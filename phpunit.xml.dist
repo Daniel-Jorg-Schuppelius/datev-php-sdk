@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  bootstrap="vendor/autoload.php" 
+  colors="true" 
+  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.3/phpunit.xsd" 
+  cacheDirectory=".phpunit.cache" 
+  displayDetailsOnTestsThatTriggerDeprecations="true"
+  displayDetailsOnTestsThatTriggerErrors="true"
+  displayDetailsOnTestsThatTriggerNotices="true"
+  displayDetailsOnTestsThatTriggerWarnings="true">
+  <testsuites>
+    <testsuite name="Unit Tests">
+      <directory>./tests</directory>
+      <exclude>./tests/Contracts</exclude>
+    </testsuite>
+  </testsuites>
+</phpunit>

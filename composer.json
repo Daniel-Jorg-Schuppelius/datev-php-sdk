@@ -1,0 +1,33 @@
+{
+  "name": "daniel-jorg-schuppelius/datev-php-sdk",
+  "description": "DATEV SDK for PHP",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Daniel Joerg Schuppelius",
+      "email": "info@schuppelius.org"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Datev\\": "src/"
+    }
+  },
+  "require": {
+    "php": "^7.4 || ^8.0",
+    "guzzlehttp/guzzle": "^7.9",
+    "psr/log": "^3.0@dev",
+    "daniel-jorg-schuppelius/php-api-toolkit": "^0.1.0"
+  },
+
+  "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    
+    "require-dev": {
+        "phpunit/phpunit": "^11.3@dev"
+    }
+}
