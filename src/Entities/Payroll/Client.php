@@ -22,4 +22,8 @@ class Client extends NamedEntity implements IdentifiableInterface {
     public function getID(): ClientID {
         return $this->id;
     }
+
+    public function getNumber(): int {
+        return $this->number;
+    }
 }

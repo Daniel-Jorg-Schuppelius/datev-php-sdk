@@ -44,5 +44,11 @@ class ClientTest extends EndpointTest {
 
         $clients = $this->endpoint->search(["reference-date" => "2021-01-01"]);
         $this->assertInstanceOf(Clients::class, $clients);
+        $this->assertNotEmpty($clients->getValues(), "No clients found");
+        $randomClient = $clients->getValues()[array_rand($clients->getValues())];
+        $this->assertInstanceOf(Client::class, $randomClient);
+        $client = $this->endpoint->get($randomClient->getId(), "all", new \DateTime("2021-01-01"));
+        $this->assertInstanceOf(Client::class, $client);
+        $this->assertEquals($randomClient->getId(), $client->getId());
     }
 }

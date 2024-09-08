@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "365fe4502dd4195905d9c2060fe72070",
+    "content-hash": "ea86436085d74082cf61a46b93069f9e",
     "packages": [
         {
             "name": "daniel-jorg-schuppelius/php-api-toolkit",
-            "version": "v0.1.0",
+            "version": "v0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Daniel-Jorg-Schuppelius/php-api-toolkit.git",
-                "reference": "38fe028616fc4ae7300cb65a1e6178bc4ca78638"
+                "reference": "427156f5c4d20cf1602863d6431b6cae64c48186"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Daniel-Jorg-Schuppelius/php-api-toolkit/zipball/38fe028616fc4ae7300cb65a1e6178bc4ca78638",
-                "reference": "38fe028616fc4ae7300cb65a1e6178bc4ca78638",
+                "url": "https://api.github.com/repos/Daniel-Jorg-Schuppelius/php-api-toolkit/zipball/427156f5c4d20cf1602863d6431b6cae64c48186",
+                "reference": "427156f5c4d20cf1602863d6431b6cae64c48186",
                 "shasum": ""
             },
             "require": {
@@ -46,9 +46,9 @@
             "description": "Reused codes for my api php sdks",
             "support": {
                 "issues": "https://github.com/Daniel-Jorg-Schuppelius/php-api-toolkit/issues",
-                "source": "https://github.com/Daniel-Jorg-Schuppelius/php-api-toolkit/tree/v0.1.0"
+                "source": "https://github.com/Daniel-Jorg-Schuppelius/php-api-toolkit/tree/v0.2.0"
             },
-            "time": "2024-09-07T17:00:08+00:00"
+            "time": "2024-09-07T21:51:38+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -1264,12 +1264,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "adf855ac00a9b84e5d9320242d0ff428cac24309"
+                "reference": "534430a40cd8c8bb58dc373de995f448bd4565be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/adf855ac00a9b84e5d9320242d0ff428cac24309",
-                "reference": "adf855ac00a9b84e5d9320242d0ff428cac24309",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/534430a40cd8c8bb58dc373de995f448bd4565be",
+                "reference": "534430a40cd8c8bb58dc373de995f448bd4565be",
                 "shasum": ""
             },
             "require": {
@@ -1357,7 +1357,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-09-07T13:10:16+00:00"
+            "time": "2024-09-08T05:56:15+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -2342,7 +2342,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.4 || ^8.0"
+        "php": "^8.1 || ^8.3"
     },
     "platform-dev": [],
     "plugin-api-version": "2.6.0"
