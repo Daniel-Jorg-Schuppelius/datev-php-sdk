@@ -6,7 +6,7 @@ namespace Datev\Contracts\Interfaces;
 
 use DateTime;
 use Datev\Contracts\Interfaces\IdentifiableInterface;
-use Datev\Contracts\Interfaces\NamedEntityInterface;
+use APIToolkit\Contracts\Interfaces\NamedEntityInterface;
 
 interface ResourceInterface extends IdentifiableInterface {
     public function getResourceUri(): string;

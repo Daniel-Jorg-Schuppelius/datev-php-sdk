@@ -6,10 +6,10 @@ use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use Datev\Contracts\Interfaces\API\SearchableEndpointInterface;
 use Datev\Entities\Accounting\Client;
 use Datev\Entities\Accounting\Clients;
-use Datev\Entities\ID;
+use APIToolkit\Entities\ID;
 
 class ClientsEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
-    protected string $baseEndpoint = 'accounting/v1';
+    protected string $endpointPrefix = 'accounting/v1';
     protected string $endpoint = 'clients';
 
     public function get(?ID $id = null): Client {
@@ -21,6 +21,6 @@ class ClientsEndpoint extends EndpointAbstract implements SearchableEndpointInte
     }
 
     public function search(array $queryParams = [], array $options = []): Clients {
-        return Clients::fromJson(parent::getContents($queryParams, [], $this->getEndpointUrl(), 200));
+        return Clients::fromJson(parent::getContents($queryParams, $options));
     }
 }

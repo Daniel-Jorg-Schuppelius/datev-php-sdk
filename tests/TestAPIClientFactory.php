@@ -2,8 +2,8 @@
 
 namespace Tests;
 
+use APIToolkit\Contracts\Interfaces\API\ApiClientInterface;
 use Datev\API\Desktop\ClientBasicAuth;
-use Datev\Contracts\Interfaces\API\ApiClientInterface;
 use Tests\Config\Config;
 
 class TestAPIClientFactory {

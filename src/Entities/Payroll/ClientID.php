@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Datev\Entities\Payroll;
 
-use Datev\Entities\ID;
+use APIToolkit\Entities\ID;
 use Psr\Log\LoggerInterface;
 
 class ClientID extends ID {

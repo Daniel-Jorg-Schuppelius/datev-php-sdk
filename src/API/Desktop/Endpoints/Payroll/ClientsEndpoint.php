@@ -7,11 +7,11 @@ use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use Datev\Contracts\Interfaces\API\SearchableEndpointInterface;
 use Datev\Entities\Payroll\Client;
 use Datev\Entities\Payroll\Clients;
-use Datev\Entities\ID;
+use APIToolkit\Entities\ID;
 use InvalidArgumentException;
 
 class ClientsEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
-    protected string $baseEndpoint = 'hr/v3';
+    protected string $endpointPrefix = 'hr/v3';
     protected string $endpoint = 'clients';
 
     public function get(?ID $id = null, ?string $expand = "all", DateTime $referenceDate = new DateTime()): Client {
@@ -19,11 +19,9 @@ class ClientsEndpoint extends EndpointAbstract implements SearchableEndpointInte
             throw new InvalidArgumentException('ID is required');
         }
 
-        //TODO: Endpointprocedure is not clear. The endpoint is not returning the expected data.
-
         $referenceDateFormatted = $referenceDate->format('Y-m-d');
         $expand = urlencode($expand);
-        error_log("{$this->getEndpointUrl()}/{$id->toString()}?expand={$expand}&reference-date={$referenceDateFormatted}");
+
         return Client::fromJson(parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}?expand={$expand}&reference-date={$referenceDateFormatted}"));
     }
 

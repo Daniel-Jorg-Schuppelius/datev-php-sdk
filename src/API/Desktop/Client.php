@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Datev\API\Desktop;
 
-use Datev\Contracts\Abstracts\API\ClientAbstract;
+use APIToolkit\Contracts\Abstracts\API\ClientAbstract;
 use Psr\Log\LoggerInterface;
 use GuzzleHttp\Client as HttpClient;
 
