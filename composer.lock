@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9cd2cfc17895a8f9d17e50ed65efdc89",
+    "content-hash": "288fe82da03c23d9844a56aab3418664",
     "packages": [
         {
             "name": "daniel-jorg-schuppelius/php-api-toolkit",
-            "version": "v0.3.2",
+            "version": "v0.3.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Daniel-Jorg-Schuppelius/php-api-toolkit.git",
-                "reference": "4ed4343fc138cc959f47885a33d68a66b6e861f7"
+                "reference": "d8df39845172091258dbdee170e86b688b65d480"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Daniel-Jorg-Schuppelius/php-api-toolkit/zipball/4ed4343fc138cc959f47885a33d68a66b6e861f7",
-                "reference": "4ed4343fc138cc959f47885a33d68a66b6e861f7",
+                "url": "https://api.github.com/repos/Daniel-Jorg-Schuppelius/php-api-toolkit/zipball/d8df39845172091258dbdee170e86b688b65d480",
+                "reference": "d8df39845172091258dbdee170e86b688b65d480",
                 "shasum": ""
             },
             "require": {
@@ -47,9 +47,9 @@
             "description": "Reused codes for my api php sdks",
             "support": {
                 "issues": "https://github.com/Daniel-Jorg-Schuppelius/php-api-toolkit/issues",
-                "source": "https://github.com/Daniel-Jorg-Schuppelius/php-api-toolkit/tree/v0.3.2"
+                "source": "https://github.com/Daniel-Jorg-Schuppelius/php-api-toolkit/tree/v0.3.6"
             },
-            "time": "2024-09-09T10:02:00+00:00"
+            "time": "2024-09-09T16:37:02+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",

@@ -5,22 +5,23 @@ declare(strict_types=1);
 namespace Datev\Entities\Payroll;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
-use APIToolkit\Entities\Bank\BIC;
-use APIToolkit\Entities\Bank\IBAN;
+use DateTime;
 use Datev\Contracts\Interfaces\IdentifiableInterface;
 use Psr\Log\LoggerInterface;
 
-class Account extends NamedEntity implements IdentifiableInterface {
-    protected ?AccountID $id;
-    protected ?IBAN $iban;
-    protected ?BIC $bic;
-    protected ?string $differing_account_holder;
+class Disability extends NamedEntity implements IdentifiableInterface {
+    protected DisabilityID $id;
+    protected ?DateTime $valid_from;
+    protected ?DateTime $valid_to;
+    protected ?float $degree_of_disability;
+    protected ?string $issuing_authority;
+    protected ?string $disability_group;
 
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
 
-    public function getID(): AccountID {
+    public function getID(): DisabilityID {
         return $this->id;
     }
 }

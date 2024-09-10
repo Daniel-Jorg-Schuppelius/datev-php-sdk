@@ -7,10 +7,10 @@ namespace Datev\Entities\Payroll;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
-class AccountableEmployees extends NamedValues {
+class CalendarRecords extends NamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";
-        $this->valueClassName = AccountableEmployee::class;
+        $this->valueClassName = CalendarRecord::class;
 
         parent::__construct($data, $logger);
     }

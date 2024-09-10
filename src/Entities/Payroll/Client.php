@@ -14,6 +14,16 @@ class Client extends NamedEntity implements IdentifiableInterface {
     protected int $number;
     protected ConsultantNumber $consultant_number;
     protected string $name;
+    protected ?Employees $employees;
+    protected ?AccountableEmployees $accountable_employees;
+    protected ?EmployeeGroup $employee_group;
+    protected ?WorkingHours $working_hours;
+    protected ?SalaryTypes $salary_types;
+    protected ?CostCenters $cost_centers;
+    protected ?CostUnits $cost_units;
+    protected ?Departments $departments;
+    protected ?FinancialAccountings $financial_accounting;
+    protected ?ReasonsForAbsence $reasons_for_absence;
 
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);

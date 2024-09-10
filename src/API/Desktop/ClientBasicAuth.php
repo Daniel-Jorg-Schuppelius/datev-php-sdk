@@ -17,7 +17,7 @@ class ClientBasicAuth extends ClientAbstract {
                 'Content-Type' => 'application/json;charset=utf-8',
                 'Accept' => 'application/json;charset=utf-8',
             ],
-            'timeout' => 30,
+            'timeout' => 120,
             'verify' => false,  // SSL-Zertifikatsüberprüfung deaktivieren (nur wenn nötig)
         ]), $logger, $sleepAfterRequest);
     }

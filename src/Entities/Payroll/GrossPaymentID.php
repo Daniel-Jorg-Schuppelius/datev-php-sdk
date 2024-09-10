@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace Datev\Entities\Payroll;
 
-use APIToolkit\Contracts\Abstracts\NamedValues;
+use APIToolkit\Entities\ID;
 use Psr\Log\LoggerInterface;
 
-class AccountableEmployees extends NamedValues {
+class GrossPaymentID extends ID {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
-        $this->entityName = "content";
-        $this->valueClassName = AccountableEmployee::class;
-
         parent::__construct($data, $logger);
+        $this->entityName = 'id';
     }
 }

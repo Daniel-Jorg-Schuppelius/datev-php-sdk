@@ -6,8 +6,8 @@ namespace Datev\Contracts\Interfaces\API;
 
 use APIToolkit\Contracts\Interfaces\API\EndpointInterface;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterface;
-use Datev\Contracts\Interfaces\ResourceInterface;
 use APIToolkit\Entities\ID;
+use Datev\Contracts\Interfaces\ResourceInterface;
 
 interface ExtendedEndpointInterface extends EndpointInterface {
     public function create(NamedEntityInterface $data, ID $id = null): ResourceInterface;
