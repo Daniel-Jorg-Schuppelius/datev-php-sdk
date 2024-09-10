@@ -2,12 +2,12 @@
 
 namespace Datev\Api\Desktop\Endpoints\Payroll;
 
+use APIToolkit\Entities\ID;
 use DateTime;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use Datev\Contracts\Interfaces\API\SearchableEndpointInterface;
-use Datev\Entities\Payroll\Client;
-use Datev\Entities\Payroll\Clients;
-use APIToolkit\Entities\ID;
+use Datev\Entities\Payroll\Clients\Client;
+use Datev\Entities\Payroll\Clients\Clients;
 use InvalidArgumentException;
 
 class ClientsEndpoint extends EndpointAbstract implements SearchableEndpointInterface {

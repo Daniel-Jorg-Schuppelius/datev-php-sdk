@@ -3,8 +3,8 @@
 namespace Tests\Endpoints\Payroll;
 
 use Datev\Api\Desktop\Endpoints\Payroll\ClientsEndpoint;
-use Datev\Entities\Payroll\Client;
-use Datev\Entities\Payroll\Clients;
+use Datev\Entities\Payroll\Clients\Client;
+use Datev\Entities\Payroll\Clients\Clients;
 use Tests\Contracts\EndpointTest;
 
 class ClientTest extends EndpointTest {
@@ -13,14 +13,14 @@ class ClientTest extends EndpointTest {
     public function __construct($name) {
         parent::__construct($name);
         $this->endpoint = new ClientsEndpoint($this->client, $this->logger);
-        $this->apiDisabled = false; // API is disabled
+        $this->apiDisabled = true; // API is disabled
     }
 
     public function testJsonSerialize() {
         $data = [
             "id" => "9351B0E3-E96B-4BB0-B94E-018B13D1DB28",
-            "number" => 55039,
             "consultant_number" => "29115",
+            "number" => 55039,
             "name" => "Küchenbeispiel",
         ];
 
