@@ -7,6 +7,7 @@ namespace Datev\Entities\Payroll\Employees;
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use DateTime;
 use Datev\Contracts\Interfaces\IdentifiableInterface;
+use Datev\Entities\EmployeeID;
 use Datev\Entities\Payroll\Accounts\Account;
 use Datev\Entities\Payroll\Activities\Activity;
 use Datev\Entities\Payroll\Addresses\Address;

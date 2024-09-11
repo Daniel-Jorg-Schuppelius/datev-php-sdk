@@ -31,7 +31,7 @@ class Activity extends NamedEntity implements IdentifiableInterface {
     protected ?float $allocation_of_working_hours_sunday;
     protected ?float $average_working_hours;
     protected ?string $form_of_remuneration;
-    protected ?string $number_of_business_unit;
+    protected ?int $number_of_business_unit;
     protected ?string $department;
     protected ?int $employee_group_accounting;
 

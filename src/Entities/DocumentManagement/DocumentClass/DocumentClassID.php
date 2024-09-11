@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Datev\Entities\Payroll\Addresses;
+namespace Datev\Entities\DocumentManagement\DocumentClass;
 
 use APIToolkit\Entities\ID;
 use Psr\Log\LoggerInterface;
 
-class AddressID extends ID {
+class DocumentClassID extends ID {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
         $this->entityName = 'id';
