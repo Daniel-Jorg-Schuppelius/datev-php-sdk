@@ -15,19 +15,21 @@
     }
   },
   "require": {
-    "php": "^8.1 || ^8.3",
+    "php": "^8.2 || ^8.3",
     "guzzlehttp/guzzle": "^7.9",
     "psr/log": "^3.0@dev",
     "daniel-jorg-schuppelius/php-api-toolkit": "^0.3.7"
   },
-
   "autoload-dev": {
         "psr-4": {
+            "Datev\\": "src/",
             "Tests\\": "tests/"
         }
-    },
-    
+    },    
     "require-dev": {
         "phpunit/phpunit": "^11.3@dev"
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
     }
 }

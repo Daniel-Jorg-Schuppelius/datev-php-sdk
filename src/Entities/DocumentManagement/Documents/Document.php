@@ -9,8 +9,8 @@ use DateTime;
 use Datev\Contracts\Interfaces\IdentifiableInterface;
 use Datev\Entities\DocumentManagement\AcknowledgementUsers\AcknowledgementUsers;
 use Datev\Entities\DocumentManagement\CorrespondencePartnerGUID;
+use Datev\Entities\DocumentManagement\DocumentDomains\DocumentDomain;
 use Datev\Entities\DocumentManagement\Documents\DocumentClass\DocumentClass;
-use Datev\Entities\DocumentManagement\Domains\Domain;
 use Psr\Log\LoggerInterface;
 
 class Document extends NamedEntity implements IdentifiableInterface {
@@ -32,7 +32,7 @@ class Document extends NamedEntity implements IdentifiableInterface {
     protected ?string $creation_user;
     protected ?DateTime $deletion_date;
     protected ?string $description;
-    protected ?Domain $domain;
+    protected ?DocumentDomain $domain;
 
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
