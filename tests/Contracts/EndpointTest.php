@@ -6,6 +6,7 @@ namespace Tests\Contracts;
 
 use APIToolkit\Logger\ConsoleLoggerFactory;
 use Datev\API\Desktop\ClientBasicAuth;
+use Datev\API\Desktop\Endpoints\Diagnostics\EchoEndpoint;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Tests\TestAPIClientFactory;
@@ -25,13 +26,14 @@ abstract class EndpointTest extends TestCase {
 
     final protected function setUp(): void {
         if (!$this->apiDisabled) {
-            // try {
-            //     $response = $this->client->get("ping");
-            //     $this->apiDisabled = $response->getStatusCode() != 200;
-            // } catch (\Exception $e) {
-            //     error_log("API disabled -> " . $e->getMessage());
-            //     $this->apiDisabled = true;
-            // }
+            try {
+                $endpoint = new EchoEndpoint($this->client);
+                $echoResponse = $endpoint->get();
+                $this->apiDisabled = !$echoResponse->isValid();
+            } catch (\Exception $e) {
+                error_log("API disabled -> " . $e->getMessage());
+                $this->apiDisabled = true;
+            }
         }
     }
 }
