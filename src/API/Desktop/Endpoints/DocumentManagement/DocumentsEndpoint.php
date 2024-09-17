@@ -1,6 +1,6 @@
 <?php
 
-namespace Datev\Api\Desktop\Endpoints\DocumentManagement;
+namespace Datev\API\Desktop\Endpoints\DocumentManagement;
 
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use Datev\Contracts\Interfaces\API\SearchableEndpointInterface;

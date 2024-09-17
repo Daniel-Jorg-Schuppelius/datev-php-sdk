@@ -1,6 +1,6 @@
 <?php
 
-namespace Datev\Api\Desktop\Endpoints\Accounting;
+namespace Datev\API\Desktop\Endpoints\Accounting;
 
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use Datev\Contracts\Interfaces\API\SearchableEndpointInterface;

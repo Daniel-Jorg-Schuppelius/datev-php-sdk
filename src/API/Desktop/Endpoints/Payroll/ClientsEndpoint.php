@@ -1,6 +1,6 @@
 <?php
 
-namespace Datev\Api\Desktop\Endpoints\Payroll;
+namespace Datev\API\Desktop\Endpoints\Payroll;
 
 use APIToolkit\Entities\ID;
 use DateTime;

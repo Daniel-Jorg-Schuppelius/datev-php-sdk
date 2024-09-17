@@ -1,6 +1,6 @@
 <?php
 
-namespace Datev\Api\Desktop\Endpoints\Payroll;
+namespace Datev\API\Desktop\Endpoints\Payroll;
 
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use Datev\Contracts\Interfaces\API\SearchableEndpointInterface;

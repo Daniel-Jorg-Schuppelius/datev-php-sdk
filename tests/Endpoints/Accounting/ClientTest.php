@@ -2,7 +2,7 @@
 
 namespace Tests\Endpoints\Accounting;
 
-use Datev\Api\Desktop\Endpoints\Accounting\ClientsEndpoint;
+use Datev\API\Desktop\Endpoints\Accounting\ClientsEndpoint;
 use Datev\Entities\Accounting\Client;
 use Datev\Entities\Accounting\Clients;
 use Tests\Contracts\EndpointTest;

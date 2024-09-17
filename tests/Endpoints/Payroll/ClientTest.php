@@ -2,7 +2,7 @@
 
 namespace Tests\Endpoints\Payroll;
 
-use Datev\Api\Desktop\Endpoints\Payroll\ClientsEndpoint;
+use Datev\API\Desktop\Endpoints\Payroll\ClientsEndpoint;
 use Datev\Entities\Payroll\Clients\Client;
 use Datev\Entities\Payroll\Clients\Clients;
 use Tests\Contracts\EndpointTest;
