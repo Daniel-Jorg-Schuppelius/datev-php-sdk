@@ -15,6 +15,7 @@
     }
   },
   "minimum-stability": "dev",
+  "prefer-stable": true,
   "require": {
     "php": "^8.2 || ^8.3",
     "guzzlehttp/guzzle": "^8.0",
