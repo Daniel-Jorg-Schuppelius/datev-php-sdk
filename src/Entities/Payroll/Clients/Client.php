@@ -6,7 +6,7 @@ namespace Datev\Entities\Payroll\Clients;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
-use Datev\Entities\ConsultantNumber;
+use Datev\Entities\Common\ConsultantNumber;
 use Datev\Entities\Payroll\CostCenters\CostCenters;
 use Datev\Entities\Payroll\CostUnits\CostUnits;
 use Datev\Entities\Payroll\Departments\Departments;
