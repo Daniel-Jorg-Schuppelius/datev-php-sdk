@@ -4,24 +4,24 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fc7c03a50b249c4a27410eb4e2659adb",
+    "content-hash": "7e2907c248790f3075de48c89c6ae6c3",
     "packages": [
         {
             "name": "daniel-jorg-schuppelius/php-api-toolkit",
-            "version": "v0.4.0",
+            "version": "v0.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Daniel-Jorg-Schuppelius/php-api-toolkit.git",
-                "reference": "ff2a30778daa1e53db41fbc047338e673e9f51f4"
+                "reference": "fbb3a8319d22b7d9ef7f8f44136900b39cab7d56"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Daniel-Jorg-Schuppelius/php-api-toolkit/zipball/ff2a30778daa1e53db41fbc047338e673e9f51f4",
-                "reference": "ff2a30778daa1e53db41fbc047338e673e9f51f4",
+                "url": "https://api.github.com/repos/Daniel-Jorg-Schuppelius/php-api-toolkit/zipball/fbb3a8319d22b7d9ef7f8f44136900b39cab7d56",
+                "reference": "fbb3a8319d22b7d9ef7f8f44136900b39cab7d56",
                 "shasum": ""
             },
             "require": {
-                "guzzlehttp/guzzle": "8.0.x-dev",
+                "guzzlehttp/guzzle": "^7.9 || ^8.0",
                 "php": "^8.2 || ^8.3",
                 "psr/log": "^3.0@dev"
             },
@@ -47,9 +47,9 @@
             "description": "Reused codes for my api php sdks",
             "support": {
                 "issues": "https://github.com/Daniel-Jorg-Schuppelius/php-api-toolkit/issues",
-                "source": "https://github.com/Daniel-Jorg-Schuppelius/php-api-toolkit/tree/v0.4.0"
+                "source": "https://github.com/Daniel-Jorg-Schuppelius/php-api-toolkit/tree/v0.5.1"
             },
-            "time": "2024-09-22T07:03:05+00:00"
+            "time": "2024-09-22T09:39:40+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
