@@ -6,10 +6,10 @@ namespace Datev\Entities\Payroll\Data\Individual;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterface;
-use Datev\Contracts\Interfaces\IdentifiableInterface;
+use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use Psr\Log\LoggerInterface;
 
-class IndividualDatum extends NamedEntity implements IdentifiableInterface {
+class IndividualDatum extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected IndividualDatumID $id;
     protected ?array $data;
 

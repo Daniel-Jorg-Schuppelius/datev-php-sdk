@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Datev\Entities\Payroll\CostCenters;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
-use Datev\Contracts\Interfaces\IdentifiableInterface;
+use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use Psr\Log\LoggerInterface;
 
-class CostCenter extends NamedEntity implements IdentifiableInterface {
+class CostCenter extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected CostCenterID $id;
     protected string $name;
 

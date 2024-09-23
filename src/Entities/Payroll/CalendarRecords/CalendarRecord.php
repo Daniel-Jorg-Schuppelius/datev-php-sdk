@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Datev\Entities\Payroll\CalendarRecords;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
+use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use DateTime;
-use Datev\Contracts\Interfaces\IdentifiableInterface;
 use Psr\Log\LoggerInterface;
 
-class CalendarRecord extends NamedEntity implements IdentifiableInterface {
+class CalendarRecord extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?CalendarRecordID $id;
     protected ?string $personnel_number;
     protected ?DateTime $date_of_emergence;

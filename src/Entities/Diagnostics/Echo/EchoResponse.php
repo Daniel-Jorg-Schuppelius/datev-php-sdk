@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Datev\Entities\Diagnostics\Echo;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
-use Datev\Contracts\Interfaces\IdentifiableInterface;
+use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use Psr\Log\LoggerInterface;
 
-class EchoResponse extends NamedEntity implements IdentifiableInterface {
+class EchoResponse extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected EchoResponseID $id;
     protected string $echo_message;
 

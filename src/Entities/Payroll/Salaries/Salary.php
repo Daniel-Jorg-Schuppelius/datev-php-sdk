@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Datev\Entities\Payroll\Salaries;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
+use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use DateTime;
-use Datev\Contracts\Interfaces\IdentifiableInterface;
 use Psr\Log\LoggerInterface;
 
-class Salary extends NamedEntity implements IdentifiableInterface {
+class Salary extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected SalaryID $id;
     protected ?string $personnel_number;
     protected ?DateTime $date_of_emergence;

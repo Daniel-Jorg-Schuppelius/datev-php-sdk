@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Datev\Entities\DocumentManagement\DocumentDomains;
+namespace Datev\Entities\DocumentManagement\Documents\Domains;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
-use Datev\Contracts\Interfaces\IdentifiableInterface;
+use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use Psr\Log\LoggerInterface;
 
-class DocumentDomain extends NamedEntity implements IdentifiableInterface {
+class DocumentDomain extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?DocumentDomainID $id;
     protected ?string $name;
 

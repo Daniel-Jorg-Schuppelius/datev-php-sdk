@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Datev\Entities\Payroll\VacationEntitlements;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
-use Datev\Contracts\Interfaces\IdentifiableInterface;
+use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use Psr\Log\LoggerInterface;
 
-class VacationEntitlement extends NamedEntity implements IdentifiableInterface {
+class VacationEntitlement extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected VacationEntitlementID $id;
     protected ?float $basic_vacation_entitlement;
     protected ?float $current_year_vacation_entitlement;

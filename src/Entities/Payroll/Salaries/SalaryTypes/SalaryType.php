@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Datev\Entities\Payroll\Salaries\SalaryTypes;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
-use Datev\Contracts\Interfaces\IdentifiableInterface;
+use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use Psr\Log\LoggerInterface;
 
-class SalaryType extends NamedEntity implements IdentifiableInterface {
+class SalaryType extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected SalaryTypeID $id;
     protected ?string $name;
     protected ?string $core;

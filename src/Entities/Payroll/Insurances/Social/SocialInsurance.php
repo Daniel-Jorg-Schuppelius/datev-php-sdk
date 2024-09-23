@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Datev\Entities\Payroll\Insurances\Social;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
-use Datev\Contracts\Interfaces\IdentifiableInterface;
+use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use Psr\Log\LoggerInterface;
 
-class SocialInsurance extends NamedEntity implements IdentifiableInterface {
+class SocialInsurance extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected SocialInsuranceID $id;
     protected ?string $contribution_class_health_insurance;
     protected ?string $contribution_class_pension_insurance;

@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Datev\Entities\Payroll\WorkingHours;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
-use Datev\Contracts\Interfaces\IdentifiableInterface;
+use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use Psr\Log\LoggerInterface;
 
-class WorkingHours extends NamedEntity implements IdentifiableInterface {
+class WorkingHours extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected WorkingHoursID $id;
     protected ?float $weekly_working_hours;
     protected ?float $allocation_of_working_hours_monday;

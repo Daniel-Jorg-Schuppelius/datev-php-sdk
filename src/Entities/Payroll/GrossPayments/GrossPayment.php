@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Datev\Entities\Payroll\GrossPayments;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
+use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use DateTime;
-use Datev\Contracts\Interfaces\IdentifiableInterface;
 use Psr\Log\LoggerInterface;
 
-class GrossPayment extends NamedEntity implements IdentifiableInterface {
+class GrossPayment extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected GrossPaymentID $id;
     protected ?string $personnel_number;
     protected ?float $amount;

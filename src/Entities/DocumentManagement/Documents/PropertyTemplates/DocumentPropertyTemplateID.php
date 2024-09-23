@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Datev\Entities\DocumentManagement\DocumentClass;
+namespace Datev\Entities\DocumentManagement\Documents\PropertyTemplates;
 
 use APIToolkit\Entities\ID;
 use Psr\Log\LoggerInterface;
 
-class DocumentClassID extends ID {
+class DocumentPropertyTemplateID extends ID {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
         $this->entityName = 'id';

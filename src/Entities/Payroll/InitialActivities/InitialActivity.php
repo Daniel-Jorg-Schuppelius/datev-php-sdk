@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Datev\Entities\Payroll\InitialActivities;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
+use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use DateTime;
-use Datev\Contracts\Interfaces\IdentifiableInterface;
 use Psr\Log\LoggerInterface;
 
-class InitialActivity extends NamedEntity implements IdentifiableInterface {
+class InitialActivity extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected InitialActivityID $id;
     protected ?DateTime $reference_date;
     protected ?string $activity_type;

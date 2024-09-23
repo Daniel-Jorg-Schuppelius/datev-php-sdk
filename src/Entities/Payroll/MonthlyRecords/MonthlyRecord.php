@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Datev\Entities\Payroll\MonthlyRecords;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
+use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use DateTime;
-use Datev\Contracts\Interfaces\IdentifiableInterface;
 use Psr\Log\LoggerInterface;
 
-class MonthlyRecord extends NamedEntity implements IdentifiableInterface {
+class MonthlyRecord extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected MonthlyRecordID $id;
     protected ?string $personnel_number;
     protected ?DateTime $month_of_emergence;

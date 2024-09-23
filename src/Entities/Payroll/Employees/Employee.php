@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Datev\Entities\Payroll\Employees;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
+use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use DateTime;
-use Datev\Contracts\Interfaces\IdentifiableInterface;
-use Datev\Entities\EmployeeID;
+use Datev\Entities\Common\EmployeeID;
 use Datev\Entities\Payroll\Accounts\Account;
 use Datev\Entities\Payroll\Activities\Activity;
 use Datev\Entities\Payroll\Addresses\Address;
@@ -30,7 +30,7 @@ use Datev\Entities\Payroll\VacationEntitlements\VacationEntitlement;
 use Datev\Entities\Payroll\VocationalTrainings\VocationalTrainings;
 use Psr\Log\LoggerInterface;
 
-class Employee extends NamedEntity implements IdentifiableInterface {
+class Employee extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?EmployeeID $id;
     protected ?string $surname;
     protected ?string $first_name;

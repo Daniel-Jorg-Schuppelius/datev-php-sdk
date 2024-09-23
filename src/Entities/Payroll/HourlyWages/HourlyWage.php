@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Datev\Entities\Payroll\HourlyWages;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
-use Datev\Contracts\Interfaces\IdentifiableInterface;
+use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use Psr\Log\LoggerInterface;
 
-class HourlyWage extends NamedEntity implements IdentifiableInterface {
+class HourlyWage extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected HourlyWageID $id;
     protected string $personnel_number;
     protected ?float $amount;

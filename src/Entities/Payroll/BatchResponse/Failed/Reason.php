@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Datev\Entities\Payroll\BatchResponse\Failed;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
-use Datev\Contracts\Interfaces\IdentifiableInterface;
+use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use Datev\Entities\Common\AdditionalMessages\AdditionalMessages;
+use Datev\Entities\Common\RequestID;
 use Psr\Log\LoggerInterface;
 
-class Reason extends NamedEntity implements IdentifiableInterface {
+class Reason extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?string $error;
     protected ?string $error_description;
     protected ?RequestID $request_id;

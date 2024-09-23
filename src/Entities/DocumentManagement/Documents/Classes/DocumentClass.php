@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Datev\Entities\DocumentManagement\DocumentClass;
+namespace Datev\Entities\DocumentManagement\Documents\Classes;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
-use Datev\Contracts\Interfaces\IdentifiableInterface;
+use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use Psr\Log\LoggerInterface;
 
-class DocumentClass extends NamedEntity implements IdentifiableInterface {
-    protected DocumentClassID $id;
+class DocumentClass extends NamedEntity implements IdentifiableNamedEntityInterface {
+    protected ?DocumentClassID $id;
     protected ?string $name;
 
     public function __construct($data = null, ?LoggerInterface $logger = null) {

@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Datev\Entities\Payroll\Disabilities;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
+use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use DateTime;
-use Datev\Contracts\Interfaces\IdentifiableInterface;
 use Psr\Log\LoggerInterface;
 
-class Disability extends NamedEntity implements IdentifiableInterface {
+class Disability extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected DisabilityID $id;
     protected ?DateTime $valid_from;
     protected ?DateTime $valid_to;

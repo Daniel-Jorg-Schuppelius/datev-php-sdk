@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Datev\Entities\Payroll\Data\Personal;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
+use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use DateTime;
-use Datev\Contracts\Interfaces\IdentifiableInterface;
 use Psr\Log\LoggerInterface;
 
-class PersonalDatum extends NamedEntity implements IdentifiableInterface {
+class PersonalDatum extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected PersonalDataID $id;
     protected ?string $first_name;
     protected ?string $surname;

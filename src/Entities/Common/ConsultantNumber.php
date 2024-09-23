@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Datev\Entities;
+namespace Datev\Entities\Common;
 
 use APIToolkit\Contracts\Abstracts\NamedValue;
 use Psr\Log\LoggerInterface;

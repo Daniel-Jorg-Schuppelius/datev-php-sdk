@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace Datev\Entities\Payroll\ReasonsForAbsence;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
-use DateTime;
-use Datev\Contracts\Interfaces\IdentifiableInterface;
+use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use Psr\Log\LoggerInterface;
 
-class ReasonForAbsence extends NamedEntity implements IdentifiableInterface {
+class ReasonForAbsence extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ReasonForAbsenceID $id;
     protected ?string $name;
 

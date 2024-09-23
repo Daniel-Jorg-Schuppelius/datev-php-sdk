@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Datev\Entities\DocumentManagement\Documents\Employee;
+namespace Datev\Entities\DocumentManagement\Employees;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
-use Datev\Contracts\Interfaces\IdentifiableInterface;
+use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use Datev\Entities\EmployeeID;
 use Psr\Log\LoggerInterface;
 
-class Employee extends NamedEntity implements IdentifiableInterface {
+class Employee extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?EmployeeID $id;
     protected ?string $name;
     protected ?bool $is_active;

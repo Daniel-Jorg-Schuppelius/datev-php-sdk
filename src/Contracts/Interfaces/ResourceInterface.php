@@ -6,9 +6,8 @@ namespace Datev\Contracts\Interfaces;
 
 use APIToolkit\Contracts\Interfaces\NamedEntityInterface;
 use DateTime;
-use Datev\Contracts\Interfaces\IdentifiableInterface;
 
-interface ResourceInterface extends IdentifiableInterface {
+interface ResourceInterface extends NamedEntityInterface {
     public function getResourceUri(): string;
     public function getCreatedDate(): DateTime;
     public function getUpdatedDate(): DateTime;

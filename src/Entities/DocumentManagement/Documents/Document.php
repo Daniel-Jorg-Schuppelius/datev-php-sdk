@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Datev\Entities\DocumentManagement\Documents;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
+use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use DateTime;
-use Datev\Contracts\Interfaces\IdentifiableInterface;
 use Datev\Entities\DocumentManagement\AcknowledgementUsers\AcknowledgementUsers;
 use Datev\Entities\DocumentManagement\CorrespondencePartnerGUID;
-use Datev\Entities\DocumentManagement\DocumentDomains\DocumentDomain;
-use Datev\Entities\DocumentManagement\Documents\DocumentClass\DocumentClass;
+use Datev\Entities\DocumentManagement\Documents\Classes\DocumentClass;
+use Datev\Entities\DocumentManagement\Documents\Domains\DocumentDomain;
 use Psr\Log\LoggerInterface;
 
-class Document extends NamedEntity implements IdentifiableInterface {
+class Document extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?DocumentID $id;
     protected ?AcknowledgementUsers $acknowledge_by;
     protected ?float $amount;

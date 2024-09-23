@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Datev\Entities\Payroll\Accounts;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
+use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use APIToolkit\Entities\Bank\BIC;
 use APIToolkit\Entities\Bank\IBAN;
-use Datev\Contracts\Interfaces\IdentifiableInterface;
 use Psr\Log\LoggerInterface;
 
-class Account extends NamedEntity implements IdentifiableInterface {
+class Account extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?AccountID $id;
     protected ?IBAN $iban;
     protected ?BIC $bic;
