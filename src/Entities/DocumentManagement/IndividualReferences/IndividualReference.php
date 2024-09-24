@@ -6,7 +6,8 @@ namespace Datev\Entities\DocumentManagement\IndividualReferences;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
-use Datev\Entities\DocumentManagement\CorrespondencePartnerGUID;
+use Datev\Entities\DocumentManagement\CorrespondencePartners\CorrespondencePartnerGUID;
+use Datev\Entities\DocumentManagement\CorrespondencePartners\CorrespondencePartnerLink;
 use Psr\Log\LoggerInterface;
 
 class IndividualReference extends NamedEntity implements IdentifiableNamedEntityInterface {
@@ -22,5 +23,17 @@ class IndividualReference extends NamedEntity implements IdentifiableNamedEntity
 
     public function getID(): IndividualReferenceID {
         return $this->id;
+    }
+
+    public function getName(): string {
+        return $this->name;
+    }
+
+    public function getCorrespondencePartnerGUID(): ?CorrespondencePartnerGUID {
+        return $this->correspondence_partner_guid;
+    }
+
+    public function getCorrespondencePartnerLink(): ?CorrespondencePartnerLink {
+        return $this->correspondence_partner_link;
     }
 }

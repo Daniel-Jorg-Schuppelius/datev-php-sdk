@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Datev\Entities\DocumentManagement;
+namespace Datev\Entities\DocumentManagement\IndividualProperties;
 
-use APIToolkit\Entities\GUID;
+use APIToolkit\Entities\ID;
 use Psr\Log\LoggerInterface;
 
-class CorrespondencePartnerGUID extends GUID {
+class IndividualPropertyID extends ID {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
-        $this->entityName = 'correspondence_partner_guid';
+        $this->entityName = 'id';
     }
 }

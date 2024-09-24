@@ -8,9 +8,11 @@ use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use DateTime;
 use Datev\Entities\DocumentManagement\AcknowledgementUsers\AcknowledgementUsers;
-use Datev\Entities\DocumentManagement\CorrespondencePartnerGUID;
+use Datev\Entities\DocumentManagement\CorrespondencePartners\CorrespondencePartnerGUID;
 use Datev\Entities\DocumentManagement\Documents\Classes\DocumentClass;
 use Datev\Entities\DocumentManagement\Documents\Domains\DocumentDomain;
+use Datev\Entities\DocumentManagement\Documents\Folders\DocumentFolder;
+use Datev\Entities\DocumentManagement\Employees\Employee;
 use Psr\Log\LoggerInterface;
 
 class Document extends NamedEntity implements IdentifiableNamedEntityInterface {
@@ -33,6 +35,17 @@ class Document extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?DateTime $deletion_date;
     protected ?string $description;
     protected ?DocumentDomain $domain;
+    protected ?Employee $employee;
+    protected ?DateTime $export_date_time;
+    protected ?string $extension;
+    protected ?DocumentFolder $folder;
+    protected ?bool $is_binder;
+    protected ?bool $is_shared;
+    protected ?DateTime $import_date_time;
+    protected ?bool $inbox;
+    protected ?DateTime $inbox_date;
+
+
 
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);

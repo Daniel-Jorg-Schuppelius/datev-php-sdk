@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Datev\Entities\DocumentManagement\CorrespondencePartners;
+namespace Datev\Entities\DocumentManagement\Users;
 
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
-class CorespondencePartners extends NamedValues {
+class Users extends NamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";
-        $this->valueClassName = CorespondencePartner::class;
+        $this->valueClassName = User::class;
 
         parent::__construct($data, $logger);
     }

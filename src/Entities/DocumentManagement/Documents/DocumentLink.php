@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Datev\Entities\DocumentManagement;
+namespace Datev\Entities\DocumentManagement\Documents;
 
-use APIToolkit\Entities\ID;
+use APIToolkit\Entities\GUID;
 use Psr\Log\LoggerInterface;
 
-class DocumentID extends ID {
+class DocumentLink extends GUID {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
-        $this->entityName = 'id';
+        $this->entityName = 'document_link';
     }
 }

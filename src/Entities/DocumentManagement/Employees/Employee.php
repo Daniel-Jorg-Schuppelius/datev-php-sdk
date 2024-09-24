@@ -6,7 +6,7 @@ namespace Datev\Entities\DocumentManagement\Employees;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
-use Datev\Entities\EmployeeID;
+use Datev\Entities\Common\EmployeeID;
 use Psr\Log\LoggerInterface;
 
 class Employee extends NamedEntity implements IdentifiableNamedEntityInterface {

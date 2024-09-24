@@ -2,26 +2,25 @@
 
 declare(strict_types=1);
 
-namespace Datev\Entities\DocumentManagement\Documents\Classes;
+namespace Datev\Entities\DocumentManagement\Registers;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
-use APIToolkit\Contracts\Interfaces\NamedEntityInterface;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use Psr\Log\LoggerInterface;
 
-class DocumentClass extends NamedEntity implements IdentifiableNamedEntityInterface {
-    protected DocumentClassID $id;
+class Register extends NamedEntity implements IdentifiableNamedEntityInterface {
+    protected RegisterID $id;
     protected ?string $name;
 
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
 
-    public function getID(): DocumentClassID {
+    public function getID(): RegisterID {
         return $this->id;
     }
 
     public function getName(): ?string {
-        return $this->name ?? null;
+        return $this->name;
     }
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Datev\Entities\DocumentManagement\IndividualReferences;
+namespace Datev\Entities\DocumentManagement\CorrespondencePartners;
 
 use APIToolkit\Entities\Information\Link;
 use Psr\Log\LoggerInterface;

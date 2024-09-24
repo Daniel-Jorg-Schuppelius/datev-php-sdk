@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Datev\Entities\Payroll\EmployeeGroups;
+namespace Datev\Entities\Payroll\Employees\Groups;
 
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
