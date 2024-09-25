@@ -13,6 +13,16 @@ use Datev\Entities\DocumentManagement\Documents\Classes\DocumentClass;
 use Datev\Entities\DocumentManagement\Documents\Domains\DocumentDomain;
 use Datev\Entities\DocumentManagement\Documents\Folders\DocumentFolder;
 use Datev\Entities\DocumentManagement\Employees\Employee;
+use Datev\Entities\DocumentManagement\IndividualProperties\IndividualProperties;
+use Datev\Entities\DocumentManagement\IndividualReferences\IndividualReferences;
+use Datev\Entities\DocumentManagement\Notes\Note;
+use Datev\Entities\DocumentManagement\Orders\Order;
+use Datev\Entities\DocumentManagement\PropertyTemplates\PropertyTemplate;
+use Datev\Entities\DocumentManagement\Registers\Register;
+use Datev\Entities\DocumentManagement\SecureAreas\SecureArea;
+use Datev\Entities\DocumentManagement\States\State;
+use Datev\Entities\DocumentManagement\StructureItems\StructureItems;
+use Datev\Entities\DocumentManagement\Users\User;
 use Psr\Log\LoggerInterface;
 
 class Document extends NamedEntity implements IdentifiableNamedEntityInterface {
@@ -44,8 +54,30 @@ class Document extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?DateTime $import_date_time;
     protected ?bool $inbox;
     protected ?DateTime $inbox_date;
-
-
+    protected ?IndividualProperties $individual_properties;
+    protected ?IndividualReferences $individual_references;
+    protected ?string $keywords;
+    protected ?int $month;
+    protected ?string $more_years;
+    protected ?Note $note;
+    protected ?int $number;
+    protected ?Order $order;
+    protected ?bool $outbox;
+    protected ?DateTime $outbox_date;
+    protected ?bool $outbox_parked;
+    protected ?int $priority;
+    protected ?PropertyTemplate $property_template;
+    protected ?bool $read_only;
+    protected ?DateTime $receipt_date;
+    protected ?int $receipt_number;
+    protected ?bool $reference_file;
+    protected ?Register $register;
+    protected ?string $revision_user;
+    protected ?SecureArea $secure_area;
+    protected ?State $state;
+    protected ?StructureItems $structure_items;
+    protected ?User $user;
+    protected ?int $year;
 
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
@@ -53,5 +85,9 @@ class Document extends NamedEntity implements IdentifiableNamedEntityInterface {
 
     public function getID(): DocumentID {
         return $this->id;
+    }
+
+    protected function getArray(string $dateFormat = DateTime::ATOM): array {
+        return parent::getArray($dateFormat);
     }
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Entities;
+namespace Tests\Entities\Payroll;
 
 use APIToolkit\Logger\ConsoleLogger;
 use APIToolkit\Logger\ConsoleLoggerFactory;
