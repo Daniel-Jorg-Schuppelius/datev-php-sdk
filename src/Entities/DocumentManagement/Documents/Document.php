@@ -87,7 +87,7 @@ class Document extends NamedEntity implements IdentifiableNamedEntityInterface {
         return $this->id;
     }
 
-    protected function getArray(string $dateFormat = DateTime::ATOM): array {
+    protected function getArray(string $dateFormat = "Y-m-d\TH:i:s"): array {
         return parent::getArray($dateFormat);
     }
 }

@@ -12,8 +12,8 @@ use Psr\Log\LoggerInterface;
 class Order extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected OrderID $id;
     protected ?string $name;
-    protected ?DateTime $assessment_year;
-    protected ?DateTime $creation_year;
+    protected ?int $assessment_year;
+    protected ?int $creation_year;
     protected int $number;
 
     public function __construct($data = null, ?LoggerInterface $logger = null) {
@@ -25,6 +25,6 @@ class Order extends NamedEntity implements IdentifiableNamedEntityInterface {
     }
 
     public function getName(): ?string {
-        return $this->name;
+        return $this->name ?? null;
     }
 }
