@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Datev\Entities\Diagnostics\Echo;
+namespace Datev\Entities\DocumentManagement\Folders;
 
-use APIToolkit\Entities\GUID;
+use APIToolkit\Entities\ID;
 use Psr\Log\LoggerInterface;
 
-class EchoResponseID extends GUID {
+class FolderID extends ID {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
         $this->entityName = 'id';
