@@ -11,10 +11,11 @@ use Psr\Log\LoggerInterface;
 class IndividualProperty extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?IndividualPropertyID $id;
     protected ?string $data_name;
-    protected ?string $datatype;
+    protected ?string $data_type;
     protected ?string $display_name;
     protected ?int $order;
-    protected ?bool $referenc_item;
+    protected ?bool $active;
+    protected ?bool $reference_item;
 
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
@@ -28,8 +29,8 @@ class IndividualProperty extends NamedEntity implements IdentifiableNamedEntityI
         return $this->data_name ?? null;
     }
 
-    public function getDatatype(): ?string {
-        return $this->datatype ?? null;
+    public function getDataType(): ?string {
+        return $this->data_type ?? null;
     }
 
     public function getDisplayName(): ?string {
@@ -40,7 +41,11 @@ class IndividualProperty extends NamedEntity implements IdentifiableNamedEntityI
         return $this->order ?? null;
     }
 
-    public function getReferencItem(): bool {
-        return $this->referenc_item ?? false;
+    public function isActive(): bool {
+        return $this->active ?? false;
+    }
+
+    public function isReferenceItem(): bool {
+        return $this->reference_item ?? false;
     }
 }

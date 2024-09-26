@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Datev\Entities\Diagnostics\Echo;
+namespace Datev\Entities\Diagnostics\EchoResponse;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;

@@ -7,6 +7,7 @@ namespace Datev\Entities\DocumentManagement\Domains;
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use Datev\Entities\DocumentManagement\CorrespondencePartners\CorrespondencePartner;
+use Datev\Entities\DocumentManagement\Folders\Folder;
 use Datev\Entities\DocumentManagement\Folders\Folders;
 use Psr\Log\LoggerInterface;
 

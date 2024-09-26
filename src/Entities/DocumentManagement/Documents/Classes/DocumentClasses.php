@@ -15,18 +15,4 @@ class DocumentClasses extends NamedValues {
 
         parent::__construct($data, $logger);
     }
-
-    public function setData($data): NamedEntityInterface {
-        if (is_array($data) && $this->isArrayOfNumericValues($data)) {
-            $this->values = [];
-
-            foreach ($data as $value) {
-                $this->values[] = new $this->valueClassName(["id" => $value], $this->logger);
-            }
-        } else {
-            parent::setData($data);
-        }
-
-        return $this;
-    }
 }
