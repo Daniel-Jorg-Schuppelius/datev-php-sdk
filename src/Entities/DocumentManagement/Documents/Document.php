@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Datev\Entities\DocumentManagement\Documents;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
-use APIToolkit\Contracts\Interfaces\NamedEntityInterface;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use DateTime;
 use Datev\Entities\DocumentManagement\AcknowledgementUsers\AcknowledgementUsers;
@@ -15,9 +14,7 @@ use Datev\Entities\DocumentManagement\Documents\Domains\DocumentDomain;
 use Datev\Entities\DocumentManagement\Documents\Folders\DocumentFolder;
 use Datev\Entities\DocumentManagement\Employees\Employee;
 use Datev\Entities\DocumentManagement\IndividualProperties\IndividualProperties;
-use Datev\Entities\DocumentManagement\IndividualProperties\IndividualProperty;
 use Datev\Entities\DocumentManagement\IndividualReferences\IndividualReference;
-use Datev\Entities\DocumentManagement\IndividualReferences\IndividualReferences;
 use Datev\Entities\DocumentManagement\Notes\Note;
 use Datev\Entities\DocumentManagement\Orders\Order;
 use Datev\Entities\DocumentManagement\PropertyTemplates\PropertyTemplate;

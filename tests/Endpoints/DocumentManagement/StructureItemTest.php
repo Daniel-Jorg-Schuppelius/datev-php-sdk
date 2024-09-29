@@ -16,7 +16,7 @@ class StructureItemTest extends EndpointTest {
         parent::__construct($name);
         $this->preEndpoint = new DocumentsEndpoint($this->client, $this->logger);
         $this->endpoint = new StructureItemsEndpoint($this->client, $this->logger);
-        $this->apiDisabled = false; // API is disabled
+        $this->apiDisabled = true; // API is disabled
     }
 
     public function testGetSecureAreasAPI() {
