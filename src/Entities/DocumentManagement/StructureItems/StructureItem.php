@@ -11,6 +11,7 @@ use Psr\Log\LoggerInterface;
 class StructureItem extends BaseStructureItem {
     protected string $name;
     protected ?int $counter;
+    protected ?int $size;
     protected StructureItemType $type;
     protected ?int $parent_counter;
     protected ?DocumentLink $document_link;

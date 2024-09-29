@@ -18,7 +18,6 @@ class DocumentTest extends TestCase {
     }
 
     public function testCreateDocument() {
-        $this->markTestSkipped('This test has not been fully implemented yet. (individual_propertyX)');
         $data = [
             "acknowledge_by" => [
                 [

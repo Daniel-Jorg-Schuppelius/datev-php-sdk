@@ -3,8 +3,9 @@
 namespace Tests\Endpoints\DocumentManagement;
 
 use Datev\API\Desktop\Endpoints\DocumentManagement\DocumentsEndpoint;
+use Datev\Entities\DocumentManagement\Documents\Document;
+use Datev\Entities\DocumentManagement\Documents\Documents;
 use Datev\Entities\Payroll\Clients\Client;
-use Datev\Entities\Payroll\Clients\Clients;
 use Tests\Contracts\EndpointTest;
 
 class DocumentTest extends EndpointTest {
@@ -42,13 +43,13 @@ class DocumentTest extends EndpointTest {
             $this->markTestSkipped('API is disabled');
         }
 
-        $clients = $this->endpoint->search(["reference-date" => "2021-01-01"]);
-        $this->assertInstanceOf(Clients::class, $clients);
-        $this->assertNotEmpty($clients->getValues(), "No clients found");
-        $randomClient = $clients->getValues()[array_rand($clients->getValues())];
-        $this->assertInstanceOf(Client::class, $randomClient);
-        $client = $this->endpoint->get($randomClient->getId());
-        $this->assertInstanceOf(Client::class, $client);
-        $this->assertEquals($randomClient->getId(), $client->getId());
+        $documents = $this->endpoint->search();
+        $this->assertInstanceOf(Documents::class, $documents);
+        $this->assertNotEmpty($documents->getValues(), "No documents found");
+        $randomDocument = $documents->getValues()[array_rand($documents->getValues())];
+        $this->assertInstanceOf(Document::class, $randomDocument);
+        $document = $this->endpoint->get($randomDocument->getId());
+        $this->assertInstanceOf(Document::class, $document);
+        $this->assertEquals($randomDocument->getId(), $document->getId());
     }
 }

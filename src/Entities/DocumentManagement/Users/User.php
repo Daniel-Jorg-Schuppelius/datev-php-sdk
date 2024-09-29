@@ -15,7 +15,12 @@ class User extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?bool $is_user_group;
 
     public function __construct($data = null, ?LoggerInterface $logger = null) {
-        parent::__construct($data, $logger);
+        if (!is_null($data) && !is_array($data)) {
+            $this->id = new UserID("00000000-0000-0000-0000-000000000000", $logger);
+            $this->name = $data;
+        } else {
+            parent::__construct($data, $logger);
+        }
     }
 
     public function getID(): UserID {

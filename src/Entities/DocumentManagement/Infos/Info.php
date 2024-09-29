@@ -24,4 +24,24 @@ class Info extends NamedEntity implements IdentifiableNamedEntityInterface {
     public function getID(): ?InfoID {
         return $this->id ?? null;
     }
+
+    public function getEnvironment(): ?string {
+        return $this->environment ?? null;
+    }
+
+    public function getFeature(): ?string {
+        return $this->feature ?? null;
+    }
+
+    public function getVersions(): ?Versions {
+        return $this->versions ?? null;
+    }
+
+    public function getDataPath(): ?string {
+        return $this->data_path ?? null;
+    }
+
+    public function getIsClientInstalled(): ?bool {
+        return $this->is_client_installed ?? null;
+    }
 }
