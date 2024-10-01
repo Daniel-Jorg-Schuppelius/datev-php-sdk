@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Datev\Entities\ClientMasterData\Employees;
+namespace Datev\Entities\Common;
 
 use Datev\Entities\ClientMasterData\Establishments\EstablishmentID as BaseEstablishmentID;
 use Psr\Log\LoggerInterface;

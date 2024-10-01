@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Datev\Entities\ClientMasterData\Employees;
+namespace Datev\Entities\Common;
 
 use Datev\Entities\ClientMasterData\FunctionalAreas\FunctionalAreaID as BaseFunctionalAreaID;
 use Psr\Log\LoggerInterface;

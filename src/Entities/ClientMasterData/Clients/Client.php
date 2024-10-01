@@ -2,34 +2,33 @@
 
 declare(strict_types=1);
 
-namespace Datev\Entities\ClientMasterData\Employees;
+namespace Datev\Entities\ClientMasterData\Clients;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use DateTime;
-use Datev\Entities\Common\EmployeeID;
 use Datev\Entities\Common\EstablishmentID;
 use Datev\Entities\Common\FunctionalAreaID;
+use Datev\Entities\Common\LegalPersonID;
 use Datev\Entities\Common\NaturalPersonID;
 use Datev\Entities\Common\OrganizationID;
+use Datev\Enums\PersonType;
 use Datev\Enums\Status;
 use Psr\Log\LoggerInterface;
 
-class Employee extends NamedEntity implements IdentifiableNamedEntityInterface {
-    protected ?EmployeeID $id;
-    protected ?string $display_name;
-    protected ?EmailAddress $email;
-    protected ?DateTime $entry_date;
-    protected ?FaxNumber $fax;
-    protected ?string $initials;
-    protected ?string $name;
+class Client extends NamedEntity implements IdentifiableNamedEntityInterface {
+    protected ?ClientID $id;
+    protected ?DateTime $client_since;
+    protected ?DateTime $client_to;
+    protected ?string $differing_name;
+    protected ?LegalPersonID $legal_person_id;
+    protected string $name;
     protected ?NaturalPersonID $natural_person_id;
     protected ?string $note;
-    protected ?int $number;
-    protected ?string $phone_extension;
-    protected ?DateTime $separation_date;
+    protected int $number;
     protected ?Status $status;
     protected ?DateTime $timestamp;
+    protected PersonType $type;
     protected ?OrganizationID $organization_id;
     protected ?string $organization_name;
     protected ?int $organization_number;
@@ -45,7 +44,7 @@ class Employee extends NamedEntity implements IdentifiableNamedEntityInterface {
         parent::__construct($data, $logger);
     }
 
-    public function getID(): EmployeeID {
+    public function getID(): ClientID {
         return $this->id;
     }
 }
