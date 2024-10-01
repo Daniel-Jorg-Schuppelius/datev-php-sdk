@@ -305,7 +305,7 @@ class Document extends NamedEntity implements IdentifiableNamedEntityInterface {
         return $this->year ?? null;
     }
 
-    protected function getArray(string $dateFormat = "Y-m-d\TH:i:s"): array {
-        return parent::getArray($dateFormat);
+    protected function getArray(bool $asStringValues = false, bool $dateAsStringValues = true, string $dateFormat = "Y-m-d\TH:i:s"): array {
+        return parent::getArray($asStringValues, $dateAsStringValues, $dateFormat);
     }
 }
