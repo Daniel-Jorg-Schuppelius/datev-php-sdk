@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Datev\Entities\ClientMasterData\RegisteredCompanyNames;
+namespace Datev\Entities\ClientMasterData\RegistrationNumbers;
 
 use Datev\Contracts\Abstracts\DateTimeNamedValue;
 use Psr\Log\LoggerInterface;
@@ -10,6 +10,6 @@ use Psr\Log\LoggerInterface;
 class RegistrationNumber extends DateTimeNamedValue {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
-        $this->entityName = 'current_surname';
+        $this->entityName = 'current_registration_number';
     }
 }

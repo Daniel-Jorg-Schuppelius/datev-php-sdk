@@ -10,6 +10,6 @@ use Psr\Log\LoggerInterface;
 class KindOfRegisterCourt extends DateTimeNamedValue {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
-        $this->entityName = 'current_company_name';
+        $this->entityName = 'current_kind_of_register_court';
     }
 }

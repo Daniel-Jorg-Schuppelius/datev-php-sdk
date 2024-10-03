@@ -10,6 +10,6 @@ use Psr\Log\LoggerInterface;
 class MaritalStatus extends DateTimeNamedValue {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
-        $this->entityName = 'current_surname';
+        $this->entityName = 'current_marital_status';
     }
 }

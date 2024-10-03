@@ -10,6 +10,6 @@ use Psr\Log\LoggerInterface;
 class ShortName extends DateTimeNamedValue {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
-        $this->entityName = 'short_name';
+        $this->entityName = 'current_short_name';
     }
 }

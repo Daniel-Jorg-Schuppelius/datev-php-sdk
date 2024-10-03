@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Datev\Entities\ClientMasterData\ClientCategories;
+namespace Datev\Entities\Common;
 
 use Datev\Entities\ClientMasterData\ClientCategoryTypes\ClientCategoryTypeID as BaseClientCategoryTypeID;
 use Psr\Log\LoggerInterface;

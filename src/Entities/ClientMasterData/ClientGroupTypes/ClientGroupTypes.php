@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Datev\Entities\ClientMasterData\CountryOfHeadOffices;
+namespace Datev\Entities\ClientMasterData\ClientGroupTypes;
 
-use Datev\Contracts\Abstracts\DateTimeNamedValues;
+use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
-class CountryOfHeadOffices extends DateTimeNamedValues {
+class ClientGroupTypes extends NamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";
-        $this->valueClassName = CountryOfHeadOffice::class;
+        $this->valueClassName = ClientGroupType::class;
 
         parent::__construct($data, $logger);
     }

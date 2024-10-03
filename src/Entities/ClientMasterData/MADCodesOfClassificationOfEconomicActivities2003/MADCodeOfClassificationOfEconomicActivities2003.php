@@ -10,6 +10,6 @@ use Psr\Log\LoggerInterface;
 class MADCodeOfClassificationOfEconomicActivities2003 extends DateTimeNamedValue {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
-        $this->entityName = 'current_short_name';
+        $this->entityName = 'current_mad_code_of_classification_of_economic_activities_2003';
     }
 }

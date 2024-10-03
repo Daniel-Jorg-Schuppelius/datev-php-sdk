@@ -7,6 +7,8 @@ namespace Datev\Entities\ClientMasterData\ClientCategories;
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use DateTime;
+use Datev\Entities\Common\ClientCategoryTypeID;
+use Datev\Entities\Common\ClientID;
 use Datev\Enums\Status;
 use Psr\Log\LoggerInterface;
 

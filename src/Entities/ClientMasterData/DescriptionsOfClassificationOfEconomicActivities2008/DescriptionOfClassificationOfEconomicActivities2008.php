@@ -10,6 +10,6 @@ use Psr\Log\LoggerInterface;
 class DescriptionOfClassificationOfEconomicActivities2008 extends DateTimeNamedValue {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
-        $this->entityName = 'current_company_name';
+        $this->entityName = 'current_description_of_classification_of_economic_activities_2008';
     }
 }
