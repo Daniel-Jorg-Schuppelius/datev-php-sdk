@@ -22,8 +22,8 @@ class Employee extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?DateTime $entry_date;
     protected ?FaxNumber $fax;
     protected ?string $initials;
-    protected ?string $name;
-    protected ?NaturalPersonID $natural_person_id;
+    protected string $name;
+    protected NaturalPersonID $natural_person_id;
     protected ?string $note;
     protected ?int $number;
     protected ?string $phone_extension;
