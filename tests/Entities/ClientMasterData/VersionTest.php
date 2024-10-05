@@ -17,12 +17,12 @@ class VersionTest extends TestCase {
         $this->logger = ConsoleLoggerFactory::getLogger();
     }
 
-    public function testCreateBankAccount() {
+    public function testCreateVersion() {
         $data = [
             "adress_country" => "DE",
             "client_number_maximum_number_of_digits" => 5,
             "client_number_start" => 10000,
-            "client_categories_groups_supported" => true,
+            "client_categories_groups_supported" => "true",
             "db_build" => 930,
             "db_version" => "Pilotversion 9.2A",
             "db_version_date" => "31.08.2018",
@@ -40,7 +40,7 @@ class VersionTest extends TestCase {
             "client_categories_groups_supported" => true,
             "db_build" => "930",
             "db_version" => "Pilotversion 9.2A",
-            "db_version_date" => "2018-08-31T00:00:00.000+00:00",
+            "db_version_date" => "31.08.2018",
             "id" => 1,
             "resource_revision" => "1.3.0",
             "resource_version" => "1",
@@ -49,10 +49,13 @@ class VersionTest extends TestCase {
         ];
 
         $version = new Version($data);
+        $version1 = new Version($data1, $this->logger);
         $this->assertTrue($version->isValid());
-        $version = new Version($data1, $this->logger);
         $this->assertInstanceOf(Version::class, new Version());
         $this->assertInstanceOf(Version::class, $version);
-        $this->assertEquals($data1, $version->toArray());
+        $this->assertInstanceOf(Version::class, $version1);
+        $this->assertEquals($data1, $version1->toArray());
+        $this->assertEquals($version->getDbBuild(), $version1->getDbBuild());
+        $this->assertEquals($version->isClientCategoriesGroupsSupported(), $version1->isClientCategoriesGroupsSupported());
     }
 }

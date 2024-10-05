@@ -6,16 +6,17 @@ namespace Datev\Entities\ClientMasterData\Communications;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
+use Datev\Entities\Common\NumberStandardized;
 use Datev\Enums\CommunicationType;
 use Psr\Log\LoggerInterface;
 
 class Communication extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?CommunicationID $id;
-    protected ?CommunicationType $type;
+    protected CommunicationType $type;
     protected ?string $data_content;
-    protected ?string $number_standardized;
+    protected NumberStandardized $number_standardized;
     protected ?string $note;
-    protected string $name;
+    protected ?string $name;
     protected ?bool $is_main_communication;
     protected ?bool $is_management_phone;
 

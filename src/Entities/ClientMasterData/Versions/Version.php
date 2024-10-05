@@ -70,4 +70,8 @@ class Version extends NamedEntity {
     public function isClientCategoriesGroupsSupported(): bool {
         return $this->client_categories_groups_supported ?? false;
     }
+
+    protected function getArray(bool $asStringValues = false, bool $dateAsStringValues = true, string $dateFormat = "d.m.Y"): array {
+        return parent::getArray($asStringValues, $dateAsStringValues, $dateFormat);
+    }
 }
