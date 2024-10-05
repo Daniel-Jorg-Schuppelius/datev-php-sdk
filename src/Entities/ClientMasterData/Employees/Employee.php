@@ -4,19 +4,17 @@ declare(strict_types=1);
 
 namespace Datev\Entities\ClientMasterData\Employees;
 
-use APIToolkit\Contracts\Abstracts\NamedEntity;
-use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use DateTime;
-use Datev\Entities\Common\EmployeeID;
-use Datev\Entities\Common\EstablishmentID;
-use Datev\Entities\Common\FunctionalAreaID;
+use Datev\Entities\ClientMasterData\Establishments\ID\EstablishmentID;
+use Datev\Entities\ClientMasterData\FunctionalAreas\ID\FunctionalAreaID;
+use Datev\Entities\Common\EmailAddress;
+use Datev\Entities\Common\Employees\Employee as BaseEmployee;
+use Datev\Entities\Common\FaxNumber;
 use Datev\Entities\Common\NaturalPersonID;
 use Datev\Entities\Common\OrganizationID;
 use Datev\Enums\Status;
-use Psr\Log\LoggerInterface;
 
-class Employee extends NamedEntity implements IdentifiableNamedEntityInterface {
-    protected ?EmployeeID $id;
+class Employee extends BaseEmployee {
     protected ?string $display_name;
     protected ?EmailAddress $email;
     protected ?DateTime $entry_date;
@@ -40,12 +38,4 @@ class Employee extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected FunctionalAreaID $functional_area_id;
     protected ?string $functional_area_name;
     protected ?string $functional_area_short_name;
-
-    public function __construct($data = null, ?LoggerInterface $logger = null) {
-        parent::__construct($data, $logger);
-    }
-
-    public function getID(): EmployeeID {
-        return $this->id;
-    }
 }

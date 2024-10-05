@@ -6,7 +6,7 @@ namespace Datev\Entities\ClientMasterData\ContactPersons;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
-use Datev\Entities\Common\AddresseeID;
+use Datev\Entities\ClientMasterData\Addressees\ID\AddresseeID;
 use Psr\Log\LoggerInterface;
 
 class ContactPerson extends NamedEntity implements IdentifiableNamedEntityInterface {

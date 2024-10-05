@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Datev\Enums;
 
 enum MeansOfIdentification: string {
-    case EZ = 'Erkennungszeuge';
-    case FS = 'Führerschein';
-    case PA = 'Personalausweis';
-    case PB = 'Persönliche Bekanntschaft';
-    case RP = 'Reisepass';
-    case SA = 'Sonstiger Ausweis';
-    case SK = 'Besondere Sachkunde';
-    case UK = 'Urkunde';
-    case IN = 'Elektronischer Identitätsnachweis';
-    case ES = 'Qualifizierte elektronische Signatur';
-    case IS = 'Elektronisches Identifizierungssystem';
+    case Erkennungszeuge = 'EZ';
+    case Führerschein = 'FS';
+    case Personalausweis = 'PA';
+    case PersönlicheBekanntschaft = 'PB';
+    case Reisepass = 'RP';
+    case SonstigerAusweis = 'SA';
+    case BesondereSachkunde = 'SK';
+    case Urkunde = 'UK';
+    case ElektronischerIdentitätsnachweis = 'IN';
+    case QualifizierteElektronischeSignatur = 'ES';
+    case ElektronischesIdentifizierungssystem = 'IS';
 }

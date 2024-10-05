@@ -7,13 +7,15 @@ namespace Datev\Entities\ClientMasterData\TaxOffices;
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use DateTime;
+use Datev\Entities\ClientMasterData\CountryCodes\Code\CountryCode;
 use Psr\Log\LoggerInterface;
 
 class TaxOffice extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?TaxOfficeID $id;
-    protected ?string $country_code;
+    protected ?CountryCode $country_code;
     protected ?string $note;
     protected ?string $tax_number;
+    protected ?string $tax_number_certificated;
     protected ?string $tax_number_standardized;
     protected ?string $tax_office_name;
     protected ?int $tax_office_number;

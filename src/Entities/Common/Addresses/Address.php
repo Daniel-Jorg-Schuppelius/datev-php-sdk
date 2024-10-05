@@ -21,4 +21,20 @@ class Address extends NamedEntity implements IdentifiableNamedEntityInterface {
     public function getID(): AddressID {
         return $this->id;
     }
+
+    public function getStreet(): ?string {
+        return $this->street ?? null;
+    }
+
+    public function getCity(): ?string {
+        return $this->city ?? null;
+    }
+
+    public function getPostalCode(): ?string {
+        return $this->postal_code ?? null;
+    }
+
+    public function getFullAddress(): string {
+        return $this->street . ', ' . $this->postal_code . ' ' . $this->city;
+    }
 }

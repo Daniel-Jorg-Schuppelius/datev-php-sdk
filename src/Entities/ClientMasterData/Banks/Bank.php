@@ -6,14 +6,15 @@ namespace Datev\Entities\ClientMasterData\Banks;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
+use APIToolkit\Entities\Bank\BIC;
 use DateTime;
-use Datev\Entities\Common\CountryCode;
+use Datev\Entities\ClientMasterData\CountryCodes\Code\CountryCode;
 use Psr\Log\LoggerInterface;
 
 class Bank extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?BankID $id;
     protected ?string $bank_code;
-    protected ?string $bic;
+    protected ?BIC $bic;
     protected ?string $city;
     protected ?CountryCode $country_code;
     protected ?string $name;

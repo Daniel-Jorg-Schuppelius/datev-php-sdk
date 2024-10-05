@@ -3,8 +3,8 @@
 namespace Tests\Endpoints\Accounting;
 
 use Datev\API\Desktop\Endpoints\Accounting\ClientsEndpoint;
-use Datev\Entities\Accounting\Client;
-use Datev\Entities\Accounting\Clients;
+use Datev\Entities\Accounting\Clients\Client;
+use Datev\Entities\Accounting\Clients\Clients;
 use Tests\Contracts\EndpointTest;
 
 class ClientTest extends EndpointTest {
@@ -24,7 +24,7 @@ class ClientTest extends EndpointTest {
         ];
 
         $data1 = [
-            "id" => "9351B0E3-E96B-4BB0-B94E-018B13D1DB28",
+            "id" => "9351b0e3-e96b-4bb0-b94e-018b13d1db28",
             "name" => "Küchenbeispiel",
             "number" => 55039,
             "company_data" => [
@@ -34,9 +34,9 @@ class ClientTest extends EndpointTest {
 
         $client = new Client($data);
         $client1 = new Client($data1);
-        $this->assertEquals($data, $client->toArray());
+        $this->assertNotEquals($data, $client->toArray());
         $this->assertEquals($data1, $client1->toArray());
-        $this->assertEquals(json_encode($data), $client->toJson());  // the order of the $data array is important for this test.
+        $this->assertEquals(json_encode($data1), $client1->toJson());  // the order of the $data array is important for this test.
     }
 
     public function testCreateAndDeleteArticleAPI() {

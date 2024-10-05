@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Datev\Entities\Payroll\Employees;
 
-use APIToolkit\Contracts\Abstracts\NamedEntity;
-use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use DateTime;
-use Datev\Entities\Common\EmployeeID;
+use Datev\Entities\Common\Employees\Employee as BaseEmployee;
 use Datev\Entities\Payroll\Accounts\Account;
 use Datev\Entities\Payroll\Activities\Activity;
 use Datev\Entities\Payroll\Addresses\Address;
@@ -28,10 +26,8 @@ use Datev\Entities\Payroll\Taxations\Taxation;
 use Datev\Entities\Payroll\Taxations\TaxCards\TaxCard;
 use Datev\Entities\Payroll\VacationEntitlements\VacationEntitlement;
 use Datev\Entities\Payroll\VocationalTrainings\VocationalTrainings;
-use Psr\Log\LoggerInterface;
 
-class Employee extends NamedEntity implements IdentifiableNamedEntityInterface {
-    protected ?EmployeeID $id;
+class Employee extends BaseEmployee {
     protected ?string $surname;
     protected ?string $first_name;
     protected ?string $company_personnel_number;
@@ -57,14 +53,6 @@ class Employee extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?VacationEntitlement $vacation_entitlement;
     protected ?VocationalTrainings $vocational_trainings;
     protected ?VoluntaryInsurance $voluntary_insurance;
-
-    public function __construct($data = null, ?LoggerInterface $logger = null) {
-        parent::__construct($data, $logger);
-    }
-
-    public function getID(): EmployeeID {
-        return $this->id;
-    }
 
     public function getCompanyPersonnelNumber(): ?string {
         return $this->company_personnel_number ?? null;
