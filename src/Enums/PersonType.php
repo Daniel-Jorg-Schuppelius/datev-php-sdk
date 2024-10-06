@@ -7,4 +7,5 @@ namespace Datev\Enums;
 enum PersonType: string {
     case Legal = "legal_person";
     case Natural = "natural_person";
+    case IndividualEnterprise = "individual_enterprise";
 }

@@ -13,7 +13,8 @@ use Psr\Log\LoggerInterface;
 
 class ClientCategoriesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointPrefix = 'master-data/v1';
-    protected string $endpoint = 'clients/{client-id}/client-categories';
+    protected string $endpoint = 'clients/{client-id}';
+    protected string $endpointSuffix = 'client-categories';
 
     protected ClientID $clientID;
 
@@ -30,8 +31,13 @@ class ClientCategoriesEndpoint extends EndpointAbstract implements SearchableEnd
         return ClientCategory::fromJson(parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}"));
     }
 
-    public function search(array $queryParams = [], array $options = []): ClientCategories {
+    public function searchByClient(array $queryParams = [], array $options = []): ClientCategories {
         return ClientCategories::fromJson(parent::getContents($queryParams, $options));
+    }
+
+    public function search(array $queryParams = [], array $options = []): ClientCategories {
+        // TODO: Check API, by documentation, this endpoint exists but it is not implemented
+        return ClientCategories::fromJson(parent::getContents($queryParams, $options, "{$this->endpointPrefix}/{$this->endpointSuffix}"));
     }
 
     public function getClientID(): ClientID {
@@ -43,6 +49,6 @@ class ClientCategoriesEndpoint extends EndpointAbstract implements SearchableEnd
     }
 
     protected function getEndpointUrl(): string {
-        return str_replace('{client-id}', $this->clientID->toString(), parent::getEndpointUrl());
+        return str_replace('{client-id}', $this->clientID->toString(), parent::getEndpointUrl() . "/{$this->endpointSuffix}");
     }
 }
