@@ -34,7 +34,7 @@ class PropertyTemplatesEndpoint extends EndpointAbstract implements SearchableEn
     public function search(array $queryParams = [], array $options = []): ?PropertyTemplates {
         $response = parent::getContents($queryParams, $options);
 
-        if (empty($response)) {
+        if (empty($response) || $response === '[]') {
             return null;
         }
 

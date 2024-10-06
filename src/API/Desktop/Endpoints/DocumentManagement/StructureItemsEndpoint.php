@@ -38,7 +38,7 @@ class StructureItemsEndpoint extends EndpointAbstract implements SearchableEndpo
 
         $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
 
-        if (empty($response)) {
+        if (empty($response) || $response === '[]') {
             return null;
         }
 
@@ -48,7 +48,7 @@ class StructureItemsEndpoint extends EndpointAbstract implements SearchableEndpo
     public function search(array $queryParams = [], array $options = []): ?StructureItems {
         $response = parent::getContents($queryParams, $options);
 
-        if (empty($response)) {
+        if (empty($response) || $response === '[]') {
             return null;
         }
 

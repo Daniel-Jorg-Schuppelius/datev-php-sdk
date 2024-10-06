@@ -34,7 +34,7 @@ class AreaOfResponsibilitiesEndpoint extends EndpointAbstract implements Searcha
     public function search(array $queryParams = [], array $options = []): ?AreaOfResponsibilities {
         $response = parent::getContents($queryParams, $options);
 
-        if (empty($response)) {
+        if (empty($response) || $response === '[]') {
             return null;
         }
 

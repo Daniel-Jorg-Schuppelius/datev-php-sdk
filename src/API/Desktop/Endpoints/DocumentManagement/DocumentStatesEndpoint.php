@@ -27,7 +27,7 @@ class DocumentStatesEndpoint extends EndpointAbstract implements SearchableEndpo
 
         $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
 
-        if (empty($response)) {
+        if (empty($response) || $response === '[]') {
             return null;
         }
 
@@ -37,7 +37,7 @@ class DocumentStatesEndpoint extends EndpointAbstract implements SearchableEndpo
     public function search(array $queryParams = [], array $options = []): ?DocumentStates {
         $response = parent::getContents($queryParams, $options);
 
-        if (empty($response)) {
+        if (empty($response) || $response === '[]') {
             return null;
         }
 

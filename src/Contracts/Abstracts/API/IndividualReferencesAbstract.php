@@ -32,7 +32,7 @@ abstract class IndividualReferencesAbstract extends EndpointAbstract implements 
     public function search(array $queryParams = [], array $options = []): IndividualReferences {
         $response = parent::getContents($queryParams, $options);
 
-        if (empty($response)) {
+        if (empty($response) || $response === '[]') {
             return null;
         }
 

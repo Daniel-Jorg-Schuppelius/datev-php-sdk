@@ -38,7 +38,7 @@ class ClientCategoriesEndpoint extends EndpointAbstract implements SearchableEnd
 
         $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
 
-        if (empty($response)) {
+        if (empty($response) || $response === '[]') {
             return null;
         }
 
@@ -48,7 +48,7 @@ class ClientCategoriesEndpoint extends EndpointAbstract implements SearchableEnd
     public function searchByClient(array $queryParams = [], array $options = []): ?ClientCategories {
         $response = parent::getContents($queryParams, $options);
 
-        if (empty($response)) {
+        if (empty($response) || $response === '[]') {
             return null;
         }
 
@@ -59,7 +59,7 @@ class ClientCategoriesEndpoint extends EndpointAbstract implements SearchableEnd
         // TODO: Check API, on documentation, this endpoint exists but it is not implemented?
         $response = parent::getContents($queryParams, $options, "{$this->endpointPrefix}/{$this->endpointSuffix}");
 
-        if (empty($response)) {
+        if (empty($response) || $response === '[]') {
             return null;
         }
 

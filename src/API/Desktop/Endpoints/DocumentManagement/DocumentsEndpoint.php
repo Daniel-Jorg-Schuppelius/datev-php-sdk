@@ -27,7 +27,7 @@ class DocumentsEndpoint extends EndpointAbstract implements SearchableEndpointIn
 
         $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
 
-        if (empty($response)) {
+        if (empty($response) || $response === '[]') {
             return null;
         }
 
@@ -37,7 +37,7 @@ class DocumentsEndpoint extends EndpointAbstract implements SearchableEndpointIn
     public function search(array $queryParams = [], array $options = []): ?Documents {
         $response = parent::getContents($queryParams, $options);
 
-        if (empty($response)) {
+        if (empty($response) || $response === '[]') {
             return null;
         }
 

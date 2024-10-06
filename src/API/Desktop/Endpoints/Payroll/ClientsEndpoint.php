@@ -32,7 +32,7 @@ class ClientsEndpoint extends EndpointAbstract implements SearchableEndpointInte
 
         $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}?expand={$expand}&reference-date={$referenceDateFormatted}");
 
-        if (empty($response)) {
+        if (empty($response) || $response === '[]') {
             return null;
         }
 
@@ -49,7 +49,7 @@ class ClientsEndpoint extends EndpointAbstract implements SearchableEndpointInte
 
         $response = parent::getContents($queryParams, $options);
 
-        if (empty($response)) {
+        if (empty($response) || $response === '[]') {
             return null;
         }
 

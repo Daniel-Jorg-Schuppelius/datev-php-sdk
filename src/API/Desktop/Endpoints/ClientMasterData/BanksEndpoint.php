@@ -33,7 +33,7 @@ class BanksEndpoint extends EndpointAbstract implements SearchableEndpointInterf
     public function search(array $queryParams = [], array $options = []): ?Banks {
         $response = parent::getContents($queryParams, $options);
 
-        if (empty($response)) {
+        if (empty($response) || $response === '[]') {
             return null;
         }
 

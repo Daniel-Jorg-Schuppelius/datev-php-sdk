@@ -33,7 +33,7 @@ class SecureAreasEndpoint extends EndpointAbstract implements SearchableEndpoint
     public function search(array $queryParams = [], array $options = []): ?SecureAreas {
         $response = parent::getContents($queryParams, $options);
 
-        if (empty($response)) {
+        if (empty($response) || $response === '[]') {
             return null;
         }
 

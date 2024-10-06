@@ -32,7 +32,7 @@ class ClientsEndpoint extends EndpointAbstract implements SearchableEndpointInte
     public function search(array $queryParams = [], array $options = []): ?Clients {
         $response = parent::getContents($queryParams, $options);
 
-        if (empty($response)) {
+        if (empty($response) || $response === '[]') {
             return null;
         }
 

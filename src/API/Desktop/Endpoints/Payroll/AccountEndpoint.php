@@ -27,7 +27,7 @@ class AccountEndpoint extends EndpointAbstract implements SearchableEndpointInte
 
         $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}/account");
 
-        if (empty($response)) {
+        if (empty($response) || $response === '[]') {
             return null;
         }
 
@@ -37,7 +37,7 @@ class AccountEndpoint extends EndpointAbstract implements SearchableEndpointInte
     public function search(array $queryParams = [], array $options = []): ?Accounts {
         $response = parent::getContents($queryParams, $options);
 
-        if (empty($response)) {
+        if (empty($response) || $response === '[]') {
             return null;
         }
 

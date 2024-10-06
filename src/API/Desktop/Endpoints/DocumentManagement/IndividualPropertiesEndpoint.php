@@ -21,7 +21,7 @@ class IndividualPropertiesEndpoint extends EndpointAbstract {
     public function get(?ID $id = null): ?IndividualProperties {
         $response = parent::getContents([], [], "{$this->getEndpointUrl()}");
 
-        if (empty($response)) {
+        if (empty($response) || $response === '[]') {
             return null;
         }
 

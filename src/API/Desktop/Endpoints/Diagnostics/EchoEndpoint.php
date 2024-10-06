@@ -21,7 +21,7 @@ class EchoEndpoint extends EndpointAbstract {
     public function get(?ID $id = null): ?EchoResponse {
         $response = parent::getContents([], [], "{$this->getEndpointUrl()}");
 
-        if (empty($response)) {
+        if (empty($response) || $response === '[]') {
             return null;
         }
 
