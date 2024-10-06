@@ -24,4 +24,24 @@ class LegalForm extends NamedEntity implements IdentifiableNamedEntityInterface 
     public function getID(): LegalFormID {
         return $this->id;
     }
+
+    public function getDisplayName(): ?string {
+        return $this->display_name ?? null;
+    }
+
+    public function getShortName(): ?string {
+        return $this->short_name ?? null;
+    }
+
+    public function getLongName(): ?string {
+        return $this->long_name ?? null;
+    }
+
+    public function getNation(): ?string {
+        return $this->nation ?? null;
+    }
+
+    public function getType(): ?LegalFormType {
+        return $this->type ?? null;
+    }
 }

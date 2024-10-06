@@ -27,4 +27,40 @@ class SocialInsurance extends NamedEntity implements IdentifiableNamedEntityInte
     public function getID(): SocialInsuranceID {
         return $this->id;
     }
+
+    public function getContributionClassHealthInsurance(): ?string {
+        return $this->contribution_class_health_insurance ?? null;
+    }
+
+    public function getContributionClassPensionInsurance(): ?string {
+        return $this->contribution_class_pension_insurance ?? null;
+    }
+
+    public function getContributionClassUnemploymentInsurance(): ?string {
+        return $this->contribution_class_unemployment_insurance ?? null;
+    }
+
+    public function getContributionClassNursingInsurance(): ?string {
+        return $this->contribution_class_nursing_insurance ?? null;
+    }
+
+    public function isAdditionalContributionToNursingInsuranceForChildlessIgnored(): bool {
+        return $this->is_additional_contribution_to_nursing_insurance_for_childless_ignored ?? false;
+    }
+
+    public function getAllocationMethod(): ?string {
+        return $this->allocation_method ?? null;
+    }
+
+    public function getLegalTreatment(): ?string {
+        return $this->legal_treatment ?? null;
+    }
+
+    public function getCompanyNumberOfHealthInsurer(): ?string {
+        return $this->company_number_of_health_insurer ?? null;
+    }
+
+    public function getBranchOfficeOfHealthInsurer(): ?string {
+        return $this->branch_office_of_health_insurer ?? null;
+    }
 }

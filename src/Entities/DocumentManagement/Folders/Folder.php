@@ -27,4 +27,8 @@ class Folder extends NamedEntity implements IdentifiableNamedEntityInterface {
     public function getName(): ?string {
         return $this->name ?? null;
     }
+
+    public function getRegisters(): ?Registers {
+        return $this->registers ?? null;
+    }
 }

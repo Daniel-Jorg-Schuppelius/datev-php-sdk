@@ -38,4 +38,96 @@ class Employee extends BaseEmployee {
     protected FunctionalAreaID $functional_area_id;
     protected ?string $functional_area_name;
     protected ?string $functional_area_short_name;
+
+    public function getDisplayName(): ?string {
+        return $this->display_name ?? null;
+    }
+
+    public function getEmail(): ?EmailAddress {
+        return $this->email ?? null;
+    }
+
+    public function getEntryDate(): ?DateTime {
+        return $this->entry_date ?? null;
+    }
+
+    public function getFax(): ?FaxNumber {
+        return $this->fax ?? null;
+    }
+
+    public function getInitials(): ?string {
+        return $this->initials ?? null;
+    }
+
+    public function getName(): string {
+        return $this->name;
+    }
+
+    public function getNaturalPersonID(): NaturalPersonID {
+        return $this->natural_person_id;
+    }
+
+    public function getNote(): ?string {
+        return $this->note ?? null;
+    }
+
+    public function getNumber(): ?int {
+        return $this->number ?? null;
+    }
+
+    public function getPhoneExtension(): ?string {
+        return $this->phone_extension ?? null;
+    }
+
+    public function getSeparationDate(): ?DateTime {
+        return $this->separation_date ?? null;
+    }
+
+    public function getStatus(): ?Status {
+        return $this->status ?? null;
+    }
+
+    public function getTimestamp(): ?DateTime {
+        return $this->timestamp ?? null;
+    }
+
+    public function getOrganizationID(): ?OrganizationID {
+        return $this->organization_id ?? null;
+    }
+
+    public function getOrganizationName(): ?string {
+        return $this->organization_name ?? null;
+    }
+
+    public function getOrganizationNumber(): ?int {
+        return $this->organization_number ?? null;
+    }
+
+    public function getEstablishmentID(): ?EstablishmentID {
+        return $this->establishment_id ?? null;
+    }
+
+    public function getEstablishmentName(): ?string {
+        return $this->establishment_name ?? null;
+    }
+
+    public function getEstablishmentNumber(): ?int {
+        return $this->establishment_number ?? null;
+    }
+
+    public function getEstablishmentShortName(): ?string {
+        return $this->establishment_short_name ?? null;
+    }
+
+    public function getFunctionalAreaID(): FunctionalAreaID {
+        return $this->functional_area_id;
+    }
+
+    public function getFunctionalAreaName(): ?string {
+        return $this->functional_area_name ?? null;
+    }
+
+    public function getFunctionalAreaShortName(): ?string {
+        return $this->functional_area_short_name ?? null;
+    }
 }

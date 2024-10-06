@@ -29,4 +29,44 @@ class MonthlyRecord extends NamedEntity implements IdentifiableNamedEntityInterf
     public function getID(): MonthlyRecordID {
         return $this->id;
     }
+
+    public function getPersonnelNumber(): ?string {
+        return $this->personnel_number ?? null;
+    }
+
+    public function getMonthOfEmergence(): ?DateTime {
+        return $this->month_of_emergence ?? null;
+    }
+
+    public function getSalaryTypeID(): ?string {
+        return $this->salary_type_id ?? null;
+    }
+
+    public function getCostCenterID(): ?string {
+        return $this->cost_center_id ?? null;
+    }
+
+    public function getCostUnitID(): ?int {
+        return $this->cost_unit_id ?? null;
+    }
+
+    public function getValue(): ?float {
+        return $this->value ?? null;
+    }
+
+    public function getDifferingFactor(): ?float {
+        return $this->differing_factor ?? null;
+    }
+
+    public function getDifferingPayChange(): ?float {
+        return $this->differing_pay_change ?? null;
+    }
+
+    public function getOrigin(): ?string {
+        return $this->origin ?? null;
+    }
+
+    public function getAccountingMonth(): ?DateTime {
+        return $this->accounting_month ?? null;
+    }
 }

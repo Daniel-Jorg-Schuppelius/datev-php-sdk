@@ -29,4 +29,16 @@ class Domain extends NamedEntity implements IdentifiableNamedEntityInterface {
     public function getName(): ?string {
         return $this->name ?? null;
     }
+
+    public function getCorrespondencePartner(): ?CorrespondencePartner {
+        return $this->correspondence_partner ?? null;
+    }
+
+    public function getFolders(): ?Folders {
+        return $this->folders ?? null;
+    }
+
+    public function isSelected(): bool {
+        return $this->is_selected ?? false;
+    }
 }

@@ -20,4 +20,12 @@ class HourlyWage extends NamedEntity implements IdentifiableNamedEntityInterface
     public function getID(): HourlyWageID {
         return $this->id;
     }
+
+    public function getPersonnelNumber(): string {
+        return $this->personnel_number;
+    }
+
+    public function getAmount(): ?float {
+        return $this->amount ?? null;
+    }
 }

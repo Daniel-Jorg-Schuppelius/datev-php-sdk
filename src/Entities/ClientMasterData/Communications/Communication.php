@@ -27,4 +27,32 @@ class Communication extends NamedEntity implements IdentifiableNamedEntityInterf
     public function getID(): CommunicationID {
         return $this->id;
     }
+
+    public function getType(): CommunicationType {
+        return $this->type;
+    }
+
+    public function getDataContent(): ?string {
+        return $this->data_content ?? null;
+    }
+
+    public function getNumberStandardized(): NumberStandardized {
+        return $this->number_standardized;
+    }
+
+    public function getNote(): ?string {
+        return $this->note ?? null;
+    }
+
+    public function getName(): ?string {
+        return $this->name ?? null;
+    }
+
+    public function isMainCommunication(): bool {
+        return $this->is_main_communication ?? false;
+    }
+
+    public function isManagementPhone(): bool {
+        return $this->is_management_phone ?? false;
+    }
 }

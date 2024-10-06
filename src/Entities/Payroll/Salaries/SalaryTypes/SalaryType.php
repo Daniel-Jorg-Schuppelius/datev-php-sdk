@@ -20,4 +20,12 @@ class SalaryType extends NamedEntity implements IdentifiableNamedEntityInterface
     public function getID(): SalaryTypeID {
         return $this->id;
     }
+
+    public function getName(): ?string {
+        return $this->name ?? null;
+    }
+
+    public function getCore(): ?string {
+        return $this->core ?? null;
+    }
 }

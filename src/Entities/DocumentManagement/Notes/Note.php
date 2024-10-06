@@ -14,4 +14,12 @@ class Note extends NamedEntity {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
+
+    public function getText(): ?string {
+        return $this->text ?? null;
+    }
+
+    public function getPopup(): ?bool {
+        return $this->popup ?? null;
+    }
 }

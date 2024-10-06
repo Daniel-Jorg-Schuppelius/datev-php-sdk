@@ -20,4 +20,12 @@ class DocumentPropertyTemplate extends NamedEntity implements IdentifiableNamedE
     public function getID(): DocumentPropertyTemplateID {
         return $this->id;
     }
+
+    public function getName(): ?string {
+        return $this->name ?? null;
+    }
+
+    public function getSupplement(): ?string {
+        return $this->supplement ?? null;
+    }
 }

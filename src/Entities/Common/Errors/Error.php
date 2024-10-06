@@ -24,4 +24,24 @@ class Error extends NamedEntity implements IdentifiableNamedEntityInterface {
     public function getID(): RequestID {
         return $this->request_id;
     }
+
+    public function getAdditionalMessages(): ?AdditionalMessages {
+        return $this->additional_messages ?? null;
+    }
+
+    public function getError(): ?string {
+        return $this->error ?? null;
+    }
+
+    public function getErrorDescription(): ?string {
+        return $this->error_description ?? null;
+    }
+
+    public function getErrorUri(): ?ErrorURI {
+        return $this->error_uri ?? null;
+    }
+
+    public function getRequestId(): ?RequestID {
+        return $this->request_id ?? null;
+    }
 }

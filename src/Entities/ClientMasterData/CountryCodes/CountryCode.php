@@ -19,4 +19,8 @@ class CountryCode extends NamedEntity implements IdentifiableNamedEntityInterfac
     public function getID(): CountryCodeID {
         return $this->id;
     }
+
+    public function getName(): ?string {
+        return $this->name ?? null;
+    }
 }

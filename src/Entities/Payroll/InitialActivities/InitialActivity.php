@@ -31,4 +31,52 @@ class InitialActivity extends NamedEntity implements IdentifiableNamedEntityInte
     public function getID(): InitialActivityID {
         return $this->id;
     }
+
+    public function getReferenceDate(): ?DateTime {
+        return $this->reference_date ?? null;
+    }
+
+    public function getActivityType(): ?string {
+        return $this->activity_type ?? null;
+    }
+
+    public function getEmployeeType(): ?string {
+        return $this->employee_type ?? null;
+    }
+
+    public function getBusinessUnitID(): ?int {
+        return $this->business_unit_id ?? null;
+    }
+
+    public function getWeeklyWorkingHours(): ?float {
+        return $this->weekly_working_hours ?? null;
+    }
+
+    public function getAllocationOfWorkingHoursMonday(): ?float {
+        return $this->allocation_of_working_hours_monday ?? null;
+    }
+
+    public function getAllocationOfWorkingHoursTuesday(): ?float {
+        return $this->allocation_of_working_hours_tuesday ?? null;
+    }
+
+    public function getAllocationOfWorkingHoursWednesday(): ?float {
+        return $this->allocation_of_working_hours_wednesday ?? null;
+    }
+
+    public function getAllocationOfWorkingHoursThursday(): ?float {
+        return $this->allocation_of_working_hours_thursday ?? null;
+    }
+
+    public function getAllocationOfWorkingHoursFriday(): ?float {
+        return $this->allocation_of_working_hours_friday ?? null;
+    }
+
+    public function getAllocationOfWorkingHoursSaturday(): ?float {
+        return $this->allocation_of_working_hours_saturday ?? null;
+    }
+
+    public function getAllocationOfWorkingHoursSunday(): ?float {
+        return $this->allocation_of_working_hours_sunday ?? null;
+    }
 }

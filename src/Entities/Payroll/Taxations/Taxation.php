@@ -22,4 +22,20 @@ class Taxation extends NamedEntity implements IdentifiableNamedEntityInterface {
     public function getID(): TaxationID {
         return $this->id;
     }
+
+    public function getTaxIdentificationNumber(): ?string {
+        return $this->tax_identification_number ?? null;
+    }
+
+    public function getEmploymentType(): ?string {
+        return $this->employment_type ?? null;
+    }
+
+    public function getRequestedAnnualAllowance(): ?float {
+        return $this->requested_annual_allowance ?? null;
+    }
+
+    public function getIsTwoPercentFlatRateTaxation(): ?bool {
+        return $this->is_two_percent_flat_rate_taxation ?? null;
+    }
 }

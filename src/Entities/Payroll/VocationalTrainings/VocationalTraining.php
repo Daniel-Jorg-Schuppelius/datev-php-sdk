@@ -20,4 +20,12 @@ class VocationalTraining extends NamedEntity implements IdentifiableNamedEntityI
     public function getID(): VocationalTrainingID {
         return $this->id;
     }
+
+    public function getPersonnelNumber(): string {
+        return $this->personnel_number;
+    }
+
+    public function getAmount(): ?float {
+        return $this->amount ?? null;
+    }
 }

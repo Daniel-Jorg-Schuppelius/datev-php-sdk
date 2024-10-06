@@ -20,4 +20,12 @@ class FinancialAccounting extends NamedEntity implements IdentifiableNamedEntity
     public function getID(): FinancialAccountingID {
         return $this->id;
     }
+
+    public function getDifferentConsultantNumber(): ?string {
+        return $this->different_consultant_number ?? null;
+    }
+
+    public function getDifferentClientNumber(): ?string {
+        return $this->different_client_number ?? null;
+    }
 }

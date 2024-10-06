@@ -19,4 +19,8 @@ class CostCenter extends NamedEntity implements IdentifiableNamedEntityInterface
     public function getID(): CostCenterID {
         return $this->id;
     }
+
+    public function getName(): string {
+        return $this->name;
+    }
 }

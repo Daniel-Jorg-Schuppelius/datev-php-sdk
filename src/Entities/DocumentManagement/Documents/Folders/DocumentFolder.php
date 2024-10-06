@@ -19,4 +19,8 @@ class DocumentFolder extends NamedEntity implements IdentifiableNamedEntityInter
     public function getID(): DocumentFolderID {
         return $this->id;
     }
+
+    public function getName(): ?string {
+        return $this->name ?? null;
+    }
 }

@@ -27,4 +27,16 @@ class Order extends NamedEntity implements IdentifiableNamedEntityInterface {
     public function getName(): ?string {
         return $this->name ?? null;
     }
+
+    public function getAssessmentYear(): ?int {
+        return $this->assessment_year ?? null;
+    }
+
+    public function getCreationYear(): ?int {
+        return $this->creation_year ?? null;
+    }
+
+    public function getNumber(): int {
+        return $this->number;
+    }
 }

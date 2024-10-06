@@ -20,4 +20,12 @@ class Department extends NamedEntity implements IdentifiableNamedEntityInterface
     public function getID(): DepartmentID {
         return $this->id;
     }
+
+    public function getName(): ?string {
+        return $this->name ?? null;
+    }
+
+    public function getContactPerson(): ?string {
+        return $this->contact_person ?? null;
+    }
 }

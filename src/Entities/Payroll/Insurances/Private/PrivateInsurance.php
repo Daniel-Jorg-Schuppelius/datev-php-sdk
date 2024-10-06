@@ -23,4 +23,24 @@ class PrivateInsurance extends NamedEntity implements IdentifiableNamedEntityInt
     public function getID(): PrivateInsuranceID {
         return $this->id;
     }
+
+    public function isPrivateHealthInsured(): bool {
+        return $this->is_private_health_insured ?? false;
+    }
+
+    public function isPrivateNursingInsured(): bool {
+        return $this->is_private_nursing_insured ?? false;
+    }
+
+    public function getMonthlyPremiumForPrivateHealthInsurance(): ?float {
+        return $this->monthly_premium_for_private_health_insurance ?? null;
+    }
+
+    public function getMonthlyPremiumForPrivateNursingInsurance(): ?float {
+        return $this->monthly_premium_for_private_nursing_insurance ?? null;
+    }
+
+    public function getMonthlyContributionToBasicHealthInsurance(): ?float {
+        return $this->monthly_contribution_to_basic_health_insurance ?? null;
+    }
 }

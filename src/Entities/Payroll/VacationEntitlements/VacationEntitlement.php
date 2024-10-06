@@ -21,4 +21,16 @@ class VacationEntitlement extends NamedEntity implements IdentifiableNamedEntity
     public function getID(): VacationEntitlementID {
         return $this->id;
     }
+
+    public function getBasicVacationEntitlement(): ?float {
+        return $this->basic_vacation_entitlement ?? null;
+    }
+
+    public function getCurrentYearVacationEntitlement(): ?float {
+        return $this->current_year_vacation_entitlement ?? null;
+    }
+
+    public function getRemainingDaysOfVacationPreviousYear(): ?float {
+        return $this->remaining_days_of_vacation_previous_year ?? null;
+    }
 }

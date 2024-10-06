@@ -29,4 +29,32 @@ class ClientGroup extends NamedEntity implements IdentifiableNamedEntityInterfac
     public function getID(): ClientGroupID {
         return $this->id;
     }
+
+    public function getClientGroupTypeID(): ?ClientGroupTypeID {
+        return $this->client_group_type_id ?? null;
+    }
+
+    public function getClientGroupTypeShortName(): ?string {
+        return $this->client_group_type_short_name ?? null;
+    }
+
+    public function getClientID(): ClientID {
+        return $this->client_id;
+    }
+
+    public function getClientName(): ?string {
+        return $this->client_name ?? null;
+    }
+
+    public function getClientNumber(): ?int {
+        return $this->client_number ?? null;
+    }
+
+    public function getClientStatus(): ?Status {
+        return $this->client_status ?? null;
+    }
+
+    public function getTimestamp(): ?DateTime {
+        return $this->timestamp ?? null;
+    }
 }

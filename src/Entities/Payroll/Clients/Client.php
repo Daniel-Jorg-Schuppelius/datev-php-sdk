@@ -46,4 +46,52 @@ class Client extends NamedEntity implements IdentifiableNamedEntityInterface {
     public function getNumber(): int {
         return $this->number;
     }
+
+    public function getName(): string {
+        return $this->name;
+    }
+
+    public function getConsultantNumber(): ConsultantNumber {
+        return $this->consultant_number;
+    }
+
+    public function getAccountableEmployees(): ?AccountableEmployees {
+        return $this->accountable_employees ?? null;
+    }
+
+    public function getCostCenters(): ?CostCenters {
+        return $this->cost_centers ?? null;
+    }
+
+    public function getCostUnits(): ?CostUnits {
+        return $this->cost_units ?? null;
+    }
+
+    public function getDepartments(): ?Departments {
+        return $this->departments ?? null;
+    }
+
+    public function getEmployeeGroup(): ?EmployeeGroup {
+        return $this->employee_group ?? null;
+    }
+
+    public function getEmployees(): ?Employees {
+        return $this->employees ?? null;
+    }
+
+    public function getFinancialAccounting(): ?FinancialAccountings {
+        return $this->financial_accounting ?? null;
+    }
+
+    public function getReasonsForAbsence(): ?ReasonsForAbsence {
+        return $this->reasons_for_absence ?? null;
+    }
+
+    public function getSalaryTypes(): ?SalaryTypes {
+        return $this->salary_types ?? null;
+    }
+
+    public function getWorkingHours(): ?WorkingHours {
+        return $this->working_hours ?? null;
+    }
 }

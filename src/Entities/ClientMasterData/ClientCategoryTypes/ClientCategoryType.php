@@ -23,4 +23,20 @@ class ClientCategoryType extends NamedEntity implements IdentifiableNamedEntityI
     public function getID(): ClientCategoryTypeID {
         return $this->id;
     }
+
+    public function getName(): ?string {
+        return $this->name ?? null;
+    }
+
+    public function getNote(): ?string {
+        return $this->note ?? null;
+    }
+
+    public function getShortName(): string {
+        return $this->short_name;
+    }
+
+    public function getTimestamp(): ?DateTime {
+        return $this->timestamp ?? null;
+    }
 }

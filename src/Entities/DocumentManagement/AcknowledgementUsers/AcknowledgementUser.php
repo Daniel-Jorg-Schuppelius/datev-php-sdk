@@ -23,4 +23,20 @@ class AcknowledgementUser extends NamedEntity implements IdentifiableNamedEntity
     public function getID(): AcknowledgementUserID {
         return $this->id;
     }
+
+    public function getName(): ?string {
+        return $this->name ?? null;
+    }
+
+    public function getRemovedAcknowledgement(): ?DateTime {
+        return $this->removed_acknowledgement ?? null;
+    }
+
+    public function getAcknowledged(): ?DateTime {
+        return $this->acknowledged ?? null;
+    }
+
+    public function isDeleted(): bool {
+        return $this->is_deleted ?? false;
+    }
 }

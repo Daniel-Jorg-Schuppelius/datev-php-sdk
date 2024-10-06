@@ -28,4 +28,20 @@ class PropertyTemplate extends NamedEntity implements IdentifiableNamedEntityInt
     public function getName(): ?string {
         return $this->name ?? null;
     }
+
+    public function getDocumentClass(): ?DocumentClass {
+        return $this->document_class ?? null;
+    }
+
+    public function getSupplement(): ?string {
+        return $this->supplement ?? null;
+    }
+
+    public function getInboxDocumentTypeNumber(): ?int {
+        return $this->inbox_document_type_number ?? null;
+    }
+
+    public function getOutboxDocumentTypeNumber(): ?int {
+        return $this->outbox_document_type_number ?? null;
+    }
 }

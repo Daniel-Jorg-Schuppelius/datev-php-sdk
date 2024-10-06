@@ -25,4 +25,20 @@ class FunctionalArea extends NamedEntity implements IdentifiableNamedEntityInter
     public function getID(): FunctionalAreaID {
         return $this->id;
     }
+
+    public function getName(): ?string {
+        return $this->name ?? null;
+    }
+
+    public function getShortName(): ?ShortName {
+        return $this->short_name ?? null;
+    }
+
+    public function getStatus(): ?Status {
+        return $this->status ?? null;
+    }
+
+    public function getTimestamp(): ?DateTime {
+        return $this->timestamp ?? null;
+    }
 }

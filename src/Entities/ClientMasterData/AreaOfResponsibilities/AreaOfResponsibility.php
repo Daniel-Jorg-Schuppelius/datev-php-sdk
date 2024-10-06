@@ -23,4 +23,20 @@ class AreaOfResponsibility extends NamedEntity implements IdentifiableNamedEntit
     public function getID(): AreaOfResponsibilityID {
         return $this->id;
     }
+
+    public function getName(): ?string {
+        return $this->name ?? null;
+    }
+
+    public function getDescription(): ?string {
+        return $this->description ?? null;
+    }
+
+    public function isStandard(): bool {
+        return $this->standard ?? false;
+    }
+
+    public function getStatus(): ?Status {
+        return $this->status ?? null;
+    }
 }

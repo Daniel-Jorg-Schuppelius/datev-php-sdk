@@ -28,4 +28,28 @@ class CorporateStructure extends NamedEntity implements IdentifiableNamedEntityI
     public function getID(): CorporateStructureID {
         return $this->id;
     }
+
+    public function getName(): ?string {
+        return $this->name ?? null;
+    }
+
+    public function getNumber(): ?int {
+        return $this->number ?? null;
+    }
+
+    public function getStatus(): ?Status {
+        return $this->status ?? null;
+    }
+
+    public function getTimestamp(): ?DateTime {
+        return $this->timestamp ?? null;
+    }
+
+    public function getEstablishments(): ?Establishments {
+        return $this->establishments ?? null;
+    }
+
+    public function getFunctionalAreas(): ?FunctionalAreas {
+        return $this->functional_areas ?? null;
+    }
 }

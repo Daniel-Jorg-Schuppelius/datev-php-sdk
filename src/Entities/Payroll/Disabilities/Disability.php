@@ -24,4 +24,24 @@ class Disability extends NamedEntity implements IdentifiableNamedEntityInterface
     public function getID(): DisabilityID {
         return $this->id;
     }
+
+    public function getValidFrom(): ?DateTime {
+        return $this->valid_from ?? null;
+    }
+
+    public function getValidTo(): ?DateTime {
+        return $this->valid_to ?? null;
+    }
+
+    public function getDegreeOfDisability(): ?float {
+        return $this->degree_of_disability ?? null;
+    }
+
+    public function getIssuingAuthority(): ?string {
+        return $this->issuing_authority ?? null;
+    }
+
+    public function getDisabilityGroup(): ?string {
+        return $this->disability_group ?? null;
+    }
 }

@@ -14,4 +14,8 @@ class AccountableEmployee extends Employee {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
+
+    public function getDateOfTerminationOfEmployment(): ?DateTime {
+        return $this->date_of_termination_of_employment;
+    }
 }

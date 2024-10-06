@@ -20,4 +20,8 @@ class DeletionLog extends NamedEntity implements IdentifiableNamedEntityInterfac
     public function getID(): DeletionLogID {
         return $this->id;
     }
+
+    public function getTimestamp(): ?DateTime {
+        return $this->timestamp ?? null;
+    }
 }

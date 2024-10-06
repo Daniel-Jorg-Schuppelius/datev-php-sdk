@@ -14,4 +14,12 @@ class Domain extends NamedEntity {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
+
+    public function getKey(): string {
+        return $this->Key;
+    }
+
+    public function getValue(): string {
+        return $this->Value;
+    }
 }

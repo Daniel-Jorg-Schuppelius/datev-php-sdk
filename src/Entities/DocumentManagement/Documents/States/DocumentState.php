@@ -22,4 +22,12 @@ class DocumentState extends NamedEntity implements IdentifiableNamedEntityInterf
     public function getID(): DocumentStateID {
         return $this->id;
     }
+
+    public function getName(): ?string {
+        return $this->name ?? null;
+    }
+
+    public function getValidDocumentClasses(): ?DocumentClasses {
+        return $this->valid_document_classes ?? null;
+    }
 }

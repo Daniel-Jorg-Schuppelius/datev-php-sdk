@@ -29,4 +29,32 @@ class ClientCategory extends NamedEntity implements IdentifiableNamedEntityInter
     public function getID(): ClientCategoryID {
         return $this->id;
     }
+
+    public function getClientCategoryTypeID(): ClientCategoryTypeID {
+        return $this->client_category_type_id;
+    }
+
+    public function getClientCategoryTypeShortName(): ?string {
+        return $this->client_category_type_short_name ?? null;
+    }
+
+    public function getClientID(): ClientID {
+        return $this->client_id;
+    }
+
+    public function getClientName(): ?string {
+        return $this->client_name ?? null;
+    }
+
+    public function getClientNumber(): ?int {
+        return $this->client_number ?? null;
+    }
+
+    public function getClientStatus(): ?Status {
+        return $this->client_status ?? null;
+    }
+
+    public function getTimestamp(): ?DateTime {
+        return $this->timestamp ?? null;
+    }
 }

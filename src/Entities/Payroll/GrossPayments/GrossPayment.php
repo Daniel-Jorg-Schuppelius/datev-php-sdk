@@ -28,4 +28,36 @@ class GrossPayment extends NamedEntity implements IdentifiableNamedEntityInterfa
     public function getID(): GrossPaymentID {
         return $this->id;
     }
+
+    public function getPersonnelNumber(): ?string {
+        return $this->personnel_number ?? null;
+    }
+
+    public function getAmount(): ?float {
+        return $this->amount ?? null;
+    }
+
+    public function getSalaryTypeID(): ?string {
+        return $this->salary_type_id ?? null;
+    }
+
+    public function getReduction(): ?string {
+        return $this->reduction ?? null;
+    }
+
+    public function getCostCenterAllocationID(): ?string {
+        return $this->cost_center_allocation_id ?? null;
+    }
+
+    public function getCostUnitAllocationID(): ?string {
+        return $this->cost_unit_allocation_id ?? null;
+    }
+
+    public function getPaymentInterval(): ?string {
+        return $this->payment_interval ?? null;
+    }
+
+    public function getReferenceDate(): ?DateTime {
+        return $this->reference_date ?? null;
+    }
 }

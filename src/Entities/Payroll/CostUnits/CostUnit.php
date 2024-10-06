@@ -19,4 +19,8 @@ class CostUnit extends NamedEntity implements IdentifiableNamedEntityInterface {
     public function getID(): CostUnitID {
         return $this->id;
     }
+
+    public function getName(): string {
+        return $this->name;
+    }
 }

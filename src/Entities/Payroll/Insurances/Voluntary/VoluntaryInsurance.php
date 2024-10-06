@@ -20,4 +20,12 @@ class VoluntaryInsurance extends NamedEntity implements IdentifiableNamedEntityI
     public function getID(): VoluntaryInsuranceID {
         return $this->id;
     }
+
+    public function getMaximalPremiumForVoluntaryHealthInsurance(): ?string {
+        return $this->maximal_premium_for_voluntary_health_insurance ?? null;
+    }
+
+    public function getMaximalPremiumForVoluntaryNursingInsurance(): ?string {
+        return $this->maximal_premium_for_voluntary_nursing_insurance ?? null;
+    }
 }

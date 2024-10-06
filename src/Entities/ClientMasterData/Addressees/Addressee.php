@@ -59,4 +59,108 @@ class Addressee extends NamedEntity implements IdentifiableNamedEntityInterface 
     public function getID(): AddresseeID {
         return $this->id;
     }
+
+    public function getEuVatIdCountryCode(): ?string {
+        return $this->eu_vat_id_country_code ?? null;
+    }
+
+    public function getEuVatIdNumber(): ?string {
+        return $this->eu_vat_id_number ?? null;
+    }
+
+    public function getShortNames(): ?ShortNames {
+        return $this->short_names ?? null;
+    }
+
+    public function getCurrentShortName(): ?string {
+        return $this->current_short_name ?? null;
+    }
+
+    public function getStatus(): ?Status {
+        return $this->status ?? null;
+    }
+
+    public function getSurrogateName(): ?string {
+        return $this->surrogate_name ?? null;
+    }
+
+    public function getTimestamp(): ?DateTime {
+        return $this->timestamp ?? null;
+    }
+
+    public function getType(): ?string {
+        return $this->type ?? null;
+    }
+
+    public function getDateOfBirth(): ?DateTime {
+        return $this->date_of_birth ?? null;
+    }
+
+    public function getEtin(): ?string {
+        return $this->etin ?? null;
+    }
+
+    public function getFirstname(): ?string {
+        return $this->firstname ?? null;
+    }
+
+    public function getSex(): ?string {
+        return $this->sex ?? null;
+    }
+
+    public function getSurnames(): ?Surnames {
+        return $this->surnames ?? null;
+    }
+
+    public function getCurrentSurname(): ?Surname {
+        return $this->current_surname ?? null;
+    }
+
+    public function getTaxIdentificationNumber(): ?string {
+        return $this->tax_identification_number ?? null;
+    }
+
+    public function getCompanyNames(): ?CompanyNames {
+        return $this->company_names ?? null;
+    }
+
+    public function getCurrentCompanyName(): ?CompanyName {
+        return $this->current_company_name ?? null;
+    }
+
+    public function getDateOfFoundation(): ?DateTime {
+        return $this->date_of_foundation ?? null;
+    }
+
+    public function getLegalFormIDs(): ?LegalFormIDs {
+        return $this->legal_form_ids ?? null;
+    }
+
+    public function getCurrentLegalFormID(): ?LegalFormID {
+        return $this->current_legal_form_id ?? null;
+    }
+
+    public function getDetail(): ?Detail {
+        return $this->detail ?? null;
+    }
+
+    public function getAddresses(): ?Addresses {
+        return $this->addresses ?? null;
+    }
+
+    public function getCommunications(): ?Communications {
+        return $this->communications ?? null;
+    }
+
+    public function getBankAccounts(): ?BankAccounts {
+        return $this->bank_accounts ?? null;
+    }
+
+    public function getTaxOffices(): ?TaxOffices {
+        return $this->tax_offices ?? null;
+    }
+
+    public function getContactPersons(): ?ContactPersons {
+        return $this->contact_persons ?? null;
+    }
 }

@@ -15,4 +15,16 @@ class EmployeeGroup extends NamedEntity {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
+
+    public function getNumber(): ?string {
+        return $this->number ?? null;
+    }
+
+    public function getName(): ?string {
+        return $this->name ?? null;
+    }
+
+    public function getClearingAccountID(): ?int {
+        return $this->clearing_account_id ?? null;
+    }
 }

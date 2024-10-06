@@ -25,4 +25,32 @@ class TaxCard extends NamedEntity implements IdentifiableNamedEntityInterface {
     public function getID(): TaxCardID {
         return $this->id;
     }
+
+    public function getTaxClass(): ?int {
+        return $this->tax_class ?? null;
+    }
+
+    public function getFactor(): ?float {
+        return $this->factor ?? null;
+    }
+
+    public function getDenomination(): ?string {
+        return $this->denomination ?? null;
+    }
+
+    public function getSpousesDenomination(): ?string {
+        return $this->spouses_denomination ?? null;
+    }
+
+    public function getMonthlyTaxAllowance(): ?float {
+        return $this->monthly_tax_allowance ?? null;
+    }
+
+    public function getAnnualTaxAllowance(): ?float {
+        return $this->annual_tax_allowance ?? null;
+    }
+
+    public function getChildTaxAllowances(): ?string {
+        return $this->child_tax_allowances ?? null;
+    }
 }

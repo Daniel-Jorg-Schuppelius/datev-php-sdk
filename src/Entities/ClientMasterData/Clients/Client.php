@@ -47,4 +47,88 @@ class Client extends NamedEntity implements IdentifiableNamedEntityInterface {
     public function getID(): ClientID {
         return $this->id;
     }
+
+    public function getClientSince(): ?DateTime {
+        return $this->client_since ?? null;
+    }
+
+    public function getClientTo(): ?DateTime {
+        return $this->client_to ?? null;
+    }
+
+    public function getDifferingName(): ?string {
+        return $this->differing_name ?? null;
+    }
+
+    public function getLegalPersonID(): ?LegalPersonID {
+        return $this->legal_person_id ?? null;
+    }
+
+    public function getName(): string {
+        return $this->name;
+    }
+
+    public function getNaturalPersonID(): ?NaturalPersonID {
+        return $this->natural_person_id ?? null;
+    }
+
+    public function getNote(): ?string {
+        return $this->note ?? null;
+    }
+
+    public function getNumber(): int {
+        return $this->number;
+    }
+
+    public function getStatus(): ?Status {
+        return $this->status ?? null;
+    }
+
+    public function getTimestamp(): ?DateTime {
+        return $this->timestamp ?? null;
+    }
+
+    public function getType(): PersonType {
+        return $this->type;
+    }
+
+    public function getOrganizationID(): ?OrganizationID {
+        return $this->organization_id ?? null;
+    }
+
+    public function getOrganizationName(): ?string {
+        return $this->organization_name ?? null;
+    }
+
+    public function getOrganizationNumber(): ?int {
+        return $this->organization_number ?? null;
+    }
+
+    public function getEstablishmentID(): ?EstablishmentID {
+        return $this->establishment_id ?? null;
+    }
+
+    public function getEstablishmentName(): ?string {
+        return $this->establishment_name ?? null;
+    }
+
+    public function getEstablishmentNumber(): ?int {
+        return $this->establishment_number ?? null;
+    }
+
+    public function getEstablishmentShortName(): ?string {
+        return $this->establishment_short_name ?? null;
+    }
+
+    public function getFunctionalAreaID(): FunctionalAreaID {
+        return $this->functional_area_id;
+    }
+
+    public function getFunctionalAreaName(): ?string {
+        return $this->functional_area_name ?? null;
+    }
+
+    public function getFunctionalAreaShortName(): ?string {
+        return $this->functional_area_short_name ?? null;
+    }
 }

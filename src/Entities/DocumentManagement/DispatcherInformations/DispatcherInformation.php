@@ -21,4 +21,12 @@ class DispatcherInformation extends NamedEntity implements IdentifiableNamedEnti
     public function getID(): ExternalDocumentID {
         return $this->external_id;
     }
+
+    public function getApplication(): string {
+        return $this->application;
+    }
+
+    public function getComment(): string {
+        return $this->comment;
+    }
 }

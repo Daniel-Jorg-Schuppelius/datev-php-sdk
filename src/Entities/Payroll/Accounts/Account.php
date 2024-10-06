@@ -23,4 +23,16 @@ class Account extends NamedEntity implements IdentifiableNamedEntityInterface {
     public function getID(): AccountID {
         return $this->id;
     }
+
+    public function getIBAN(): ?IBAN {
+        return $this->iban ?? null;
+    }
+
+    public function getBIC(): ?BIC {
+        return $this->bic ?? null;
+    }
+
+    public function getDifferingAccountHolder(): ?string {
+        return $this->differing_account_holder ?? null;
+    }
 }

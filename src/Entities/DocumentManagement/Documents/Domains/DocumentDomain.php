@@ -19,4 +19,8 @@ class DocumentDomain extends NamedEntity implements IdentifiableNamedEntityInter
     public function getID(): DocumentDomainID {
         return $this->id;
     }
+
+    public function getName(): ?string {
+        return $this->name ?? null;
+    }
 }

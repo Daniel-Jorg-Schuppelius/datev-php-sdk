@@ -21,4 +21,12 @@ class CorrespondencePartner extends NamedEntity {
             'link' => $this->link->getValue()
         ];
     }
+
+    public function getDomain(): ?string {
+        return $this->domain ?? null;
+    }
+
+    public function getLink(): ?CorrespondencePartnerLink {
+        return $this->link ?? null;
+    }
 }

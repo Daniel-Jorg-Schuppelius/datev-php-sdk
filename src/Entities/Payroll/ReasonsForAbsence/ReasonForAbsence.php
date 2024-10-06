@@ -19,4 +19,8 @@ class ReasonForAbsence extends NamedEntity implements IdentifiableNamedEntityInt
     public function getID(): ReasonForAbsenceID {
         return $this->id;
     }
+
+    public function getName(): ?string {
+        return $this->name ?? null;
+    }
 }

@@ -25,4 +25,20 @@ class Establishment extends NamedEntity implements IdentifiableNamedEntityInterf
     public function getID(): EstablishmentID {
         return $this->id;
     }
+
+    public function getName(): ?string {
+        return $this->name ?? null;
+    }
+
+    public function getShortName(): ?ShortName {
+        return $this->short_name ?? null;
+    }
+
+    public function getStatus(): ?Status {
+        return $this->status ?? null;
+    }
+
+    public function getTimestamp(): ?DateTime {
+        return $this->timestamp ?? null;
+    }
 }
