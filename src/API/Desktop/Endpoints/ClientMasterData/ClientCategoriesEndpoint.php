@@ -11,9 +11,9 @@
 namespace Datev\API\Desktop\Endpoints\ClientMasterData;
 
 use APIToolkit\Contracts\Interfaces\API\ApiClientInterface;
-use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Contracts\Interfaces\API\SearchableEndpointInterface;
+use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
+use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use Datev\Entities\ClientMasterData\ClientCategories\ClientCategories;
 use Datev\Entities\ClientMasterData\ClientCategories\ClientCategory;
 use Datev\Entities\ClientMasterData\Clients\ClientID;
@@ -31,21 +31,39 @@ class ClientCategoriesEndpoint extends EndpointAbstract implements SearchableEnd
         $this->clientID = $clientID;
     }
 
-    public function get(?ID $id = null): ClientCategory {
+    public function get(?ID $id = null): ?ClientCategory {
         if (is_null($id)) {
             throw new \InvalidArgumentException('ID is required');
         }
 
-        return ClientCategory::fromJson(parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}"));
+        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
+
+        if (empty($response)) {
+            return null;
+        }
+
+        return ClientCategory::fromJson($response);
     }
 
-    public function searchByClient(array $queryParams = [], array $options = []): ClientCategories {
-        return ClientCategories::fromJson(parent::getContents($queryParams, $options));
+    public function searchByClient(array $queryParams = [], array $options = []): ?ClientCategories {
+        $response = parent::getContents($queryParams, $options);
+
+        if (empty($response)) {
+            return null;
+        }
+
+        return ClientCategories::fromJson($response);
     }
 
-    public function search(array $queryParams = [], array $options = []): ClientCategories {
-        // TODO: Check API, by documentation, this endpoint exists but it is not implemented
-        return ClientCategories::fromJson(parent::getContents($queryParams, $options, "{$this->endpointPrefix}/{$this->endpointSuffix}"));
+    public function search(array $queryParams = [], array $options = []): ?ClientCategories {
+        // TODO: Check API, on documentation, this endpoint exists but it is not implemented?
+        $response = parent::getContents($queryParams, $options, "{$this->endpointPrefix}/{$this->endpointSuffix}");
+
+        if (empty($response)) {
+            return null;
+        }
+
+        return ClientCategories::fromJson($response);
     }
 
     public function getClientID(): ClientID {
@@ -57,6 +75,6 @@ class ClientCategoriesEndpoint extends EndpointAbstract implements SearchableEnd
     }
 
     protected function getEndpointUrl(): string {
-        return str_replace('{client-id}', $this->clientID->toString(), parent::getEndpointUrl() . "/{$this->endpointSuffix}");
+        return str_replace('{client-id}', $this->clientID->toString(), parent::getEndpointUrl());
     }
 }

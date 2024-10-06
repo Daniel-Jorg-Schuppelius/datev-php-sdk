@@ -10,9 +10,9 @@
 
 namespace Datev\API\Desktop\Endpoints\DocumentManagement;
 
-use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Contracts\Interfaces\API\SearchableEndpointInterface;
+use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
+use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use Datev\Entities\DocumentManagement\Domains\Domain;
 use Datev\Entities\DocumentManagement\Domains\Domains;
 
@@ -20,15 +20,23 @@ class DomainsEndpoint extends EndpointAbstract implements SearchableEndpointInte
     protected string $endpointPrefix = 'dms/v2';
     protected string $endpoint = 'domains';
 
-    public function get(?ID $id = null): Domain {
-        // if (is_null($id)) {
-        //     throw new \InvalidArgumentException('ID is required');
-        // }
+    public function get(?ID $id = null): ?Domain {
+        if (is_null($id)) {
+            throw new \InvalidArgumentException('ID is required');
+        }
 
-        return Domain::fromJson(parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}"));
+        $result = $this->search()->getFirstValue("id", $id->toString());
+
+        return $result;
     }
 
-    public function search(array $queryParams = [], array $options = []): Domains {
-        return Domains::fromJson(parent::getContents($queryParams, $options));
+    public function search(array $queryParams = [], array $options = []): ?Domains {
+        $response = parent::getContents($queryParams, $options);
+
+        if (empty($response)) {
+            return null;
+        }
+
+        return Domains::fromJson($response);
     }
 }

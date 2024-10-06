@@ -10,9 +10,9 @@
 
 namespace Datev\API\Desktop\Endpoints\DocumentManagement;
 
-use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Contracts\Interfaces\API\SearchableEndpointInterface;
+use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
+use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use Datev\Entities\DocumentManagement\Documents\Document;
 use Datev\Entities\DocumentManagement\Documents\Documents;
 
@@ -20,15 +20,27 @@ class DocumentsEndpoint extends EndpointAbstract implements SearchableEndpointIn
     protected string $endpointPrefix = 'dms/v2';
     protected string $endpoint = 'documents';
 
-    public function get(?ID $id = null): Document {
+    public function get(?ID $id = null): ?Document {
         if (is_null($id)) {
             throw new \InvalidArgumentException('ID is required');
         }
 
-        return Document::fromJson(parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}"));
+        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
+
+        if (empty($response)) {
+            return null;
+        }
+
+        return Document::fromJson($response);
     }
 
-    public function search(array $queryParams = [], array $options = []): Documents {
-        return Documents::fromJson(parent::getContents($queryParams, $options));
+    public function search(array $queryParams = [], array $options = []): ?Documents {
+        $response = parent::getContents($queryParams, $options);
+
+        if (empty($response)) {
+            return null;
+        }
+
+        return Documents::fromJson($response);
     }
 }

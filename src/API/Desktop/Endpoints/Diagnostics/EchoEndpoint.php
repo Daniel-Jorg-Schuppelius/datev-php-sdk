@@ -10,15 +10,21 @@
 
 namespace Datev\API\Desktop\Endpoints\Diagnostics;
 
-use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use APIToolkit\Entities\ID;
+use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use Datev\Entities\Diagnostics\EchoResponse\EchoResponse;
 
 class EchoEndpoint extends EndpointAbstract {
     protected string $endpointPrefix = 'diagnostics/v1';
     protected string $endpoint = 'echo';
 
-    public function get(?ID $id = null): EchoResponse {
-        return EchoResponse::fromJson(parent::getContents([], [], "{$this->getEndpointUrl()}"));
+    public function get(?ID $id = null): ?EchoResponse {
+        $response = parent::getContents([], [], "{$this->getEndpointUrl()}");
+
+        if (empty($response)) {
+            return null;
+        }
+
+        return EchoResponse::fromJson($response);
     }
 }

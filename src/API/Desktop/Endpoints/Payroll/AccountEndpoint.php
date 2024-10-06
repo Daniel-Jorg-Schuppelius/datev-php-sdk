@@ -10,9 +10,9 @@
 
 namespace Datev\API\Desktop\Endpoints\Payroll;
 
-use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Contracts\Interfaces\API\SearchableEndpointInterface;
+use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
+use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use Datev\Entities\Payroll\Accounts\Account;
 use Datev\Entities\Payroll\Accounts\Accounts;
 
@@ -20,15 +20,27 @@ class AccountEndpoint extends EndpointAbstract implements SearchableEndpointInte
     protected string $endpointPrefix = 'hr/v3';
     protected string $endpoint = 'clients';
 
-    public function get(?ID $id = null): Account {
+    public function get(?ID $id = null): ?Account {
         if (is_null($id)) {
             throw new \InvalidArgumentException('ID is required');
         }
 
-        return Account::fromJson(parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}/account"));
+        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}/account");
+
+        if (empty($response)) {
+            return null;
+        }
+
+        return Account::fromJson($response);
     }
 
-    public function search(array $queryParams = [], array $options = []): Accounts {
-        return Accounts::fromJson(parent::getContents($queryParams, $options));
+    public function search(array $queryParams = [], array $options = []): ?Accounts {
+        $response = parent::getContents($queryParams, $options);
+
+        if (empty($response)) {
+            return null;
+        }
+
+        return Accounts::fromJson($response);
     }
 }

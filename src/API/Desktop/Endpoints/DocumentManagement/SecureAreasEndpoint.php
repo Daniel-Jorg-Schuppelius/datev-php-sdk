@@ -10,10 +10,9 @@
 
 namespace Datev\API\Desktop\Endpoints\DocumentManagement;
 
-use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Contracts\Interfaces\API\SearchableEndpointInterface;
+use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
-use APIToolkit\Exceptions\NotFoundException;
+use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use Datev\Entities\DocumentManagement\SecureAreas\SecureArea;
 use Datev\Entities\DocumentManagement\SecureAreas\SecureAreas;
 
@@ -21,21 +20,23 @@ class SecureAreasEndpoint extends EndpointAbstract implements SearchableEndpoint
     protected string $endpointPrefix = 'dms/v2';
     protected string $endpoint = 'secure-areas';
 
-    public function get(?ID $id = null): SecureArea {
+    public function get(?ID $id = null): ?SecureArea {
         if (is_null($id)) {
             throw new \InvalidArgumentException('ID is required');
         }
-        $proptertyTemplates = $this->search()->getValues("id", $id->toString());
-        $result = array_pop($proptertyTemplates);
 
-        if (is_null($result)) {
-            throw new NotFoundException('Resource not found', 404);
-        }
+        $result = $this->search()->getFirstValue("id", $id->toString());
 
         return $result;
     }
 
-    public function search(array $queryParams = [], array $options = []): SecureAreas {
-        return SecureAreas::fromJson(parent::getContents($queryParams, $options));
+    public function search(array $queryParams = [], array $options = []): ?SecureAreas {
+        $response = parent::getContents($queryParams, $options);
+
+        if (empty($response)) {
+            return null;
+        }
+
+        return SecureAreas::fromJson($response);
     }
 }

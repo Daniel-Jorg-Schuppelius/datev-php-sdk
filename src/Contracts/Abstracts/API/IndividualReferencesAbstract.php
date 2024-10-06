@@ -13,7 +13,6 @@ namespace Datev\Contracts\Abstracts\API;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use APIToolkit\Entities\ID;
-use APIToolkit\Exceptions\NotFoundException;
 use Datev\Entities\DocumentManagement\IndividualReferences\IndividualReference;
 use Datev\Entities\DocumentManagement\IndividualReferences\IndividualReferences;
 
@@ -21,21 +20,22 @@ abstract class IndividualReferencesAbstract extends EndpointAbstract implements 
     protected string $endpointPrefix = 'dms/v2';
     protected string $endpoint = 'individual-references';
 
-    public function get(?ID $id = null): IndividualReference {
+    public function get(?ID $id = null): ?IndividualReference {
         if (is_null($id)) {
             throw new \InvalidArgumentException('ID is required');
         }
-        $individualReferences = $this->search()->getValues("id", $id->toString());
-        $result = array_pop($individualReferences);
-
-        if (is_null($result)) {
-            throw new NotFoundException('Resource not found', 404);
-        }
+        $result = $this->search()->getFirstValue("id", $id->toString());
 
         return $result;
     }
 
     public function search(array $queryParams = [], array $options = []): IndividualReferences {
-        return IndividualReferences::fromJson(parent::getContents($queryParams, $options));
+        $response = parent::getContents($queryParams, $options);
+
+        if (empty($response)) {
+            return null;
+        }
+
+        return IndividualReferences::fromJson($response);
     }
 }
