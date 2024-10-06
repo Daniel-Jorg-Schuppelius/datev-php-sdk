@@ -14,7 +14,6 @@ namespace Tests\Entities\ClientMasterData;
 
 use APIToolkit\Logger\ConsoleLogger;
 use APIToolkit\Logger\ConsoleLoggerFactory;
-use Datev\Entities\ClientMasterData\ClientGroups\ClientGroup;
 use Datev\Entities\ClientMasterData\ClientGroupTypes\ClientGroupType;
 use PHPUnit\Framework\TestCase;
 

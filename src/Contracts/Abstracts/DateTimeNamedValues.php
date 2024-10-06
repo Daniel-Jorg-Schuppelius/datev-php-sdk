@@ -13,8 +13,6 @@ declare(strict_types=1);
 namespace Datev\Contracts\Abstracts;
 
 use APIToolkit\Contracts\Abstracts\NamedValues;
-use APIToolkit\Contracts\Interfaces\NamedEntityInterface;
-use APIToolkit\Contracts\Interfaces\NamedValueInterface;
 use DateTime;
 
 abstract class DateTimeNamedValues extends NamedValues {

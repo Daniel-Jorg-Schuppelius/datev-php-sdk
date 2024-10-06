@@ -14,7 +14,6 @@ namespace Datev\Entities\DocumentManagement\SecureAreas;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
-use Datev\Entities\DocumentManagement\Documents\Classes\DocumentClasses;
 use Psr\Log\LoggerInterface;
 
 class SecureArea extends NamedEntity implements IdentifiableNamedEntityInterface {

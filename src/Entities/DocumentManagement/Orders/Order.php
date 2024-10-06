@@ -14,7 +14,6 @@ namespace Datev\Entities\DocumentManagement\Orders;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
-use DateTime;
 use Psr\Log\LoggerInterface;
 
 class Order extends NamedEntity implements IdentifiableNamedEntityInterface {
