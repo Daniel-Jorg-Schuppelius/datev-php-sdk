@@ -7,8 +7,8 @@ namespace Tests\Entities\ClientMasterData;
 use APIToolkit\Logger\ConsoleLogger;
 use APIToolkit\Logger\ConsoleLoggerFactory;
 use DateTime;
-use Datev\Entities\ClientMasterData\LegalForms\BaseIDs\LegalFormID;
-use Datev\Entities\ClientMasterData\LegalForms\BaseIDs\LegalFormIDs;
+use Datev\Entities\ClientMasterData\LegalForms\LegalFormID;
+use Datev\Entities\ClientMasterData\LegalForms\LegalFormIDs;
 use PHPUnit\Framework\TestCase;
 
 class LegalFormIDTest extends TestCase {

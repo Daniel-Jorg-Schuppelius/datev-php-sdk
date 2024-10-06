@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Datev\Entities\ClientMasterData\LegalForms\ID;
 
 use DateTime;
-use Datev\Entities\ClientMasterData\LegalForms\BaseIDs\LegalFormID as BaseLegalFormID;
+use Datev\Entities\ClientMasterData\LegalForms\LegalFormID as BaseLegalFormID;
 use Psr\Log\LoggerInterface;
 
 class LegalFormID extends BaseLegalFormID {

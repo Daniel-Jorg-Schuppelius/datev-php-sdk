@@ -15,7 +15,7 @@ use Datev\Entities\ClientMasterData\CompanyNames\CompanyNames;
 use Datev\Entities\ClientMasterData\ContactPersons\ContactPersons;
 use Datev\Entities\ClientMasterData\Details\Detail;
 use Datev\Entities\ClientMasterData\LegalForms\ID\LegalFormID;
-use Datev\Entities\ClientMasterData\LegalForms\BaseIDs\LegalFormIDs;
+use Datev\Entities\ClientMasterData\LegalForms\LegalFormIDs;
 use Datev\Entities\ClientMasterData\ShortNames\ShortNames;
 use Datev\Entities\ClientMasterData\Surnames\Surname;
 use Datev\Entities\ClientMasterData\Surnames\Surnames;
