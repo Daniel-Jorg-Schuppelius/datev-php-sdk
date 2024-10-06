@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Datev\Entities\ClientMasterData\Addressees;
+namespace Datev\Entities\ClientMasterData\LegalForms\ID;
 
-use APIToolkit\Entities\ID;
 use DateTime;
-use Datev\Entities\ClientMasterData\LegalFormIDs\LegalFormID as BaseLegalFormID;
+use Datev\Entities\ClientMasterData\LegalForms\BaseIDs\LegalFormID as BaseLegalFormID;
 use Psr\Log\LoggerInterface;
 
 class LegalFormID extends BaseLegalFormID {

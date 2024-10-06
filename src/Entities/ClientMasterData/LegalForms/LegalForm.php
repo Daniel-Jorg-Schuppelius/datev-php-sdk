@@ -6,7 +6,7 @@ namespace Datev\Entities\ClientMasterData\LegalForms;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
-use Datev\Entities\ClientMasterData\LegalFormIDs\LegalFormID;
+use Datev\Entities\ClientMasterData\LegalForms\BaseIDs\LegalFormID;
 use Datev\Enums\LegalFormType;
 use Psr\Log\LoggerInterface;
 

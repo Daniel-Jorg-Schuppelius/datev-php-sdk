@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Datev\Entities\ClientMasterData\LegalFormIDs;
+namespace Datev\Entities\ClientMasterData\LegalForms\BaseIDs;
 
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use DateTime;
