@@ -42,6 +42,10 @@ class ClientsEndpoint extends EndpointAbstract implements SearchableEndpointInte
 
 
     public function search(array $queryParams = [], array $options = []): ?Clients {
+        if (is_null($this->logger)) {
+            $this->logger = ConsoleLoggerFactory::getLogger();
+        }
+
         if (!isset($queryParams['reference-date'])) {
             $this->logger->info('No reference-date provided. Using current date.');
             $queryParams['reference-date'] = date('Y-m-d');
