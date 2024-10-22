@@ -12,6 +12,7 @@ namespace Datev\API\Desktop\Endpoints\Payroll;
 
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
+use APIToolkit\Logger\ConsoleLoggerFactory;
 use DateTime;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use Datev\Entities\Payroll\Clients\Client;
@@ -42,8 +43,10 @@ class ClientsEndpoint extends EndpointAbstract implements SearchableEndpointInte
 
     public function search(array $queryParams = [], array $options = []): ?Clients {
         if (!isset($queryParams['reference-date'])) {
-            throw new InvalidArgumentException('reference-date is required in $queryParams');
+            $this->logger->info('No reference-date provided. Using current date.');
+            $queryParams['reference-date'] = date('Y-m-d');
         } elseif (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $queryParams['reference-date'])) {
+            $this->logger->error('Invalid reference-date provided.');
             throw new InvalidArgumentException('reference-date must be in the format yyyy-mm-dd');
         }
 
