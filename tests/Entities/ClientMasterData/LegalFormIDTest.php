@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Tests\Entities\ClientMasterData;
 
 use APIToolkit\Logger\ConsoleLogger;
-use APIToolkit\Logger\ConsoleLoggerFactory;
+use APIToolkit\Factories\ConsoleLoggerFactory;
 use DateTime;
 use Datev\Entities\ClientMasterData\LegalForms\LegalFormID;
 use Datev\Entities\ClientMasterData\LegalForms\LegalFormIDs;

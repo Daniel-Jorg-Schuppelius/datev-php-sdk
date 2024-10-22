@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Tests\Contracts;
 
-use APIToolkit\Logger\ConsoleLoggerFactory;
+use APIToolkit\Factories\ConsoleLoggerFactory;
 use Datev\API\Desktop\ClientBasicAuth;
 use Datev\API\Desktop\Endpoints\Diagnostics\EchoEndpoint;
 use PHPUnit\Framework\TestCase;

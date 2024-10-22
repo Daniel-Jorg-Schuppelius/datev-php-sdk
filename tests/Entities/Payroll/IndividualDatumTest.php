@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Tests\Entities\Payroll;
 
 use APIToolkit\Logger\ConsoleLogger;
-use APIToolkit\Logger\ConsoleLoggerFactory;
+use APIToolkit\Factories\ConsoleLoggerFactory;
 use Datev\Entities\Payroll\Data\Individual\IndividualData;
 use Datev\Entities\Payroll\Data\Individual\IndividualDatum;
 use PHPUnit\Framework\TestCase;

@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Tests\Entities\DocumentManagement;
 
 use APIToolkit\Logger\ConsoleLogger;
-use APIToolkit\Logger\ConsoleLoggerFactory;
+use APIToolkit\Factories\ConsoleLoggerFactory;
 use Datev\Entities\DocumentManagement\Documents\Document;
 use PHPUnit\Framework\TestCase;
 
