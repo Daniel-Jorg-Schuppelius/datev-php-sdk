@@ -12,7 +12,7 @@ namespace Datev\API\Desktop\Endpoints\Payroll;
 
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
-use APIToolkit\Logger\ConsoleLoggerFactory;
+use APIToolkit\Factories\ConsoleLoggerFactory;
 use DateTime;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use Datev\Entities\Payroll\Clients\Client;
