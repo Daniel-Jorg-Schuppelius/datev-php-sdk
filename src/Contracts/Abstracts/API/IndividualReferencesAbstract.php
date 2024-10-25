@@ -15,6 +15,7 @@ use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use APIToolkit\Entities\ID;
 use Datev\Entities\DocumentManagement\IndividualReferences\IndividualReference;
 use Datev\Entities\DocumentManagement\IndividualReferences\IndividualReferences;
+use InvalidArgumentException;
 
 abstract class IndividualReferencesAbstract extends EndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointPrefix = 'dms/v2';
@@ -22,7 +23,8 @@ abstract class IndividualReferencesAbstract extends EndpointAbstract implements 
 
     public function get(?ID $id = null): ?IndividualReference {
         if (is_null($id)) {
-            throw new \InvalidArgumentException('ID is required');
+            $this->logError('ID is required (Class:' . static::class . ')');
+            throw new InvalidArgumentException('ID is required');
         }
         $result = $this->search()->getFirstValue("id", $id->toString());
 

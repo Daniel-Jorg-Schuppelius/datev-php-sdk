@@ -10,6 +10,7 @@
 
 namespace Tests\Endpoints\Payroll;
 
+use DateTime;
 use Datev\API\Desktop\Endpoints\Payroll\ClientsEndpoint;
 use Datev\Entities\Payroll\Clients\Client;
 use Datev\Entities\Payroll\Clients\Clients;
@@ -21,7 +22,7 @@ class ClientTest extends EndpointTest {
     public function __construct($name) {
         parent::__construct($name);
         $this->endpoint = new ClientsEndpoint($this->client, $this->logger);
-        $this->apiDisabled = true; // API is disabled
+        $this->apiDisabled = false; // API is disabled
     }
 
     public function testJsonSerialize() {
@@ -55,7 +56,7 @@ class ClientTest extends EndpointTest {
         $this->assertNotEmpty($clients->getValues(), "No clients found");
         $randomClient = $clients->getValues()[array_rand($clients->getValues())];
         $this->assertInstanceOf(Client::class, $randomClient);
-        $client = $this->endpoint->get($randomClient->getId(), "all", new \DateTime("2021-01-01"));
+        $client = $this->endpoint->get($randomClient->getId(), "all", new DateTime("2021-01-01"));
         $this->assertInstanceOf(Client::class, $client);
         $this->assertEquals($randomClient->getId(), $client->getId());
     }

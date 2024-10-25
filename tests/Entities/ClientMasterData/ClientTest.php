@@ -51,7 +51,7 @@ class ClientTest extends TestCase {
             "functional_area_short_name" => "999"
         ];
 
-        $client = new Client($data);
+        $client = new Client($data, $this->logger);
         $this->assertFalse($client->isValid());
         $client = new Client($data, $this->logger);
         $this->assertInstanceOf(Client::class, new Client());

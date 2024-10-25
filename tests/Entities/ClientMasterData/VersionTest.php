@@ -56,7 +56,7 @@ class VersionTest extends TestCase {
             "version_name" => "Kernstammdaten - Daten V.9.2A"
         ];
 
-        $version = new Version($data);
+        $version = new Version($data, $this->logger);
         $version1 = new Version($data1, $this->logger);
         $this->assertTrue($version->isValid());
         $this->assertInstanceOf(Version::class, new Version());

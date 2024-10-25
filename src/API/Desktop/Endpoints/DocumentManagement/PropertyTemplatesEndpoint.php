@@ -12,10 +12,10 @@ namespace Datev\API\Desktop\Endpoints\DocumentManagement;
 
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
-use APIToolkit\Exceptions\NotFoundException;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use Datev\Entities\DocumentManagement\PropertyTemplates\PropertyTemplate;
 use Datev\Entities\DocumentManagement\PropertyTemplates\PropertyTemplates;
+use InvalidArgumentException;
 
 class PropertyTemplatesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointPrefix = 'dms/v2';
@@ -23,7 +23,8 @@ class PropertyTemplatesEndpoint extends EndpointAbstract implements SearchableEn
 
     public function get(?ID $id = null): ?PropertyTemplate {
         if (is_null($id)) {
-            throw new \InvalidArgumentException('ID is required');
+            $this->logError('ID is required (Class:' . static::class . ')');
+            throw new InvalidArgumentException('ID is required');
         }
 
         $result = $this->search()->getFirstValue("id", $id->toString());

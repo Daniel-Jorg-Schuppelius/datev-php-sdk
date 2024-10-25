@@ -15,6 +15,7 @@ use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use Datev\Entities\ClientMasterData\Addressees\Addressee;
 use Datev\Entities\ClientMasterData\Addressees\Addressees;
+use InvalidArgumentException;
 
 class AddresseesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointPrefix = 'master-data/v1';
@@ -22,7 +23,8 @@ class AddresseesEndpoint extends EndpointAbstract implements SearchableEndpointI
 
     public function get(?ID $id = null): ?Addressee {
         if (is_null($id)) {
-            throw new \InvalidArgumentException('ID is required');
+            $this->logError('ID is required (Class:' . static::class . ')');
+            throw new InvalidArgumentException('ID is required');
         }
 
         $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");

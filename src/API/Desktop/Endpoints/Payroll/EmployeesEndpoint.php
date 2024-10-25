@@ -3,27 +3,27 @@
  * Created on   : Sun Oct 06 2024
  * Author       : Daniel Jörg Schuppelius
  * Author Uri   : https://schuppelius.org
- * Filename     : ClientCategoriesEndpoint.php
+ * Filename     : ClientsEndpoint.php
  * License      : MIT License
  * License Uri  : https://opensource.org/license/mit
  */
 
-namespace Datev\API\Desktop\Endpoints\ClientMasterData;
+namespace Datev\API\Desktop\Endpoints\Payroll;
 
 use APIToolkit\Contracts\Interfaces\API\ApiClientInterface;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\ClientMasterData\ClientCategories\ClientCategories;
-use Datev\Entities\ClientMasterData\ClientCategories\ClientCategory;
-use Datev\Entities\ClientMasterData\Clients\ClientID;
+use Datev\Entities\Payroll\Clients\ClientID;
+use Datev\Entities\Payroll\Employees\Employee;
+use Datev\Entities\Payroll\Employees\Employees;
 use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 
-class ClientCategoriesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
-    protected string $endpointPrefix = 'master-data/v1';
+class EmployeesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
+    protected string $endpointPrefix = 'hr/v3';
     protected string $endpoint = 'clients/{client-id}';
-    protected string $endpointSuffix = 'client-categories';
+    protected string $endpointSuffix = 'employees';
 
     protected ClientID $clientID;
 
@@ -32,7 +32,7 @@ class ClientCategoriesEndpoint extends EndpointAbstract implements SearchableEnd
         $this->clientID = $clientID;
     }
 
-    public function get(?ID $id = null): ?ClientCategory {
+    public function get(?ID $id = null): ?Employee {
         if (is_null($id)) {
             $this->logError('ID is required (Class:' . static::class . ')');
             throw new InvalidArgumentException('ID is required');
@@ -44,28 +44,17 @@ class ClientCategoriesEndpoint extends EndpointAbstract implements SearchableEnd
             return null;
         }
 
-        return ClientCategory::fromJson($response);
+        return Employee::fromJson($response);
     }
 
-    public function searchByClient(array $queryParams = [], array $options = []): ?ClientCategories {
+    public function search(array $queryParams = [], array $options = []): ?Employees {
         $response = parent::getContents($queryParams, $options);
 
         if (empty($response) || $response === '[]') {
             return null;
         }
 
-        return ClientCategories::fromJson($response);
-    }
-
-    public function search(array $queryParams = [], array $options = []): ?ClientCategories {
-        // TODO: Check API, on documentation, this endpoint exists but it is not implemented?
-        $response = parent::getContents($queryParams, $options, "{$this->endpointPrefix}/{$this->endpointSuffix}");
-
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
-
-        return ClientCategories::fromJson($response);
+        return Employees::fromJson($response);
     }
 
     public function getClientID(): ClientID {

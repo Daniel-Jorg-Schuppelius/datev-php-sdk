@@ -15,6 +15,7 @@ use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use Datev\Entities\ClientMasterData\Banks\Bank;
 use Datev\Entities\ClientMasterData\Banks\Banks;
+use InvalidArgumentException;
 
 class BanksEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointPrefix = 'master-data/v1';
@@ -22,7 +23,8 @@ class BanksEndpoint extends EndpointAbstract implements SearchableEndpointInterf
 
     public function get(?ID $id = null): ?Bank {
         if (is_null($id)) {
-            throw new \InvalidArgumentException('ID is required');
+            $this->logError('ID is required (Class:' . static::class . ')');
+            throw new InvalidArgumentException('ID is required');
         }
 
         $result = $this->search()->getFirstValue("id", $id->toString());

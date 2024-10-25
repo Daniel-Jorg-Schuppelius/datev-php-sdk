@@ -15,6 +15,7 @@ use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use Datev\Entities\DocumentManagement\Domains\Domain;
 use Datev\Entities\DocumentManagement\Domains\Domains;
+use InvalidArgumentException;
 
 class DomainsEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointPrefix = 'dms/v2';
@@ -22,7 +23,8 @@ class DomainsEndpoint extends EndpointAbstract implements SearchableEndpointInte
 
     public function get(?ID $id = null): ?Domain {
         if (is_null($id)) {
-            throw new \InvalidArgumentException('ID is required');
+            $this->logError('ID is required (Class:' . static::class . ')');
+            throw new InvalidArgumentException('ID is required');
         }
 
         $result = $this->search()->getFirstValue("id", $id->toString());

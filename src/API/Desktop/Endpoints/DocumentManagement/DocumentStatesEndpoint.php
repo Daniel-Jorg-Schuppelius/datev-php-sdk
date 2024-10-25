@@ -15,6 +15,7 @@ use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use Datev\Entities\DocumentManagement\Documents\States\DocumentState;
 use Datev\Entities\DocumentManagement\Documents\States\DocumentStates;
+use InvalidArgumentException;
 
 class DocumentStatesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointPrefix = 'dms/v2';
@@ -22,7 +23,8 @@ class DocumentStatesEndpoint extends EndpointAbstract implements SearchableEndpo
 
     public function get(?ID $id = null): ?DocumentState {
         if (is_null($id)) {
-            throw new \InvalidArgumentException('ID is required');
+            $this->logError('ID is required (Class:' . static::class . ')');
+            throw new InvalidArgumentException('ID is required');
         }
 
         $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");

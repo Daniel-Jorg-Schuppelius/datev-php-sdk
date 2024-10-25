@@ -12,10 +12,10 @@ namespace Datev\API\Desktop\Endpoints\ClientMasterData;
 
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
-use APIToolkit\Exceptions\NotFoundException;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use Datev\Entities\ClientMasterData\AreaOfResponsibilities\AreaOfResponsibilities;
 use Datev\Entities\ClientMasterData\AreaOfResponsibilities\AreaOfResponsibility;
+use InvalidArgumentException;
 
 class AreaOfResponsibilitiesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointPrefix = 'master-data/v1';
@@ -23,7 +23,8 @@ class AreaOfResponsibilitiesEndpoint extends EndpointAbstract implements Searcha
 
     public function get(?ID $id = null): ?AreaOfResponsibility {
         if (is_null($id)) {
-            throw new \InvalidArgumentException('ID is required');
+            $this->logError('ID is required (Class:' . static::class . ')');
+            throw new InvalidArgumentException('ID is required');
         }
 
         $result = $this->search()->getFirstValue("id", $id->toString());

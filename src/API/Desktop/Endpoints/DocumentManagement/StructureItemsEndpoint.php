@@ -17,6 +17,7 @@ use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use Datev\Entities\DocumentManagement\Documents\DocumentID;
 use Datev\Entities\DocumentManagement\StructureItems\StructureItem;
 use Datev\Entities\DocumentManagement\StructureItems\StructureItems;
+use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 
 class StructureItemsEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
@@ -33,7 +34,8 @@ class StructureItemsEndpoint extends EndpointAbstract implements SearchableEndpo
 
     public function get(?ID $id = null): ?StructureItem {
         if (is_null($id)) {
-            throw new \InvalidArgumentException('ID is required');
+            $this->logError('ID is required (Class:' . static::class . ')');
+            throw new InvalidArgumentException('ID is required');
         }
 
         $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");

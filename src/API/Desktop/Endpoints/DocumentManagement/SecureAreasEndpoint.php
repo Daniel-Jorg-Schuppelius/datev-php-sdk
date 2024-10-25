@@ -15,6 +15,7 @@ use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use Datev\Entities\DocumentManagement\SecureAreas\SecureArea;
 use Datev\Entities\DocumentManagement\SecureAreas\SecureAreas;
+use InvalidArgumentException;
 
 class SecureAreasEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointPrefix = 'dms/v2';
@@ -22,7 +23,8 @@ class SecureAreasEndpoint extends EndpointAbstract implements SearchableEndpoint
 
     public function get(?ID $id = null): ?SecureArea {
         if (is_null($id)) {
-            throw new \InvalidArgumentException('ID is required');
+            $this->logError('ID is required (Class:' . static::class . ')');
+            throw new InvalidArgumentException('ID is required');
         }
 
         $result = $this->search()->getFirstValue("id", $id->toString());

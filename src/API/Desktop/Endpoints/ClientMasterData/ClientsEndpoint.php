@@ -15,6 +15,7 @@ use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use Datev\Entities\ClientMasterData\Clients\Client;
 use Datev\Entities\ClientMasterData\Clients\Clients;
+use InvalidArgumentException;
 
 class ClientsEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointPrefix = 'master-data/v1';
@@ -22,7 +23,8 @@ class ClientsEndpoint extends EndpointAbstract implements SearchableEndpointInte
 
     public function get(?ID $id = null): ?Client {
         if (is_null($id)) {
-            throw new \InvalidArgumentException('ID is required');
+            $this->logError('ID is required (Class:' . static::class . ')');
+            throw new InvalidArgumentException('ID is required');
         }
         $result = $this->search()->getFirstValue("id", $id->toString());
 
