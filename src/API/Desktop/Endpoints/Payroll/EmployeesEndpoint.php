@@ -44,7 +44,7 @@ class EmployeesEndpoint extends EndpointAbstract implements SearchableEndpointIn
             return null;
         }
 
-        return Employee::fromJson($response);
+        return Employee::fromJson($response, $this->logger);
     }
 
     public function search(array $queryParams = [], array $options = []): ?Employees {
@@ -54,7 +54,7 @@ class EmployeesEndpoint extends EndpointAbstract implements SearchableEndpointIn
             return null;
         }
 
-        return Employees::fromJson($response);
+        return Employees::fromJson($response, $this->logger);
     }
 
     public function getClientID(): ClientID {

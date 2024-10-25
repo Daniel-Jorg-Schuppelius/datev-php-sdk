@@ -39,6 +39,6 @@ class DomainsEndpoint extends EndpointAbstract implements SearchableEndpointInte
             return null;
         }
 
-        return Domains::fromJson($response);
+        return Domains::fromJson($response, $this->logger);
     }
 }

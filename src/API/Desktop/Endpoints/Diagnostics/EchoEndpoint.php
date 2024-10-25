@@ -25,6 +25,6 @@ class EchoEndpoint extends EndpointAbstract {
             return null;
         }
 
-        return EchoResponse::fromJson($response);
+        return EchoResponse::fromJson($response, $this->logger);
     }
 }

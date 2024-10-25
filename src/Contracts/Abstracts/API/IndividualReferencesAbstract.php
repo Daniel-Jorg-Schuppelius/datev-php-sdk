@@ -38,6 +38,6 @@ abstract class IndividualReferencesAbstract extends EndpointAbstract implements 
             return null;
         }
 
-        return IndividualReferences::fromJson($response);
+        return IndividualReferences::fromJson($response, $this->logger);
     }
 }

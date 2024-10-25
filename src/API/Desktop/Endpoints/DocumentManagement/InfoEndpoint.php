@@ -25,6 +25,6 @@ class InfoEndpoint extends EndpointAbstract {
             return null;
         }
 
-        return Info::fromJson($response);
+        return Info::fromJson($response, $this->logger);
     }
 }

@@ -39,6 +39,6 @@ class AreaOfResponsibilitiesEndpoint extends EndpointAbstract implements Searcha
             return null;
         }
 
-        return AreaOfResponsibilities::fromJson($response);
+        return AreaOfResponsibilities::fromJson($response, $this->logger);
     }
 }

@@ -39,6 +39,6 @@ class PropertyTemplatesEndpoint extends EndpointAbstract implements SearchableEn
             return null;
         }
 
-        return PropertyTemplates::fromJson($response);
+        return PropertyTemplates::fromJson($response, $this->logger);
     }
 }

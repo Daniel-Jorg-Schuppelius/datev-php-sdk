@@ -44,7 +44,7 @@ class StructureItemsEndpoint extends EndpointAbstract implements SearchableEndpo
             return null;
         }
 
-        return StructureItem::fromJson($response);
+        return StructureItem::fromJson($response, $this->logger);
     }
 
     public function search(array $queryParams = [], array $options = []): ?StructureItems {
@@ -54,7 +54,7 @@ class StructureItemsEndpoint extends EndpointAbstract implements SearchableEndpo
             return null;
         }
 
-        return StructureItems::fromJson($response);
+        return StructureItems::fromJson($response, $this->logger);
     }
 
     public function getDocumentID(): DocumentID {

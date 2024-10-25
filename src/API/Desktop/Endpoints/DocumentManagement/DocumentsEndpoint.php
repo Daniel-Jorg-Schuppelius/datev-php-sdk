@@ -33,7 +33,7 @@ class DocumentsEndpoint extends EndpointAbstract implements SearchableEndpointIn
             return null;
         }
 
-        return Document::fromJson($response);
+        return Document::fromJson($response, $this->logger);
     }
 
     public function search(array $queryParams = [], array $options = []): ?Documents {
@@ -43,6 +43,6 @@ class DocumentsEndpoint extends EndpointAbstract implements SearchableEndpointIn
             return null;
         }
 
-        return Documents::fromJson($response);
+        return Documents::fromJson($response, $this->logger);
     }
 }

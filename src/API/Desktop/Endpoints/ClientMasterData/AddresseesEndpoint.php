@@ -33,7 +33,7 @@ class AddresseesEndpoint extends EndpointAbstract implements SearchableEndpointI
             return null;
         }
 
-        return Addressee::fromJson($response);
+        return Addressee::fromJson($response, $this->logger);
     }
 
     public function search(array $queryParams = [], array $options = []): ?Addressees {
@@ -43,6 +43,6 @@ class AddresseesEndpoint extends EndpointAbstract implements SearchableEndpointI
             return null;
         }
 
-        return Addressees::fromJson($response);
+        return Addressees::fromJson($response, $this->logger);
     }
 }

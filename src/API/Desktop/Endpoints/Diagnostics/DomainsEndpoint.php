@@ -25,6 +25,6 @@ class DomainsEndpoint extends EndpointAbstract {
             return null;
         }
 
-        return Domains::fromJson($response);
+        return Domains::fromJson($response, $this->logger);
     }
 }

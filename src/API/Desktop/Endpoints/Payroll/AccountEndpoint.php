@@ -33,7 +33,7 @@ class AccountEndpoint extends EndpointAbstract implements SearchableEndpointInte
             return null;
         }
 
-        return Account::fromJson($response);
+        return Account::fromJson($response, $this->logger);
     }
 
     public function search(array $queryParams = [], array $options = []): ?Accounts {
@@ -43,6 +43,6 @@ class AccountEndpoint extends EndpointAbstract implements SearchableEndpointInte
             return null;
         }
 
-        return Accounts::fromJson($response);
+        return Accounts::fromJson($response, $this->logger);
     }
 }

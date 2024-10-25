@@ -25,6 +25,6 @@ class IndividualPropertiesEndpoint extends EndpointAbstract {
             return null;
         }
 
-        return IndividualProperties::fromJson($response);
+        return IndividualProperties::fromJson($response, $this->logger);
     }
 }

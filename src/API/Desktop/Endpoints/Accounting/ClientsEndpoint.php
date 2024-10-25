@@ -33,7 +33,7 @@ class ClientsEndpoint extends EndpointAbstract implements SearchableEndpointInte
             return null;
         }
 
-        return Client::fromJson($response);
+        return Client::fromJson($response, $this->logger);
     }
 
     public function search(array $queryParams = [], array $options = []): ?Clients {
@@ -43,6 +43,6 @@ class ClientsEndpoint extends EndpointAbstract implements SearchableEndpointInte
             return null;
         }
 
-        return Clients::fromJson($response);
+        return Clients::fromJson($response, $this->logger);
     }
 }

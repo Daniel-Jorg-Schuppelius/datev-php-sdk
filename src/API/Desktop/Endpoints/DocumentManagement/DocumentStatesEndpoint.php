@@ -33,7 +33,7 @@ class DocumentStatesEndpoint extends EndpointAbstract implements SearchableEndpo
             return null;
         }
 
-        return DocumentState::fromJson($response);
+        return DocumentState::fromJson($response, $this->logger);
     }
 
     public function search(array $queryParams = [], array $options = []): ?DocumentStates {
@@ -43,6 +43,6 @@ class DocumentStatesEndpoint extends EndpointAbstract implements SearchableEndpo
             return null;
         }
 
-        return DocumentStates::fromJson($response);
+        return DocumentStates::fromJson($response, $this->logger);
     }
 }
