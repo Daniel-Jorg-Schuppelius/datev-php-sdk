@@ -15,6 +15,7 @@ namespace Datev\API\Desktop;
 use APIToolkit\Contracts\Abstracts\API\ClientAbstract;
 use Psr\Log\LoggerInterface;
 use GuzzleHttp\Client as HttpClient;
+use Psr\Http\Message\ResponseInterface;
 
 class ClientBasicAuth extends ClientAbstract {
     public function __construct(?string $username, ?string $password, string $baseUrl = 'https://127.0.0.1:58452', ?LoggerInterface $logger = null, bool $sleepAfterRequest = false) {
@@ -28,5 +29,9 @@ class ClientBasicAuth extends ClientAbstract {
             'timeout' => 120,
             'verify' => false,  // SSL-Zertifikatsüberprüfung deaktivieren (nur wenn nötig)
         ]), $logger, $sleepAfterRequest);
+    }
+
+    protected function requestWithRetry(string $method, string $uri, array $options = [], int $maxRetries = 3, int $retryDelay = 60): ResponseInterface {
+        return parent::requestWithRetry($method, $uri, $options, $maxRetries, $retryDelay);
     }
 }
