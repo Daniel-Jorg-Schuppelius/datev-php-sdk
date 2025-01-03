@@ -31,6 +31,8 @@ class InitialActivity extends NamedEntity implements IdentifiableNamedEntityInte
     protected ?float $allocation_of_working_hours_friday;
     protected ?float $allocation_of_working_hours_saturday;
     protected ?float $allocation_of_working_hours_sunday;
+    protected ?int $employee_group_financial_accounting;
+
 
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);

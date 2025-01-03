@@ -42,6 +42,7 @@ class Activity extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?int $number_of_business_unit;
     protected ?string $department;
     protected ?int $employee_group_accounting;
+    protected ?int $employee_group_financial_accounting;
 
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);

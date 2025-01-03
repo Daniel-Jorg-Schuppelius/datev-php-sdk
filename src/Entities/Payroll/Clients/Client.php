@@ -21,7 +21,8 @@ use Datev\Entities\Payroll\Departments\Departments;
 use Datev\Entities\Payroll\Employees\Accountable\AccountableEmployees;
 use Datev\Entities\Payroll\Employees\Employees;
 use Datev\Entities\Payroll\Employees\Groups\EmployeeGroup;
-use Datev\Entities\Payroll\FinancialAccountings\FinancialAccountings;
+use Datev\Entities\Payroll\Employees\Groups\EmployeeGroups;
+use Datev\Entities\Payroll\FinancialAccountings\FinancialAccounting;
 use Datev\Entities\Payroll\ReasonsForAbsence\ReasonsForAbsence;
 use Datev\Entities\Payroll\Salaries\SalaryTypes\SalaryTypes;
 use Datev\Entities\Payroll\WorkingHours\WorkingHours;
@@ -36,9 +37,10 @@ class Client extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?CostCenters $cost_centers;
     protected ?CostUnits $cost_units;
     protected ?Departments $departments;
-    protected ?EmployeeGroup $employee_group;
+    protected ?EmployeeGroups $employee_group;
+    //protected ?string $employee_group_accounting;
     protected ?Employees $employees;
-    protected ?FinancialAccountings $financial_accounting;
+    protected ?FinancialAccounting $financial_accounting;
     protected ?ReasonsForAbsence $reasons_for_absence;
     protected ?SalaryTypes $salary_types;
     protected ?WorkingHours $working_hours;
@@ -87,7 +89,7 @@ class Client extends NamedEntity implements IdentifiableNamedEntityInterface {
         return $this->employees ?? null;
     }
 
-    public function getFinancialAccounting(): ?FinancialAccountings {
+    public function getFinancialAccounting(): ?FinancialAccounting {
         return $this->financial_accounting ?? null;
     }
 
