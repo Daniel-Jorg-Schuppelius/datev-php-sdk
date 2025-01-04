@@ -22,7 +22,7 @@ class ClientTest extends EndpointTest {
     public function __construct($name) {
         parent::__construct($name);
         $this->endpoint = new ClientsEndpoint($this->client, $this->logger);
-        $this->apiDisabled = false; // API is disabled
+        $this->apiDisabled = true; // API is disabled
     }
 
     public function testJsonSerialize() {
