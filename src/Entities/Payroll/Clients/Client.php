@@ -20,6 +20,7 @@ use Datev\Entities\Payroll\CostUnits\CostUnits;
 use Datev\Entities\Payroll\Departments\Departments;
 use Datev\Entities\Payroll\Employees\Accountable\AccountableEmployees;
 use Datev\Entities\Payroll\Employees\Employees;
+use Datev\Entities\Payroll\Employees\Groups\Accountings\EmployeeGroupAccountings;
 use Datev\Entities\Payroll\Employees\Groups\EmployeeGroup;
 use Datev\Entities\Payroll\Employees\Groups\EmployeeGroups;
 use Datev\Entities\Payroll\FinancialAccountings\FinancialAccounting;
@@ -38,7 +39,7 @@ class Client extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?CostUnits $cost_units;
     protected ?Departments $departments;
     protected ?EmployeeGroups $employee_group;
-    //protected ?string $employee_group_accounting;
+    protected ?EmployeeGroupAccountings $employee_group_accounting;
     protected ?Employees $employees;
     protected ?FinancialAccounting $financial_accounting;
     protected ?ReasonsForAbsence $reasons_for_absence;
@@ -83,6 +84,10 @@ class Client extends NamedEntity implements IdentifiableNamedEntityInterface {
 
     public function getEmployeeGroup(): ?EmployeeGroup {
         return $this->employee_group ?? null;
+    }
+
+    public function getEmployeeGroupAccounting(): ?EmployeeGroupAccountings {
+        return $this->employee_group_accounting ?? null;
     }
 
     public function getEmployees(): ?Employees {

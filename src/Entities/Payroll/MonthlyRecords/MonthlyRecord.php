@@ -15,13 +15,14 @@ namespace Datev\Entities\Payroll\MonthlyRecords;
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use DateTime;
+use Datev\Entities\Payroll\Salaries\SalaryTypes\ID\SalaryTypeID;
 use Psr\Log\LoggerInterface;
 
 class MonthlyRecord extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected MonthlyRecordID $id;
     protected ?string $personnel_number;
     protected ?DateTime $month_of_emergence;
-    protected ?string $salary_type_id;
+    protected ?SalaryTypeID $salary_type_id;
     protected ?string $cost_center_id;
     protected ?int $cost_unit_id;
     protected ?float $value;
@@ -46,7 +47,7 @@ class MonthlyRecord extends NamedEntity implements IdentifiableNamedEntityInterf
         return $this->month_of_emergence ?? null;
     }
 
-    public function getSalaryTypeID(): ?string {
+    public function getSalaryTypeID(): ?SalaryTypeID {
         return $this->salary_type_id ?? null;
     }
 
