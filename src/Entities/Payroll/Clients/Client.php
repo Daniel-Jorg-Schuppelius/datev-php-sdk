@@ -12,8 +12,7 @@ declare(strict_types=1);
 
 namespace Datev\Entities\Payroll\Clients;
 
-use APIToolkit\Contracts\Abstracts\NamedEntity;
-use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
+use Datev\Entities\Common\Clients\Client as CommonClient;
 use Datev\Entities\Common\ConsultantNumber;
 use Datev\Entities\Payroll\CostCenters\CostCenters;
 use Datev\Entities\Payroll\CostUnits\CostUnits;
@@ -29,11 +28,8 @@ use Datev\Entities\Payroll\Salaries\SalaryTypes\SalaryTypes;
 use Datev\Entities\Payroll\WorkingHours\WorkingHours;
 use Psr\Log\LoggerInterface;
 
-class Client extends NamedEntity implements IdentifiableNamedEntityInterface {
-    protected ClientID $id;
+class Client extends CommonClient {
     protected ConsultantNumber $consultant_number;
-    protected int $number;
-    protected string $name;
     protected ?AccountableEmployees $accountable_employees;
     protected ?CostCenters $cost_centers;
     protected ?CostUnits $cost_units;
@@ -48,18 +44,6 @@ class Client extends NamedEntity implements IdentifiableNamedEntityInterface {
 
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
-    }
-
-    public function getID(): ClientID {
-        return $this->id;
-    }
-
-    public function getNumber(): int {
-        return $this->number;
-    }
-
-    public function getName(): string {
-        return $this->name;
     }
 
     public function getConsultantNumber(): ConsultantNumber {

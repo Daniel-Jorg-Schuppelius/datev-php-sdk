@@ -1,6 +1,6 @@
 <?php
 /*
- * Created on   : Sun Oct 06 2024
+ * Created on   : Sun Jan 26 2025
  * Author       : Daniel Jörg Schuppelius
  * Author Uri   : https://schuppelius.org
  * Filename     : ClientID.php
@@ -10,12 +10,12 @@
 
 declare(strict_types=1);
 
-namespace Datev\Entities\Payroll\Clients;
+namespace Datev\Entities\Common\Clients;
 
-use APIToolkit\Entities\ID;
+use APIToolkit\Entities\GUID;
 use Psr\Log\LoggerInterface;
 
-class ClientID extends ID {
+class ClientID extends GUID {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
         $this->entityName = 'id';

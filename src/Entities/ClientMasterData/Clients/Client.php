@@ -12,11 +12,10 @@ declare(strict_types=1);
 
 namespace Datev\Entities\ClientMasterData\Clients;
 
-use APIToolkit\Contracts\Abstracts\NamedEntity;
-use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use DateTime;
 use Datev\Entities\ClientMasterData\Establishments\ID\EstablishmentID;
 use Datev\Entities\ClientMasterData\FunctionalAreas\ID\FunctionalAreaID;
+use Datev\Entities\Common\Clients\Client as CommonClient;
 use Datev\Entities\Common\LegalPersonID;
 use Datev\Entities\Common\NaturalPersonID;
 use Datev\Entities\Common\OrganizationID;
@@ -24,16 +23,13 @@ use Datev\Enums\PersonType;
 use Datev\Enums\Status;
 use Psr\Log\LoggerInterface;
 
-class Client extends NamedEntity implements IdentifiableNamedEntityInterface {
-    protected ?ClientID $id;
+class Client extends CommonClient {
     protected ?DateTime $client_since;
     protected ?DateTime $client_to;
     protected ?string $differing_name;
     protected ?LegalPersonID $legal_person_id;
-    protected string $name;
     protected ?NaturalPersonID $natural_person_id;
     protected ?string $note;
-    protected int $number;
     protected ?Status $status;
     protected ?DateTime $timestamp;
     protected PersonType $type;
@@ -52,10 +48,6 @@ class Client extends NamedEntity implements IdentifiableNamedEntityInterface {
         parent::__construct($data, $logger);
     }
 
-    public function getID(): ClientID {
-        return $this->id;
-    }
-
     public function getClientSince(): ?DateTime {
         return $this->client_since ?? null;
     }
@@ -72,20 +64,12 @@ class Client extends NamedEntity implements IdentifiableNamedEntityInterface {
         return $this->legal_person_id ?? null;
     }
 
-    public function getName(): string {
-        return $this->name;
-    }
-
     public function getNaturalPersonID(): ?NaturalPersonID {
         return $this->natural_person_id ?? null;
     }
 
     public function getNote(): ?string {
         return $this->note ?? null;
-    }
-
-    public function getNumber(): int {
-        return $this->number;
     }
 
     public function getStatus(): ?Status {

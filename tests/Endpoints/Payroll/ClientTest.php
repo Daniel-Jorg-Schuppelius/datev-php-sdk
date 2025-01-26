@@ -27,16 +27,16 @@ class ClientTest extends EndpointTest {
 
     public function testJsonSerialize() {
         $data = [
-            "id" => "9351B0E3-E96B-4BB0-B94E-018B13D1DB28",
             "consultant_number" => "29115",
-            "number" => 55039,
+            "id" => "9351b0e3-e96b-4bb0-b94e-018b13d1db28",
             "name" => "Küchenbeispiel",
+            "number" => 55039
         ];
 
         $data1 = [
-            "id" => "9351B0E3-E96B-4BB0-B94E-018B13D1DB28",
-            "number" => 55039,
-            "name" => "Küchenbeispiel"
+            "id" => "9351b0e3-e96b-4bb0-b94e-018b13d1db28",
+            "name" => "Küchenbeispiel",
+            "number" => 55039
         ];
 
         $client = new Client($data);

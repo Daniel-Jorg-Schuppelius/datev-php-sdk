@@ -1,6 +1,6 @@
 <?php
 /*
- * Created on   : Sun Oct 06 2024
+ * Created on   : Sun Jan 26 2025
  * Author       : Daniel Jörg Schuppelius
  * Author Uri   : https://schuppelius.org
  * Filename     : ClientID.php
@@ -10,9 +10,9 @@
 
 declare(strict_types=1);
 
-namespace Datev\Entities\ClientMasterData\Clients\ID;
+namespace Datev\Entities\Common\Clients\ID;
 
-use Datev\Entities\ClientMasterData\Clients\ClientID as BaseClientID;
+use Datev\Entities\Common\Clients\ClientID as BaseClientID;
 use Psr\Log\LoggerInterface;
 
 class ClientID extends BaseClientID {

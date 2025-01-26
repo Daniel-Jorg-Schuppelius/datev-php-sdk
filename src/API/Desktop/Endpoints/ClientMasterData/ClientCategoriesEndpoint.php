@@ -16,7 +16,7 @@ use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use Datev\Entities\ClientMasterData\ClientCategories\ClientCategories;
 use Datev\Entities\ClientMasterData\ClientCategories\ClientCategory;
-use Datev\Entities\ClientMasterData\Clients\ClientID;
+use Datev\Entities\Common\Clients\ClientID;
 use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 

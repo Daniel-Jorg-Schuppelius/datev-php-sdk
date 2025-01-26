@@ -1,6 +1,6 @@
 <?php
 /*
- * Created on   : Sun Oct 06 2024
+ * Created on   : Sun Jan 26 2025
  * Author       : Daniel Jörg Schuppelius
  * Author Uri   : https://schuppelius.org
  * Filename     : Client.php
@@ -10,25 +10,30 @@
 
 declare(strict_types=1);
 
-namespace Datev\Entities\Accounting\Clients;
+namespace Datev\Entities\Common\Clients;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
-use Datev\Entities\Accounting\CompanyData;
-use Datev\Entities\Common\Clients\ClientID;
 use Psr\Log\LoggerInterface;
 
 class Client extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?ClientID $id;
-    protected ?string $name;
-    protected ?int $number;
-    protected CompanyData $company_data;
+    protected string $name;
+    protected int $number;
 
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
 
-    public function getID(): ClientID {
-        return $this->id;
+    public function getID(): ?ClientID {
+        return $this->id ?? null;
+    }
+
+    public function getName(): string {
+        return $this->name;
+    }
+
+    public function getNumber(): int {
+        return $this->number;
     }
 }

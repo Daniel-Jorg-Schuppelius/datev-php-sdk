@@ -16,7 +16,7 @@ use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use DateTime;
 use Datev\Entities\ClientMasterData\ClientGroupTypes\ID\ClientGroupTypeID;
-use Datev\Entities\ClientMasterData\Clients\ID\ClientID;
+use Datev\Entities\Common\Clients\ID\ClientID;
 use Datev\Enums\Status;
 use Psr\Log\LoggerInterface;
 
