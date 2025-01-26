@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Tests\Contracts;
 
 use APIToolkit\Contracts\Interfaces\API\ApiClientInterface;
-use APIToolkit\Factories\ConsoleLoggerFactory;
+use ERRORToolkit\Factories\ConsoleLoggerFactory;
 use Datev\API\Desktop\Endpoints\Diagnostics\EchoEndpoint;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;

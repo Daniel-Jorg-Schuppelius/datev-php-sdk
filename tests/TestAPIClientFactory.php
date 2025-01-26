@@ -11,7 +11,7 @@
 namespace Tests;
 
 use APIToolkit\Contracts\Interfaces\API\ApiClientInterface;
-use APIToolkit\Factories\ConsoleLoggerFactory;
+use ERRORToolkit\Factories\ConsoleLoggerFactory;
 use Datev\API\Desktop\ClientBasicAuth;
 use Tests\Config\Config;
 

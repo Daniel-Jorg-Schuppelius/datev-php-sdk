@@ -12,8 +12,9 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
-use APIToolkit\Logger\ConsoleLogger;
-use APIToolkit\Factories\ConsoleLoggerFactory;
+use ERRORToolkit\Logger\ConsoleLogger;;
+
+use ERRORToolkit\Factories\ConsoleLoggerFactory;
 use Datev\Entities\ClientMasterData\ClientGroups\ClientGroup;
 use PHPUnit\Framework\TestCase;
 
