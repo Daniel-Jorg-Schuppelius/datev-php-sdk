@@ -12,12 +12,11 @@ declare(strict_types=1);
 
 namespace Datev\Entities\Accounting\Clients;
 
-use APIToolkit\Contracts\Abstracts\NamedValues;
+use Datev\Entities\Common\Clients\Clients as CommonClients;
 use Psr\Log\LoggerInterface;
 
-class Clients extends NamedValues {
+class Clients extends CommonClients {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
-        $this->entityName = "content";
         $this->valueClassName = Client::class;
 
         parent::__construct($data, $logger);

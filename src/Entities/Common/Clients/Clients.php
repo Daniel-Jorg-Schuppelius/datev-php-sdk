@@ -18,7 +18,9 @@ use Psr\Log\LoggerInterface;
 class Clients extends NamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";
-        $this->valueClassName = Client::class;
+        if (empty($this->valueClassName) || (!is_subclass_of($this->valueClassName, Client::class) && $this->valueClassName !== Client::class)) {
+            $this->valueClassName = Client::class;
+        }
 
         parent::__construct($data, $logger);
     }

@@ -32,12 +32,12 @@ class ClientTest extends EndpointTest {
         ];
 
         $data1 = [
-            "id" => "9351b0e3-e96b-4bb0-b94e-018b13d1db28",
-            "name" => "Küchenbeispiel",
-            "number" => 55039,
             "company_data" => [
                 "creditor_identifier" => "DE98ZZZ09999999999"
-            ]
+            ],
+            "id" => "9351b0e3-e96b-4bb0-b94e-018b13d1db28",
+            "name" => "Küchenbeispiel",
+            "number" => 55039
         ];
 
         $client = new Client($data);
@@ -47,12 +47,18 @@ class ClientTest extends EndpointTest {
         $this->assertEquals(json_encode($data1), $client1->toJson());  // the order of the $data array is important for this test.
     }
 
-    public function testCreateAndDeleteArticleAPI() {
+    public function testGetClients() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }
 
         $clients = $this->endpoint->search();
         $this->assertInstanceOf(Clients::class, $clients);
+        $this->assertNotEmpty($clients->getValues(), "No clients found");
+        $randomClient = $clients->getValues()[array_rand($clients->getValues())];
+        $this->assertInstanceOf(Client::class, $randomClient);
+        $client = $this->endpoint->get($randomClient->getId());
+        $this->assertInstanceOf(Client::class, $client);
+        $this->assertEquals($randomClient->getId(), $client->getId());
     }
 }

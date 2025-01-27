@@ -12,6 +12,7 @@ namespace Datev\API\Desktop\Endpoints\Accounting;
 
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
+use DateTime;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use Datev\Entities\Accounting\Clients\Client;
 use Datev\Entities\Accounting\Clients\Clients;
@@ -21,13 +22,22 @@ class ClientsEndpoint extends EndpointAbstract implements SearchableEndpointInte
     protected string $endpointPrefix = 'accounting/v1';
     protected string $endpoint = 'clients';
 
-    public function get(?ID $id = null): ?Client {
+    public function get(?ID $id = null, ?string $select = null, ?string $expand = "all"): ?Client {
         if (is_null($id)) {
             $this->logError('ID is required (Class:' . static::class . ')');
             throw new InvalidArgumentException('ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
+        $queryParams = [];
+        if (!empty($select)) {
+            $queryParams[] = "select=" . urlencode($select);
+        }
+        if (!empty($expand)) {
+            $queryParams[] = "expand=" . urlencode($expand);
+        }
+
+        $queryString = !empty($queryParams) ? '?' . implode('&', $queryParams) : '';
+        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}{$queryString}");
 
         if (empty($response) || $response === '[]') {
             return null;
