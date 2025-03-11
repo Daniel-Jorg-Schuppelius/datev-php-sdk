@@ -29,7 +29,8 @@
     }
   },
   "require-dev": {
-    "phpunit/phpunit": "^11.3@dev"
+    "phpunit/phpunit": "^11.3@dev",
+    "dschuppelius/php-config-toolkit": "^0.1.0"
   },
   "config": {
     "platform": {

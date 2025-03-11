@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "616512c0589d1aaeb5932f200caca500",
+    "content-hash": "83002ca76731b925de6d6d843859aa6b",
     "packages": [
         {
             "name": "daniel-jorg-schuppelius/php-api-toolkit",
@@ -744,6 +744,50 @@
         }
     ],
     "packages-dev": [
+        {
+            "name": "dschuppelius/php-config-toolkit",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/DSchuppelius/php-config-toolkit.git",
+                "reference": "69dc3bd84ab1ddb56acf67b93ccd8d6b92aef47e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/DSchuppelius/php-config-toolkit/zipball/69dc3bd84ab1ddb56acf67b93ccd8d6b92aef47e",
+                "reference": "69dc3bd84ab1ddb56acf67b93ccd8d6b92aef47e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0",
+                "psr/log": "^3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^11.3@dev"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ConfigToolkit\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniel Joerg Schuppelius",
+                    "email": "info@schuppelius.org"
+                }
+            ],
+            "description": "Ein Toolkit für JSON-basierte Konfigurationsverwaltung",
+            "support": {
+                "issues": "https://github.com/DSchuppelius/php-config-toolkit/issues",
+                "source": "https://github.com/DSchuppelius/php-config-toolkit/tree/v0.1.0"
+            },
+            "time": "2025-03-10T19:43:32+00:00"
+        },
         {
             "name": "myclabs/deep-copy",
             "version": "1.13.0",
@@ -2435,7 +2479,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "phpunit/phpunit": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
@@ -2445,5 +2491,5 @@
     "platform-overrides": {
         "php": "8.2.0"
     },
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }

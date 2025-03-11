@@ -1,6 +1,5 @@
 {
-	"name": "DATEV Desktop API",
-	"values": [
+	"DATEV-DESKTOP-API": [
 		{
 			"key": "resourceurl",
 			"value": "https://127.0.0.1:58452",
