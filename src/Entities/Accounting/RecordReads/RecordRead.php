@@ -35,8 +35,8 @@ use Psr\Log\LoggerInterface;
 
 class RecordRead extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected RecordReadID $id;
-    protected ?int $account_number;
     protected ?int $accounting_transaction_key;
+    protected ?int $account_number;
     protected ?AdditionalInformations $additional_information;
     protected ?AdvancePayment $advance_payment;
     protected ?float $amount;

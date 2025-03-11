@@ -12,7 +12,6 @@ namespace Datev\API\Desktop\Endpoints\Accounting;
 
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
-use DateTime;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use Datev\Entities\Accounting\Clients\Client;
 use Datev\Entities\Accounting\Clients\Clients;
