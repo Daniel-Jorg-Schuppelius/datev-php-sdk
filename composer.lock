@@ -760,6 +760,7 @@
             },
             "require": {
                 "dschuppelius/php-error-toolkit": "^1.2",
+                "dschuppelius/php-error-toolkit": "^1.2",
                 "php": ">=8.0",
                 "psr/log": "^3.0"
             },
@@ -2492,5 +2493,5 @@
     "platform-overrides": {
         "php": "8.2.0"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.3.0"
 }
