@@ -44,7 +44,7 @@ class ClientCategoriesEndpoint extends EndpointAbstract implements SearchableEnd
             return null;
         }
 
-        return ClientCategory::fromJson($response, $this->logger);
+        return ClientCategory::fromJson($response, self::$logger);
     }
 
     public function searchByClient(array $queryParams = [], array $options = []): ?ClientCategories {
@@ -54,7 +54,7 @@ class ClientCategoriesEndpoint extends EndpointAbstract implements SearchableEnd
             return null;
         }
 
-        return ClientCategories::fromJson($response, $this->logger);
+        return ClientCategories::fromJson($response, self::$logger);
     }
 
     public function search(array $queryParams = [], array $options = []): ?ClientCategories {
@@ -65,7 +65,7 @@ class ClientCategoriesEndpoint extends EndpointAbstract implements SearchableEnd
             return null;
         }
 
-        return ClientCategories::fromJson($response, $this->logger);
+        return ClientCategories::fromJson($response, self::$logger);
     }
 
     public function getClientID(): ClientID {

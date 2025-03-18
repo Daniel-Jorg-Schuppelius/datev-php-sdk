@@ -39,6 +39,6 @@ class SecureAreasEndpoint extends EndpointAbstract implements SearchableEndpoint
             return null;
         }
 
-        return SecureAreas::fromJson($response, $this->logger);
+        return SecureAreas::fromJson($response, self::$logger);
     }
 }

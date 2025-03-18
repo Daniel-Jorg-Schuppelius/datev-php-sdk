@@ -20,7 +20,7 @@ class TestAPIClientFactory {
 
     public static function getClient(): ApiClientInterface {
         if (self::$client === null) {
-            $config = ConfigLoader::getInstance();
+            $config = ConfigLoader::getInstance(ConsoleLoggerFactory::getLogger());
             $config->loadConfigFile(__DIR__ . "/../.samples/config.json");
             self::$client = new ClientBasicAuth($config->get("DATEV-DESKTOP-API", "user"), $config->get("DATEV-DESKTOP-API", "password"), $config->get("DATEV-DESKTOP-API", "resourceurl", "https://127.0.0.1:58452"), ConsoleLoggerFactory::getLogger());
         }

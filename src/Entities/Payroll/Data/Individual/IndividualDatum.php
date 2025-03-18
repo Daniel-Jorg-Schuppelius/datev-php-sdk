@@ -44,7 +44,7 @@ class IndividualDatum extends NamedEntity implements IdentifiableNamedEntityInte
                 "amount" => isset($data['amount']) ? (float) $data['amount'] : null,
             ];
 
-            $this->data[] = new IndividualDatumRecord($recordData, $this->logger);
+            $this->data[] = new IndividualDatumRecord($recordData, self::$logger);
 
             $index = 2;
             while (
@@ -60,7 +60,7 @@ class IndividualDatum extends NamedEntity implements IdentifiableNamedEntityInte
                     "amount" => isset($data["amount{$index}"]) ? (float) $data["amount{$index}"] : null,
                 ];
 
-                $this->data[] = new IndividualDatumRecord($recordData, $this->logger);
+                $this->data[] = new IndividualDatumRecord($recordData, self::$logger);
 
                 $index++;
             }

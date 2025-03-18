@@ -31,13 +31,13 @@ abstract class IndividualReferencesAbstract extends EndpointAbstract implements 
         return $result;
     }
 
-    public function search(array $queryParams = [], array $options = []): IndividualReferences {
+    public function search(array $queryParams = [], array $options = []): ?IndividualReferences {
         $response = parent::getContents($queryParams, $options);
 
         if (empty($response) || $response === '[]') {
             return null;
         }
 
-        return IndividualReferences::fromJson($response, $this->logger);
+        return IndividualReferences::fromJson($response, self::$logger);
     }
 }

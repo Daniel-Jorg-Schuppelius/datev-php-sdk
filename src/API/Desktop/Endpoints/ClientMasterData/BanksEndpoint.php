@@ -39,6 +39,6 @@ class BanksEndpoint extends EndpointAbstract implements SearchableEndpointInterf
             return null;
         }
 
-        return Banks::fromJson($response, $this->logger);
+        return Banks::fromJson($response, self::$logger);
     }
 }

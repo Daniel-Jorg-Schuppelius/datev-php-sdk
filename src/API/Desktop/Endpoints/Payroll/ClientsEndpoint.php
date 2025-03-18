@@ -37,7 +37,7 @@ class ClientsEndpoint extends EndpointAbstract implements SearchableEndpointInte
             return null;
         }
 
-        return Client::fromJson($response, $this->logger);
+        return Client::fromJson($response, self::$logger);
     }
 
 
@@ -56,6 +56,6 @@ class ClientsEndpoint extends EndpointAbstract implements SearchableEndpointInte
             return null;
         }
 
-        return Clients::fromJson($response, $this->logger);
+        return Clients::fromJson($response, self::$logger);
     }
 }
