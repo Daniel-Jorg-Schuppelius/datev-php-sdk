@@ -54,16 +54,16 @@
         },
         {
             "name": "dschuppelius/php-error-toolkit",
-            "version": "v1.2.6",
+            "version": "v1.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DSchuppelius/php-error-toolkit.git",
-                "reference": "690395ba6bc52c9b673b0ef5b6289eaaec324859"
+                "reference": "e9e37e77fcf922c257682b512082aec10dcb34a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DSchuppelius/php-error-toolkit/zipball/690395ba6bc52c9b673b0ef5b6289eaaec324859",
-                "reference": "690395ba6bc52c9b673b0ef5b6289eaaec324859",
+                "url": "https://api.github.com/repos/DSchuppelius/php-error-toolkit/zipball/e9e37e77fcf922c257682b512082aec10dcb34a0",
+                "reference": "e9e37e77fcf922c257682b512082aec10dcb34a0",
                 "shasum": ""
             },
             "require": {
@@ -92,9 +92,9 @@
             "description": "Reused codes for my api php sdks",
             "support": {
                 "issues": "https://github.com/DSchuppelius/php-error-toolkit/issues",
-                "source": "https://github.com/DSchuppelius/php-error-toolkit/tree/v1.2.6"
+                "source": "https://github.com/DSchuppelius/php-error-toolkit/tree/v1.2.8"
             },
-            "time": "2025-03-17T19:36:20+00:00"
+            "time": "2025-03-18T12:39:28+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -746,20 +746,19 @@
     "packages-dev": [
         {
             "name": "dschuppelius/php-config-toolkit",
-            "version": "v0.2.7",
+            "version": "v0.2.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DSchuppelius/php-config-toolkit.git",
-                "reference": "88cd8ad90200c918d03f85c41b390364df39d8b2"
+                "reference": "0fdacd78f2a41007463de959d26a32e4f7d4f52a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DSchuppelius/php-config-toolkit/zipball/88cd8ad90200c918d03f85c41b390364df39d8b2",
-                "reference": "88cd8ad90200c918d03f85c41b390364df39d8b2",
+                "url": "https://api.github.com/repos/DSchuppelius/php-config-toolkit/zipball/0fdacd78f2a41007463de959d26a32e4f7d4f52a",
+                "reference": "0fdacd78f2a41007463de959d26a32e4f7d4f52a",
                 "shasum": ""
             },
             "require": {
-                "dschuppelius/php-error-toolkit": "^1.2",
                 "dschuppelius/php-error-toolkit": "^1.2",
                 "php": ">=8.0",
                 "psr/log": "^3.0"
@@ -786,9 +785,9 @@
             "description": "Ein Toolkit für JSON-basierte Konfigurationsverwaltung",
             "support": {
                 "issues": "https://github.com/DSchuppelius/php-config-toolkit/issues",
-                "source": "https://github.com/DSchuppelius/php-config-toolkit/tree/v0.2.7"
+                "source": "https://github.com/DSchuppelius/php-config-toolkit/tree/v0.2.10"
             },
-            "time": "2025-03-17T19:48:26+00:00"
+            "time": "2025-03-19T06:52:54+00:00"
         },
         {
             "name": "myclabs/deep-copy",
