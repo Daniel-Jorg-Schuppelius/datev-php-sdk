@@ -14,22 +14,20 @@ namespace Datev\Entities\Accounting\RecordReads;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
-use APIToolkit\Enums\CurrencyCode;
+use CommonToolkit\Enums\CurrencyCode;
 use DateTime;
 use Datev\Entities\Accounting\AdditionalInformations\AdditionalInformations;
 use Datev\Entities\Accounting\AdvancePayments\AdvancePayment;
 use Datev\Entities\Accounting\CostCenters\ID\CostCenterIDOne;
 use Datev\Entities\Accounting\CostCenters\ID\CostCenterIDTwo;
-use Datev\Entities\Accounting\OpenItems\OpenItem;
-use Datev\Entities\Accounting\Sequences\SequenceID;
+use Datev\Entities\Common\VariousAddressID;
 use Datev\Entities\Common\VAT\EuVatID;
 use Datev\Entities\Common\VAT\EuVatID4CountryOfOrigin;
 use Datev\Entities\DocumentManagement\Documents\DocumentID;
-use Datev\Enums\AccountingReason;
-use Datev\Enums\AccountingRecordType;
 use Datev\Enums\CashDiscountType;
 use Datev\Enums\DebitCredit;
 use Datev\Enums\InspectionStatus;
+use Datev\Enums\PaymentMethod;
 use Datev\Enums\TaxationMethod;
 use Psr\Log\LoggerInterface;
 
@@ -70,14 +68,16 @@ class RecordRead extends NamedEntity implements IdentifiableNamedEntityInterface
     protected ?CostCenterIDOne $kost1_cost_center_id;
     protected ?CostCenterIDTwo $kost2_cost_center_id;
     protected DateTime $kost_date;
-
     protected ?float $kost_quantity;
-    protected ?string $kost_unit_price;
-    protected ?OpenItem $open_item_information;
-    protected ?string $mark_of_origin;
+    protected ?PaymentMethod $payment_method;
     protected ?string $posting_description;
-    protected ?AccountingRecordType $record_type;
-    protected ?float $tax_rate;
+    protected ?int $quantity;
+    protected ?string $receivable_type_id;
+    protected ?int $selectable_tax_rate;
+    protected ?string $sepa_mandate_reference;
+    protected ?DateTime $temp_dunning_block;
+    protected ?VariousAddressID $various_address_id;
+    protected ?float $weight;
 
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);

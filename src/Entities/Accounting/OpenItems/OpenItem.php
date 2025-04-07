@@ -14,6 +14,7 @@ namespace Datev\Entities\Accounting\OpenItems;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use DateTime;
+use Datev\Entities\Common\VariousAddressID;
 use Datev\Enums\PaymentMethod;
 use Psr\Log\LoggerInterface;
 
@@ -27,7 +28,7 @@ class OpenItem extends NamedEntity {
     protected ?bool $has_interest_block;
     protected ?PaymentMethod $payment_method;
     protected ?string $receivable_type_id;
-    protected ?string $various_address_id;
+    protected ?VariousAddressID $various_address_id;
 
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);

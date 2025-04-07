@@ -15,6 +15,7 @@ namespace Tests\Contracts;
 use APIToolkit\Contracts\Interfaces\API\ApiClientInterface;
 use ERRORToolkit\Factories\ConsoleLoggerFactory;
 use Datev\API\Desktop\Endpoints\Diagnostics\EchoEndpoint;
+use ERRORToolkit\LoggerRegistry;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Tests\TestAPIClientFactory;
@@ -33,6 +34,7 @@ abstract class EndpointTest extends TestCase {
     }
 
     final protected function setUp(): void {
+        LoggerRegistry::setLogger($this->logger);
         if (!$this->apiDisabled) {
             try {
                 $endpoint = new EchoEndpoint($this->client);

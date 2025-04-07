@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Datev\Entities\Accounting\Records;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
-use APIToolkit\Enums\CurrencyCode;
+use CommonToolkit\Enums\CurrencyCode;
 use DateTime;
 use Datev\Entities\Accounting\AdditionalInformations\AdditionalInformation;
 use Datev\Entities\Accounting\AdvancePayments\AdvancePayment;
