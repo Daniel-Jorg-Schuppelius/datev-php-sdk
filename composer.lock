@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "45098dc6a1ef8380c9005f1653265b33",
+    "content-hash": "a76c17fc9248b2d4101921ce5b2a4189",
     "packages": [
         {
             "name": "daniel-jorg-schuppelius/php-api-toolkit",
@@ -147,16 +147,16 @@
         },
         {
             "name": "dschuppelius/php-error-toolkit",
-            "version": "v1.2.11",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DSchuppelius/php-error-toolkit.git",
-                "reference": "31c0f5abcdf6c5cafff56e6be72d10df72a6087f"
+                "reference": "5ad80d62eae77e555592e541628c1be3ab42ebf6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DSchuppelius/php-error-toolkit/zipball/31c0f5abcdf6c5cafff56e6be72d10df72a6087f",
-                "reference": "31c0f5abcdf6c5cafff56e6be72d10df72a6087f",
+                "url": "https://api.github.com/repos/DSchuppelius/php-error-toolkit/zipball/5ad80d62eae77e555592e541628c1be3ab42ebf6",
+                "reference": "5ad80d62eae77e555592e541628c1be3ab42ebf6",
                 "shasum": ""
             },
             "require": {
@@ -185,9 +185,9 @@
             "description": "Reused codes for my api php sdks",
             "support": {
                 "issues": "https://github.com/DSchuppelius/php-error-toolkit/issues",
-                "source": "https://github.com/DSchuppelius/php-error-toolkit/tree/v1.2.11"
+                "source": "https://github.com/DSchuppelius/php-error-toolkit/tree/v1.3.0"
             },
-            "time": "2025-04-03T12:24:21+00:00"
+            "time": "2025-04-20T13:10:37+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -1398,16 +1398,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "11.5.15",
+            "version": "11.5.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "4b6a4ee654e5e0c5e1f17e2f83c0f4c91dee1f9c"
+                "reference": "fd2e863a2995cdfd864fb514b5e0b28b09895b5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/4b6a4ee654e5e0c5e1f17e2f83c0f4c91dee1f9c",
-                "reference": "4b6a4ee654e5e0c5e1f17e2f83c0f4c91dee1f9c",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/fd2e863a2995cdfd864fb514b5e0b28b09895b5c",
+                "reference": "fd2e863a2995cdfd864fb514b5e0b28b09895b5c",
                 "shasum": ""
             },
             "require": {
@@ -1479,7 +1479,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.5.15"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.5.17"
             },
             "funding": [
                 {
@@ -1495,7 +1495,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-03-23T16:02:11+00:00"
+            "time": "2025-04-08T07:59:11+00:00"
         },
         {
             "name": "sebastian/cli-parser",
