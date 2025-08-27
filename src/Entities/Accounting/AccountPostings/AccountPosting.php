@@ -14,7 +14,7 @@ namespace Datev\Entities\Accounting\AccountPostings;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
-use APIToolkit\Enums\CurrencyCode;
+use CommonToolkit\Enums\CurrencyCode;
 use DateTime;
 use Datev\Entities\Accounting\AdditionalInformations\AdditionalInformations;
 use Datev\Entities\Accounting\AdvancePayments\AdvancePayment;

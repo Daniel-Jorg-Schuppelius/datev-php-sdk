@@ -20,7 +20,8 @@ use Datev\Enums\AccountingReason;
 use Datev\Enums\AccountingRecordType;
 use Psr\Log\LoggerInterface;
 
-class Sequence extends NamedEntity {
+class SequenceRead extends NamedEntity implements IdentifiableNamedEntityInterface {
+    protected ?SequenceID $id;
     protected ?AccountingReason $accounting_reason;
     protected ?string $application_information;
     protected DateTime $date_from;
@@ -33,5 +34,9 @@ class Sequence extends NamedEntity {
 
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
+    }
+
+    public function getID(): SequenceID {
+        return $this->id;
     }
 }
