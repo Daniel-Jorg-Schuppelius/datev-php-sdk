@@ -1,0 +1,1988 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Identity and Access Management – User Administration",
+    "description": "The System for Cross-domain Identity Management (SCIM) specifications\nare designed to make identity management in cloud-based applications\nand services easier. The specification suite builds upon experience\nwith existing schemas and deployments, placing specific emphasis on\nsimplicity of development and integration, while applying existing\nauthentication, authorization, and privacy models. Its intent is to\nreduce the cost and complexity of user management operations by\nproviding a common user schema and extension model as well as binding\ndocuments to provide patterns for exchanging this schema using HTTP.\n\nThis document provides a platform-neutral schema and extension model\nfor representing users and groups and other resource types in JSON\nformat. This schema is intended for exchange and use with cloud\nservice providers.\n",
+    "contact": {
+      "name": "DATEV Schnittstellenberatung",
+      "url": "http://www.datev.de/connect",
+      "email": "schnittstellenberatung@datev.de"
+    },
+    "license": {
+      "name": "DATEV eG",
+      "url": "http://www.datev.de"
+    },
+    "version": "1.1.2",
+    "x-datev-shortdescription": "This API can be used to check if your environment is correctly set up. Use http://localhost:58454/, https://localhost:58452/ or https://[machinename]:58452/ as the base URL.",
+    "termsOfService": "https://developer.datev.de/portal/terms"
+  },
+  "servers": [
+    {
+      "url": "https://localhost:58452/datev/api/iam/v1",
+      "description": "Also allowed urls: http://localhost:58454/, https://[machinename]:58452/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Users"
+    },
+    {
+      "name": "Groups"
+    },
+    {
+      "name": "Service Provider Configuration Endpoints"
+    }
+  ],
+  "paths": {
+    "/ServiceProviderConfig": {
+      "get": {
+        "tags": [
+          "Service Provider Configuration Endpoints"
+        ],
+        "summary": "Returns the service provider configuration.",
+        "description": "A JSON structure that\ndescribes the SCIM specification features available on a service\nprovider. This endpoint SHALL return responses with a JSON object\nusing a \"schemas\" attribute of\n\"urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig\".\nThe attributes returned in the JSON object are defined in\nSection 5 of [RFC7643]. An example representation of SCIM service\nprovider configuration may be found in Section 8.5 of [RFC7643].\n",
+        "responses": {
+          "200": {
+            "description": "Service Provider Config",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/scim_service_provider_config"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/ResourceTypes": {
+      "get": {
+        "tags": [
+          "Service Provider Configuration Endpoints"
+        ],
+        "summary": "Returns the resource types.",
+        "description": "An HTTP GET to this endpoint is used to discover the types of\nresources available on a SCIM service provider (e.g., Users and\nGroups). Each resource type defines the endpoints, the core\nschema URI that defines the resource, and any supported schema\nextensions. The attributes defining a resource type can be found\nin Section 6 of [RFC7643], and an example representation can be\nfound in Section 8.6 of [RFC7643].\n",
+        "responses": {
+          "200": {
+            "description": "ResourceTypes",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/scim_list_response_resource_type"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/Schemas": {
+      "get": {
+        "tags": [
+          "Service Provider Configuration Endpoints"
+        ],
+        "summary": "Returns all resource schemas.",
+        "description": "An HTTP GET to this endpoint is used to retrieve information about\nresource schemas supported by a SCIM service provider. An HTTP\nGET to the endpoint \"/Schemas\" SHALL return all supported schemas\nin ListResponse format (see Figure 3). The contents of each schema\nreturned are described in Section 7 of[RFC7643]. An example representation\nof SCIM schemas may be found in Section 8.7 of [RFC7643].\n",
+        "responses": {
+          "200": {
+            "description": "Schemas",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/scim_list_response_schema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Schemas/{schema-id}": {
+      "get": {
+        "tags": [
+          "Service Provider Configuration Endpoints"
+        ],
+        "summary": "Returns a single resource schema.",
+        "description": "An HTTP GET to this endpoint is used to retrieve information about\nresource schemas supported by a SCIM service provider. Individual schema\ndefinitions can be returned by appending the schema URI to the\n/Schemas endpoint. For example:\n\n      /Schemas/urn:ietf:params:scim:schemas:core:2.0:User\n\nThe contents of each schema returned are described in Section 7 of\n[RFC7643]. An example representation of SCIM schemas may be found\nin Section 8.7 of [RFC7643].\n",
+        "parameters": [
+          {
+            "name": "schema-id",
+            "in": "path",
+            "description": "Identifier of the schema",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A single schema",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/scim_schema"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "There is no schema with this id."
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/Users": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Returns all DATEV-users.",
+        "description": "Returns a list of all DATEV-users. The following features are currently NOT\nsupported: pagination, filter, sort, projection, aggregation.\n",
+        "responses": {
+          "200": {
+            "description": "List of DATEV-users",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/scim_list_response_datev_user"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/return_message"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/return_message"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Creates a new DATEV-user.",
+        "description": "Creates a new DATEV-user.\n",
+        "requestBody": {
+          "description": "Data of the new DATEV-user",
+          "content": {
+            "application/json;charset=utf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/scim_datev_user_request"
+              },
+              "example": {
+                "id": "/iam/v1/users/f66a81fb-2681-45ec-81b0-ce8346baac07",
+                "meta": {
+                  "resource_type": "user",
+                  "location": "/iam/v1/users/f66a81fb-2681-45ec-81b0-ce8346baac07"
+                },
+                "schemas": [
+                  "urn:ietf:params:scim:schemas:core:2.0:User",
+                  "urn:ietf:params:scim:schemas:extension:datev:2.0:user"
+                ],
+                "name": {
+                  "given_name": "Max",
+                  "family_name": "Mustermann"
+                },
+                "display_name": "Mustermann, Max",
+                "active": true,
+                "groups": [
+                  {
+                    "value": "a077bae8-e669-4b3a-851b-35b2079d2acd",
+                    "display": "Sachbearbeiter",
+                    " $ref": "/iam/v1/groups/a077bae8-e669-4b3a-851b-35b2079d2acd"
+                  },
+                  {
+                    "value": "c8d49685-29b2-4ac1-ac8c-3b79335dfaf8",
+                    "display": "Lohnbearbeitung",
+                    " $ref": "/iam/v1/groups/c8d49685-29b2-4ac1-ac8c-3b79335dfaf8"
+                  }
+                ],
+                "entitlements": [
+                  "IamUser"
+                ],
+                "urn:ietf:params:scim:schemas:extension:datev:2.0:user": {
+                  "valid_from": "2022-03-01T00:00:00.000",
+                  "valid_to": "2022-03-02T00:00:00.000",
+                  "initials": "mm",
+                  "linked_windows_identity": {
+                    "value": "S-1-5-21-7623811015-3361044348-030300820-1013"
+                  },
+                  "linked_nuko_identity": {
+                    "value": "admin"
+                  },
+                  "linked_employeeadministration_identity": {
+                    "value": "ec80ed2e-7a63-47e8-afc6-ea8da47c2d17"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "The DATEV-user has been created.",
+            "headers": {
+              "Link": {
+                "description": "The link contains a self-reference with the id of the created object.\n",
+                "schema": {
+                  "type": "string",
+                  "example": "/iam/v1/users/f66a81fb-2681-45ec-81b0-ce8346baac07"
+                }
+              }
+            },
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/scim_datev_user_response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No DATEV-user has been created.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/return_message"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/return_message"
+                }
+              }
+            }
+          }
+        },
+        "x-codegen-request-body-name": "user"
+      }
+    },
+    "/Users/{user-id}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Returns a single DATEV-user.",
+        "description": "Returns a single DATEV-user.\n",
+        "parameters": [
+          {
+            "name": "user-id",
+            "in": "path",
+            "description": "Identifier of the DATEV-user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "f66a81fb-2681-45ec-81b0-ce8346baac07"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A single DATEV-user",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/scim_datev_user_response"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "There is no DATEV-user with this id.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/return_message"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/return_message"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Updates a single DATEV-user.",
+        "description": "Updates a single DATEV-user.\n",
+        "parameters": [
+          {
+            "name": "user-id",
+            "in": "path",
+            "description": "Identifier of the DATEV-user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "f66a81fb-2681-45ec-81b0-ce8346baac07"
+          }
+        ],
+        "requestBody": {
+          "description": "Data of the DATEV-user",
+          "content": {
+            "application/json;charset=utf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/scim_datev_user_put"
+              },
+              "example": {
+                "id": "/iam/v1/users/f66a81fb-2681-45ec-81b0-ce8346baac07",
+                "meta": {
+                  "resource_type": "user",
+                  "location": "/iam/v1/users/f66a81fb-2681-45ec-81b0-ce8346baac07"
+                },
+                "schemas": [
+                  "urn:ietf:params:scim:schemas:core:2.0:User",
+                  "urn:ietf:params:scim:schemas:extension:datev:2.0:user"
+                ],
+                "name": {
+                  "given_name": "Max",
+                  "family_name": "Mustermann"
+                },
+                "display_name": "Mustermann, Max",
+                "active": true,
+                "groups": [
+                  {
+                    "value": "a077bae8-e669-4b3a-851b-35b2079d2acd",
+                    "display": "Sachbearbeiter",
+                    " $ref": "/iam/v1/groups/a077bae8-e669-4b3a-851b-35b2079d2acd"
+                  },
+                  {
+                    "value": "c8d49685-29b2-4ac1-ac8c-3b79335dfaf8",
+                    "display": "Lohnbearbeitung",
+                    " $ref": "/iam/v1/groups/c8d49685-29b2-4ac1-ac8c-3b79335dfaf8"
+                  }
+                ],
+                "entitlements": [
+                  "IamUser"
+                ],
+                "urn:ietf:params:scim:schemas:extension:datev:2.0:user": {
+                  "valid_from": "2022-03-01T00:00:00.000",
+                  "valid_to": "2022-03-02T00:00:00.000",
+                  "initials": "mm",
+                  "linked_windows_identity": {
+                    "value": "S-1-5-21-7623811015-3361044348-030300820-1013"
+                  },
+                  "linked_nuko_identity": {
+                    "value": "admin"
+                  },
+                  "linked_employeeadministration_identity": {
+                    "value": "ec80ed2e-7a63-47e8-afc6-ea8da47c2d17"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "The DATEV-user has been updated.",
+            "headers": {
+              "Link": {
+                "description": "The link contains a self-reference with the id of the created object.\n",
+                "schema": {
+                  "type": "string",
+                  "example": "/iam/v1/users/f66a81fb-2681-45ec-81b0-ce8346baac07"
+                }
+              }
+            },
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/scim_datev_user_response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No DATEV-user has been read.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/return_message"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "There is no DATEV-user with this id.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/return_message"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/return_message"
+                }
+              }
+            }
+          }
+        },
+        "x-codegen-request-body-name": "user"
+      },
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Deletes a single DATEV-user.",
+        "description": "Deletes a single DATEV-user.\n",
+        "parameters": [
+          {
+            "name": "user-id",
+            "in": "path",
+            "description": "Identifier of the DATEV-user",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "f66a81fb-2681-45ec-81b0-ce8346baac07"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The DATEV-user has been deleted."
+          },
+          "400": {
+            "description": "No DATEV-user has been read.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/return_message"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "There is no DATEV-user with this id.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/return_message"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/return_message"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Users/me": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Returns the current logged in DATEV user",
+        "description": "Returns a single DATEV-user.\n",
+        "responses": {
+          "200": {
+            "description": "the current logged in DATEV-user",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/scim_datev_user_response"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/return_message"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Groups": {
+      "get": {
+        "tags": [
+          "Groups"
+        ],
+        "summary": "Returns all DATEV-groups.",
+        "description": "Returns a list of all DATEV-groups. The following features are currently NOT\nsupported: pagination, filter, sort, projection, aggregation.\n",
+        "responses": {
+          "200": {
+            "description": "List of DATEV-groups",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/scim_list_response_datev_group"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/return_message"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Groups"
+        ],
+        "summary": "Creates a new DATEV-group.",
+        "description": "Creates a new DATEV-group.\n",
+        "requestBody": {
+          "description": "Data of the new DATEV-group",
+          "content": {
+            "application/json;charset=utf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/scim_datev_group_request"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "The DATEV-group has been created.",
+            "headers": {
+              "Link": {
+                "description": "The link contains a self-reference with the id of the created object.\n",
+                "schema": {
+                  "type": "string",
+                  "example": "/iam/v1/groups/a077bae8-e669-4b3a-851b-35b2079d2acd"
+                }
+              }
+            },
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/scim_datev_group"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No DATEV-group has been created.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/return_message"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/return_message"
+                }
+              }
+            }
+          }
+        },
+        "x-codegen-request-body-name": "group"
+      }
+    },
+    "/Groups/{group-id}": {
+      "get": {
+        "tags": [
+          "Groups"
+        ],
+        "summary": "Returns a single DATEV-group.",
+        "description": "Returns a single DATEV-group.\n",
+        "parameters": [
+          {
+            "name": "group-id",
+            "in": "path",
+            "description": "Identifier of the DATEV-group",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "a077bae8-e669-4b3a-851b-35b2079d2acd"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The single DATEV-group",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/scim_datev_group"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "There is no DATEV-group with this id.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/return_message"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/return_message"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Groups"
+        ],
+        "summary": "Updates a single DATEV-group.",
+        "description": "Updates a single DATEV-group.\n",
+        "parameters": [
+          {
+            "name": "group-id",
+            "in": "path",
+            "description": "Identifier of the DATEV-group",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "a077bae8-e669-4b3a-851b-35b2079d2acd"
+          }
+        ],
+        "requestBody": {
+          "description": "Data of the DATEV-group",
+          "content": {
+            "application/json;charset=utf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/scim_datev_group_put"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "The DATEV-group has been updated.",
+            "headers": {
+              "Link": {
+                "description": "The link contains a self-reference with the id of the created object.\n",
+                "schema": {
+                  "type": "string",
+                  "example": "/iam/v1/groups/a077bae8-e669-4b3a-851b-35b2079d2acd"
+                }
+              }
+            },
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/scim_datev_group"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No DATEV-group has been updated.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/return_message"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "There is no DATEV-group with this id.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/return_message"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/return_message"
+                }
+              }
+            }
+          }
+        },
+        "x-codegen-request-body-name": "group"
+      },
+      "delete": {
+        "tags": [
+          "Groups"
+        ],
+        "summary": "Deletes a single DATEV-group.",
+        "description": "Deletes a single DATEV-group.\nIf the DATEV-group has still members, remove them by calling PUT with no members.\n",
+        "parameters": [
+          {
+            "name": "group-id",
+            "in": "path",
+            "description": "Identifier of the DATEV-group",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "a077bae8-e669-4b3a-851b-35b2079d2acd"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The DATEV-group has been deleted."
+          },
+          "400": {
+            "description": "No DATEV-group has been deleted.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/return_message"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "There is no DATEV-group with this id.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/return_message"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/return_message"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "scim_list_response": {
+        "required": [
+          "total_results"
+        ],
+        "type": "object",
+        "properties": {
+          "total_results": {
+            "type": "number",
+            "description": "The total number of results returned by the list or\nquery operation. The value may be larger than the number of\nresources returned, such as when returning a single page (see\nSection 3.4.2.4) of results where multiple pages are available.\nREQUIRED.\n",
+            "example": 2
+          },
+          "items_per_page": {
+            "type": "number",
+            "description": "The number of resources returned in a list response\npage.\n",
+            "example": 2
+          },
+          "start_index": {
+            "type": "number",
+            "description": "The 1-based index of the first result in the current set\nof list results.\n",
+            "example": 0
+          },
+          "schemas": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "default": "urn:ietf:params:scim:api:messages:2.0:ListResponse"
+            }
+          }
+        }
+      },
+      "scim_list_response_datev_user": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/scim_list_response"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "Resources": {
+                "type": "array",
+                "description": "A multi-valued list of complex objects containing the\nrequested users. This MAY be a subset of the full set of\nresources if pagination is requested. REQUIRED\nif \"totalResults\" is non-zero.\n",
+                "items": {
+                  "$ref": "#/components/schemas/scim_datev_user_response"
+                },
+                "example": [
+                  {
+                    "id": "/iam/v1/users/f66a81fb-2681-45ec-81b0-ce8346baac07",
+                    "meta": {
+                      "resource_type": "user",
+                      "location": "/iam/v1/users/f66a81fb-2681-45ec-81b0-ce8346baac07"
+                    },
+                    "schemas": [
+                      "urn:ietf:params:scim:schemas:core:2.0:User",
+                      "urn:ietf:params:scim:schemas:extension:datev:2.0:user"
+                    ],
+                    "name": {
+                      "given_name": "Max",
+                      "family_name": "Mustermann"
+                    },
+                    "display_name": "Mustermann, Max",
+                    "active": true,
+                    "groups": [
+                      {
+                        "value": "a077bae8-e669-4b3a-851b-35b2079d2acd",
+                        "display": "Sachbearbeiter",
+                        " $ref": "/iam/v1/groups/a077bae8-e669-4b3a-851b-35b2079d2acd"
+                      },
+                      {
+                        "value": "c8d49685-29b2-4ac1-ac8c-3b79335dfaf8",
+                        "display": "Lohnbearbeitung",
+                        " $ref": "/iam/v1/groups/c8d49685-29b2-4ac1-ac8c-3b79335dfaf8"
+                      }
+                    ],
+                    "entitlements": [
+                      "IamUser"
+                    ],
+                    "urn:ietf:params:scim:schemas:extension:datev:2.0:user": {
+                      "valid_from": "2022-03-01T00:00:00.000",
+                      "valid_to": "2022-03-02T00:00:00.000",
+                      "initials": "mm",
+                      "linked_windows_identity": {
+                        "value": "S-1-5-21-7623811015-3361044348-030300820-1013"
+                      },
+                      "linked_nuko_identity": {
+                        "value": "admin"
+                      },
+                      "linked_employeeadministration_identity": {
+                        "value": "ec80ed2e-7a63-47e8-afc6-ea8da47c2d17"
+                      },
+                      "linked_datacenter_identity": {
+                        "value": 123456
+                      }
+                    }
+                  },
+                  {
+                    "id": "/iam/v1/users/f8c9a51d-51da-4bb1-b8b4-e18c8d314706",
+                    "meta": {
+                      "resource_type": "user",
+                      "location": "/iam/v1/users/f8c9a51d-51da-4bb1-b8b4-e18c8d314706"
+                    },
+                    "schemas": [
+                      "urn:ietf:params:scim:schemas:core:2.0:User",
+                      "urn:ietf:params:scim:schemas:extension:datev:2.0:user"
+                    ],
+                    "name": {
+                      "given_name": "Susanne",
+                      "family_name": "Musterfrau"
+                    },
+                    "display_name": "Musterfrau, Susanne",
+                    "active": true,
+                    "groups": [
+                      {
+                        "value": "a077bae8-e669-4b3a-851b-35b2079d2acd",
+                        "display": "Sachbearbeiter",
+                        " $ref": "/iam/v1/groups/a077bae8-e669-4b3a-851b-35b2079d2acd"
+                      }
+                    ],
+                    "entitlements": [
+                      "PomAdministrator",
+                      "IdmAdministrator",
+                      "IdmAndPomSelfAdministrator"
+                    ],
+                    "urn:ietf:params:scim:schemas:extension:datev:2.0:user": {
+                      "initials": "sm",
+                      "linked_windows_identity": {
+                        "value": "S-1-5-21-123697389-1196883430-1112475604-1016"
+                      },
+                      "linked_datacenter_identity": {
+                        "value": 111111
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "scim_list_response_datev_group": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/scim_list_response"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "Resources": {
+                "type": "array",
+                "description": "A multi-valued list of complex objects containing the requested groups.",
+                "items": {
+                  "$ref": "#/components/schemas/scim_datev_group"
+                },
+                "example": [
+                  {
+                    "urn:ietf:params:scim:schemas:extension:datev:2.0:group": {
+                      "description": "MitarbeiterInnen der Sachbearbeitung"
+                    },
+                    "display_name": "Sachbearbeiter",
+                    "members": [
+                      {
+                        "value": "f66a81fb-2681-45ec-81b0-ce8346baac07",
+                        " $ref": "/iam/v1/users/f66a81fb-2681-45ec-81b0-ce8346baac07"
+                      },
+                      {
+                        "value": "f8c9a51d-51da-4bb1-b8b4-e18c8d314706",
+                        " $ref": "/iam/v1/users/f8c9a51d-51da-4bb1-b8b4-e18c8d314706"
+                      }
+                    ],
+                    "meta": {
+                      "resource_type": "group",
+                      "location": "/iam/v1/groups/a077bae8-e669-4b3a-851b-35b2079d2acd"
+                    },
+                    "schemas": [
+                      "urn:ietf:params:scim:schemas:core:2.0:Group",
+                      "urn:ietf:params:scim:schemas:extension:datev:2.0:group"
+                    ],
+                    "id": "a077bae8-e669-4b3a-851b-35b2079d2acd"
+                  },
+                  {
+                    "urn:ietf:params:scim:schemas:extension:datev:2.0:group": {
+                      "description": "MitarbeiterInnen der Lohnbearbeitung"
+                    },
+                    "display_name": "Lohnbearbeitung",
+                    "members": [
+                      {
+                        "value": "f66a81fb-2681-45ec-81b0-ce8346baac07",
+                        " $ref": "/iam/v1/users/f66a81fb-2681-45ec-81b0-ce8346baac07"
+                      }
+                    ],
+                    "meta": {
+                      "resource_type": "group",
+                      "location": "/iam/v1/groups/c8d49685-29b2-4ac1-ac8c-3b79335dfaf8"
+                    },
+                    "schemas": [
+                      "urn:ietf:params:scim:schemas:core:2.0:Group",
+                      "urn:ietf:params:scim:schemas:extension:datev:2.0:group"
+                    ],
+                    "id": "c8d49685-29b2-4ac1-ac8c-3b79335dfaf8"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "scim_list_response_resource_type": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/scim_list_response"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "Resources": {
+                "type": "array",
+                "description": "A multi-valued list of complex objects containing the\nrequested resource types. This MAY be a subset of the full set of\nresources if pagination is requested. REQUIRED\nif \"totalResults\" is non-zero.\n",
+                "items": {
+                  "$ref": "#/components/schemas/scim_resource_type"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "scim_list_response_schema": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/scim_list_response"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "Resources": {
+                "type": "array",
+                "description": "A multi-valued list of complex objects containing the\nrequested schemas.  This MAY be a subset of the full set of\nresources if pagination is requested.  REQUIRED\nif \"totalResults\" is non-zero.\n",
+                "items": {
+                  "$ref": "#/components/schemas/scim_schema"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "scim_datev_user_put": {
+        "allOf": [
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "A unique identifier for the DATEV-user.\n",
+                "example": "f66a81fb-2681-45ec-81b0-ce8346baac07"
+              }
+            }
+          },
+          {
+            "$ref": "#/components/schemas/scim_datev_user_request"
+          }
+        ]
+      },
+      "scim_datev_user_request": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/scim_name"
+          },
+          "display_name": {
+            "type": "string",
+            "description": "The name of the user, suitable for display to end-users. Each\nuser returned MAY include a non-empty displayName value.\nIn DATEV-iam the user requires a unique displayName\n",
+            "example": "Mustermann, Max"
+          },
+          "active": {
+            "type": "boolean",
+            "description": "A Boolean value indicating the user's administrative status. As a typical example, a value of true implies that the user is able to use DATEV software.\nThe default value is false, if the property is omitted.\n"
+          },
+          "groups": {
+            "type": "array",
+            "description": "A list of groups to which the user belongs, either through direct\nmembership or dynamically calculated. The\nvalues are meant to enable expression of common group-based or\nrole-based access control models, although no explicit\nauthorization model is defined.\n",
+            "items": {
+              "$ref": "#/components/schemas/scim_linkage"
+            },
+            "example": [
+              {
+                "value": "a077bae8-e669-4b3a-851b-35b2079d2acd"
+              }
+            ]
+          },
+          "entitlements": {
+            "$ref": "#/components/schemas/scim_entitlements"
+          },
+          "urn:ietf:params:scim:schemas:extension:datev:2.0:user": {
+            "$ref": "#/components/schemas/scim_extension_datev_user_request"
+          }
+        }
+      },
+      "scim_datev_user_response": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/scim_core_user"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "urn:ietf:params:scim:schemas:extension:datev:2.0:user": {
+                "$ref": "#/components/schemas/scim_extension_datev_user_response"
+              }
+            }
+          }
+        ]
+      },
+      "scim_datev_group": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/scim_core_group"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "urn:ietf:params:scim:schemas:extension:datev:2.0:group": {
+                "type": "object",
+                "properties": {
+                  "description": {
+                    "type": "string",
+                    "description": "A description for the DATEV group. If this property is omitted in a PUT-Request the description of a group will be deleted.",
+                    "example": "MitarbeiterInnen der Sachbearbeitung"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "scim_datev_group_put": {
+        "allOf": [
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "A unique identifier for the DATEV-group.\n",
+                "example": "a077bae8-e669-4b3a-851b-35b2079d2acd"
+              }
+            }
+          },
+          {
+            "$ref": "#/components/schemas/scim_datev_group_request"
+          }
+        ]
+      },
+      "scim_datev_group_request": {
+        "type": "object",
+        "properties": {
+          "display_name": {
+            "type": "string",
+            "description": "A human-readable name for the group.",
+            "example": "Sachbearbeiter"
+          },
+          "members": {
+            "type": "array",
+            "description": "A list of DATEV-users. While values MAY be added or\nremoved, sub-attributes of members are \"immutable\".\n",
+            "items": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "string",
+                  "description": "The unique identifier of the DATEV-user.\n"
+                },
+                "$ref": {
+                  "type": "string",
+                  "description": "The reference URI of the DATEV-user.\n"
+                }
+              }
+            },
+            "example": [
+              {
+                "value": "f66a81fb-2681-45ec-81b0-ce8346baac07"
+              }
+            ]
+          },
+          "urn:ietf:params:scim:schemas:extension:datev:2.0:group": {
+            "type": "object",
+            "properties": {
+              "description": {
+                "type": "string",
+                "description": "A description for the DATEV group. If this property is omitted in a PUT-Request the description of a group will be deleted.",
+                "example": "MitarbeiterInnen der Sachbearbeitung"
+              }
+            }
+          }
+        }
+      },
+      "scim_extension_datev_user_request": {
+        "type": "object",
+        "properties": {
+          "valid_from": {
+            "type": "string",
+            "description": "A DateTime that represents the first time at which this DATEV user is valid. If the user is to be valid immediately, the property can be omitted.\n",
+            "format": "date",
+            "example": "2022-03-01"
+          },
+          "valid_to": {
+            "type": "string",
+            "description": "A DateTime that represents the last time at which this DATEV user is valid.\n",
+            "format": "date",
+            "example": "2022-03-02"
+          },
+          "initials": {
+            "maxLength": 2,
+            "type": "string",
+            "description": "Diktatkuerzel",
+            "example": "mm"
+          },
+          "linked_windows_identity": {
+            "required": [
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string",
+                "description": "The attribute's significant value.\n",
+                "example": "S-1-5-21-7623811015-3361044348-030300820-1013"
+              }
+            }
+          },
+          "linked_nuko_identity": {
+            "required": [
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "value": {
+                "maxLength": 25,
+                "type": "string",
+                "description": "The attribute's significant value.\n",
+                "example": "admin"
+              }
+            }
+          },
+          "linked_employeeadministration_identity": {
+            "required": [
+              "value"
+            ],
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "string",
+                "description": "The attribute's significant value.\n",
+                "format": "UUID",
+                "example": "ec80ed2e-7a63-47e8-afc6-ea8da47c2d17"
+              }
+            }
+          }
+        }
+      },
+      "scim_extension_datev_user_response": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/scim_extension_datev_user_request"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "linked_datacenter_identity": {
+                "type": "object",
+                "description": "Not allowed at POST or PUT /users. \n",
+                "properties": {
+                  "value": {
+                    "type": "integer",
+                    "description": "The attribute's significant value.\n",
+                    "format": "int32",
+                    "example": 123456
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "scim_core_user": {
+        "type": "object",
+        "allOf": [
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "A unique identifier for the DATEV-user.\n",
+                "example": "f66a81fb-2681-45ec-81b0-ce8346baac07"
+              },
+              "meta": {
+                "type": "object",
+                "properties": {
+                  "resource_type": {
+                    "type": "string",
+                    "description": "The name of the resource type of the DATEV-user.\n",
+                    "readOnly": true,
+                    "example": "user"
+                  },
+                  "location": {
+                    "type": "string",
+                    "description": "The URI of the DATEV-user.\n",
+                    "readOnly": true,
+                    "example": "/iam/v1/users/f66a81fb-2681-45ec-81b0-ce8346baac07"
+                  }
+                }
+              },
+              "schemas": {
+                "type": "array",
+                "description": "The \"schemas\" attribute is a REQUIRED attribute and is an array of\nStrings containing URIs that are used to indicate the namespaces\nof the SCIM schemas that define the attributes present in the\ncurrent JSON structure. This attribute may be used by parsers to\ndefine the attributes present in the JSON structure that is the\nbody to an HTTP request or response. Each String value must be a\nunique URI. All representations of SCIM schemas MUST include a\nnon-empty array with value(s) of the URIs supported by that\nrepresentation.\n",
+                "items": {
+                  "type": "string"
+                },
+                "example": [
+                  "urn:ietf:params:scim:schemas:core:2.0:User",
+                  "urn:ietf:params:scim:schemas:extension:datev:2.0:user"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "properties": {
+              "name": {
+                "$ref": "#/components/schemas/scim_name"
+              },
+              "display_name": {
+                "type": "string",
+                "description": "The name of the user, suitable for display to end-users.\nThe value provided SHOULD be the primary textual\nlabel by which this User is normally displayed by the service\nprovider when presenting it to end-users.\n\nIn DATEV-iam the user requires a unique displayName\n",
+                "example": "Mustermann, Max"
+              },
+              "active": {
+                "type": "boolean",
+                "description": "A Boolean value indicating the user's administrative status. The\ndefinitive meaning of this attribute is determined by the service\nprovider. As a typical example, a value of true implies that the\nuser is able to log in, while a value of false implies that the\nuser's account has been suspended.\nThe default value is false, if the property is omitted.\n"
+              },
+              "groups": {
+                "type": "array",
+                "description": "A list of groups to which the user belongs, either through direct\nmembership or dynamically calculated. The\nvalues are meant to enable expression of common group-based or\nrole-based access control models, although no explicit\nauthorization model is defined.\n",
+                "items": {
+                  "$ref": "#/components/schemas/scim_linkage"
+                }
+              },
+              "entitlements": {
+                "$ref": "#/components/schemas/scim_entitlements"
+              }
+            }
+          }
+        ]
+      },
+      "scim_entitlements": {
+        "type": "array",
+        "description": "A list of entitlements for the user that represent a administration right the user has in Identity and Policy Management.\n        \nPossible values are:\n- IamUser -> normal user for DATEV Software without any administrative rights in the Identity- and Access Management-System. This is the default value, if the property is omitted.\n- PomAdministrator -> Policy Management Administrator can administer users in the Access Management System. This role can be combined with IdmAdministrator and IdmAndPomSelfAdministrator.\n- IdmAdministrator -> Identity Management Administrator can administer users in the Identity Management System. This role can be combined with PomAdministrator and IdmAndPomSelfAdministrator.\n- IdmAndPomSelfAdministrator -> Only Idm- or PomAdministrators with this Flag can administer themself. This flag can only set by an IamAdministrator.\n- IamAdministrator -> Main Administrator for the DATEV Identity- and Access Management-System. This role includes all the other roles. A user with this role has full access to all DATEV programs and data.                \n",
+        "items": {
+          "type": "string",
+          "enum": [
+            "IamUser",
+            "IamAdministrator",
+            "PomAdministrator",
+            "IdmAdministrator",
+            "IdmAndPomSelfAdministrator"
+          ]
+        }
+      },
+      "scim_core_group": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "A unique identifier for the DATEV-group.",
+            "example": "a077bae8-e669-4b3a-851b-35b2079d2acd"
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "resource_type": {
+                "type": "string",
+                "description": "The name of the resource type DATEV-group.\n",
+                "readOnly": true,
+                "example": "group"
+              },
+              "location": {
+                "type": "string",
+                "description": "The URI of the DATEV-group.\n",
+                "readOnly": true,
+                "example": "/iam/v1/groups/a077bae8-e669-4b3a-851b-35b2079d2acd"
+              }
+            }
+          },
+          "schemas": {
+            "type": "array",
+            "description": "The \"schemas\" attribute is a REQUIRED attribute and is an array of\nStrings containing URIs that are used to indicate the namespaces\nof the SCIM schemas that define the attributes present in the\ncurrent JSON structure. This attribute may be used by parsers to\ndefine the attributes present in the JSON structure that is the\nbody to an HTTP request or response. Each String value must be a\nunique URI. All representations of SCIM schemas MUST include a\nnon-empty array with value(s) of the URIs supported by that\nrepresentation. The \"schemas\" attribute for a resource MUST only\ncontain values defined as \"schema\" and \"schemaExtensions\" for the\nresource's defined \"resourceType\". Duplicate values MUST NOT be\nincluded. Value order is not specified and MUST NOT impact\nbehavior.\n",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "urn:ietf:params:scim:schemas:core:2.0:Group",
+              "urn:ietf:params:scim:schemas:extension:datev:2.0:group"
+            ]
+          },
+          "display_name": {
+            "type": "string",
+            "description": "A human-readable name for the Group.",
+            "example": "Sachbearbeiter"
+          },
+          "members": {
+            "type": "array",
+            "description": "A list of DATEV-users. While values MAY be added or\nremoved, sub-attributes of members are \"immutable\".\n",
+            "items": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "string",
+                  "description": "The unique identifier of the DATEV-user.\n",
+                  "example": "f66a81fb-2681-45ec-81b0-ce8346baac07"
+                },
+                "$ref": {
+                  "type": "string",
+                  "description": "The reference URI of the DATEV-user.\n",
+                  "example": "/iam/v1/users/f66a81fb-2681-45ec-81b0-ce8346baac07"
+                }
+              }
+            }
+          }
+        }
+      },
+      "scim_name": {
+        "type": "object",
+        "properties": {
+          "given_name": {
+            "type": "string",
+            "description": "The given name of the user, or first name in most Western languages.\n",
+            "example": "Max"
+          },
+          "family_name": {
+            "type": "string",
+            "description": "The family name of the User, or\nlast name in most Western languages.\n",
+            "example": "Mustermann"
+          },
+          "honorific_prefix": {
+            "type": "string",
+            "description": "Not supported in DATEV-iam.\n"
+          }
+        },
+        "description": "The components of the user's real name.\n",
+        "example": {
+          "given_name": "Max",
+          "family_name": "Mustermann"
+        }
+      },
+      "scim_linkage": {
+        "required": [
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": "A unique identifier.\n",
+            "example": "a077bae8-e669-4b3a-851b-35b2079d2acd"
+          },
+          "display": {
+            "type": "string",
+            "description": "A human-readable name, primarily used for display purposes.\nThis property is only supported with groups of a DATEV-user.\n",
+            "example": "Sachbearbeiter"
+          },
+          "$ref": {
+            "type": "string",
+            "description": "The reference URI of a target resource.\nIn DATEV iam this can be a member of a DATEV-group oder a group of a DATEV-user.\nURIs are canonicalized per Section 6.2 of [RFC3986].\nWhile the representation of a resource may vary in different SCIM\nprotocol API versions (see Section 3.13 of [RFC7644]), URIs for\nSCIM resources with an API version SHALL be considered comparable\nto URIs without a version or with a different version.\n",
+            "example": "/iam/v1/groups/a077bae8-e669-4b3a-851b-35b2079d2acd"
+          }
+        }
+      },
+      "scim_service_provider_config": {
+        "required": [
+          "authentication_schemes",
+          "bulk",
+          "change_password",
+          "etag",
+          "filter",
+          "patch",
+          "sort"
+        ],
+        "type": "object",
+        "properties": {
+          "schemas": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig"
+            }
+          },
+          "documentation_uri": {
+            "type": "string",
+            "description": "An HTTP-addressable URL pointing to the service provider's human-consumable help documentation.",
+            "example": "https://www.datev.de/developer/"
+          },
+          "patch": {
+            "type": "object",
+            "properties": {
+              "supported": {
+                "type": "boolean",
+                "example": true
+              }
+            },
+            "description": "A complex type that specifies PATCH configuration options. See Section 3.5.2 of [RFC7644]."
+          },
+          "bulk": {
+            "type": "object",
+            "properties": {
+              "supported": {
+                "type": "boolean",
+                "example": true
+              },
+              "max_operations": {
+                "type": "number",
+                "example": 1000
+              },
+              "max_payload_size": {
+                "type": "number",
+                "example": 1048576
+              }
+            },
+            "description": "A complex type that specifies bulk configuration options. See Section 3.7 of [RFC7644]."
+          },
+          "filter": {
+            "type": "object",
+            "properties": {
+              "supported": {
+                "type": "boolean",
+                "example": false
+              },
+              "max_results": {
+                "type": "number",
+                "example": 0
+              }
+            },
+            "description": "A complex type that specifies FILTER options. See Section 3.4.2.2 of [RFC7644]."
+          },
+          "change_password": {
+            "type": "object",
+            "properties": {
+              "supported": {
+                "type": "boolean",
+                "example": false
+              }
+            },
+            "description": "A complex type that specifies configuration options related to changing a password."
+          },
+          "sort": {
+            "type": "object",
+            "properties": {
+              "supported": {
+                "type": "boolean",
+                "example": false
+              }
+            },
+            "description": "A complex type that specifies Sort configuration options."
+          },
+          "etag": {
+            "type": "object",
+            "properties": {
+              "supported": {
+                "type": "boolean",
+                "example": true
+              }
+            },
+            "description": "A complex type that specifies ETag configuration options."
+          },
+          "authentication_schemes": {
+            "type": "array",
+            "description": "A multi-valued complex type that specifies supported\nauthentication scheme properties. To enable seamless discovery of\nconfigurations, the service provider SHOULD, with the appropriate\nsecurity considerations, make the authenticationSchemes attribute\npublicly accessible without prior authentication\n",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "The common authentication scheme name, e.g., HTTP Basic.\n"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "A description of the authentication scheme.\n"
+                },
+                "spec_uri": {
+                  "type": "string",
+                  "description": "An HTTP-addressable URL pointing to the authentication\nscheme's specification.\n"
+                },
+                "documentation_uri": {
+                  "type": "string",
+                  "description": "An HTTP-addressable URL pointing to the authentication\nscheme's usage documentation.\n"
+                },
+                "type": {
+                  "type": "string",
+                  "description": "The authentication scheme. This specification defines the\nvalues \"oauth\", \"oauth2\", \"oauthbearertoken\", \"httpbasic\", and\n\"httpdigest\".\n",
+                  "enum": [
+                    "oauth",
+                    "oauth2",
+                    "oauthbearertoken",
+                    "httpbasic",
+                    "httpdigest"
+                  ]
+                },
+                "primary": {
+                  "type": "boolean",
+                  "description": "A bool value indicating the 'primary' or preferred attribute\nvalue for this attribute, e.g., the preferred mailing address\nor primary email address.The primary attribute value 'true'\nMUST appear no more than once\n"
+                }
+              }
+            },
+            "example": [
+              {
+                "name": "Windows",
+                "description": "Windows authentication (NTLM/Kerberos)",
+                "type": "windows",
+                "primary": false
+              },
+              {
+                "name": "HTTP Basic",
+                "description": "Authentication scheme using the HTTP Basic Standard",
+                "spec_uri": "http://www.rfc-editor.org/info/rfc2617",
+                "documentation_uri": "http://example.com/help/httpBasic.html",
+                "type": "httpbasic",
+                "primary": false
+              }
+            ]
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "resource_type": {
+                "type": "string",
+                "description": "The name of the resource type of the resource.",
+                "readOnly": true,
+                "example": "serviceProviderConfig"
+              },
+              "created": {
+                "type": "string",
+                "description": "The \"DateTime\" that the resource was added to the service provider.",
+                "format": "dateTime",
+                "readOnly": true,
+                "example": "2017-07-27T17:07:04.000+02:00"
+              },
+              "last_modified": {
+                "type": "string",
+                "description": "The most recent DateTime that the details of this resource were updated at the service provider.",
+                "format": "dateTime",
+                "readOnly": true,
+                "example": "2017-07-27T17:07:04.000+02:00"
+              },
+              "location": {
+                "type": "string",
+                "description": "The URI of the resource being returned.",
+                "readOnly": true,
+                "example": "/iam/v1/serviceProviderConfig"
+              },
+              "version": {
+                "type": "string",
+                "description": "The version of the resource being returned.",
+                "readOnly": true,
+                "example": "0.1"
+              }
+            }
+          }
+        }
+      },
+      "scim_resource_type": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The resource type's server unique id.",
+            "example": "User"
+          },
+          "name": {
+            "type": "string",
+            "description": "The resource type name.",
+            "example": "User"
+          },
+          "description": {
+            "type": "string",
+            "description": "The resource type's human-readable description.",
+            "example": "User Account"
+          },
+          "endpoint": {
+            "type": "string",
+            "description": "The resource type's HTTP-addressable endpoint relative to the Base URL of the service provider",
+            "example": "/Users"
+          },
+          "schema": {
+            "type": "string",
+            "description": "The resource type's primary/base schema URI.",
+            "example": "urn:ietf:params:scim:schemas:core:2.0:User"
+          },
+          "schema_extensions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "schema": {
+                  "type": "string",
+                  "description": "The URI of an extended schema.",
+                  "example": "urn:ietf:params:scim:schemas:extension:datev:2.0:user"
+                },
+                "required": {
+                  "type": "boolean",
+                  "description": "A Boolean value that specifies whether or not the schema extension is required for the resource type. Always true for resource type user and group.",
+                  "example": true
+                }
+              }
+            }
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "resource_type": {
+                "type": "string",
+                "description": "The name of the resource type of the resource.",
+                "readOnly": true,
+                "example": "resourceTypes"
+              },
+              "created": {
+                "type": "string",
+                "description": "The \"DateTime\" that the resource was added to the service provider.",
+                "format": "dateTime",
+                "readOnly": true,
+                "example": "2017-07-27T17:07:04.000+02:00"
+              },
+              "last_modified": {
+                "type": "string",
+                "description": "The most recent DateTime that the details of this resource were updated at the service provider.",
+                "format": "dateTime",
+                "readOnly": true,
+                "example": "2017-07-27T17:07:04.000+02:00"
+              },
+              "location": {
+                "type": "string",
+                "description": "The URI of the resource being returned.",
+                "readOnly": true,
+                "example": "/iam/v1/resourceTypes/user"
+              },
+              "version": {
+                "type": "string",
+                "description": "The version of the resource being returned.",
+                "readOnly": true,
+                "example": "0.1"
+              }
+            }
+          }
+        }
+      },
+      "scim_schema": {
+        "required": [
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique URI of the schema.",
+            "example": "urn:ietf:params:scim:schemas:core:2.0:User"
+          },
+          "name": {
+            "type": "string",
+            "description": "The schema's human-readable name.",
+            "example": "User"
+          },
+          "description": {
+            "type": "string",
+            "description": "The schema's human-readable description.",
+            "example": "User Account"
+          },
+          "attributes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/scim_schema_attribute"
+            }
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "resource_type": {
+                "type": "string",
+                "description": "The name of the resource type of the resource.",
+                "readOnly": true,
+                "example": "Schema"
+              },
+              "location": {
+                "type": "string",
+                "description": "The URI of the resource being returned.",
+                "readOnly": true,
+                "example": "/v1/schemas/urn:ietf:params:scim:schemas:core:2.0:User"
+              }
+            }
+          }
+        }
+      },
+      "scim_schema_attribute": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The attribute's name.",
+            "example": "name"
+          },
+          "type": {
+            "type": "string",
+            "description": "The attribute's data type. Valid values are \"string\", \"boolean\", \"decimal\", \"integer\", \"dateTime\", \"reference\", and \"complex\". When an attribute is of type \"complex\", there SHOULD be a corresponding schema attribute \"subAttributes\" defined, listing the sub-attributes of the attribute.",
+            "example": "complex",
+            "enum": [
+              "boolean",
+              "decimal",
+              "integer",
+              "dateTime",
+              "reference",
+              "complex"
+            ]
+          },
+          "sub_attributes": {
+            "type": "object",
+            "properties": {},
+            "description": "When an attribute is of type \"complex\", \"subAttributes\" defines a set of sub-attributes. \"subAttributes\" has the same schema sub-attributes as \"attributes\"."
+          },
+          "multi_valued": {
+            "type": "boolean",
+            "description": "A Boolean value indicating the attribute's plurality.",
+            "example": false
+          },
+          "description": {
+            "type": "string",
+            "description": "The attribute's human-readable description. When applicable, service providers MUST specify the description"
+          },
+          "required": {
+            "type": "boolean",
+            "description": "A Boolean value that specifies whether or not the\nattribute is required.\n"
+          },
+          "canonical_values": {
+            "type": "string",
+            "description": "A collection of suggested canonical values that\nMAY be used (e.g., \"work\" and \"home\"). In some cases, service\nproviders MAY choose to ignore unsupported values.\n"
+          },
+          "case_exact": {
+            "type": "boolean",
+            "description": "A Boolean value that specifies whether or not a string\nattribute is case sensitive. The server SHALL use case\nsensitivity when evaluating filters. For attributes that are\ncase exact, the server SHALL preserve case for any value\nsubmitted. If the attribute is case insensitive, the server\nMAY alter case for a submitted value. Case sensitivity also\nimpacts how attribute values MAY be compared against filter\nvalues (see Section 3.4.2.2 of [RFC7644]).\n"
+          },
+          "mutability": {
+            "type": "string",
+            "description": "A single keyword indicating the circumstances under\nwhich the value of the attribute can be (re)defined:\n\nreadOnly The attribute SHALL NOT be modified.\n\nreadWrite The attribute MAY be updated and read at any time.\n  This is the default value.\n\nimmutable The attribute MAY be defined at resource creation\n  (e.g., POST) or at record replacement via a request (e.g., a\n  PUT). The attribute SHALL NOT be updated.\n\nwriteOnly The attribute MAY be updated at any time.  Attribute\n  values SHALL NOT be returned (e.g., because the value is a\n  stored hash).  Note: An attribute with a mutability of\n  \"writeOnly\" usually also has a returned setting of \"never\".\n",
+            "enum": [
+              "readOnly",
+              "readWrite",
+              "immutable",
+              "writeOnly"
+            ]
+          },
+          "returned": {
+            "type": "string",
+            "description": "A single keyword that indicates when an attribute and\nassociated values are returned in response to a GET request or\nin response to a PUT, POST, or PATCH request. Valid keywords\nare as follows:\n\nalways The attribute is always returned, regardless of the\n  contents of the \"attributes\" parameter. For example, \"id\"\n  is always returned to identify a SCIM resource.\n\nnever The attribute is never returned. This may occur because\n  the original attribute value (e.g., a hashed value) is not\n  retained by the service provider. A service provider MAY\n  allow attributes to be used in a search filter.\n\ndefault The attribute is returned by default in all SCIM\n  operation responses where attribute values are returned. If\n  the GET request \"attributes\" parameter is specified,\n  attribute values are only returned if the attribute is named\n  in the \"attributes\" parameter. DEFAULT.\n\nrequest The attribute is returned in response to any PUT,\n  POST, or PATCH operations if the attribute was specified by\n  the client (for example, the attribute was modified). The\n  attribute is returned in a SCIM query operation only if\n  specified in the \"attributes\" parameter.\n",
+            "enum": [
+              "always",
+              "never",
+              "default",
+              "request"
+            ]
+          },
+          "uniqueness": {
+            "type": "string",
+            "description": "A single keyword value that specifies how the service\nprovider enforces uniqueness of attribute values. A server MAY\nreject an invalid value based on uniqueness by returning HTTP\nresponse code 400 (Bad Request). A client MAY enforce\nuniqueness on the client side to a greater degree than the\nservice provider enforces. For example, a client could make a\nvalue unique while the server has uniqueness of \"none\". Valid\nkeywords are as follows:\n\nnone The values are not intended to be unique in any way.\n  DEFAULT.\n\nserver The value SHOULD be unique within the context of the\n  current SCIM endpoint (or tenancy) and MAY be globally\n  unique (e.g., a \"username\", email address, or other\n  server-generated key or counter). No two resources on the\n  same server SHOULD possess the same value.\n\nglobal The value SHOULD be globally unique (e.g., an email\n  address, a GUID, or other value). No two resources on any\n  server SHOULD possess the same value.\n",
+            "enum": [
+              "none",
+              "server",
+              "global"
+            ]
+          },
+          "reference_types": {
+            "type": "array",
+            "description": "A multi-valued array of JSON strings that indicate\nthe SCIM resource types that may be referenced. Valid values\nare as follows:\n\n+ A SCIM resource type (e.g., \"User\" or \"Group\"),\n\n+ \"external\" - indicating that the resource is an external\nresource (e.g., a photo), or\n\n+ \"uri\" - indicating that the reference is to a service\nendpoint or an identifier (e.g., a schema URN).\n\nThis attribute is only applicable for attributes that are of\ntype \"reference\" (Section 2.3.7).\n",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "example": {
+          "name": "name",
+          "type": "complex",
+          "multi_valued": false,
+          "sub_attribute": [
+            {
+              "name": "given_name",
+              "type": "string",
+              "multi_valued": false
+            },
+            {
+              "name": "family_name",
+              "type": "string",
+              "multi_valued": false
+            }
+          ]
+        }
+      },
+      "return_message": {
+        "type": "object",
+        "properties": {
+          "message_type": {
+            "type": "string",
+            "description": "The type of the return message",
+            "example": "Error",
+            "enum": [
+              "Error",
+              "Warning",
+              "Information",
+              "Requirement"
+            ]
+          },
+          "message_id": {
+            "type": "string",
+            "description": "The id of the error",
+            "example": "IDM23006"
+          },
+          "message_text": {
+            "type": "string",
+            "description": "The error message",
+            "example": "User not found"
+          },
+          "inner_return_message": {
+            "$ref": "#/components/schemas/return_message"
+          },
+          "request_id": {
+            "type": "string",
+            "description": "The id of the request",
+            "example": "3F1FDE60-A566-41F4-8242-33283B499A19"
+          },
+          "help_link": {
+            "type": "string",
+            "description": "The id of an info document",
+            "example": 123456
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "basicAuth": {
+        "type": "http",
+        "scheme": "basic"
+      }
+    }
+  },
+  "security": [
+    {
+      "basicAuth": []
+    }
+  ]
+}

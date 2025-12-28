@@ -1,0 +1,4872 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Public Sector - Citizen Portal",
+    "version": "1.0.4",
+    "description": "Die Schnittstelle DATEVconnect Kommunale Abgabe funktioniert ausschließlich in Verbindung mit der Anwendung DATEV Kommunale Abgabe.\nDATEVconnect Kommunale Abgabe unterstützt vor allem Kommunen und Kommunale Unternehmen bei der Digitalisierung und trägt zur Effizienzsteigerung in Prozessabläufen bei, um zum Beispiel Bürgern den digitalen Zugangsweg über ein Web-Portal zur Verwaltung zu ermöglichen. Die Schnittstelle DATEVconnect Kommunale Abgabe erweitert das Lösungsangebot im Public Sector und bietet einen einfachen bidirektionalen Datenaustausch zwischen Drittlösungen und der Anwendung DATEV Kommunale Abgabe. Die Schnittstelle stellt Veranlagungsdaten wie zum Beispiel: Kommunikationsdaten, Abgabeinformationen und Verbräuche und Zählerstände im Bereich Wasser/Abwasser bereit.\n",
+    "x-datev-shortdescription": "The API extends solution portfolio in public sector and provides easy bidirectional data transfer between third party solutions and the application DATEV Public Sector – Citizen Portal.",
+    "termsOfService": "Copyright DATEV eG - 2016",
+    "contact": {
+      "name": "DATEV Schnittstellenberatung",
+      "url": "http://www.datev.de/connect",
+      "email": "schnittstellenberatung@datev.de"
+    },
+    "license": {
+      "name": "DATEV eG",
+      "url": "http://www.datev.de"
+    },
+    "x-ibm-languages": {
+      "description": {
+        "en": "The DATEVconnect Kommunale Abgabe (Municipal Dispensing) interface works only in conjunction with the DATEV Kommunale Abgabe application.\nAbove all, DATEVconnect Kommunale Abgabe supports municipalities and municipal companies in digitization and contributes to increase  the efficiency of processes, for example to enable citizens to access their digital data via a web portal for administration. The DATEVconnect Kommunale Abgabe interface extends the solution offered in the Public Sector and provides easy bidirectional data exchange between third-party solutions and the DATEV Kommunale Abgabe application. The interface provides disposition data such as: communication data, disbursement information and consumption and meter readings in the area of water/wastewater.\n",
+        "de": "Die Schnittstelle DATEVconnect Kommunale Abgabe funktioniert ausschließlich in Verbindung mit der Anwendung DATEV Kommunale Abgabe.\nDATEVconnect Kommunale Abgabe unterstützt vor allem Kommunen und Kommunale Unternehmen bei der Digitalisierung und trägt zur Effizienzsteigerung in Prozessabläufen bei, um zum Beispiel Bürgern den digitalen Zugangsweg über ein Web-Portal zur Verwaltung zu ermöglichen. Die Schnittstelle DATEVconnect Kommunale Abgabe erweitert das Lösungsangebot im Public Sector und bietet einen einfachen bidirektionalen Datenaustausch zwischen Drittlösungen und der Anwendung DATEV Kommunale Abgabe. Die Schnittstelle stellt Veranlagungsdaten wie zum Beispiel: Kommunikationsdaten, Abgabeinformationen und Verbräuche und Zählerstände im Bereich Wasser/Abwasser bereit.\n"
+      },
+      "x-datev-shortdescription": {
+        "en": "The API extends solution portfolio in public sector and provides easy bidirectional data transfer between third party solutions and the application DATEV Public Sector – Citizen Portal.",
+        "de": "Die Schnittstelle erweitert das Lösungsangebot im Public Sector und bietet einen einfachen bidirektionalen Datenaustausch zwischen Drittlösungen und der Anwendung DATEV Public Sector – Citizen Portal."
+      }
+    }
+  },
+  "securityDefinitions": {
+    "basicAuth": {
+      "type": "basic"
+    }
+  },
+  "security": [
+    {
+      "basicAuth": []
+    }
+  ],
+  "host": "localhost:58454",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "basePath": "/datev/api/public-sector/v1",
+  "produces": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "tags": [
+    {
+      "name": "Citizen"
+    },
+    {
+      "name": "Notification"
+    },
+    {
+      "name": "Fee"
+    },
+    {
+      "name": "Due"
+    },
+    {
+      "name": "Meter"
+    },
+    {
+      "name": "Meter Reading"
+    }
+  ],
+  "parameters": {
+    "ClientId": {
+      "name": "client-id",
+      "description": "Client ID",
+      "x-example": "25e96732-a3d9-5024-766f-8d45371a6200",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "x-ibm-languages": {
+        "description": {
+          "en": "Client ID",
+          "de": "Zentrale Mandantennummer"
+        }
+      }
+    },
+    "CitizenId": {
+      "name": "citizen-id",
+      "description": "Citizen ID (GUID of addressee)",
+      "x-example": "cf192785-88f6-492c-8705-d836727e2479",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "x-ibm-languages": {
+        "description": {
+          "en": "Citizen ID (GUID of addressee)",
+          "de": "BürgerID (Adressaten GUID)"
+        }
+      }
+    },
+    "FeeId": {
+      "name": "fee-id",
+      "description": "Fee ID",
+      "x-example": 1,
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "x-ibm-languages": {
+        "description": {
+          "en": "Fee ID",
+          "de": "AbgabeID"
+        }
+      }
+    },
+    "MeterId": {
+      "name": "meter-id",
+      "description": "(Water-)Meter ID",
+      "x-example": "098765",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "x-ibm-languages": {
+        "description": {
+          "en": "(Water-)Meter ID",
+          "de": "Zählernummer"
+        }
+      }
+    },
+    "MeterReadingId": {
+      "name": "meterreading-id",
+      "description": "Meter Reading ID",
+      "x-example": "098765",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "x-ibm-languages": {
+        "description": {
+          "en": "Meter Reading ID",
+          "de": "ZählerstandsID"
+        }
+      }
+    },
+    "NotificationId": {
+      "name": "notification-id",
+      "description": "Notification ID",
+      "x-example": 11231,
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "x-ibm-languages": {
+        "description": {
+          "en": "Notification ID",
+          "de": "BescheidID"
+        }
+      }
+    },
+    "TransactionCommunicationId": {
+      "name": "transaction-communication-id",
+      "description": "Transaction Communication ID",
+      "x-example": "1b9c4079-2432-47b8-84c2-eebaa97e7376",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "x-ibm-languages": {
+        "description": {
+          "en": "Transaction Communication ID",
+          "de": "Transaktions Kommunikation ID"
+        }
+      }
+    },
+    "TransactionAddressId": {
+      "name": "transaction-address-id",
+      "description": "Transaction Address ID",
+      "x-example": "114257f8-3005-4e1d-9fbd-7def7069da56",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "x-ibm-languages": {
+        "description": {
+          "en": "Transaction Address ID",
+          "de": "Transaktions Adress ID"
+        }
+      }
+    },
+    "TransactionRegistrationId": {
+      "name": "transaction-registration-id",
+      "description": "Transaction Registration ID",
+      "x-example": "9cd408e5-3d0b-4252-b97e-9e82a99d3d61",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "x-ibm-languages": {
+        "description": {
+          "en": "Transaction Registration ID",
+          "de": "Transaktions Registrierung ID"
+        }
+      }
+    },
+    "TransactionMeterReadingId": {
+      "name": "transaction-meter-reading-id",
+      "description": "Transaction Meter Reading ID",
+      "x-example": 78512344,
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "x-ibm-languages": {
+        "description": {
+          "en": "Transaction Meter Reading ID",
+          "de": "Transaktions Zählerstand ID"
+        }
+      }
+    },
+    "SelectParameter": {
+      "name": "select",
+      "description": "Here you can select properties to set what the representation consists of.\n",
+      "x-example": "select=is_cleared,date,currency",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "x-ibm-languages": {
+        "description": {
+          "en": "Here you can select properties to set what the representation consists of. \n",
+          "de": "Angabe von einzelnen Properties aus denen die Repräsentation bestehen soll.\n"
+        }
+      }
+    },
+    "TopParameter": {
+      "name": "top",
+      "description": "Here you can set the max number of items in the response.\n",
+      "x-example": "top=10",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "x-ibm-languages": {
+        "description": {
+          "en": "Here you can set the max number of items in the response.\n",
+          "de": "Gibt die Anzahl der Elemente an, die maximal in der Ergebnismenge enthalten sein sollen.\n"
+        }
+      }
+    },
+    "SkipParameter": {
+      "name": "skip",
+      "description": "Here you can set how many items of the total should be skipped.\n",
+      "x-example": "skip=10 oder skip=20150101",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "x-ibm-languages": {
+        "description": {
+          "en": "Here you can set how many items of the total should be skipped.\n",
+          "de": "Gibt an ab welcher Position in der Gesamtmenge die Ergebnismenge ermittelt werden soll.\n"
+        }
+      }
+    },
+    "FilterParameter": {
+      "name": "filter",
+      "description": "Here you can set a filter to determine the outcome.\n",
+      "x-example": "filter=assessment_period eq 2016 and date ge 2016-08-15",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "x-ibm-languages": {
+        "description": {
+          "en": "Here you can set a filter to determine the outcome.\n",
+          "de": "Angabe eines Filterausdrucks beinflusst die Ergebnismenge.\n"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Echo": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Some Guid",
+          "x-ibm-languages": {
+            "description": {
+              "en": "Some Guid",
+              "de": "Eine Guid"
+            }
+          }
+        }
+      }
+    },
+    "Client": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "client ID",
+          "x-ibm-languages": {
+            "description": {
+              "en": "client ID",
+              "de": "Zentrale Mandantennummer"
+            }
+          }
+        },
+        "name": {
+          "type": "string",
+          "description": "company name",
+          "x-ibm-languages": {
+            "description": {
+              "en": "company name",
+              "de": "Unternehmensname"
+            }
+          }
+        },
+        "number": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "text": {
+          "type": "string"
+        }
+      }
+    },
+    "Citizen": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "citizen ID (GUID of addressee)\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "citizen ID (GUID of addressee)\n",
+              "de": "Id des Bürgers (Adressats-GUID)\n"
+            }
+          }
+        },
+        "account_number": {
+          "type": "integer",
+          "format": "int32",
+          "description": "9 digit account number of citizen\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "9 digit account number of citizen\n",
+              "de": "9-stellige Kontonummer des Geschäftspartners\n"
+            }
+          }
+        },
+        "registration_id": {
+          "type": "string",
+          "description": "web ID of citizen\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "web ID of citizen\n",
+              "de": "WebId des Bürgers\n"
+            }
+          }
+        },
+        "account_number_short": {
+          "type": "integer",
+          "format": "int32",
+          "description": "For displaying  the shortened client's account number\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "For displaying  the shortened client's account number\n",
+              "de": "Zur Anzeige der gekürzten Kontonummer des Geschäftspartners\n"
+            }
+          }
+        }
+      }
+    },
+    "Fee": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "fee ID\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "fee ID\n",
+              "de": "ID der Abgabe\n"
+            }
+          }
+        },
+        "type_name": {
+          "type": "string",
+          "description": "fee type description\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "fee type description\n",
+              "de": "AbgabeArt Bezeichnung\n"
+            }
+          }
+        },
+        "type_shortname": {
+          "type": "string",
+          "description": "fee type short description\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "fee type short description\n",
+              "de": "AbgabeArt Kurzbezeichnung\n"
+            }
+          }
+        },
+        "reference_number": {
+          "type": "string",
+          "description": "reference number of fee\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "reference number of fee\n",
+              "de": "Aktenzeichen der Abgabe\n"
+            }
+          }
+        },
+        "start_date": {
+          "type": "string",
+          "format": "date",
+          "description": "start date of fee\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "start date of fee\n",
+              "de": "Beginndatum der Abgabenpflicht\n"
+            }
+          }
+        },
+        "end_date": {
+          "type": "string",
+          "format": "date",
+          "description": "end date of fee\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "end date of fee\n",
+              "de": "Endedatum der Abgabenpflicht\n"
+            }
+          }
+        },
+        "comment": {
+          "type": "string",
+          "description": "comment on fee\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "comment on fee\n",
+              "de": "Bemerkung der Abgabe\n"
+            }
+          }
+        },
+        "notification_address_id": {
+          "type": "string",
+          "description": "shipping address ID\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "shipping address ID\n",
+              "de": "Versand AdressID des Bescheids\n"
+            }
+          }
+        },
+        "notification_type": {
+          "type": "string",
+          "description": "nofitication type - no notification - information notification - original notification\n",
+          "enum": [
+            "no notification",
+            "information notification",
+            "original notification"
+          ],
+          "x-ibm-languages": {
+            "description": {
+              "en": "nofitication type - no notification - information notification - original notification\n",
+              "de": "Bescheidart - no notification | Kein Bescheid - information notification | Infobescheid - original notification | Originalbescheid\n"
+            }
+          }
+        },
+        "location": {
+          "description": "location information",
+          "$ref": "#/definitions/datev.complextype.location",
+          "x-ibm-languages": {
+            "description": {
+              "en": "location information",
+              "de": "Lageinformationen"
+            }
+          }
+        },
+        "payment_method": {
+          "description": "payment method information",
+          "$ref": "#/definitions/datev.complextype.paymentmethod",
+          "x-ibm-languages": {
+            "description": {
+              "en": "payment method information",
+              "de": "Informationen zur Zahlweise"
+            }
+          }
+        }
+      }
+    },
+    "datev.complextype.location": {
+      "type": "object",
+      "description": "location information",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "location ID\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "location ID\n",
+              "de": "ID der Lage\n"
+            }
+          }
+        },
+        "description": {
+          "type": "string",
+          "description": "location description\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "location description\n",
+              "de": "Lagebezeichnung\n"
+            }
+          }
+        },
+        "address_appendix": {
+          "type": "string",
+          "description": "address appendix\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "address appendix\n",
+              "de": "Adresszusatz der Lage\n"
+            }
+          }
+        },
+        "street": {
+          "type": "string",
+          "description": "street\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "street\n",
+              "de": "Straße\n"
+            }
+          }
+        },
+        "street_number": {
+          "type": "string",
+          "description": "street number\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "street number\n",
+              "de": "Hausnummer\n"
+            }
+          }
+        },
+        "district": {
+          "type": "string",
+          "description": "district\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "district\n",
+              "de": "Ortsteil\n"
+            }
+          }
+        },
+        "postal_code": {
+          "type": "string",
+          "description": "postal code\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "postal code\n",
+              "de": "Postleitzahl\n"
+            }
+          }
+        },
+        "city": {
+          "type": "string",
+          "description": "city\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "city\n",
+              "de": "Ort\n"
+            }
+          }
+        },
+        "farmland": {
+          "type": "string",
+          "description": "farmland\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "farmland\n",
+              "de": "Flur\n"
+            }
+          }
+        },
+        "farmland_number": {
+          "type": "string",
+          "description": "farmland number\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "farmland number\n",
+              "de": "Flurstück\n"
+            }
+          }
+        },
+        "cadastral_number": {
+          "type": "string",
+          "description": "cadastral number\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "cadastral number\n",
+              "de": "Gemarkung\n"
+            }
+          }
+        }
+      },
+      "x-ibm-languages": {
+        "description": {
+          "en": "location information",
+          "de": "Lageinformationen"
+        }
+      }
+    },
+    "datev.complextype.paymentmethod": {
+      "type": "object",
+      "description": "payment method information",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "payment method ID\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "payment method ID\n",
+              "de": "ID der Zahlweise\n"
+            }
+          }
+        },
+        "valid_from": {
+          "type": "string",
+          "description": "valid from\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "valid from\n",
+              "de": "Gültig ab\n"
+            }
+          }
+        },
+        "valid_to": {
+          "type": "string",
+          "description": "valid to\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "valid to\n",
+              "de": "Gültig bis\n"
+            }
+          }
+        },
+        "commissioner": {
+          "type": "string",
+          "description": "commissioner\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "commissioner\n",
+              "de": "Bevollmächtigter\n"
+            }
+          }
+        },
+        "bank_account_number": {
+          "type": "string",
+          "description": "bank account number\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "bank account number\n",
+              "de": "Kontonummer\n"
+            }
+          }
+        },
+        "bank_code": {
+          "type": "string",
+          "description": "bank code\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "bank code\n",
+              "de": "Bankleitzahl\n"
+            }
+          }
+        },
+        "iban": {
+          "type": "string",
+          "description": "IBAN\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "IBAN\n",
+              "de": "IBAN\n"
+            }
+          }
+        },
+        "bic": {
+          "type": "string",
+          "description": "BIC\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "BIC\n",
+              "de": "BIC\n"
+            }
+          }
+        },
+        "bank_name": {
+          "type": "string",
+          "description": "bank name\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "bank name\n",
+              "de": "Bankbezeichnung\n"
+            }
+          }
+        },
+        "sepa_mandate_reference": {
+          "type": "string",
+          "description": "SEPA mandate reference\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "SEPA mandate reference\n",
+              "de": "SEPA-Mandatsreferenz\n"
+            }
+          }
+        },
+        "differing_account_holder": {
+          "type": "string",
+          "description": "differing account holder\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "differing account holder\n",
+              "de": "Abweichender Kontoinhaber\n"
+            }
+          }
+        }
+      },
+      "x-ibm-languages": {
+        "description": {
+          "en": "payment method information",
+          "de": "Informationen zur Zahlweise"
+        }
+      }
+    },
+    "Meter": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "meter ID\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "meter ID\n",
+              "de": "ZählerId\n"
+            }
+          }
+        },
+        "number": {
+          "type": "string",
+          "description": "meter number\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "meter number\n",
+              "de": "Zählernummer\n"
+            }
+          }
+        },
+        "usagetype": {
+          "type": "string",
+          "description": "Meter usage in fee (not filled)\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "Meter usage in fee (not filled)\n",
+              "de": "Verwendung des Zählers innerhalb der Abgabe - wird in der Meter-Api nicht befüllt\n"
+            }
+          }
+        },
+        "effect_on_billing": {
+          "type": "string",
+          "description": "Effect of meter (not filled)\n- no effect\n- subtraction\n- addition\n",
+          "enum": [
+            "no effect",
+            "subtraction",
+            "addition"
+          ],
+          "x-ibm-languages": {
+            "description": {
+              "en": "Effect of meter (not filled)\n- no effect\n- subtraction\n- addition\n",
+              "de": "Wirkung des Zählers - wird in der Meter-Api nicht befüllt - no effect | Keine Auswirkung - subtraction | Abzug - addition | Hinzurechnung\n"
+            }
+          }
+        },
+        "first_date": {
+          "type": "string",
+          "format": "date",
+          "description": "start  date of first accounting period\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "start  date of first accounting period\n",
+              "de": "Beginn des ersten Abrechungszeitraums\n"
+            }
+          }
+        },
+        "last_date": {
+          "type": "string",
+          "format": "date",
+          "description": "end date of last accounting period\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "end date of last accounting period\n",
+              "de": "Ende des letzten Abrechungszeitraums\n"
+            }
+          }
+        },
+        "changed_reason": {
+          "type": "string",
+          "description": "meter change type  (not filled) - no change type - termination - cancellation - tariff change - meter exchange\n",
+          "enum": [
+            "no change",
+            "removal",
+            "cancellation",
+            "tariff change",
+            "meter exchange"
+          ],
+          "x-ibm-languages": {
+            "description": {
+              "en": "meter change type  (not filled) - no change type - termination - cancellation - tariff change - meter exchange\n",
+              "de": "Änderungsart des Zählers - wird in der Meter-Api nicht befüllt - no change | Keine Änderungsart - removal | Abmeldung - cancellation | Storno - tariff change | Tarifwechsel - meter exchange | Zählerwechsel\n"
+            }
+          }
+        },
+        "meter_type": {
+          "description": "meter type",
+          "$ref": "#/definitions/datev.complextype.metertype",
+          "x-ibm-languages": {
+            "description": {
+              "en": "meter type",
+              "de": "Zählertyp"
+            }
+          }
+        },
+        "manufacturer": {
+          "type": "string",
+          "description": "manufacturer of meter\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "manufacturer of meter\n",
+              "de": "Hersteller des Wasserzählers\n"
+            }
+          }
+        },
+        "year_of_manufacture": {
+          "type": "integer",
+          "format": "int32",
+          "description": "year of manufacture\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "year of manufacture\n",
+              "de": "Baujahr\n"
+            }
+          }
+        },
+        "year_of_calibration": {
+          "type": "integer",
+          "format": "int32",
+          "description": "year of calibration\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "year of calibration\n",
+              "de": "Eichjahr\n"
+            }
+          }
+        },
+        "owner": {
+          "type": "string",
+          "description": "owner\n- municipality\n- citizen\n",
+          "enum": [
+            "municipality",
+            "citizen"
+          ],
+          "x-ibm-languages": {
+            "description": {
+              "en": "owner\n- municipality\n- citizen\n",
+              "de": "Besitzer\n- municipality | Kommune\n- citizen | Bürger\n"
+            }
+          }
+        },
+        "comment": {
+          "type": "string",
+          "description": "comment\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "comment\n",
+              "de": "Vermerk\n"
+            }
+          }
+        },
+        "orientation": {
+          "type": "string",
+          "description": "orientation\n- vertical\n- horizontal\n",
+          "enum": [
+            "vertical",
+            "horizontal"
+          ],
+          "x-ibm-languages": {
+            "description": {
+              "en": "orientation\n- vertical\n- horizontal\n",
+              "de": "Einbauart\n- vertical | senkrecht\n- horizontal | waagrecht\n"
+            }
+          }
+        },
+        "localization": {
+          "description": "localization of meter",
+          "$ref": "#/definitions/datev.complextype.meterlocalization",
+          "x-ibm-languages": {
+            "description": {
+              "en": "localization of meter",
+              "de": "Ort des Zählers"
+            }
+          }
+        }
+      }
+    },
+    "datev.complextype.metertype": {
+      "type": "object",
+      "description": "meter type",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32",
+          "description": "meter type ID\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "meter type ID\n",
+              "de": "ID des Zählertyp\n"
+            }
+          }
+        },
+        "type": {
+          "type": "string",
+          "description": "meter type\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "meter type\n",
+              "de": "Zählertyp\n"
+            }
+          }
+        },
+        "mechanism": {
+          "type": "string",
+          "description": "mechanism\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "mechanism\n",
+              "de": "Zählwerk\n"
+            }
+          }
+        },
+        "nominal_flow_rate": {
+          "type": "number",
+          "format": "float",
+          "description": "nominal flow rate\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "nominal flow rate\n",
+              "de": "Nenndurchfluss\n"
+            }
+          }
+        },
+        "count_of_pre_decimal_digits": {
+          "type": "integer",
+          "format": "int32",
+          "description": "count of pre decimal digits\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "count of pre decimal digits\n",
+              "de": "Anzahl Vorkommastellen\n"
+            }
+          }
+        },
+        "count_of_post_decimal_digits": {
+          "type": "integer",
+          "format": "int32",
+          "description": "count of post decimal digits\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "count of post decimal digits\n",
+              "de": "Anzahl Nachkommastellen\n"
+            }
+          }
+        },
+        "periodicity_of_calibration": {
+          "type": "string",
+          "description": "periodicity of calibration - 6 years (cold water meter) - 5 years (warm water meter)\n",
+          "enum": [
+            "6 years (cold water meter)",
+            "5 years (warm water meter)"
+          ],
+          "x-ibm-languages": {
+            "description": {
+              "en": "periodicity of calibration - 6 years (cold water meter) - 5 years (warm water meter)\n",
+              "de": "Eichrythmus - 6 years (cold water meter) | 6 Jahre (Kaltwasserzähler) - 5 years (warm water meter) | 5 Jahre (Warmwasserzähler)\n"
+            }
+          }
+        }
+      },
+      "x-ibm-languages": {
+        "description": {
+          "en": "meter type",
+          "de": "Zählertyp"
+        }
+      }
+    },
+    "datev.complextype.meterlocalization": {
+      "type": "object",
+      "description": "meter localization",
+      "properties": {
+        "is_located": {
+          "type": "string",
+          "description": "meter is - in the water supply network - in stock - under repair - under calibration\n",
+          "enum": [
+            "in the water supply network",
+            "in stock",
+            "under repair",
+            "under calibration"
+          ],
+          "x-ibm-languages": {
+            "description": {
+              "en": "meter is - in the water supply network - in stock - under repair - under calibration\n",
+              "de": "Zähler befindet sich - in the water supply network | Im Netz - in stock | Auf Lager - under repair | Bei Reparatur - under calibration | Bei Eichung\n"
+            }
+          }
+        },
+        "last_replacement_date": {
+          "type": "string",
+          "format": "date",
+          "description": "last replacement date\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "last replacement date\n",
+              "de": "Zähler befindet sich dort seit\n"
+            }
+          }
+        },
+        "last_replacement_reason": {
+          "type": "string",
+          "description": "last replacement reason\n- removal\n- defective\n- calibration\n",
+          "enum": [
+            "removal",
+            "defective",
+            "calibration"
+          ],
+          "x-ibm-languages": {
+            "description": {
+              "en": "last replacement reason\n- removal\n- defective\n- calibration\n",
+              "de": "Zählerwechselgrund - removal | Ausbau - defective | Defekt - calibration | Eichung\n"
+            }
+          }
+        },
+        "comment": {
+          "type": "string",
+          "description": "comment on the meter localization\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "comment on the meter localization\n",
+              "de": "Einbauort\n"
+            }
+          }
+        },
+        "meter_purpose": {
+          "type": "string",
+          "description": "meter purpose - construction water - commercial water supply - main water supply - partial water supply - bypass meter\n",
+          "enum": [
+            "construction water",
+            "commercial water supply",
+            "main water supply",
+            "partial water supply",
+            "bypass meter"
+          ],
+          "x-ibm-languages": {
+            "description": {
+              "en": "meter purpose - construction water - commercial water supply - main water supply - partial water supply - bypass meter\n",
+              "de": "Zählerzweck - construction water | Bauwasser - commercial water supply | Gewerbeanschluss - main water supply | Hauptanschluss/Vollanschluss - partial water supply | Teilanschluss - bypass meter | Nebenzähler\n"
+            }
+          }
+        },
+        "reading_district": {
+          "type": "string",
+          "description": "reading district\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "reading district\n",
+              "de": "Ablesebezirk\n"
+            }
+          }
+        }
+      },
+      "x-ibm-languages": {
+        "description": {
+          "en": "meter localization",
+          "de": "Lage des Zählers"
+        }
+      }
+    },
+    "MeterReading": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "readOnly": true,
+          "description": "meter reading ID\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "meter reading ID\n",
+              "de": "Zählerstand ID\n"
+            }
+          }
+        },
+        "date": {
+          "type": "string",
+          "format": "date",
+          "description": "meter reading date\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "meter reading date\n",
+              "de": "Ablesedatum\n"
+            }
+          }
+        },
+        "date_serial_number": {
+          "type": "integer",
+          "format": "int32",
+          "description": "serial number of meter reading date\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "serial number of meter reading date\n",
+              "de": "Laufende Nummer innerhalb des Ablesedatums\n"
+            }
+          }
+        },
+        "value": {
+          "type": "number",
+          "format": "double",
+          "description": "meter value\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "meter value\n",
+              "de": "Zählerstand\n"
+            }
+          }
+        },
+        "consumption": {
+          "type": "number",
+          "format": "double",
+          "description": "consumption\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "consumption\n",
+              "de": "Verbrauch\n"
+            }
+          }
+        },
+        "relevance": {
+          "type": "string",
+          "description": "is relevant for\n- water\n- sewage\n- water and sewage\n",
+          "enum": [
+            "water",
+            "sewage",
+            "water and sewage"
+          ],
+          "x-ibm-languages": {
+            "description": {
+              "en": "is relevant for\n- water\n- sewage\n- water and sewage\n",
+              "de": "Relevant für - water | Wasser - sewage | Abwasser - water and sewage | Wasser und Abwasser\n"
+            }
+          }
+        },
+        "sign": {
+          "type": "string",
+          "description": "meter reading sign - reading - self-reading - estimate - extrapolation - estimate billed\n",
+          "enum": [
+            "reading",
+            "self-reading",
+            "estimate",
+            "extrapolation",
+            "estimate billed"
+          ],
+          "x-ibm-languages": {
+            "description": {
+              "en": "meter reading sign - reading - self-reading - estimate - extrapolation - estimate billed\n",
+              "de": "Ablesekennzeichen - reading | Ablesung - self-reading | Selbstablesung - estimate | Schätzung - extrapolation | Hochrechnung - estimate billed | Schätzung abgerechnet\n"
+            }
+          }
+        },
+        "reason": {
+          "type": "string",
+          "description": "meter reading reason\n- annual reading\n- interim reading\n",
+          "enum": [
+            "annual reading",
+            "interim reading"
+          ],
+          "x-ibm-languages": {
+            "description": {
+              "en": "meter reading reason\n- annual reading\n- interim reading\n",
+              "de": "Ablesegrund - annual reading | Jahresablesung - interim reading | Zwischenablesung\n"
+            }
+          }
+        },
+        "overrun": {
+          "type": "boolean",
+          "description": "overrun (true = meter reading passed maximum value and started counting at zero again)\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "overrun (true = meter reading passed maximum value and started counting at zero again)\n",
+              "de": "Überlauf (true = Zählerwerk hat seit der letzten Ablesung den Maximalwert passiert und wieder bei 0 zu zählen begonnen)\n"
+            }
+          }
+        },
+        "reverse_running": {
+          "type": "boolean",
+          "description": "reverse running (true = meter ist installed vice versa and counts backwards)\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "reverse running (true = meter ist installed vice versa and counts backwards)\n",
+              "de": "Rückwärtslauf (true = Zählwerk wurde verkehrt herum eingebaut; vorheriger Zählerstand ist höher als jetztiger Zählerstand)\n"
+            }
+          }
+        },
+        "initialised": {
+          "type": "boolean",
+          "description": "initialized (true = consumption since last meter reading is not taken into account; consumption is zero)\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "initialized (true = consumption since last meter reading is not taken into account; consumption is zero)\n",
+              "de": "Initialzählerstand (true = Verbrauch zum vorherigen Zählerstand wird nicht berücksichtigt; Verbrauch ist 0)\n"
+            }
+          }
+        },
+        "reader": {
+          "type": "string",
+          "description": "reader\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "reader\n",
+              "de": "Ableser\n"
+            }
+          }
+        },
+        "comment_for_notification": {
+          "type": "string",
+          "description": "comment for notification\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "comment for notification\n",
+              "de": "Bemerkung für Bescheid\n"
+            }
+          }
+        },
+        "comment": {
+          "type": "string",
+          "description": "comment\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "comment\n",
+              "de": "Bemerkung\n"
+            }
+          }
+        }
+      }
+    },
+    "Notification": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "notification ID",
+          "x-ibm-languages": {
+            "description": {
+              "en": "notification ID",
+              "de": "Bescheid-ID"
+            }
+          }
+        },
+        "number": {
+          "type": "string",
+          "description": "notification number",
+          "x-ibm-languages": {
+            "description": {
+              "en": "notification number",
+              "de": "Belegnummer"
+            }
+          }
+        },
+        "date": {
+          "type": "string",
+          "format": "date",
+          "description": "notification date",
+          "x-ibm-languages": {
+            "description": {
+              "en": "notification date",
+              "de": "Belegdatum"
+            }
+          }
+        },
+        "state": {
+          "type": "string",
+          "description": "status\n- PDF created\n- printed\n- reseted\n- printed in previous version\n",
+          "enum": [
+            "PDF created",
+            "printed",
+            "reseted",
+            "printed in previous version"
+          ],
+          "x-ibm-languages": {
+            "description": {
+              "en": "status - PDF created - printed - reseted - printed in previous version\n",
+              "de": "status - PDF created | PDF erstellt - printed | Gedruckt - reseted | Zurückgesetzt - printed in previous version | Gedruckt in Vorversion\n"
+            }
+          }
+        },
+        "type": {
+          "type": "string",
+          "description": "notification type\n- information notification\n- original notification\n",
+          "enum": [
+            "information notification",
+            "original notification"
+          ],
+          "x-ibm-languages": {
+            "description": {
+              "en": "notification type - information notification - original notification\n",
+              "de": "Bescheidart - information notification | Infobescheid - original notification | Originalbescheid\n"
+            }
+          }
+        },
+        "fee_type_list": {
+          "type": "string",
+          "description": "list of all fee types included in  notification separated by commas",
+          "x-ibm-languages": {
+            "description": {
+              "en": "list of all fee types included in  notification separated by commas",
+              "de": "Liste der auf dem Bescheid veranlagten Abgabearten mit Komma getrennt"
+            }
+          }
+        },
+        "location": {
+          "description": "location information",
+          "$ref": "#/definitions/datev.complextype.location",
+          "x-ibm-languages": {
+            "description": {
+              "en": "location information",
+              "de": "Lageinformationen"
+            }
+          }
+        }
+      }
+    },
+    "Due": {
+      "type": "object",
+      "properties": {
+        "assessment_period": {
+          "type": "string",
+          "format": "date",
+          "description": "assessment period\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "assessment period\n",
+              "de": "Veranlagungszeitraum\n"
+            }
+          }
+        },
+        "date": {
+          "type": "string",
+          "format": "date",
+          "description": "due date\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "due date\n",
+              "de": "Fälligkeitsdatum\n"
+            }
+          }
+        },
+        "amount": {
+          "type": "number",
+          "format": "double",
+          "description": "amount\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "amount\n",
+              "de": "Fälligkeitsbetrag\n"
+            }
+          }
+        },
+        "tax_percentage": {
+          "type": "number",
+          "format": "double",
+          "description": "tax percentage\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "tax percentage\n",
+              "de": "Mehrwertsteuersatz\n"
+            }
+          }
+        },
+        "tax_amount": {
+          "type": "number",
+          "format": "double",
+          "description": "tax amount\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "tax amount\n",
+              "de": "Mehrwertsteuerbetrag\n"
+            }
+          }
+        },
+        "supplementary_work": {
+          "type": "string",
+          "description": "supplementary work - no supplementary work - internal billing - interest tariff - trade tax interest - late surcharge - transitory item\n",
+          "enum": [
+            "no supplementary work",
+            "internal billing",
+            "interest tariff",
+            "trade tax interest",
+            "late surcharge",
+            "transitory item"
+          ],
+          "x-ibm-languages": {
+            "description": {
+              "en": "supplementary work - no supplementary work - internal billing - interest tariff - trade tax interest - late surcharge - transitory item\n",
+              "de": "Nebenleistung - no supplementary work | Keine Nebenleistung - internal billing | Interne Verrechnung (IV) - interest tariff | Zinstarif - trade tax interest | GewSt-Zins - late surcharge | Verspätungszuschlag - transitory item | Durchlaufposten\n"
+            }
+          }
+        },
+        "notification_date": {
+          "type": "string",
+          "format": "date",
+          "description": "notification date\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "notification date\n",
+              "de": "Bescheiddatum\n"
+            }
+          }
+        },
+        "notification_number": {
+          "type": "string",
+          "description": "notification number\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "notification number\n",
+              "de": "Bescheidnummer\n"
+            }
+          }
+        },
+        "tariff_caption": {
+          "type": "string",
+          "description": "tariff caption\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "tariff caption\n",
+              "de": "Tarifbezeichnung\n"
+            }
+          }
+        },
+        "tariff_additional_caption": {
+          "type": "string",
+          "description": "tariff additional caption\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "tariff additional caption\n",
+              "de": "Tarifbezeichnungszusatz\n"
+            }
+          }
+        }
+      }
+    },
+    "Consumption": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "generated unique ID\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "generated unique ID\n",
+              "de": "Generierte eindeutige ID\n"
+            }
+          }
+        },
+        "assessment_year": {
+          "type": "integer",
+          "format": "int32",
+          "description": "assessment year\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "assessment year\n",
+              "de": "Veranlagungsjahr\n"
+            }
+          }
+        },
+        "assessment_period": {
+          "type": "string",
+          "description": "assessment period\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "assessment period\n",
+              "de": "Veranlagungszeitraum\n"
+            }
+          }
+        },
+        "sub_assessment_period": {
+          "type": "string",
+          "description": "sub assessment period\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "sub assessment period\n",
+              "de": "Unterzeitraumsbezeichnung\n"
+            }
+          }
+        },
+        "description": {
+          "type": "string",
+          "description": "description of consumption object (description template)\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "description of consumption object (description template)\n",
+              "de": "Bezeichnung des Verbrauchsobjekt (Schablonenbezeichnung)\n"
+            }
+          }
+        },
+        "effect_on_billing": {
+          "type": "string",
+          "description": "effect on billing (template)\n- no effect\n- subtraction\n- addition\n",
+          "enum": [
+            "no effect",
+            "subtraction",
+            "addition"
+          ],
+          "x-ibm-languages": {
+            "description": {
+              "en": "effect on billing (template)\n- no effect\n- subtraction\n- addition\n",
+              "de": "Wirkung des Verbrauchsobjekts (Schablone) - no effect | Keine Auswirkung - subtraction | Abzug - addition | Hinzurechnung\n"
+            }
+          }
+        },
+        "is_meter": {
+          "type": "boolean",
+          "description": "consumption object is meter (true = consumption object is meter, false = consumption object is calculation template)\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "consumption object is meter (true = consumption object is meter, false = consumption object is calculation template)\n",
+              "de": "Verbrauchsobjekt ist ein Zähler (true = Verbrauchsobjekt ist ein Zähler, false = Verbrauchsobjekt ist eine Berechnungsschablone)\n"
+            }
+          }
+        },
+        "extrapolation": {
+          "type": "boolean",
+          "description": "consumption object is being extrapolated (true = consumption object is being extrapolated, false = consumption object is not being extrapolated)\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "consumption object is being extrapolated (true = consumption object is being extrapolated, false = consumption object is not being extrapolated)\n",
+              "de": "Verbrauchsobjekt wird hochgerechnet (true = Verbrauchsobjekt wird hochgerechnet, false = Verbrauchsobjekt wird nicht hochgerechnet)\n"
+            }
+          }
+        },
+        "prepayment": {
+          "type": "boolean",
+          "description": "prepayment on consumption object (true = consumption object is being considered in prepayment, false = consumption object is considered in final payment only)\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "prepayment on consumption object (true = consumption object is being considered in prepayment, false = consumption object is considered in final payment only)\n",
+              "de": "Vorauszahlung auf Verbrauchsobjekt (true = Verbrauchsobjekt wird für die Vorauszahlung berücksichtigt, false = Verbrauchsobjekt wird nur bei Abrechnung berücksichtigt)\n"
+            }
+          }
+        },
+        "show_way_of_calculation_on_notification": {
+          "type": "boolean",
+          "description": "way of calculation is shown on notificaton (true = way of calculation is shown, false = way of calculation is not shown)\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "way of calculation is shown on notificaton (true = way of calculation is shown, false = way of calculation is not shown)\n",
+              "de": "Rechenweg des Verbrauchsobjekts wird auf dem Bescheid angedruckt (true = Rechenweg wird ausgegeben, false = Rechenweg wird nicht ausgegeben)\n"
+            }
+          }
+        },
+        "count_of_post_decimal_digits": {
+          "type": "integer",
+          "format": "int32",
+          "description": "count of post decimal digits\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "count of post decimal digits\n",
+              "de": "Anzahl Nachkommastellen\n"
+            }
+          }
+        },
+        "first_date": {
+          "type": "string",
+          "format": "date",
+          "description": "first date of consumption object\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "first date of consumption object\n",
+              "de": "Beginn des Verbrauchsobjekts\n"
+            }
+          }
+        },
+        "last_date": {
+          "type": "string",
+          "format": "date",
+          "description": "last date of consumption object\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "last date of consumption object\n",
+              "de": "Ende des Verbrauchsobjekts\n"
+            }
+          }
+        },
+        "changed_reason": {
+          "type": "string",
+          "description": "type of meter change - no change type - termination - cancellation - tariff change - meter exchange\n",
+          "enum": [
+            "no change",
+            "removal",
+            "cancellation",
+            "tariff change",
+            "meter exchange"
+          ],
+          "x-ibm-languages": {
+            "description": {
+              "en": "type of meter change - no change type - termination - cancellation - tariff change - meter exchange\n",
+              "de": "Änderungsart des Zählers - no change | Keine Änderungsart - removal | Abmeldung - cancellation | Storno - tariff change | Tarifwechsel - meter exchange | Zählerwechsel\n"
+            }
+          }
+        },
+        "quantity": {
+          "type": "number",
+          "format": "double",
+          "description": "consumption (from meter reading to meter reading without considering a possible extrapolation)\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "consumption (from meter reading to meter reading without considering a possible extrapolation)\n",
+              "de": "Verbrauch (von Ablesung zu Ablesung ohne Berücksichtigung einer möglichen Hochrechnung)\n"
+            }
+          }
+        },
+        "quantity_to_be_billed": {
+          "type": "number",
+          "format": "double",
+          "description": "quantity to be billed (consumption under consideration of a possible extrapolation)\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "quantity to be billed (consumption under consideration of a possible extrapolation)\n",
+              "de": "Abzurechnender Verbrauch (Verbrauch unter Berücksichtigung einer möglichen Hochrechnung)\n"
+            }
+          }
+        },
+        "way_of_calculation": {
+          "type": "string",
+          "description": "way of calculation (for templates; not available for meters)\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "way of calculation (for templates; not available for meters)\n",
+              "de": "Rechenweg (für Schablonen; bei Zählern nicht verfügbar)\n"
+            }
+          }
+        },
+        "prior_consumption_id": {
+          "type": "string",
+          "description": "prior consumption object ID (e.g. relevant for meter exchange; consumption object of removed meter)\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "prior consumption object ID (e.g. relevant for meter exchange; consumption object of removed meter)\n",
+              "de": "ID des Vorgänger-Verbrauchsobjekts (z.B. bei Zählerwechsel Verbrauchsobjekt des ausgebauten Zählers)\n"
+            }
+          }
+        },
+        "following_consumption_id": {
+          "type": "string",
+          "description": "following consumption object ID (e.g. relevant for meter exchange; consumption object of new meter)\n",
+          "x-ibm-languages": {
+            "description": {
+              "en": "following consumption object ID (e.g. relevant for meter exchange; consumption object of new meter)\n",
+              "de": "ID des Nachfolger-Verbrauchsobjekts (z.B. bei Zählerwechsel Verbrauchsobjekt des neu eingebauten Zählers)\n"
+            }
+          }
+        },
+        "meter": {
+          "description": "meter data (if consumption object is a meter)",
+          "$ref": "#/definitions/Meter",
+          "x-ibm-languages": {
+            "description": {
+              "en": "meter data (if consumption object is a meter)",
+              "de": "Zählerdaten (wenn Verbrauchsobjekt ein Zähler ist)"
+            }
+          }
+        },
+        "start_meterreading": {
+          "description": "start meter reading (if consumption object is a meter)",
+          "$ref": "#/definitions/MeterReading",
+          "x-ibm-languages": {
+            "description": {
+              "en": "start meter reading (if consumption object is a meter)",
+              "de": "Anfangszählerstand (wenn Verbrauchsobjekt ein Zähler ist)"
+            }
+          }
+        },
+        "end_meterreading": {
+          "description": "end meter reading (if consumption object is a meter)",
+          "$ref": "#/definitions/MeterReading",
+          "x-ibm-languages": {
+            "description": {
+              "en": "end meter reading (if consumption object is a meter)",
+              "de": "Endzählerstand (wenn Verbrauchsobjekt ein Zähler ist)"
+            }
+          }
+        },
+        "extrapolation_meterreading": {
+          "description": "extrapolation meter reading (if consumption object is a meter which is being extrapolated)",
+          "$ref": "#/definitions/MeterReading",
+          "x-ibm-languages": {
+            "description": {
+              "en": "extrapolation meter reading (if consumption object is a meter which is being extrapolated)",
+              "de": "Hochrechnungszählerstand (wenn Verbrauchsobjekt ein Zähler ist und hochgerechnet wird)"
+            }
+          }
+        }
+      }
+    },
+    "TransactionMeterReading": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "transaction ID",
+          "x-ibm-languages": {
+            "description": {
+              "en": "transaction ID",
+              "de": "TransaktionsID"
+            }
+          }
+        },
+        "status": {
+          "type": "string",
+          "description": "status\n- open\n- done\n- rejected\n- proved\n",
+          "enum": [
+            "open",
+            "done",
+            "rejected",
+            "proved"
+          ],
+          "x-ibm-languages": {
+            "description": {
+              "en": "status\n- open\n- done\n- rejected\n- proved\n",
+              "de": "Verarbeitungsstatus - open | offen - done | verarbeitet - rejected | verworfen - proved | geprueft\n"
+            }
+          }
+        },
+        "notification_e_mail": {
+          "type": "string",
+          "description": "notification e-mail",
+          "x-ibm-languages": {
+            "description": {
+              "en": "notification e-mail",
+              "de": "E-Mail für die Benachrichtigung"
+            }
+          }
+        },
+        "comment": {
+          "type": "string",
+          "description": "comment on transaction",
+          "x-ibm-languages": {
+            "description": {
+              "en": "comment on transaction",
+              "de": "Bemerkung zur Transaktion"
+            }
+          }
+        },
+        "meter_reading": {
+          "description": "meter reading",
+          "$ref": "#/definitions/MeterReading",
+          "x-ibm-languages": {
+            "description": {
+              "en": "meter reading",
+              "de": "Zählerstand"
+            }
+          }
+        }
+      }
+    },
+    "TransactionAddress": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "transaction ID",
+          "x-ibm-languages": {
+            "description": {
+              "en": "transaction ID",
+              "de": "TransaktionsID"
+            }
+          }
+        },
+        "status": {
+          "type": "string",
+          "description": "status\n- open\n- done\n- rejected\n- proved\n",
+          "enum": [
+            "open",
+            "done",
+            "rejected",
+            "proved"
+          ],
+          "x-ibm-languages": {
+            "description": {
+              "en": "status\n- open\n- done\n- rejected\n- proved\n",
+              "de": "Verarbeitungsstatus - open | offen - done | verarbeitet - rejected | verworfen - proved | geprueft\n"
+            }
+          }
+        },
+        "notification_e_mail": {
+          "type": "string",
+          "description": "notificaton e-mail",
+          "x-ibm-languages": {
+            "description": {
+              "en": "notificaton e-mail",
+              "de": "E-Mail für die Benachrichtigung"
+            }
+          }
+        },
+        "comment": {
+          "type": "string",
+          "description": "comment on transaction",
+          "x-ibm-languages": {
+            "description": {
+              "en": "comment on transaction",
+              "de": "Bemerkung zur Transaktion"
+            }
+          }
+        },
+        "address": {
+          "description": "address",
+          "$ref": "#/definitions/datev.complextype.address",
+          "x-ibm-languages": {
+            "description": {
+              "en": "address",
+              "de": "Adresse"
+            }
+          }
+        }
+      }
+    },
+    "TransactionRegistration": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "transaction ID",
+          "x-ibm-languages": {
+            "description": {
+              "en": "transaction ID",
+              "de": "TransaktionsID"
+            }
+          }
+        },
+        "status": {
+          "type": "string",
+          "description": "status\n- open\n- done\n- rejected\n- proved\n",
+          "enum": [
+            "open",
+            "done",
+            "rejected",
+            "proved"
+          ],
+          "x-ibm-languages": {
+            "description": {
+              "en": "status\n- open\n- done\n- rejected\n- proved\n",
+              "de": "Verarbeitungsstatus - open | offen - done | verarbeitet - rejected | verworfen - proved | geprueft\n"
+            }
+          }
+        },
+        "notification_e_mail": {
+          "type": "string",
+          "description": "notificaton e-mail",
+          "x-ibm-languages": {
+            "description": {
+              "en": "notificaton e-mail",
+              "de": "E-Mail für die Benachrichtigung"
+            }
+          }
+        },
+        "comment": {
+          "type": "string",
+          "description": "comment on transaction",
+          "x-ibm-languages": {
+            "description": {
+              "en": "comment on transaction",
+              "de": "Bemerkung zur Transaktion"
+            }
+          }
+        },
+        "registration": {
+          "description": "registration information",
+          "$ref": "#/definitions/datev.complextype.registration",
+          "x-ibm-languages": {
+            "description": {
+              "en": "registration information",
+              "de": "Daten zur Registrierung im Bürgerportal"
+            }
+          }
+        }
+      }
+    },
+    "TransactionCommunication": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "transaction ID",
+          "x-ibm-languages": {
+            "description": {
+              "en": "transaction ID",
+              "de": "TransaktionsID"
+            }
+          }
+        },
+        "status": {
+          "type": "string",
+          "description": "status\n- open\n- done\n- rejected\n- proved\n",
+          "enum": [
+            "open",
+            "done",
+            "rejected",
+            "proved"
+          ],
+          "x-ibm-languages": {
+            "description": {
+              "en": "status\n- open\n- done\n- rejected\n- proved\n",
+              "de": "Verarbeitungsstatus - open | offen - done | verarbeitet - rejected | verworfen - proved | geprueft\n"
+            }
+          }
+        },
+        "notification_e_mail": {
+          "type": "string",
+          "description": "notification e-mail",
+          "x-ibm-languages": {
+            "description": {
+              "en": "notification e-mail",
+              "de": "E-Mail für die Benachrichtigung"
+            }
+          }
+        },
+        "comment": {
+          "type": "string",
+          "description": "comment on transaction",
+          "x-ibm-languages": {
+            "description": {
+              "en": "comment on transaction",
+              "de": "Bemerkung zur Transaktion"
+            }
+          }
+        },
+        "communication": {
+          "description": "communication",
+          "$ref": "#/definitions/datev.complextype.communication",
+          "x-ibm-languages": {
+            "description": {
+              "en": "communication",
+              "de": "Kommunikation"
+            }
+          }
+        }
+      }
+    },
+    "File": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string",
+          "description": "content of file",
+          "x-ibm-languages": {
+            "description": {
+              "en": "content of file",
+              "de": "Inhalt der Datei"
+            }
+          }
+        }
+      }
+    },
+    "datev.complextype.address": {
+      "type": "object",
+      "description": "address",
+      "properties": {
+        "additional_correspendence_title": {
+          "type": "string",
+          "description": "additional correspondence title",
+          "example": "firm name",
+          "x-ibm-languages": {
+            "description": {
+              "en": "additional correspondence title",
+              "de": "abweichende Anrede"
+            }
+          }
+        },
+        "additional_delivery_text1": {
+          "type": "string",
+          "description": "divergent delivery text 1",
+          "example": "surnamedivergent",
+          "x-ibm-languages": {
+            "description": {
+              "en": "divergent delivery text 1",
+              "de": "Abweichende Zustellbezeichung 1"
+            }
+          }
+        },
+        "additional_delivery_text2": {
+          "type": "string",
+          "description": "divergent delivery text 2",
+          "example": "first name",
+          "x-ibm-languages": {
+            "description": {
+              "en": "divergent delivery text 2",
+              "de": "Abweichende Zustellbezeichung 2"
+            }
+          }
+        },
+        "address_appendix": {
+          "type": "string",
+          "description": "address appendix",
+          "x-ibm-languages": {
+            "description": {
+              "en": "address appendix",
+              "de": "Adresszusatz"
+            }
+          }
+        },
+        "address_manually_edited": {
+          "readOnly": true,
+          "type": "string",
+          "description": "address manually edited",
+          "x-ibm-languages": {
+            "description": {
+              "en": "address manually edited",
+              "de": "Aufbereitete Anschrift"
+            }
+          }
+        },
+        "address_type": {
+          "type": "string",
+          "description": "address type (not specified, street address, post office box address, corporate client address)",
+          "enum": [
+            "not_specified",
+            "street_address",
+            "post_office_box_address",
+            "corporate_client_address"
+          ],
+          "example": "not_specified",
+          "x-ibm-languages": {
+            "description": {
+              "en": "address type (not specified, street address, post office box address, corporate client address)",
+              "de": "Adressart (Keine Angabe, Straßen-Adresse, Postfach, Großkundenadresse)"
+            }
+          }
+        },
+        "address_usage_type": {
+          "$ref": "#/definitions/datev.complextype.addressusagetype"
+        },
+        "city": {
+          "type": "string",
+          "description": "city",
+          "example": "Nürnberg",
+          "x-ibm-languages": {
+            "description": {
+              "en": "city",
+              "de": "Ort"
+            }
+          }
+        },
+        "country_code": {
+          "type": "string",
+          "description": "country",
+          "example": "DE",
+          "x-ibm-languages": {
+            "description": {
+              "en": "country",
+              "de": "Land"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "description": "GUID, ID of subobject address",
+          "example": "1b9c4079-2432-47b8-84c2-eebaa97e7376",
+          "x-ibm-languages": {
+            "description": {
+              "en": "GUID, ID of subobject address",
+              "de": "GUID, Id des Unterobjekts Adresse"
+            }
+          }
+        },
+        "individual_shipping_information": {
+          "type": "string",
+          "description": "individual shipping information",
+          "x-ibm-languages": {
+            "description": {
+              "en": "individual shipping information",
+              "de": "Versandzusatz"
+            }
+          }
+        },
+        "is_address_manually_edited": {
+          "readOnly": true,
+          "type": "boolean",
+          "description": "sign if address is manually edited",
+          "example": false,
+          "x-ibm-languages": {
+            "description": {
+              "en": "sign if address is manually edited",
+              "de": "Verwendungskennzeichen für aufbreitete Anschrift"
+            }
+          }
+        },
+        "post_office_box": {
+          "type": "string",
+          "description": "post office box",
+          "example": 101010,
+          "x-ibm-languages": {
+            "description": {
+              "en": "post office box",
+              "de": "Postfach"
+            }
+          }
+        },
+        "postal_code": {
+          "type": "string",
+          "description": "postal code",
+          "example": 90491,
+          "x-ibm-languages": {
+            "description": {
+              "en": "postal code",
+              "de": "Postleitzahl"
+            }
+          }
+        },
+        "street": {
+          "type": "string",
+          "description": "street",
+          "example": "Musterstraße 1",
+          "x-ibm-languages": {
+            "description": {
+              "en": "street",
+              "de": "Straße"
+            }
+          }
+        },
+        "valid_from": {
+          "type": "object",
+          "description": "valid from",
+          "example": "2016-01-01T00:00:00.000Z",
+          "x-ibm-languages": {
+            "description": {
+              "en": "valid from",
+              "de": "Gültig von"
+            }
+          }
+        },
+        "valid_to": {
+          "type": "object",
+          "description": "valid to",
+          "example": "9999-12-31T00:00:00.000Z",
+          "x-ibm-languages": {
+            "description": {
+              "en": "valid to",
+              "de": "Gültig bis"
+            }
+          }
+        }
+      },
+      "x-ibm-languages": {
+        "description": {
+          "en": "address",
+          "de": "Adressen"
+        }
+      }
+    },
+    "datev.complextype.addressusagetype": {
+      "type": "object",
+      "description": "address usage type",
+      "properties": {
+        "is_correspondence_address": {
+          "type": "boolean",
+          "description": "correspondence address",
+          "example": true,
+          "x-ibm-languages": {
+            "description": {
+              "en": "correspondence address",
+              "de": "Korrespondenzadresse"
+            }
+          }
+        },
+        "is_default_payment_address": {
+          "type": "boolean",
+          "description": "default payment address",
+          "example": false,
+          "x-ibm-languages": {
+            "description": {
+              "en": "default payment address",
+              "de": "Standard-Rechnungsadresse"
+            }
+          }
+        },
+        "is_main_post_office_box_address": {
+          "type": "boolean",
+          "description": "main post office box address",
+          "example": false,
+          "x-ibm-languages": {
+            "description": {
+              "en": "main post office box address",
+              "de": "Hauptpostfachadresse"
+            }
+          }
+        },
+        "is_main_street_address": {
+          "type": "boolean",
+          "description": "main street address",
+          "example": false,
+          "x-ibm-languages": {
+            "description": {
+              "en": "main street address",
+              "de": "Hauptstraßenadresse"
+            }
+          }
+        },
+        "is_management_address": {
+          "type": "boolean",
+          "description": "address of the management",
+          "example": false,
+          "x-ibm-languages": {
+            "description": {
+              "en": "address of the management",
+              "de": "Hauptstraßenadresse"
+            }
+          }
+        }
+      },
+      "x-ibm-languages": {
+        "description": {
+          "en": "address usage type",
+          "de": "Adresstyp"
+        }
+      }
+    },
+    "datev.complextype.registration": {
+      "type": "object",
+      "description": "registration information",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "GUID, ID of subobject registration",
+          "example": "1b9c4079-2432-47b8-84c2-eebaa97e7376",
+          "x-ibm-languages": {
+            "description": {
+              "en": "GUID, ID of subobject registration",
+              "de": "GUID, Id des Unterobjekts Registration"
+            }
+          }
+        },
+        "is_registered": {
+          "type": "boolean",
+          "description": "sign if citizen has registered in citizen portal",
+          "example": false,
+          "x-ibm-languages": {
+            "description": {
+              "en": "sign if citizen has registered in citizen portal",
+              "de": "Kennzeichen das angibt, ob sich der Bürger im Bürgerportal registriert hat"
+            }
+          }
+        },
+        "registration_email": {
+          "type": "string",
+          "description": "The email address used for registration",
+          "example": "email@example.comb",
+          "x-ibm-languages": {
+            "description": {
+              "en": "email address used for registration in the citizen portal",
+              "de": "Email-Adresse, die für die Registrierung im Bürgerportal verwendet wurde"
+            }
+          }
+        }
+      },
+      "x-ibm-languages": {
+        "description": {
+          "en": "registration information",
+          "de": "Daten zur Registrierung im Bürgerportal"
+        }
+      }
+    },
+    "datev.complextype.communication": {
+      "type": "object",
+      "description": "communication",
+      "properties": {
+        "communication_data_content": {
+          "type": "string",
+          "description": "communication data content",
+          "example": "+49 911 999882",
+          "x-ibm-languages": {
+            "description": {
+              "en": "communication data content",
+              "de": "Inhalt der Kommunikationsart"
+            }
+          }
+        },
+        "communication_number_standardized": {
+          "type": "string",
+          "description": "number standardized",
+          "example": "0049911999882",
+          "x-ibm-languages": {
+            "description": {
+              "en": "number standardized",
+              "de": "Nummer normiert"
+            }
+          }
+        },
+        "id": {
+          "type": "string",
+          "description": "GUID, ID of  communication subobject",
+          "example": "1b9c4079-2432-47b8-84c2-eebaa97e7376",
+          "x-ibm-languages": {
+            "description": {
+              "en": "GUID, ID of  communication subobject",
+              "de": "GUID, Id des Unterobjekts Kommunikation"
+            }
+          }
+        },
+        "communication_type": {
+          "type": "string",
+          "enum": [
+            "not_specified",
+            "phone",
+            "email",
+            "url",
+            "fax",
+            "other"
+          ],
+          "description": "communication type (not specified, phone, email, url, fax, other)",
+          "example": "phone",
+          "x-ibm-languages": {
+            "description": {
+              "en": "communication type (not specified, phone, email, url, fax, other)",
+              "de": "Kommunikationstyp (Keine Angabe, Telefon, E-Mail, Internet, Fax, Sonstige)"
+            }
+          }
+        },
+        "note": {
+          "type": "string",
+          "description": "note",
+          "x-ibm-languages": {
+            "description": {
+              "en": "note",
+              "de": "Notiz"
+            }
+          }
+        },
+        "communication_usage_type": {
+          "$ref": "#/definitions/datev.complextype.communicationUsageType"
+        }
+      },
+      "x-ibm-languages": {
+        "description": {
+          "en": "communication",
+          "de": "Kommunikation"
+        }
+      }
+    },
+    "datev.complextype.communicationUsageType": {
+      "type": "object",
+      "description": "communication usage type",
+      "properties": {
+        "is_main_communication_usage_type": {
+          "type": "boolean",
+          "description": "main communication usage type",
+          "example": true,
+          "x-ibm-languages": {
+            "description": {
+              "en": "main communication usage type",
+              "de": "Hauptkommunikationsmittel"
+            }
+          }
+        },
+        "is_main_management_phone": {
+          "type": "boolean",
+          "description": "main management phone",
+          "example": true,
+          "x-ibm-languages": {
+            "description": {
+              "en": "main management phone",
+              "de": "Geschäftstelefon"
+            }
+          }
+        }
+      },
+      "x-ibm-languages": {
+        "description": {
+          "en": "communication usage type",
+          "de": "Kommunikationstyp"
+        }
+      }
+    },
+    "AdditionalMessage": {
+      "type": "object",
+      "description": "Additional message for the root error.",
+      "required": [
+        "id",
+        "severity"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string",
+          "description": "Descriptive text for the message.",
+          "x-ibm-languages": {
+            "description": {
+              "en": "Descriptive text for the message.",
+              "de": "Descriptive text for the message."
+            }
+          }
+        },
+        "severity": {
+          "type": "string",
+          "enum": [
+            "error",
+            "warning",
+            "information"
+          ]
+        },
+        "help_uri": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        }
+      },
+      "x-ibm-languages": {
+        "description": {
+          "en": "Additional message for the root error.",
+          "de": "Additional message for the root error."
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "required": [
+        "error"
+      ],
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "error_description": {
+          "type": "string"
+        },
+        "error_uri": {
+          "type": "string"
+        },
+        "request_id": {
+          "type": "string"
+        },
+        "additional_messages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AdditionalMessage"
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/echo/": {
+      "get": {
+        "tags": [
+          "Diagnostics"
+        ],
+        "summary": "nop request for checking service health",
+        "description": "Use this resource to check if service is up and listening",
+        "responses": {
+          "200": {
+            "description": "request was successful",
+            "examples": {
+              "application/json": "{ \n  \"id\": \"33F25FE5-DE4B-41A2-BC27-ECAA6B199666\"\n}\n"
+            },
+            "schema": {
+              "$ref": "#/definitions/Echo"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "request was successful",
+                "de": "Abfrage war erfolgreich"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Unexpected error",
+                "de": "Unexpected error"
+              }
+            }
+          }
+        },
+        "x-ibm-languages": {
+          "summary": {
+            "en": "nop request for checking service health",
+            "de": "Abfrage ohne Funktion um die Verfügbarkeit des Dienstes zu prüfen"
+          },
+          "description": {
+            "en": "Use this resource to check if service is up and listening",
+            "de": "Kann verwendet werden um zu prüfen ob der Dienst aktiv ist und Anfragen entgegennimmt"
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/citizen/": {
+      "get": {
+        "tags": [
+          "Citizen"
+        ],
+        "summary": "list of all citizens",
+        "description": "\n### Filter Options ###\nThe outcome can be manipulated by **Filter Options** and **Operators**\n\n  Properties\n\n  - registration_id\n\n\n### Operators ###\n**registration_id**\n\n| Operators| Description     | \n| :--------:|----------------| \n| eq       | equal           |\n",
+        "parameters": [
+          {
+            "$ref": "#/parameters/SelectParameter"
+          },
+          {
+            "$ref": "#/parameters/ClientId"
+          },
+          {
+            "$ref": "#/parameters/FilterParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful request of all citizens",
+            "examples": {
+              "application/json": [
+                {
+                  "id": "cf192785-88f6-492c-8705-d836727e2479",
+                  "account_number": "100001000",
+                  "registration_id": "d35fG7v1sR",
+                  "account_number_short": "100001"
+                },
+                {
+                  "id": "25e96732-a3d9-5024-766f-8d45371a6200",
+                  "account_number": "100002000",
+                  "registration_id": "sFD35z1v7Q",
+                  "account_number_short": "100002"
+                }
+              ]
+            },
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Citizen"
+              }
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "successful request of all citizens",
+                "de": "Erfolgreicher Abruf aller Bürger"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Unexpected error",
+                "de": "Unexpected error"
+              }
+            }
+          }
+        },
+        "x-ibm-languages": {
+          "summary": {
+            "en": "list of all citizens",
+            "de": "Eine Liste aller Bürger"
+          },
+          "description": {
+            "en": "\n### Filter Options ###\nThe outcome can be manipulated by **Filter Options** and **Operators**\n\n  Properties\n\n  - registration_id\n\n\n### Operators ###\n**registration_id**\n\n| Operators| Description    |  |:--------:|----------------|  | eq       | equal          |\n",
+            "de": "\n### Filter Options ###\nDie Ergebnismenge kann durch **Filter** und **Operatoren** beeinflusst werden.\n\n  Properties\n\n  - registration_id\n\n\n### Operators ###\n**registration_id**\n\n| Operators| Beschreibung   |  |:--------:|----------------|  | eq       | Equal; 'gleich'|\n"
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/citizen/{citizen-id}": {
+      "get": {
+        "tags": [
+          "Citizen"
+        ],
+        "summary": "request of single citizen",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ClientId"
+          },
+          {
+            "$ref": "#/parameters/CitizenId"
+          },
+          {
+            "$ref": "#/parameters/SelectParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful request of single citizen",
+            "examples": {
+              "application/json": {
+                "id": "cf192785-88f6-492c-8705-d836727e2479",
+                "account_number": "100001",
+                "registration_id": "d35fG7v1sR",
+                "account_number_short": "100001"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/Citizen"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "successful request of single citizen",
+                "de": "Erfolgreicher Abruf eines Bürgers"
+              }
+            }
+          },
+          "404": {
+            "description": "citizen cannot be found",
+            "x-ibm-languages": {
+              "description": {
+                "en": "citizen cannot be found",
+                "de": "Bürger konnte nicht gefunden werden"
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "unexpected error",
+                "de": "Unbekannter Fehler"
+              }
+            }
+          }
+        },
+        "x-ibm-languages": {
+          "summary": {
+            "en": "request of single citizen",
+            "de": "Abruf eines Bürgers"
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/citizen/{citizen-id}/notifications/": {
+      "get": {
+        "tags": [
+          "Notification"
+        ],
+        "summary": "complete meta-data of all notifications by single citizen",
+        "parameters": [
+          {
+            "$ref": "#/parameters/SelectParameter"
+          },
+          {
+            "$ref": "#/parameters/ClientId"
+          },
+          {
+            "$ref": "#/parameters/CitizenId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful request of meta-data of all notifications by single citizen",
+            "examples": {
+              "application/json": [
+                {
+                  "id": "1_123_1",
+                  "number": "100001-1",
+                  "date": "2016-01-12",
+                  "state": "printed",
+                  "type": "original notification",
+                  "fee_type_list": "Grundsteuer, Wasser, Abwasser, Straßenreinigung",
+                  "location": {
+                    "id": 11,
+                    "description": "Am Musterweg 1a (Hinterhaus)",
+                    "street": "Musterweg",
+                    "street_number": "1 a",
+                    "district": "Musterortsteil",
+                    "postal_code": "99999",
+                    "city": "Musterort"
+                  }
+                },
+                {
+                  "id": "1_125_2",
+                  "notification_number": "100001-4",
+                  "date": "2016-02-01",
+                  "state": "printed",
+                  "type": "information notification",
+                  "fee_type_list": "Hundesteuer",
+                  "location": {}
+                }
+              ]
+            },
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Notification"
+              }
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Successful request of meta-data of all notifications by single citizen",
+                "de": "Erfolgreicher Abruf einer Liste von Bescheid-Metadaten für alle Bescheide eines Bürgers"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Unexpected error",
+                "de": "Unerwarteter Fehler"
+              }
+            }
+          }
+        },
+        "x-ibm-languages": {
+          "summary": {
+            "en": "complete meta-data of all notifications by single citizen",
+            "de": "Alle Bescheid-Metadaten für alle Bescheide eines Bürgers"
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/citizen/{citizen-id}/notifications/{notification-id}": {
+      "get": {
+        "tags": [
+          "Notification"
+        ],
+        "summary": "Request of all meta-data from single notification",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ClientId"
+          },
+          {
+            "$ref": "#/parameters/CitizenId"
+          },
+          {
+            "$ref": "#/parameters/NotificationId"
+          },
+          {
+            "$ref": "#/parameters/SelectParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful request of all meta-data from single notification",
+            "examples": {
+              "application/json": {
+                "id": "1_123_1",
+                "number": "100001-1",
+                "date": "2016-01-12",
+                "state": "printed",
+                "type": "original notification",
+                "fee_type_list": "Grundsteuer, Wasser, Abwasser, Straßenreinigung",
+                "location": {
+                  "id": 11,
+                  "description": "Am Musterweg 1a (Hinterhaus)",
+                  "street": "Musterweg",
+                  "street_number": "1 a",
+                  "district": "Musterortsteil",
+                  "postal_code": "99999",
+                  "city": "Musterort"
+                }
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/Notification"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Successful request of all meta-data from single notification",
+                "de": "Erfolgreicher Abruf von Bescheid-Metadaten für einen Bescheid"
+              }
+            }
+          },
+          "404": {
+            "description": "Meta-data from notification could not be found.",
+            "x-ibm-languages": {
+              "description": {
+                "en": "Meta-data from notification could not be found.",
+                "de": "Bescheid/Bescheid-Metadaten konnten nicht gefunden werden"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Unexpected error",
+                "de": "Unerwarteter Fehler"
+              }
+            }
+          }
+        },
+        "x-ibm-languages": {
+          "summary": {
+            "en": "Request of all meta-data from single notification",
+            "de": "Abruf von Bescheid-Metadaten für einen Bescheid"
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/citizen/{citizen-id}/notifications/{notification-id}/document": {
+      "get": {
+        "tags": [
+          "Notification"
+        ],
+        "summary": "Request of one document from notification",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ClientId"
+          },
+          {
+            "$ref": "#/parameters/CitizenId"
+          },
+          {
+            "$ref": "#/parameters/NotificationId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful request of document from notification",
+            "schema": {
+              "$ref": "#/definitions/File"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Successful request of document from notification",
+                "de": "Erfolgreicher Abruf eines Bescheiddokuments"
+              }
+            }
+          },
+          "404": {
+            "description": "Document from notification cannot be found",
+            "x-ibm-languages": {
+              "description": {
+                "en": "Document from notification cannot be found",
+                "de": "Bescheiddokument konnte nicht gefunden werden"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Unexpected error",
+                "de": "Unerwarteter Fehler"
+              }
+            }
+          }
+        },
+        "x-ibm-languages": {
+          "summary": {
+            "en": "Request of one document from notification",
+            "de": "Abruf eines Bescheiddokuments"
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/citizen/{citizen-id}/fees/": {
+      "get": {
+        "tags": [
+          "Fee"
+        ],
+        "summary": "All fees by single citizen",
+        "description": "\n### Filter Options ###\nThe outcome can be manipulated by **Filter Options** and **Operators**\n\n  Properties\n\n  - type_name\n  - type_shortname\n  - enddate\n\n\n### Operators ###\n**type_name, type_shortname**\n\n | Operators  | Description     | \n |:----------:|-----------------| \n | eq         | equal           |\n\n**enddate** Operator can be combined by \"and\" with type_name and type_shortname.\n\n| Operators  | Description              |  |:----------:|--------------------------|  | eq         | equal                    |  | ge         | greater than or equal    |  | le         | less than or equal       |\n",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ClientId"
+          },
+          {
+            "$ref": "#/parameters/CitizenId"
+          },
+          {
+            "$ref": "#/parameters/SelectParameter"
+          },
+          {
+            "$ref": "#/parameters/FilterParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful request of fee list",
+            "examples": {
+              "application/json": [
+                {
+                  "id": 1,
+                  "type_name": "Wasser",
+                  "type_shortname": "Wasser",
+                  "reference_number": "W123-456",
+                  "start_date": "2014-01-01",
+                  "end_date": "",
+                  "comment": "Due to a pipe break last year, we reduced your consumption by 300m³.",
+                  "notification_address_id": "114257f8-3005-4e1d-9fbd-7def7069da56",
+                  "notification_type": "original notification",
+                  "location": {
+                    "id": 11,
+                    "description": "Am Musterweg 1a (Hinterhaus)",
+                    "address_appendix": "Entrance in Mustergasse",
+                    "street": "Musterweg",
+                    "street_number": "1 a",
+                    "district": "Musterortsteil",
+                    "postal_code": "99999",
+                    "city": "Musterort",
+                    "farmland": "100; 101",
+                    "farmland_number": "23, 24, 25; 12, 13, 14, 15",
+                    "cadastral_number": "1234"
+                  },
+                  "payment_method": {
+                    "id": "754258a8-5014-4f5e-7bb2-14ed7367d61a",
+                    "valid_from": "2016-04-01",
+                    "valid_to": "",
+                    "commissioner": "",
+                    "bank_account_number": "",
+                    "bank_code": "",
+                    "iban": "",
+                    "bic": "",
+                    "bank_name": "",
+                    "sepa_mandate_reference": "",
+                    "differing_account_holder": ""
+                  }
+                },
+                {
+                  "id": 2,
+                  "type_name": "Hundesteuer",
+                  "type_shortname": "HSt",
+                  "reference_number": "H987-654",
+                  "start_date": "2002-04-01",
+                  "end_date": "2016-03-31",
+                  "comment": "",
+                  "individual_fields": "",
+                  "notification_address_id": "bfd2af78-ba24-41fd-b3b6-096a79f245a8",
+                  "notification_type": "information notification",
+                  "location": {},
+                  "payment_method": {
+                    "id": "d24790f2-8319-44d1-b56a-41d583336d57",
+                    "valid_from": "2015-01-01",
+                    "valid_to": "",
+                    "commissioner": "Helga Musteroma",
+                    "bank_account_number": "123456789",
+                    "bank_code": "99999999",
+                    "iban": "DE00999999990123456789",
+                    "bic": "ABCDZZA0XXX",
+                    "bank_name": "Musterbank",
+                    "sepa_mandate_reference": "100001000002",
+                    "differing_account_holder": "Holger Musteropa"
+                  }
+                }
+              ]
+            },
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Fee"
+              }
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Successful request of fee list",
+                "de": "Erfolgreicher Abruf einer Liste von Abgaben"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Unexpected error",
+                "de": "Unerwarteter Fehler"
+              }
+            }
+          }
+        },
+        "x-ibm-languages": {
+          "summary": {
+            "en": "All fees by single citizen",
+            "de": "Alle Abgaben eines Bürgers"
+          },
+          "description": {
+            "en": "\n### Filter Options ###\nThe outcome can be manipulated by **Filter Options** and **Operators**\n\n  Properties\n\n  - type_name\n  - type_shortname\n  - enddate\n\n\n### Operators ###\n**type_name, type_shortname**\n\n| Operators  | Description     |  |:----------:|-----------------|  | eq         | equal           |\n\n**enddate** Operator can be combined by \"and\" with type_name and type_shortname.\n\n| Operators  | Description              |  |:----------:|--------------------------|  | eq         | equal                    |  | ge         | greater than or equal    |  | le         | less than or equal       |\n",
+            "de": "\n### Filter Options ###\nDie Ergebnismenge kann durch **Filter** und **Operatoren** beeinflusst werden.\n\n  Properties\n\n  - type_name\n  - type_shortname\n  - enddate\n\n\n### Operators ###\n**type_name, type_shortname**\n\n| Operators  | Beschreibung    |  |:----------:|-----------------|  | eq         | Equal; 'gleich' |\n\n**enddate** Der Operator kann über \"and\" mit type_name oder type_shortname kombiniert werden.\n\n| Operators  | Beschreibung                                    |  |:----------:|-------------------------------------------------|  | eq         | Equal; 'gleich'                                 | | ge         | Greater than or equal; 'Größer als oder gleich' | | le         | Less than or equal; 'Kleiner als oder gleich'   |\n"
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/citizen/{citizen-id}/fees/{fee-id}": {
+      "get": {
+        "tags": [
+          "Fee"
+        ],
+        "summary": "Request of single fee",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ClientId"
+          },
+          {
+            "$ref": "#/parameters/CitizenId"
+          },
+          {
+            "$ref": "#/parameters/FeeId"
+          },
+          {
+            "$ref": "#/parameters/SelectParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful request of single fee",
+            "examples": {
+              "application/json": {
+                "id": 1,
+                "type_name": "Wasser",
+                "type_shortname": "Wasser",
+                "reference_number": "W123-456",
+                "start_date": "2014-01-01",
+                "end_date": "",
+                "comment": "Due to a pipe break last year, we reduced your consumption by 300m³.",
+                "notification_address_id": "114257f8-3005-4e1d-9fbd-7def7069da56",
+                "notification_type": "original notification",
+                "location": {
+                  "id": 11,
+                  "description": "Am Musterweg 1a (Hinterhaus)",
+                  "address_appendix": "Zugang über Mustergasse",
+                  "street": "Musterweg",
+                  "street_number": "1 a",
+                  "district": "Musterortsteil",
+                  "postal_code": "99999",
+                  "city": "Musterort",
+                  "farmland": "100; 101",
+                  "farmland_number": "23, 24, 25; 12, 13, 14, 15",
+                  "cadastral_number": "1234"
+                },
+                "payment_method": {
+                  "id": "754258a8-5014-4f5e-7bb2-14ed7367d61a",
+                  "valid_from": "2016-04-01",
+                  "valid_to": "",
+                  "commissioner": "",
+                  "bank_account_number": "",
+                  "bank_code": "",
+                  "iban": "",
+                  "bic": "",
+                  "bank_name": "",
+                  "sepa_mandate_reference": "",
+                  "differing_account_holder": ""
+                }
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/Fee"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Successful request of single fee",
+                "de": "Erfolgreicher Abruf einer einzelnen Abgabe"
+              }
+            }
+          },
+          "404": {
+            "description": "Fee cannot be found",
+            "x-ibm-languages": {
+              "description": {
+                "en": "Fee cannot be found",
+                "de": "Abgabe kann nicht gefunden werden"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Unexpected error",
+                "de": "Unerwarteter Fehler"
+              }
+            }
+          }
+        },
+        "x-ibm-languages": {
+          "summary": {
+            "en": "Request of single fee",
+            "de": "Abruf einer einzelnen Abgabe"
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/citizen/{citizen-id}/fees/{fee-id}/dues/": {
+      "get": {
+        "tags": [
+          "Due"
+        ],
+        "summary": "Request of all due dates by single fee",
+        "description": "\n### Filter Options ###\nThe outcome can be manipulated by **Filter Options** and **Operators**.\n\n  Properties\n\n  - date\n  - assessment_period\n\n\n### Operators ###\n**date, assessment_period** Operators can be combined by \"and\".\n\n| Operators  | Description           | |:----------:|-----------------------| | eq         | equal                 | | ge         | greater than or equal | | le         | less than or equal    |\n\n### Paging ###\n\n   Paging determines the amount of due dates that should be displayed by the parameter \"top\". The result is sorted by due date ascending.\n\n|Parameter| Description                                                  | |:-------:|--------------------------------------------------------------| | top     | Number of due dates that should be displayed; Example: top=1 |\n",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ClientId"
+          },
+          {
+            "$ref": "#/parameters/CitizenId"
+          },
+          {
+            "$ref": "#/parameters/FeeId"
+          },
+          {
+            "$ref": "#/parameters/SelectParameter"
+          },
+          {
+            "$ref": "#/parameters/FilterParameter"
+          },
+          {
+            "$ref": "#/parameters/TopParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful request of a list of due dates.",
+            "examples": {
+              "application/json": [
+                {
+                  "assessment_period": "2016",
+                  "date": "2016-05-15",
+                  "amount": 12.82,
+                  "tax_percentage": 7,
+                  "tax_amount": 0.84,
+                  "supplementary_work": "no supplementary work",
+                  "notification_date": "2016-01-12",
+                  "notification_number": "100001-3",
+                  "tariff_caption": "fresh water consumption",
+                  "tariff_additional_caption": ""
+                },
+                {
+                  "assessment_period": "2016",
+                  "date": "2016-08-15",
+                  "amount": 12.82,
+                  "tax_percentage": 7,
+                  "tax_amount": 0.84,
+                  "supplementary_work": "no supplementary work",
+                  "notification_date": "2016-01-12",
+                  "notification_number": "100001-3",
+                  "tariff_caption": "fresh water consumption",
+                  "tariff_additional_caption": ""
+                }
+              ]
+            },
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Due"
+              }
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Successful request of a list of due dates.",
+                "de": "Erfolgreicher Abruf einer Liste von Fälligkeiten"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Unexpected error",
+                "de": "Unerwarteter Fehler"
+              }
+            }
+          }
+        },
+        "x-ibm-languages": {
+          "summary": {
+            "en": "Request of all due dates by single fee",
+            "de": "Abruf einer Liste aller Fälligkeiten zu einer Abgabe"
+          },
+          "description": {
+            "en": "\n### Filter Options ###\nThe outcome can be manipulated by **Filter Options** and **Operators**.\n\n  Properties\n\n  - date\n  - assessment_period\n\n\n### Operators ###\n**date, assessment_period** Operators can be combined by \"and\".\n\n| Operators  | Description           | |:----------:|-----------------------| | eq         | equal                 | | ge         | greater than or equal | | le         | less than or equal    |\n\n### Paging ###\n\n   Paging determines the amount of due dates that should be displayed by the parameter \"top\". The result is sorted by due date ascending.\n\n|Parameter| Description                                                  | |:-------:|--------------------------------------------------------------| | top     | Number of due dates that should be displayed; Example: top=1 |\n",
+            "de": "\n### Filter Options ###\nDie Ergebnismenge kann durch **Filter** und **Operatoren** beeinflusst werden.\n\n  Properties\n\n  - date\n  - assessment_period\n\n\n### Operators ###\n**date, assessment_period** Die Operatoren können über \"and\" kombiniert werden.\n\n| Operators  | Beschreibung                                    | |:----------:|-------------------------------------------------| | eq         | Equal; 'gleich'                                 | | ge         | Greater than or equal; 'Größer als oder gleich' | | le         | Less than or equal; 'Kleiner als oder gleich'   |\n\n### Paging ###\n\n   Durch das Paging können nur eine bestimmte Anzahl an Fälligkeiten dargestellt werden. Dies erfolgt mit Hilfe des Parameters „top\".\n   Die Sortierung der gewünschten Anzahl an Geschäftspartnern wird nach Fälligkeitsdatum aufsteigend durchgeführt.\n\n|Parameter|Beschreibung                                                         | |:-------:|-----------------------------------------------------------------    | | top     | Anzahl der Fälligkeiten die angezeigt werden sollen; Beispiel: top=1|\n"
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/citizen/{citizen-id}/fees/{fee-id}/consumptions/": {
+      "get": {
+        "tags": [
+          "Consumption"
+        ],
+        "summary": "Request of list of all consumptions by single fee",
+        "description": "\n### Filter Options ###\nThe outcome can be manipulated by **Filter Options** and **Operators**.\nProperties\n\n\n - assessment_year\n - assessment_period\n\n\n### Operators ###\n**assessment_year, assessment_period** Operators can be combined by and.\n\n| Operators| Description           | |:--------:|-----------------------| | eq       | equal                 | | ge       | greater than or equal | | le       | less than or equal    |\n\n### Paging ###\n\n   Paging determines the amount of consumptions that should be displayed by the parameter \"top\".\n   The list is then sorted by due date\n\n|Parameter| Description                                                      | |:-------:|------------------------------------------------------------------| | top     | Number of consumptions that should be displayed; Example: top=1  |\n",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ClientId"
+          },
+          {
+            "$ref": "#/parameters/CitizenId"
+          },
+          {
+            "$ref": "#/parameters/FeeId"
+          },
+          {
+            "$ref": "#/parameters/SelectParameter"
+          },
+          {
+            "$ref": "#/parameters/FilterParameter"
+          },
+          {
+            "$ref": "#/parameters/TopParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful request of list of consumptions",
+            "examples": {
+              "application/json": [
+                {
+                  "id": "6_1_1_2",
+                  "assessment_year": 2016,
+                  "assessment_period": "2016",
+                  "sub_assessment_period": "summer",
+                  "description": "main meter",
+                  "effect_on_billing": "addition",
+                  "is_meter": true,
+                  "extrapolation": true,
+                  "prepayment": true,
+                  "show_way_of_calculation_on_notification": false,
+                  "count_of_post_decimal_digits": 2,
+                  "first_date": "2016-05-18",
+                  "last_date": "2016-12-31",
+                  "changed_reason": "",
+                  "quantity": 42,
+                  "quantity_to_be_billed": 45,
+                  "way_of_calculation": "",
+                  "prior_consumption_id": "6_1_1_1",
+                  "following_consumption_id": "",
+                  "meter": {
+                    "id": "098765",
+                    "usagetype": "main meter",
+                    "effect_on_billing": "addition",
+                    "first_date": "2016-05-18",
+                    "last_date": "2016-12-31",
+                    "changed_reason": "no change",
+                    "meter_type": {
+                      "id": 2,
+                      "type": "Qn 2,5 main meter",
+                      "mechanism": "ring piston meter",
+                      "nominal_flow_rate": 2.5,
+                      "count_of_pre_decimal_digits": 6,
+                      "count_of_post_decimal_digits": 0,
+                      "periodicity_of_calibration": "6 years (cold water meter)"
+                    },
+                    "manufacturer": "BeispielZähler AG",
+                    "year_of_manufacture": 2016,
+                    "year_of_calibration": 2022,
+                    "owner": "municipality",
+                    "comment": "",
+                    "orientation": "horizontal",
+                    "localization": {
+                      "is_located": "in the water supply network",
+                      "last_replacement_date": "2016-05-18",
+                      "last_replacement_reason": "",
+                      "comment": "cellar department behind stairs",
+                      "meter_purpose": "main water supply",
+                      "reading_district": "Musterbezirk 01"
+                    }
+                  },
+                  "start_meterreading": {
+                    "id": 2,
+                    "date": "2016-05-18",
+                    "date_serial_number": 1,
+                    "value": 0,
+                    "consumption": 0,
+                    "relevance": "water and sewage",
+                    "sign": "reading",
+                    "reason": "annual reading",
+                    "overrun": false,
+                    "reverse_running": false,
+                    "initialised": false,
+                    "reader": "Herr Hans Musterzählerwechsler",
+                    "comment_for_notification": "",
+                    "comment": ""
+                  },
+                  "end_meterreading": {
+                    "id": 4,
+                    "date": "2016-12-23",
+                    "date_serial_number": 1,
+                    "value": 42,
+                    "consumption": 42,
+                    "relevance": "water and sewage",
+                    "sign": "self-reading",
+                    "reason": "annual reading",
+                    "overrun": false,
+                    "reverse_running": false,
+                    "initialised": false,
+                    "reader": "",
+                    "comment_for_notification": "",
+                    "comment": ""
+                  },
+                  "extrapolation_meterreading": {
+                    "id": 5,
+                    "date": "2016-12-31",
+                    "date_serial_number": 2,
+                    "value": 45,
+                    "consumption": 3,
+                    "relevance": "water and sewage",
+                    "sign": "•extrapolation",
+                    "reason": "annual reading",
+                    "overrun": false,
+                    "reverse_running": false,
+                    "initialised": false,
+                    "reader": "",
+                    "comment_for_notification": "",
+                    "comment": ""
+                  }
+                },
+                {
+                  "id": "6_1_4_1",
+                  "assessment_year": 2016,
+                  "assessment_period": "2016",
+                  "sub_assessment_period": "Summer",
+                  "description": "meter in garden",
+                  "effect_on_billing": "subtraction",
+                  "is_meter": true,
+                  "extrapolation": false,
+                  "prepayment": false,
+                  "show_way_of_calculation_on_notification": false,
+                  "count_of_post_decimal_digits": 2,
+                  "first_date": "2016-01-01",
+                  "last_date": "2016-12-31",
+                  "changed_reason": "",
+                  "quantity": 5,
+                  "quantity_to_be_billed": 5,
+                  "way_of_calculation": "",
+                  "prior_consumption_id": "",
+                  "following_consumption_id": "",
+                  "meter": {
+                    "id": "NZ-12-3456789",
+                    "usagetype": "meter in garden",
+                    "effect_on_billing": "subtraction",
+                    "first_date": "2016-01-01",
+                    "last_date": "2016-12-31",
+                    "changed_reason": "no change",
+                    "meter_type": {
+                      "id": 5,
+                      "type": "Qn 2,5 additional meter",
+                      "mechanism": "jet impeller meter",
+                      "nominal_flow_rate": 2.5,
+                      "count_of_pre_decimal_digits": 6,
+                      "count_of_post_decimal_digits": 0,
+                      "periodicity_of_calibration": "6 years (cold water meter)"
+                    },
+                    "manufacturer": "Muster-Bau-Markt GmbH",
+                    "year_of_manufacture": 2014,
+                    "year_of_calibration": 2020,
+                    "owner": "citizen",
+                    "comment": "",
+                    "orientation": "vertical",
+                    "localization": {
+                      "is_located": "in the water supply network",
+                      "last_replacement_date": "2014-04-28",
+                      "last_replacement_reason": "",
+                      "comment": "in conservatory",
+                      "meter_purpose": "bypass meter",
+                      "reading_district": "Musterbezirk 01"
+                    }
+                  },
+                  "start_meterreading": {
+                    "id": 23,
+                    "date": "2015-11-19",
+                    "date_serial_number": 1,
+                    "value": 38,
+                    "consumption": 6,
+                    "relevance": "water and sewage",
+                    "sign": "self-reading",
+                    "reason": "annual reading",
+                    "overrun": false,
+                    "reverse_running": false,
+                    "initialised": false,
+                    "reader": "",
+                    "comment_for_notification": "",
+                    "comment": ""
+                  },
+                  "end_meterreading": {
+                    "id": 24,
+                    "date": "2016-12-05",
+                    "date_serial_number": 1,
+                    "value": 43,
+                    "consumption": 5,
+                    "relevance": "water and sewage",
+                    "sign": "self-reading",
+                    "reason": "annual reading",
+                    "overrun": false,
+                    "reverse_running": false,
+                    "initialised": false,
+                    "reader": "",
+                    "comment_for_notification": "",
+                    "comment": ""
+                  },
+                  "extrapolation_meterreading": {}
+                }
+              ]
+            },
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Consumption"
+              }
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Successful request of list of consumptions",
+                "de": "Erfolgreicher Abruf einer Liste von Verbräuchen"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Unexpected error",
+                "de": "Unerwarteter Fehler"
+              }
+            }
+          }
+        },
+        "x-ibm-languages": {
+          "summary": {
+            "en": "Request of list of all consumptions by single fee",
+            "de": "Abruf einer Liste aller Verbräuche zu einer Abgabe"
+          },
+          "description": {
+            "en": "\n### Filter Options ###\nThe outcome can be manipulated by **Filter Options** and **Operators**.\nProperties\n\n\n - assessment_year\n - assessment_period\n\n\n### Operators ###\n**assessment_year, assessment_period** Operators can be combined by and.\n\n| Operators| Description           | |:--------:|-----------------------| | eq       | equal                 | | ge       | greater than or equal | | le       | less than or equal    |\n\n### Paging ###\n\n   Paging determines the amount of consumptions that should be displayed by the parameter \"top\".\n   The list is then sorted by due date\n\n|Parameter| Description                                                      | |:-------:|------------------------------------------------------------------| | top     | Number of consumptions that should be displayed; Example: top=1  |\n",
+            "de": "\n### Filter Options ###\nDie Ergebnismenge kann durch **Filter** und **Operatoren** beeinflusst werden.\nProperties\n\n\n - assessment_year\n - assessment_period\n\n\n### Operators ###\n**assessment_year, assessment_period** Die Operatoren können über \"and\" kombiniert werden.\n\n| Operators  | Beschreibung                                    | |:----------:|-------------------------------------------------| | eq         | Equal; 'gleich'                                 | | ge         | Greater than or equal; 'Größer als oder gleich' | | le         | Less than or equal; 'Kleiner als oder gleich'   |\n\n### Paging ###\n\n   Durch das Paging können nur eine bestimmte Anzahl an Verbräuche dargestellt werden. Dies erfolgt mit Hilfe des Parameters „top\".\n   Die Sortierung der gewünschten Anzahl an Geschäftspartnern wird nach Fälligkeitsdatum aufsteigend durchgeführt.\n\n|Parameter|Beschreibung                                                       | |:-------:|-------------------------------------------------------------------| | top     | Anzahl der Verbräuche die angezeigt werden sollen; Beispiel: top=1|\n"
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/citizen/{citizen-id}/fees/{fee-id}/meters/": {
+      "get": {
+        "tags": [
+          "Meter"
+        ],
+        "summary": "Request of all meters by single fee",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ClientId"
+          },
+          {
+            "$ref": "#/parameters/CitizenId"
+          },
+          {
+            "$ref": "#/parameters/FeeId"
+          },
+          {
+            "$ref": "#/parameters/SelectParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful request of all meters by single fee",
+            "examples": {
+              "application/json": [
+                {
+                  "id": "12-r3456",
+                  "usagetype": "",
+                  "effect_on_billing": "",
+                  "first_date": "2014-01-01",
+                  "last_date": "2016-05-18",
+                  "changed_reason": "",
+                  "meter_type": {
+                    "id": 1,
+                    "type": "Qn 2,5 main meter",
+                    "mechanism": "jet impeller meter",
+                    "nominal_flow_rate": 2.5,
+                    "count_of_pre_decimal_digits": 5,
+                    "count_of_post_decimal_digits": 0,
+                    "periodicity_of_calibration": "6 years (cold water meter)"
+                  },
+                  "manufacturer": "MusterZählerBau GmbH",
+                  "year_of_manufacture": 2004,
+                  "year_of_calibration": 2016,
+                  "owner": "municipality",
+                  "comment": "",
+                  "orientation": "horizontal",
+                  "localization": {
+                    "is_located": "under calibration",
+                    "last_replacement_date": "2016-05-18",
+                    "last_replacement_reason": "calibration",
+                    "comment": "cellar department behind stairs",
+                    "meter_purpose": "",
+                    "reading_district": "Musterbezirk 01"
+                  }
+                },
+                {
+                  "id": "098765",
+                  "usagetype": "",
+                  "effect_on_billing": "",
+                  "first_date": "2016-05-18",
+                  "last_date": "2016-12-31",
+                  "changed_reason": "",
+                  "meter_type": {
+                    "id": 2,
+                    "type": "Qn 2,5 main meter",
+                    "mechanism": "ring piston meter",
+                    "nominal_flow_rate": 2.5,
+                    "count_of_pre_decimal_digits": 6,
+                    "count_of_post_decimal_digits": 0,
+                    "periodicity_of_calibration": "6 years (cold water meter)"
+                  },
+                  "manufacturer": "BeispielZähler AG",
+                  "year_of_manufacture": 2016,
+                  "year_of_calibration": 2022,
+                  "owner": "municipality",
+                  "comment": "",
+                  "orientation": "horizontal",
+                  "localization": {
+                    "is_located": "in the water supply network",
+                    "last_replacement_date": "2016-05-18",
+                    "last_replacement_reason": "",
+                    "comment": "cellar department behind stairs",
+                    "meter_purpose": "main water supply",
+                    "reading_district": "Musterbezirk 01"
+                  }
+                }
+              ]
+            },
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Meter"
+              }
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Successful request of all meters by single fee",
+                "de": "Erfolgreicher Abruf einer Liste aller Zähler einer Abgabe"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Unexpected error",
+                "de": "Unerwarteter Fehler"
+              }
+            }
+          }
+        },
+        "x-ibm-languages": {
+          "summary": {
+            "en": "Request of all meters by single fee",
+            "de": "Abruf aller Zähler einer Abgabe"
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/citizen/{citizen-id}/fees/{fee-id}/meters/{meter-id}": {
+      "get": {
+        "tags": [
+          "Meter"
+        ],
+        "summary": "Request of single meter",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ClientId"
+          },
+          {
+            "$ref": "#/parameters/CitizenId"
+          },
+          {
+            "$ref": "#/parameters/FeeId"
+          },
+          {
+            "$ref": "#/parameters/MeterId"
+          },
+          {
+            "$ref": "#/parameters/SelectParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful request of single meter",
+            "examples": {
+              "application/json": {
+                "id": "12-r3456",
+                "usagetype": "main meter",
+                "effect_on_billing": "addition",
+                "first_date": "2014-01-01",
+                "last_date": "2016-12-31",
+                "changed_reason": "meter exchange",
+                "meter_type": {
+                  "id": 1,
+                  "type": "Qn 2,5 main meter",
+                  "mechanism": "jet impeller meter",
+                  "nominal_flow_rate": 2.5,
+                  "count_of_pre_decimal_digits": 5,
+                  "count_of_post_decimal_digits": 0,
+                  "periodicity_of_calibration": "6 years (cold water meter)"
+                },
+                "manufacturer": "MusterZählerBau GmbH",
+                "year_of_manufacture": 2004,
+                "year_of_calibration": 2016,
+                "owner": "municipality",
+                "comment": "",
+                "orientation": "horizontal",
+                "localization": {
+                  "is_located": "under calibration",
+                  "last_replacement_date": "2016-05-18",
+                  "last_replacement_reason": "calibration",
+                  "comment": "cellar behind stairs",
+                  "meter_purpose": "",
+                  "reading_district": "Musterbezirk 01"
+                }
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/Meter"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Successful request of single meter",
+                "de": "Erfolgreicher Abruf eines Zählers"
+              }
+            }
+          },
+          "404": {
+            "description": "meter cannot be found",
+            "x-ibm-languages": {
+              "description": {
+                "en": "meter cannot be found",
+                "de": "Zähler kann nicht gefunden werden"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Unexpected error",
+                "de": "Unerwarteter Fehler"
+              }
+            }
+          }
+        },
+        "x-ibm-languages": {
+          "summary": {
+            "en": "Request of single meter",
+            "de": "Abruf eines Zählers"
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/citizen/{citizen-id}/fees/{fee-id}/meters/{meter-id}/meterreadings/": {
+      "get": {
+        "tags": [
+          "Meter Reading"
+        ],
+        "summary": "Request of all meter readings by single meter",
+        "description": "\n### Filter Options ###\n\n The outcome can be manipulated by **Filter ** ** Options** and **Operators**.\n\n   Properties\n\n   - date\n\n\n ### Operators ###\n\n  **date**\n\n\n| Operators  | Description            |\n|:----------:|------------------------|\n| eq         | equal                  |\n| ge         | greater than or equal  |\n| le         | less than or equal     |\n",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ClientId"
+          },
+          {
+            "$ref": "#/parameters/CitizenId"
+          },
+          {
+            "$ref": "#/parameters/FeeId"
+          },
+          {
+            "$ref": "#/parameters/MeterId"
+          },
+          {
+            "$ref": "#/parameters/SelectParameter"
+          },
+          {
+            "$ref": "#/parameters/FilterParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful request of all meter readings by single meter",
+            "examples": {
+              "application/json": [
+                {
+                  "id": 12,
+                  "date": "2015-12-31",
+                  "date_serial_number": 2,
+                  "value": 56691,
+                  "consumption": 64,
+                  "relevance": "water and sewage",
+                  "sign": "self-reading",
+                  "reason": "annual reading",
+                  "overrun": false,
+                  "reverse_running": false,
+                  "initialised": false,
+                  "reader": "",
+                  "comment_for_notification": "",
+                  "comment": ""
+                },
+                {
+                  "id": 13,
+                  "date": "2016-05-18",
+                  "date_serial_number": 1,
+                  "value": 56712,
+                  "consumption": 21,
+                  "relevance": "water and sewage",
+                  "sign": "reading",
+                  "reason": "annual reading",
+                  "overrun": false,
+                  "reverse_running": false,
+                  "initialised": false,
+                  "reader": "Herr Hans Musterzählerwechsler",
+                  "comment_for_notification": "",
+                  "comment": "The meter exchange will be executed by the company Musterzähler & Söhne."
+                }
+              ]
+            },
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/MeterReading"
+              }
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Successful request of all meter readings by single meter",
+                "de": "Erfolgreicher Abruf einer Liste aller Zählerstände eines Zählers"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Unexpected error",
+                "de": "Unerwarteter Fehler"
+              }
+            }
+          }
+        },
+        "x-ibm-languages": {
+          "summary": {
+            "en": "Request of all meter readings by single meter",
+            "de": "Abruf aller Zählerstände eines Zählers"
+          },
+          "description": {
+            "en": "\n### Filter Options ###\n\n The outcome can be manipulated by **Filter ** ** Options** and **Operators**.\n\n   Properties\n\n   - date\n\n\n ### Operators ###\n\n  **date**\n\n\n| Operators  | Description            |\n|:----------:|------------------------|\n| eq         | equal                  |\n| ge         | greater than or equal  |\n| le         | less than or equal     |\n",
+            "de": "\n### Filter Options ###\nDie Ergebnismenge kann durch **Filter** und **Operatoren** beeinflusst werden.\n\n   Properties\n\n   - date\n\n\n ### Operators ###\n\n  **date**\n\n\n| Operators  | Beschreibung                                   | |:----------:|------------------------------------------------| | eq         | Equal; 'gleich'                                | | ge         | Greater than or equal; 'Größer als oder gleich'| | le         | Less than or equal; 'Kleiner als oder gleich'  |\n"
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/citizen/{citizen-id}/fees/{fee-id}/meters/{meter-id}/meterreadings/{meterreading-id}": {
+      "get": {
+        "tags": [
+          "Meter Reading"
+        ],
+        "summary": "Request of meter reading",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ClientId"
+          },
+          {
+            "$ref": "#/parameters/CitizenId"
+          },
+          {
+            "$ref": "#/parameters/FeeId"
+          },
+          {
+            "$ref": "#/parameters/MeterId"
+          },
+          {
+            "$ref": "#/parameters/MeterReadingId"
+          },
+          {
+            "$ref": "#/parameters/SelectParameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful request of meter reading",
+            "examples": {
+              "application/json": {
+                "id": 13,
+                "date": "2016-05-18",
+                "date_serial_number": 1,
+                "value": 56712,
+                "consumption": 21,
+                "relevance": "water and sewage",
+                "sign": "reading",
+                "reason": "annual reading",
+                "overrun": false,
+                "reverse_running": false,
+                "initialised": false,
+                "reader": "Herr Hans Musterzählerwechsler",
+                "comment_for_notification": "",
+                "comment": "The meter exchange will be executed by the company Musterzähler & Söhne"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/MeterReading"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Successful request of meter reading",
+                "de": "Erfolgreicher Abruf eines Zählerstands"
+              }
+            }
+          },
+          "404": {
+            "description": "Meter reading cannot be found",
+            "x-ibm-languages": {
+              "description": {
+                "en": "Meter reading cannot be found",
+                "de": "Zählerstand kann nicht gefunden werden"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Unexpected error",
+                "de": "Unerwarteter Fehler"
+              }
+            }
+          }
+        },
+        "x-ibm-languages": {
+          "summary": {
+            "en": "Request of meter reading",
+            "de": "Abruf eines Zählerstands"
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/citizen/{citizen-id}/fees/{fee-id}/meters/{meter-id}/transaction-meter-readings/": {
+      "get": {
+        "tags": [
+          "Transaction Meter Reading"
+        ],
+        "summary": "Read from transaction table",
+        "description": "\n### Filter Options ###\nThe outcome can be manipulated by **Filter Options** and **Operators**.\n\n  Properties\n\n  - status\n\n\n### Operators ###\n**status**\n\n| Operators| Description |\n|:--------:|-------------|\n| eq       | equal       |\n",
+        "parameters": [
+          {
+            "$ref": "#/parameters/SelectParameter"
+          },
+          {
+            "$ref": "#/parameters/ClientId"
+          },
+          {
+            "$ref": "#/parameters/FeeId"
+          },
+          {
+            "$ref": "#/parameters/MeterId"
+          },
+          {
+            "$ref": "#/parameters/CitizenId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful request of all meter reading transactions",
+            "examples": {
+              "application/json": [
+                {
+                  "id": 1,
+                  "status": "done",
+                  "type": "meter_reading",
+                  "notification_e_mail": "notification@mail.de",
+                  "meter_reading": {
+                    "meter_id": "098765",
+                    "identification_number": "10025",
+                    "date": "2016-12-18",
+                    "value": 56708,
+                    "relevance": "water and sewage",
+                    "sign": "self-reading",
+                    "reason": "annual reading",
+                    "overrun": false,
+                    "reverse_running": false,
+                    "initialised": false,
+                    "reader": "",
+                    "comment_for_notification": "",
+                    "comment": ""
+                  }
+                },
+                {
+                  "id": 2,
+                  "status": "done",
+                  "type": "meter_reading",
+                  "notification_e_mail": "notification@mail.de",
+                  "meter_reading": {
+                    "meter_id": "098765",
+                    "identification_number": "10025",
+                    "date": "2016-12-18",
+                    "value": 56708,
+                    "relevance": "water and sewage",
+                    "sign": "self-reading",
+                    "reason": "annual reading",
+                    "overrun": false,
+                    "reverse_running": false,
+                    "initialised": false,
+                    "reader": "",
+                    "comment_for_notification": "",
+                    "comment": ""
+                  }
+                }
+              ]
+            },
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TransactionMeterReading"
+              }
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Successful request of all meter reading transactions",
+                "de": "Erfolgreicher Abruf einer Liste aller Zählerstands-Transaktionen"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Unexpected error",
+                "de": "Unerwarteter Fehler"
+              }
+            }
+          }
+        },
+        "x-ibm-languages": {
+          "summary": {
+            "en": "Read from transaction table",
+            "de": "Aus der Transaktionstabelle lesen"
+          },
+          "description": {
+            "en": "\n### Filter Options ###\nThe outcome can be manipulated by **Filter Options** and **Operators**.\n\n  Properties\n\n  - status\n\n\n### Operators ###\n**status**\n\n| Operators| Description | |:--------:|-------------| | eq       | equal       |\n",
+            "de": "\n### Filter Options ###\nDie Ergebnismenge kann durch **Filter** und **Operatoren** beeinflusst werden.\n\n  Properties\n\n  - status\n\n\n### Operators ###\n**status**\n\n| Operators| Beschreibung   | |:--------:|----------------| | eq       | Equal; 'gleich'|\n"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Transaction Meter Reading"
+        ],
+        "summary": "Update transaction table",
+        "description": "With POST you can write an object into the transaction table. If meter reading object is being filled, a new transaction for a meter reading with the state 'open' will be generated.\n",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ClientId"
+          },
+          {
+            "$ref": "#/parameters/CitizenId"
+          },
+          {
+            "$ref": "#/parameters/FeeId"
+          },
+          {
+            "$ref": "#/parameters/MeterId"
+          },
+          {
+            "name": "TransactionMeterReading",
+            "in": "body",
+            "description": "transaction object\n",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TransactionMeterReading"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successfully added new transaction with state open.",
+            "headers": {
+              "Link": {
+                "description": "Link contains a self reference with the ID of the newly added object.",
+                "type": "string",
+                "x-ibm-languages": {
+                  "description": {
+                    "en": "Link contains a self reference with the ID of the newly added object.",
+                    "de": "Der Link enthält eine Self-Referenz mit der ID des neu angelegten Objektes. Siehe \"Erste Schritte - Response Header\"."
+                  }
+                }
+              }
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Successfully added new transaction with state open.",
+                "de": "Eine neue Transaktion mit Status offen wurde erfolgreich angelegt."
+              }
+            }
+          },
+          "400": {
+            "description": "Bad client request. A possible cause may be that an incorrect value has been handed over. For further information, look up the response message.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Bad client request. A possible cause may be that an incorrect value has been handed over. For further information, look up the response message.",
+                "de": "Es liegt ein fehlerhafter Clientaufruf vor. Eine mögliche Ursache kann sein, dass ein fehlerhafter Wert übergeben wurde. Weitere Informationen sind in der Response-Nachricht enthalten."
+              }
+            }
+          },
+          "404": {
+            "description": "Requested resource is temporarily or permanently not available. A possible cause may be a defective URL.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Requested resource is temporarily or permanently not available. A possible cause may be a defective URL.",
+                "de": "Die angeforderte Ressource ist dauerhaft oder temporär nicht verfügbar. Eine mögliche Ursache kann sein, dass die URL fehlerhaft ist."
+              }
+            }
+          }
+        },
+        "x-ibm-languages": {
+          "summary": {
+            "en": "Update transaction table",
+            "de": "Änderungen in Transaktionstabelle schreiben"
+          },
+          "description": {
+            "en": "With POST you can write an object into the transaction table. If meter reading object is being filled, a new transaction for a meter reading with the state 'open' will be generated.\n",
+            "de": "Mit Post ist es möglich ein Objekt in die Transaktionstabelle zu schreiben. Ist das Meterreading-Objekt gefüllt wird eine neue Transaktion für eine Ablesung mit den angegeben Daten und dem Status offen erstellt.\n"
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/citizen/{citizen-id}/fees/{fee-id}/meters/{meter-id}/transaction-meter-readings/{transaction-meter-reading-id}/": {
+      "get": {
+        "tags": [
+          "Transaction Meter Reading"
+        ],
+        "summary": "Request of specific transaction",
+        "parameters": [
+          {
+            "$ref": "#/parameters/SelectParameter"
+          },
+          {
+            "$ref": "#/parameters/ClientId"
+          },
+          {
+            "$ref": "#/parameters/CitizenId"
+          },
+          {
+            "$ref": "#/parameters/FeeId"
+          },
+          {
+            "$ref": "#/parameters/MeterId"
+          },
+          {
+            "$ref": "#/parameters/TransactionMeterReadingId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful request of transaction",
+            "examples": {
+              "application/json": {
+                "id": 1,
+                "status": "done",
+                "type": "meter_reading",
+                "notification_e_mail": "notification@mail.de",
+                "meter_reading": {
+                  "meter_id": "098765",
+                  "identification_number": "10025",
+                  "date": "2016-12-18",
+                  "value": 56708,
+                  "relevance": "water and sewage",
+                  "sign": "self-reading",
+                  "reason": "annual reading",
+                  "overrun": false,
+                  "reverse_running": false,
+                  "initialised": false,
+                  "reader": "",
+                  "comment_for_notification": "",
+                  "comment": ""
+                }
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/TransactionMeterReading"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Successful request of transaction",
+                "de": "Erfolgreicher Abruf einer Transaktion"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Unexpected error",
+                "de": "Unerwarteter Fehler"
+              }
+            }
+          }
+        },
+        "x-ibm-languages": {
+          "summary": {
+            "en": "Request of specific transaction",
+            "de": "Eine bestimmte Transaktion lesen"
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/citizen/{citizen-id}/transaction-addresses/": {
+      "get": {
+        "tags": [
+          "Transaction Address"
+        ],
+        "summary": "Read from transaction table",
+        "description": "\n### Filter Options ###\nThe outcome can be manipulated by **Filter Options** and **Operators**.\n\n  Properties\n\n  - status\n\n\n### Operators ###\n**status**\n\n\n   | Operators| Description  |\n   |:--------:|--------------|\n   | eq       | equal        |\n",
+        "parameters": [
+          {
+            "$ref": "#/parameters/SelectParameter"
+          },
+          {
+            "$ref": "#/parameters/ClientId"
+          },
+          {
+            "$ref": "#/parameters/CitizenId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful request of all address transactions",
+            "examples": {
+              "application/json": [
+                {
+                  "id": 1,
+                  "status": "open",
+                  "notification_e_mail": "notification@mail.de",
+                  "address": {
+                    "id": "114257f8-3005-4e1d-9fbd-7def7069da56",
+                    "street": "Musterallee 50",
+                    "postal_code": "99999",
+                    "city": "Musterort"
+                  }
+                },
+                {
+                  "id": 2,
+                  "status": "open",
+                  "notification_e_mail": "notification@mail.de",
+                  "address": {
+                    "id": "114257f8-3005-4e1d-9fbd-7def7069da56",
+                    "street": "Musterallee 50",
+                    "postal_code": "99999",
+                    "city": "Musterort"
+                  }
+                }
+              ]
+            },
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TransactionAddress"
+              }
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Successful request of all address transactions",
+                "de": "Erfolgreicher Abruf einer Liste aller Adress-Transaktionen"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Unexpected error",
+                "de": "Unerwarteter Fehler"
+              }
+            }
+          }
+        },
+        "x-ibm-languages": {
+          "summary": {
+            "en": "Read from transaction table",
+            "de": "Aus der Transaktionstabelle lesen"
+          },
+          "description": {
+            "en": "\n### Filter Options ###\nThe outcome can be manipulated by **Filter Options** and **Operators**.\n\n  Properties\n\n  - status\n\n\n### Operators ###\n**status**\n\n\n   | Operators| Description  |\n   |:--------:|--------------|\n   | eq       | equal        |\n",
+            "de": "\n### Filter Options ###\nDie Ergebnismenge kann durch **Filter** und **Operatoren** beeinflusst werden.\n\n  Properties\n\n  - status\n\n\n### Operators ###\n**status**\n\n| Operators| Beschreibung   | |:--------:|----------------| | eq       | Equal; 'gleich'|\n"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Transaction Address"
+        ],
+        "summary": "Update transaction table",
+        "description": "An object can be added to the transaction table with POST.\nIf the address object is filled, a new transaction with the state \"open\" will be created to update the addressee data of the chosen citizen. (It is not possible to create a new citizen or a new address; only existing addresses can be modified)\n",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ClientId"
+          },
+          {
+            "$ref": "#/parameters/CitizenId"
+          },
+          {
+            "name": "TransactionAddress",
+            "in": "body",
+            "description": "transaction object\n",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TransactionAddress"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successfully created new transaction with status \"open\".",
+            "headers": {
+              "Link": {
+                "description": "Link contains a self reference with the ID of the newly added object.",
+                "type": "string",
+                "x-ibm-languages": {
+                  "description": {
+                    "en": "Link contains a self reference with the ID of the newly added object.",
+                    "de": "Der Link enthält eine Self-Referenz mit der ID des neu angelegten Objektes. Siehe \"Erste Schritte - Response Header\"."
+                  }
+                }
+              }
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Successfully created new transaction with status \"open\".",
+                "de": "Eine neue Transaktion mit Status offen wurde erfolgreich angelegt."
+              }
+            }
+          },
+          "400": {
+            "description": "Bad client request. A possible cause may be that an incorrect value has been handed over. For further information, look up the response message.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Bad client request. A possible cause may be that an incorrect value has been handed over. For further information, look up the response message.",
+                "de": "Es liegt ein fehlerhafter Clientaufruf vor. Eine mögliche Ursache kann sein, dass ein fehlerhafter Wert übergeben wurde. Weitere Informationen sind in der Response-Nachricht enthalten."
+              }
+            }
+          },
+          "404": {
+            "description": "Requested resource is temporarily or permanently not available. A possible cause may be a defective URL.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Requested resource is temporarily or permanently not available. A possible cause may be a defective URL.",
+                "de": "Die angeforderte Ressource ist dauerhaft oder temporär nicht verfügbar. Eine mögliche Ursache kann sein, dass die URL fehlerhaft ist."
+              }
+            }
+          }
+        },
+        "x-ibm-languages": {
+          "summary": {
+            "en": "Update transaction table",
+            "de": "Änderungen in Transaktionstabelle schreiben"
+          },
+          "description": {
+            "en": "An object can be added to the transaction table with POST.\nIf the address object is filled, a new transaction with the state \"open\" will be created to update the addressee data of the chosen citizen. (It is not possible to create a new citizen or a new address; only existing addresses can be modified)\n",
+            "de": "Mit Post ist es möglich ein Objekt in die Transaktionstabelle zu schreiben.\n\nIst das Adresse-Objekt gefüllt wird eine neue Transaktion für das aktualisieren der Adressatsstammdaten des entsprechenden Bürgers und dem Status offen erstellt. (Es ist nicht möglich über das Adresse-Objekt einen neuen Debitor anzulegen, oder neue Adressen hinzu zufügen; Es können lediglich bestehende Adressen geändert werden. )\n"
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/citizen/{citizen-id}/transaction-addresses/{transaction-address-id}/": {
+      "get": {
+        "tags": [
+          "Transaction Address"
+        ],
+        "summary": "Read distinct transaction",
+        "parameters": [
+          {
+            "$ref": "#/parameters/SelectParameter"
+          },
+          {
+            "$ref": "#/parameters/ClientId"
+          },
+          {
+            "$ref": "#/parameters/CitizenId"
+          },
+          {
+            "$ref": "#/parameters/TransactionAddressId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful request of transaction",
+            "examples": {
+              "application/json": {
+                "id": 1,
+                "status": "open",
+                "notification_e_mail": "notification@mail.de",
+                "address": {
+                  "id": "114257f8-3005-4e1d-9fbd-7def7069da56",
+                  "street": "Musterallee 50",
+                  "postal_code": "99999",
+                  "city": "Musterort"
+                }
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/TransactionAddress"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Successful request of transaction",
+                "de": "Erfolgreicher Abruf einer Transaktion"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Unexpected error",
+                "de": "Unerwarteter Fehler"
+              }
+            }
+          }
+        },
+        "x-ibm-languages": {
+          "summary": {
+            "en": "Read distinct transaction",
+            "de": "Eine bestimmte Transaktion lesen"
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/citizen/{citizen-id}/transaction-registration/": {
+      "get": {
+        "tags": [
+          "Transaction Registration"
+        ],
+        "summary": "Read from transaction table",
+        "description": "\n### Filter Options ###\nThe outcome can be manipulated by **Filter Options** and **Operators**.\n\n  Properties\n\n  - status\n\n\n### Operators ###\n**status**\n\n\n   | Operators| Description  |\n   |:--------:|--------------|\n   | eq       | equal        |\n",
+        "parameters": [
+          {
+            "$ref": "#/parameters/SelectParameter"
+          },
+          {
+            "$ref": "#/parameters/ClientId"
+          },
+          {
+            "$ref": "#/parameters/CitizenId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful request of all registration transactions",
+            "examples": {
+              "application/json": [
+                {
+                  "id": 1,
+                  "status": "open",
+                  "notification_e_mail": "notification@mail.de",
+                  "registration": {
+                    "id": "9cd408e5-3d0b-4252-b97e-9e82a99d3d61",
+                    "is_registered": true,
+                    "registration_email": "reg1000011@test.de"
+                  }
+                },
+                {
+                  "id": 2,
+                  "status": "open",
+                  "notification_e_mail": "notification@mail.de",
+                  "registration": {
+                    "id": "e57ec003-6172-4729-9a24-b171891073f1",
+                    "is_registered": false,
+                    "registration_email": "newMailAddr@test.de"
+                  }
+                }
+              ]
+            },
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TransactionRegistration"
+              }
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Successful request of all registration transactions",
+                "de": "Erfolgreicher Abruf einer Liste aller Registrierungs-Transaktionen"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Unexpected error",
+                "de": "Unerwarteter Fehler"
+              }
+            }
+          }
+        },
+        "x-ibm-languages": {
+          "summary": {
+            "en": "Read from transaction table",
+            "de": "Aus der Transaktionstabelle lesen"
+          },
+          "description": {
+            "en": "\n### Filter Options ###\nThe outcome can be manipulated by **Filter Options** and **Operators**.\n\n  Properties\n\n  - status\n\n\n### Operators ###\n**status**\n\n\n   | Operators| Description  |\n   |:--------:|--------------|\n   | eq       | equal        |\n",
+            "de": "\n### Filter Options ###\nDie Ergebnismenge kann durch **Filter** und **Operatoren** beeinflusst werden.\n\n  Properties\n\n  - status\n\n\n### Operators ###\n**status**\n\n| Operators| Beschreibung   | |:--------:|----------------| | eq       | Equal; 'gleich'|\n"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Transaction Registration"
+        ],
+        "summary": "Update transaction table",
+        "description": "An object can be added to the transaction table with POST.\nIf the registration object is filled, a new transaction with the state \"open\" will be created to update the registration data of the chosen citizen. (It is not possible to create a new citizen; only existing registration information of existing citizens can be modified)\n",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ClientId"
+          },
+          {
+            "$ref": "#/parameters/CitizenId"
+          },
+          {
+            "name": "TransactionRegistration",
+            "in": "body",
+            "description": "transaction object\n",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TransactionRegistration"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successfully created new transaction with status \"open\".",
+            "headers": {
+              "Link": {
+                "description": "Link contains a self reference with the ID of the newly added object.",
+                "type": "string",
+                "x-ibm-languages": {
+                  "description": {
+                    "en": "Link contains a self reference with the ID of the newly added object.",
+                    "de": "Der Link enthält eine Self-Referenz mit der ID des neu angelegten Objektes. Siehe \"Erste Schritte - Response Header\"."
+                  }
+                }
+              }
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Successfully created new transaction with status \"open\".",
+                "de": "Eine neue Transaktion mit Status offen wurde erfolgreich angelegt."
+              }
+            }
+          },
+          "400": {
+            "description": "Bad client request. A possible cause may be that an incorrect value has been handed over. For further information, look up the response message.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Bad client request. A possible cause may be that an incorrect value has been handed over. For further information, look up the response message.",
+                "de": "Es liegt ein fehlerhafter Clientaufruf vor. Eine mögliche Ursache kann sein, dass ein fehlerhafter Wert übergeben wurde. Weitere Informationen sind in der Response-Nachricht enthalten."
+              }
+            }
+          },
+          "404": {
+            "description": "Requested resource is temporarily or permanently not available. A possible cause may be a defective URL.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Requested resource is temporarily or permanently not available. A possible cause may be a defective URL.",
+                "de": "Die angeforderte Ressource ist dauerhaft oder temporär nicht verfügbar. Eine mögliche Ursache kann sein, dass die URL fehlerhaft ist."
+              }
+            }
+          }
+        },
+        "x-ibm-languages": {
+          "summary": {
+            "en": "Update transaction table",
+            "de": "Änderungen in Transaktionstabelle schreiben"
+          },
+          "description": {
+            "en": "An object can be added to the transaction table with POST.\nIf the registration object is filled, a new transaction with the state \"open\" will be created to update the registration data of the chosen citizen. (It is not possible to create a new citizen; only existing registration information of existing citizens can be modified)\n",
+            "de": "Mit Post ist es möglich ein Objekt in die Transaktionstabelle zu schreiben.\nIst das Registration-Objekt gefüllt wird eine neue Transaktion für das aktualisieren der Registrierungsdaten des entsprechenden Bürgers und dem Status offen erstellt. (Es ist nicht möglich über das Registration-Objekt einen neuen Debitor anzulegen; Es können lediglich Registrierungsdaten bestehender Debitoren geändert werden. )\n"
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/citizen/{citizen-id}/transaction-registration/{transaction-registration-id}/": {
+      "get": {
+        "tags": [
+          "Transaction Registration"
+        ],
+        "summary": "Read distinct transaction",
+        "parameters": [
+          {
+            "$ref": "#/parameters/SelectParameter"
+          },
+          {
+            "$ref": "#/parameters/ClientId"
+          },
+          {
+            "$ref": "#/parameters/CitizenId"
+          },
+          {
+            "$ref": "#/parameters/TransactionRegistrationId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful request of transaction",
+            "examples": {
+              "application/json": {
+                "id": 1,
+                "status": "open",
+                "notification_e_mail": "notification@mail.de",
+                "registration": {
+                  "id": "9cd408e5-3d0b-4252-b97e-9e82a99d3d61",
+                  "is_registered": true,
+                  "registration_email": "reg1000011@test.de"
+                }
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/TransactionRegistration"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Successful request of transaction",
+                "de": "Erfolgreicher Abruf einer Transaktion"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Unexpected error",
+                "de": "Unerwarteter Fehler"
+              }
+            }
+          }
+        },
+        "x-ibm-languages": {
+          "summary": {
+            "en": "Read distinct transaction",
+            "de": "Eine bestimmte Transaktion lesen"
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/citizen/{citizen-id}/transaction-communications/": {
+      "get": {
+        "tags": [
+          "Transaction Communication"
+        ],
+        "summary": "Read from transaction table",
+        "description": "\n### Filter Options ###\nThe outcome can be manipulated by **Filter Options** and **Operators**.\n\n  Properties\n\n  - status\n\n\n### Operators ###\n**status**\n\n\n  | Operators| Description |\n  |:--------:|-------------|\n  | eq       | equal       |\n",
+        "parameters": [
+          {
+            "$ref": "#/parameters/SelectParameter"
+          },
+          {
+            "$ref": "#/parameters/ClientId"
+          },
+          {
+            "$ref": "#/parameters/CitizenId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful request of list with all communication transactions",
+            "examples": {
+              "application/json": [
+                {
+                  "id": 1,
+                  "status": "open",
+                  "notification_e_mail": "notification@mail.de",
+                  "communication": {
+                    "id": "1b9c4079-2432-47b8-84c2-eebaa97e7376",
+                    "communication_data_content": "+49 911 999882",
+                    "communication_number_standardized": "0049911999882",
+                    "communication_type": "phone",
+                    "note": "string",
+                    "communication_usage_type": {
+                      "is_main_communication_usage_type": true,
+                      "is_main_management_phone": true
+                    }
+                  }
+                },
+                {
+                  "id": 2,
+                  "status": "open",
+                  "notification_e_mail": "notification@mail.de",
+                  "communication": {
+                    "id": "1b9c4079-2432-47b8-84c2-eebaa97e7376",
+                    "communication_data_content": "+49 911 999882",
+                    "communication_number_standardized": "0049911999882",
+                    "communication_type": "phone",
+                    "note": "string",
+                    "communication_usage_type": {
+                      "is_main_communication_usage_type": true,
+                      "is_main_management_phone": true
+                    }
+                  }
+                }
+              ]
+            },
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/TransactionCommunication"
+              }
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Successful request of list with all communication transactions",
+                "de": "Erfolgreicher Abruf einer Liste aller Kommunikations-Transaktionen"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Unexpected error",
+                "de": "Unerwarteter Fehler"
+              }
+            }
+          }
+        },
+        "x-ibm-languages": {
+          "summary": {
+            "en": "Read from transaction table",
+            "de": "Aus der Transaktionstabelle lesen"
+          },
+          "description": {
+            "en": "\n### Filter Options ###\nThe outcome can be manipulated by **Filter Options** and **Operators**.\n\n  Properties\n\n  - status\n\n\n### Operators ###\n**status**\n\n\n  | Operators| Description |\n  |:--------:|-------------|\n  | eq       | equal       |\n",
+            "de": "\n### Filter Options ###\nDie Ergebnismenge kann durch **Filter** und **Operatoren** beeinflusst werden.\n\n  Properties\n\n  - status\n\n\n### Operators ###\n**status**\n\n| Operators| Beschreibung   | |:--------:|----------------| | eq       | Equal; 'gleich'|\n"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Transaction Communication"
+        ],
+        "summary": "Update changes in transaction table",
+        "description": "Objects can be added to the transaction table by POST. It is possible to add new means of communicaton (phone numbers, email addresses).\n",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ClientId"
+          },
+          {
+            "$ref": "#/parameters/CitizenId"
+          },
+          {
+            "name": "TransactionCommunication",
+            "in": "body",
+            "description": "transaction object\n",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TransactionCommunication"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successfully added new transaction with the state 'open'.",
+            "headers": {
+              "Link'": {
+                "description": "Link contains a self reference with the ID of the newly added object.",
+                "type": "string",
+                "x-ibm-languages": {
+                  "description": {
+                    "en": "Link contains a self reference with the ID of the newly added object.",
+                    "de": "Der Link enthält eine Self-Referenz mit der ID des neu angelegten Objektes. Siehe \"Erste Schritte - Response Header\"."
+                  }
+                }
+              }
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Successfully added new transaction with the state 'open'.",
+                "de": "Eine neue Transaktion mit Status offen wurde erfolgreich angelegt."
+              }
+            }
+          },
+          "400": {
+            "description": "Bad client request. A possible cause may be that an incorrect value has been handed over. For further information, look up the response message.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Bad client request. A possible cause may be that an incorrect value has been handed over. For further information, look up the response message.",
+                "de": "Es liegt ein fehlerhafter Clientaufruf vor. Eine mögliche Ursache kann sein, dass ein fehlerhafter Wert übergeben wurde. Weitere Informationen sind in der Response-Nachricht enthalten."
+              }
+            }
+          },
+          "404": {
+            "description": "Request resource is temporarily or permanently not available. A possible cause may be a defective URL.",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Request resource is temporarily or permanently not available. A possible cause may be a defective URL.",
+                "de": "Die angeforderte Ressource ist dauerhaft oder temporär nicht verfügbar. Eine mögliche Ursache kann sein, dass die URL fehlerhaft ist."
+              }
+            }
+          }
+        },
+        "x-ibm-languages": {
+          "summary": {
+            "en": "Update changes in transaction table",
+            "de": "Änderungen in Transaktionstabelle schreiben"
+          },
+          "description": {
+            "en": "Objects can be added to the transaction table by POST. It is possible to add new means of communicaton (phone numbers, email addresses).\n",
+            "de": "Mit Post ist es möglich ein Objekt in die Transaktionstabelle zu schreiben. Es ist möglich neue Kommunikationsmittel (Telefonnummern, E-Mailadressen) hinzu zufügen.\n"
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/citizen/{citizen-id}/transaction-communications/{transaction-communication-id}/": {
+      "get": {
+        "tags": [
+          "Transaction Communication"
+        ],
+        "summary": "Read distinct transaction",
+        "parameters": [
+          {
+            "$ref": "#/parameters/SelectParameter"
+          },
+          {
+            "$ref": "#/parameters/ClientId"
+          },
+          {
+            "$ref": "#/parameters/CitizenId"
+          },
+          {
+            "$ref": "#/parameters/TransactionCommunicationId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful request of transaction",
+            "examples": {
+              "application/json": {
+                "id": 1,
+                "status": "open",
+                "notification_e_mail": "notification@mail.de",
+                "communication": {
+                  "id": "1b9c4079-2432-47b8-84c2-eebaa97e7376",
+                  "communication_data_content": "+49 911 999882",
+                  "communication_number_standardized": "0049911999882",
+                  "communication_type": "phone",
+                  "note": "string",
+                  "communication_usage_type": {
+                    "is_main_communication_usage_type": true,
+                    "is_main_management_phone": true
+                  }
+                }
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/TransactionCommunication"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Successful request of transaction",
+                "de": "Erfolgreicher Abruf einer Transaktion"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "x-ibm-languages": {
+              "description": {
+                "en": "Unexpected error",
+                "de": "Unerwarteter Fehler"
+              }
+            }
+          }
+        },
+        "x-ibm-languages": {
+          "summary": {
+            "en": "Read distinct transaction",
+            "de": "Eine bestimmte Transaktion lesen"
+          }
+        }
+      }
+    }
+  }
+}

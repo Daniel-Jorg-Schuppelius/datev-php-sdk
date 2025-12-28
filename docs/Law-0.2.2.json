@@ -1,0 +1,4112 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Law",
+    "version": "0.2.2",
+    "description": "API to access DATEV Anwalt classic (OnPremise). \nThe API only enables GET requests. There will no longer be an extension to enable write access (POST / PUT) in OnPremise.\n\nTo shrink excessive data transfers, all resources uses a *top* parameter of *100* if this has not been set.\n",
+    "termsOfService": "https://developer.datev.de/portal/terms",
+    "contact": {
+      "name": "DATEV Schnittstellenberatung",
+      "url": "http://www.datev.de",
+      "email": "schnittstellenberatung@datev.de"
+    },
+    "license": {
+      "name": "DATEV eG",
+      "url": "http://www.datev.de"
+    },
+    "x-datev-shortdescription": "API to access DATEV Anwalt. Use http://localhost:58454/, https://localhost:58452/ or https://[machinename]:58452/ as the base URL."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:58454/datev/api/law/v1",
+      "description": "Also allowed urls: https://localhost:58452/, https://[machinename]:58452/"
+    }
+  ],
+  "security": [
+    {
+      "basicAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "health",
+      "description": "Contains all resources to query the health status of the REST API server"
+    },
+    {
+      "name": "expenses",
+      "description": "Contains all resources to administrate expenses."
+    },
+    {
+      "name": "employees",
+      "description": "Contains all resources to query or administrate employees."
+    },
+    {
+      "name": "files",
+      "description": "Contains all resources to query or administrate a file."
+    },
+    {
+      "name": "masterdata",
+      "description": "Contains all resources to query or administrate basic information for a law office"
+    }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "tags": [
+          "health"
+        ],
+        "summary": "Checks if the server is alive",
+        "responses": {
+          "200": {
+            "description": "Returns an object of health information.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Health"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/expense-types": {
+      "get": {
+        "tags": [
+          "masterdata"
+        ],
+        "summary": "Get all expense types (de: Aufwandarten)",
+        "description": "The expense types endpoint returns information about the available *expense types*.\nThe response includes the display name and other details about each type.\nCurrently the property `visibility` is not filter- and sortable.\n*Default sort order: short_name ASC*\n",
+        "parameters": [
+          {
+            "name": "visibility",
+            "in": "query",
+            "description": "Possible values: none | all | lawyer | notary",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "none",
+                "all",
+                "lawyer",
+                "notary"
+              ]
+            }
+          },
+          {
+            "$ref": "#/components/parameters/Filter"
+          },
+          {
+            "$ref": "#/components/parameters/OrderBy"
+          },
+          {
+            "$ref": "#/components/parameters/Top"
+          },
+          {
+            "$ref": "#/components/parameters/Skip"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of expense types",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Expense-Type"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ]
+      }
+    },
+    "/expense-types/{id}": {
+      "get": {
+        "tags": [
+          "masterdata"
+        ],
+        "summary": "Get a specific expense type (de: Aufwandart) by its id",
+        "description": "The expense types endpoint returns information about a specific *expense type* by ID.",
+        "operationId": "getExpenseTypeById",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK. Returns an *expense type* object",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Expense-Type"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "ID is missing or malformed.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "ID not found.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ]
+      }
+    },
+    "/billing-categories": {
+      "get": {
+        "tags": [
+          "masterdata"
+        ],
+        "summary": "Gets all expense category values (de: Abrechnungsarten).",
+        "description": "The billing categories endpoint returns information about all existing *billing category* values.\nBy default only visible *billing category* values are returned.\n*Default sort order: id ASC*\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Filter"
+          },
+          {
+            "$ref": "#/components/parameters/OrderBy"
+          },
+          {
+            "$ref": "#/components/parameters/Top"
+          },
+          {
+            "$ref": "#/components/parameters/Skip"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of expense types",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Billing-Category"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ]
+      }
+    },
+    "/billing-categories/{number}": {
+      "get": {
+        "tags": [
+          "masterdata"
+        ],
+        "summary": "Get a specific billing category by its number",
+        "description": "The billing categories endpoint returns information about a specific *billing category* by its number.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK. Returns a *billing category* object",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Billing-Category"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Number is missing or malformed.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Number not found.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ]
+      }
+    },
+    "/expense-categories": {
+      "get": {
+        "tags": [
+          "masterdata"
+        ],
+        "summary": "Gets all expense categories.",
+        "description": "The expense categories endpoint returns information about all existing *expense categories*. It gets the categories of expenses (de: Auslagen), own-expense (de: Eigenaufwand) and tax expenses (de: steuerpflichtige Auslagen). *Default sort order: id ASC*",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Filter"
+          },
+          {
+            "$ref": "#/components/parameters/OrderBy"
+          },
+          {
+            "$ref": "#/components/parameters/Top"
+          },
+          {
+            "$ref": "#/components/parameters/Skip"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of expense categories.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Expense-Category"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ]
+      }
+    },
+    "/expense-categories/{number}": {
+      "get": {
+        "tags": [
+          "masterdata"
+        ],
+        "summary": "Get a specific expense category by its number.",
+        "description": "The expense category endpoint returns information about a specific *expense category* by its number. It gets the categories of expenses (de: Auslagen), own-expense (de: Eigenaufwand) and tax expenses (de: steuerpflichtige Auslagen).",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK. Returns an *expense category* object",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Expense-Category"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "ID is missing or malformed.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "ID not found.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ]
+      }
+    },
+    "/fee-versions": {
+      "get": {
+        "tags": [
+          "masterdata"
+        ],
+        "summary": "Gets all fee versions (de: Gebührenversion).",
+        "description": "The fee versions endpoint returns information about all existing *fee versions*.\n*Default sort order: id ASC*\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Filter"
+          },
+          {
+            "$ref": "#/components/parameters/OrderBy"
+          },
+          {
+            "$ref": "#/components/parameters/Top"
+          },
+          {
+            "$ref": "#/components/parameters/Skip"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of fee versions.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Fee-Version"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ]
+      }
+    },
+    "/fee-versions/{number}": {
+      "get": {
+        "tags": [
+          "masterdata"
+        ],
+        "summary": "Get a specific fee version by its number (de: Gebührenversion).",
+        "description": "The fee version endpoint returns information about a specific *fee version* by its number.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK. Returns an *fee version* object",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Fee-Version"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "ID is missing or malformed.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "ID not found.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ]
+      }
+    },
+    "/expenses": {
+      "get": {
+        "tags": [
+          "expenses"
+        ],
+        "summary": "Gets all expenses (de: Aufwände).",
+        "description": "The expenses endpoint returns information about all available *expense*.\nThe result set is limited by IAM for the querying user to permitted *expenses*.\nThe response includes the display name and other details about each type.\nCurrently the properties `object_type`, `case_handler_id`, `expense_type_id`,\n`start`, `end`, `creator_id`, `modifier_id`, `billed`, `invoice_id`,\n`invoice_key`, `billing_category`, `file_id`, `client_id`,\n`fee_version` and `billable` are not filter- and sortable.\n*Default sort order: start DESC*\n",
+        "parameters": [
+          {
+            "name": "billed",
+            "in": "query",
+            "description": "The billed status of the expense (yes, no, reserved).",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "yes",
+                "no",
+                "reserved"
+              ]
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "description": "The category id of the expense. See /expense-categories/",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/Select"
+          },
+          {
+            "$ref": "#/components/parameters/Filter"
+          },
+          {
+            "$ref": "#/components/parameters/OrderBy"
+          },
+          {
+            "$ref": "#/components/parameters/Top"
+          },
+          {
+            "$ref": "#/components/parameters/Skip"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of expenses. This can be [Taxable-Expense](#model-Taxable-Expense \"Go to Type definition\"), [Time-Expense](#model-Time-Expense \"Go to Type definition\") or [Own-Expense](#model-Own-Expense \"Go to Type definition\").",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Base-Expense"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ]
+      }
+    },
+    "/expenses/{id}": {
+      "get": {
+        "tags": [
+          "expenses"
+        ],
+        "summary": "Get a specific expense (de: Aufwand) object identified by its id.",
+        "description": "The expense objects endpoint returns information about a specific *expense object* by ID.\nThe result set is limited by IAM for the querying user to permitted *expenses*.\n",
+        "operationId": "getExpenseById",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK. Returns an *expense* object",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Base-Expense"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "ID is missing or malformed.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "ID not found. This occurs when the ID either does not exist or the rights to read the data are missing.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ]
+      }
+    },
+    "/employees": {
+      "get": {
+        "tags": [
+          "employees"
+        ],
+        "summary": "Gets all employees.",
+        "description": "The employees endpoint returns information about all existing *employees*.\nThe response includes the display name and other details about each employees.\nCurrently the properties `functions`, `job_titles`, `display_name`, `phone`,\n`email`, and `branch` are not filter- and sortable.\n*Default sort order: employee_number ASC*\nBy default only active employees are returned.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Select"
+          },
+          {
+            "$ref": "#/components/parameters/Filter"
+          },
+          {
+            "$ref": "#/components/parameters/OrderBy"
+          },
+          {
+            "$ref": "#/components/parameters/Top"
+          },
+          {
+            "$ref": "#/components/parameters/Skip"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of employees.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Employee"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ]
+      }
+    },
+    "/employees/{id}": {
+      "get": {
+        "tags": [
+          "employees"
+        ],
+        "summary": "Get a specific employee by its id",
+        "description": "The employee endpoint returns information about a specific *employee* by ID.\n",
+        "operationId": "getEmployeeById",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK. Returns an *employee* object",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Employee"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "ID is missing or malformed.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "ID not found.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ]
+      }
+    },
+    "/employees/{id}/contingency-fees": {
+      "get": {
+        "tags": [
+          "employees"
+        ],
+        "summary": "Gets all contingency fees of an employee (de: Stundensatzvereinbarung).",
+        "description": "The contingency fees endpoint returns information about a specific *employees* contingency fees.\nOnly extern visible contingency fees are returned.\nCurrently the property `file_id`, `client_id` and `object_type` is not filter- and sortable.\n*Default sort order: object_type ASC, file_id DESC (if present), client_id ASC (if present), valid_from DESC, expense_type_id ASC*\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK. Returns a *contingency-fee* object. This can be `Contingency-Fee`, `Contingency-Fee-By-File` or `Contingency-Fee-By-Client`",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Contingency-Fee"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "ID is missing or malformed.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ]
+      }
+    },
+    "/employees/{id}/custom-fields": {
+      "get": {
+        "tags": [
+          "employees"
+        ],
+        "summary": "Gets all custom fields of an employee.",
+        "description": "The endpoint returns information about all custom fields of a specific employee.\nCurrently this resource is not filter- and sortable.\n*Default sort order: name ASC*\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of *custom field* items.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Custom-Field"
+                  },
+                  "example": [
+                    {
+                      "id": 403,
+                      "name": "Beruf",
+                      "value": "Metzger"
+                    },
+                    {
+                      "id": 407,
+                      "name": "Arbeitgeber",
+                      "value": "Metzgerei Boggnsagg"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "ID is missing or malformed.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ]
+      }
+    },
+    "/departments": {
+      "get": {
+        "tags": [
+          "masterdata"
+        ],
+        "summary": "Gets all departments (de: Referate).",
+        "description": "\"The departments endpoint returns information about all existing *departments*.\nFields of activity of a law firm: e.g. Civil law, administrative law, ...\nThe items are sorted by ordered by their number.\n*Default sort order: number ASC*\"\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Select"
+          },
+          {
+            "$ref": "#/components/parameters/Filter"
+          },
+          {
+            "$ref": "#/components/parameters/OrderBy"
+          },
+          {
+            "$ref": "#/components/parameters/Top"
+          },
+          {
+            "$ref": "#/components/parameters/Skip"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of departments.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Department"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ]
+      }
+    },
+    "/departments/{id}": {
+      "get": {
+        "tags": [
+          "masterdata"
+        ],
+        "summary": "Get a specific department by its id (de: Referat).",
+        "description": "\"The department endpoint returns information about a specific *department* by ID.\nFields of activity of a law firm: e.g. Civil law, administrative law, ...\"\n",
+        "operationId": "getDepartmentId",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK. Returns an *department* object",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Department"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "ID is missing or malformed.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "ID not found.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ]
+      }
+    },
+    "/causes": {
+      "get": {
+        "tags": [
+          "masterdata"
+        ],
+        "summary": "Gets all available causes.",
+        "description": "\"The causes endpoint returns information about all existing *causes* (de: Gegenstände).\n*Default sort order: number ASC*\"\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Select"
+          },
+          {
+            "$ref": "#/components/parameters/Filter"
+          },
+          {
+            "$ref": "#/components/parameters/OrderBy"
+          },
+          {
+            "$ref": "#/components/parameters/Top"
+          },
+          {
+            "$ref": "#/components/parameters/Skip"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of causes.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Cause"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ]
+      }
+    },
+    "/security-zones": {
+      "get": {
+        "tags": [
+          "masterdata"
+        ],
+        "summary": "Gets all available security zones.",
+        "description": "The security zones endpoint returns information about all existing *security zones*.\nThe result set is limited by IAM for the querying user to permitted *security zones*.\n*Default sort order: short_name ASC*\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Select"
+          },
+          {
+            "$ref": "#/components/parameters/Filter"
+          },
+          {
+            "$ref": "#/components/parameters/OrderBy"
+          },
+          {
+            "$ref": "#/components/parameters/Top"
+          },
+          {
+            "$ref": "#/components/parameters/Skip"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of security zones.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Security-Zone"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ]
+      }
+    },
+    "/levels-of-jurisdiction": {
+      "get": {
+        "tags": [
+          "masterdata"
+        ],
+        "summary": "Gets all available levels of jurisdiction or order for payment procedure (de: Gerichtsinstanzen / -verfahren).",
+        "description": "The level of jurisdiction endpoint returns information about all existing *level of jurisdictions*.\n*Default sort order: number ASC*\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Select"
+          },
+          {
+            "$ref": "#/components/parameters/Filter"
+          },
+          {
+            "$ref": "#/components/parameters/OrderBy"
+          },
+          {
+            "$ref": "#/components/parameters/Top"
+          },
+          {
+            "$ref": "#/components/parameters/Skip"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of levels of jurisdictions.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Levels-Of-Jurisdiction"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ]
+      }
+    },
+    "/files": {
+      "get": {
+        "tags": [
+          "files"
+        ],
+        "summary": "Gets all files (de: Akten).",
+        "description": "The files endpoint returns information about all existing *files*.\nThe result set is limited by IAM for the querying user to permitted *files*.\nBy default, only active files are returned ordered by their file number.\nCurrently only the following properties are filter- and sortable:\n`id`, `file_number`, `file_number_short`, `file_name`, `project_number`,\n`short_reason`, `reactivated`, `note`\n*Default sort order: file_number_short*\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Select"
+          },
+          {
+            "$ref": "#/components/parameters/Filter"
+          },
+          {
+            "$ref": "#/components/parameters/OrderBy"
+          },
+          {
+            "$ref": "#/components/parameters/Top"
+          },
+          {
+            "$ref": "#/components/parameters/Skip"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of files.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/File"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ]
+      }
+    },
+    "/files/{id}": {
+      "get": {
+        "tags": [
+          "files"
+        ],
+        "summary": "Get a specific file by its id (de: Akte)",
+        "description": "The files endpoint returns information about a specific *file*.\nThe result set is limited by IAM for the querying user to permitted *files*.\n",
+        "operationId": "getFileById",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          },
+          {
+            "$ref": "#/components/parameters/Select"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK. Returns a *file* object",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/File"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "ID is missing or malformed.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "ID not found. This occurs when the ID either does not exist or the rights to read the data are missing.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ]
+      }
+    },
+    "/files/{id}/reference-sheet": {
+      "get": {
+        "tags": [
+          "files"
+        ],
+        "summary": "Gets the reference sheet of the given file (de: Handaktenbogen).",
+        "description": "The reference sheet contains an overview of the most important information on the respective mandate and, of course, the process register number. \nBy default, the address and telephone details of the parties involved, lawyers and institutions are noted there.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          },
+          {
+            "name": "show_participants",
+            "in": "query",
+            "description": "If `true` the participant part will be processed, otherwise not.",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
+            "name": "show_notes",
+            "in": "query",
+            "description": "If `true` the notes part will be processed, otherwise not.",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          },
+          {
+            "name": "show_vita",
+            "in": "query",
+            "description": "If `true` the vita part will be processed, otherwise not.",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "show_invoices",
+            "in": "query",
+            "description": "If `true` the invoices part will be processed, otherwise not.",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "show_appointments",
+            "in": "query",
+            "description": "If `true` the appointments part will be processed, otherwise not.",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "show_period",
+            "in": "query",
+            "description": "If `true` the periods part will be processed, otherwise not.",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The reference sheet as *HTML* processed content.",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "<html><head><META http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"><style type=\"text/css\">@media screen { body { margin:0px 0px 0px 0px; padding:1cm 1cm 1cm 1cm; font-family:Verdana; font-size:9.5pt; }} @media print { body { margin:0px 0px 0px 1cm; padding:0px 0px 0px 0px; font-family:Verdana; font-size:9.5pt; }} table { margin:0px; padding:0px; border-collapse:collapse; font-size:9.5pt; } th { margin:0px; padding:0px; vertical-align:top; text-align:left; } td { margin:0px; padding:0px; vertical-align:top; text-align:left; } hr { margin-top:2em; } .nowrap { white-space:nowrap; } .normal { font-weight:normal; } .fett { font-weight:bold; } .gross { font-size:160%; } .mittel { font-size:110%; } .right { text-align:right; } .abteilung { padding-top:2em; } .headline { padding-bottom:0.4em; font-weight:bold; text-align:left; } .label { padding-right:0.4em; color:gray; white-space:nowrap; } .unmittelbar { text-decoration:underline; } span.adresse { display:block; } span.adresse:first-child { display:block; } @media screen { .layout-ersteseite {} } @media screen { .layout-neueseite { padding-top:4em } } @media print { .layout-ersteseite {} } @media print { .layout-neueseite {} } .layout-ersteseite { page-break-before:avoid; clear:both; } .layout-neueseite { page-break-before:always; clear:both; } .deckblatt-tabelle { width:100%; } .deckblatt-tabelle-spalte-links { width:39%; padding-right:0.5em; } .deckblatt-tabelle-spalte-rechts { padding-left:0.5em; } .beteiligter-spalte { width:49%; padding-left:0.5em; padding-right:0.5em; display:inline; vertical-align:top; } table.urkunden { width:100%; page-break-inside:avoid; } table.urkunden * td.narrow { width:20%; } table.urkunden * td { border:1px dotted gray; height:30px; padding:0.4em; overflow:hidden; } table.urkunden *.head td { border:1px solid gray; vertical-align:middle; } table.urkunden * td.wide { } table.termine { width:100%; page-break-inside:avoid; } table.termine * td.narrow { width:20%; } table.termine * td { border:1px dotted gray; height:30px; padding:0.4em; overflow:hidden; } table.termine *.head td { border:1px solid gray; vertical-align:middle; } table.termine * td.wide { } table.vita { width:100%; page-break-inside:avoid; } table.vita * td.narrow { width:15%; } table.vita * td { border:1px dotted gray; height:30px; padding:0.4em; overflow:hidden; } table.vita *.head td { border:1px solid gray; vertical-align:middle; } table.vita * td.wide { } table.rechnung { width:100%; page-break-inside:avoid; } table.rechnung * td.narrow { width:7%; } table.rechnung * td { border:1px dotted gray; height:30px; padding:0.4em; overflow:hidden; } table.rechnung *.head td { border:1px solid gray; vertical-align:middle; } table.rechnung * td.wide { } table.fristen { width:100%; page-break-inside:avoid; } table.fristen * td.narrow { width:20%; } table.fristen * td { border:1px dotted gray; height:30px; padding:0.4em; overflow:hidden; } td.allgemein-kopf-kanzlei { vertical-align:bottom; width:100%; } td.allgemein-kopf-akte { text-align:right; vertical-align:bottom; } .allgemein-kopf-titel { text-align:center; padding:0.6em; border-top:1px solid black; border-bottom:1px solid black; } </style><title> Handaktenbogen 000001-08</title></head><body><div id=\"deckblatt\" class=\"layout-ersteseite\"><table><tr><td class=\"allgemein-kopf-kanzlei\"><span>Standardbuchungskreis / Hauptsitz</span></td><td class=\"allgemein-kopf-akte nowrap\"><span class=\"label\">Aktennr.:</span><span class=\"fett\">000001-08</span></td></tr></table><div class=\"allgemein-kopf-titel\"><span class=\"fett gross\">Handaktenbogen </span><span class=\"normal mittel\">in Sachen</span><br><br><span class=\"fett mittel\">Fristen, Termine, Wiedervorlagen</span></div><div id=\"deckblatt-akte-wegen\" class=\"abteilung\"><table><tr><td class=\"label\">Wegen:</td><td colspan=\"3\"></td></tr></table></div><table class=\"deckblatt-tabelle\"><tr><td class=\"deckblatt-tabelle-spalte-links\"><div id=\"deckblatt-akte-1\" class=\"abteilung\"><table><tr><td class=\"label\">Referat:</td><td>Zivilrecht</td></tr><tr><td class=\"label\">Projektnr.:</td><td></td></tr><tr><td class=\"label\">Sachbearb.:</td><td>Anwaltexempel, Albrecht </td></tr><tr><td></td><td>Muster-Mitarbeiter, Manfred </td></tr><tr><td class=\"label\">Geg.-Wert:</td><td>0,00 EUR</td></tr></table></div><div class=\"abteilung\" id=\"&#xA; deckblatt-funktion-Auftraggeber1\"><div class=\"headline\"><span>Auftraggeber</span></div><div><span class=\"adresse\">Herrn</span><span class=\"adresse\">Manfred Musterhinz</span><span class=\"adresse\">Berliner Str. 3</span><span class=\"adresse\">01067 Dresden</span><table><tr><td><font face=\"Wingdings\">(</font><span style=\"font-size:50%;\"></span></td><td>+49 (351) 9999 - 90909090</td></tr><tr><td><font face=\"Wingdings\">*</font><span style=\"font-size:50%;\"></span></td><td>manfred@testdaten.datev.de</td></tr></table></div></div><div class=\"abteilung\" id=\"&#xA; deckblatt-funktion-Gegner1\"><div class=\"headline\"><span>Gegner</span></div><div><span class=\"adresse\">Herrn</span><span class=\"adresse\">Barbara Beispielkunz</span><span class=\"adresse\">Altenburger Str. 377</span><span class=\"adresse\">50968 Köln</span><table><tr><td><font face=\"Wingdings\">(</font><span style=\"font-size:50%;\"></span></td><td>+49 (211) 111 - 12345</td></tr></table></div></div><div id=\"deckblatt-notizen-kurz\" class=\"abteilung\"><div class=\"headline\"><span> Notizen: </span></div>Akte zeigt Termine, Fristen und Wiedervorlagen (Aufgaben) im Terminkalender in der Zeit vom 03.03.2008 bis 09.03.2008 </div><div id=\"deckblatt-akte-2\" class=\"abteilung\"><table><tr><td class=\"label\">angelegt am:</td><td>08.01.2008</td></tr><tr><td class=\"label\">abgelegt am:</td><td></td></tr><tr><td class=\"label\">Ablagenr.:</td><td></td></tr></table></div></td><td class=\"deckblatt-tabelle-spalte-rechts\"><div id=\"deckblatt-termin-liste\" class=\"abteilung\"><div class=\"headline\"><span>Termine:</span></div><table class=\"termine\"><tr class=\"head\"><td class=\"narrow\">Datum</td><td class=\"narrow\">Zeit</td><td class=\"narrow\">Zimmer</td><td class=\"wide\">Bemerkung</td></tr></table></div><div id=\"deckblatt-frist-liste\" class=\"abteilung\"><div class=\"headline\"><span>Fristen / Wiedervorlagen:</span></div><table class=\"fristen\"><tr><td class=\"narrow\"></td><td class=\"narrow\"></td><td class=\"narrow\"></td><td class=\"narrow\"></td><td class=\"narrow\"></td></tr></table></div></td></tr></table></div><div id=\"beteiligte\" class=\"layout-neueseite\"><table><tr><td class=\"allgemein-kopf-kanzlei\"><span>Standardbuchungskreis / Hauptsitz</span></td><td class=\"allgemein-kopf-akte nowrap\"><span class=\"label\">Aktennr.:</span><span class=\"fett\">000001-08</span></td></tr></table><div class=\"allgemein-kopf-titel\"><span class=\"fett gross\">Beteiligte </span><span class=\"normal mittel\">in Sachen</span><br><br><span class=\"fett mittel\">Fristen, Termine, Wiedervorlagen</span></div><div class=\"beteiligter-spalte abteilung\"><div class=\"headline\"><span>1.) </span><span class=\"unmittelbar\">Mandant 1</span></div><div><span class=\"adresse\">Herrn</span><span class=\"adresse\">Manfred Musterhinz</span><span class=\"adresse\">Berliner Str. 3</span><span class=\"adresse\">01067 Dresden</span><table><tr><td><font face=\"Wingdings\">(</font><span style=\"font-size:50%;\"></span></td><td>+49 (351) 9999 - 90909090</td></tr><tr><td><font face=\"Wingdings\">*</font><span style=\"font-size:50%;\"></span></td><td>manfred@testdaten.datev.de</td></tr></table></div></div><hr><div class=\"beteiligter-spalte abteilung\"><div class=\"headline\"><span>2.) </span><span class=\"unmittelbar\">Gegner 1</span></div><div><span class=\"adresse\">Herrn</span><span class=\"adresse\">Barbara Beispielkunz</span><span class=\"adresse\">Altenburger Str. 377</span><span class=\"adresse\">50968 Köln</span><table><tr><td><font face=\"Wingdings\">(</font><span style=\"font-size:50%;\"></span></td><td>+49 (211) 111 - 12345</td></tr></table></div></div></div><div id=\"notizen\" class=\"layout-neueseite\"><table><tr><td class=\"allgemein-kopf-kanzlei\"><span>Standardbuchungskreis / Hauptsitz</span></td><td class=\"allgemein-kopf-akte nowrap\"><span class=\"label\">Aktennr.:</span><span class=\"fett\">000001-08</span></td></tr></table><div class=\"allgemein-kopf-titel\"><span class=\"fett gross\">Alle Notizen</span><span class=\"normal mittel\">in Sachen</span><br><br><span class=\"fett mittel\">Fristen, Termine, Wiedervorlagen</span></div><div id=\"notizen-inhalt\" class=\"abteilung\"><span><notizen-text>Akte zeigt Termine, Fristen und Wiedervorlagen (Aufgaben) im Terminkalender in der Zeit vom 03.03.2008 bis 09.03.2008 </notizen-text></span></div></div></body></html>"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ]
+      }
+    },
+    "/files/{id}/levels-of-jurisdiction": {
+      "get": {
+        "tags": [
+          "files"
+        ],
+        "summary": "Gets all levels of jurisdiction or order for payment procedure of the given file (de: Gerichtsinstanzen / -verfahren).",
+        "description": "The levels of jurisdiction endpoint returns information about all existing *levels of jurisdictions* of the given file.\nThe result set is limited by IAM for the querying user to permitted *files*.\nCurrently the property `active` is not filter- and sortable.\n*Default sort order: number ASC*\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of levels of jurisdiction.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Levels-Of-Jurisdiction-File-Related"
+                  },
+                  "example": [
+                    {
+                      "number": 1,
+                      "name": "1. Instanz",
+                      "active": false
+                    },
+                    {
+                      "number": 2,
+                      "name": "2. Instanz",
+                      "active": true
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "ID is missing or malformed.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "ID not found. This occurs when the ID either does not exist or the rights to read the data are missing.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ]
+      }
+    },
+    "/files/{id}/custom-fields": {
+      "get": {
+        "tags": [
+          "files"
+        ],
+        "summary": "Gets all customer created properties attached to a file.",
+        "description": "The *custom fields* endpoint returns information about all existing *custom fields* of the given file.\nThe result set is limited by IAM for the querying user to permitted *files*.\n*Default sort order: name ASC*\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of custom field items.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Custom-Field"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "ID is missing or malformed.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "ID not found. This occurs when the ID either does not exist or the rights to read the data are missing.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ]
+      }
+    },
+    "/files/{id}/parties": {
+      "get": {
+        "tags": [
+          "files"
+        ],
+        "summary": "Gets all parties attached to the file.",
+        "description": "The parties endpoint returns information about all parties of the given file.\nThe result set is limited by IAM for the querying user to permitted *files*.\nCurrently the properties `party_name`, `party_name_modified` and `indirect_parties` are not filter- and sortable.\n*Default sort order: part_role_id ASC, serial_number ASC*\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of parties.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Party"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "ID is missing or malformed.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "ID not found. This occurs when the ID either does not exist or the rights to read the data are missing.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ]
+      }
+    },
+    "/files/{id}/parties/{betId}/custom-fields": {
+      "get": {
+        "tags": [
+          "files"
+        ],
+        "summary": "Gets all custom fields of a party who is in relation to the given file.",
+        "description": "The endpoint returns information about all custom fields of a specific party.\n*Default sort order: name ASC*\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          },
+          {
+            "name": "betId",
+            "in": "path",
+            "description": "The id of the *party*",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of *custom field* items.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Custom-Field"
+                  },
+                  "example": [
+                    {
+                      "id": 403,
+                      "name": "Beruf",
+                      "value": "Metzger"
+                    },
+                    {
+                      "id": 407,
+                      "name": "Arbeitgeber",
+                      "value": "Metzgerei Boggnsagg"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ]
+      }
+    },
+    "/files/{id}/budget": {
+      "get": {
+        "tags": [
+          "files"
+        ],
+        "summary": "Gets the budget of the file.",
+        "description": "The endpoint to get the budget of the given *file*. It takes car of non-billable hours. The result set is limited by IAM for the querying user to permitted *files*. Currently the properties `sum_time_expenses`, `sum_taxable_expenses` and `unused_budget` are not filter- and sortable.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The calculated values of the budget.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Budget"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "ID is missing or malformed.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "ID not found. This occurs when the ID either does not exist or the rights to read the data are missing.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ]
+      }
+    },
+    "/party-roles": {
+      "get": {
+        "tags": [
+          "masterdata"
+        ],
+        "summary": "Gets all available *party roles* (de: Beteiligungsarten).",
+        "description": "The endpoint returns all available *party roles*.\n*Default sort order: number ASC*\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Select"
+          },
+          {
+            "$ref": "#/components/parameters/Filter"
+          },
+          {
+            "$ref": "#/components/parameters/OrderBy"
+          },
+          {
+            "$ref": "#/components/parameters/Top"
+          },
+          {
+            "$ref": "#/components/parameters/Skip"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of *party roles*",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Party-Role"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ]
+      }
+    },
+    "/party-roles/{id}": {
+      "get": {
+        "tags": [
+          "masterdata"
+        ],
+        "summary": "Gets a specific *party role* (de: Beteiligungsart).",
+        "description": "The endpoint returns a single *party role*.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A *party roles* object",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Party-Role"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "ID is missing or malformed.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "ID not found.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ]
+      }
+    },
+    "/accounting-areas": {
+      "get": {
+        "tags": [
+          "masterdata"
+        ],
+        "summary": "Gets all available *accounting areas* (de: Buchungskreise).",
+        "description": "The endpoint returns all available *accounting areas*.\nCurrently the property `taxation_method` is not filter- and sortable.\n*Default sort order: number ASC*\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Select"
+          },
+          {
+            "$ref": "#/components/parameters/Filter"
+          },
+          {
+            "$ref": "#/components/parameters/OrderBy"
+          },
+          {
+            "$ref": "#/components/parameters/Top"
+          },
+          {
+            "$ref": "#/components/parameters/Skip"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of *accounting areas*",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Accounting-Area"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ]
+      }
+    },
+    "/accounting-areas/{id}": {
+      "get": {
+        "tags": [
+          "masterdata"
+        ],
+        "summary": "Get a specific *accounting area* (de: Buchungskreise).",
+        "description": "The endpoint returns a specific *accounting area*.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A *accounting area* object",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Accounting-Area"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "ID is missing or malformed.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "ID not found.",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ]
+      }
+    },
+    "/custom-fields": {
+      "get": {
+        "tags": [
+          "masterdata"
+        ],
+        "summary": "Gets all customer created properties (de: Freie Felder).",
+        "description": "The endpoint returns all available *custom fields* for all domains. \nThese *custom fields* contain the metadata like *datatype, length, ...*.\nCurrently the property `relation` is not filter- and sortable.\n*Default sort order: relation ASC, name ASC*\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Select"
+          },
+          {
+            "$ref": "#/components/parameters/Filter"
+          },
+          {
+            "$ref": "#/components/parameters/OrderBy"
+          },
+          {
+            "$ref": "#/components/parameters/Top"
+          },
+          {
+            "$ref": "#/components/parameters/Skip"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of *custom-fields*",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Custom-Field-Definition"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Health": {
+        "type": "object",
+        "description": "The definition of the Health object",
+        "properties": {
+          "id": {
+            "description": "Unique identifier representing a specific *Expense-Type* (de: Aufwandart).",
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "readOnly": true,
+            "example": "6f8491b7-9df4-447c-82ed-24ec1ac7f685"
+          },
+          "version": {
+            "description": "The current assembly version",
+            "type": "string",
+            "example": "0.0.1.0"
+          },
+          "start_time": {
+            "description": "The start datetime (As defined by *date-time* - [RFC3339](http://xml2rfc.ietf.org/public/rfc/html/rfc3339.html#anchor14)) of the running process.",
+            "type": "string",
+            "format": "date-time",
+            "example": "2019-11-13T11:33:39.306+01:00"
+          },
+          "process_id": {
+            "description": "The process id of the running REST API.",
+            "type": "integer",
+            "example": 4711
+          },
+          "individual_checks": {
+            "description": "Contains individual health checks with their result.",
+            "type": "array",
+            "items": {
+              "description": "Contains a single health check with its result.",
+              "type": "object",
+              "additionalProperties": true,
+              "example": {
+                "sql_server": "ok",
+                "sdd_connection": "timeout"
+              }
+            }
+          }
+        }
+      },
+      "Expense-Type": {
+        "description": "Defines the type of expense (de: Aufwandart)",
+        "required": [
+          "billing_category",
+          "category",
+          "name",
+          "short_name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "Unique identifier representing a specific *Expense-Type* (de: Aufwandart).",
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "readOnly": true,
+            "example": "a8d0e39f-a217-4744-b3a9-e253c7ac60a1"
+          },
+          "short_name": {
+            "description": "Contains the short name of the expense type",
+            "type": "string",
+            "example": "FA"
+          },
+          "name": {
+            "description": "Contains the long name of the expense type",
+            "type": "string",
+            "example": "Fahrtkosten (eigenes KFZ)"
+          },
+          "unit_name": {
+            "description": "Contains the unit name of taxable expense types. With other expense types this property will be empty. E.g. *Kilometer, Stunden, Dateien, ...*",
+            "type": "string",
+            "example": "Kilometer"
+          },
+          "unit_rate": {
+            "description": "The factor which will be multiplied with the unit defined in a taxable expense. (de: EinheitenSatz, EUR / Einheit; The unit rate)",
+            "type": "number",
+            "format": "currency",
+            "example": 0.3
+          },
+          "category": {
+            "$ref": "#/components/schemas/Expense-Category"
+          },
+          "billing_category": {
+            "$ref": "#/components/schemas/Billing-Category"
+          },
+          "note": {
+            "description": "Contains details of the expense type",
+            "type": "string",
+            "example": "null"
+          },
+          "visibility": {
+            "$ref": "#/components/schemas/Expense-Type-Visibility"
+          }
+        }
+      },
+      "Billing-Category": {
+        "description": "Contains the billing category (e.g. Nicht abrechenbar, Abrechenbar Post- und Telekommunikationsentgelte, Abrechenbar Dokumentenpauschale, Abrechenbar Reisekosten, Nach Vereinbarung, Abrechenbar sonstige Auslagen)",
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "The id as integer of the category",
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true,
+            "example": 2
+          },
+          "name": {
+            "description": "The category name",
+            "type": "string",
+            "example": "Abrechenbar Post- und Telekommunikationsentgelte"
+          }
+        }
+      },
+      "Expense-Category": {
+        "description": "Contains the category (e.g. expense, time expense, own expense)",
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "The id as integer of the category",
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true,
+            "example": 1
+          },
+          "name": {
+            "description": "The name of the category",
+            "type": "string",
+            "example": "steuerpflichtige Auslage"
+          }
+        }
+      },
+      "Fee-Version": {
+        "description": "Contains the fee versions for invoices (e.g. BRAGO/KostO 1994, BRAGO/KostO 2002, RVG/KostO bis 31.07.2013, RVG/GNotKG ab 01.08.2013).",
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "The id as integer of the fee version.",
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true,
+            "example": 1350
+          },
+          "name": {
+            "description": "The display name of the fee version.",
+            "type": "string",
+            "example": "RVG/GNotKG ab 01.08.2013"
+          }
+        }
+      },
+      "Expense-Type-Visibility": {
+        "description": "Defines the visibility for a specific group of persons.",
+        "type": "string",
+        "enum": [
+          "none",
+          "all",
+          "lawyer",
+          "notary"
+        ],
+        "example": "lawyer"
+      },
+      "Base-Expense": {
+        "description": "Contains information about a single *base expense* object. This is the base class for all expense types. This type should *NOT* be used directly. Use the inherited types instead.",
+        "discriminator": {
+          "propertyName": "object_type"
+        },
+        "required": [
+          "case_handler_id",
+          "end",
+          "expense_type_id",
+          "object_type",
+          "start",
+          "unit_value"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "Unique identifier representing a specific *expense* object.",
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "readOnly": true,
+            "example": "981f5bf6-8b3e-4175-bc7f-2add0e45c8ae"
+          },
+          "object_type": {
+            "description": "Specifies the data type name",
+            "type": "string",
+            "example": "Expense"
+          },
+          "case_handler_id": {
+            "description": "The Unique identifier of the assigned case handler.",
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+          },
+          "case_handler_link": {
+            "description": "The link to the assigned case handler.",
+            "type": "string",
+            "format": "url",
+            "readOnly": true,
+            "example": "https://localhost:58452/datev/api/law/v1/employees/3fa85f64-5717-4562-b3fc-2c963f66afa6"
+          },
+          "expense_type_id": {
+            "description": "The Unique identifier of the assigned *expense type*.",
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "example": "a8d0e39f-a217-4744-b3a9-e253c7ac60a1"
+          },
+          "expense_type_link": {
+            "description": "The link to the assigned *expense type*.",
+            "type": "string",
+            "format": "url",
+            "readOnly": true,
+            "example": "https://localhost:58452/datev/api/law/v1/expense-types/a8d0e39f-a217-4744-b3a9-e253c7ac60a1"
+          },
+          "start": {
+            "description": "The start datetime (As defined by *date-time* - [RFC3339](http://xml2rfc.ietf.org/public/rfc/html/rfc3339.html#anchor14))",
+            "type": "string",
+            "format": "date-time",
+            "example": "2019-09-12T09:20:00Z"
+          },
+          "end": {
+            "description": "The end datetime (As defined by *date-time* - [RFC3339](http://xml2rfc.ietf.org/public/rfc/html/rfc3339.html#anchor14))",
+            "type": "string",
+            "format": "date-time",
+            "example": "2019-09-12T09:53:00Z"
+          },
+          "unit_value": {
+            "description": "Factor by which *hourly rate* is multiplied (de: Einheiten)",
+            "type": "number",
+            "example": 3
+          },
+          "billed": {
+            "description": "Current status of the record for billing. If `yes`, the dataset is already billed in an invoice, if `reserved` it is already considered in an invoice design, if `no` it is not included in any invoice or invoice design.",
+            "type": "string",
+            "enum": [
+              "yes",
+              "no",
+              "reserved"
+            ],
+            "example": "no"
+          },
+          "invoice_id": {
+            "description": "The id of the related invoice.",
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "example": "13b94958-25e8-4ce3-89be-3863af2321cc"
+          },
+          "invoice_key": {
+            "description": "The key of the related invoice.",
+            "type": "string",
+            "example": "5/100"
+          },
+          "internal_note": {
+            "description": "An internal note. It is possible to get this value printed on invoices",
+            "type": "string",
+            "example": "null"
+          },
+          "note": {
+            "description": "A note to this expense",
+            "type": "string",
+            "example": "null"
+          },
+          "creator_id": {
+            "description": "The id of the *creator* of this record.",
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+          },
+          "creator_link": {
+            "description": "The link to the assigned *creator*",
+            "type": "string",
+            "readOnly": true,
+            "example": "https://localhost:58452/datev/api/law/v1/employees/3fa85f64-5717-4562-b3fc-2c963f66afa6"
+          },
+          "modifier_id": {
+            "description": "The id of the *modifier* of this record.",
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+          },
+          "modifier_link": {
+            "description": "The link to the assigned *modifier*",
+            "type": "string",
+            "readOnly": true,
+            "example": "https://localhost:58452/datev/api/law/v1/employees/3fa85f64-5717-4562-b3fc-2c963f66afa6"
+          }
+        }
+      },
+      "Taxable-Expense": {
+        "description": "Contains information about a single expense object (de: steuerpflichtige Auslagen).",
+        "required": [
+          "billing_category",
+          "client_id",
+          "fee_version",
+          "file_id"
+        ],
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Base-Expense"
+          }
+        ],
+        "properties": {
+          "object_type": {
+            "description": "Specifies the data type name",
+            "type": "string",
+            "default": "Taxable-Expense"
+          },
+          "file_id": {
+            "description": "The Unique identifier of the assigned file.",
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+          },
+          "file_link": {
+            "description": "The link to the assigned file.",
+            "type": "string",
+            "readOnly": true,
+            "example": "https://localhost:58452/datev/api/law/v1/files/3fa85f64-5717-4562-b3fc-2c963f66afa6"
+          },
+          "client_id": {
+            "description": "The Unique identifier of the assigned client.",
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "example": "f8fad058-bdba-4313-85e1-ff99f57da9e0"
+          },
+          "client_link": {
+            "description": "The link to the assigned client.",
+            "type": "string",
+            "readOnly": true,
+            "example": "http://localhost:58454/datev/api/master-data/v1/clients/f8fad058-bdba-4313-85e1-ff99f57da9e0"
+          },
+          "fee_version": {
+            "$ref": "#/components/schemas/Fee-Version"
+          },
+          "billing_category": {
+            "$ref": "#/components/schemas/Billing-Category"
+          },
+          "used_colored_paper": {
+            "description": "`true` if pages are printed in colored mode, otherwise `false`.",
+            "type": "boolean",
+            "default": false,
+            "example": false
+          },
+          "amount": {
+            "description": "The amount of the tax expense.",
+            "type": "number",
+            "format": "currency",
+            "example": 250
+          },
+          "currency": {
+            "description": "The currency unit associated with a currency amount (de: Belegwährung). The currency is shown e.g. on an invoice. The currency in short form.",
+            "type": "string",
+            "default": "EUR",
+            "example": "EUR"
+          }
+        }
+      },
+      "Time-Expense": {
+        "description": "Contains information about a single *time expense* object (de: Zeitaufwand).",
+        "required": [
+          "billable",
+          "client_id",
+          "file_id"
+        ],
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Base-Expense"
+          }
+        ],
+        "properties": {
+          "object_type": {
+            "description": "Specifies the data type name",
+            "type": "string",
+            "default": "Time-Expense"
+          },
+          "file_id": {
+            "description": "The Unique identifier of the assigned file.",
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+          },
+          "file_link": {
+            "description": "The link to the assigned file.",
+            "type": "string",
+            "readOnly": true,
+            "example": "https://localhost:58452/datev/api/law/v1/files/3fa85f64-5717-4562-b3fc-2c963f66afa6"
+          },
+          "client_id": {
+            "description": "The Unique identifier of the assigned client.",
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "example": "f8fad058-bdba-4313-85e1-ff99f57da9e0"
+          },
+          "client_link": {
+            "description": "The link to the assigned client.",
+            "type": "string",
+            "readOnly": true,
+            "example": "http://localhost:58454/datev/api/master-data/v1/clients/f8fad058-bdba-4313-85e1-ff99f57da9e0"
+          },
+          "unit_rate": {
+            "description": "de: EinheitenSatz, EUR / Einheit; The internal hourly rate",
+            "type": "number",
+            "format": "currency",
+            "example": 75
+          },
+          "amount": {
+            "description": "The result of the product of `amount = unit_rate * unit_value`. This can be overwritten by the user.",
+            "type": "number",
+            "format": "currency",
+            "example": 225
+          },
+          "actual_effort": {
+            "description": "If `true`, this expense is imaginary effort, otherwise `false` if the activity actually took time",
+            "type": "boolean",
+            "example": false
+          },
+          "billable": {
+            "description": "If `true`, this expense should be used in an invoice, otherwise `false`.",
+            "type": "boolean",
+            "default": true,
+            "example": true
+          }
+        }
+      },
+      "Own-Expense": {
+        "description": "Contains information about a single *own expense* (de: Eigenaufwand) object.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Base-Expense"
+          }
+        ],
+        "properties": {
+          "object_type": {
+            "description": "Specifies the data type name",
+            "type": "string",
+            "default": "Own-Expense",
+            "example": "Own-Expense"
+          },
+          "unit_rate": {
+            "description": "de: EinheitenSatz, EUR / Einheit; The internal hourly rate",
+            "type": "number",
+            "format": "currency",
+            "example": 30
+          },
+          "amount": {
+            "description": "The result of the product of `amount = unit_rate * unit_value`. This can be overwritten by the user.",
+            "type": "number",
+            "format": "currency",
+            "example": 150
+          },
+          "actual_effort": {
+            "description": "If `true`, this expense is imaginary effort, otherwise `false` if the activity actually took time",
+            "type": "boolean",
+            "example": true
+          },
+          "billable": {
+            "description": "If `true`, this expense should be used in an invoice, otherwise `false`. Own expenses are never billable. So the value is always `false`.",
+            "type": "boolean",
+            "default": false,
+            "example": false
+          }
+        }
+      },
+      "Active-Inactive-Status": {
+        "description": "Defines the active / inactive status.",
+        "type": "string",
+        "enum": [
+          "active",
+          "inactive"
+        ],
+        "example": "active"
+      },
+      "Employee": {
+        "type": "object",
+        "description": "Contains information about a office employee.",
+        "properties": {
+          "id": {
+            "description": "Unique identifier representing a specific *employee* object.",
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "readOnly": true,
+            "example": "f8586db2-4f22-44af-8cec-16f426bd5440"
+          },
+          "addressee_id": {
+            "description": "Id of the referenced SDD addressee.",
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "example": "4cf3c34a-d9a5-4942-a87a-a92c66543d8f"
+          },
+          "addressee_link": {
+            "description": "The link to the referenced SDD addressee.",
+            "type": "string",
+            "readOnly": true,
+            "example": "http://localhost:58454/datev/api/master-data/v1/addressees/4cf3c34a-d9a5-4942-a87a-a92c66543d8f"
+          },
+          "employee_number": {
+            "description": "With the employee number each employee is unique identifiable.",
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0,
+            "readOnly": true,
+            "example": 4711
+          },
+          "degree": {
+            "description": "The title or academic grad of the employee.",
+            "type": "string",
+            "readOnly": true,
+            "example": "Dr."
+          },
+          "title_of_nobility": {
+            "description": "The nobility title of the employee.",
+            "type": "string",
+            "readOnly": true,
+            "example": "Baronin"
+          },
+          "name_prefix": {
+            "description": "The prefix of the employees name, e.g. `an der; von und zu; ...`",
+            "type": "string",
+            "readOnly": true,
+            "example": "von"
+          },
+          "surname": {
+            "description": "The surname of the employee.",
+            "type": "string",
+            "readOnly": true,
+            "example": "Hohenstein"
+          },
+          "firstname": {
+            "description": "The forename (optional) of the employee.",
+            "type": "string",
+            "readOnly": true,
+            "example": "Tanja"
+          },
+          "display_name": {
+            "description": "The formatted, human readable name of the employee. E.g. `<Lastname>, <Firstname>`",
+            "type": "string",
+            "readOnly": true,
+            "example": "von Hohenstein, Tanja"
+          },
+          "correspondence_name": {
+            "description": "The formatted, human readable name of the employee used in letters. E.g. `<Firstname> <Lastname>`",
+            "type": "string",
+            "readOnly": true,
+            "example": "Tanja von Hohenstein"
+          },
+          "activity_status": {
+            "$ref": "#/components/schemas/Active-Inactive-Status"
+          },
+          "phone": {
+            "description": "Phone number, valid length is between 1 and 60 characters and \\ format has to correspond to '+49 123 456789'. It may also be a call-through number.",
+            "type": "string",
+            "maxLength": 60,
+            "readOnly": true,
+            "example": "0911/866168-35"
+          },
+          "email": {
+            "description": "Email address, valid length is between 1 and 60 characters and format has to correspond to 'sample@example.com'.",
+            "type": "string",
+            "maxLength": 60,
+            "readOnly": true,
+            "example": "tanja@von-hohenstein.de"
+          },
+          "fax": {
+            "description": "Fax number, valid length is between 1 and 60 characters and \\ format has to correspond to '+49 123 456789'. It may also be a call-through number.",
+            "type": "string",
+            "maxLength": 60,
+            "readOnly": true,
+            "example": "0911/866168-36"
+          },
+          "functions": {
+            "description": "Contains job descriptions or specialized lawyer description (e.g. lawyer, tax accountant, specialized lawyer in administrative law, ...)",
+            "type": "array",
+            "items": {
+              "description": "Contains a job description or specialized lawyer description (e.g. lawyer, tax accountant, specialized lawyer in administrative law, ...)",
+              "type": "string",
+              "maxLength": 60
+            },
+            "maxItems": 3,
+            "example": [
+              "Rechtsanwalt",
+              "Rechtsanwalt für Familienrecht"
+            ]
+          },
+          "assistant_id": {
+            "description": "The id of the referenced assistant.",
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "example": "null"
+          },
+          "assistant_link": {
+            "description": "The link to the referenced assistant object.",
+            "type": "string",
+            "readOnly": true,
+            "example": "null"
+          },
+          "initials": {
+            "description": "The initials of the employee for use in a letter (de: Diktatzeichen).",
+            "type": "string",
+            "maxLength": 10,
+            "example": "TvH"
+          },
+          "profit_center": {
+            "description": "Contains the name of the assigned profit center.",
+            "type": "string",
+            "maxLength": 10,
+            "example": "null"
+          },
+          "job_titles": {
+            "description": "The jobs the employee is assigned to.",
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "required": [
+                "name"
+              ],
+              "type": "object",
+              "description": "Defines the employee job. E.g. case handler, lawyer, notary, tax_accountant",
+              "properties": {
+                "id": {
+                  "description": "The id as integer of the job",
+                  "type": "integer",
+                  "format": "int32",
+                  "readOnly": true,
+                  "example": 2
+                },
+                "name": {
+                  "description": "The name of the job",
+                  "type": "string",
+                  "example": "lawyer"
+                }
+              },
+              "example": [
+                {
+                  "id": 1,
+                  "name": "case handler"
+                },
+                {
+                  "id": 2,
+                  "name": "lawyer"
+                }
+              ]
+            }
+          },
+          "branch": {
+            "description": "The branch the employee is assigned to.",
+            "type": "object",
+            "properties": {
+              "id": {
+                "description": "The id of the branch.",
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+                "example": "2da7f880-6c24-44cd-be38-32746a268b0f"
+              },
+              "number": {
+                "description": "The number of the branch.",
+                "type": "integer",
+                "format": "int32",
+                "example": 1
+              },
+              "name": {
+                "description": "The name of the branch.",
+                "type": "string",
+                "example": "Zentrale"
+              },
+              "status": {
+                "$ref": "#/components/schemas/Active-Inactive-Status"
+              },
+              "company": {
+                "description": "The company the branch is assigned to.",
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "description": "The id of the company.",
+                    "type": "string",
+                    "format": "uuid",
+                    "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+                    "example": "a4435334-a7fb-47f2-8172-6786a025e424"
+                  },
+                  "number": {
+                    "description": "The number of the company.",
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 300
+                  },
+                  "name": {
+                    "description": "The name of the company.",
+                    "type": "string",
+                    "example": "Mustermann und Partner"
+                  },
+                  "status": {
+                    "$ref": "#/components/schemas/Active-Inactive-Status"
+                  }
+                },
+                "readOnly": true
+              }
+            },
+            "readOnly": true
+          }
+        }
+      },
+      "Contingency-Fee": {
+        "description": "Contains information about a contingency fee of an employee.",
+        "discriminator": {
+          "propertyName": "object_type"
+        },
+        "required": [
+          "object_type"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "Unique identifier representing a specific *contingency fee* object.",
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "readOnly": true,
+            "example": "9ed35edf-dd17-456c-857d-b895a6859cf0"
+          },
+          "object_type": {
+            "description": "Specifies the data type name",
+            "type": "string",
+            "example": "Contingency-Fee-By-File"
+          },
+          "unit_rate": {
+            "description": "The hourly rate for this file (de: Stundensatz).",
+            "type": "number",
+            "format": "double",
+            "readOnly": true,
+            "example": 125
+          },
+          "note": {
+            "description": "The note to the contingency fee.",
+            "type": "string",
+            "example": "null"
+          },
+          "document_currency": {
+            "description": "The currency of the hourly rate.",
+            "type": "string",
+            "example": "EUR"
+          },
+          "valid_from": {
+            "description": "Defines the start date from which the value is valid (As defined by *date* - [RFC3339, section 5.6](https://tools.ietf.org/html/rfc3339.html#section-5.6))",
+            "type": "string",
+            "format": "date",
+            "example": "2018-02-01"
+          },
+          "expense_type_id": {
+            "description": "The assigned expense type id.",
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "readOnly": true,
+            "example": "a8d0e39f-a217-4744-b3a9-e253c7ac60a1"
+          }
+        }
+      },
+      "Contingency-Fee-By-File": {
+        "description": "Contains information about a contingency fee of an employee related to a file (de: Stundensatzvereinbarung mit Aktenbezug).",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Contingency-Fee"
+          }
+        ],
+        "properties": {
+          "object_type": {
+            "description": "Specifies the data type name",
+            "type": "string",
+            "default": "Contingency-Fee-By-File",
+            "example": "Contingency-Fee-By-File"
+          },
+          "file_id": {
+            "description": "The related file.",
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "readOnly": true
+          },
+          "file_link": {
+            "description": "The link to the related file.",
+            "type": "string",
+            "format": "url",
+            "readOnly": true,
+            "example": "https://localhost:58452/datev/api/law/v1/files/3fa85f64-5717-4562-b3fc-2c963f66afa6"
+          }
+        }
+      },
+      "Contingency-Fee-By-Client": {
+        "description": "Contains information about a contingency fee of an employee related to a client.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Contingency-Fee"
+          }
+        ],
+        "properties": {
+          "object_type": {
+            "description": "Specifies the data type name",
+            "type": "string",
+            "default": "Contingency-Fee-By-Client",
+            "example": "Contingency-Fee-By-Client"
+          },
+          "client_id": {
+            "description": "The related client.",
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "readOnly": true,
+            "example": "f8fad058-bdba-4313-85e1-ff99f57da9e0"
+          },
+          "client_link": {
+            "description": "The link to the related client.",
+            "type": "string",
+            "format": "url",
+            "readOnly": true,
+            "example": "http://localhost:58454/datev/api/master-data/v1/clients/f8fad058-bdba-4313-85e1-ff99f57da9e0"
+          }
+        }
+      },
+      "Case-Handler": {
+        "description": "The case handler of a file (de: Sachbearbeiter)",
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "The id of the case handler",
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "example": "c015c071-43c4-432f-be80-508d54c720e7"
+          },
+          "number": {
+            "description": "The number of the case handler",
+            "type": "integer",
+            "format": "int32",
+            "example": 62
+          },
+          "display_name": {
+            "description": "The display name of the case handler in format `<Firstname> <Surname>`",
+            "type": "string",
+            "example": "Ernst Exempeladvokat"
+          },
+          "primary_case_handler": {
+            "description": "Flag if this case handler is the primary case handler of the file.",
+            "type": "boolean",
+            "default": false,
+            "example": true
+          },
+          "commission": {
+            "description": "Share of the case handler in the revenue distribution of the file",
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0,
+            "maximum": 100,
+            "example": 100
+          },
+          "employee_id": {
+            "description": "The id of the related employee.",
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "example": "f8586db2-4f22-44af-8cec-16f426bd5440"
+          },
+          "employee_link": {
+            "description": "The link to the employee",
+            "type": "string",
+            "format": "url",
+            "example": "http://localhost:58454/datev/api/master-data/v1/employees/f8586db2-4f22-44af-8cec-16f426bd5440"
+          }
+        }
+      },
+      "Security-Zone": {
+        "description": "The security zone allows to restrict access to a file (de: Sicherheitsbereich).",
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "Unique identifier representing a specific *security zone* object.",
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "readOnly": true,
+            "example": "174ddc49-e8c4-466b-8c35-d8eef5d655b6"
+          },
+          "short_name": {
+            "description": "The short name of the security zone",
+            "type": "string",
+            "example": "SB-0"
+          },
+          "name": {
+            "description": "The name of the security zone",
+            "type": "string",
+            "example": "Öffentliche Akten"
+          }
+        }
+      },
+      "Levels-Of-Jurisdiction": {
+        "description": "The possible levels of jurisdiction or order for payment procedure defined in masterdata (de: Gerichtsinstanz / -verfahren).",
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "The number of the active level or order for payment procedure",
+            "type": "integer",
+            "format": "int32",
+            "example": 1
+          },
+          "name": {
+            "description": "The name of the active level or order for payment procedure, z.B. 'Mahnverfahren', '1. Instanz', ...",
+            "type": "string",
+            "example": "1. Instanz"
+          }
+        }
+      },
+      "Levels-Of-Jurisdiction-File-Related": {
+        "description": "The level of jurisdiction or order for payment procedure (de: Gerichtsinstanz / Mahnverfahren einer Akte) file related.",
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "Unique identifier representing a specific *level of jurisdiction* object of a file.",
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "readOnly": true,
+            "example": "b8dffb3e-c7a6-4578-9a30-fe390e83e267"
+          },
+          "number": {
+            "description": "The number of the active level or order for payment procedure",
+            "type": "integer",
+            "format": "int32",
+            "example": 2
+          },
+          "name": {
+            "description": "The name of the active level or order for payment procedure, z.B. 'Mahnverfahren', '1. Instanz', ...",
+            "type": "string",
+            "example": "2. Instanz"
+          },
+          "active": {
+            "description": "`true` to mark a level of jurisdiction as the active one. Otherwise `false`",
+            "type": "boolean",
+            "example": true
+          }
+        }
+      },
+      "Currency-Amount": {
+        "description": "Amount and currency",
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number",
+            "format": "double",
+            "example": 47.11
+          },
+          "currency": {
+            "description": "The currencies, e.g. \"EUR\"",
+            "type": "string",
+            "default": "EUR",
+            "example": "EUR"
+          }
+        }
+      },
+      "File": {
+        "description": "Contains information about a lawyer or notary file.",
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "Unique identifier representing a specific *file* object.",
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "readOnly": true,
+            "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+          },
+          "file_number_short": {
+            "description": "The file number like *000001-08*",
+            "type": "string",
+            "format": "file-number-short",
+            "pattern": "^(\\d{6}-\\d{2})$",
+            "example": "000001-05"
+          },
+          "file_number": {
+            "description": "The file number like *000001-2008/001:00* with location part.",
+            "type": "string",
+            "format": "file-number",
+            "pattern": "^(\\d{6}-\\d{4}\\/\\d{3}:\\d{2})$",
+            "example": "000001-2005/001:00"
+          },
+          "file_name": {
+            "description": "The name of the file (de: Aktenbezeichnung) *Manfred Mustermandant ./. Martin Mustergegner*",
+            "type": "string",
+            "maxLength": 80,
+            "example": "Insolvenzverfahren Mustermann"
+          },
+          "project_number": {
+            "description": "The project number",
+            "type": "string",
+            "maxLength": 40,
+            "example": "123/331-12"
+          },
+          "short_reason": {
+            "description": "Describes the legal basis of a file, e.g. Warenlieferung, Scheidung, ...",
+            "type": "string",
+            "maxLength": 80,
+            "example": "Beratung"
+          },
+          "long_reason": {
+            "description": "Describes the legal basis of a file, e.g. Warenlieferung, Scheidung, ... Is identical to `short_reason`, only with the exception that here a longer reason can be included",
+            "type": "string",
+            "example": "null"
+          },
+          "department": {
+            "description": "Specifies the department (de: Referat) where the *custom field* should be visible. If the value is *null* the *custom field* should be visible on all departments.",
+            "type": "object",
+            "properties": {
+              "id": {
+                "description": "Unique identifier representing the referenced *department* object.",
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+                "readOnly": true,
+                "example": "ebd93cfc-1c2e-4927-aee5-24b448b050fd"
+              },
+              "link": {
+                "description": "The link to the specific department.",
+                "type": "string",
+                "format": "url",
+                "example": "https://localhost:58452/datev/api/law/v1/departments/ebd93cfc-1c2e-4927-aee5-24b448b050fd"
+              }
+            }
+          },
+          "causes": {
+            "description": "The collection of causes assigned to the file.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Cause"
+            },
+            "example": [
+              {
+                "id": "051534f8-7b78-441a-aa9e-6f708b49d855",
+                "number": 3,
+                "name": "Forderung aus Warenlieferung",
+                "department_id": "ebd93cfc-1c2e-4927-aee5-24b448b050fd",
+                "department_link": "https://localhost:58452/datev/api/law/v1/departments/ebd93cfc-1c2e-4927-aee5-24b448b050fd"
+              },
+              {
+                "id": "051534f8-7b78-441a-aa9e-6f708b49d855",
+                "number": 15,
+                "name": "sonstige zivilrechtliche Ansprüche",
+                "department_id": "e5a91019-af4d-4373-a18c-36e64e4ec478",
+                "department_link": "https://localhost:58452/datev/api/law/v1/departments/e5a91019-af4d-4373-a18c-36e64e4ec478"
+              }
+            ]
+          },
+          "partner": {
+            "description": "The case handler who is partner of the file. This can only be an employee who is case handler.",
+            "type": "object",
+            "properties": {
+              "id": {
+                "description": "The id of the case handler",
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+                "example": "c015c071-43c4-432f-be80-508d54c720e7"
+              },
+              "number": {
+                "description": "The number of the case handler",
+                "type": "integer",
+                "format": "int32",
+                "example": 62
+              },
+              "display_name": {
+                "description": "The display name of the case handler in format `<Firstname> <Surname>`",
+                "type": "string",
+                "example": "Ernst Exempeladvokat"
+              },
+              "link": {
+                "description": "The link to the employee. See '/employees/{id}'",
+                "type": "string",
+                "example": "https://localhost:58452/datev/api/law/v1/employees/c015c071-43c4-432f-be80-508d54c720e7"
+              }
+            }
+          },
+          "case_handlers": {
+            "description": "The collection of assigned case handlers (de: Sachbearbeiter).",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Case-Handler"
+            }
+          },
+          "security_zone": {
+            "$ref": "#/components/schemas/Security-Zone"
+          },
+          "establishment": {
+            "description": "The establishment (de: Niederlassung) the file is assigned to.",
+            "type": "object",
+            "properties": {
+              "number": {
+                "description": "The number of the establishment.",
+                "type": "integer",
+                "format": "int32",
+                "example": 1
+              },
+              "name": {
+                "description": "The name of the establishment.",
+                "type": "string",
+                "readOnly": true,
+                "example": "Musterniederlassung"
+              },
+              "link": {
+                "description": "The link to the establishment content.",
+                "type": "string",
+                "readOnly": true,
+                "example": "http://localhost:58454/datev/api/master-data/v1/corporate-structures/3fa85f64-5717-4562-b3fc-2c963f66afa6/establishments/59bb1870-5e0a-4ce9-bb7d-42e95f5cdb4e"
+              },
+              "organization": {
+                "description": "The organization (de: Unternehmen) the establishment is assigned to.",
+                "type": "object",
+                "readOnly": true,
+                "properties": {
+                  "id": {
+                    "description": "The id of the organization.",
+                    "type": "string",
+                    "format": "uuid",
+                    "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+                    "example": "2da7f880-6c24-44cd-be38-32746a268b0f"
+                  },
+                  "number": {
+                    "description": "The number of the organization.",
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 1
+                  },
+                  "name": {
+                    "description": "The name of the organization.",
+                    "type": "string",
+                    "example": "Musterkanzlei"
+                  },
+                  "link": {
+                    "description": "The link to the establishment content.",
+                    "type": "string",
+                    "example": "http://localhost:58454/datev/api/master-data/v1/corporate-structures/3fa85f64-5717-4562-b3fc-2c963f66afa6"
+                  }
+                }
+              }
+            }
+          },
+          "economic_data": {
+            "description": "Contains all economy data (de: wirtschaftliche Daten).",
+            "type": "object",
+            "properties": {
+              "client": {
+                "$ref": "#/components/schemas/Economical-Client",
+                "example": {
+                  "id": "4161fc24-84c8-4c18-8a63-bbf8cb904a75",
+                  "number": 4711,
+                  "name": "Traumustername, Ernst",
+                  "link": "http://localhost:58454/datev/api/master-data/v1/clients/4161fc24-84c8-4c18-8a63-bbf8cb904a75"
+                }
+              },
+              "cause_value": {
+                "$ref": "#/components/schemas/Currency-Amount",
+                "example": {
+                  "amount": 20000,
+                  "currency": "EUR"
+                }
+              },
+              "budget": {
+                "$ref": "#/components/schemas/Currency-Amount",
+                "example": {
+                  "amount": 10000,
+                  "currency": "EUR"
+                }
+              },
+              "budget_timespan": {
+                "type": "string",
+                "enum": [
+                  "total",
+                  "weekly",
+                  "monthly",
+                  "yearly"
+                ],
+                "example": "total"
+              },
+              "base_currency": {
+                "type": "string",
+                "default": "EUR",
+                "example": "EUR"
+              }
+            }
+          },
+          "accounting_area": {
+            "description": "Contains a subset of the assigned accounting area.",
+            "type": "object",
+            "properties": {
+              "id": {
+                "description": "The id of the accounting area.",
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+                "example": "7447f931-b42e-4e71-84f3-1319a49fb076"
+              },
+              "number": {
+                "description": "Number of the accounting area",
+                "type": "integer",
+                "format": "int32",
+                "example": 1
+              },
+              "name": {
+                "description": "Display name of the accounting area",
+                "type": "string",
+                "example": "Standardbuchungskreis"
+              },
+              "link": {
+                "description": "The link to the assigned accounting area.",
+                "type": "string",
+                "format": "uri",
+                "example": "https://localhost:58452/datev/api/law/v1/accounting-areas/7447f931-b42e-4e71-84f3-1319a49fb076"
+              }
+            }
+          },
+          "reactivated": {
+            "description": "Flag to sign, if the file was first filed and after a while was reactivated to an active file",
+            "type": "boolean",
+            "default": false,
+            "example": false
+          },
+          "filing": {
+            "description": "This property is only filled, if the file was already filed",
+            "type": "object",
+            "properties": {
+              "date": {
+                "description": "The datetime the file was filed (As defined by *date-time* - [RFC3339](http://xml2rfc.ietf.org/public/rfc/html/rfc3339.html#anchor14))",
+                "type": "string",
+                "format": "date-time",
+                "example": "2019-08-12"
+              },
+              "number": {
+                "description": "The filing number like *000003-2020*",
+                "type": "string",
+                "format": "string",
+                "pattern": "^(\\d{6}-\\d{4})$",
+                "example": "000001-2005"
+              },
+              "retention_period_end": {
+                "description": "The time after that the file gets deleted (As defined by *date-time* - [RFC3339](http://xml2rfc.ietf.org/public/rfc/html/rfc3339.html#anchor14))",
+                "type": "string",
+                "format": "date-time",
+                "example": "2029-08-12"
+              },
+              "location": {
+                "description": "The location the law is filed",
+                "type": "string",
+                "example": "Keller"
+              }
+            }
+          },
+          "note": {
+            "description": "Contains a note to the file. The content can be plain text or RTF.",
+            "type": "string",
+            "example": "null"
+          },
+          "created": {
+            "description": "The creation information of the file",
+            "type": "object",
+            "properties": {
+              "date": {
+                "description": "The datetime the file was created (As defined by *date-time* - [RFC3339](http://xml2rfc.ietf.org/public/rfc/html/rfc3339.html#anchor14))",
+                "type": "string",
+                "format": "date-time",
+                "example": "2018-09-27"
+              },
+              "creator": {
+                "description": "The user name who created the file",
+                "type": "string",
+                "example": "Ernst Exempeladvokat"
+              }
+            }
+          },
+          "modified": {
+            "description": "The last modification information of the file",
+            "type": "object",
+            "properties": {
+              "date": {
+                "description": "The datetime the file was last modified (As defined by *date-time* - [RFC3339](http://xml2rfc.ietf.org/public/rfc/html/rfc3339.html#anchor14))",
+                "type": "string",
+                "format": "date-time",
+                "example": "2019-08-11"
+              },
+              "creator": {
+                "description": "The user name who last modified the file",
+                "type": "string",
+                "example": "Ernst Exempeladvokat"
+              }
+            }
+          }
+        }
+      },
+      "Budget": {
+        "description": "The budget values of the current file.",
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "The unique number of the budget.",
+            "type": "integer",
+            "format": "int32",
+            "example": 1
+          },
+          "budget": {
+            "description": "The budget of the current file.",
+            "type": "number",
+            "format": "currency",
+            "example": 1000
+          },
+          "sum_time_expenses": {
+            "description": "The sum of all time expenses.",
+            "type": "number",
+            "format": "currency",
+            "example": 200
+          },
+          "sum_taxable_expenses": {
+            "description": "The sum of all taxable expenses.",
+            "type": "number",
+            "format": "currency",
+            "example": 329
+          },
+          "unused_budget": {
+            "description": "The unused budget.",
+            "type": "number",
+            "format": "currency",
+            "example": 471
+          },
+          "currency_unit": {
+            "description": "The currency of all values.",
+            "type": "string",
+            "example": "EUR"
+          }
+        }
+      },
+      "Economical-Client": {
+        "description": "The economical client (de: betriebswirtschaftlicher Mandant) of the current file.",
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "Unique identifier representing a specific *Economical-Client* (de: betriebswirtschaftlicher Mandant).",
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "readOnly": true,
+            "example": "4161fc24-84c8-4c18-8a63-bbf8cb904a75"
+          },
+          "number": {
+            "description": "The client number each client is unique identifiable.",
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0,
+            "readOnly": true,
+            "example": 4711
+          },
+          "name": {
+            "description": "The formatted, human readable name of the employee. E.g. `<Lastname>, <Firstname>`",
+            "type": "string",
+            "readOnly": true,
+            "example": "Traumustername, Ernst"
+          },
+          "link": {
+            "description": "The link to the assigned client.",
+            "type": "string",
+            "format": "url",
+            "readOnly": true,
+            "example": "http://localhost:58454/datev/api/master-data/v1/clients/4161fc24-84c8-4c18-8a63-bbf8cb904a75"
+          }
+        }
+      },
+      "Cause": {
+        "description": "The cause a file is needed (de: Gegenstand)",
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "The unique number of the case",
+            "type": "integer",
+            "format": "int32",
+            "example": 3
+          },
+          "name": {
+            "description": "The name of the cause",
+            "type": "string",
+            "example": "Forderung aus Warenlieferung"
+          },
+          "departments": {
+            "description": "Assigned departments of the cause.",
+            "type": "array",
+            "items": {
+              "description": "Contains all assigned departments.",
+              "type": "object",
+              "properties": {
+                "department_id": {
+                  "description": "Assignment of the cause to a department",
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+                  "readOnly": true,
+                  "example": "ebd93cfc-1c2e-4927-aee5-24b448b050fd"
+                },
+                "department_link": {
+                  "description": "The link to the assigned department.",
+                  "type": "string",
+                  "format": "url",
+                  "example": "https://localhost:58452/datev/api/law/v1/departments/ebd93cfc-1c2e-4927-aee5-24b448b050fd"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Department": {
+        "description": "\"Contains information about a department a file is assigned to (de: Referat).\nFields of activity of a law firm: e.g. Civil law, administrative law, ...\"\n",
+        "required": [
+          "name",
+          "number"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "Unique identifier representing a specific *department* object.",
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "readOnly": true,
+            "example": "57a5df32-18e6-4785-9b60-629a339fd44f"
+          },
+          "number": {
+            "description": "The number of the department",
+            "type": "integer",
+            "format": "int32",
+            "example": 1
+          },
+          "name": {
+            "description": "The name of the department",
+            "type": "string",
+            "example": "Zivilrecht"
+          },
+          "causes": {
+            "description": "The assigned causes (de: Gegenstände)",
+            "type": "array",
+            "items": {
+              "description": "Contains information of a cause.",
+              "type": "object",
+              "properties": {
+                "id": {
+                  "description": "The id of the cause",
+                  "type": "integer",
+                  "format": "int32",
+                  "example": 3
+                },
+                "name": {
+                  "description": "The name of the cause",
+                  "type": "string",
+                  "example": "Forderung aus Warenlieferung"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Custom-Field-Definition": {
+        "description": "A customer created property attached to a file or an addressee. This type contains the metadata of a *custom property*.",
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "Unique identifier representing a specific *custom field* object.",
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "readOnly": true,
+            "example": "eda5cb03-dfaa-472d-b976-84cbf70989cf"
+          },
+          "relation": {
+            "description": "Defines the relation. If this custom field can be used in conjunction with a file, `file` is used. If this custom field can be used in conjunction with an addressee, `addressee` is used.",
+            "type": "string",
+            "enum": [
+              "file",
+              "addressee"
+            ],
+            "example": "file"
+          },
+          "name": {
+            "description": "The name of the *custom field*",
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 17,
+            "example": "Unfallort"
+          },
+          "datatype": {
+            "description": "The datatype of the value.",
+            "type": "string",
+            "enum": [
+              "text",
+              "int16",
+              "int32",
+              "float",
+              "date",
+              "time",
+              "enum",
+              "proposallist"
+            ],
+            "example": "text"
+          },
+          "length": {
+            "description": "The maximum length of the value.",
+            "type": "integer",
+            "format": "int32",
+            "example": 100
+          },
+          "department": {
+            "description": "Specifies the department (de: Referat) where the *custom field* should be visible. If the value is *null* the *custom field* should be visible on all departments.",
+            "type": "object",
+            "properties": {
+              "id": {
+                "description": "Unique identifier representing a specific *department* object.",
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+                "readOnly": true,
+                "example": "ebd93cfc-1c2e-4927-aee5-24b448b050fd"
+              },
+              "link": {
+                "description": "The link to the specific department.",
+                "type": "string",
+                "format": "url",
+                "example": "https://localhost:58452/datev/api/law/v1/departments/ebd93cfc-1c2e-4927-aee5-24b448b050fd"
+              }
+            }
+          }
+        }
+      },
+      "Custom-Field": {
+        "description": "A customer created property attached to a file or an addressee.",
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "The unique number of the *custom field*",
+            "type": "integer",
+            "format": "int32",
+            "example": 7
+          },
+          "name": {
+            "description": "The name of the *custom field*",
+            "type": "string",
+            "minLength": 1,
+            "example": "Unfallort"
+          },
+          "value": {
+            "description": "The specific value attached to a file or an addressee.",
+            "type": "string",
+            "example": "Kieselweg 4, 90402 Nürnberg"
+          }
+        }
+      },
+      "Party-Role": {
+        "description": "The *role* how a *party* is attached to a file.",
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "Unique identifier representing a specific *party role* object.",
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "readOnly": true,
+            "example": "ebd93cfc-1c2e-4927-aee5-24b448b050fd"
+          },
+          "number": {
+            "description": "The number of the *party role*",
+            "type": "integer",
+            "format": "uint32",
+            "readOnly": true,
+            "example": 1
+          },
+          "type": {
+            "description": "Indicates the *party role*.",
+            "type": "string",
+            "readOnly": true,
+            "enum": [
+              "direct",
+              "indirect"
+            ],
+            "example": "direct"
+          },
+          "short_name": {
+            "description": "The short name of the *party role*.",
+            "type": "string",
+            "readOnly": true,
+            "example": "MDT"
+          },
+          "name": {
+            "description": "The name of the *party role*.",
+            "type": "string",
+            "readOnly": true,
+            "example": "Mandant"
+          }
+        }
+      },
+      "Party": {
+        "description": "A *party* who is attached to the file. This can be a client, an opponent, etc.",
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "Unique identifier representing a specific *party* object.",
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "readOnly": true,
+            "example": "32e6f021-8174-42c3-9d1a-d5eb3b636a1d"
+          },
+          "party_role_id": {
+            "description": "Unique identifier representing a specific *party role* object.",
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "readOnly": true,
+            "example": "ebd93cfc-1c2e-4927-aee5-24b448b050fd"
+          },
+          "party_role_link": {
+            "description": "The link to the assigned *party role*.",
+            "type": "string",
+            "format": "url",
+            "readOnly": true,
+            "example": "https://localhost:58452/datev/api/law/v1/party-roles/ebd93cfc-1c2e-4927-aee5-24b448b050fd"
+          },
+          "party_role": {
+            "description": "If the object is expanded this property is filled. Otherwise `null`",
+            "$ref": "#/components/schemas/Party-Role"
+          },
+          "serial_number": {
+            "description": "the serial number of a *party* within a *party role*",
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true,
+            "example": 1
+          },
+          "surname": {
+            "description": "The surname of the *party*.",
+            "type": "string",
+            "readOnly": true,
+            "example": "Musterhinz"
+          },
+          "first_name": {
+            "description": "The forename (optional) of the *party*.",
+            "type": "string",
+            "readOnly": true,
+            "example": "Manfred"
+          },
+          "address_id": {
+            "description": "Unique identifier representing a specific *addressee* object in SDD.",
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "readOnly": true,
+            "example": "4cf3c34a-d9a5-4942-a87a-a92c66543d8f"
+          },
+          "address_link": {
+            "description": "The link to the assigned addressee.",
+            "type": "string",
+            "format": "url",
+            "readOnly": true,
+            "example": "http://localhost:58454/datev/api/master-data/v1/addressees/4cf3c34a-d9a5-4942-a87a-a92c66543d8f"
+          },
+          "sign": {
+            "description": "The sign of a *party*",
+            "type": "string",
+            "example": "MaMu"
+          },
+          "subject": {
+            "description": "The subject specific for this *party*. By default this will be identical to the *Aktenbezeichnung* of the file.",
+            "type": "string",
+            "example": "Fristen, Termine, Wiedervorlagen"
+          },
+          "entitled_to_deduct_input_vat": {
+            "description": "`true` if the *party* is entitled to deduct input VAT (de: vorsteuerabzugsberechtigt).",
+            "type": "boolean",
+            "example": false
+          },
+          "client_id": {
+            "description": "Unique identifier representing a specific *client* object in SDD.",
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "readOnly": true,
+            "example": "f8fad058-bdba-4313-85e1-ff99f57da9e0"
+          },
+          "client_link": {
+            "description": "The link to the assigned client.",
+            "type": "string",
+            "format": "url",
+            "readOnly": true,
+            "example": "http://localhost:58454/datev/api/master-data/v1/clients/f8fad058-bdba-4313-85e1-ff99f57da9e0"
+          },
+          "party_name": {
+            "description": "Contains the description of how the person is represented in the title of a judgment (de: Rubrum).",
+            "type": "string",
+            "example": "Manfred Musterhinz, Berliner Str. 3, 01067 Dresden"
+          },
+          "party_name_modified": {
+            "description": "`true` if the user has modified the *party_name*",
+            "type": "boolean",
+            "example": true
+          },
+          "official_party_type": {
+            "description": "Describes the `party role` in more detail (de: Fachbeteiligung)",
+            "type": "string",
+            "example": "Kfz-Halter"
+          },
+          "indirect_parties": {
+            "description": "Contains an array of indirectly involved *parties*.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Party"
+            }
+          }
+        },
+        "example": {
+          "id": "32e6f021-8174-42c3-9d1a-d5eb3b636a1d",
+          "party_role_id": "ebd93cfc-1c2e-4927-aee5-24b448b050fd",
+          "party_role_link": "https://localhost:58452/datev/api/law/v1/party-roles/ebd93cfc-1c2e-4927-aee5-24b448b050fd",
+          "serial_number": 1,
+          "surname": "Musterhinz",
+          "first_name": "Manfred",
+          "address_id": "4cf3c34a-d9a5-4942-a87a-a92c66543d8f",
+          "address_link": "http://localhost:58454/datev/api/master-data/v1/addressees/4cf3c34a-d9a5-4942-a87a-a92c66543d8f",
+          "sign": "MaMu",
+          "subject": "Fristen, Termine, Wiedervorlagen",
+          "entitled_to_deduct_input_vat": false,
+          "client_id": "f8fad058-bdba-4313-85e1-ff99f57da9e0",
+          "client_link": "http://localhost:58454/datev/api/master-data/v1/clients/f8fad058-bdba-4313-85e1-ff99f57da9e0",
+          "party_name": "Manfred Musterhinz, Berliner Str. 3, 01067 Dresden",
+          "party_name_modified": true,
+          "official_party_type": "Kfz-Halter",
+          "indirect_parties": [
+            {
+              "id": "82b31bfc-7e44-4554-adb4-7c596d7e855b",
+              "party_role_id": "3be1bcd9-e19b-464e-8ed7-2a3a87cbfa4a",
+              "party_role_link": "https://localhost:58452/datev/api/law/v1/party-roles/3be1bcd9-e19b-464e-8ed7-2a3a87cbfa4a",
+              "party_role": {
+                "id": "3be1bcd9-e19b-464e-8ed7-2a3a87cbfa4a",
+                "number": 52,
+                "type": "direct",
+                "short_name": "GV",
+                "name": "Gesetzliche Vertretung"
+              },
+              "serial_number": 1,
+              "surname": "Traumustername",
+              "first_name": "",
+              "address_id": "4cf3c34a-d9a5-4942-a87a-a92c66543d8f",
+              "address_link": "http://localhost:58454/datev/api/master-data/v1/addressees/4cf3c34a-d9a5-4942-a87a-a92c66543d8f",
+              "sign": "",
+              "subject": "Fristen, Termine, Wiedervorlagen",
+              "entitled_to_deduct_input_vat": false,
+              "client_id": "",
+              "client_link": "",
+              "party_name": "Manfred Musterhinz, Berliner Str. 3, 01067 Dresden",
+              "party_name_modified": false,
+              "official_party_type": "",
+              "indirect_parties": [
+                null
+              ]
+            }
+          ]
+        }
+      },
+      "Accounting-Area": {
+        "description": "Used for financial administration in an office. Smallest organizational unit of external accounting, for which a complete, self-contained accounting can be mapped.",
+        "required": [
+          "general_ledger_account_length",
+          "general_ledger_accounts_frame",
+          "name",
+          "number",
+          "taxation_method"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "Unique identifier representing a specific *accounting area* object.",
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "readOnly": true,
+            "example": "bdbc560a-6787-4f60-90e5-f993b257f27c"
+          },
+          "number": {
+            "description": "The number of the *accounting area*",
+            "type": "integer",
+            "format": "uint32",
+            "example": 1
+          },
+          "name": {
+            "description": "The name of the *accounting area*",
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 80,
+            "example": "Standardbuchungskreis"
+          },
+          "fiscal_year": {
+            "description": "Contains information about the fiscal year of the accounting area.",
+            "type": "object",
+            "properties": {
+              "previous_year_start": {
+                "description": "The datetime the previous fiscal year started (As defined by *date-time* - [RFC3339](http://xml2rfc.ietf.org/public/rfc/html/rfc3339.html#anchor14))",
+                "type": "string",
+                "format": "date-time",
+                "example": "2018-01-01"
+              },
+              "current_year_start": {
+                "description": "The datetime the current fiscal year started (As defined by *date-time* - [RFC3339](http://xml2rfc.ietf.org/public/rfc/html/rfc3339.html#anchor14))",
+                "type": "string",
+                "format": "date-time",
+                "example": "2019-01-01"
+              },
+              "current_year_end": {
+                "description": "The datetime the current fiscal year ends (As defined by *date-time* - [RFC3339](http://xml2rfc.ietf.org/public/rfc/html/rfc3339.html#anchor14))",
+                "type": "string",
+                "format": "date-time",
+                "example": "2019-12-31"
+              }
+            }
+          },
+          "general_ledger_account_length": {
+            "description": "The length of the number of a *general ledger account* (de: Sachkontenlänge)",
+            "type": "integer",
+            "format": "uint32",
+            "minimum": 4,
+            "maximum": 8,
+            "example": 5
+          },
+          "general_ledger_accounts_frame": {
+            "description": "Defines the default *DATEV chart of accounts* (de: Sachkontenrahmen).",
+            "type": "integer",
+            "format": "uint32",
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4
+            ],
+            "example": 4
+          },
+          "taxation_method": {
+            "description": "The taxation method used for the current *accounting area* (de: Versteuerungsart)",
+            "type": "string",
+            "enum": [
+              "taxation_based_on_value_of_actual_receipts",
+              "taxation_based_on_value_of_services_rendered"
+            ],
+            "example": "taxation_based_on_value_of_actual_receipts"
+          },
+          "payment_target": {
+            "description": "The payment target for invoices in days (de: Zahlungsziel)",
+            "type": "integer",
+            "format": "uint32",
+            "example": 30
+          },
+          "transfer_path": {
+            "description": "The filesystem directory to provide accounting transactions for *DATEV Rechnungswesen* (de: Übergabepfad).",
+            "type": "string",
+            "example": "L:\\DATEV\\DATEN\\RWDAT\\IMPORT"
+          }
+        }
+      },
+      "Error": {
+        "required": [
+          "error"
+        ],
+        "type": "object",
+        "properties": {
+          "additional_messages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdditionalMessage"
+            }
+          },
+          "error": {
+            "type": "string",
+            "description": "error code",
+            "example": 404
+          },
+          "error_description": {
+            "type": "string",
+            "description": "Longer error description",
+            "example": "given parameter is invalid"
+          },
+          "error_uri": {
+            "type": "string",
+            "description": "URI to further information",
+            "example": "null"
+          },
+          "request_id": {
+            "type": "string",
+            "description": "ID of the original request",
+            "example": "f1115192-2283-496c-ac58-3a693143991b"
+          }
+        }
+      },
+      "AdditionalMessage": {
+        "required": [
+          "id",
+          "severity"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "id of additional message"
+          },
+          "description": {
+            "type": "string",
+            "description": "Further information of message"
+          },
+          "help_uri": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string",
+            "description": "severity of error",
+            "enum": [
+              "error",
+              "warning",
+              "information"
+            ]
+          }
+        },
+        "example": [
+          {
+            "description": "parameter 'id' does not exist"
+          },
+          {
+            "severity": "error"
+          }
+        ]
+      }
+    },
+    "parameters": {
+      "Id": {
+        "name": "id",
+        "in": "path",
+        "description": "The id of the queried object",
+        "required": true,
+        "schema": {
+          "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "Number": {
+        "name": "number",
+        "in": "path",
+        "description": "The number of the queried object",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "Top": {
+        "name": "top",
+        "in": "query",
+        "description": "Defines how many elements should be read. For paging this is used in combination with *skip* parameter.<br/> **To shrink excessive data transfers, all resources uses a *top* parameter of *100* if this has not been set.**",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "format": "int32",
+          "default": 100
+        },
+        "example": "top=10"
+      },
+      "Skip": {
+        "name": "skip",
+        "in": "query",
+        "description": "Defines how many elements to skip in read process. For paging this is used in combination with *top* parameter.",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "format": "int32",
+          "default": 0
+        },
+        "example": "skip=10"
+      },
+      "Select": {
+        "name": "select",
+        "in": "query",
+        "description": "Enter relevant attributes to which the results will then be limited.",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "example": "select=id, name, number"
+      },
+      "Filter": {
+        "name": "filter",
+        "in": "query",
+        "description": "Contains a filter expression according to the filter syntax in the REST guidelines.\nE.g.: filter=number eq 10000\n\nOperators:\n| Operator                        | Description                                                   | Example                         |\n|---------------------------------|---------------------------------------------------------------|---------------------------------|\n| eq                              | Equal                                                         | city eq 'Nuremberg'             |\n| ne                              | Not Equal                                                     | city ne 'Munich'                |\n| gt                              | Greater than                                                  | price gt 20                     |\n| ge                              | Greater than or equal                                         | price ge 10                     |\n| lt                              | Less than                                                     | price lt 20                     |\n| le                              | Less than or equal                                            | price le 100                    |\n| startswith(property, substring) | Search for Substring at the beginning of the property's value | startswith(client_name, 'Mü')   |\n| contains(property, substring)   | Search for Substring in property's value                      | contains(client_name, 'alg')    |\n| and                             | Logical and                                                   | price gt 10 and price le 20     |\n| or                              | Logical or                                                    | price eq 10 or price eq 20      |\n| not                             | Logical negation                                              | price gt 10 and not price eq 15 |\n",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "example": "filter=number eq 10000 and value gt 3"
+      },
+      "OrderBy": {
+        "name": "orderby",
+        "in": "query",
+        "description": "Enables the sorting of the content",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "example": "orderby=my_property_name desc,other_property_name asc"
+      }
+    },
+    "securitySchemes": {
+      "BasicAuth": {
+        "type": "http",
+        "scheme": "basic"
+      }
+    }
+  }
+}

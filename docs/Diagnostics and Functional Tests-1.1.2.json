@@ -1,0 +1,103 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Diagnostics and Functional Tests",
+    "version": "1.1.2",
+    "description": "API for test purposes",
+    "x-datev-shortdescription": "This API can be used to check if your environment is correctly set up. Use http://localhost:58454/, https://localhost:58452/ or https://[machinename]:58452/ as the base URL.",
+    "termsOfService": "https://developer.datev.de/portal/terms",
+    "contact": {
+      "name": "DATEV Schnittstellenberatung",
+      "email": "schnittstellenberatung@datev.de"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:58454/datev/api/diagnostics/v1",
+      "description": "Also allowed urls: https://localhost:58452/, https://[machinename]:58452/"
+    }
+  ],
+  "paths": {
+    "/echo": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "echoGet"
+      }
+    },
+    "/domains": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "displays all installed and working DATEVconnect APIs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/API"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "domainsGet"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "API": {
+        "type": "object",
+        "properties": {
+          "Key": {
+            "type": "string",
+            "description": "API-name",
+            "enum": [
+              "accounting",
+              "master-data",
+              "diagnostics",
+              "dms",
+              "iam",
+              "law",
+              "order-management",
+              "hr",
+              "public-sector"
+            ]
+          },
+          "Value": {
+            "type": "string",
+            "description": "version",
+            "enum": [
+              "v1",
+              "v2",
+              "v3"
+            ]
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "basicAuth": {
+        "type": "http",
+        "scheme": "basic"
+      }
+    }
+  },
+  "security": [
+    {
+      "basicAuth": []
+    }
+  ]
+}
