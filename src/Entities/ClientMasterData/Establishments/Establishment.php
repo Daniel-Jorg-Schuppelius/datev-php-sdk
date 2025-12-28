@@ -22,6 +22,7 @@ use Psr\Log\LoggerInterface;
 class Establishment extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?EstablishmentID $id;
     protected ?string $name;
+    protected ?int $number;
     protected ?ShortName $short_name;
     protected ?Status $status;
     protected ?DateTime $timestamp;
@@ -36,6 +37,10 @@ class Establishment extends NamedEntity implements IdentifiableNamedEntityInterf
 
     public function getName(): ?string {
         return $this->name ?? null;
+    }
+
+    public function getNumber(): ?int {
+        return $this->number ?? null;
     }
 
     public function getShortName(): ?ShortName {

@@ -18,7 +18,8 @@ use Psr\Log\LoggerInterface;
 class AdditionalMessages extends NamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";
-        $this->valueClassName = AdditionalMessage::class;
+        if (empty($this->valueClassName))
+            $this->valueClassName = AdditionalMessage::class;
 
         parent::__construct($data, $logger);
     }

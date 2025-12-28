@@ -14,7 +14,7 @@ use APIToolkit\Contracts\Interfaces\API\ApiClientInterface;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\Payroll\Clients\ClientID;
+use Datev\Entities\Common\Clients\ClientID;
 use Datev\Entities\Payroll\Employees\Employee;
 use Datev\Entities\Payroll\Employees\Employees;
 use InvalidArgumentException;

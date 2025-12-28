@@ -18,7 +18,8 @@ use Psr\Log\LoggerInterface;
 class Errors extends NamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";
-        $this->valueClassName = Error::class;
+        if (empty($this->valueClassName))
+            $this->valueClassName = Error::class;
 
         parent::__construct($data, $logger);
     }

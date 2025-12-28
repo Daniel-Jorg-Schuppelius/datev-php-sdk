@@ -18,7 +18,7 @@ use Psr\Log\LoggerInterface;
 class BankAccounts extends NamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";
-        if (!isset($this->valueClassName))
+        if (empty($this->valueClassName))
             $this->valueClassName = BankAccount::class;
 
         parent::__construct($data, $logger);

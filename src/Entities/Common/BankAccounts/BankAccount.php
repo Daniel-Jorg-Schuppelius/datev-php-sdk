@@ -27,8 +27,10 @@ class BankAccount extends NamedEntity implements IdentifiableNamedEntityInterfac
     protected ?string $bank_name;
     protected ?BIC $bic;
     protected ?CountryCode $country_code;
+    protected ?bool $currently_valid;
     protected ?string $differing_account_holder;
     protected ?IBAN $iban;
+    protected ?bool $is_main_bank_account;
     protected ?string $note;
     protected ?DateTime $valid_from;
     protected ?DateTime $valid_to;
@@ -79,5 +81,13 @@ class BankAccount extends NamedEntity implements IdentifiableNamedEntityInterfac
 
     public function getValidTo(): ?DateTime {
         return $this->valid_to;
+    }
+
+    public function isCurrentlyValid(): ?bool {
+        return $this->currently_valid ?? null;
+    }
+
+    public function isMainBankAccount(): ?bool {
+        return $this->is_main_bank_account ?? null;
     }
 }

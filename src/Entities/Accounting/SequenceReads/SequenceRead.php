@@ -3,19 +3,20 @@
  * Created on   : Sat Nov 02 2024
  * Author       : Daniel Jörg Schuppelius
  * Author Uri   : https://schuppelius.org
- * Filename     : Sequence.php
+ * Filename     : SequenceRead.php
  * License      : MIT License
  * License Uri  : https://opensource.org/license/mit
  */
 
 declare(strict_types=1);
 
-namespace Datev\Entities\Accounting\Sequences;
+namespace Datev\Entities\Accounting\SequenceReads;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use DateTime;
 use Datev\Entities\Accounting\Records\Records;
+use Datev\Entities\Accounting\Sequences\SequenceID;
 use Datev\Enums\AccountingReason;
 use Datev\Enums\AccountingRecordType;
 use Psr\Log\LoggerInterface;
