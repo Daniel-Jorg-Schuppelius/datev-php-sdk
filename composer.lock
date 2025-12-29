@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "883b65d9c72467a0f3af4c316522d425",
+    "content-hash": "683ea60bd1af10a51615b1361674326d",
     "packages": [
         {
             "name": "brick/math",
@@ -115,21 +115,20 @@
         },
         {
             "name": "dschuppelius/php-common-toolkit",
-            "version": "v0.7.2",
+            "version": "v0.7.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DSchuppelius/php-common-toolkit.git",
-                "reference": "ab00dde8d657806dac221279bf5fa2f46b54a98b"
+                "reference": "89e0be1ef915c0ed21c7798c603857e14c1b48da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DSchuppelius/php-common-toolkit/zipball/ab00dde8d657806dac221279bf5fa2f46b54a98b",
-                "reference": "ab00dde8d657806dac221279bf5fa2f46b54a98b",
+                "url": "https://api.github.com/repos/DSchuppelius/php-common-toolkit/zipball/89e0be1ef915c0ed21c7798c603857e14c1b48da",
+                "reference": "89e0be1ef915c0ed21c7798c603857e14c1b48da",
                 "shasum": ""
             },
             "require": {
                 "dschuppelius/php-config-toolkit": "^0.2.7",
-                "dschuppelius/php-error-toolkit": "^1.2",
                 "ext-bcmath": "*",
                 "ext-intl": "*",
                 "php": "^7.4 || ^8.0",
@@ -157,9 +156,9 @@
             "description": "Project description.",
             "support": {
                 "issues": "https://github.com/DSchuppelius/php-common-toolkit/issues",
-                "source": "https://github.com/DSchuppelius/php-common-toolkit/tree/v0.7.2"
+                "source": "https://github.com/DSchuppelius/php-common-toolkit/tree/v0.7.2.1"
             },
-            "time": "2025-12-28T12:42:15+00:00"
+            "time": "2025-12-29T10:45:39+00:00"
         },
         {
             "name": "dschuppelius/php-config-toolkit",
