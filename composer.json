@@ -14,17 +14,13 @@
       "Datev\\": "src/"
     }
   },
-  "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
     "php": ">=8.2 <8.5",
-    "guzzlehttp/guzzle": "^7.9 || ^8.0",
-    "psr/log": "^3.0",
     "daniel-jorg-schuppelius/php-api-toolkit": "^2.0"
   },
   "autoload-dev": {
     "psr-4": {
-      "Datev\\": "src/",
       "Tests\\": "tests/"
     }
   },

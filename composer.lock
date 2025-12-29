@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "333a8ddf402daffa29288b7f59f4c1be",
+    "content-hash": "a1f2e8c2b13aeaafb0cb91bbd1d6e57f",
     "packages": [
         {
             "name": "brick/math",
@@ -68,23 +68,22 @@
         },
         {
             "name": "daniel-jorg-schuppelius/php-api-toolkit",
-            "version": "v2.0.2",
+            "version": "v2.0.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Daniel-Jorg-Schuppelius/php-api-toolkit.git",
-                "reference": "f7767c1144305ed7f446b3d095c0bbc0203da275"
+                "reference": "890f02fd7e7b246afb9d15de2d7eee02debbbaf1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Daniel-Jorg-Schuppelius/php-api-toolkit/zipball/f7767c1144305ed7f446b3d095c0bbc0203da275",
-                "reference": "f7767c1144305ed7f446b3d095c0bbc0203da275",
+                "url": "https://api.github.com/repos/Daniel-Jorg-Schuppelius/php-api-toolkit/zipball/890f02fd7e7b246afb9d15de2d7eee02debbbaf1",
+                "reference": "890f02fd7e7b246afb9d15de2d7eee02debbbaf1",
                 "shasum": ""
             },
             "require": {
                 "dschuppelius/php-common-toolkit": "^0.7.2",
                 "guzzlehttp/guzzle": "^7.9 || ^8.0",
                 "php": ">=8.2 <8.5",
-                "psr/log": "^3.0@dev",
                 "ramsey/uuid": "^4.9"
             },
             "require-dev": {
@@ -109,35 +108,34 @@
             "description": "Reused codes for my api php sdks",
             "support": {
                 "issues": "https://github.com/Daniel-Jorg-Schuppelius/php-api-toolkit/issues",
-                "source": "https://github.com/Daniel-Jorg-Schuppelius/php-api-toolkit/tree/v2.0.2"
+                "source": "https://github.com/Daniel-Jorg-Schuppelius/php-api-toolkit/tree/v2.0.2.1"
             },
-            "time": "2025-12-29T11:23:17+00:00"
+            "time": "2025-12-29T12:27:36+00:00"
         },
         {
             "name": "dschuppelius/php-common-toolkit",
-            "version": "v0.7.2.4",
+            "version": "v0.7.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DSchuppelius/php-common-toolkit.git",
-                "reference": "56d2eb8fb28bc6a249c459b3102a789fee0281c0"
+                "reference": "77227c9e70475dc085fb2f58278fdae9cf61ba80"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DSchuppelius/php-common-toolkit/zipball/56d2eb8fb28bc6a249c459b3102a789fee0281c0",
-                "reference": "56d2eb8fb28bc6a249c459b3102a789fee0281c0",
+                "url": "https://api.github.com/repos/DSchuppelius/php-common-toolkit/zipball/77227c9e70475dc085fb2f58278fdae9cf61ba80",
+                "reference": "77227c9e70475dc085fb2f58278fdae9cf61ba80",
                 "shasum": ""
             },
             "require": {
                 "dschuppelius/php-config-toolkit": "^0.2.15",
                 "ext-bcmath": "*",
                 "ext-intl": "*",
-                "php": ">=8.2 <8.5",
-                "psr/log": "^3.0@dev"
+                "php": ">=8.2 <8.5"
             },
             "require-dev": {
                 "phpunit/phpunit": "^11.3@dev"
             },
-            "type": "app",
+            "type": "library",
             "autoload": {
                 "psr-4": {
                     "CommonToolkit\\": "src/"
@@ -156,28 +154,27 @@
             "description": "Project description.",
             "support": {
                 "issues": "https://github.com/DSchuppelius/php-common-toolkit/issues",
-                "source": "https://github.com/DSchuppelius/php-common-toolkit/tree/v0.7.2.4"
+                "source": "https://github.com/DSchuppelius/php-common-toolkit/tree/v0.7.2.6"
             },
-            "time": "2025-12-29T11:49:04+00:00"
+            "time": "2025-12-29T12:26:29+00:00"
         },
         {
             "name": "dschuppelius/php-config-toolkit",
-            "version": "v0.2.15",
+            "version": "v0.2.15.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DSchuppelius/php-config-toolkit.git",
-                "reference": "eddc0b604d0e9c5c52e89d9962dd15670bd9c2d4"
+                "reference": "626c5b3e993dbd4f4b2a748c79e6c797fb178e0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DSchuppelius/php-config-toolkit/zipball/eddc0b604d0e9c5c52e89d9962dd15670bd9c2d4",
-                "reference": "eddc0b604d0e9c5c52e89d9962dd15670bd9c2d4",
+                "url": "https://api.github.com/repos/DSchuppelius/php-config-toolkit/zipball/626c5b3e993dbd4f4b2a748c79e6c797fb178e0e",
+                "reference": "626c5b3e993dbd4f4b2a748c79e6c797fb178e0e",
                 "shasum": ""
             },
             "require": {
                 "dschuppelius/php-error-toolkit": "^1.2",
-                "php": ">=8.0",
-                "psr/log": "^3.0"
+                "php": ">=8.2 <8.5"
             },
             "require-dev": {
                 "phpunit/phpunit": "^11.3@dev"
@@ -201,22 +198,22 @@
             "description": "Ein Toolkit für JSON-basierte Konfigurationsverwaltung",
             "support": {
                 "issues": "https://github.com/DSchuppelius/php-config-toolkit/issues",
-                "source": "https://github.com/DSchuppelius/php-config-toolkit/tree/v0.2.15"
+                "source": "https://github.com/DSchuppelius/php-config-toolkit/tree/v0.2.15.1"
             },
-            "time": "2025-12-28T09:05:18+00:00"
+            "time": "2025-12-29T12:25:01+00:00"
         },
         {
             "name": "dschuppelius/php-error-toolkit",
-            "version": "v1.3.5.1",
+            "version": "v1.3.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DSchuppelius/php-error-toolkit.git",
-                "reference": "030d1c544ef31d67f01a3c202b471ada58f0994e"
+                "reference": "7a273f8b7d38e52ec3a627347bffeef4f6f521bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DSchuppelius/php-error-toolkit/zipball/030d1c544ef31d67f01a3c202b471ada58f0994e",
-                "reference": "030d1c544ef31d67f01a3c202b471ada58f0994e",
+                "url": "https://api.github.com/repos/DSchuppelius/php-error-toolkit/zipball/7a273f8b7d38e52ec3a627347bffeef4f6f521bb",
+                "reference": "7a273f8b7d38e52ec3a627347bffeef4f6f521bb",
                 "shasum": ""
             },
             "require": {
@@ -245,9 +242,9 @@
             "description": "Reused codes for my api php sdks",
             "support": {
                 "issues": "https://github.com/DSchuppelius/php-error-toolkit/issues",
-                "source": "https://github.com/DSchuppelius/php-error-toolkit/tree/v1.3.5.1"
+                "source": "https://github.com/DSchuppelius/php-error-toolkit/tree/v1.3.5.2"
             },
-            "time": "2025-12-29T11:46:28+00:00"
+            "time": "2025-12-29T12:23:12+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -2821,7 +2818,7 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "stability-flags": {
         "phpunit/phpunit": 20
     },
