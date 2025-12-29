@@ -13,6 +13,7 @@ namespace Datev\API\Desktop\Endpoints\DocumentManagement;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
+use Datev\Entities\DocumentManagement\DispatcherInformations\DispatcherInformation;
 use Datev\Entities\DocumentManagement\Documents\Document;
 use Datev\Entities\DocumentManagement\Documents\Documents;
 use InvalidArgumentException;
@@ -44,5 +45,22 @@ class DocumentsEndpoint extends EndpointAbstract implements SearchableEndpointIn
         }
 
         return Documents::fromJson($response, self::$logger);
+    }
+
+    public function deletePermanently(ID $id): bool {
+        $response = parent::deleteContents([], "{$this->getEndpointUrl()}/{$id->toString()}/delete-permanently");
+
+        return $response === 'success';
+    }
+
+    public function addDispatcherInformation(ID $documentId, DispatcherInformation $dispatcherInfo): bool {
+        $response = parent::postContents(
+            $dispatcherInfo->toArray(),
+            [],
+            "{$this->getEndpointUrl()}/{$documentId->toString()}/dispatcher-information",
+            204
+        );
+
+        return $response === 'success';
     }
 }

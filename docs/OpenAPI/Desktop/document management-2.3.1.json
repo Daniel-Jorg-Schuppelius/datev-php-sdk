@@ -1,0 +1,3640 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "2.3.1",
+    "title": "document management",
+    "description": "API to acquire, change and create documents in DATEV Document Management.<br>By default, the requests reference the current active data path. This can be verified via the info resource.<br> Depending on the installed document management system, some properties or resources may not be available. If something is not available, it is marked with (only DATEV DMS) in the description.",
+    "termsOfService": "https://localhost:58454/datev/",
+    "contact": {
+      "name": "DATEV Schnittstellenberatung",
+      "url": "http://www.datev.de",
+      "email": "schnittstellenberatung@datev.de"
+    },
+    "license": {
+      "name": "DATEV eG",
+      "url": "https://www.datev.de"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:58454/datev/api/dms/v2"
+    },
+    {
+      "url": "https://localhost:58452/datev/api/dms/v2"
+    }
+  ],
+  "tags": [
+    {
+      "name": "documents",
+      "description": "Document resource",
+      "externalDocs": {
+        "description": "Evtl. Link Info-DB",
+        "url": "http://datev.de/info-db"
+      }
+    },
+    {
+      "name": "domains",
+      "description": "list the storage structure"
+    },
+    {
+      "name": "documentstates",
+      "description": "list all valid states"
+    },
+    {
+      "name": "info",
+      "description": "information about the application"
+    },
+    {
+      "name": "document-files",
+      "description": "document files"
+    },
+    {
+      "name": "secure-areas",
+      "description": "list of all secure-areas"
+    },
+    {
+      "name": "individual-references1",
+      "description": "retieves individual properties"
+    },
+    {
+      "name": "individual-references2",
+      "description": "retieves individual properties"
+    },
+    {
+      "name": "individual-properties",
+      "description": "retieves individual properties"
+    }
+  ],
+  "paths": {
+    "/documents": {
+      "get": {
+        "tags": [
+          "documents"
+        ],
+        "summary": "Get a list of documents",
+        "description": "Returns a list of document meta data, for documents that have an active client and which have not been archived or deleted.  Maximum size of list is 1,000 entries.<br> <br>  **Filter expressions**        \n<table>\n  <tr>\n    <th>parameter</th>\n    <th>description</th>\n    <th>value</th>\n  <tr>\n  </tr>\n    <td>number</td>\n    <td>document number</td>\n    <td>Integer</td>\n  </tr>\n  <tr>\n    <td>domain.id</td>\n    <td>document domain</td>\n    <td>Integer</td>\n  </tr>\n  <tr>\n    <td>folder.id</td>\n    <td>document folder in DATEV DMS or Dokumentenablage</td>\n    <td>Integer</td>\n  </tr>\n  <tr>\n    <td>register.id</td>\n    <td>document register</td>\n    <td>Integer</td>\n  </tr>\n  <tr>\n    <td>state.id</td>\n    <td>document state in DATEV DMS or Dokumentenablage</td>\n    <td>Integer</td>\n  </tr>\n  <tr>\n    <td>user.id</td>\n    <td>document editor in DATEV DMS or Dokumentenablage</td>\n    <td>GUID</td>\n  </tr>\n  <tr>\n    <td>correspondence<br>_partner_guid</td>\n    <td>correspondence partner of the document in DATEV DMS or Dokumentenablage, it can be a client or law file</td>\n    <td>GUID</td>\n  </tr>\n  <tr>\n    <td>change_date_time </td>\n    <td>the date of the last change in the document in DATEV DMS or Dokumentenablage</td>\n    <td>string format date_time</td>\n  </tr>\n  <tr>\n    <td>employee.id </td>\n    <td>employee with associated with the document</td>\n    <td>Integer</td>\n  </tr>\n  <tr>\n    <td>create_date_time </td>\n    <td>the date on which the document was created in DATEV DMS or Dokumentenablage</td>\n    <td>string format date_time</td>\n  </tr>\n   <tr>\n    <td>creation_user.id</td>\n    <td>document creator in DATEV DMS or Dokumentenablage</td>\n    <td>GUID</td>\n  </tr>\n  <tr>\n    <td>checked_out</td>\n    <td>status whether a document is currently in editing mode</td>\n    <td>Boolean</td>\n  </tr>\n  <tr>\n    <td>checkout_user.id</td>\n    <td>user in DATEV DMS that has checked out a document for editing</td>\n    <td>GUID</td>\n  </tr>",
+        "operationId": "getDocuments",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Filter"
+          },
+          {
+            "$ref": "#/components/parameters/Top"
+          },
+          {
+            "$ref": "#/components/parameters/Skip"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation. The example shows just one document with all possible parameters.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Document"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A client error has occurred. One possible cause might be that an incorrect value has been transferred. Further information is contained in the response message.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "documents"
+        ],
+        "summary": "Create a new document",
+        "description": "Create a new document.<br>\n<br>**correspondence partner GUID**<br> <br><u>Chancellery market</u><br> Supported GUID's are:<br> client (\\via http://localhost:58454/datev/api/master-data/v1/clients)<br> law file (\\via https://localhost:58452/datev/api/law/v1/files/)<br> employee (\\via https://localhost:58452/datev/iam/user/ property linked_employeeadministration_identity)<br> <br><u>Company market</u><br>         Supported GUID's are:<br> clients (\\via http://localhost:58454/datev/api/accounting/v1/clients)<br> debtors (\\via http://localhost:58454/datev/api/accounting/v1/clients/{client-it}/fiscal-years/fiscal-year/{fiscal-year-id}/debitors  debitors.business_partner_relation_id)<br> creditors (\\via http://localhost:58454/datev/api/accounting/v1/clients/{client-it}/fiscal-years/fiscal-year/{fiscal-year-id}/creditors  creditors.business_partner_relation_id).<br> <br>Debtor and creditor have to be centrally provided. If the business_partner_relation_id is an empty GUID (00000000-0000-0000-0000-000000000000) the debtor or creditor is not centralized. How to centralize a debtor or creditor can be found <a href=\"https://apps.datev.de/help-center/documents/1018248\">here</a>.<br> ???For better performance it is recommended to specify the correspondence_partner_firm_number for debtors or creditors. This corresponds to the client.number under this endpoint (\\via http://localhost:58454/datev/api/accounting/v1/clients). <br><br>**domain.id**<br> The current active domain can be selected in the document-management application. The available domains can be read via the domains resource.         <br><u>Chancellery market</u><br> Supported id's are 1, 4, 33, 40, 51, 61-68.<br> <br><u>Company market</u><br>   Supported id's are 36, 37, 38, 61-68.<br> <br>**user.id**<br> Todetermine the GUID for a given User use the following request https://localhost:58452/datev/api/iam/v1/users.<br> or to determine a group use https://localhost:58452/datev/api/iam/v1/groups.<br>         <br>**order.id**<br> The client (documents.correspondence_partner_id) must be identical to the client in the order (orders.client_id). If this is not the case the server will return 400. In the desktop application the following is ensured:        \n  - the year (documents.year) is identical to the assessment_year in the order (order.assessment_year)\n  - the order for the current year will be automatically set, if a law file is set as correspondence partner\n\nTherefore it is recommended to take this into account by saving a document via the API.<br> <br>**structure_items.name**<br> The structure_item.name contains the file name and the file extension. Therefore it is important that data and name fit together. If they do not match, the file can't be displayed in the desktop application.<br>  The file extension must be DLK if the property structure_items.document_link is set.<br> <br>**structure_items.document_file_id**<br> It is necessary to upload the file via https://localhost:58452/datev/api/dms/v2/document_files beforehand. The id of the file will be returned in the response. The parameter document_file_id has to be set to this value.<br> <br>**property_template**<br> If a value is set by the template, this overwrites the value that was explicitly set.  Except for the value specified in the priority description. If the propety template has the field, \"Beschreibung in das Ergänzungsfeld übernehmen\", set the value specified in the description is copied to the property property_templates_supplement. <br> <br>**Important note**<br> The composition and structure of the document are required inputs. This composition can only be manipulated in the offline product.<br> The ID of a document is generated automatically. In exceptional cases it is possible to set a specific GUID for document ID via PUT /documents/{id}.<br> <br>**Required Elements**<br> Either document_link or data must be set. If both are set the property document_link is ignored.\n\n  - class\n  - correspondence_partner_guid\n  - description \n  - domain\n  - state\n  - user\n  -structure_items\n  - structure_items.counter\n  - structure_items.type\n  - structure_items.creation_date\n  - structure_items.modification_date",
+        "operationId": "addDocument",
+        "requestBody": {
+          "description": "Document to be added.",
+          "required": true,
+          "content": {
+            "application/json;charset=utf-8": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation. All Parameters that have been set are displayed in the response. The example depicts all parameters which are possible.  <br> If the user doesn't have the right to see a document for a specific client or folder. But can create documents to this client or folder. The responsce includes only a valid id of the document, other properties are filled with defoult values, not the real value of the created document. ",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Document"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A client error has occurred. One possible cause might be that an incorrect value has been transferred. Further information is contained in the response message.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource is either permanently or temporarily not available. One possible cause might be an incorrect URI.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/documents/{id}": {
+      "get": {
+        "tags": [
+          "documents"
+        ],
+        "summary": "Get the meta data of a specific document",
+        "description": "Returns the meta data of the document, in its current revision, for the given id. Deleted documents or the documents to deleted correspondence partners can also to retrieved.",
+        "operationId": "getDocumentByGuid",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/DocumentGuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation. The example shows all possible attributes. Not all attributes have to occur if the property isn't set at DATEV DMS.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Document"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A client error has occurred. One possible cause might be that an incorrect value has been transferred. Further information is contained in the response message.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource is either permanently or temporarily not available. One possible cause might be an incorrect URI.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "documents"
+        ],
+        "summary": "Update meta data of an existing document",
+        "description": "Update the  meta data of the document for the given \"id\".<br> \n<br>**correspondence partner GUID**<br> <br><u>Chancellery market</u><br> Supported GUID's are:<br> client (\\via http://localhost:58454/datev/api/master-data/v1/clients)<br> law file (\\via https://localhost:58452/datev/api/law/v1/files/)<br> ???employee (\\via https://localhost:58452/datev/iam/user/ property linked_employeeadministration_identity)<br> <br><u>Company market</u><br>         Supported GUID's are:<br> clients (\\via http://localhost:58454/datev/api/accounting/v1/clients)<br> debtors (\\via http://localhost:58454/datev/api/accounting/v1/clients/{client-it}/fiscal-years/fiscal-year/{fiscal-year-id}/debitors  debitors.business_partner_relation_id)<br> creditors (\\via http://localhost:58454/datev/api/accounting/v1/clients/{client-it}/fiscal-years/fiscal-year/{fiscal-year-id}/creditors  creditors.business_partner_relation_id).<br> <br>Debtor and creditor have to be centrally provided. If the business_partner_relation_id is an empty GUID (00000000-0000-0000-0000-000000000000) the debtor or creditor is not centralized. How to centralize a debtor or creditor can be found <a href=\"https://apps.datev.de/help-center/documents/1018248\">here</a>.<br> ???For better performance it is recommended to specify the correspondence_partner_firm_number for debtors or creditors. This corresponds to the client.number under this endpoint (\\via http://localhost:58454/datev/api/accounting/v1/clients). <br>         <br>**note**<br>\nUsually the note includes the User and a timestamp by whom the note was written in DATEV DMS.  This information should be included in the note content if the receiving application is DATEV DMS and is not necessary if it is only DokAblage.<br> The note content will be completely overwritten. Therefore it is important to append the note content. For instance:<br> \"new content\"+\"existing content\"<br> [surname2, name2 - user name2 08.09.2021 08:18:56]\\nNote written by DATEVconnect API\\n[surname1, name1 - user name1 08.09.2021 08:18:56]\\nNote wiritten by DATEV DMS\\n         <br> <br>**order.id**<br> In the desktop application the following is ensured:\n\n  - the client (documents.correspondence_partner_id) is identical to the client in the order (orders.client_id) \n  - the year (documents.year) is identical to the fiscal_year in the order (order.fiscal_year)\n  - the order for the current year will be automatically set, if a law filte is set as correspondence partner\n\nTherefore it is recommended to take this into account by saving a document via the application.<br> It is necessary that the correspondance_partner_guid of the document is equal to the correspondance_partner_guid of the order.  <br> <br>**save a document with a given id** <br> A complete document can be saved using a GUID unknown in the desktop application as a parameter for the document.id. For this it is relevant to define structure_items.<br> If the files of documents that already exist in the desktop application are to be change, the endpoint /document/{id}/structure-items/{structure-item-id} can be used.",
+        "operationId": "UpdateDocument",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/DocumentGuid"
+          }
+        ],
+        "requestBody": {
+          "description": "Change the meta data of an existing document.",
+          "required": true,
+          "content": {
+            "application/json;charset=utf-8": {
+              "schema": {
+                "required": [
+                  "id"
+                ],
+                "$ref": "#/components/schemas/DocumentUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Successful operation."
+          },
+          "400": {
+            "description": "A client error has occurred. One possible cause might be that an incorrect value has been transferred. Further information is contained in the response message.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The user does not have the right to change the read_only property from true to false."
+          },
+          "404": {
+            "description": "The requested resource is either permanently or temporarily not available. One possible cause might be an incorrect URI.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "documents"
+        ],
+        "summary": "Delete a document at document management",
+        "description": "Delete a document in document management.<br>          Deleted documents can be read via the GET document/{id} endpoint. <br> If a document is deleted it can be found and retrieved with the filter \"Gelöschte Dokumente\" in the document management application.",
+        "operationId": "DeleteDocument",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/DocumentGuid"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful operation."
+          },
+          "400": {
+            "description": "A client error has occurred. One possible cause might be that an incorrect value has been transferred. Further information is contained in the response message.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The user has no access right to delete a document."
+          },
+          "404": {
+            "description": "The requested resource is either permanently or temporarily not available. One possible cause might be an incorrect URI.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/documents/{id}/delete-permanently": {
+      "delete": {
+        "tags": [
+          "documents"
+        ],
+        "summary": "Delete a document permanently in document management",
+        "description": "Delete a document permanently in document management.<br>          If a document is permanently deleted and cannot be recovered.",
+        "operationId": "DeleteDocumentPermanently",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/DocumentGuid"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful operation."
+          },
+          "400": {
+            "description": "A client error has occurred. One possible cause might be that an incorrect value has been transferred. Further information is contained in the response message.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The user has no access right to delete a document."
+          },
+          "404": {
+            "description": "The requested resource is either permanently or temporarily not available. One possible cause might be an incorrect URI.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/document-files/{document-file-id}": {
+      "get": {
+        "tags": [
+          "document-files"
+        ],
+        "summary": "Returns the file of a structure_item",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/FileId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The file binary. The Files werden je nach MIME-TYP übertragen. File of a structure_item can be any kind of file type.",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary",
+                  "example": "<streaming content>"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A client error has occurred. One possible cause might be that an incorrect value has been transferred. Further information is contained in the response message.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource is either permanently or temporarily not available. One possible cause might be an incorrect URI.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/document-files": {
+      "post": {
+        "tags": [
+          "document-files"
+        ],
+        "summary": "Upload a single file",
+        "description": "Upload individual files. These can then be assigned to a structure item via the id. It is recommended not to exceed the file size of **200MB**. Unassigned files will not be available after 24 hours.",
+        "operationId": "postDocument-file",
+        "requestBody": {
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The responses include the document_files.id which must be include in the structure_items.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentFile"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A client error has occurred. One possible cause might be that an incorrect value has been transferred. Further information is contained in the response message.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The user does not have the right to change the read_only property from true to false."
+          },
+          "404": {
+            "description": "The requested resource is either permanently or temporarily not available. One possible cause might be an incorrect URI.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/documents/{id}/structure-items": {
+      "get": {
+        "tags": [
+          "documents"
+        ],
+        "summary": "Get structure_items of a document",
+        "description": "Returns **all** structure_items of a document. A download of the files is triggered by the GET on /document-files/{document_file_id}. A **maximum of 10.000 structure_items** can be retrieved.",
+        "operationId": "getStructureItemsByDocumentGuid",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/DocumentGuid"
+          },
+          {
+            "$ref": "#/components/parameters/Top"
+          },
+          {
+            "$ref": "#/components/parameters/Skip"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation. The example shows a structure with all possible parameters.<br>       ",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "type": "array",
+                  "required": [
+                    "name",
+                    "type"
+                  ],
+                  "items": {
+                    "$ref": "#/components/schemas/StructureItem"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A client error has occurred. One possible cause might be that an incorrect value has been transferred. Further information is contained in the response message.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource is either permanently or temporarily not available. One possible cause might be an incorrect URI.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "documents"
+        ],
+        "summary": "Add a file to an existing document-structure",
+        "description": "Adds a file or folder to an existing document-structure of a document in Document management.<br> Which document-structure item can be defined via the property \"type\".                    \n  <table>\n    <tr>\n      <th>structure item type</th>\n      <th>value</th>\n    </tr>\n    <tr>\n      <td>file</td>\n      <td>1</td>\n    </tr>\n    <tr>\n      <td>folder</td>\n      <td>2</td>\n    </tr>\n  </table>\n<br>It is not possible to set a document_link.<br> To insert the document-structure item on a specific subfolder the property \"parent_counter\" has to be set.  The \"parent_counter\" determines which folder the document-structure item is located. The parent counter is always 0 if there is no parent counter set.<br>  The parameter **insertposition** defines whether the structure item is inserted at the beginning or the end in a document-structure or subfolder. <br><br>**Required Elements**<br>\n\n  - name    \n  - type  ",
+        "operationId": "postStructureItemsByDocumentGuid",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/DocumentGuid"
+          },
+          {
+            "$ref": "#/components/parameters/Insertposition"
+          }
+        ],
+        "requestBody": {
+          "description": "Document to be added. The Data has to be Base64 binary data.",
+          "required": true,
+          "content": {
+            "application/json;charset=utf-8": {
+              "schema": {
+                "required": [
+                  "name",
+                  "type"
+                ],
+                "$ref": "#/components/schemas/StructureItem"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The responses include the resource structure_items of the file which that was saved.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/StructureItem"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A client error has occurred. One possible cause might be that an incorrect value has been transferred. Further information is contained in the response message.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The user does not have the access right to create a structure_item (Inhalte bearbeiten)."
+          },
+          "404": {
+            "description": "The requested resource is either permanently or temporarily not available. One possible cause might be an incorrect URI.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/documents/{id}/structure-items/{structure-item-id}": {
+      "get": {
+        "tags": [
+          "documents"
+        ],
+        "summary": "Get a single structure_item of a document",
+        "description": "Returns the structure_item of a structure for the given structure_item-id.",
+        "operationId": "getStructureItemByStructureItemId",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/DocumentGuid"
+          },
+          {
+            "$ref": "#/components/parameters/StructureItemId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation. The example shows a structure with all possible parameters.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "required": [
+                    "name",
+                    "type"
+                  ],
+                  "$ref": "#/components/schemas/StructureItem"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A client error has occurred. One possible cause might be that an incorrect value has been transferred. Further information is contained in the response message.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource is either permanently or temporarily not available. One possible cause might be an incorrect URI.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "documents"
+        ],
+        "summary": "Update a specific structure item",
+        "description": "Update the structure_item for the given structure_item-id.<br>\nThe update will be rejected, if the document is checked out by another user in DATEV DMS.<br>\n\n<br>**strucutre_items.document_file_id**<br> It is necessary to upload the file via https://localhost:58452/datev/api/dms/v2/document_files before. The id of the file is returned in the response. This value has to be set in the parameter document_file_id.\n<br><br>**strucutre_items.document_link**<br> This property can not be set.<br>\n<br>**Required Elements**\n  - strucutre_items.id",
+        "operationId": "updateStructureItem",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/DocumentGuid"
+          },
+          {
+            "$ref": "#/components/parameters/StructureItemId"
+          }
+        ],
+        "requestBody": {
+          "description": "To update a document the structure_item-id, file_id of a specific file, creation_date, last_modifiction_date and the data of the new file have to be included.  The name of the file is optional.",
+          "required": true,
+          "content": {
+            "application/json;charset=utf-8": {
+              "schema": {
+                "required": [
+                  "document_file_id",
+                  "id"
+                ],
+                "$ref": "#/components/schemas/StructureItemUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Successful operation."
+          },
+          "400": {
+            "description": "A client error has occurred. One possible cause might be that an incorrect value has been transferred. Further information is contained in the response message.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The user does not have the access right to edit a structure_item (Inhalte bearbeiten)."
+          },
+          "404": {
+            "description": "The requested resource is either permanently or temporarily not available. One possible cause might be an incorrect URI.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/documents/{id}/dispatcher-information": {
+      "post": {
+        "tags": [
+          "documents"
+        ],
+        "summary": "Creates the information that a document has been transferred",
+        "description": "Creates an entry in the revision history, \"Nach Online gesendet\" is set to true in the desktop application. The entry in the revision history contains a reason and a comment. It is not possible to set the revision reason via the api. Therefore the reason is always \"copy send\". The revision comment is composed from the properties \"application\" and \"description\".",
+        "operationId": "dispatcherInformations",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/DocumentGuid"
+          }
+        ],
+        "requestBody": {
+          "description": "dispatcher-information value to be add",
+          "required": true,
+          "content": {
+            "application/json;charset=utf-8": {
+              "schema": {
+                "required": [
+                  "name"
+                ],
+                "$ref": "#/components/schemas/DispatcherInformation"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Successful operation. All informations of the new value are displayed."
+          },
+          "400": {
+            "description": "A client error has occurred. One possible cause might be that an incorrect value has been transferred. Further information is contained in the response message.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource is either permanently or temporarily not available. One possible cause might be an incorrect URI.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/domains": {
+      "get": {
+        "tags": [
+          "domains"
+        ],
+        "summary": "Get all domains, folders and registers that are configured for the user.",
+        "description": "Returns a list of available domains, folders and registers for the user. <br>Whether an area is listed depends on user rights and what has been configured for the user under extras | settings in the DATEV document managment application.<br> <br>**Filter expressions** <table> <tr> <th>parameter</th> <th>description</th> <th>value</th> </tr> <tr> <td>correspondance_partner.domain</td> <td>which master data domain the correspondance partner belongs to </td> <td>string</td> </tr> </table>",
+        "operationId": "getDomains",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Domain"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A client error has occurred. One possible cause might be that an incorrect value has been transferred. Further information is contained in the response message.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource is either permanently or temporarily not available. One possible cause might be an incorrect URI.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/documentstates": {
+      "get": {
+        "tags": [
+          "documentstates"
+        ],
+        "summary": "Get all DocumentStates",
+        "description": "Returns a list of available document states <br>**Filter expressions** <table> <tr> <th>parameter</th> <th>value</th> </tr> <tr> <td>document_class</td> <td>string</td> </tr> </table>",
+        "operationId": "getDocumentStates",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/State"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A client error has occurred. One possible cause might be that an incorrect value has been transferred. Further information is contained in the response message.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "documentstates"
+        ],
+        "summary": "Create new document state",
+        "description": "Create a new document state.",
+        "operationId": "postDocumentStates",
+        "requestBody": {
+          "description": "Create a new Document state in desktop application DATEV DMS. It is not possible to create a document state in DATEV Dokumentenablage.<br> **valid_document_classes**<br> It is only possible to create a document state for document classes 1 (document) or 3 (receipt).",
+          "required": true,
+          "content": {
+            "application/json;charset=utf-8": {
+              "schema": {
+                "required": [
+                  "description",
+                  "valid_document_classes"
+                ],
+                "$ref": "#/components/schemas/State"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation. All informations of the new value are displayed.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/DocumentState"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A client error has occurred. One possible cause might be that an incorrect value has been transferred. Further information is contained in the response message.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The user does not have the right to edited document states (\"Status-Konfiguration\")."
+          },
+          "404": {
+            "description": "The requested resource is either permanently or temporarily not available. One possible cause might be an incorrect URI.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/documentstates/{state-id}": {
+      "get": {
+        "tags": [
+          "documentstates"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/StateId"
+          }
+        ],
+        "summary": "Get all information of a specific state",
+        "description": "Returns the document state for the given state-id",
+        "operationId": "getDocumentState",
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentState"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A client error has occurred. One possible cause might be that an incorrect value has been transferred. Further information is contained in the response message.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource is either permanently or temporarily not available. One possible cause might be an incorrect URI.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/info": {
+      "get": {
+        "tags": [
+          "info"
+        ],
+        "summary": "Information of the installed DATEV document management application",
+        "description": "Returns the system information about the application DATEV document management application.<br> **Versions**<br> Depending on the version.number it can be determined which API version can be addressed. Any version.number smaller than 14.0 can only be addressed by API version V1. From version.number 14.0A API V1 and V2 are available.",
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Info"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A client error has occurred. One possible cause might be that an incorrect value has been transferred. Further information is contained in the response message.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource is either permanently or temporarily not available. One possible cause might be an incorrect URI.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/secure-areas": {
+      "get": {
+        "tags": [
+          "secure-areas"
+        ],
+        "summary": "List of all secure-areas (only DATEV DMS)",
+        "description": "Property which can be set on a document to give a specific user the permission to see it.<br> It is possible to set individual secure-areas in the DATEV document management application.<br> The secure-areas only exist as a feature of DATEV DMS.",
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SecureArea"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A client error has occurred. One possible cause might be that an incorrect value has been transferred. Further information is contained in the response message.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource is either permanently or temporarily not available. One possible cause might be an incorrect URI.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/property-templates": {
+      "get": {
+        "tags": [
+          "property-templates"
+        ],
+        "summary": "List of all property-templates (only DATEV DMS)",
+        "description": "In order to make the filing of documents uniform, property templates can be created in the desktop application DATEV DMS. The defined properties to the respective template are then automatically set to the document. If a value is set by the template, this overwrites the value that was explicitly set by a property. Except for the value specified in the priority description and acknowledge_by. If the propety template has \"Beschreibung in das Ergänzungsfeld übernehmen\" set the values specified in the description are carried over to the property property_templates_supplement. Users which are defined in acknowledge_by will be added. Inbox and Outbox information are created by the PFB API and can be linked to a document here. If a document is saved in the desktop application DATEV DMS with a property-template which has an inbox or outbox it is ensures that this is created and linked to the document. <br>DATEV Dokumentenablage doesn't support propety templates.<br> **Filter expression**<br> <table> <tr> <th>parameter</th> <th>value</th> </tr> <tr> <td>document_class</td> <td>Integer</td> </tr> </table>",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of all property templates.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PropertyTemplates"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A client error has occurred. One possible cause might be that an incorrect value has been transferred. Further information is contained in the response message.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource is either permanently or temporarily not available. One possible cause might be an incorrect URI.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/individual-properties": {
+      "get": {
+        "tags": [
+          "individual-properties"
+        ],
+        "summary": "Retrieves individual properties (only DATEV DMS)",
+        "description": "Returns the individual properties that have been set in the application document management. Individual-properties are a feature only available in DATEV DMS.",
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IndividualProperty"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A client error has occurred. One possible cause might be that an incorrect value has been transferred. Further information is contained in the response message.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource is either permanently or temporarily not available. One possible cause might be an incorrect URI.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/individual-references1": {
+      "get": {
+        "tags": [
+          "individual-references1"
+        ],
+        "summary": "Retrieves the first individual references (only DATEV DMS)",
+        "description": "Returns the individual references that have been set in the application document management. Individual-references are a feature only available in DATEV DMS. <br>A value can be available for all correspondence partners or to a specific correspondence partner. If there is a correspondence partner set for a individual-reference value, then the correspondence partner in the document has to be equal to the corespondence partner. <br>The parameter correspondence_partner_link contains an API-Address to a correspondence partner domain if one exists.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Top"
+          },
+          {
+            "$ref": "#/components/parameters/Skip"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "type": "array",
+                  "required": [
+                    "name",
+                    "id"
+                  ],
+                  "items": {
+                    "$ref": "#/components/schemas/IndividualReference"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A client error has occurred. One possible cause might be that an incorrect value has been transferred. Further information is contained in the response message.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource is either permanently or temporarily not available. One possible cause might be an incorrect URI.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "individual-references1"
+        ],
+        "summary": "Create a new individual-references value (only DATEV DMS)",
+        "description": "Add a new value to the individual-references1. <br>The name has to be set <br>For specific correspondence partner, it is necessary to set the following element in the correspondence partner object. <br>**correspondence_partner_guid** <br>If the correspondance partner already exists in the document management desktop application, it is possible to set the correspondence partner just with the property correspondance_partner_guid. <br>**correspondence_partner_domain** <br>if the correspondance partner does not exists it is required to set correspondance_partner_guid and correspondence_partner_domain. <br><br>**Required Elements**<br> - name",
+        "requestBody": {
+          "description": "individual-references1 value to be add",
+          "required": true,
+          "content": {
+            "application/json;charset=utf-8": {
+              "schema": {
+                "required": [
+                  "name"
+                ],
+                "$ref": "#/components/schemas/IndividualReference"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation. All informations of the new value are displayed.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "type": "array",
+                  "required": [
+                    "name",
+                    "id"
+                  ],
+                  "items": {
+                    "$ref": "#/components/schemas/IndividualReference"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A client error has occurred. One possible cause might be that an incorrect value has been transferred. Further information is contained in the response message.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The user does not have the right to edited individual-references."
+          },
+          "404": {
+            "description": "The requested resource is either permanently or temporarily not available. One possible cause might be an incorrect URI.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/individual-references1/{id}": {
+      "put": {
+        "tags": [
+          "individual-references1"
+        ],
+        "summary": "Update a value to the individual reference1 (only DATEV DMS)",
+        "description": "Update an existing value of the individual reference1. </br> It is not possible to edit the property correspondence_partner_domain or correspondence_partner_guid if the value is used in a document.</br> It is possible to edit these two propertys again, only if the document is permanently deleted.</br> <br>**correspondence_partner_guid** <br>If the correspondance partner already exists in the document management desktop application, it is possible to set the correspondence partner just with the property correspondance_partner_guid. <br>**correspondence_partner_domain** <br>if the correspondance partner does not exists it is required to set correspondance_partner_guid and correspondence_partner_domain. <br>**name** <br>The property name is always editable. <br>",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IndRefId"
+          }
+        ],
+        "requestBody": {
+          "description": "individual-reference value to be updated.",
+          "required": true,
+          "content": {
+            "application/json;charset=utf-8": {
+              "schema": {
+                "required": [
+                  "name",
+                  "id"
+                ],
+                "$ref": "#/components/schemas/IndividualReference"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Successful operation."
+          },
+          "400": {
+            "description": "A client error has occurred. One possible cause might be that an incorrect value has been transferred. Further information is contained in the response message.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The user does not have the right to edited individual-references."
+          },
+          "404": {
+            "description": "The requested resource is either permanently or temporarily not available. One possible cause might be an incorrect URI.  ",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "individual-references1"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IndRefId"
+          }
+        ],
+        "summary": "Delete a value of individual-references (only DATEV DMS)",
+        "description": "Delete a value of a individual-references1. Is not possible to delete a value if it is referenced in a document.",
+        "responses": {
+          "204": {
+            "description": "Successful operation."
+          },
+          "400": {
+            "description": "A client error has occurred. One possible cause might be that an incorrect value has been transferred. Further information is contained in the response message.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The user does not have the access right to edit individual-references1."
+          },
+          "404": {
+            "description": "The requested resource is either permanently or temporarily not available. One possible cause might be an incorrect URI.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/individual-references2": {
+      "get": {
+        "tags": [
+          "individual-references2"
+        ],
+        "summary": "Information of the configurations of the second individual reference set (only DATEV DMS)",
+        "description": "Returns the information of the individual reference set in the application document management. Individual-references are just exists for the feature DATEV DMS. <br>A value can be available to all correspondence partner or to a specific correspondence partner. If ther is a correspondence partner set for a individual-references value the correspondence partner at a document have to be equal to the corespondence partner of a value. <br>If an API exists for a correspondence partner domain it is given at the element correspondence_partner_link.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Top"
+          },
+          {
+            "$ref": "#/components/parameters/Skip"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "type": "array",
+                  "required": [
+                    "name",
+                    "id"
+                  ],
+                  "items": {
+                    "$ref": "#/components/schemas/IndividualReference"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A client error has occurred. One possible cause might be that an incorrect value has been transferred. Further information is contained in the response message.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource is either permanently or temporarily not available. One possible cause might be an incorrect URI.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "individual-references2"
+        ],
+        "summary": "Create a new individual-references value (only DATEV DMS)",
+        "description": "Add a new value to the individual-references2. Which can be dedicated to the document propertys. <br>Just the name have to be set, if the value should be available for all correspondence partners. <br>To set a value to an specific correspondence partner, it is necessary to set the correspondence partner elements. <br>**correspondence_partner_guid** <br>If the correspondance partner alredy exists at the desktop application document management. It is possible to set the correspondance partner just with property correspondance_partner_guid. <br>**correspondence_partner_domain** <br>if the correspondance partner not exists it is required to set correspondance_partner_guid and correspondence_partner_domain. <br><br>**Required Elements**<br>\n- name",
+        "requestBody": {
+          "description": "individual-references2 value to be add",
+          "required": true,
+          "content": {
+            "application/json;charset=utf-8": {
+              "schema": {
+                "required": [
+                  "name"
+                ],
+                "$ref": "#/components/schemas/IndividualReference"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation. All informations of the new value are displayed.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "type": "array",
+                  "required": [
+                    "name",
+                    "id"
+                  ],
+                  "items": {
+                    "$ref": "#/components/schemas/IndividualReference"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A client error has occurred. One possible cause might be that an incorrect value has been transferred. Further information is contained in the response message.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The user does not have the right to edited individual-references."
+          },
+          "404": {
+            "description": "The requested resource is either permanently or temporarily not available. One possible cause might be an incorrect URI.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/individual-references2/{id}": {
+      "put": {
+        "tags": [
+          "individual-references2"
+        ],
+        "summary": "Update an value to the individual reference2 (only DATEV DMS)",
+        "description": "Update an existing value of the individual reference2. </br> It is not possible to edit the property correspondence_partner_domain or correspondence_partner_guid if the value is used on a document.</br> Just if the document is permanently deleted it is again possible to edit this two propertys.</br> <br>**correspondence_partner_guid** <br>If the correspondance partner alredy exists at the desktop application document management. It is possible to set the correspondance partner just with property correspondance_partner_guid. <br>**correspondence_partner_domain** <br>if the correspondance partner not exists it is required to set correspondance_partner_guid and correspondence_partner_domain. <br>**name** <br> The property name is always editable. <br>",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IndRefId"
+          }
+        ],
+        "requestBody": {
+          "description": "individual-reference value to be updated.",
+          "required": true,
+          "content": {
+            "application/json;charset=utf-8": {
+              "schema": {
+                "required": [
+                  "name",
+                  "id"
+                ],
+                "$ref": "#/components/schemas/IndividualReference"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Successful operation."
+          },
+          "400": {
+            "description": "A client error has occurred. One possible cause might be that an incorrect value has been transferred. Further information is contained in the response message.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The user does not have the right to edited individual-references."
+          },
+          "404": {
+            "description": "The requested resource is either permanently or temporarily not available. One possible cause might be an incorrect URI.   ",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "individual-references2"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IndRefId"
+          }
+        ],
+        "summary": "Delete a value of individual-references2 (only DATEV DMS)",
+        "description": "Delete a value of a individual-references2. Is not possible to delete a value if it is dedicated to a document.",
+        "responses": {
+          "204": {
+            "description": "Successful operation."
+          },
+          "400": {
+            "description": "A client error has occurred. One possible cause might be that an incorrect value has been transferred. Further information is contained in the response message.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The user does not have the right to edited individual-references."
+          },
+          "404": {
+            "description": "The requested resource is either permanently or temporarily not available. One possible cause might be an incorrect URI.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "BasicAuth": {
+        "type": "http",
+        "scheme": "basic"
+      }
+    },
+    "schemas": {
+      "Document": {
+        "type": "object",
+        "properties": {
+          "acknowledge_by": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/AcknowledgementUser"
+            },
+            "description": "(only DATEV DMS) (only for Post)  The user that should take note or review the document."
+          },
+          "amount": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true,
+            "example": "150,95",
+            "description": "Amount of a receipt."
+          },
+          "application": {
+            "type": "string",
+            "nullable": true,
+            "example": "KARE",
+            "description": "The application through which the document was saved."
+          },
+          "case_number": {
+            "type": "integer",
+            "readOnly": true,
+            "format": "int32",
+            "nullable": true,
+            "description": "The number that uniquely identifies the case in the system."
+          },
+          "change_date_time": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true,
+            "format": "date-time",
+            "example": "2021-04-28T14:03:58.310",
+            "description": "The last modification date of the meta data or the file of a document. Times are expressed in local time."
+          },
+          "checked_out": {
+            "type": "boolean",
+            "nullable": true,
+            "readOnly": true,
+            "default": false,
+            "example": true,
+            "description": "Flag which shows if the document is in active processing in the offline application."
+          },
+          "checkout_computer": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 255,
+            "example": "WTS (USER_4)",
+            "description": "The machinename of the computer on which a document is checked out for editing."
+          },
+          "checkout_user": {
+            "readOnly": true,
+            "nullable": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/User"
+              }
+            ],
+            "description": "User in DATEV DMS that has checked out a document for editing."
+          },
+          "class": {
+            "$ref": "#/components/schemas/Class"
+          },
+          "correspondence_partner_guid": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 50,
+            "example": "e602ddcb-e479-4cee-b268-e53bbecf6dc9",
+            "description": "The GUID of a correspondence partner. Not all correspondence_partners are of type GUID. Examples for correspondence_partners are \"Mandanten\", \"Akten\", \"Mitarbeiter\", etc."
+          },
+          "correspondence_partner_firm_number": {
+            "type": "integer",
+            "readOnly": false,
+            "format": "int32",
+            "nullable": true,
+            "example": 0,
+            "description": "Company number of the correspondence partner."
+          },
+          "cost_quantity": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true,
+            "example": 1.25,
+            "description": "The quantity of the matter cost."
+          },
+          "cost_date": {
+            "type": "string",
+            "nullable": true,
+            "format": "date-time",
+            "example": "2020-12-10T00:00:00",
+            "description": "The date of the bill. Times are expressed in local time."
+          },
+          "cost_number1": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 36,
+            "example": 1000,
+            "description": "Cost center/unit of cost 1. Equivalent to the kost2_cost_center_id in the Accountin API."
+          },
+          "cost_number2": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 36,
+            "example": 2000,
+            "description": "Cost center/unit of cost 2. Equivalent to the kost2_cost_center_id in the Accountin API."
+          },
+          "create_date_time": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true,
+            "format": "date-time",
+            "example": "2021-04-28T14:03:58.310",
+            "description": "The date of filing the document in DATEV document management system. Times are expressed in local time."
+          },
+          "creation_user": {
+            "readOnly": true,
+            "nullable": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/User"
+              }
+            ],
+            "description": "The user who filed the document in DATEV document management system."
+          },
+          "deletion_date": {
+            "type": "string",
+            "nullable": true,
+            "format": "date-time",
+            "example": "2020-12-10T00:00:00",
+            "description": "The date when the document will be deleted. Times are expressed in local time."
+          },
+          "description": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 255,
+            "example": "Eingangsrechnung 19.01.2021",
+            "description": "The description of the document."
+          },
+          "domain": {
+            "$ref": "#/components/schemas/DocumentDomain",
+            "nullable": true
+          },
+          "employee": {
+            "$ref": "#/components/schemas/Employee",
+            "nullable": true,
+            "description": "(only DATEV DMS) The number of the employee of the client."
+          },
+          "export_date_time": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true,
+            "format": "date-time",
+            "example": "2020-01-14T00:00:00",
+            "description": "Date of the export of the document. Times are expressed in local time."
+          },
+          "extension": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true,
+            "example": "docx",
+            "description": "A collection of datatypes contained in the structure of the document in DATEV DMS. In \"Dokumentenablage\" it is just one value and not a collection, because it is not possible to have more than one file in a document structure."
+          },
+          "folder": {
+            "$ref": "#/components/schemas/DocumentFolder",
+            "nullable": true
+          },
+          "is_binder": {
+            "type": "boolean",
+            "nullable": true,
+            "default": false,
+            "example": false,
+            "description": "(only can be true in DATEV DMS) (only for Post) Flag which states if the document is a work folder."
+          },
+          "is_shared": {
+            "type": "boolean",
+            "nullable": true,
+            "default": false,
+            "readOnly": true,
+            "example": false,
+            "description": "Flag if a document is \"Nach Online gesendet\" via the desktop application or the dispatcher-information is set."
+          },
+          "import_date_time": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true,
+            "format": "date-time",
+            "example": "2020-01-14T00:00:00",
+            "description": "Date of the import of the document. Times are expressed in local time."
+          },
+          "inbox": {
+            "type": "boolean",
+            "nullable": true,
+            "default": false,
+            "readOnly": true,
+            "description": "Flag if an inbox linked to the document exists."
+          },
+          "inbox_date": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true,
+            "format": "date-time",
+            "example": "2021-04-28T00:00:00.000",
+            "description": "Date of the inbox linked to the document. Times are expressed in local time."
+          },
+          "individual_property1": {
+            "type": "string",
+            "nullable": true,
+            "example": "N BG 1423",
+            "description": "(only DATEV DMS) The individual property 1 set for this document."
+          },
+          "individual_property2": {
+            "type": "string",
+            "nullable": true,
+            "example": "Audi A4",
+            "description": "(only DATEV DMS) The individual property 2 set for this document."
+          },
+          "individual_property3": {
+            "type": "string",
+            "nullable": true,
+            "example": "123 PS",
+            "description": "(only DATEV DMS) The individual property 3 set for this document."
+          },
+          "individual_property4": {
+            "type": "string",
+            "nullable": true,
+            "example": "4 Sitzer",
+            "description": "(only DATEV DMS) The individual property 4 set for this document."
+          },
+          "individual_property5": {
+            "type": "number",
+            "nullable": true,
+            "example": "3.0",
+            "format": "decimal",
+            "description": "(only DATEV DMS) The individual property 5 set for this document."
+          },
+          "individual_property6": {
+            "type": "number",
+            "nullable": true,
+            "example": "5.0",
+            "format": "decimal",
+            "description": "(only DATEV DMS) The individual property 6 set for this document."
+          },
+          "individual_property7": {
+            "type": "boolean",
+            "nullable": true,
+            "example": "true",
+            "description": "(only DATEV DMS) The individual property 7 set for this document."
+          },
+          "individual_property8": {
+            "type": "boolean",
+            "nullable": true,
+            "example": "true",
+            "description": "(only DATEV DMS) The individual property 8 set for this document."
+          },
+          "individual_property9": {
+            "type": "string",
+            "nullable": true,
+            "format": "date-time",
+            "example": "2020-01-14T00:00:00",
+            "description": "(only DATEV DMS) The individual property 9 set for this document. Times are expressed in local time."
+          },
+          "individual_property10": {
+            "type": "string",
+            "nullable": true,
+            "format": "date-time",
+            "example": "2020-01-14T00:00:00",
+            "description": "(only DATEV DMS) The individual property 10 set for this document. Times are expressed in local time."
+          },
+          "individual_reference1": {
+            "$ref": "#/components/schemas/DocumentIndividualReference",
+            "nullable": true,
+            "description": "(only DATEV DMS) The value of the individual reference list."
+          },
+          "individual_reference2": {
+            "$ref": "#/components/schemas/DocumentIndividualReference",
+            "nullable": true,
+            "description": "(only DATEV DMS) The value of the individual reference list."
+          },
+          "keywords": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 255,
+            "example": "These, are, keywords",
+            "description": "Keywords linked to the document."
+          },
+          "month": {
+            "type": "integer",
+            "format": "int16",
+            "nullable": true,
+            "example": 11,
+            "description": "Month of the assessment."
+          },
+          "more_years": {
+            "type": "string",
+            "nullable": true,
+            "example": "2015,2016,2017",
+            "description": "Additional year parameters linked to the document (only DATEV DMS)."
+          },
+          "note": {
+            "$ref": "#/components/schemas/Note",
+            "nullable": true,
+            "description": "Note associated with the document."
+          },
+          "number": {
+            "type": "integer",
+            "readOnly": true,
+            "nullable": true,
+            "format": "int32",
+            "example": 3001,
+            "description": "Number of the document."
+          },
+          "order": {
+            "$ref": "#/components/schemas/Order",
+            "nullable": true,
+            "description": "Order that belongs to the Document. More information can be retrieved via the order management API https://localhost:58454/datev/api/order-management/v1/orders/{order.id}"
+          },
+          "outbox": {
+            "type": "boolean",
+            "readOnly": true,
+            "nullable": true,
+            "default": false,
+            "example": true,
+            "description": "Flag if an outbox linked to the document exists."
+          },
+          "outbox_date": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true,
+            "format": "date",
+            "example": "2021-03-31",
+            "description": "Date of the outbox linked to the document."
+          },
+          "outbox_parked": {
+            "type": "boolean",
+            "readOnly": true,
+            "nullable": true,
+            "default": false,
+            "example": true,
+            "description": "(only can be true in DATEV DMS) Flag if there is an outbox prepared but not sent."
+          },
+          "priority": {
+            "type": "integer",
+            "format": "int16",
+            "nullable": true,
+            "default": 0,
+            "example": 1,
+            "description": "(only DATEV DMS) Flag if the document has a high priority or not. 1=high priority; 0=not high priority."
+          },
+          "property_template": {
+            "nullable": true,
+            "$ref": "#/components/schemas/DocumentPropertyTemplates"
+          },
+          "read_only": {
+            "type": "boolean",
+            "nullable": true,
+            "default": false,
+            "example": true,
+            "description": "Flag if the document is in read-only mode or writable."
+          },
+          "receipt_date": {
+            "type": "string",
+            "nullable": true,
+            "format": "date-time",
+            "example": "2020-12-14T00:00:00",
+            "description": "The date of the receipt or the document. Times are expressed in local time."
+          },
+          "receipt_number": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 36,
+            "example": 123456,
+            "description": "The number of the receipt. Equivalent to the property document_field1 in the Accounting API."
+          },
+          "reference_file": {
+            "type": "boolean",
+            "nullable": true,
+            "default": false,
+            "example": true,
+            "description": "A flag for documents that are not relevant for tax purposes and are therefore not subject to an economic audit."
+          },
+          "register": {
+            "nullable": true,
+            "$ref": "#/components/schemas/Register"
+          },
+          "revision_user": {
+            "readOnly": true,
+            "nullable": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/User"
+              }
+            ],
+            "description": "The user whom created the current revision of the document."
+          },
+          "secure_area": {
+            "$ref": "#/components/schemas/SecureArea",
+            "nullable": true,
+            "description": "(only DATEV DMS) Secure area which is set for the document."
+          },
+          "state": {
+            "$ref": "#/components/schemas/DocumentState",
+            "nullable": true,
+            "description": "The state of a document. Is not required for the application context \"Dokumentenablage\" for document-class 1 and 5."
+          },
+          "user": {
+            "$ref": "#/components/schemas/User",
+            "nullable": true,
+            "description": "The user who currently edited the document."
+          },
+          "year": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true,
+            "example": 2021,
+            "description": "Year of the assessment basis."
+          },
+          "id": {
+            "type": "string",
+            "readOnly": true,
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "example": "e602ddcb-e479-4cee-b268-e53bbecf6dc9",
+            "description": "Id of the document."
+          }
+        }
+      },
+      "DocumentUpdate": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "amount": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true,
+            "example": "150,95",
+            "description": "Amount of a receipt."
+          },
+          "application": {
+            "type": "string",
+            "nullable": true,
+            "example": "KARE",
+            "description": "The application that saved the document."
+          },
+          "class": {
+            "$ref": "#/components/schemas/Class",
+            "nullable": true
+          },
+          "correspondence_partner_guid": {
+            "type": "string",
+            "nullable": true,
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "example": "e602ddcb-e479-4cee-b268-e53bbecf6dc9",
+            "description": "The GUID of a correspondence partner. It is only possible to save a document for client, law-file, debtors and creditors. Depending on the installed market package. To determine the GUID you have to use the following requests. <br/> <table> <thead> <th>market</th> <th>correspondence partner</th> <th>request</th> </thead> <tbody> <tr> <td>chancellery</td> <td>client</td> <td>.../master-data/v1/clients</td> </tr> <tr> <td>chancellery</td> <td>law-file</td> <td>.../law/v1/files</td> </tr> <tr> <td>chancellery</td> <td>employee</td> <td>.../master-data/v1/employees</td> </tr> <tr> <td>company</td> <td>deptor</td> <td>.../accounting/v1/clients/{client-id}/fiscal-years/{fiscal-year-id}/debitors</td> </tr> <tr> <td>company</td> <td>creditor</td> <td>.../accounting/v1/clients/{client-id }/fiscal-years/{fiscal-year-id}/creditors</td> </tr> </tbody> </table>"
+          },
+          "correspondence_partner_firm_number": {
+            "type": "integer",
+            "readOnly": false,
+            "format": "int32",
+            "nullable": true,
+            "example": 16205
+          },
+          "cost_quantity": {
+            "type": "number",
+            "nullable": true,
+            "format": "decimal",
+            "example": 1.25,
+            "description": "Quantity relating to the cost."
+          },
+          "cost_date": {
+            "type": "string",
+            "nullable": true,
+            "format": "date-time",
+            "example": "2020-12-10T00:00:00",
+            "description": "Billing date. Times are expressed in local time."
+          },
+          "cost_number1": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 36,
+            "example": 1000,
+            "description": "Cost center/unit of cost 1. Equivalent to the kost1_cost_center_id in the Accounting API."
+          },
+          "cost_number2": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 36,
+            "example": 2000,
+            "description": "Cost center/unit of cost 2. Equivalent to the kost2_cost_center_id in the Accounting API."
+          },
+          "deletion_date": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2020-12-10T00:00:00",
+            "description": "The date when the document will be deleted. Times are expressed in local time."
+          },
+          "description": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 255,
+            "example": "Eingangsrechnung 19.01.2021",
+            "description": "Description of the document."
+          },
+          "domain": {
+            "nullable": true,
+            "$ref": "#/components/schemas/DocumentDomain"
+          },
+          "employee": {
+            "$ref": "#/components/schemas/Employee",
+            "nullable": true,
+            "description": "(only DATEV DMS) The employee number."
+          },
+          "folder": {
+            "$ref": "#/components/schemas/DocumentFolder",
+            "nullable": true
+          },
+          "individual_property1": {
+            "type": "string",
+            "nullable": true,
+            "example": "N BG 1423",
+            "description": "(only DATEV DMS) The individual property 1 set for this document."
+          },
+          "individual_property2": {
+            "type": "string",
+            "nullable": true,
+            "example": "Audi A4",
+            "description": "(only DATEV DMS) The individual property 2 set for this document."
+          },
+          "individual_property3": {
+            "type": "string",
+            "nullable": true,
+            "example": "123 PS",
+            "description": "(only DATEV DMS) The individual property 3 set for this document."
+          },
+          "individual_property4": {
+            "type": "string",
+            "nullable": true,
+            "example": "4 Sitzer",
+            "description": "(only DATEV DMS) The individual property 4 set for this document."
+          },
+          "individual_property5": {
+            "type": "number",
+            "nullable": true,
+            "example": "3.0",
+            "format": "decimal",
+            "description": "(only DATEV DMS) The individual property 5 set for this document."
+          },
+          "individual_property6": {
+            "type": "number",
+            "nullable": true,
+            "example": "5.0",
+            "format": "decimal",
+            "description": "(only DATEV DMS) The individual property 6 set for this document."
+          },
+          "individual_property7": {
+            "type": "boolean",
+            "nullable": true,
+            "example": "true",
+            "description": "(only DATEV DMS) The individual property 7 set for this document."
+          },
+          "individual_property8": {
+            "type": "boolean",
+            "nullable": true,
+            "example": "true",
+            "description": "(only DATEV DMS) The individual property 8 set for this document."
+          },
+          "individual_property9": {
+            "type": "string",
+            "nullable": true,
+            "format": "date-time",
+            "example": "2020-01-14T00:00:00",
+            "description": "(only DATEV DMS) The individual property 9 set for this document. Times are expressed in local time."
+          },
+          "individual_property10": {
+            "type": "string",
+            "nullable": true,
+            "format": "date-time",
+            "example": "2020-01-14T00:00:00",
+            "description": "(only DATEV DMS) The individual property 10 set for this document. Times are expressed in local time."
+          },
+          "individual_reference1": {
+            "nullable": true,
+            "$ref": "#/components/schemas/DocumentIndividualReference",
+            "description": "(only DATEV DMS) The value of the individual reference list."
+          },
+          "individual_reference2": {
+            "nullable": true,
+            "$ref": "#/components/schemas/DocumentIndividualReference",
+            "description": "(only DATEV DMS) The value of the individual reference list."
+          },
+          "keywords": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 255,
+            "example": "These, are, keywords",
+            "description": "Keywords linked to the document."
+          },
+          "month": {
+            "type": "integer",
+            "nullable": true,
+            "format": "int16",
+            "example": 11,
+            "description": "Month of the assessment basis."
+          },
+          "more_years": {
+            "type": "string",
+            "nullable": true,
+            "example": "2015,2016,2017",
+            "description": "Additional year parameters linked to the document (only DATEV DMS)."
+          },
+          "note": {
+            "nullable": true,
+            "$ref": "#/components/schemas/Note",
+            "description": "Note associated with the document."
+          },
+          "order": {
+            "nullable": true,
+            "$ref": "#/components/schemas/Order",
+            "description": "Order that belongs to the Document. More infromations can be retrieved via the order management API https://localhost:58454/datev/api/order-management/v1/orders/{order.id}"
+          },
+          "priority": {
+            "type": "integer",
+            "nullable": true,
+            "default": false,
+            "format": "int32",
+            "example": 1,
+            "description": "(only DATEV DMS) Flag if the document has a high priority or not. 1=high priority; 0=not high priority."
+          },
+          "read_only": {
+            "type": "boolean",
+            "nullable": true,
+            "default": false,
+            "example": true,
+            "description": "Flag if the document is in read-only mode or writable."
+          },
+          "receipt_date": {
+            "type": "string",
+            "nullable": true,
+            "format": "date-time",
+            "example": "2020-12-14T00:00:00",
+            "description": "The date of the receipt or the document. Times are expressed in local time."
+          },
+          "receipt_number": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 36,
+            "example": 123456,
+            "description": "The number of the receipt. Equivalent to the property document_field1 in the Accounting API."
+          },
+          "reference_file": {
+            "type": "boolean",
+            "nullable": true,
+            "default": false,
+            "example": true,
+            "description": "A flag for documents that are not relevant for tax purposes and are therefore not subject to an economic audit."
+          },
+          "register": {
+            "nullable": true,
+            "$ref": "#/components/schemas/Register"
+          },
+          "revision_comment": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 255,
+            "writeOnly": true,
+            "example": "Status wurde von offen auf erledigt gesetzt",
+            "description": "(only DATEV DMS) Additional information to the change of the document."
+          },
+          "state": {
+            "nullable": true,
+            "$ref": "#/components/schemas/DocumentState",
+            "description": "The state of a document. Is not required for the application context \"Dokumentenablage\" for document-class 1 and 5."
+          },
+          "structure_item": {
+            "nullable": true,
+            "$ref": "#/components/schemas/StructureItem"
+          },
+          "user": {
+            "nullable": true,
+            "$ref": "#/components/schemas/User",
+            "description": "The user who currently edited the document."
+          },
+          "year": {
+            "type": "integer",
+            "nullable": true,
+            "format": "int32",
+            "example": 2021,
+            "description": "Year of the assessment."
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "example": "e602ddcb-e479-4cee-b268-e53bbecf6dc9",
+            "description": "Id of the document. This attribute must equal the current id of the document being changed."
+          }
+        }
+      },
+      "DocumentCreate": {
+        "type": "object",
+        "required": [
+          "correspondance_partner_guid",
+          "structure_items",
+          "class"
+        ],
+        "properties": {
+          "acknowledge_by": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/AcknowledgementUser"
+            },
+            "description": "(only DATEV DMS) (only for Post)  The user that should take note or review the document."
+          },
+          "amount": {
+            "type": "string",
+            "nullable": true,
+            "example": "250,95",
+            "pattern": "^\\d{1,10}(,\\d{1,2})?$",
+            "description": "Amount of a receipt."
+          },
+          "application": {
+            "type": "string",
+            "nullable": true,
+            "example": "KARE",
+            "description": "The application through which the document was saved."
+          },
+          "case_number": {
+            "type": "integer",
+            "readOnly": true,
+            "format": "int32",
+            "nullable": true,
+            "description": "The number that uniquely identifies the case in the system."
+          },
+          "class": {
+            "$ref": "#/components/schemas/Class"
+          },
+          "correspondence_partner_guid": {
+            "type": "string",
+            "maxLength": 50,
+            "example": "e602ddcb-e479-4cee-b268-e53bbecf6dc9",
+            "description": "The GUID of a correspondence partner. Not all correspondence_partners are of type GUID. Examples for correspondence_partners are \"Mandanten\", \"Akten\", \"Mitarbeiter\", etc."
+          },
+          "correspondence_partner_firm_number": {
+            "type": "integer",
+            "readOnly": false,
+            "format": "int32",
+            "nullable": true,
+            "example": 16205,
+            "description": "Company number of the correspondence partner."
+          },
+          "cost_quantity": {
+            "type": "number",
+            "format": "decimal",
+            "multipleOf": 0.0001,
+            "exclusiveMaximum": true,
+            "nullable": true,
+            "example": 1.25,
+            "description": "The quantity of the matter cost."
+          },
+          "cost_date": {
+            "type": "string",
+            "nullable": true,
+            "format": "date-time",
+            "example": "2020-12-10T00:00:00",
+            "description": "The date of the bill. Times are expressed in local time."
+          },
+          "cost_number1": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 36,
+            "example": 1000,
+            "description": "Cost center/unit of cost 1. Equivalent to the kost1_cost_center_id in the Accounting API."
+          },
+          "cost_number2": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 36,
+            "example": 2000,
+            "description": "Cost center/unit of cost 2. Equivalent to the kost2_cost_center_id in the Accounting API."
+          },
+          "create_date_time": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true,
+            "format": "date-time",
+            "example": "2021-04-28T14:03:58.310",
+            "description": "The date of filing the document in DATEV document management system. Times are expressed in local time."
+          },
+          "creation_user": {
+            "readOnly": true,
+            "nullable": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/User"
+              }
+            ],
+            "description": "The user who filed the document in DATEV document management system."
+          },
+          "deletion_date": {
+            "type": "string",
+            "nullable": true,
+            "format": "date-time",
+            "example": "2020-12-10T00:00:00",
+            "description": "The date when the document will be deleted. Times are expressed in local time."
+          },
+          "description": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 255,
+            "example": "Eingangsrechnung 19.01.2021",
+            "description": "The description of the document."
+          },
+          "domain": {
+            "$ref": "#/components/schemas/DocumentDomain",
+            "nullable": true
+          },
+          "employee": {
+            "$ref": "#/components/schemas/Employee",
+            "nullable": true,
+            "description": "(only DATEV DMS) The number of the employee of the client."
+          },
+          "export_date_time": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true,
+            "format": "date-time",
+            "example": "2020-01-14T00:00:00",
+            "description": "Date of the export of the document. Times are expressed in local time."
+          },
+          "extension": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true,
+            "example": "docx",
+            "description": "A collection of datatypes contained in the structure of the document in DATEV DMS. In \"Dokumentenablage\" it is just one value and not a collection, because it'not possible to have more as one file in a document structure."
+          },
+          "folder": {
+            "nullable": true,
+            "$ref": "#/components/schemas/DocumentFolder"
+          },
+          "is_binder": {
+            "type": "boolean",
+            "nullable": true,
+            "default": false,
+            "example": false,
+            "description": "(only can be true in DATEV DMS) (only for Post) Flag which states if the document is a work folder."
+          },
+          "import_date_time": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true,
+            "format": "date-time",
+            "example": "2020-01-14T00:00:00",
+            "description": "Date of the import of the document. Times are expressed in local time."
+          },
+          "inbox": {
+            "type": "boolean",
+            "nullable": true,
+            "default": false,
+            "readOnly": true,
+            "description": "Flag if an inbox linked to the document exists."
+          },
+          "inbox_date": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true,
+            "format": "date-time",
+            "example": "2021-04-28T00:00:00.000",
+            "description": "Date of the inbox linked to the document. Times are expressed in local time."
+          },
+          "individual_property1": {
+            "type": "string",
+            "nullable": true,
+            "example": "N BG 1423",
+            "description": "(only DATEV DMS) The individual property 1 set for this document."
+          },
+          "individual_property2": {
+            "type": "string",
+            "nullable": true,
+            "example": "Audi A4",
+            "description": "(only DATEV DMS) The individual property 2 set for this document."
+          },
+          "individual_property3": {
+            "type": "string",
+            "nullable": true,
+            "example": "123 PS",
+            "description": "(only DATEV DMS) The individual property 3 set for this document."
+          },
+          "individual_property4": {
+            "type": "string",
+            "nullable": true,
+            "example": "4 Sitzer",
+            "description": "(only DATEV DMS) The individual property 4 set for this document."
+          },
+          "individual_property5": {
+            "type": "number",
+            "nullable": true,
+            "example": "3.0",
+            "format": "decimal",
+            "description": "(only DATEV DMS) The individual property 5 set for this document."
+          },
+          "individual_property6": {
+            "type": "number",
+            "nullable": true,
+            "example": "5.0",
+            "format": "decimal",
+            "description": "(only DATEV DMS) The individual property 6 set for this document."
+          },
+          "individual_property7": {
+            "type": "boolean",
+            "nullable": true,
+            "example": "true",
+            "description": "(only DATEV DMS) The individual property 7 set for this document."
+          },
+          "individual_property8": {
+            "type": "boolean",
+            "nullable": true,
+            "example": "true",
+            "description": "(only DATEV DMS) The individual property 8 set for this document."
+          },
+          "individual_property9": {
+            "type": "string",
+            "nullable": true,
+            "format": "date-time",
+            "example": "2020-01-14T00:00:00",
+            "description": "(only DATEV DMS) The individual property 9 set for this document. Times are expressed in local time."
+          },
+          "individual_property10": {
+            "type": "string",
+            "nullable": true,
+            "format": "date-time",
+            "example": "2020-01-14T00:00:00",
+            "description": "(only DATEV DMS) The individual property 10 set for this document. Times are expressed in local time."
+          },
+          "individual_reference1": {
+            "nullable": true,
+            "$ref": "#/components/schemas/DocumentIndividualReference",
+            "description": "(only DATEV DMS) The value of the individual reference list."
+          },
+          "individual_reference2": {
+            "nullable": true,
+            "$ref": "#/components/schemas/DocumentIndividualReference",
+            "description": "(only DATEV DMS) The value of the individual reference list."
+          },
+          "keywords": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 255,
+            "example": "These, are, keywords",
+            "description": "Keywords linked to the document."
+          },
+          "month": {
+            "type": "integer",
+            "nullable": true,
+            "format": "int16",
+            "example": 11,
+            "description": "Month of the assessment."
+          },
+          "more_years": {
+            "type": "string",
+            "nullable": true,
+            "example": "2015,2016,2017",
+            "description": "Additional year parameters linked to the document (only DATEV DMS)"
+          },
+          "note": {
+            "nullable": true,
+            "$ref": "#/components/schemas/Note",
+            "description": "Note associated with the document."
+          },
+          "number": {
+            "type": "integer",
+            "readOnly": true,
+            "nullable": true,
+            "format": "int32",
+            "example": 3001,
+            "description": "Number of the document."
+          },
+          "order": {
+            "nullable": true,
+            "$ref": "#/components/schemas/Order",
+            "description": "Order that belongs to the Document. More infromations can be retrieved via the order management API https://localhost:58454/datev/api/order-management/v1/orders/{order.id}"
+          },
+          "outbox": {
+            "type": "boolean",
+            "readOnly": true,
+            "nullable": true,
+            "default": false,
+            "example": true,
+            "description": "Flag if an outbox linked to the document exists."
+          },
+          "outbox_date": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true,
+            "format": "date",
+            "example": "2021-03-31",
+            "description": "Date of the outbox linked to the document."
+          },
+          "outbox_parked": {
+            "type": "boolean",
+            "readOnly": true,
+            "nullable": true,
+            "default": false,
+            "example": true,
+            "description": "(only can be true in DATEV DMS) Flag if there is an outbox prepared but not sent."
+          },
+          "priority": {
+            "type": "integer",
+            "format": "int16",
+            "nullable": true,
+            "default": 0,
+            "example": 1,
+            "description": "(only DATEV DMS) Flag if the document has high priority or not. 1=high priority; 0=not high priority."
+          },
+          "property_template": {
+            "nullable": true,
+            "$ref": "#/components/schemas/DocumentPropertyTemplates"
+          },
+          "read_only": {
+            "type": "boolean",
+            "nullable": true,
+            "default": false,
+            "example": true,
+            "description": "Flag if the document is in read-only mode or writable."
+          },
+          "receipt_date": {
+            "type": "string",
+            "nullable": true,
+            "format": "date-time",
+            "example": "2020-12-14T00:00:00",
+            "description": "The date of the receipt or the document. Times are expressed in local time."
+          },
+          "receipt_number": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 36,
+            "example": 123456,
+            "description": "The number of the receipt. Equivalent to the property document_field1 in the Accounting API."
+          },
+          "reference_file": {
+            "type": "boolean",
+            "nullable": true,
+            "default": false,
+            "example": true,
+            "description": "A flag for documents that are not relevant for tax purposes and are therefore not subject to an economic audit."
+          },
+          "register": {
+            "nullable": true,
+            "$ref": "#/components/schemas/Register"
+          },
+          "secure_area": {
+            "$ref": "#/components/schemas/SecureArea",
+            "nullable": true,
+            "description": "(only DATEV DMS) Secure area which is set for the document."
+          },
+          "state": {
+            "$ref": "#/components/schemas/DocumentState",
+            "nullable": true,
+            "description": "The state of a document. Is not required for the application context \"Dokumentenablage\" for document-class 1 and 5."
+          },
+          "structure_items": {
+            "type": "array",
+            "nullable": true,
+            "writeOnly": true,
+            "items": {
+              "required": [
+                "name",
+                "counter",
+                "type",
+                "file"
+              ],
+              "$ref": "#/components/schemas/StructureItem"
+            },
+            "description": "(only for Post) It is possible, only in the application context DATEV DMS, to save more as one file or include folders as structure_items."
+          },
+          "user": {
+            "nullable": true,
+            "$ref": "#/components/schemas/User",
+            "description": "The user who currently edited the document."
+          },
+          "year": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true,
+            "example": 2021,
+            "description": "Year of the assessment basis."
+          }
+        }
+      },
+      "Order": {
+        "type": "object",
+        "properties": {
+          "assessment_year": {
+            "type": "integer",
+            "nullable": true,
+            "readOnly": true,
+            "format": "smallint",
+            "example": "2021",
+            "description": "The year for which the service is provided for a client, e. g. income tax 2019."
+          },
+          "creation_year": {
+            "type": "integer",
+            "nullable": true,
+            "readOnly": true,
+            "format": "smallint",
+            "example": "2021",
+            "description": "Year in which the order was created in the system."
+          },
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true,
+            "maxLength": 60,
+            "example": "Jahresurlaub",
+            "description": "Order name"
+          },
+          "number": {
+            "type": "integer",
+            "nullable": true,
+            "readOnly": true,
+            "format": "int",
+            "example": 92,
+            "description": "Consecutive number of an order within one year. Creation Year + Order number is the key(non technical) of the order."
+          },
+          "id": {
+            "type": "integer",
+            "nullable": true,
+            "readOnly": false,
+            "format": "int32",
+            "example": 1056,
+            "description": "Unique technical key of the order."
+          }
+        }
+      },
+      "PropertyTemplates": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "BaM ESt-Bescheid",
+            "maxLength": 255,
+            "readOnly": true,
+            "description": "property template name."
+          },
+          "document_class": {
+            "type": "integer",
+            "example": 1,
+            "readOnly": true,
+            "description": "Substitute of the document class. 1 = Dokument, 3 = Beleg, 5 = Telefonnotiz."
+          },
+          "supplement": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": false,
+            "example": "Eine Ergänzung",
+            "description": "Supplement information to the property template."
+          },
+          "inbox_document_type_number": {
+            "type": "integer",
+            "nullable": true,
+            "format": "int32",
+            "example": 3600,
+            "readOnly": true,
+            "description": "Number of the document type for the inbox. It is set if the property template has an inbox."
+          },
+          "outbox_document_type_number": {
+            "type": "integer",
+            "nullable": true,
+            "format": "int32",
+            "example": 3600,
+            "readOnly": true,
+            "description": "Number of the document type for the outbox. It is set if the property template has an outbox."
+          },
+          "id": {
+            "type": "integer",
+            "readOnly": false,
+            "format": "int32",
+            "example": 1056,
+            "description": "Unique technical key of the property template."
+          }
+        }
+      },
+      "DocumentPropertyTemplates": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "example": "BaM ESt-Bescheid",
+            "maxLength": 255,
+            "readOnly": true,
+            "description": "Property template name."
+          },
+          "supplement": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": false,
+            "example": "Eine Ergänzung",
+            "description": "Supplement information to the property template."
+          },
+          "id": {
+            "type": "integer",
+            "readOnly": false,
+            "format": "int32",
+            "example": 1056,
+            "description": "Unique technical key of the property template."
+          }
+        }
+      },
+      "Note": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "nullable": true,
+            "example": "This is an example of a note",
+            "description": "Unformatted content of the note associated with the document."
+          },
+          "popup": {
+            "type": "boolean",
+            "default": false,
+            "example": true,
+            "description": "(only DATEV DMS) Flag which indicates whether to show the note before opening the document."
+          }
+        }
+      },
+      "DocumentState": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true,
+            "example": "offen",
+            "description": "Description of the document state."
+          },
+          "id": {
+            "type": "string",
+            "readOnly": false,
+            "example": "5",
+            "description": "Id of the document state."
+          }
+        }
+      },
+      "State": {
+        "type": "object",
+        "required": [
+          "description",
+          "valid_document_classes"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "offen",
+            "description": "Name of the document state."
+          },
+          "valid_document_classes": {
+            "type": "integer",
+            "example": [
+              1,
+              3,
+              5
+            ],
+            "description": "Substitute of the document class. 1 = Dokument, 3 = Beleg, 5 = Telefonnotiz."
+          },
+          "id": {
+            "type": "string",
+            "readOnly": true,
+            "example": 5,
+            "description": "Id of the document state."
+          }
+        }
+      },
+      "Class": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "example": "Dokument",
+            "readOnly": true,
+            "description": "Name of the document class."
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1,
+            "description": "Substitute of the document class. 1 = Dokument, 3 = Beleg, 5 = Telefonnotiz."
+          }
+        }
+      },
+      "DocumentDomain": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true,
+            "example": "Mandanten",
+            "description": "Name of the domain."
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": "1",
+            "description": "Id of the domain."
+          }
+        }
+      },
+      "DispatcherInformation": {
+        "type": "object",
+        "required": [
+          "comment",
+          "application"
+        ],
+        "properties": {
+          "application": {
+            "type": "string",
+            "example": "KARE",
+            "description": "Application which transferred the document. The value will be visible in the comment field of the revision."
+          },
+          "comment": {
+            "type": "string",
+            "maxLength": 255,
+            "example": "Dokument erfolgreich übermittelt",
+            "description": "Individual text which will be visible in the comment field of the revision in the desktop application."
+          },
+          "external_id": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 50,
+            "example": 234,
+            "description": "The id of the document of the user of the API."
+          }
+        }
+      },
+      "Domain": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "correspondence_partner": {
+            "type": "object",
+            "readOnly": true,
+            "$ref": "#/components/schemas/CorrespondencePartner",
+            "description": "Informationen to the area from which the correspondance partner originates."
+          },
+          "folders": {
+            "type": "array",
+            "readOnly": true,
+            "items": {
+              "$ref": "#/components/schemas/Folder"
+            }
+          },
+          "is_selected": {
+            "type": "boolean",
+            "readOnly": true,
+            "example": true,
+            "description": "indicates if the user uses this domain in his desktop application."
+          },
+          "name": {
+            "type": "string",
+            "readOnly": true,
+            "example": "Mandant",
+            "description": "Name of the domain."
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": "1",
+            "description": "Id of the domain."
+          }
+        }
+      },
+      "Employee": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "readOnly": true,
+            "example": "Mustermann, Max",
+            "description": "Name of the employee."
+          },
+          "is_active": {
+            "type": "boolean",
+            "readOnly": true,
+            "example": true,
+            "description": "Indicates if an employee can be seleced in DATEV DMS."
+          },
+          "id": {
+            "type": "integer",
+            "readOnly": false,
+            "format": "int32",
+            "example": 11,
+            "description": "The employee number."
+          }
+        }
+      },
+      "CorrespondencePartner": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string",
+            "readOnly": true,
+            "example": "Mandant",
+            "description": "indicates which master data domain the correspondance partner belongs to."
+          },
+          "link": {
+            "type": "string",
+            "readOnly": true,
+            "example": "http://localhost:58454/datev/api/master-data/v1/clients",
+            "description": "URL to get more informations to the correspondence partner. The element is not given if there is no API for this masta data domain."
+          }
+        }
+      },
+      "DocumentFolder": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true,
+            "example": "Stammakte",
+            "description": "Name of the folder."
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": "3",
+            "description": "Id of the folder."
+          }
+        }
+      },
+      "Folder": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "readOnly": true,
+            "example": "Stammakte",
+            "description": "Name of the folder."
+          },
+          "registers": {
+            "type": "array",
+            "readOnly": true,
+            "items": {
+              "$ref": "#/components/schemas/Register"
+            }
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": "3",
+            "description": "Id of the folder."
+          }
+        }
+      },
+      "Register": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true,
+            "example": "Korrespondenz",
+            "description": "Name of the register."
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": "2",
+            "description": "Id of the register."
+          }
+        }
+      },
+      "StructureItem": {
+        "type": "object",
+        "required": [
+          "name",
+          "type"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "EST.pdf",
+            "description": "Name of the file or folder an the file extension."
+          },
+          "counter": {
+            "type": "integer",
+            "nullable": true,
+            "format": "int32",
+            "example": "1",
+            "description": "Structure items are sorted in ascending order according to this number."
+          },
+          "creation_date": {
+            "type": "string",
+            "nullable": true,
+            "format": "date-time",
+            "example": "2012-11-07T15:26:40+01:00",
+            "description": "Date of the creation of the file. Times are expressed in local time."
+          },
+          "last_modification_date": {
+            "type": "string",
+            "nullable": true,
+            "format": "date-time",
+            "example": "2021-01-04T11:37:40.7188738+01:00",
+            "description": "Date of the last modification of the file. Times are expressed in local time."
+          },
+          "type": {
+            "type": "integer",
+            "format": "int16",
+            "nullable": true,
+            "default": 1,
+            "example": 1,
+            "description": "Type of the structure_item. 1 - file, 2 - folder."
+          },
+          "parent_counter": {
+            "type": "integer",
+            "nullable": true,
+            "default": 0,
+            "format": "int16",
+            "example": 0,
+            "description": "Used for parent-child association. Set this to the counter of the parent structure item. 0 if no parent exists."
+          },
+          "document_link": {
+            "type": "string",
+            "nullable": true,
+            "example": "96e01d5b-952d-4c1f-a634-76bebcc7ee99",
+            "description": "The GUID to another document at DATEV DMS or Document Filing (Dokumentenablage). This creates a link from this structure_item to the corresponding document. It is only possible to set document_file_id or document_link. If document_link is set the strucuture-item.name have to end with .dlk"
+          },
+          "document_file_id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true,
+            "example": 1489,
+            "description": "The Responde from the request about the resource document-files. It is only possible to set document_file_id or document_link."
+          },
+          "revision_comment": {
+            "type": "string",
+            "nullable": true,
+            "writeOnly": true,
+            "maxLength": 255,
+            "example": "Datei XY zu der Struktur unter den Ordner 4. Quartal hinzugefügt",
+            "description": "(only DATEV DMS) Additional information to the change of the document."
+          },
+          "id": {
+            "type": "integer",
+            "nullable": true,
+            "format": "int32",
+            "readOnly": true,
+            "description": "Id of the structure_item.",
+            "example": 976058
+          }
+        }
+      },
+      "StructureItemUpdate": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "example": "EST.pdf",
+            "description": "Name of the file or folder."
+          },
+          "creation_date": {
+            "type": "string",
+            "nullable": true,
+            "format": "date-time",
+            "example": "2012-11-07T15:26:40+01:00",
+            "description": "Date of the creation of the file. Times are expressed in local time."
+          },
+          "last_modification_date": {
+            "type": "string",
+            "nullable": true,
+            "format": "date-time",
+            "example": "2021-01-04T11:37:40.7188738+01:00",
+            "description": "Date of the last modification of the file. Times are expressed in local time."
+          },
+          "document_file_id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The id of the file.",
+            "example": 1034725
+          },
+          "revision_comment": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 255,
+            "writeOnly": true,
+            "example": "Die Datei XY wurde geändert",
+            "description": "(only DATEV DMS) Additional information to the change of the document."
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "description": "The id of the structure item.",
+            "example": 1036031
+          }
+        }
+      },
+      "DocumentFile": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 1051362,
+            "readOnly": true,
+            "description": "Id of the file."
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true,
+            "example": "Mustermann, Bob, BobM13",
+            "description": "Name of an user. Format is 'last name, first name, user name'."
+          },
+          "is_deleted": {
+            "type": "boolean",
+            "nullable": true,
+            "readOnly": true,
+            "example": false,
+            "description": "Flag if the user is deleted."
+          },
+          "is_user_group": {
+            "type": "boolean",
+            "nullable": true,
+            "readOnly": true,
+            "example": false,
+            "description": "Flag if the user is a user group."
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "example": "35e98168-01dd-4104-a273-79e38b3c3b22",
+            "description": "Id of the user. The value is 00000000-0000-0000-0000-000000000000 by a GET request if the user doesn't exist in the useradministation of DATEV Document Management or it is the revision user and the program Document Filing (Dokumentenablage) is installed. To determine the GUID by a POST request you have to use the following requests https://localhost:58452/datev/api/iam/v1/Users."
+          }
+        }
+      },
+      "Info": {
+        "type": "object",
+        "properties": {
+          "environment": {
+            "type": "string",
+            "example": "Kanzlei",
+            "description": "indicates the environment of the installation. Possible values are \"Kanzlei\", \"Unternehmen\" und \"Berufsorganisationen\"."
+          },
+          "feature": {
+            "type": "string",
+            "example": "DATEV DMS",
+            "description": "returns the DATEV Document Management program type. Program types can be 'DokAB' for Document Filing, 'DokAbRev' for Document Filing with revison management and 'DMS' for DATEV DMS."
+          },
+          "versions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Version"
+            }
+          },
+          "data_path": {
+            "type": "string",
+            "example": "\\\\V008064\\WINDVSW1\\DATEV\\DATEN\\K0005100\\DATA\\STANDARD",
+            "description": "DATEV Document Management datapath which receives the request of the API."
+          },
+          "is_client_installed": {
+            "type": "boolean",
+            "example": true,
+            "description": "Indicates whether the client is installed on the server. Which is necessary for access management."
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "example": "35e98168-01dd-4104-a273-79e38b3c3b22",
+            "description": "Random id."
+          }
+        }
+      },
+      "Version": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "K0003024",
+            "description": "Name of the component. Possible components K0003021, K0003024, K0005100; K0005300."
+          },
+          "number": {
+            "type": "string",
+            "example": "14.0A",
+            "description": "Number of the version of the component."
+          }
+        }
+      },
+      "IndividualProperty": {
+        "type": "object",
+        "properties": {
+          "active": {
+            "type": "boolean",
+            "example": true,
+            "description": "Shows if the  given individual property is set to active in the DATEV document management application."
+          },
+          "data_name": {
+            "type": "string",
+            "example": "individual_property1",
+            "description": "Name of the object property for the given individual property."
+          },
+          "datatype": {
+            "type": "string",
+            "example": "string",
+            "description": "Data type of the given individual property."
+          },
+          "display_name": {
+            "type": "string",
+            "example": "KFZ",
+            "description": "Name given to the individual property for display purposes."
+          },
+          "order": {
+            "type": "number",
+            "format": "integer",
+            "example": 2,
+            "description": "Index for ordering the individual properties for display purposes."
+          },
+          "reference_item": {
+            "type": "boolean",
+            "example": true,
+            "description": "Indicates whether the given individual property is useful on its own or a reference item which points to \"/individual-references\"."
+          },
+          "id": {
+            "type": "string",
+            "example": "1301"
+          }
+        }
+      },
+      "IndividualReference": {
+        "type": "object",
+        "required": [
+          "name",
+          "id"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Bob"
+          },
+          "correspondence_partner_guid": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 50,
+            "example": "e602ddcb-e479-4cee-b268-e53bbecf6dc9",
+            "description": "The GUID of a correspondence partner. Not all correspondence_partners are of type GUID. Examples of correspondence_partners are \"Mandanten\", \"Akten\", \"Mitarbeiter\", etc."
+          },
+          "correspondence_partner_domain": {
+            "type": "string",
+            "nullable": true,
+            "example": "Mandanten",
+            "description": "indicates which master data domain the correspondance partner belongs to."
+          },
+          "correspondence_partner_link": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true,
+            "example": "https://VAA1DBZ0038:58452/datev/api/master-data/v1/clients/6336711a-1f08-4fc9-bc01-bd1f9e180498",
+            "description": "URL to get more informations to the correspondence partner. The element is not given if there is no API for this masta data domain."
+          },
+          "id": {
+            "type": "string",
+            "readOnly": true,
+            "example": "1",
+            "description": "Individual reference id."
+          }
+        }
+      },
+      "DocumentIndividualReference": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "readOnly": true,
+            "example": "Bob"
+          },
+          "id": {
+            "type": "string",
+            "readOnly": false,
+            "example": "1",
+            "description": "Individual reference id."
+          }
+        }
+      },
+      "SecureArea": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "maxLength": 80,
+            "readOnly": true,
+            "example": "Kanzleileitung",
+            "description": "The name of the secureArea."
+          },
+          "id": {
+            "type": "string",
+            "example": "1",
+            "description": "The id of the secureArea."
+          }
+        }
+      },
+      "AcknowledgementUser": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true,
+            "example": "Mustermann, Bob, BobM13",
+            "description": "Name of an user. Format is 'last name, first name, user name'."
+          },
+          "removed_acknowledgement": {
+            "type": "string",
+            "nullable": true,
+            "format": "date-time",
+            "example": "2021-03-04T14:03:58.310",
+            "description": "The date when the user was removed from the list of persons that should acknowledge a document. Is only visible if the value is set. Times are expressed in local time."
+          },
+          "acknowledged": {
+            "type": "string",
+            "nullable": true,
+            "format": "date-time",
+            "example": "2021-03-04T14:03:58.310",
+            "description": "The date when the user acknowledge the document. Is only visible if the value is set. Times are expressed in local time."
+          },
+          "is_deleted": {
+            "type": "boolean",
+            "nullable": true,
+            "readOnly": true,
+            "example": false,
+            "description": "Flag if the user is deleted."
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$",
+            "example": "35e98168-01dd-4104-a273-79e38b3c3b22",
+            "description": "Id of the user. The value is 00000000-0000-0000-0000-000000000000 by a GET request if the user doesn't exist in the useradministation of DATEV Document Management or it is the revision user and the program Document Filing (Dokumentenablage) is installed. To determine the GUID by a POST request you have to use the following requests https://localhost:58452/datev/api/iam/v1/Users."
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "additional_messages": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/AdditionalMessage"
+            }
+          },
+          "error": {
+            "type": "string",
+            "nullable": true,
+            "description": "error code",
+            "example": "DCO10006"
+          },
+          "error_description": {
+            "type": "string",
+            "description": "Example of an error description.",
+            "example": "description of the error"
+          },
+          "error_uri": {
+            "type": "string",
+            "nullable": true,
+            "description": "URI to further information",
+            "example": "https://apps.datev.de/knowledge/help/search?q=DCO10006"
+          },
+          "request_id": {
+            "type": "string",
+            "description": "Id of the original request.",
+            "example": "4bbb43c7-41a9-4f8b-bb1d-38a49b13e06f"
+          }
+        }
+      },
+      "AdditionalMessage": {
+        "required": [
+          "id",
+          "severity"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "nullable": true,
+            "format": "int32",
+            "description": "Id of the additional message."
+          },
+          "description": {
+            "type": "string",
+            "description": "Further information of message.",
+            "example": "Example of additional error description"
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "Error",
+              "Warning",
+              "Information"
+            ],
+            "description": "Severity of the error."
+          }
+        }
+      }
+    },
+    "parameters": {
+      "Select": {
+        "in": "query",
+        "name": "select",
+        "schema": {
+          "type": "string"
+        },
+        "description": "Attributes to which the result of the query is to be limited."
+      },
+      "FileId": {
+        "name": "document-file-id",
+        "in": "path",
+        "description": "The Id of the File.",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "x-example": "../document-files/5843"
+      },
+      "Filter": {
+        "name": "filter",
+        "schema": {
+          "type": "string"
+        },
+        "in": "query",
+        "description": "Entering a filter expression influences the number of results. Example: filter=domain.id eq 33 and state.id eq 5 <br>\n**Operators**\n<table>\n  <tr>\n    <th>operator</th>\n    <th>description</th>\n    <th>parameter</th>\n  </tr>\n  <tr>\n    <td>eq</td>\n    <td>Equal; 'gleich'</td>\n    <td>number, user.id, domain.id, folder.id,\nregister.id, state.id, correspondence_partner_guid, change_date_time</td>\n  </tr>\n  <tr>\n    <td>gt</td>\n    <td>Greater than</td>\n    <td>number, domain.id, folder.id, register.id, state.id, change_date_time</td>\n  </tr>\n  <tr>\n    <td>lt</td>\n    <td>Less than</td>\n    <td>number, domain.id, folder.id, register.id, state.id, change_date_time</td>\n  </tr>\n</table>\n**Filter combinations**\nYou can combine filter expressions with the opertors \"and\" and \"or\".",
+        "x-example": "filter=domain.id eq 33 and number eq 50781"
+      },
+      "Insertposition": {
+        "name": "insertposition",
+        "schema": {
+          "type": "string"
+        },
+        "in": "query",
+        "description": "specific if the new file is inserted at the beginning or the end of the document-structure.<br> **Variables** <table> <tr> <th>variable</th> <th>structure-postion</th> </tr> <tr> <td>first</td> <td>beginning</td> </tr> <tr> <td>last</td> <td>end</td> </tr> </table>",
+        "x-example": ".../documents/e407e6a3-0045-4275-8bf2-a0f858dbfb33/structure-items?insertposition=first"
+      },
+      "Top": {
+        "name": "top",
+        "schema": {
+          "type": "integer"
+        },
+        "in": "query",
+        "description": "Specifies the number of elements that should be included in the result<br>\n**Paging**\nWhen accessing large quantities of data, it may happen that these cannot be delivered in a single request. In this case, paging has to be used in order to reduce the amount of data in a single request. Please use top and skip for this purpose.",
+        "x-example": "Top=3"
+      },
+      "Skip": {
+        "name": "skip",
+        "schema": {
+          "type": "integer"
+        },
+        "in": "query",
+        "description": "Specifies the number of elements to be skipped in the result<br>\n**Paging**\nWhen accessing large quantities of data, it may happen that these cannot be delivered in a single request. In this case, paging has to be used in order to reduce the amount of data in a single request. Please use top and skip for this purpose.",
+        "x-example": "Skip=985"
+      },
+      "DocumentGuid": {
+        "name": "id",
+        "in": "path",
+        "description": "Unique id of the document.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^(\\{?[0-9A-Fa-f]{8}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{4}[-][0-9A-Fa-f]{12}\\}?)$"
+        },
+        "x-example": ".../documents/edc851b7-14ac-4101-90e6-120b2a7e97a1"
+      },
+      "StructureItemId": {
+        "name": "structure-item-id",
+        "in": "path",
+        "description": "Id of the structure_item.",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "x-example": ".../documents/edc851b7-14ac-4101-90e6-120b2a7e97a1/structure-items/358"
+      },
+      "DomainId": {
+        "name": "domain-id",
+        "in": "path",
+        "description": "ID of the domain.",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "FolderId": {
+        "name": "folder-id",
+        "in": "path",
+        "description": "Id of the folder.",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "StateId": {
+        "name": "state-id",
+        "in": "path",
+        "description": "Id of the state of the document.",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "x-example": ".../documentstates/5"
+      },
+      "IndRefId": {
+        "name": "id",
+        "in": "path",
+        "description": "Id of the individual reference.",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "x-example": ".../individual-references1/3"
+      }
+    }
+  }
+}
