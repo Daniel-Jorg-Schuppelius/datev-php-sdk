@@ -4,19 +4,38 @@
 			"key": "resourceurl",
 			"value": "https://127.0.0.1:58452",
 			"type": "text",
-			"description": "",
+			"description": "DATEV Desktop API base URL",
+			"enabled": true
+		},
+		{
+			"key": "auth_type",
+			"value": "basic",
+			"type": "text",
+			"description": "Authentication type: 'basic' or 'bearer'",
 			"enabled": true
 		},
 		{
 			"key": "user",
 			"value": "Benutzer",
-			"description": "",
+			"description": "Username for Basic Authentication",
 			"enabled": true
 		},
 		{
 			"key": "password",
 			"value": "password",
-			"description": "",
+			"description": "Password for Basic Authentication",
+			"enabled": true
+		},
+		{
+			"key": "api_key",
+			"value": "",
+			"description": "API Key/Token for Bearer Authentication",
+			"enabled": true
+		},
+		{
+			"key": "client_id",
+			"value": "",
+			"description": "X-Datev-Client-ID header for Bearer Authentication",
 			"enabled": true
 		}
 	]

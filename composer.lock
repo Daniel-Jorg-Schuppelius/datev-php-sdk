@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a76c17fc9248b2d4101921ce5b2a4189",
+    "content-hash": "883b65d9c72467a0f3af4c316522d425",
     "packages": [
         {
             "name": "brick/math",
@@ -68,16 +68,16 @@
         },
         {
             "name": "daniel-jorg-schuppelius/php-api-toolkit",
-            "version": "v1.5.3",
+            "version": "v2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Daniel-Jorg-Schuppelius/php-api-toolkit.git",
-                "reference": "13c4d4180547a4f47ce89799e25bfe5f6fcd1c24"
+                "reference": "09595237234d2e0f0bfa805aab60f0d11e5ffa11"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Daniel-Jorg-Schuppelius/php-api-toolkit/zipball/13c4d4180547a4f47ce89799e25bfe5f6fcd1c24",
-                "reference": "13c4d4180547a4f47ce89799e25bfe5f6fcd1c24",
+                "url": "https://api.github.com/repos/Daniel-Jorg-Schuppelius/php-api-toolkit/zipball/09595237234d2e0f0bfa805aab60f0d11e5ffa11",
+                "reference": "09595237234d2e0f0bfa805aab60f0d11e5ffa11",
                 "shasum": ""
             },
             "require": {
@@ -109,9 +109,9 @@
             "description": "Reused codes for my api php sdks",
             "support": {
                 "issues": "https://github.com/Daniel-Jorg-Schuppelius/php-api-toolkit/issues",
-                "source": "https://github.com/Daniel-Jorg-Schuppelius/php-api-toolkit/tree/v1.5.3"
+                "source": "https://github.com/Daniel-Jorg-Schuppelius/php-api-toolkit/tree/v2.0"
             },
-            "time": "2025-12-28T13:30:41+00:00"
+            "time": "2025-12-29T09:52:17+00:00"
         },
         {
             "name": "dschuppelius/php-common-toolkit",

@@ -10,10 +10,12 @@
 
 namespace Tests;
 
+use APIToolkit\Contracts\Abstracts\API\Authentication\BasicAuthentication;
+use APIToolkit\Contracts\Abstracts\API\Authentication\BearerAuthentication;
 use APIToolkit\Contracts\Interfaces\API\ApiClientInterface;
 use ConfigToolkit\ConfigLoader;
 use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use Datev\API\Desktop\ClientBasicAuth;
+use Datev\API\Desktop\Client;
 
 class TestAPIClientFactory {
     private static ?ApiClientInterface $client = null;
@@ -22,7 +24,23 @@ class TestAPIClientFactory {
         if (self::$client === null) {
             $config = ConfigLoader::getInstance(ConsoleLoggerFactory::getLogger());
             $config->loadConfigFile(__DIR__ . "/../.samples/config.json");
-            self::$client = new ClientBasicAuth($config->get("DATEV-DESKTOP-API", "user"), $config->get("DATEV-DESKTOP-API", "password"), $config->get("DATEV-DESKTOP-API", "resourceurl", "https://127.0.0.1:58452"), ConsoleLoggerFactory::getLogger());
+
+            $authType = $config->get("DATEV-DESKTOP-API", "auth_type", "basic");
+            $baseUrl = $config->get("DATEV-DESKTOP-API", "resourceurl", "https://127.0.0.1:58452");
+
+            if ($authType === "bearer") {
+                $authentication = new BearerAuthentication(
+                    $config->get("DATEV-DESKTOP-API", "api_key"),
+                    ['X-Datev-Client-ID' => $config->get("DATEV-DESKTOP-API", "client_id")]
+                );
+                self::$client = new Client($authentication, $baseUrl, ConsoleLoggerFactory::getLogger());
+            } else {
+                $authentication = new BasicAuthentication(
+                    $config->get("DATEV-DESKTOP-API", "user"),
+                    $config->get("DATEV-DESKTOP-API", "password")
+                );
+                self::$client = new Client($authentication, $baseUrl, ConsoleLoggerFactory::getLogger());
+            }
         }
         return self::$client;
     }
