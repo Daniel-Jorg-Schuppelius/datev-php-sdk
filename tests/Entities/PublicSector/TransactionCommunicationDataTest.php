@@ -27,8 +27,8 @@ class TransactionCommunicationDataTest extends TestCase {
             "communication_type" => "email",
             "note" => "Primäre E-Mail",
             "communication_usage_type" => [
-                "id" => 1,
-                "name" => "Business"
+                "is_main_communication_usage_type" => true,
+                "is_main_management_phone" => false
             ]
         ];
 

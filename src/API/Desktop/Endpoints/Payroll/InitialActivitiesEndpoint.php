@@ -17,7 +17,7 @@ use APIToolkit\Entities\ID;
 use APIToolkit\Contracts\Interfaces\API\ApiClientInterface;
 use Datev\Contracts\Abstracts\API\Desktop\Payroll\PayrollEndpointAbstract;
 use Datev\Entities\Common\Clients\ClientID;
-use Datev\Entities\Payroll\Employees\EmployeeID;
+use Datev\Entities\Common\Employees\EmployeeID;
 use Datev\Entities\Payroll\InitialActivities\InitialActivities;
 use InvalidArgumentException;
 use Psr\Log\LoggerInterface;

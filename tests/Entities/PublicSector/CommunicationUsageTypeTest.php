@@ -21,9 +21,8 @@ class CommunicationUsageTypeTest extends TestCase {
         $logger = ConsoleLoggerFactory::getLogger();
 
         $data = [
-            "id" => 1,
-            "name" => "Email",
-            "description" => "E-Mail-Kommunikation"
+            "is_main_communication_usage_type" => true,
+            "is_main_management_phone" => false
         ];
 
         $usageType = new CommunicationUsageType($data, $logger);

@@ -20,6 +20,11 @@ class ResourceTypes extends NamedValues {
         $this->entityName = "Resources";
         $this->valueClassName = ResourceType::class;
 
+        // Extract Resources array if wrapped in SCIM ListResponse format
+        if (is_array($data) && array_key_exists($this->entityName, $data)) {
+            $data = $data[$this->entityName];
+        }
+
         parent::__construct($data, $logger);
     }
 }

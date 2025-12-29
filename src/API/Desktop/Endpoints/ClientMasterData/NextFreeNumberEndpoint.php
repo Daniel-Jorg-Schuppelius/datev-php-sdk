@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Datev\API\Desktop\Endpoints\ClientMasterData;
 
+use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use Datev\Entities\ClientMasterData\NextFreeNumbers\NextFreeNumber;
 
@@ -23,7 +24,7 @@ class NextFreeNumberEndpoint extends EndpointAbstract {
         return "{$this->getEndpointUrl()}/next-free-number";
     }
 
-    public function get(): ?NextFreeNumber {
+    public function get(?ID $id = null): ?NextFreeNumber {
         $response = parent::getContents([], [], $this->getBaseUrl());
 
         if (empty($response) || $response === '[]') {

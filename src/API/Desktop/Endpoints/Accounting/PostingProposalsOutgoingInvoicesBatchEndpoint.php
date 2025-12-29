@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Datev\API\Desktop\Endpoints\Accounting;
 
-use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\PostableEndpointInterface;
+use Datev\Contracts\Interfaces\API\PostableEndpointInterface;
 use APIToolkit\Entities\ID;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterface;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;

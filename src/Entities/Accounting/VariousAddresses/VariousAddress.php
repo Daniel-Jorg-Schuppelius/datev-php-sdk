@@ -16,7 +16,7 @@ use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use DateTime;
 use Datev\Entities\ClientMasterData\Addresses\Addresses;
-use Datev\Entities\Common\Banks\Banks;
+use Datev\Entities\Accounting\Banks\Banks;
 use Datev\Entities\ClientMasterData\Communications\Communications;
 use Psr\Log\LoggerInterface;
 

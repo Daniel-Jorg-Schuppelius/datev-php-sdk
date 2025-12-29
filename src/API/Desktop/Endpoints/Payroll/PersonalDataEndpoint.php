@@ -14,7 +14,7 @@ namespace Datev\API\Desktop\Endpoints\Payroll;
 
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use Datev\Contracts\Abstracts\API\Desktop\Payroll\PayrollEndpointAbstract;
-use Datev\Entities\Payroll\Data\PersonalData;
+use Datev\Entities\Payroll\Data\Personal\PersonalData;
 
 class PersonalDataEndpoint extends PayrollEndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointSuffix = 'personal-data';

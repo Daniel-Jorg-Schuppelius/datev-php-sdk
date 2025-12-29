@@ -21,11 +21,10 @@ class TransactionAddressDataTest extends TestCase {
         $logger = ConsoleLoggerFactory::getLogger();
 
         $data = [
+            "id" => "addr-123",
             "street" => "Musterstraße",
-            "house_number" => "123",
             "postal_code" => "12345",
-            "city" => "Berlin",
-            "country" => "DE"
+            "city" => "Berlin"
         ];
 
         $addressData = new TransactionAddressData($data, $logger);

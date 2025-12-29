@@ -22,9 +22,9 @@ class EmployeeGroupAccountingTest extends TestCase {
         $logger = ConsoleLoggerFactory::getLogger();
 
         $data = [
-            "id" => "ega-001",
+            "number" => "001",
             "name" => "Buchhaltung Team A",
-            "cost_center" => "1000"
+            "contact_person" => "Max Mustermann"
         ];
 
         $employeeGroupAccounting = new EmployeeGroupAccounting($data, $logger);
@@ -38,11 +38,11 @@ class EmployeeGroupAccountingTest extends TestCase {
         $data = [
             "content" => [
                 [
-                    "id" => "ega-001",
+                    "number" => "001",
                     "name" => "Buchhaltung Team A"
                 ],
                 [
-                    "id" => "ega-002",
+                    "number" => "002",
                     "name" => "Buchhaltung Team B"
                 ]
             ]

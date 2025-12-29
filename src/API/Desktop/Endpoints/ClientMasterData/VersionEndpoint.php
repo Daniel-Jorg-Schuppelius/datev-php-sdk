@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Datev\API\Desktop\Endpoints\ClientMasterData;
 
+use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use Datev\Entities\ClientMasterData\Versions\Version;
 
@@ -19,7 +20,7 @@ class VersionEndpoint extends EndpointAbstract {
     protected string $endpointPrefix = 'master-data/v1';
     protected string $endpoint = 'version';
 
-    public function get(): ?Version {
+    public function get(?ID $id = null): ?Version {
         $response = parent::getContents();
 
         if (empty($response) || $response === '[]') {

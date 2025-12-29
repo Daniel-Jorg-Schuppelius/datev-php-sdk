@@ -24,7 +24,9 @@ class ResourceTypeTest extends TestCase {
             "name" => "User",
             "description" => "User Account",
             "endpoint" => "/Users",
-            "schema" => "urn:ietf:params:scim:schemas:core:2.0:User"
+            "schema" => "urn:ietf:params:scim:schemas:core:2.0:User",
+            "schema_extensions" => [],
+            "meta" => []
         ];
 
         $logger = ConsoleLoggerFactory::getLogger();
@@ -33,7 +35,9 @@ class ResourceTypeTest extends TestCase {
         $this->assertInstanceOf(ResourceType::class, $resourceType);
         $this->assertEquals("User", $resourceType->getId());
         $this->assertEquals("User", $resourceType->getName());
+        $this->assertEquals("User Account", $resourceType->getDescription());
         $this->assertEquals("/Users", $resourceType->getEndpoint());
+        $this->assertEquals("urn:ietf:params:scim:schemas:core:2.0:User", $resourceType->getSchema());
     }
 
     public function testCreateResourceTypes() {
@@ -42,7 +46,11 @@ class ResourceTypeTest extends TestCase {
                 [
                     "id" => "User",
                     "name" => "User",
-                    "endpoint" => "/Users"
+                    "description" => "User Account",
+                    "endpoint" => "/Users",
+                    "schema" => "urn:ietf:params:scim:schemas:core:2.0:User",
+                    "schema_extensions" => [],
+                    "meta" => []
                 ]
             ]
         ];

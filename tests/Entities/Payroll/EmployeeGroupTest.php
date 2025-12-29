@@ -22,9 +22,9 @@ class EmployeeGroupTest extends TestCase {
         $logger = ConsoleLoggerFactory::getLogger();
 
         $data = [
-            "id" => "eg-001",
+            "number" => "001",
             "name" => "Vollzeit-Mitarbeiter",
-            "description" => "Gruppe für alle Vollzeitmitarbeiter"
+            "clearing_account_id" => 1234
         ];
 
         $employeeGroup = new EmployeeGroup($data, $logger);
@@ -38,11 +38,11 @@ class EmployeeGroupTest extends TestCase {
         $data = [
             "content" => [
                 [
-                    "id" => "eg-001",
+                    "number" => "001",
                     "name" => "Vollzeit"
                 ],
                 [
-                    "id" => "eg-002",
+                    "number" => "002",
                     "name" => "Teilzeit"
                 ]
             ]

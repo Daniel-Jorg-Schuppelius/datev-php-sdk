@@ -23,10 +23,9 @@ class TaxCardTest extends TestCase {
 
         $data = [
             "id" => "tc-001",
-            "personnel_number" => "12345",
             "tax_class" => 1,
             "factor" => 1.0,
-            "number_of_children" => 0
+            "denomination" => "Hauptlohnsteuerkarte"
         ];
 
         $taxCard = new TaxCard($data, $logger);
