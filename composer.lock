@@ -68,20 +68,20 @@
         },
         {
             "name": "daniel-jorg-schuppelius/php-api-toolkit",
-            "version": "v2.0",
+            "version": "v2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Daniel-Jorg-Schuppelius/php-api-toolkit.git",
-                "reference": "09595237234d2e0f0bfa805aab60f0d11e5ffa11"
+                "reference": "0938d0df9d401c899c9b8de4cc8959bde20d5e18"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Daniel-Jorg-Schuppelius/php-api-toolkit/zipball/09595237234d2e0f0bfa805aab60f0d11e5ffa11",
-                "reference": "09595237234d2e0f0bfa805aab60f0d11e5ffa11",
+                "url": "https://api.github.com/repos/Daniel-Jorg-Schuppelius/php-api-toolkit/zipball/0938d0df9d401c899c9b8de4cc8959bde20d5e18",
+                "reference": "0938d0df9d401c899c9b8de4cc8959bde20d5e18",
                 "shasum": ""
             },
             "require": {
-                "dschuppelius/php-common-toolkit": "^0.7.1",
+                "dschuppelius/php-common-toolkit": "^0.7.2",
                 "guzzlehttp/guzzle": "^7.9 || ^8.0",
                 "php": "^8.2 || ^8.3",
                 "psr/log": "^3.0@dev",
@@ -109,9 +109,9 @@
             "description": "Reused codes for my api php sdks",
             "support": {
                 "issues": "https://github.com/Daniel-Jorg-Schuppelius/php-api-toolkit/issues",
-                "source": "https://github.com/Daniel-Jorg-Schuppelius/php-api-toolkit/tree/v2.0"
+                "source": "https://github.com/Daniel-Jorg-Schuppelius/php-api-toolkit/tree/v2.0.1"
             },
-            "time": "2025-12-29T09:52:17+00:00"
+            "time": "2025-12-29T10:56:23+00:00"
         },
         {
             "name": "dschuppelius/php-common-toolkit",
