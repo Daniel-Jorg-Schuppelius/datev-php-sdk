@@ -27,19 +27,20 @@ class TestAPIClientFactory {
 
             $authType = $config->get("DATEV-DESKTOP-API", "auth_type", "basic");
             $baseUrl = $config->get("DATEV-DESKTOP-API", "resourceurl", "https://127.0.0.1:58452");
+            $verifySSL = $config->get("DATEV-DESKTOP-API", "verify_ssl", false);
 
             if ($authType === "bearer") {
                 $authentication = new BearerAuthentication(
                     $config->get("DATEV-DESKTOP-API", "api_key") ?? "test-api-key",
                     ['X-Datev-Client-ID' => $config->get("DATEV-DESKTOP-API", "client_id") ?? "test-client-id"]
                 );
-                self::$client = new Client($authentication, $baseUrl, ConsoleLoggerFactory::getLogger());
+                self::$client = new Client($authentication, $baseUrl, ConsoleLoggerFactory::getLogger(), false, $verifySSL);
             } else {
                 $authentication = new BasicAuthentication(
                     $config->get("DATEV-DESKTOP-API", "user") ?? "test-user",
                     $config->get("DATEV-DESKTOP-API", "password") ?? "test-password"
                 );
-                self::$client = new Client($authentication, $baseUrl, ConsoleLoggerFactory::getLogger());
+                self::$client = new Client($authentication, $baseUrl, ConsoleLoggerFactory::getLogger(), false, $verifySSL);
             }
         }
         return self::$client;

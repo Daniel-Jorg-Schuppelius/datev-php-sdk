@@ -21,11 +21,12 @@ class Client extends ClientAbstract {
         ?AuthenticationInterface $authentication = null,
         string $baseUrl = 'https://127.0.0.1:58452',
         ?LoggerInterface $logger = null,
-        bool $sleepAfterRequest = false
+        bool $sleepAfterRequest = false,
+        bool $verifySSL = false
     ) {
         parent::__construct($baseUrl, $logger, $sleepAfterRequest);
 
-        $this->setVerifySSL(false);
+        $this->setVerifySSL($verifySSL);
         $this->setTimeout(120.0);
         $this->setDefaultHeaders([
             'Accept' => 'application/json;charset=utf-8',

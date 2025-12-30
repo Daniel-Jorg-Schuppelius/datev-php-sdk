@@ -37,6 +37,13 @@
 			"value": "",
 			"description": "X-Datev-Client-ID header for Bearer Authentication",
 			"enabled": true
+		},
+		{
+			"key": "verify_ssl",
+			"value": false,
+			"type": "boolean",
+			"description": "Enable or disable SSL certificate verification",
+			"enabled": true
 		}
 	]
 }
