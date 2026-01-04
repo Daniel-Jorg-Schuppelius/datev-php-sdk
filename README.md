@@ -306,14 +306,14 @@ Dokumentation: [docs/OpenApiCoverageAnalyzer.md](docs/OpenApiCoverageAnalyzer.md
 
 Dieses Projekt ist unter der [MIT-Lizenz](LICENSE) lizenziert.
 
-## � Unterstützung
+## 💖 Unterstützung
 
 Wenn Ihnen dieses Projekt gefällt und es Ihnen bei Ihrer Arbeit hilft, würde ich mich sehr über eine Spende freuen!
 
 [![GitHub Sponsors](https://img.shields.io/badge/Sponsor-GitHub-ea4aaa?logo=github)](https://github.com/sponsors/Daniel-Jorg-Schuppelius)
 [![PayPal](https://img.shields.io/badge/Spenden-PayPal-blue?logo=paypal)](https://www.paypal.com/donate/?hosted_button_id=X43UQQVDKL76Y)
 
-## �👤 Autor
+## 👤 Autor
 
 **Daniel Jörg Schuppelius**
 - Website: [schuppelius.org](https://schuppelius.org)
