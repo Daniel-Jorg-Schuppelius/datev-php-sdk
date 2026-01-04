@@ -1,28 +1,30 @@
 # DATEV PHP SDK
 
-[![PHP Version](https://img.shields.io/badge/php-%5E8.2%20%7C%7C%20%5E8.3-blue)](https://php.net)
+[![PHP Version](https://img.shields.io/badge/php-8.2%20|%208.3%20|%208.4-blue)](https://php.net)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[![Packagist](https://img.shields.io/packagist/v/daniel-jorg-schuppelius/datev-php-sdk)](https://packagist.org/packages/daniel-jorg-schuppelius/datev-php-sdk)
 
 Ein PHP SDK für die **DATEV Desktop API**, das programmatischen Zugriff auf die deutsche Buchhaltungs- und Lohnabrechnungssoftware ermöglicht.
 
 ## 🚀 Features
 
-- **Zwei Authentifizierungsmodi**: Bearer Token und HTTP Basic Auth
+- **Flexible Authentifizierung**: Basic Auth und Bearer Token über austauschbare Authentication-Klassen
 - **Domain-Driven Design**: Strikte Trennung zwischen API-Clients, Endpoints, Entities und Contracts
+- **Über 120 Endpoints** für umfassende DATEV-Integration
 - **Umfassende API-Abdeckung** für verschiedene DATEV-Bereiche:
-  - Buchhaltung (Accounting)
-  - Mandantenstammdaten (Client Master Data)
-  - Lohn & Gehalt (Payroll/HR)
-  - Dokumentenmanagement
-  - Auftragsverwaltung (Order Management)
-  - Rechtswesen (Law)
-  - Öffentlicher Sektor (Public Sector)
-  - Identity & Access Management
-  - Diagnostics
+  - Buchhaltung (Accounting) - 34 Endpoints
+  - Mandantenstammdaten (Client Master Data) - 19 Endpoints
+  - Lohn & Gehalt (Payroll/HR) - 32 Endpoints
+  - Dokumentenmanagement (DMS) - 11 Endpoints
+  - Auftragsverwaltung (Order Management) - 21 Endpoints
+  - Rechtswesen (Law) - 15 Endpoints
+  - Öffentlicher Sektor (Public Sector) - 12 Endpoints
+  - Identity & Access Management (SCIM) - 5 Endpoints
+  - Diagnostics - 2 Endpoints
 
 ## 📋 Voraussetzungen
 
-- PHP 8.2 oder höher
+- PHP 8.2, 8.3 oder 8.4
 - DATEV Software mit aktivierter Desktop API (läuft standardmäßig auf Port 58452)
 - Composer
 
@@ -42,24 +44,23 @@ Die API läuft standardmäßig auf `https://127.0.0.1:58452`.
 
 **HTTP Basic Auth (empfohlen):**
 ```php
-use Datev\API\Desktop\ClientBasicAuth;
+use APIToolkit\Contracts\Abstracts\API\Authentication\BasicAuthentication;
+use Datev\API\Desktop\Client;
 
-$client = new ClientBasicAuth(
-    username: 'Benutzer',
-    password: 'password',
-    baseUrl: 'https://127.0.0.1:58452'
-);
+$authentication = new BasicAuthentication('Benutzer', 'Passwort');
+$client = new Client($authentication, 'https://127.0.0.1:58452');
 ```
 
 **Bearer Token Auth:**
 ```php
+use APIToolkit\Contracts\Abstracts\API\Authentication\BearerAuthentication;
 use Datev\API\Desktop\Client;
 
-$client = new Client(
-    apiKey: 'your-api-key',
-    clientID: 'your-client-id',
-    baseUrl: 'https://127.0.0.1:58452'
+$authentication = new BearerAuthentication(
+    'your-api-key',
+    ['X-Datev-Client-ID' => 'your-client-id']
 );
+$client = new Client($authentication, 'https://127.0.0.1:58452');
 ```
 
 ## 📚 Verwendung
@@ -67,10 +68,11 @@ $client = new Client(
 ### Beispiel: Mandanten abrufen (Accounting)
 
 ```php
-use Datev\API\Desktop\ClientBasicAuth;
+use APIToolkit\Contracts\Abstracts\API\Authentication\BasicAuthentication;
+use Datev\API\Desktop\Client;
 use Datev\API\Desktop\Endpoints\Accounting\ClientsEndpoint;
 
-$client = new ClientBasicAuth('user', 'password');
+$client = new Client(new BasicAuthentication('user', 'password'));
 $endpoint = new ClientsEndpoint($client);
 
 // Alle Mandanten abrufen
@@ -83,10 +85,11 @@ $singleClient = $endpoint->get(id: $clientId);
 ### Beispiel: Mitarbeiter abrufen (Payroll)
 
 ```php
-use Datev\API\Desktop\ClientBasicAuth;
+use APIToolkit\Contracts\Abstracts\API\Authentication\BasicAuthentication;
+use Datev\API\Desktop\Client;
 use Datev\API\Desktop\Endpoints\Payroll\EmployeesEndpoint;
 
-$client = new ClientBasicAuth('user', 'password');
+$client = new Client(new BasicAuthentication('user', 'password'));
 $endpoint = new EmployeesEndpoint($client);
 
 // Mitarbeiter mit Referenzdatum abrufen (erforderlich für HR-Endpoints)
@@ -96,10 +99,11 @@ $employees = $endpoint->get(referenceDate: new DateTime('2024-01-01'));
 ### Beispiel: Echo-Test (Verbindung prüfen)
 
 ```php
-use Datev\API\Desktop\ClientBasicAuth;
+use APIToolkit\Contracts\Abstracts\API\Authentication\BasicAuthentication;
+use Datev\API\Desktop\Client;
 use Datev\API\Desktop\Endpoints\Diagnostics\EchoEndpoint;
 
-$client = new ClientBasicAuth('user', 'password');
+$client = new Client(new BasicAuthentication('user', 'password'));
 $echoEndpoint = new EchoEndpoint($client);
 
 $response = $echoEndpoint->get();
@@ -111,38 +115,140 @@ $response = $echoEndpoint->get();
 src/
 ├── API/
 │   └── Desktop/
-│       ├── Client.php              # Bearer Token Auth
-│       ├── ClientBasicAuth.php     # HTTP Basic Auth
+│       ├── Client.php              # API Client (unterstützt alle Auth-Typen)
 │       └── Endpoints/
-│           ├── Accounting/         # accounting/v1
-│           ├── ClientMasterData/   # master-data/v1
-│           ├── Diagnostics/        # Echo & Domain-Checks
-│           ├── DocumentManagement/ # dms/v2
-│           ├── IdentityAndAccessManagement/  # SCIM
-│           ├── Law/                # law/v1
-│           ├── OrderManagement/    # Auftragsverwaltung
-│           ├── Payroll/            # hr/v3
-│           └── PublicSector/       # public-sector/v1
+│           ├── Accounting/         # 34 Endpoints (accounting/v1)
+│           ├── ClientMasterData/   # 19 Endpoints (master-data/v1)
+│           ├── Diagnostics/        # 2 Endpoints (Echo & Domains)
+│           ├── DocumentManagement/ # 11 Endpoints (dms/v2)
+│           ├── IdentityAndAccessManagement/  # 5 Endpoints (SCIM)
+│           ├── Law/                # 15 Endpoints (law/v1)
+│           ├── OrderManagement/    # 21 Endpoints
+│           ├── Payroll/            # 32 Endpoints (hr/v3)
+│           └── PublicSector/       # 12 Endpoints (public-sector/v1)
 ├── Contracts/
 │   ├── Abstracts/                  # Basis-Klassen
 │   └── Interfaces/                 # Interface-Definitionen
 ├── Entities/                       # Domain-Entities
-└── Enums/                          # Enumerations
+└── Enums/                          # Enumerations (20+ Typen)
 ```
 
 ## 🔌 API-Endpunkte
 
-| Domain | Prefix | Beschreibung |
-|--------|--------|--------------|
-| Accounting | `accounting/v1` | Buchungssätze, Kostenstellen, Konten, etc. |
-| Client Master Data | `master-data/v1` | Adressaten, Mandantenstammdaten, Finanzämter |
-| Payroll | `hr/v3` | Mitarbeiter, Gehälter, Sozialversicherung |
-| Document Management | `dms/v2` | Dokumente, Domains, Eigenschaften |
-| Identity & Access | SCIM | Benutzer, Gruppen, Schemas |
-| Law | `law/v1` | Akten, Gebühren, Auslagen |
-| Order Management | - | Aufträge, Rechnungen, Gebührenpläne |
-| Public Sector | `public-sector/v1` | Bürger, Bescheide, Zähler |
-| Diagnostics | - | Echo-Endpoint für Verbindungstests |
+### Accounting (`accounting/v1`)
+Buchungssätze, Kostenstellen, Konten, Kreditoren, Debitoren und mehr.
+
+| Endpoint | Beschreibung |
+|----------|--------------|
+| `ClientsEndpoint` | Mandantenverwaltung |
+| `AccountingRecordsEndpoint` | Buchungssätze |
+| `AccountingSequencesEndpoint` | Buchungsstapel |
+| `GeneralLedgerAccountsEndpoint` | Sachkonten |
+| `CreditorsEndpoint` / `DebitorsEndpoint` | Kreditoren & Debitoren |
+| `CostCentersEndpoint` | Kostenstellen |
+| `FiscalYearsEndpoint` | Wirtschaftsjahre |
+| `TermsOfPaymentEndpoint` | Zahlungsbedingungen |
+| `PostingProposal*Endpoint` | Buchungsvorschläge (Kasse, Ein-/Ausgangsrechnungen) |
+| ... und 24 weitere | |
+
+### Client Master Data (`master-data/v1`)
+Mandantenstammdaten, Adressaten und Finanzämter.
+
+| Endpoint | Beschreibung |
+|----------|--------------|
+| `ClientsEndpoint` | Mandantenstammdaten |
+| `AddresseesEndpoint` | Adressatenverwaltung |
+| `TaxAuthoritiesEndpoint` | Finanzämter |
+| `BanksEndpoint` | Bankverbindungen |
+| `LegalFormsEndpoint` | Rechtsformen |
+| `ClientCategoriesEndpoint` | Mandantenkategorien |
+| `RelationshipsEndpoint` | Beziehungen |
+| ... und 12 weitere | |
+
+### Payroll / HR (`hr/v3`)
+Lohn- und Gehaltsabrechnung. **Hinweis:** Alle HR-Endpoints erfordern ein `reference-date`.
+
+| Endpoint | Beschreibung |
+|----------|--------------|
+| `EmployeesEndpoint` | Mitarbeiterverwaltung |
+| `SalariesEndpoint` | Gehälter |
+| `SocialInsuranceEndpoint` | Sozialversicherung |
+| `TaxationEndpoint` | Besteuerung |
+| `WorkingHoursEndpoint` | Arbeitszeiten |
+| `VacationEntitlementEndpoint` | Urlaubsansprüche |
+| `GrossPaymentsEndpoint` | Bruttobezüge |
+| ... und 25 weitere | |
+
+### Document Management (`dms/v2`)
+Dokumentenverwaltung und Archivierung.
+
+| Endpoint | Beschreibung |
+|----------|--------------|
+| `DocumentsEndpoint` | Dokumentverwaltung |
+| `DocumentFilesEndpoint` | Dateien zu Dokumenten |
+| `DocumentStatesEndpoint` | Dokumentstatus |
+| `DomainsEndpoint` | Mandantenbereiche |
+| `StructureItemsEndpoint` | Ordnerstrukturen |
+| `SecureAreasEndpoint` | Sicherheitsbereiche |
+| ... und 5 weitere | |
+
+### Order Management
+Auftragsverwaltung mit Gebührenplanung.
+
+| Endpoint | Beschreibung |
+|----------|--------------|
+| `OrdersEndpoint` | Aufträge |
+| `InvoicesEndpoint` | Rechnungen |
+| `FeePlansEndpoint` | Gebührenpläne |
+| `ChargeRatesEndpoint` | Verrechnungssätze |
+| `CostItemsEndpoint` | Kostenträger |
+| `ExpensePostingsEndpoint` | Auslagenbuchungen |
+| ... und 15 weitere | |
+
+### Law (`law/v1`)
+Aktenverwaltung für Rechtsanwälte und Notare.
+
+| Endpoint | Beschreibung |
+|----------|--------------|
+| `FilesEndpoint` | Akten |
+| `ExpensesEndpoint` | Auslagen |
+| `FeeVersionsEndpoint` | Gebührenversionen |
+| `CausesEndpoint` | Fallursachen |
+| `PartyRolesEndpoint` | Parteirollen |
+| `SecurityZonesEndpoint` | Sicherheitszonen |
+| ... und 9 weitere | |
+
+### Public Sector (`public-sector/v1`)
+Kommunalverwaltung und öffentlicher Sektor.
+
+| Endpoint | Beschreibung |
+|----------|--------------|
+| `CitizensEndpoint` | Bürgerverwaltung |
+| `MetersEndpoint` | Zählerverwaltung |
+| `MeterReadingsEndpoint` | Zählerablesungen |
+| `NotificationsEndpoint` | Bescheide |
+| `DuesEndpoint` | Gebühren |
+| `ConsumptionsEndpoint` | Verbrauchsdaten |
+| ... und 6 weitere | |
+
+### Identity & Access Management (SCIM)
+Benutzer- und Gruppenverwaltung nach SCIM-Standard.
+
+| Endpoint | Beschreibung |
+|----------|--------------|
+| `UsersEndpoint` | Benutzerverwaltung |
+| `GroupsEndpoint` | Gruppenverwaltung |
+| `SchemasEndpoint` | SCIM-Schemas |
+| `ResourceTypesEndpoint` | Ressourcentypen |
+| `ServiceProviderConfigEndpoint` | Provider-Konfiguration |
+
+### Diagnostics
+Verbindungstests und Systemdiagnose.
+
+| Endpoint | Beschreibung |
+|----------|--------------|
+| `EchoEndpoint` | Verbindungstest |
+| `DomainsEndpoint` | Verfügbare Domains |
 
 ## 🧪 Tests
 
@@ -182,9 +288,19 @@ vendor/bin/phpunit
 
 ## 📖 Abhängigkeiten
 
-- [php-api-toolkit](https://github.com/daniel-jorg-schuppelius/php-api-toolkit) - Basis-Klassen für Clients, Endpoints und Entities
+- [php-api-toolkit](https://github.com/daniel-jorg-schuppelius/php-api-toolkit) (^2.0) - Basis-Klassen für Clients, Endpoints und Entities
 - [GuzzleHttp](https://github.com/guzzle/guzzle) - HTTP Client
 - [PSR-3 Logger](https://www.php-fig.org/psr/psr-3/) - Logging-Interface
+
+## 🔧 Tools
+
+Das SDK enthält ein **OpenAPI Coverage Analyzer** Tool zur Analyse der API-Abdeckung:
+
+```bash
+php tools/OpenApiCoverageAnalyzer.php
+```
+
+Dokumentation: [docs/OpenApiCoverageAnalyzer.md](docs/OpenApiCoverageAnalyzer.md)
 
 ## 📄 Lizenz
 
