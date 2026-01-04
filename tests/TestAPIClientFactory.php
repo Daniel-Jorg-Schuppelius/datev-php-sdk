@@ -10,8 +10,8 @@
 
 namespace Tests;
 
-use APIToolkit\Contracts\Abstracts\API\Authentication\BasicAuthentication;
-use APIToolkit\Contracts\Abstracts\API\Authentication\BearerAuthentication;
+use APIToolkit\API\Authentication\BasicAuthentication;
+use APIToolkit\API\Authentication\BearerAuthentication;
 use APIToolkit\Contracts\Interfaces\API\ApiClientInterface;
 use ConfigToolkit\ConfigLoader;
 use ERRORToolkit\Factories\ConsoleLoggerFactory;

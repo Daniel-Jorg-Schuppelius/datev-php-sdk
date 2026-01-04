@@ -68,20 +68,20 @@
         },
         {
             "name": "daniel-jorg-schuppelius/php-api-toolkit",
-            "version": "v2.0.3",
+            "version": "v2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Daniel-Jorg-Schuppelius/php-api-toolkit.git",
-                "reference": "7a077301028ba9e49b5ce8ad070860ab76fa1106"
+                "reference": "3aff9535c2035715a0bf8b6d2e6c4b44a799f81e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Daniel-Jorg-Schuppelius/php-api-toolkit/zipball/7a077301028ba9e49b5ce8ad070860ab76fa1106",
-                "reference": "7a077301028ba9e49b5ce8ad070860ab76fa1106",
+                "url": "https://api.github.com/repos/Daniel-Jorg-Schuppelius/php-api-toolkit/zipball/3aff9535c2035715a0bf8b6d2e6c4b44a799f81e",
+                "reference": "3aff9535c2035715a0bf8b6d2e6c4b44a799f81e",
                 "shasum": ""
             },
             "require": {
-                "dschuppelius/php-common-toolkit": "^0.8.0",
+                "dschuppelius/php-common-toolkit": "^0.9.1",
                 "guzzlehttp/guzzle": "^7.10",
                 "php": ">=8.1 <8.5",
                 "ramsey/uuid": "^4.9"
@@ -108,22 +108,22 @@
             "description": "Reused codes for my api php sdks",
             "support": {
                 "issues": "https://github.com/Daniel-Jorg-Schuppelius/php-api-toolkit/issues",
-                "source": "https://github.com/Daniel-Jorg-Schuppelius/php-api-toolkit/tree/v2.0.3"
+                "source": "https://github.com/Daniel-Jorg-Schuppelius/php-api-toolkit/tree/v2.1.1"
             },
-            "time": "2025-12-31T00:57:57+00:00"
+            "time": "2026-01-04T08:43:39+00:00"
         },
         {
             "name": "dschuppelius/php-common-toolkit",
-            "version": "v0.8",
+            "version": "v0.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DSchuppelius/php-common-toolkit.git",
-                "reference": "e931bf9972c4949f9bb03d8692b1ce0d75e8fb0a"
+                "reference": "556818bdea0f82dfaf4ce1f913e7eefff9e9be54"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DSchuppelius/php-common-toolkit/zipball/e931bf9972c4949f9bb03d8692b1ce0d75e8fb0a",
-                "reference": "e931bf9972c4949f9bb03d8692b1ce0d75e8fb0a",
+                "url": "https://api.github.com/repos/DSchuppelius/php-common-toolkit/zipball/556818bdea0f82dfaf4ce1f913e7eefff9e9be54",
+                "reference": "556818bdea0f82dfaf4ce1f913e7eefff9e9be54",
                 "shasum": ""
             },
             "require": {
@@ -155,9 +155,9 @@
             "description": "Project description.",
             "support": {
                 "issues": "https://github.com/DSchuppelius/php-common-toolkit/issues",
-                "source": "https://github.com/DSchuppelius/php-common-toolkit/tree/v0.8"
+                "source": "https://github.com/DSchuppelius/php-common-toolkit/tree/v0.9.1"
             },
-            "time": "2025-12-31T00:49:32+00:00"
+            "time": "2026-01-03T18:47:54+00:00"
         },
         {
             "name": "dschuppelius/php-config-toolkit",

@@ -44,7 +44,7 @@ Die API läuft standardmäßig auf `https://127.0.0.1:58452`.
 
 **HTTP Basic Auth (empfohlen):**
 ```php
-use APIToolkit\Contracts\Abstracts\API\Authentication\BasicAuthentication;
+use APIToolkit\API\Authentication\BasicAuthentication;
 use Datev\API\Desktop\Client;
 
 $authentication = new BasicAuthentication('Benutzer', 'Passwort');
@@ -53,7 +53,7 @@ $client = new Client($authentication, 'https://127.0.0.1:58452');
 
 **Bearer Token Auth:**
 ```php
-use APIToolkit\Contracts\Abstracts\API\Authentication\BearerAuthentication;
+use APIToolkit\API\Authentication\BearerAuthentication;
 use Datev\API\Desktop\Client;
 
 $authentication = new BearerAuthentication(
@@ -68,7 +68,7 @@ $client = new Client($authentication, 'https://127.0.0.1:58452');
 ### Beispiel: Mandanten abrufen (Accounting)
 
 ```php
-use APIToolkit\Contracts\Abstracts\API\Authentication\BasicAuthentication;
+use APIToolkit\API\Authentication\BasicAuthentication;
 use Datev\API\Desktop\Client;
 use Datev\API\Desktop\Endpoints\Accounting\ClientsEndpoint;
 
@@ -85,7 +85,7 @@ $singleClient = $endpoint->get(id: $clientId);
 ### Beispiel: Mitarbeiter abrufen (Payroll)
 
 ```php
-use APIToolkit\Contracts\Abstracts\API\Authentication\BasicAuthentication;
+use APIToolkit\API\Authentication\BasicAuthentication;
 use Datev\API\Desktop\Client;
 use Datev\API\Desktop\Endpoints\Payroll\EmployeesEndpoint;
 
@@ -99,7 +99,7 @@ $employees = $endpoint->get(referenceDate: new DateTime('2024-01-01'));
 ### Beispiel: Echo-Test (Verbindung prüfen)
 
 ```php
-use APIToolkit\Contracts\Abstracts\API\Authentication\BasicAuthentication;
+use APIToolkit\API\Authentication\BasicAuthentication;
 use Datev\API\Desktop\Client;
 use Datev\API\Desktop\Endpoints\Diagnostics\EchoEndpoint;
 
