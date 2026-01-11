@@ -20,10 +20,14 @@ use ERRORToolkit\Factories\ConsoleLoggerFactory;
 use ERRORToolkit\Factories\FileLoggerFactory;
 use ERRORToolkit\LoggerRegistry;
 use Psr\Log\LoggerInterface;
+use Tests\Mocks\MockClient;
+use Tests\Mocks\MockDataLoader;
 
 class TestAPIClientFactory {
     private static ?ApiClientInterface $client = null;
+    private static ?MockClient $mockClient = null;
     private static ?LoggerInterface $logger = null;
+    private static bool $useMock = false;
 
     /**
      * Erstellt oder gibt den Logger zurück.
@@ -46,6 +50,11 @@ class TestAPIClientFactory {
     }
 
     public static function getClient(): ApiClientInterface {
+        // Wenn Mock aktiviert ist, MockClient zurückgeben
+        if (self::$useMock) {
+            return self::getMockClient();
+        }
+
         if (self::$client === null) {
             $logger = self::getLogger();
             $config = ConfigLoader::getInstance($logger);
@@ -73,11 +82,53 @@ class TestAPIClientFactory {
     }
 
     /**
+     * Gibt den MockClient zurück, erstellt ihn bei Bedarf.
+     */
+    public static function getMockClient(): MockClient {
+        if (self::$mockClient === null) {
+            self::$mockClient = MockDataLoader::createFullyConfiguredMockClient();
+        }
+        return self::$mockClient;
+    }
+
+    /**
+     * Erstellt einen MockClient für eine bestimmte Domain.
+     *
+     * @param string $domain 'diagnostics', 'accounting', 'clientmasterdata', 'payroll'
+     */
+    public static function getMockClientForDomain(string $domain): MockClient {
+        return MockDataLoader::createMockClientForDomain($domain);
+    }
+
+    /**
+     * Aktiviert den Mock-Modus für alle getClient()-Aufrufe.
+     */
+    public static function enableMock(): void {
+        self::$useMock = true;
+    }
+
+    /**
+     * Deaktiviert den Mock-Modus.
+     */
+    public static function disableMock(): void {
+        self::$useMock = false;
+    }
+
+    /**
+     * Prüft, ob der Mock-Modus aktiv ist.
+     */
+    public static function isMockEnabled(): bool {
+        return self::$useMock;
+    }
+
+    /**
      * Setzt den Client zurück für frische Konfiguration.
      */
     public static function reset(): void {
         self::$client = null;
+        self::$mockClient = null;
         self::$logger = null;
+        self::$useMock = false;
         LoggerRegistry::resetLogger();
     }
 }

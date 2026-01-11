@@ -14,20 +14,25 @@ use Datev\API\Desktop\Endpoints\Diagnostics\EchoEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class EchoTest extends EndpointTest {
-    protected ?EchoEndpoint $endpoint;
+    protected ?EchoEndpoint $endpoint = null;
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new EchoEndpoint($this->client, self::getLogger());
-        $this->apiDisabled = true;
+    protected string $mockDomain = 'diagnostics';
+
+    protected function createEndpoint(): EchoEndpoint {
+        return new EchoEndpoint($this->client, self::getLogger());
     }
 
-    public function testGetEcho() {
-        if ($this->apiDisabled) {
-            $this->markTestSkipped('API is disabled');
-        }
+    public function testGetEcho(): void {
+        $this->endpoint = $this->createEndpoint();
 
         $echo = $this->endpoint->get();
-        $this->assertNotNull($echo);
+
+        if ($this->isUsingMock()) {
+            // Im Mock-Modus: Prüfe dass ein Ergebnis zurückkommt
+            $this->assertNotNull($echo, 'Mock should return EchoResponse');
+        } else {
+            // Im Live-Modus: Normale Assertions
+            $this->assertNotNull($echo);
+        }
     }
 }

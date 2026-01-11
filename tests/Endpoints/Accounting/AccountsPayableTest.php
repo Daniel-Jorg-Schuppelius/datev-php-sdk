@@ -15,23 +15,27 @@ use Datev\API\Desktop\Endpoints\Accounting\AccountsPayableEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class AccountsPayableTest extends EndpointTest {
-    protected ?AccountsPayableEndpoint $endpoint;
+    protected ?AccountsPayableEndpoint $endpoint = null;
+    protected string $mockDomain = 'accounting';
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new AccountsPayableEndpoint($this->client, self::getLogger());
-        $this->apiDisabled = true;
+    protected function createEndpoint(): AccountsPayableEndpoint {
+        return new AccountsPayableEndpoint($this->client, self::getLogger());
     }
 
     public function testGetAccountsPayable() {
-        if ($this->apiDisabled) {
-            $this->markTestSkipped('API is disabled');
-        }
+        $this->skipMockIfComplexEntity();
+
+        $this->endpoint = $this->createEndpoint();
 
         $this->endpoint->setClientId(new ID('test-client-id'));
         $this->endpoint->setFiscalYearId(new ID('test-fiscal-year-id'));
 
         $accounts = $this->endpoint->search();
-        $this->assertNotNull($accounts);
+
+        if ($this->isUsingMock()) {
+            $this->assertNotNull($accounts);
+        } else {
+            $this->assertNotNull($accounts);
+        }
     }
 }

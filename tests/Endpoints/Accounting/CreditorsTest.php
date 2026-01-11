@@ -16,23 +16,27 @@ use Datev\Entities\Accounting\Creditors\Creditors;
 use Tests\Contracts\EndpointTest;
 
 class CreditorsTest extends EndpointTest {
-    protected ?CreditorsEndpoint $endpoint;
+    protected ?CreditorsEndpoint $endpoint = null;
+    protected string $mockDomain = 'accounting';
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new CreditorsEndpoint($this->client, self::getLogger());
-        $this->apiDisabled = true;
+    protected function createEndpoint(): CreditorsEndpoint {
+        return new CreditorsEndpoint($this->client, self::getLogger());
     }
 
     public function testGetCreditors() {
-        if ($this->apiDisabled) {
-            $this->markTestSkipped('API is disabled');
-        }
+        $this->skipMockIfComplexEntity();
+
+        $this->endpoint = $this->createEndpoint();
 
         $this->endpoint->setClientId(new ID('test-client-id'));
         $this->endpoint->setFiscalYearId(new ID('test-fiscal-year-id'));
 
         $creditors = $this->endpoint->search();
-        $this->assertInstanceOf(Creditors::class, $creditors);
+
+        if ($this->isUsingMock()) {
+            $this->assertNotNull($creditors);
+        } else {
+            $this->assertInstanceOf(Creditors::class, $creditors);
+        }
     }
 }

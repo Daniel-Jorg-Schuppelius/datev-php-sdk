@@ -15,23 +15,27 @@ use Datev\API\Desktop\Endpoints\Accounting\AccountPostingsEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class AccountPostingsTest extends EndpointTest {
-    protected ?AccountPostingsEndpoint $endpoint;
+    protected ?AccountPostingsEndpoint $endpoint = null;
+    protected string $mockDomain = 'accounting';
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new AccountPostingsEndpoint($this->client, self::getLogger());
-        $this->apiDisabled = true;
+    protected function createEndpoint(): AccountPostingsEndpoint {
+        return new AccountPostingsEndpoint($this->client, self::getLogger());
     }
 
     public function testGetAccountPostings() {
-        if ($this->apiDisabled) {
-            $this->markTestSkipped('API is disabled');
-        }
+        $this->skipMockIfComplexEntity();
+
+        $this->endpoint = $this->createEndpoint();
 
         $this->endpoint->setClientId(new ID('test-client-id'));
         $this->endpoint->setFiscalYearId(new ID('test-fiscal-year-id'));
 
         $postings = $this->endpoint->search();
-        $this->assertNotNull($postings);
+
+        if ($this->isUsingMock()) {
+            $this->assertNotNull($postings);
+        } else {
+            $this->assertNotNull($postings);
+        }
     }
 }

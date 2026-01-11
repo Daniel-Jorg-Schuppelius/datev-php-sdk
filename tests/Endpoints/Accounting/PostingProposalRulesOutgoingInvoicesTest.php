@@ -15,23 +15,27 @@ use Datev\API\Desktop\Endpoints\Accounting\PostingProposalRulesOutgoingInvoicesE
 use Tests\Contracts\EndpointTest;
 
 class PostingProposalRulesOutgoingInvoicesTest extends EndpointTest {
-    protected ?PostingProposalRulesOutgoingInvoicesEndpoint $endpoint;
+    protected ?PostingProposalRulesOutgoingInvoicesEndpoint $endpoint = null;
+    protected string $mockDomain = 'accounting';
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new PostingProposalRulesOutgoingInvoicesEndpoint($this->client, self::getLogger());
-        $this->apiDisabled = true;
+    protected function createEndpoint(): PostingProposalRulesOutgoingInvoicesEndpoint {
+        return new PostingProposalRulesOutgoingInvoicesEndpoint($this->client, self::getLogger());
     }
 
     public function testGetPostingProposalRulesOutgoingInvoices() {
-        if ($this->apiDisabled) {
-            $this->markTestSkipped('API is disabled');
-        }
+        $this->skipMockIfComplexEntity();
+
+        $this->endpoint = $this->createEndpoint();
 
         $this->endpoint->setClientId(new ID('test-client-id'));
         $this->endpoint->setFiscalYearId(new ID('test-fiscal-year-id'));
 
         $rules = $this->endpoint->search();
-        $this->assertNotNull($rules);
+
+        if ($this->isUsingMock()) {
+            $this->assertNotNull($rules);
+        } else {
+            $this->assertNotNull($rules);
+        }
     }
 }

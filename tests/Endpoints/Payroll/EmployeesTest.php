@@ -14,20 +14,22 @@ use Datev\API\Desktop\Endpoints\Payroll\EmployeesEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class EmployeesTest extends EndpointTest {
-    protected ?EmployeesEndpoint $endpoint;
+    protected ?EmployeesEndpoint $endpoint = null;
+    protected string $mockDomain = 'payroll';
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new EmployeesEndpoint($this->client, self::getLogger());
-        $this->apiDisabled = true;
+    protected function createEndpoint(): EmployeesEndpoint {
+        return new EmployeesEndpoint($this->client, self::getLogger());
     }
 
     public function testGetEmployees() {
-        if ($this->apiDisabled) {
-            $this->markTestSkipped('API is disabled');
+        // Employees hat eine sehr komplexe Entity-Struktur mit verschachtelten Objekten
+        // Mock-Daten können diese Struktur nicht vollständig abbilden
+        if ($this->isUsingMock()) {
+            $this->markTestSkipped('Employees endpoint requires real API due to complex entity structure');
         }
 
-        $employees = $this->endpoint->search();
+        $this->endpoint = $this->createEndpoint();
+        $employees = $this->endpoint->search(["reference-date" => "2021-01-01"]);
         $this->assertNotNull($employees);
     }
 }

@@ -16,24 +16,28 @@ use Datev\Entities\Accounting\CostSequences\CostSequences;
 use Tests\Contracts\EndpointTest;
 
 class CostSequencesTest extends EndpointTest {
-    protected ?CostSequencesEndpoint $endpoint;
+    protected ?CostSequencesEndpoint $endpoint = null;
+    protected string $mockDomain = 'accounting';
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new CostSequencesEndpoint($this->client, self::getLogger());
-        $this->apiDisabled = true;
+    protected function createEndpoint(): CostSequencesEndpoint {
+        return new CostSequencesEndpoint($this->client, self::getLogger());
     }
 
     public function testGetCostSequences() {
-        if ($this->apiDisabled) {
-            $this->markTestSkipped('API is disabled');
-        }
+        $this->skipMockIfComplexEntity();
+
+        $this->endpoint = $this->createEndpoint();
 
         $this->endpoint->setClientId(new ID('test-client-id'));
         $this->endpoint->setFiscalYearId(new ID('test-fiscal-year-id'));
         $this->endpoint->setCostSystemId(new ID('test-cost-system-id'));
 
         $costSequences = $this->endpoint->search();
-        $this->assertInstanceOf(CostSequences::class, $costSequences);
+
+        if ($this->isUsingMock()) {
+            $this->assertNotNull($costSequences);
+        } else {
+            $this->assertInstanceOf(CostSequences::class, $costSequences);
+        }
     }
 }

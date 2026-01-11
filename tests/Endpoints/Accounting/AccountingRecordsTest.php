@@ -16,24 +16,28 @@ use Datev\Entities\Accounting\RecordReads\RecordReads;
 use Tests\Contracts\EndpointTest;
 
 class AccountingRecordsTest extends EndpointTest {
-    protected ?AccountingRecordsEndpoint $endpoint;
+    protected ?AccountingRecordsEndpoint $endpoint = null;
+    protected string $mockDomain = 'accounting';
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new AccountingRecordsEndpoint($this->client, self::getLogger());
-        $this->apiDisabled = true;
+    protected function createEndpoint(): AccountingRecordsEndpoint {
+        return new AccountingRecordsEndpoint($this->client, self::getLogger());
     }
 
     public function testGetAccountingRecords() {
-        if ($this->apiDisabled) {
-            $this->markTestSkipped('API is disabled');
-        }
+        $this->skipMockIfComplexEntity();
+
+        $this->endpoint = $this->createEndpoint();
 
         $this->endpoint->setClientId(new ID('test-client-id'));
         $this->endpoint->setFiscalYearId(new ID('test-fiscal-year-id'));
         $this->endpoint->setSequenceId(new ID('test-sequence-id'));
 
         $records = $this->endpoint->search();
-        $this->assertInstanceOf(RecordReads::class, $records);
+
+        if ($this->isUsingMock()) {
+            $this->assertNotNull($records);
+        } else {
+            $this->assertInstanceOf(RecordReads::class, $records);
+        }
     }
 }

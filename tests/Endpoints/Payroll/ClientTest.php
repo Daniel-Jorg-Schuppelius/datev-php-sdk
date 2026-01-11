@@ -17,12 +17,12 @@ use Datev\Entities\Payroll\Clients\Clients;
 use Tests\Contracts\EndpointTest;
 
 class ClientTest extends EndpointTest {
-    protected ?ClientsEndpoint $endpoint;
+    protected ?ClientsEndpoint $endpoint = null;
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new ClientsEndpoint($this->client, self::getLogger());
-        $this->apiDisabled = true; // API is disabled
+    protected string $mockDomain = 'payroll';
+
+    protected function createEndpoint(): ClientsEndpoint {
+        return new ClientsEndpoint($this->client, self::getLogger());
     }
 
     public function testJsonSerialize() {
@@ -46,19 +46,20 @@ class ClientTest extends EndpointTest {
         $this->assertEquals(json_encode($data), $client->toJson());  // the order of the $data array is important for this test.
     }
 
-    public function testCreateAndDeleteArticleAPI() {
-        if ($this->apiDisabled) {
-            $this->markTestSkipped('API is disabled');
-        }
+    public function testGetClientsAPI() {
+        $this->endpoint = $this->createEndpoint();
 
         $clients = $this->endpoint->search(["reference-date" => "2021-01-01"]);
         $this->assertInstanceOf(Clients::class, $clients);
         $this->assertNotEmpty($clients->getValues(), "No clients found");
         $randomClient = $clients->getValues()[array_rand($clients->getValues())];
         $this->assertInstanceOf(Client::class, $randomClient);
-        // $client = $this->endpoint->get($clients->getFirstValue("number", "11111")->getID(), "all", new DateTime("2021-01-01"));
-        $client = $this->endpoint->get($randomClient->getID(), "all", new DateTime("2021-01-01"));
-        $this->assertInstanceOf(Client::class, $client);
-        $this->assertEquals($randomClient->getID(), $client->getID());
+
+        if (!$this->isUsingMock()) {
+            // Nur im Live-Modus: Einzelnen Client abrufen
+            $client = $this->endpoint->get($randomClient->getID(), "all", new DateTime("2021-01-01"));
+            $this->assertInstanceOf(Client::class, $client);
+            $this->assertEquals($randomClient->getID(), $client->getID());
+        }
     }
 }

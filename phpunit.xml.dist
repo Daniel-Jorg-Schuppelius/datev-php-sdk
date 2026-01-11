@@ -8,6 +8,13 @@
   displayDetailsOnTestsThatTriggerErrors="true"
   displayDetailsOnTestsThatTriggerNotices="true"
   displayDetailsOnTestsThatTriggerWarnings="true">
+  <php>
+    <!-- DATEV_SKIP_API_TESTS=1: Skip all API endpoint tests completely (fastest) -->
+    <env name="DATEV_SKIP_API_TESTS" value="1"/>
+    
+    <!-- DATEV_FORCE_MOCK=1: Run tests with mock data without trying API connection -->
+    <!-- <env name="DATEV_FORCE_MOCK" value="1"/> -->
+  </php>
   <testsuites>
     <testsuite name="Unit Tests">
       <directory>./tests</directory>

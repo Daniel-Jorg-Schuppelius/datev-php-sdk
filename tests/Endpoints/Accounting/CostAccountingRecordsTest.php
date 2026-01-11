@@ -15,18 +15,17 @@ use Datev\API\Desktop\Endpoints\Accounting\CostAccountingRecordsEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class CostAccountingRecordsTest extends EndpointTest {
-    protected ?CostAccountingRecordsEndpoint $endpoint;
+    protected ?CostAccountingRecordsEndpoint $endpoint = null;
+    protected string $mockDomain = 'accounting';
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new CostAccountingRecordsEndpoint($this->client, self::getLogger());
-        $this->apiDisabled = true;
+    protected function createEndpoint(): CostAccountingRecordsEndpoint {
+        return new CostAccountingRecordsEndpoint($this->client, self::getLogger());
     }
 
     public function testGetCostAccountingRecords() {
-        if ($this->apiDisabled) {
-            $this->markTestSkipped('API is disabled');
-        }
+        $this->skipMockIfComplexEntity();
+
+        $this->endpoint = $this->createEndpoint();
 
         $this->endpoint->setClientId(new ID('test-client-id'));
         $this->endpoint->setFiscalYearId(new ID('test-fiscal-year-id'));
@@ -34,6 +33,7 @@ class CostAccountingRecordsTest extends EndpointTest {
         $this->endpoint->setCostSequenceId(new ID('test-cost-sequence-id'));
 
         $records = $this->endpoint->search();
+
         $this->assertNotNull($records);
     }
 }

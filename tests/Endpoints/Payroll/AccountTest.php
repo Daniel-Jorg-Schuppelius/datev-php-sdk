@@ -14,20 +14,21 @@ use Datev\API\Desktop\Endpoints\Payroll\AccountEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class AccountTest extends EndpointTest {
-    protected ?AccountEndpoint $endpoint;
+    protected ?AccountEndpoint $endpoint = null;
+    protected string $mockDomain = 'payroll';
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new AccountEndpoint($this->client, self::getLogger());
-        $this->apiDisabled = true;
+    protected function createEndpoint(): AccountEndpoint {
+        return new AccountEndpoint($this->client, self::getLogger());
     }
 
     public function testGetAccount() {
-        if ($this->apiDisabled) {
-            $this->markTestSkipped('API is disabled');
-        }
+        $this->endpoint = $this->createEndpoint();
+        $accounts = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 
-        $account = $this->endpoint->get();
-        $this->assertNotNull($account);
+        if ($this->isUsingMock()) {
+            $this->assertNotNull($accounts);
+        } else {
+            $this->assertNotNull($accounts);
+        }
     }
 }

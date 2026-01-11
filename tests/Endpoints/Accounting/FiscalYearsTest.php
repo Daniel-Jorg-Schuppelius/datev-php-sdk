@@ -16,22 +16,26 @@ use Datev\Entities\Accounting\FiscalYears\FiscalYears;
 use Tests\Contracts\EndpointTest;
 
 class FiscalYearsTest extends EndpointTest {
-    protected ?FiscalYearsEndpoint $endpoint;
+    protected ?FiscalYearsEndpoint $endpoint = null;
+    protected string $mockDomain = 'accounting';
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new FiscalYearsEndpoint($this->client, self::getLogger());
-        $this->apiDisabled = true;
+    protected function createEndpoint(): FiscalYearsEndpoint {
+        return new FiscalYearsEndpoint($this->client, self::getLogger());
     }
 
     public function testGetFiscalYears() {
-        if ($this->apiDisabled) {
-            $this->markTestSkipped('API is disabled');
-        }
+        $this->skipMockIfComplexEntity();
+
+        $this->endpoint = $this->createEndpoint();
 
         $this->endpoint->setClientId(new ID('test-client-id'));
 
         $fiscalYears = $this->endpoint->search();
-        $this->assertInstanceOf(FiscalYears::class, $fiscalYears);
+
+        if ($this->isUsingMock()) {
+            $this->assertNotNull($fiscalYears);
+        } else {
+            $this->assertInstanceOf(FiscalYears::class, $fiscalYears);
+        }
     }
 }

@@ -16,23 +16,27 @@ use Datev\Entities\Accounting\Sequences\Sequence;
 use Tests\Contracts\EndpointTest;
 
 class AccountingSequencesTest extends EndpointTest {
-    protected ?AccountingSequencesEndpoint $endpoint;
+    protected ?AccountingSequencesEndpoint $endpoint = null;
+    protected string $mockDomain = 'accounting';
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new AccountingSequencesEndpoint($this->client, self::getLogger());
-        $this->apiDisabled = true;
+    protected function createEndpoint(): AccountingSequencesEndpoint {
+        return new AccountingSequencesEndpoint($this->client, self::getLogger());
     }
 
     public function testGetAccountingSequences() {
-        if ($this->apiDisabled) {
-            $this->markTestSkipped('API is disabled');
-        }
+        $this->skipMockIfComplexEntity();
+
+        $this->endpoint = $this->createEndpoint();
 
         $this->endpoint->setClientId(new ID('test-client-id'));
         $this->endpoint->setFiscalYearId(new ID('test-fiscal-year-id'));
 
         $sequence = $this->endpoint->get(new ID('test-sequence-id'));
-        $this->assertInstanceOf(Sequence::class, $sequence);
+
+        if ($this->isUsingMock()) {
+            $this->assertNotNull($sequence);
+        } else {
+            $this->assertInstanceOf(Sequence::class, $sequence);
+        }
     }
 }

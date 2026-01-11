@@ -15,23 +15,27 @@ use Datev\API\Desktop\Endpoints\Accounting\AccountsReceivableEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class AccountsReceivableTest extends EndpointTest {
-    protected ?AccountsReceivableEndpoint $endpoint;
+    protected ?AccountsReceivableEndpoint $endpoint = null;
+    protected string $mockDomain = 'accounting';
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new AccountsReceivableEndpoint($this->client, self::getLogger());
-        $this->apiDisabled = true;
+    protected function createEndpoint(): AccountsReceivableEndpoint {
+        return new AccountsReceivableEndpoint($this->client, self::getLogger());
     }
 
     public function testGetAccountsReceivable() {
-        if ($this->apiDisabled) {
-            $this->markTestSkipped('API is disabled');
-        }
+        $this->skipMockIfComplexEntity();
+
+        $this->endpoint = $this->createEndpoint();
 
         $this->endpoint->setClientId(new ID('test-client-id'));
         $this->endpoint->setFiscalYearId(new ID('test-fiscal-year-id'));
 
         $accounts = $this->endpoint->search();
-        $this->assertNotNull($accounts);
+
+        if ($this->isUsingMock()) {
+            $this->assertNotNull($accounts);
+        } else {
+            $this->assertNotNull($accounts);
+        }
     }
 }
