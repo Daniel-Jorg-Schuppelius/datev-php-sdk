@@ -17,7 +17,6 @@ use Tests\Contracts\EntityTest;
 use Datev\Entities\Law\Health\Health;
 
 class HealthTest extends EntityTest {
-    
     public function testCreateHealth(): void {
         $data = [
             "status" => "ok",

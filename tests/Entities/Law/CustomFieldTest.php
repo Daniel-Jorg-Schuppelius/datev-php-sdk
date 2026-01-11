@@ -18,7 +18,6 @@ use Datev\Entities\Law\CustomFields\CustomField;
 use Datev\Entities\Law\CustomFields\CustomFields;
 
 class CustomFieldTest extends EntityTest {
-    
     public function testCreateCustomField(): void {
         $data = [
             "id" => "test-id",

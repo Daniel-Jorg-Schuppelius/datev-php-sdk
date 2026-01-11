@@ -18,7 +18,6 @@ use Datev\Entities\Law\LevelsOfJurisdiction\LevelOfJurisdiction;
 use Datev\Entities\Law\LevelsOfJurisdiction\LevelsOfJurisdiction;
 
 class LevelOfJurisdictionTest extends EntityTest {
-    
     public function testCreateLevelOfJurisdiction(): void {
         $data = [
             "id" => "test-id",

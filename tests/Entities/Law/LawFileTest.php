@@ -18,7 +18,6 @@ use Datev\Entities\Law\Files\LawFile;
 use Datev\Entities\Law\Files\LawFiles;
 
 class LawFileTest extends EntityTest {
-    
     public function testCreateLawFile(): void {
         $data = [
             "id" => "test-id",

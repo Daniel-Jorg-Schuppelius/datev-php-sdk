@@ -18,7 +18,6 @@ use Datev\Entities\Law\ExpenseTypes\ExpenseType;
 use Datev\Entities\Law\ExpenseTypes\ExpenseTypes;
 
 class ExpenseTypeTest extends EntityTest {
-    
     public function testCreateExpenseType(): void {
         $data = [
             "id" => "test-id",

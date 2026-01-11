@@ -18,7 +18,6 @@ use Datev\Entities\Law\AccountingAreas\AccountingArea;
 use Datev\Entities\Law\AccountingAreas\AccountingAreas;
 
 class AccountingAreaTest extends EntityTest {
-    
     public function testCreateAccountingArea(): void {
         $data = [
             "id" => "test-id",

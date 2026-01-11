@@ -18,7 +18,6 @@ use Datev\Entities\Law\ExpenseCategories\ExpenseCategory;
 use Datev\Entities\Law\ExpenseCategories\ExpenseCategories;
 
 class ExpenseCategoryTest extends EntityTest {
-    
     public function testCreateExpenseCategory(): void {
         $data = [
             "number" => 1,

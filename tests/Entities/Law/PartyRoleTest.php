@@ -18,7 +18,6 @@ use Datev\Entities\Law\PartyRoles\PartyRole;
 use Datev\Entities\Law\PartyRoles\PartyRoles;
 
 class PartyRoleTest extends EntityTest {
-    
     public function testCreatePartyRole(): void {
         $data = [
             "id" => "test-id",

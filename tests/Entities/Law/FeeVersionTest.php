@@ -18,7 +18,6 @@ use Datev\Entities\Law\FeeVersions\FeeVersion;
 use Datev\Entities\Law\FeeVersions\FeeVersions;
 
 class FeeVersionTest extends EntityTest {
-    
     public function testCreateFeeVersion(): void {
         $data = [
             "id" => 1,

@@ -18,7 +18,6 @@ use Datev\Entities\Law\BillingCategories\BillingCategory;
 use Datev\Entities\Law\BillingCategories\BillingCategories;
 
 class BillingCategoryTest extends EntityTest {
-    
     public function testCreateBillingCategory(): void {
         $data = [
             "number" => 1,

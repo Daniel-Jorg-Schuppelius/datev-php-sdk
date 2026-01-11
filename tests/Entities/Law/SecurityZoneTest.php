@@ -18,7 +18,6 @@ use Datev\Entities\Law\SecurityZones\SecurityZone;
 use Datev\Entities\Law\SecurityZones\SecurityZones;
 
 class SecurityZoneTest extends EntityTest {
-    
     public function testCreateSecurityZone(): void {
         $data = [
             "id" => "test-id",
