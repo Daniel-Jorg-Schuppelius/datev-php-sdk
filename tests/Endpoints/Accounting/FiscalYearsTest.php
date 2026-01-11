@@ -20,7 +20,7 @@ class FiscalYearsTest extends EndpointTest {
 
     public function __construct($name) {
         parent::__construct($name);
-        $this->endpoint = new FiscalYearsEndpoint($this->client, $this->logger);
+        $this->endpoint = new FiscalYearsEndpoint($this->client, self::getLogger());
         $this->apiDisabled = true;
     }
 

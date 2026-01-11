@@ -23,7 +23,7 @@ class FeeVersion extends NamedEntity {
         parent::__construct($data, $logger);
     }
 
-    public function getId(): ?int {
+    public function getID(): ?int {
         return $this->id ?? null;
     }
 

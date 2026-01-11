@@ -15,6 +15,9 @@ namespace Datev\Entities\Common\AdditionalMessages;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<AdditionalMessage>
+ */
 class AdditionalMessages extends NamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";

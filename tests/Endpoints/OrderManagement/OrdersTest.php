@@ -22,7 +22,7 @@ class OrdersTest extends EndpointTest {
 
     public function __construct($name = null) {
         parent::__construct($name);
-        $this->endpoint = new OrdersEndpoint($this->client, $this->logger);
+        $this->endpoint = new OrdersEndpoint($this->client, self::getLogger());
         $this->apiDisabled = true;
     }
 

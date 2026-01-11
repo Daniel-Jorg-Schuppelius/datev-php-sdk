@@ -35,7 +35,7 @@ class FeeVersionTest extends TestCase {
         $feeVersion = new FeeVersion($data, $this->logger);
 
         $this->assertInstanceOf(FeeVersion::class, $feeVersion);
-        $this->assertEquals(1, $feeVersion->getId());
+        $this->assertEquals(1, $feeVersion->getID());
         $this->assertEquals("RVG 2021", $feeVersion->getName());
     }
 

@@ -15,6 +15,9 @@ namespace Datev\Entities\OrderManagement\SuborderStateBilling;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<SuborderStateBilling>
+ */
 class SubordersStateBilling extends NamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";

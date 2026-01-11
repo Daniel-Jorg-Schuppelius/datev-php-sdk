@@ -22,7 +22,7 @@ class CitizensTest extends EndpointTest {
 
     public function __construct($name = null, array $data = [], $dataName = '') {
         parent::__construct($name, $data, $dataName);
-        $this->endpoint = new CitizensEndpoint($this->client, $this->logger);
+        $this->endpoint = new CitizensEndpoint($this->client, self::getLogger());
         $this->apiDisabled = true;
     }
 

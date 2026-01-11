@@ -17,6 +17,9 @@ use DateTime;
 use Datev\Contracts\Abstracts\DateTimeNamedValue;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<LegalFormID>
+ */
 class LegalFormIDs extends NamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";

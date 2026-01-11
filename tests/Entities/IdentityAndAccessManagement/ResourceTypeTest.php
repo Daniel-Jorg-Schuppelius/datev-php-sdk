@@ -33,7 +33,7 @@ class ResourceTypeTest extends TestCase {
         $resourceType = new ResourceType($data, $logger);
 
         $this->assertInstanceOf(ResourceType::class, $resourceType);
-        $this->assertEquals("User", $resourceType->getId());
+        $this->assertEquals("User", $resourceType->getID());
         $this->assertEquals("User", $resourceType->getName());
         $this->assertEquals("User Account", $resourceType->getDescription());
         $this->assertEquals("/Users", $resourceType->getEndpoint());

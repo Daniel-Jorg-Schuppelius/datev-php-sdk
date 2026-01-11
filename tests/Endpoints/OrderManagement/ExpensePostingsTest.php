@@ -18,7 +18,7 @@ class ExpensePostingsTest extends EndpointTest {
 
     public function __construct($name) {
         parent::__construct($name);
-        $this->endpoint = new ExpensePostingsEndpoint($this->client, $this->logger);
+        $this->endpoint = new ExpensePostingsEndpoint($this->client, self::getLogger());
         $this->apiDisabled = true;
     }
 

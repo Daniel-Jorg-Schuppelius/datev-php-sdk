@@ -15,6 +15,9 @@ namespace Datev\Entities\ClientMasterData\Considerations;
 use Datev\Contracts\Abstracts\DateTimeNamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends DateTimeNamedValues<Consideration>
+ */
 class Considerations extends DateTimeNamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";

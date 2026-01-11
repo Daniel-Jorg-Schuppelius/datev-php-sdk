@@ -15,6 +15,9 @@ namespace Datev\Entities\PublicSector\Meters;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<Meter>
+ */
 class Meters extends NamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";

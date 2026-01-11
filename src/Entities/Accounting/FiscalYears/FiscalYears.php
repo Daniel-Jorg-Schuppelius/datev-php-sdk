@@ -15,6 +15,9 @@ namespace Datev\Entities\Accounting\FiscalYears;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<FiscalYear>
+ */
 class FiscalYears extends NamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";

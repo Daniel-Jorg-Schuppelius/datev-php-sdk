@@ -15,6 +15,9 @@ namespace Datev\Entities\Accounting\SequenceReads;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<SequenceRead>
+ */
 class SequenceReads extends NamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";

@@ -15,6 +15,9 @@ namespace Datev\Entities\Law\Employees;
 use Datev\Entities\Common\Employees\Employees as BaseEmployees;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends BaseEmployees<Employee>
+ */
 class Employees extends BaseEmployees {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";

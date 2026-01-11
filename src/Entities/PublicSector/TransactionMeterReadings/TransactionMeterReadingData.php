@@ -39,7 +39,7 @@ class TransactionMeterReadingData extends NamedEntity {
         return $this->meter_id ?? null;
     }
 
-    public function getIdentificationNumber(): ?string {
+    public function getIDentificationNumber(): ?string {
         return $this->identification_number ?? null;
     }
 

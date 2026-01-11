@@ -15,6 +15,9 @@ namespace Datev\Entities\Payroll\ReasonsForAbsence;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<ReasonForAbsence>
+ */
 class ReasonsForAbsence extends NamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";

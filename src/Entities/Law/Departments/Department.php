@@ -26,7 +26,7 @@ class Department extends NamedEntity {
         parent::__construct($data, $logger);
     }
 
-    public function getId(): ?GUID {
+    public function getID(): ?GUID {
         return $this->id ?? null;
     }
 

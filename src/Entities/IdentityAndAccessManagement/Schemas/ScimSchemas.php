@@ -15,6 +15,9 @@ namespace Datev\Entities\IdentityAndAccessManagement\Schemas;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<ScimSchema>
+ */
 class ScimSchemas extends NamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "Resources";

@@ -15,6 +15,9 @@ namespace Datev\Entities\DocumentManagement\Notes;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<Note>
+ */
 class Notes extends NamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";

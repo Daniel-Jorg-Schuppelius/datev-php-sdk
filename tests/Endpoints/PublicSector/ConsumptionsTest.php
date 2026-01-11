@@ -18,7 +18,7 @@ class ConsumptionsTest extends EndpointTest {
 
     public function __construct($name) {
         parent::__construct($name);
-        $this->endpoint = new ConsumptionsEndpoint($this->client, $this->logger);
+        $this->endpoint = new ConsumptionsEndpoint($this->client, self::getLogger());
         $this->apiDisabled = true;
     }
 

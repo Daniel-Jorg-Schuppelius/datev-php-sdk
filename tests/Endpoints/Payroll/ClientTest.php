@@ -21,7 +21,7 @@ class ClientTest extends EndpointTest {
 
     public function __construct($name) {
         parent::__construct($name);
-        $this->endpoint = new ClientsEndpoint($this->client, $this->logger);
+        $this->endpoint = new ClientsEndpoint($this->client, self::getLogger());
         $this->apiDisabled = true; // API is disabled
     }
 
@@ -56,9 +56,9 @@ class ClientTest extends EndpointTest {
         $this->assertNotEmpty($clients->getValues(), "No clients found");
         $randomClient = $clients->getValues()[array_rand($clients->getValues())];
         $this->assertInstanceOf(Client::class, $randomClient);
-        // $client = $this->endpoint->get($clients->getFirstValue("number", "11111")->getId(), "all", new DateTime("2021-01-01"));
-        $client = $this->endpoint->get($randomClient->getId(), "all", new DateTime("2021-01-01"));
+        // $client = $this->endpoint->get($clients->getFirstValue("number", "11111")->getID(), "all", new DateTime("2021-01-01"));
+        $client = $this->endpoint->get($randomClient->getID(), "all", new DateTime("2021-01-01"));
         $this->assertInstanceOf(Client::class, $client);
-        $this->assertEquals($randomClient->getId(), $client->getId());
+        $this->assertEquals($randomClient->getID(), $client->getID());
     }
 }

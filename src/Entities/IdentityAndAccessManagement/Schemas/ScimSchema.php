@@ -27,7 +27,7 @@ class ScimSchema extends NamedEntity {
         parent::__construct($data, $logger);
     }
 
-    public function getId(): string {
+    public function getID(): string {
         return $this->id;
     }
 

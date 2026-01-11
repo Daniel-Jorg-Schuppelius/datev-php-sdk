@@ -22,7 +22,7 @@ class FeesTest extends EndpointTest {
 
     public function __construct($name = null, array $data = [], $dataName = '') {
         parent::__construct($name, $data, $dataName);
-        $this->endpoint = new FeesEndpoint($this->client, $this->logger);
+        $this->endpoint = new FeesEndpoint($this->client, self::getLogger());
         $this->apiDisabled = true;
     }
 
@@ -43,7 +43,7 @@ class FeesTest extends EndpointTest {
 
         $fee = Fee::fromJson(json_encode($data));
         $this->assertInstanceOf(Fee::class, $fee);
-        $this->assertEquals(12345, $fee->getId());
+        $this->assertEquals(12345, $fee->getID());
         $this->assertEquals('Wassergebühr', $fee->getFeeName());
         $this->assertEquals('Max Mustermann', $fee->getInvoiceRecipient());
         $this->assertNotNull($fee->getPaymentMethod());

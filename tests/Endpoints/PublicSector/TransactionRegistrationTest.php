@@ -18,7 +18,7 @@ class TransactionRegistrationTest extends EndpointTest {
 
     public function __construct($name) {
         parent::__construct($name);
-        $this->endpoint = new TransactionRegistrationEndpoint($this->client, $this->logger);
+        $this->endpoint = new TransactionRegistrationEndpoint($this->client, self::getLogger());
         $this->apiDisabled = true;
     }
 

@@ -15,6 +15,9 @@ namespace Datev\Entities\OrderManagement\SelfClients;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<SelfClient>
+ */
 class SelfClients extends NamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";

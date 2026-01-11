@@ -22,8 +22,8 @@ class StructureItemTest extends EndpointTest {
 
     public function __construct($name) {
         parent::__construct($name);
-        $this->preEndpoint = new DocumentsEndpoint($this->client, $this->logger);
-        $this->endpoint = new StructureItemsEndpoint($this->client, $this->logger);
+        $this->preEndpoint = new DocumentsEndpoint($this->client, self::getLogger());
+        $this->endpoint = new StructureItemsEndpoint($this->client, self::getLogger());
         $this->apiDisabled = true; // API is disabled
     }
 
@@ -34,15 +34,15 @@ class StructureItemTest extends EndpointTest {
 
         $documents = $this->preEndpoint->search();
         $randomDocument = $documents->getValues()[array_rand($documents->getValues())];
-        $this->endpoint->setDocumentID($randomDocument->getId());
+        $this->endpoint->setDocumentID($randomDocument->getID());
 
         $structureItems = $this->endpoint->search();
         $this->assertInstanceOf(StructureItems::class, $structureItems);
         $this->assertNotEmpty($structureItems->getValues(), "No structureItems found");
         $randomStructureItem = $structureItems->getValues()[array_rand($structureItems->getValues())];
         $this->assertInstanceOf(StructureItem::class, $randomStructureItem);
-        $structureItem = $this->endpoint->get($randomStructureItem->getId());
+        $structureItem = $this->endpoint->get($randomStructureItem->getID());
         $this->assertInstanceOf(StructureItem::class, $structureItem);
-        $this->assertEquals($randomStructureItem->getId(), $structureItem->getId());
+        $this->assertEquals($randomStructureItem->getID(), $structureItem->getID());
     }
 }

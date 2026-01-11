@@ -15,6 +15,9 @@ namespace Datev\Entities\PublicSector\TransactionCommunications;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<TransactionCommunication>
+ */
 class TransactionCommunications extends NamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";

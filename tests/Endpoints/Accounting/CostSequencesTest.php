@@ -20,7 +20,7 @@ class CostSequencesTest extends EndpointTest {
 
     public function __construct($name) {
         parent::__construct($name);
-        $this->endpoint = new CostSequencesEndpoint($this->client, $this->logger);
+        $this->endpoint = new CostSequencesEndpoint($this->client, self::getLogger());
         $this->apiDisabled = true;
     }
 

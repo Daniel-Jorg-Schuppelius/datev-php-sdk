@@ -15,6 +15,9 @@ namespace Datev\Entities\DocumentManagement\DispatcherInformations;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<DispatcherInformation>
+ */
 class DispatcherInformations extends NamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";

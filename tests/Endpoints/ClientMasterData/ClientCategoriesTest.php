@@ -22,8 +22,8 @@ class ClientCategoriesTest extends EndpointTest {
 
     public function __construct($name) {
         parent::__construct($name);
-        $this->preEndpoint = new ClientsEndpoint($this->client, $this->logger);
-        $this->endpoint = new ClientCategoriesEndpoint($this->client, $this->logger);
+        $this->preEndpoint = new ClientsEndpoint($this->client, self::getLogger());
+        $this->endpoint = new ClientCategoriesEndpoint($this->client, self::getLogger());
         $this->apiDisabled = true; // API is disabled
     }
 
@@ -34,7 +34,7 @@ class ClientCategoriesTest extends EndpointTest {
 
         $clients = $this->preEndpoint->search();
         $randomClient = $clients->getValues()[array_rand($clients->getValues())];
-        $this->endpoint->setClientID($randomClient->getId());
+        $this->endpoint->setClientID($randomClient->getID());
 
         $clientCategories = $this->endpoint->searchByClient();
         $allClientCategories = $this->endpoint->search();
@@ -44,8 +44,8 @@ class ClientCategoriesTest extends EndpointTest {
         $this->assertNotEmpty($clientCategories->getValues(), "No clientCategories found");
         $randomClientCategory = $clientCategories->getValues()[array_rand($clientCategories->getValues())];
         $this->assertInstanceOf(ClientCategory::class, $randomClientCategory);
-        $clientCategory = $this->endpoint->get($randomClientCategory->getId());
+        $clientCategory = $this->endpoint->get($randomClientCategory->getID());
         $this->assertInstanceOf(ClientCategory::class, $randomClientCategory);
-        $this->assertEquals($randomClientCategory->getId(), $clientCategory->getId());
+        $this->assertEquals($randomClientCategory->getID(), $clientCategory->getID());
     }
 }

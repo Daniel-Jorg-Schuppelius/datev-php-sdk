@@ -15,6 +15,9 @@ namespace Datev\Entities\ClientMasterData\LegalForms;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<LegalForm>
+ */
 class LegalForms extends NamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";

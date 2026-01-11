@@ -15,6 +15,9 @@ namespace Datev\Entities\ClientMasterData\ClientCategories;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<ClientCategory>
+ */
 class ClientCategories extends NamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";

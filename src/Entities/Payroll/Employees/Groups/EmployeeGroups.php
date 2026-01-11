@@ -15,6 +15,9 @@ namespace Datev\Entities\Payroll\Employees\Groups;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<EmployeeGroup>
+ */
 class EmployeeGroups extends NamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";

@@ -22,7 +22,7 @@ class InvoicesTest extends EndpointTest {
 
     public function __construct($name = null) {
         parent::__construct($name);
-        $this->endpoint = new InvoicesEndpoint($this->client, $this->logger);
+        $this->endpoint = new InvoicesEndpoint($this->client, self::getLogger());
         $this->apiDisabled = true;
     }
 

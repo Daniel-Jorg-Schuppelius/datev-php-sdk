@@ -15,6 +15,9 @@ namespace Datev\Entities\ClientMasterData\CodesOfClassificationOfEconomicActivit
 use Datev\Contracts\Abstracts\DateTimeNamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends DateTimeNamedValues<CodeOfClassificationOfEconomicActivities2008>
+ */
 class CodesOfClassificationOfEconomicActivities2008 extends DateTimeNamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";

@@ -18,7 +18,7 @@ class CausesTest extends EndpointTest {
 
     public function __construct($name) {
         parent::__construct($name);
-        $this->endpoint = new CausesEndpoint($this->client, $this->logger);
+        $this->endpoint = new CausesEndpoint($this->client, self::getLogger());
         $this->apiDisabled = true;
     }
 

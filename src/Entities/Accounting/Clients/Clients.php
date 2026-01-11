@@ -15,6 +15,9 @@ namespace Datev\Entities\Accounting\Clients;
 use Datev\Entities\Common\Clients\Clients as CommonClients;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends CommonClients<Client>
+ */
 class Clients extends CommonClients {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->valueClassName = Client::class;

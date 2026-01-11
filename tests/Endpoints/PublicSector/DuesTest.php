@@ -18,7 +18,7 @@ class DuesTest extends EndpointTest {
 
     public function __construct($name) {
         parent::__construct($name);
-        $this->endpoint = new DuesEndpoint($this->client, $this->logger);
+        $this->endpoint = new DuesEndpoint($this->client, self::getLogger());
         $this->apiDisabled = true;
     }
 

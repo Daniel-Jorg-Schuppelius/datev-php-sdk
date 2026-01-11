@@ -21,7 +21,7 @@ class DomainsTest extends EndpointTest {
 
     public function __construct($name) {
         parent::__construct($name);
-        $this->endpoint = new DomainsEndpoint($this->client, $this->logger);
+        $this->endpoint = new DomainsEndpoint($this->client, self::getLogger());
         $this->apiDisabled = true; // API is disabled
     }
 

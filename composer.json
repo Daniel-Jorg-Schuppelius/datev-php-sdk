@@ -17,7 +17,7 @@
   "prefer-stable": true,
   "require": {
     "php": ">=8.2 <8.5",
-    "daniel-jorg-schuppelius/php-api-toolkit": "^2.0"
+    "daniel-jorg-schuppelius/php-api-toolkit": "^2.2"
   },
   "autoload-dev": {
     "psr-4": {

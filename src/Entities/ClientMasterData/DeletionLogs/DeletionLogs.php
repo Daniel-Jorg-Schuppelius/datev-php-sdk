@@ -15,6 +15,9 @@ namespace Datev\Entities\ClientMasterData\DeletionLogs;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<DeletionLog>
+ */
 class DeletionLogs extends NamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";

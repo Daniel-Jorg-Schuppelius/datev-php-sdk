@@ -29,7 +29,7 @@ class ScimSchemaTest extends TestCase {
         $schema = new ScimSchema($data, $logger);
 
         $this->assertInstanceOf(ScimSchema::class, $schema);
-        $this->assertEquals("urn:ietf:params:scim:schemas:core:2.0:User", $schema->getId());
+        $this->assertEquals("urn:ietf:params:scim:schemas:core:2.0:User", $schema->getID());
         $this->assertEquals("User", $schema->getName());
     }
 

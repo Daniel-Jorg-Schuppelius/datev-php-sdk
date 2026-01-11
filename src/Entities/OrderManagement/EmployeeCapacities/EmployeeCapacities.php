@@ -15,6 +15,9 @@ namespace Datev\Entities\OrderManagement\EmployeeCapacities;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<EmployeeCapacity>
+ */
 class EmployeeCapacities extends NamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";

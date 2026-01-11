@@ -15,6 +15,9 @@ namespace Datev\Entities\Law\Files;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<LawFile>
+ */
 class LawFiles extends NamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";

@@ -15,6 +15,9 @@ namespace Datev\Entities\Law\LevelsOfJurisdiction;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<LevelOfJurisdiction>
+ */
 class LevelsOfJurisdiction extends NamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";

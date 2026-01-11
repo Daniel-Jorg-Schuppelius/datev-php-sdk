@@ -40,7 +40,7 @@ class TransactionMeterReadingDataTest extends TestCase {
 
         $this->assertInstanceOf(TransactionMeterReadingData::class, $meterReading);
         $this->assertEquals("MTR-001", $meterReading->getMeterId());
-        $this->assertEquals("12345678", $meterReading->getIdentificationNumber());
+        $this->assertEquals("12345678", $meterReading->getIDentificationNumber());
         $this->assertEquals(1234.567, $meterReading->getValue());
         $this->assertEquals("billing", $meterReading->getRelevance());
         $this->assertFalse($meterReading->getOverrun());

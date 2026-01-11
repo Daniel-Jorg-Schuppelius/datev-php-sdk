@@ -20,7 +20,7 @@ class IndividualReference2Test extends EndpointTest {
 
     public function __construct($name) {
         parent::__construct($name);
-        $this->endpoint = new IndividualReferences2Endpoint($this->client, $this->logger);
+        $this->endpoint = new IndividualReferences2Endpoint($this->client, self::getLogger());
         $this->apiDisabled = true; // API is disabled
     }
 

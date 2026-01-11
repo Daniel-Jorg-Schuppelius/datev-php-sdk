@@ -18,7 +18,7 @@ class OrderStateWorkTest extends EndpointTest {
 
     public function __construct($name) {
         parent::__construct($name);
-        $this->endpoint = new OrderStateWorkEndpoint($this->client, $this->logger);
+        $this->endpoint = new OrderStateWorkEndpoint($this->client, self::getLogger());
         $this->apiDisabled = true;
     }
 

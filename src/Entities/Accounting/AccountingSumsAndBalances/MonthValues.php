@@ -15,6 +15,9 @@ namespace Datev\Entities\Accounting\AccountingSumsAndBalances;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<MonthValue>
+ */
 class MonthValues extends NamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "accounting_sums_and_balances_month_values";

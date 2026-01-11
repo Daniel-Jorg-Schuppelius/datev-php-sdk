@@ -20,7 +20,7 @@ class SecureAreaTest extends EndpointTest {
 
     public function __construct($name) {
         parent::__construct($name);
-        $this->endpoint = new SecureAreasEndpoint($this->client, $this->logger);
+        $this->endpoint = new SecureAreasEndpoint($this->client, self::getLogger());
         $this->apiDisabled = true; // API is disabled
     }
 
@@ -34,8 +34,8 @@ class SecureAreaTest extends EndpointTest {
         $this->assertNotEmpty($secureAreas->getValues(), "No secureAreas found");
         $randomSecureArea = $secureAreas->getValues()[array_rand($secureAreas->getValues())];
         $this->assertInstanceOf(SecureArea::class, $randomSecureArea);
-        $secureArea = $this->endpoint->get($randomSecureArea->getId());
+        $secureArea = $this->endpoint->get($randomSecureArea->getID());
         $this->assertInstanceOf(SecureArea::class, $secureArea);
-        $this->assertEquals($randomSecureArea->getId(), $secureArea->getId());
+        $this->assertEquals($randomSecureArea->getID(), $secureArea->getID());
     }
 }

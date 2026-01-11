@@ -20,7 +20,7 @@ class AreaOfResponsibilitiesTest extends EndpointTest {
 
     public function __construct($name) {
         parent::__construct($name);
-        $this->endpoint = new AreaOfResponsibilitiesEndpoint($this->client, $this->logger);
+        $this->endpoint = new AreaOfResponsibilitiesEndpoint($this->client, self::getLogger());
         $this->apiDisabled = true; // API is disabled
     }
 
@@ -34,8 +34,8 @@ class AreaOfResponsibilitiesTest extends EndpointTest {
         $this->assertNotEmpty($areaOfResponsibilities->getValues(), "No areaOfResponsibilities found");
         $randomAreaOfResponsibility = $areaOfResponsibilities->getValues()[array_rand($areaOfResponsibilities->getValues())];
         $this->assertInstanceOf(AreaOfResponsibility::class, $randomAreaOfResponsibility);
-        $areaOfResponsibility = $this->endpoint->get($randomAreaOfResponsibility->getId());
+        $areaOfResponsibility = $this->endpoint->get($randomAreaOfResponsibility->getID());
         $this->assertInstanceOf(AreaOfResponsibility::class, $areaOfResponsibility);
-        $this->assertEquals($randomAreaOfResponsibility->getId(), $areaOfResponsibility->getId());
+        $this->assertEquals($randomAreaOfResponsibility->getID(), $areaOfResponsibility->getID());
     }
 }

@@ -38,7 +38,7 @@ class BudgetTest extends TestCase {
         $budget = new Budget($data, $this->logger);
         $this->assertInstanceOf(Budget::class, new Budget());
         $this->assertInstanceOf(Budget::class, $budget);
-        $this->assertEquals(1, $budget->getId());
+        $this->assertEquals(1, $budget->getID());
         $this->assertEquals(1000.00, $budget->getBudget());
         $this->assertEquals(200.00, $budget->getSumTimeExpenses());
         $this->assertEquals(329.00, $budget->getSumTaxableExpenses());
@@ -49,7 +49,7 @@ class BudgetTest extends TestCase {
     public function testCreateEmptyBudget() {
         $budget = new Budget(null, $this->logger);
         $this->assertInstanceOf(Budget::class, $budget);
-        $this->assertNull($budget->getId());
+        $this->assertNull($budget->getID());
         $this->assertNull($budget->getBudget());
     }
 }

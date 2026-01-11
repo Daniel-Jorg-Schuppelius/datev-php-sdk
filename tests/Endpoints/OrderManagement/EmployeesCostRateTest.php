@@ -18,7 +18,7 @@ class EmployeesCostRateTest extends EndpointTest {
 
     public function __construct($name) {
         parent::__construct($name);
-        $this->endpoint = new EmployeesCostRateEndpoint($this->client, $this->logger);
+        $this->endpoint = new EmployeesCostRateEndpoint($this->client, self::getLogger());
         $this->apiDisabled = true;
     }
 

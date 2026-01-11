@@ -21,7 +21,7 @@ class ServiceProviderConfigTest extends EndpointTest {
 
     public function __construct($name) {
         parent::__construct($name);
-        $this->endpoint = new ServiceProviderConfigEndpoint($this->client, $this->logger);
+        $this->endpoint = new ServiceProviderConfigEndpoint($this->client, self::getLogger());
         $this->apiDisabled = true; // API is disabled
     }
 

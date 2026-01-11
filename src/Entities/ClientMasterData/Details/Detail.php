@@ -234,7 +234,7 @@ class Detail extends NamedEntity {
         return $this->current_federal_state_of_natural_person ?? null;
     }
 
-    public function getIdentificationNumber(): ?string {
+    public function getIDentificationNumber(): ?string {
         return $this->identification_number ?? null;
     }
 

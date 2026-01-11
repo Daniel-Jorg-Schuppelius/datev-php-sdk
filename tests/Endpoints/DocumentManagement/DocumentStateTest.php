@@ -21,7 +21,7 @@ class DocumentStateTest extends EndpointTest {
 
     public function __construct($name) {
         parent::__construct($name);
-        $this->endpoint = new DocumentStatesEndpoint($this->client, $this->logger);
+        $this->endpoint = new DocumentStatesEndpoint($this->client, self::getLogger());
         $this->apiDisabled = true; // API is disabled
     }
 
@@ -56,8 +56,8 @@ class DocumentStateTest extends EndpointTest {
         $this->assertNotEmpty($documentStates->getValues(), "No documentStates found");
         $randomDocumentState = $documentStates->getValues()[array_rand($documentStates->getValues())];
         $this->assertInstanceOf(DocumentState::class, $randomDocumentState);
-        $client = $this->endpoint->get($randomDocumentState->getId());
+        $client = $this->endpoint->get($randomDocumentState->getID());
         $this->assertInstanceOf(DocumentState::class, $client);
-        $this->assertEquals($randomDocumentState->getId(), $client->getId());
+        $this->assertEquals($randomDocumentState->getID(), $client->getID());
     }
 }

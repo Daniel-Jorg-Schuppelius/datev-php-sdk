@@ -18,7 +18,7 @@ class TransactionAddressesTest extends EndpointTest {
 
     public function __construct($name) {
         parent::__construct($name);
-        $this->endpoint = new TransactionAddressesEndpoint($this->client, $this->logger);
+        $this->endpoint = new TransactionAddressesEndpoint($this->client, self::getLogger());
         $this->apiDisabled = true;
     }
 

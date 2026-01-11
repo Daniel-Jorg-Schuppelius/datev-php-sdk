@@ -15,6 +15,10 @@ namespace Datev\Contracts\Abstracts;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use DateTime;
 
+/**
+ * @template T
+ * @extends NamedValues<T>
+ */
 abstract class DateTimeNamedValues extends NamedValues {
     public function toArray(bool $fullEntity = true, string $dateFormat = DateTime::RFC3339_EXTENDED): array {
         $result = [];

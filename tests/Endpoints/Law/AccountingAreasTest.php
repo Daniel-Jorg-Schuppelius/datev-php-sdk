@@ -18,7 +18,7 @@ class AccountingAreasTest extends EndpointTest {
 
     public function __construct($name) {
         parent::__construct($name);
-        $this->endpoint = new AccountingAreasEndpoint($this->client, $this->logger);
+        $this->endpoint = new AccountingAreasEndpoint($this->client, self::getLogger());
         $this->apiDisabled = true;
     }
 

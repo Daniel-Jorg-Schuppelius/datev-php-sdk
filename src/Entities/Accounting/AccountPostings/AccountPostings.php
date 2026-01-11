@@ -16,6 +16,9 @@ use APIToolkit\Contracts\Abstracts\NamedValues;
 use Datev\Entities\Accounting\AccountPostings\AccountPosting;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<AccountPosting>
+ */
 class AccountPostings extends NamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";

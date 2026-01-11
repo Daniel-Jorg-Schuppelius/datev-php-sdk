@@ -20,7 +20,7 @@ class IndividualPropertyTest extends EndpointTest {
 
     public function __construct($name) {
         parent::__construct($name);
-        $this->endpoint = new IndividualPropertiesEndpoint($this->client, $this->logger);
+        $this->endpoint = new IndividualPropertiesEndpoint($this->client, self::getLogger());
         $this->apiDisabled = true; // API is disabled
     }
 

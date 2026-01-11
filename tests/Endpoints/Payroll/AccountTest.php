@@ -18,7 +18,7 @@ class AccountTest extends EndpointTest {
 
     public function __construct($name) {
         parent::__construct($name);
-        $this->endpoint = new AccountEndpoint($this->client, $this->logger);
+        $this->endpoint = new AccountEndpoint($this->client, self::getLogger());
         $this->apiDisabled = true;
     }
 

@@ -15,6 +15,9 @@ namespace Datev\Entities\OrderManagement\ExpensePostings;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<ExpensePosting>
+ */
 class ExpensePostings extends NamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";

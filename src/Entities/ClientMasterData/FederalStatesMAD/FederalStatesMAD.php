@@ -15,6 +15,9 @@ namespace Datev\Entities\ClientMasterData\FederalStatesMAD;
 use Datev\Contracts\Abstracts\DateTimeNamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends DateTimeNamedValues<FederalStateMAD>
+ */
 class FederalStatesMAD extends DateTimeNamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";

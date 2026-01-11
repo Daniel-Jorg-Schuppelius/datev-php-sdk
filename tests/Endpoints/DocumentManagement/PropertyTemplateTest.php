@@ -20,7 +20,7 @@ class PropertyTemplateTest extends EndpointTest {
 
     public function __construct($name) {
         parent::__construct($name);
-        $this->endpoint = new PropertyTemplatesEndpoint($this->client, $this->logger);
+        $this->endpoint = new PropertyTemplatesEndpoint($this->client, self::getLogger());
         $this->apiDisabled = true; // API is disabled
     }
 
@@ -34,7 +34,7 @@ class PropertyTemplateTest extends EndpointTest {
         $this->assertNotEmpty($propertyTemplates->getValues(), "No propertyTemplates found");
         $randomPropertyTemplate = $propertyTemplates->getValues()[array_rand($propertyTemplates->getValues())];
         $this->assertInstanceOf(PropertyTemplate::class, $randomPropertyTemplate);
-        $propertyTemplate = $this->endpoint->get($randomPropertyTemplate->getId());
+        $propertyTemplate = $this->endpoint->get($randomPropertyTemplate->getID());
         $this->assertInstanceOf(PropertyTemplate::class, $propertyTemplate);
         $this->assertEquals($randomPropertyTemplate, $propertyTemplate);
     }

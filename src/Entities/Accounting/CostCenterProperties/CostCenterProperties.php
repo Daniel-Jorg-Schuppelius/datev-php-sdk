@@ -13,9 +13,11 @@ declare(strict_types=1);
 namespace Datev\Entities\Accounting\CostCenterProperties;
 
 use APIToolkit\Contracts\Abstracts\NamedValues;
-use Datev\Entities\Accounting\AccountPostings\AccountPosting;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<CostCenterProperty>
+ */
 class CostCenterProperties extends NamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";

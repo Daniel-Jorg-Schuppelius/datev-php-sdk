@@ -15,6 +15,9 @@ namespace Datev\Entities\DocumentManagement\Versions;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<Version>
+ */
 class Versions extends NamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";

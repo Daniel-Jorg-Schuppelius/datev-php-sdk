@@ -20,7 +20,7 @@ class BanksTest extends EndpointTest {
 
     public function __construct($name) {
         parent::__construct($name);
-        $this->endpoint = new BanksEndpoint($this->client, $this->logger);
+        $this->endpoint = new BanksEndpoint($this->client, self::getLogger());
         $this->apiDisabled = true; // API is disabled
     }
 
@@ -34,8 +34,8 @@ class BanksTest extends EndpointTest {
         $this->assertNotEmpty($banks->getValues(), "No banks found");
         $randomBank = $banks->getValues()[array_rand($banks->getValues())];
         $this->assertInstanceOf(Bank::class, $randomBank);
-        $bank = $this->endpoint->get($randomBank->getId());
+        $bank = $this->endpoint->get($randomBank->getID());
         $this->assertInstanceOf(Bank::class, $randomBank);
-        $this->assertEquals($randomBank->getId(), $bank->getId());
+        $this->assertEquals($randomBank->getID(), $bank->getID());
     }
 }

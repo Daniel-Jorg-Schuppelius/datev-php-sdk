@@ -15,6 +15,9 @@ namespace Datev\Entities\OrderManagement\OrderTypes;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<OrderType>
+ */
 class OrderTypes extends NamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";

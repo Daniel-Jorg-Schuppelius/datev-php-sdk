@@ -15,6 +15,9 @@ namespace Datev\Entities\ClientMasterData\BankAccounts;
 use Datev\Entities\Common\BankAccounts\BankAccounts as BaseBankAccounts;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends BaseBankAccounts<BankAccount>
+ */
 class BankAccounts extends BaseBankAccounts {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";

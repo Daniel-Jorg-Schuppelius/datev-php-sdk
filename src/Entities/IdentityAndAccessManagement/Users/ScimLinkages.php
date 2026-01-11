@@ -15,6 +15,9 @@ namespace Datev\Entities\IdentityAndAccessManagement\Users;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<ScimLinkage>
+ */
 class ScimLinkages extends NamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";

@@ -26,8 +26,8 @@ class MetersTest extends EndpointTest {
 
     public function __construct($name = null, array $data = [], $dataName = '') {
         parent::__construct($name, $data, $dataName);
-        $this->endpoint = new MetersEndpoint($this->client, $this->logger);
-        $this->meterReadingsEndpoint = new MeterReadingsEndpoint($this->client, $this->logger);
+        $this->endpoint = new MetersEndpoint($this->client, self::getLogger());
+        $this->meterReadingsEndpoint = new MeterReadingsEndpoint($this->client, self::getLogger());
         $this->apiDisabled = true;
     }
 
@@ -48,7 +48,7 @@ class MetersTest extends EndpointTest {
 
         $meter = Meter::fromJson(json_encode($data));
         $this->assertInstanceOf(Meter::class, $meter);
-        $this->assertEquals('METER-001', $meter->getId());
+        $this->assertEquals('METER-001', $meter->getID());
         $this->assertEquals('WZ-12345', $meter->getMeterNumber());
         $this->assertNotNull($meter->getMeterType());
         $this->assertEquals('Wasserzähler', $meter->getMeterType()->getName());
@@ -82,7 +82,7 @@ class MetersTest extends EndpointTest {
 
         $meterReading = MeterReading::fromJson(json_encode($data));
         $this->assertInstanceOf(MeterReading::class, $meterReading);
-        $this->assertEquals('READING-001', $meterReading->getId());
+        $this->assertEquals('READING-001', $meterReading->getID());
         $this->assertEquals(12345.67, $meterReading->getReadingValue());
         $this->assertEquals('Jahresablesung', $meterReading->getReadingReason());
         $this->assertFalse($meterReading->getIsEstimated());

@@ -18,7 +18,7 @@ class EmployeesWithGroupTest extends EndpointTest {
 
     public function __construct($name) {
         parent::__construct($name);
-        $this->endpoint = new EmployeesWithGroupEndpoint($this->client, $this->logger);
+        $this->endpoint = new EmployeesWithGroupEndpoint($this->client, self::getLogger());
         $this->apiDisabled = true;
     }
 

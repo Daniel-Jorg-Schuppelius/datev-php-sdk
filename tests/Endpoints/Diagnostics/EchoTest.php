@@ -18,7 +18,7 @@ class EchoTest extends EndpointTest {
 
     public function __construct($name) {
         parent::__construct($name);
-        $this->endpoint = new EchoEndpoint($this->client, $this->logger);
+        $this->endpoint = new EchoEndpoint($this->client, self::getLogger());
         $this->apiDisabled = true;
     }
 

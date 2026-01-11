@@ -20,7 +20,7 @@ class AddresseesTest extends EndpointTest {
 
     public function __construct($name) {
         parent::__construct($name);
-        $this->endpoint = new AddresseesEndpoint($this->client, $this->logger);
+        $this->endpoint = new AddresseesEndpoint($this->client, self::getLogger());
         $this->apiDisabled = true; // API is disabled
     }
 
@@ -34,8 +34,8 @@ class AddresseesTest extends EndpointTest {
         $this->assertNotEmpty($addressees->getValues(), "No addressees found");
         $randomaddressee = $addressees->getValues()[array_rand($addressees->getValues())];
         $this->assertInstanceOf(Addressee::class, $randomaddressee);
-        $addresse = $this->endpoint->get($randomaddressee->getId());
+        $addresse = $this->endpoint->get($randomaddressee->getID());
         $this->assertInstanceOf(Addressee::class, $addresse);
-        $this->assertEquals($randomaddressee->getId(), $addresse->getId());
+        $this->assertEquals($randomaddressee->getID(), $addresse->getID());
     }
 }

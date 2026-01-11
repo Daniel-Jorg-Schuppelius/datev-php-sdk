@@ -18,7 +18,7 @@ class BillingCategoriesTest extends EndpointTest {
 
     public function __construct($name) {
         parent::__construct($name);
-        $this->endpoint = new BillingCategoriesEndpoint($this->client, $this->logger);
+        $this->endpoint = new BillingCategoriesEndpoint($this->client, self::getLogger());
         $this->apiDisabled = true;
     }
 
