@@ -20,12 +20,14 @@ class IndividualDataEndpoint extends PayrollEndpointAbstract implements Searchab
     protected string $endpointSuffix = 'individual-data';
 
     public function search(array $queryParams = [], array $options = []): ?IndividualData {
-        $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->endpointSuffix}");
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->endpointSuffix}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return IndividualData::fromJson($response, self::$logger);
+            return IndividualData::fromJson($response, self::$logger);
+        }, "Searching IndividualData");
     }
 }

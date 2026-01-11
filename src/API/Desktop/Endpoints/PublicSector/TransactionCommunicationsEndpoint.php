@@ -45,45 +45,47 @@ class TransactionCommunicationsEndpoint extends EndpointAbstract implements Sear
 
     public function getById(?int $transactionId = null): ?TransactionCommunication {
         if (!isset($this->clientId) || !isset($this->citizenId)) {
-            $this->logError('Client ID and Citizen ID are required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID and Citizen ID are required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID and Citizen ID are required');
         }
 
         if (is_null($transactionId)) {
-            $this->logError('Transaction ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Transaction ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Transaction ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/transaction-communications/{$transactionId}");
+        return $this->logDebugWithTimer(function () use ($transactionId) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/transaction-communications/{$transactionId}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return TransactionCommunication::fromJson($response, self::$logger);
+            return TransactionCommunication::fromJson($response, self::$logger);
+        }, "Fetching TransactionCommunication (ID: {$transactionId})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?TransactionCommunications {
         if (!isset($this->clientId) || !isset($this->citizenId)) {
-            $this->logError('Client ID and Citizen ID are required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID and Citizen ID are required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID and Citizen ID are required');
         }
 
-        $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/transaction-communications");
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/transaction-communications");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return TransactionCommunications::fromJson($response, self::$logger);
+            return TransactionCommunications::fromJson($response, self::$logger);
+        }, "Searching TransactionCommunications");
     }
 
     public function create(TransactionCommunication $transaction): ?ResponseInterface {
         if (!isset($this->clientId) || !isset($this->citizenId)) {
-            $this->logError('Client ID and Citizen ID are required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID and Citizen ID are required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID and Citizen ID are required');
         }
 
-        return parent::postContent($transaction, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/transaction-communications");
+        return $this->logDebugWithTimer(function () use ($transaction) {
+            return parent::postContent($transaction, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/transaction-communications");
+        }, "Creating TransactionCommunication");
     }
 }

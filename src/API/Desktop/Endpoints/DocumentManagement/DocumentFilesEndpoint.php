@@ -36,38 +36,40 @@ class DocumentFilesEndpoint extends EndpointAbstract {
 
     public function getFileById(?string $fileId = null): ?string {
         if (is_null($fileId)) {
-            $this->logError('Document File ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Document File ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Document File ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$fileId}");
+        return $this->logDebugWithTimer(function () use ($fileId) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$fileId}");
 
-        if (empty($response)) {
-            return null;
-        }
+            if (empty($response)) {
+                return null;
+            }
 
-        return $response;
+            return $response;
+        }, "Fetching DocumentFile (ID: {$fileId})");
     }
 
     public function upload(string $fileContent): ?DocumentFile {
         if (empty($fileContent)) {
-            $this->logError('File content is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('File content is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'File content is required');
         }
 
-        $response = $this->client->post($this->getEndpointUrl(), [
-            'body' => $fileContent,
-            'headers' => [
-                'Content-Type' => 'application/octet-stream'
-            ]
-        ]);
+        return $this->logDebugWithTimer(function () use ($fileContent) {
+            $response = $this->client->post($this->getEndpointUrl(), [
+                'body' => $fileContent,
+                'headers' => [
+                    'Content-Type' => 'application/octet-stream'
+                ]
+            ]);
 
-        $body = $response->getBody()->getContents();
+            $body = $response->getBody()->getContents();
 
-        if (empty($body) || $body === '[]') {
-            return null;
-        }
+            if (empty($body) || $body === '[]') {
+                return null;
+            }
 
-        return DocumentFile::fromJson($body, self::$logger);
+            return DocumentFile::fromJson($body, self::$logger);
+        }, 'Uploading DocumentFile');
     }
 }

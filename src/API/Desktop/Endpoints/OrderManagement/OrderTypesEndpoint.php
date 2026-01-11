@@ -27,22 +27,26 @@ class OrderTypesEndpoint extends EndpointAbstract implements SearchableEndpointI
             return null;
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
+        return $this->logDebugWithTimer(function () use ($id) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return OrderType::fromJson($response, self::$logger);
+            return OrderType::fromJson($response, self::$logger);
+        }, "Fetching OrderType (ID: {$id})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?OrderTypes {
-        $response = parent::getContents($queryParams, $options);
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options);
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return OrderTypes::fromJson($response, self::$logger);
+            return OrderTypes::fromJson($response, self::$logger);
+        }, 'Searching OrderTypes');
     }
 }

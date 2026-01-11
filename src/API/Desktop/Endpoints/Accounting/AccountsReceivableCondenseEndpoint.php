@@ -39,25 +39,25 @@ class AccountsReceivableCondenseEndpoint extends EndpointAbstract implements Sea
 
     protected function getBaseUrl(): string {
         if (!isset($this->clientId)) {
-            $this->logError('Client ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID is required');
         }
 
         if (!isset($this->fiscalYearId)) {
-            $this->logError('Fiscal Year ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Fiscal Year ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Fiscal Year ID is required');
         }
 
         return "{$this->getEndpointUrl()}/{$this->clientId->toString()}/fiscal-years/{$this->fiscalYearId->toString()}/accounts-receivable/condense";
     }
 
     public function search(array $queryParams = [], array $options = []): ?OpenItems {
-        $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return OpenItems::fromJson($response, self::$logger);
+            return OpenItems::fromJson($response, self::$logger);
+        }, 'Searching OpenItems (Accounts Receivable Condense)');
     }
 }

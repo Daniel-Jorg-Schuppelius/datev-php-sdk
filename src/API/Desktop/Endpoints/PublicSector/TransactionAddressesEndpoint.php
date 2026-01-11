@@ -45,45 +45,47 @@ class TransactionAddressesEndpoint extends EndpointAbstract implements Searchabl
 
     public function getById(?int $transactionId = null): ?TransactionAddress {
         if (!isset($this->clientId) || !isset($this->citizenId)) {
-            $this->logError('Client ID and Citizen ID are required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID and Citizen ID are required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID and Citizen ID are required');
         }
 
         if (is_null($transactionId)) {
-            $this->logError('Transaction ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Transaction ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Transaction ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/transaction-addresses/{$transactionId}");
+        return $this->logDebugWithTimer(function () use ($transactionId) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/transaction-addresses/{$transactionId}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return TransactionAddress::fromJson($response, self::$logger);
+            return TransactionAddress::fromJson($response, self::$logger);
+        }, "Fetching TransactionAddress (ID: {$transactionId})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?TransactionAddresses {
         if (!isset($this->clientId) || !isset($this->citizenId)) {
-            $this->logError('Client ID and Citizen ID are required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID and Citizen ID are required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID and Citizen ID are required');
         }
 
-        $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/transaction-addresses");
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/transaction-addresses");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return TransactionAddresses::fromJson($response, self::$logger);
+            return TransactionAddresses::fromJson($response, self::$logger);
+        }, "Searching TransactionAddresses");
     }
 
     public function create(TransactionAddress $transaction): ?ResponseInterface {
         if (!isset($this->clientId) || !isset($this->citizenId)) {
-            $this->logError('Client ID and Citizen ID are required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID and Citizen ID are required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID and Citizen ID are required');
         }
 
-        return parent::postContent($transaction, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/transaction-addresses");
+        return $this->logDebugWithTimer(function () use ($transaction) {
+            return parent::postContent($transaction, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/transaction-addresses");
+        }, "Creating TransactionAddress");
     }
 }

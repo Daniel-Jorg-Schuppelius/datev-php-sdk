@@ -32,27 +32,30 @@ class SubordersStateBillingEndpoint extends EndpointAbstract implements Searchab
 
     public function getByOrderId(?int $orderId = null, array $queryParams = []): ?SuborderStateBilling {
         if (is_null($orderId)) {
-            $this->logError('Order ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Order ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Order ID is required');
         }
 
-        $response = parent::getContents($queryParams, [], $this->buildOrderUrl($orderId));
+        return $this->logDebugWithTimer(function () use ($orderId, $queryParams) {
+            $response = parent::getContents($queryParams, [], $this->buildOrderUrl($orderId));
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return SuborderStateBilling::fromJson($response, self::$logger);
+            return SuborderStateBilling::fromJson($response, self::$logger);
+        }, "Fetching SuborderStateBilling (OrderID: {$orderId})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?SubordersStateBilling {
-        $response = parent::getContents($queryParams, $options);
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options);
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return SubordersStateBilling::fromJson($response, self::$logger);
+            return SubordersStateBilling::fromJson($response, self::$logger);
+        }, 'Searching SubordersStateBilling');
     }
 
     private function buildOrderUrl(int $orderId): string {

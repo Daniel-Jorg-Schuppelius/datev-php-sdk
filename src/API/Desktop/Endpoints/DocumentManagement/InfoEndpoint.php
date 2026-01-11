@@ -19,12 +19,14 @@ class InfoEndpoint extends EndpointAbstract {
     protected string $endpoint = 'info';
 
     public function get(?ID $id = null): ?Info {
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}");
+        return $this->logDebugWithTimer(function () {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Info::fromJson($response, self::$logger);
+            return Info::fromJson($response, self::$logger);
+        }, 'Fetching Info');
     }
 }

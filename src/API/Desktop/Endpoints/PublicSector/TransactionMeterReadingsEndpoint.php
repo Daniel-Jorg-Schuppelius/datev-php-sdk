@@ -55,45 +55,47 @@ class TransactionMeterReadingsEndpoint extends EndpointAbstract implements Searc
 
     public function getById(?int $transactionId = null): ?TransactionMeterReading {
         if (!isset($this->clientId) || !isset($this->citizenId) || !isset($this->feeId) || !isset($this->meterId)) {
-            $this->logError('Client ID, Citizen ID, Fee ID and Meter ID are required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID, Citizen ID, Fee ID and Meter ID are required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID, Citizen ID, Fee ID and Meter ID are required');
         }
 
         if (is_null($transactionId)) {
-            $this->logError('Transaction ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Transaction ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Transaction ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/meters/{$this->meterId}/transaction-meter-readings/{$transactionId}");
+        return $this->logDebugWithTimer(function () use ($transactionId) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/meters/{$this->meterId}/transaction-meter-readings/{$transactionId}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return TransactionMeterReading::fromJson($response, self::$logger);
+            return TransactionMeterReading::fromJson($response, self::$logger);
+        }, "Fetching TransactionMeterReading (ID: {$transactionId})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?TransactionMeterReadings {
         if (!isset($this->clientId) || !isset($this->citizenId) || !isset($this->feeId) || !isset($this->meterId)) {
-            $this->logError('Client ID, Citizen ID, Fee ID and Meter ID are required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID, Citizen ID, Fee ID and Meter ID are required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID, Citizen ID, Fee ID and Meter ID are required');
         }
 
-        $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/meters/{$this->meterId}/transaction-meter-readings");
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/meters/{$this->meterId}/transaction-meter-readings");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return TransactionMeterReadings::fromJson($response, self::$logger);
+            return TransactionMeterReadings::fromJson($response, self::$logger);
+        }, "Searching TransactionMeterReadings");
     }
 
     public function create(TransactionMeterReading $transaction): ?ResponseInterface {
         if (!isset($this->clientId) || !isset($this->citizenId) || !isset($this->feeId) || !isset($this->meterId)) {
-            $this->logError('Client ID, Citizen ID, Fee ID and Meter ID are required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID, Citizen ID, Fee ID and Meter ID are required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID, Citizen ID, Fee ID and Meter ID are required');
         }
 
-        return parent::postContent($transaction, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/meters/{$this->meterId}/transaction-meter-readings");
+        return $this->logDebugWithTimer(function () use ($transaction) {
+            return parent::postContent($transaction, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/meters/{$this->meterId}/transaction-meter-readings");
+        }, "Creating TransactionMeterReading");
     }
 }

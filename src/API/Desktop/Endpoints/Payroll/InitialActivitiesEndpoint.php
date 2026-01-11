@@ -42,16 +42,17 @@ class InitialActivitiesEndpoint extends PayrollEndpointAbstract implements Searc
 
     public function search(array $queryParams = [], array $options = []): ?InitialActivities {
         if (!$this->employeeID->isValid()) {
-            $this->logError('Employee ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Employee ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Employee ID is required');
         }
 
-        $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/employees/{$this->employeeID->toString()}/{$this->endpointSuffix}");
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/employees/{$this->employeeID->toString()}/{$this->endpointSuffix}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return InitialActivities::fromJson($response, self::$logger);
+            return InitialActivities::fromJson($response, self::$logger);
+        }, "Searching InitialActivities for Employee (ID: {$this->employeeID})");
     }
 }

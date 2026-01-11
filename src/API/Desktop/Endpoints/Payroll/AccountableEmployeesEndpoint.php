@@ -24,26 +24,29 @@ class AccountableEmployeesEndpoint extends PayrollEndpointAbstract implements Se
 
     public function get(?ID $id = null): ?AccountableEmployee {
         if (is_null($id)) {
-            $this->logError('ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->endpointSuffix}/{$id->toString()}");
+        return $this->logDebugWithTimer(function () use ($id) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->endpointSuffix}/{$id->toString()}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return AccountableEmployee::fromJson($response, self::$logger);
+            return AccountableEmployee::fromJson($response, self::$logger);
+        }, "Fetching AccountableEmployee (ID: {$id})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?AccountableEmployees {
-        $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->endpointSuffix}");
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->endpointSuffix}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return AccountableEmployees::fromJson($response, self::$logger);
+            return AccountableEmployees::fromJson($response, self::$logger);
+        }, "Searching AccountableEmployees");
     }
 }

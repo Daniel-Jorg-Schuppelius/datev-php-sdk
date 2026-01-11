@@ -36,13 +36,11 @@ class DebitorsEndpoint extends EndpointAbstract implements SearchableEndpointInt
 
     protected function getBaseUrl(): string {
         if (!isset($this->clientId)) {
-            $this->logError('Client ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID is required');
         }
 
         if (!isset($this->fiscalYearId)) {
-            $this->logError('Fiscal Year ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Fiscal Year ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Fiscal Year ID is required');
         }
 
         return "{$this->getEndpointUrl()}/{$this->clientId->toString()}/fiscal-years/{$this->fiscalYearId->toString()}/debitors";
@@ -57,42 +55,47 @@ class DebitorsEndpoint extends EndpointAbstract implements SearchableEndpointInt
 
     public function getById(?string $debitorId = null): ?Debitor {
         if (is_null($debitorId)) {
-            $this->logError('Debitor ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Debitor ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Debitor ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getBaseUrl()}/{$debitorId}");
+        return $this->logDebugWithTimer(function () use ($debitorId) {
+            $response = parent::getContents([], [], "{$this->getBaseUrl()}/{$debitorId}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Debitor::fromJson($response, self::$logger);
+            return Debitor::fromJson($response, self::$logger);
+        }, "Fetching Debitor (ID: {$debitorId})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?Debitors {
-        $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Debitors::fromJson($response, self::$logger);
+            return Debitors::fromJson($response, self::$logger);
+        }, 'Searching Debitors');
     }
 
     public function getNextAvailable(?int $startAt = null): ?int {
-        $url = "{$this->getBaseUrl()}/next-available";
-        if ($startAt !== null) {
-            $url .= "?start-at={$startAt}";
-        }
+        return $this->logDebugWithTimer(function () use ($startAt) {
+            $url = "{$this->getBaseUrl()}/next-available";
+            if ($startAt !== null) {
+                $url .= "?start-at={$startAt}";
+            }
 
-        $response = parent::getContents([], [], $url);
+            $response = parent::getContents([], [], $url);
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        $data = json_decode($response, true);
-        return $data['account_number'] ?? null;
+            $data = json_decode($response, true);
+            return $data['account_number'] ?? null;
+        }, 'Fetching next available Debitor number');
     }
 }

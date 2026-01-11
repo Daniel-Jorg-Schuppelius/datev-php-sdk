@@ -25,26 +25,29 @@ class LevelsOfJurisdictionEndpoint extends EndpointAbstract implements Searchabl
 
     public function get(?ID $id = null): ?LevelOfJurisdiction {
         if (is_null($id)) {
-            $this->logError('ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
+        return $this->logDebugWithTimer(function () use ($id) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return LevelOfJurisdiction::fromJson($response, self::$logger);
+            return LevelOfJurisdiction::fromJson($response, self::$logger);
+        }, "Fetching LevelOfJurisdiction (ID: {$id})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?LevelsOfJurisdiction {
-        $response = parent::getContents($queryParams, $options);
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options);
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return LevelsOfJurisdiction::fromJson($response, self::$logger);
+            return LevelsOfJurisdiction::fromJson($response, self::$logger);
+        }, 'Searching LevelsOfJurisdiction');
     }
 }

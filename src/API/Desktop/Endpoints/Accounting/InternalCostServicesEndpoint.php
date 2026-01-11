@@ -45,30 +45,29 @@ class InternalCostServicesEndpoint extends EndpointAbstract implements PostableE
 
     protected function getBaseUrl(): string {
         if (!isset($this->clientId)) {
-            $this->logError('Client ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID is required');
         }
 
         if (!isset($this->fiscalYearId)) {
-            $this->logError('Fiscal Year ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Fiscal Year ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Fiscal Year ID is required');
         }
 
         if (!isset($this->costSystemId)) {
-            $this->logError('Cost System ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Cost System ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Cost System ID is required');
         }
 
         return "{$this->getEndpointUrl()}/{$this->clientId->toString()}/fiscal-years/{$this->fiscalYearId->toString()}/cost-systems/{$this->costSystemId->toString()}/internal-cost-services";
     }
 
     public function create($data): ?InternalCostService {
-        $response = parent::postContents($data->toArray(), [], $this->getBaseUrl());
+        return $this->logDebugWithTimer(function () use ($data) {
+            $response = parent::postContents($data->toArray(), [], $this->getBaseUrl());
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return InternalCostService::fromJson($response, self::$logger);
+            return InternalCostService::fromJson($response, self::$logger);
+        }, 'Creating InternalCostService');
     }
 }

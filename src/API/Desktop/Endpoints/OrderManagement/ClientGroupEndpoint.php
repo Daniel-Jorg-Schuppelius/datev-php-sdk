@@ -23,16 +23,17 @@ class ClientGroupEndpoint extends EndpointAbstract {
 
     public function get(?ID $clientId = null): ?ClientGroups {
         if (is_null($clientId)) {
-            $this->logError('Client ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID is required');
         }
 
-        $response = parent::getContents(['clientid' => $clientId->toString()]);
+        return $this->logDebugWithTimer(function () use ($clientId) {
+            $response = parent::getContents(['clientid' => $clientId->toString()]);
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return ClientGroups::fromJson($response, self::$logger);
+            return ClientGroups::fromJson($response, self::$logger);
+        }, "Fetching ClientGroups (ClientID: {$clientId})");
     }
 }

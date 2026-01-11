@@ -27,22 +27,26 @@ class FeesEndpoint extends EndpointAbstract implements SearchableEndpointInterfa
             return null;
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
+        return $this->logDebugWithTimer(function () use ($id) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Fee::fromJson($response, self::$logger);
+            return Fee::fromJson($response, self::$logger);
+        }, "Fetching Fee (ID: {$id})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?Fees {
-        $response = parent::getContents($queryParams, $options);
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options);
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Fees::fromJson($response, self::$logger);
+            return Fees::fromJson($response, self::$logger);
+        }, 'Searching Fees');
     }
 }

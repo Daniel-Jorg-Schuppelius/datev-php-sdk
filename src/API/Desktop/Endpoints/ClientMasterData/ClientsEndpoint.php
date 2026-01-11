@@ -23,8 +23,7 @@ class ClientsEndpoint extends EndpointAbstract implements SearchableEndpointInte
 
     public function get(?ID $id = null): ?Client {
         if (is_null($id)) {
-            $this->logError('ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'ID is required');
         }
         $result = $this->search()->getFirstValue("id", $id->toString());
 
@@ -32,12 +31,14 @@ class ClientsEndpoint extends EndpointAbstract implements SearchableEndpointInte
     }
 
     public function search(array $queryParams = [], array $options = []): ?Clients {
-        $response = parent::getContents($queryParams, $options);
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options);
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Clients::fromJson($response, self::$logger);
+            return Clients::fromJson($response, self::$logger);
+        }, 'Searching Clients');
     }
 }

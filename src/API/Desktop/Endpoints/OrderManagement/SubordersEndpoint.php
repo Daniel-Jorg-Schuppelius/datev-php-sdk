@@ -28,22 +28,25 @@ class SubordersEndpoint extends EndpointAbstract {
 
     public function getByOrderIdAndSuborderId(?int $orderId = null, ?int $suborderId = null, array $queryParams = []): ?Suborder {
         if (is_null($orderId) || is_null($suborderId)) {
-            $this->logError('Order ID and Suborder ID are required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Order ID and Suborder ID are required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Order ID and Suborder ID are required');
         }
 
-        $response = parent::getContents($queryParams, [], "{$this->getEndpointUrl()}/{$orderId}/suborders/{$suborderId}");
+        return $this->logDebugWithTimer(function () use ($orderId, $suborderId, $queryParams) {
+            $response = parent::getContents($queryParams, [], "{$this->getEndpointUrl()}/{$orderId}/suborders/{$suborderId}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Suborder::fromJson($response, self::$logger);
+            return Suborder::fromJson($response, self::$logger);
+        }, "Fetching Suborder (OrderID: {$orderId}, SuborderID: {$suborderId})");
     }
 
     public function update(int $orderId, int $suborderId, Suborder $suborder): bool {
-        $response = parent::putContents($suborder->toArray(), [], "{$this->getEndpointUrl()}/{$orderId}/suborders/{$suborderId}");
+        return $this->logDebugWithTimer(function () use ($orderId, $suborderId, $suborder) {
+            $response = parent::putContents($suborder->toArray(), [], "{$this->getEndpointUrl()}/{$orderId}/suborders/{$suborderId}");
 
-        return $response !== false;
+            return $response !== false;
+        }, "Updating Suborder (OrderID: {$orderId}, SuborderID: {$suborderId})");
     }
 }

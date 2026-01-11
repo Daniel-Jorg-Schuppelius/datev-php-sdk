@@ -28,38 +28,46 @@ class ExpensePostingsEndpoint extends EndpointAbstract implements SearchableEndp
             return null;
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/expensepostings/{$id->toString()}");
+        return $this->logDebugWithTimer(function () use ($id) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/expensepostings/{$id->toString()}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return ExpensePosting::fromJson($response, self::$logger);
+            return ExpensePosting::fromJson($response, self::$logger);
+        }, "Fetching ExpensePosting (ID: {$id})");
     }
 
     public function getForOrder(int $orderId, array $queryParams = []): ?ExpensePostings {
-        $response = parent::getContents($queryParams, [], "{$this->getEndpointUrl()}/{$orderId}/expensepostings");
+        return $this->logDebugWithTimer(function () use ($orderId, $queryParams) {
+            $response = parent::getContents($queryParams, [], "{$this->getEndpointUrl()}/{$orderId}/expensepostings");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return ExpensePostings::fromJson($response, self::$logger);
+            return ExpensePostings::fromJson($response, self::$logger);
+        }, "Fetching ExpensePostings for Order (ID: {$orderId})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?ExpensePostings {
-        $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/expensepostings");
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/expensepostings");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return ExpensePostings::fromJson($response, self::$logger);
+            return ExpensePostings::fromJson($response, self::$logger);
+        }, 'Searching ExpensePostings');
     }
 
     public function create(int $orderId, ExpensePosting $expensePosting, array $queryParams = []): bool {
-        $response = parent::postContents($expensePosting->toArray(), $queryParams, "{$this->getEndpointUrl()}/{$orderId}/expensepostings");
+        return $this->logDebugWithTimer(function () use ($orderId, $expensePosting, $queryParams) {
+            $response = parent::postContents($expensePosting->toArray(), $queryParams, "{$this->getEndpointUrl()}/{$orderId}/expensepostings");
 
-        return $response !== false;
+            return $response !== false;
+        }, "Creating ExpensePosting for Order (ID: {$orderId})");
     }
 }

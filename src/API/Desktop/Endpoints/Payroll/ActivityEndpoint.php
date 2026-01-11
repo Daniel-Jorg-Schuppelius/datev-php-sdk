@@ -20,12 +20,14 @@ class ActivityEndpoint extends PayrollEndpointAbstract implements SearchableEndp
     protected string $endpointSuffix = 'activity';
 
     public function search(array $queryParams = [], array $options = []): ?Activities {
-        $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->endpointSuffix}");
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->endpointSuffix}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Activities::fromJson($response, self::$logger);
+            return Activities::fromJson($response, self::$logger);
+        }, "Searching Activities");
     }
 }

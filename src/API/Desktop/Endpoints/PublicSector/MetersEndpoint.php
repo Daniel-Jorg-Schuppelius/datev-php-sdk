@@ -46,36 +46,37 @@ class MetersEndpoint extends EndpointAbstract implements SearchableEndpointInter
 
     public function getById(?string $meterId = null): ?Meter {
         if (!isset($this->clientId) || !isset($this->citizenId) || !isset($this->feeId)) {
-            $this->logError('Client ID, Citizen ID and Fee ID are required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID, Citizen ID and Fee ID are required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID, Citizen ID and Fee ID are required');
         }
 
         if (is_null($meterId)) {
-            $this->logError('Meter ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Meter ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Meter ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/meters/{$meterId}");
+        return $this->logDebugWithTimer(function () use ($meterId) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/meters/{$meterId}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Meter::fromJson($response, self::$logger);
+            return Meter::fromJson($response, self::$logger);
+        }, "Fetching Meter (ID: {$meterId})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?Meters {
         if (!isset($this->clientId) || !isset($this->citizenId) || !isset($this->feeId)) {
-            $this->logError('Client ID, Citizen ID and Fee ID are required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID, Citizen ID and Fee ID are required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID, Citizen ID and Fee ID are required');
         }
 
-        $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/meters");
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/meters");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Meters::fromJson($response, self::$logger);
+            return Meters::fromJson($response, self::$logger);
+        }, "Searching Meters");
     }
 }

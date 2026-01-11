@@ -39,36 +39,37 @@ class CitizensEndpoint extends EndpointAbstract implements SearchableEndpointInt
 
     public function getByGuid(?GUID $citizenId = null): ?Citizen {
         if (!isset($this->clientId)) {
-            $this->logError('Client ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID is required');
         }
 
         if (is_null($citizenId)) {
-            $this->logError('Citizen ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Citizen ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Citizen ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$citizenId->toString()}");
+        return $this->logDebugWithTimer(function () use ($citizenId) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$citizenId->toString()}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Citizen::fromJson($response, self::$logger);
+            return Citizen::fromJson($response, self::$logger);
+        }, "Fetching Citizen (ID: {$citizenId})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?Citizens {
         if (!isset($this->clientId)) {
-            $this->logError('Client ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID is required');
         }
 
-        $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens");
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Citizens::fromJson($response, self::$logger);
+            return Citizens::fromJson($response, self::$logger);
+        }, "Searching Citizens");
     }
 }

@@ -27,21 +27,25 @@ class SchemasEndpoint extends EndpointAbstract {
 
     public function getById(?string $schemaId = null): ScimSchema|ScimSchemas|null {
         if (!is_null($schemaId)) {
-            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/" . urlencode($schemaId));
+            return $this->logDebugWithTimer(function () use ($schemaId) {
+                $response = parent::getContents([], [], "{$this->getEndpointUrl()}/" . urlencode($schemaId));
+
+                if (empty($response) || $response === '[]') {
+                    return null;
+                }
+
+                return ScimSchema::fromJson($response, self::$logger);
+            }, "Fetching ScimSchema (ID: {$schemaId})");
+        }
+
+        return $this->logDebugWithTimer(function () {
+            $response = parent::getContents();
 
             if (empty($response) || $response === '[]') {
                 return null;
             }
 
-            return ScimSchema::fromJson($response, self::$logger);
-        }
-
-        $response = parent::getContents();
-
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
-
-        return ScimSchemas::fromJson($response, self::$logger);
+            return ScimSchemas::fromJson($response, self::$logger);
+        }, 'Fetching ScimSchemas');
     }
 }

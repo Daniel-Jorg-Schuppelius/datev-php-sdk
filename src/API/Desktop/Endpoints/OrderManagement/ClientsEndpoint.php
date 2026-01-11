@@ -33,26 +33,29 @@ class ClientsEndpoint extends EndpointAbstract implements SearchableEndpointInte
 
     public function getByGuid(?GUID $id = null): ?Client {
         if (is_null($id)) {
-            $this->logError('ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
+        return $this->logDebugWithTimer(function () use ($id) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Client::fromJson($response, self::$logger);
+            return Client::fromJson($response, self::$logger);
+        }, "Fetching Client (GUID: {$id})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?Clients {
-        $response = parent::getContents($queryParams, $options);
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options);
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Clients::fromJson($response, self::$logger);
+            return Clients::fromJson($response, self::$logger);
+        }, 'Searching Clients');
     }
 }

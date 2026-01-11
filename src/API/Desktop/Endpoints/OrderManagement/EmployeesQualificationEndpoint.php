@@ -27,22 +27,26 @@ class EmployeesQualificationEndpoint extends EndpointAbstract implements Searcha
             return null;
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
+        return $this->logDebugWithTimer(function () use ($id) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return EmployeeQualification::fromJson($response, self::$logger);
+            return EmployeeQualification::fromJson($response, self::$logger);
+        }, "Fetching EmployeeQualification (ID: {$id})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?EmployeesQualification {
-        $response = parent::getContents($queryParams, $options);
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options);
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return EmployeesQualification::fromJson($response, self::$logger);
+            return EmployeesQualification::fromJson($response, self::$logger);
+        }, 'Searching EmployeesQualification');
     }
 }

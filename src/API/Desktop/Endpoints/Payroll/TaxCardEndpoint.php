@@ -20,12 +20,14 @@ class TaxCardEndpoint extends PayrollEndpointAbstract implements SearchableEndpo
     protected string $endpointSuffix = 'tax-card';
 
     public function search(array $queryParams = [], array $options = []): ?TaxCards {
-        $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->endpointSuffix}");
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->endpointSuffix}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return TaxCards::fromJson($response, self::$logger);
+            return TaxCards::fromJson($response, self::$logger);
+        }, "Searching TaxCards");
     }
 }

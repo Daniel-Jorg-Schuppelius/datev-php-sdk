@@ -38,26 +38,26 @@ class CreditorsNextAvailableEndpoint extends EndpointAbstract {
 
     protected function getBaseUrl(): string {
         if (!isset($this->clientId)) {
-            $this->logError('Client ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID is required');
         }
 
         if (!isset($this->fiscalYearId)) {
-            $this->logError('Fiscal Year ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Fiscal Year ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Fiscal Year ID is required');
         }
 
         return "{$this->getEndpointUrl()}/{$this->clientId->toString()}/fiscal-years/{$this->fiscalYearId->toString()}/creditors/next-available";
     }
 
     public function getNextAvailable(array $queryParams = []): ?int {
-        $response = parent::getContents($queryParams, [], $this->getBaseUrl());
+        return $this->logDebugWithTimer(function () use ($queryParams) {
+            $response = parent::getContents($queryParams, [], $this->getBaseUrl());
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        $data = json_decode($response, true);
-        return $data['account_number'] ?? null;
+            $data = json_decode($response, true);
+            return $data['account_number'] ?? null;
+        }, 'Fetching next available Creditor number');
     }
 }

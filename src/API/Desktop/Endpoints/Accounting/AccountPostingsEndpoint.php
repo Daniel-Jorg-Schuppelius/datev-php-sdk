@@ -36,13 +36,11 @@ class AccountPostingsEndpoint extends EndpointAbstract implements SearchableEndp
 
     protected function getBaseUrl(): string {
         if (!isset($this->clientId)) {
-            $this->logError('Client ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID is required');
         }
 
         if (!isset($this->fiscalYearId)) {
-            $this->logError('Fiscal Year ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Fiscal Year ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Fiscal Year ID is required');
         }
 
         return "{$this->getEndpointUrl()}/{$this->clientId->toString()}/fiscal-years/{$this->fiscalYearId->toString()}/account-postings";
@@ -57,26 +55,29 @@ class AccountPostingsEndpoint extends EndpointAbstract implements SearchableEndp
 
     public function getById(?string $accountPostingId = null): ?AccountPosting {
         if (is_null($accountPostingId)) {
-            $this->logError('Account Posting ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Account Posting ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Account Posting ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getBaseUrl()}/{$accountPostingId}");
+        return $this->logDebugWithTimer(function () use ($accountPostingId) {
+            $response = parent::getContents([], [], "{$this->getBaseUrl()}/{$accountPostingId}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return AccountPosting::fromJson($response, self::$logger);
+            return AccountPosting::fromJson($response, self::$logger);
+        }, "Fetching AccountPosting (ID: {$accountPostingId})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?AccountPostings {
-        $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return AccountPostings::fromJson($response, self::$logger);
+            return AccountPostings::fromJson($response, self::$logger);
+        }, 'Searching AccountPostings');
     }
 }

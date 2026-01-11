@@ -34,13 +34,11 @@ class AccountingSequencesEndpoint extends EndpointAbstract {
 
     protected function getBaseUrl(): string {
         if (!isset($this->clientId)) {
-            $this->logError('Client ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID is required');
         }
 
         if (!isset($this->fiscalYearId)) {
-            $this->logError('Fiscal Year ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Fiscal Year ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Fiscal Year ID is required');
         }
 
         return "{$this->getEndpointUrl()}/{$this->clientId->toString()}/fiscal-years/{$this->fiscalYearId->toString()}/accounting-sequences";
@@ -53,8 +51,10 @@ class AccountingSequencesEndpoint extends EndpointAbstract {
     }
 
     public function create(Sequence $sequence): bool {
-        $response = parent::postContents($sequence->toArray(), [], $this->getBaseUrl());
+        return $this->logDebugWithTimer(function () use ($sequence) {
+            $response = parent::postContents($sequence->toArray(), [], $this->getBaseUrl());
 
-        return $response !== null;
+            return $response !== null;
+        }, 'Creating Sequence');
     }
 }

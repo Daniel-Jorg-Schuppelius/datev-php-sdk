@@ -27,22 +27,26 @@ class EmployeesWithGroupEndpoint extends EndpointAbstract implements SearchableE
             return null;
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
+        return $this->logDebugWithTimer(function () use ($id) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return EmployeeWithGroup::fromJson($response, self::$logger);
+            return EmployeeWithGroup::fromJson($response, self::$logger);
+        }, "Fetching EmployeeWithGroup (ID: {$id})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?EmployeesWithGroup {
-        $response = parent::getContents($queryParams, $options);
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options);
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return EmployeesWithGroup::fromJson($response, self::$logger);
+            return EmployeesWithGroup::fromJson($response, self::$logger);
+        }, 'Searching EmployeesWithGroup');
     }
 }

@@ -33,41 +33,45 @@ class CorporateStructuresEndpoint extends EndpointAbstract implements Searchable
 
     public function getById(?string $id = null): ?CorporateStructure {
         if (is_null($id)) {
-            $this->logError('ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id}");
+        return $this->logDebugWithTimer(function () use ($id) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return CorporateStructure::fromJson($response, self::$logger);
+            return CorporateStructure::fromJson($response, self::$logger);
+        }, "Fetching CorporateStructure (ID: {$id})");
     }
 
     public function getEstablishment(?string $organizationId = null, ?string $establishmentId = null): ?Establishment {
         if (is_null($organizationId) || is_null($establishmentId)) {
-            $this->logError('Organization ID and Establishment ID are required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Organization ID and Establishment ID are required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Organization ID and Establishment ID are required');
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$organizationId}/establishments/{$establishmentId}");
+        return $this->logDebugWithTimer(function () use ($organizationId, $establishmentId) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$organizationId}/establishments/{$establishmentId}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Establishment::fromJson($response, self::$logger);
+            return Establishment::fromJson($response, self::$logger);
+        }, "Fetching Establishment (Organization: {$organizationId}, Establishment: {$establishmentId})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?CorporateStructures {
-        $response = parent::getContents($queryParams, $options);
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options);
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return CorporateStructures::fromJson($response, self::$logger);
+            return CorporateStructures::fromJson($response, self::$logger);
+        }, 'Searching CorporateStructures');
     }
 }

@@ -19,12 +19,14 @@ class IndividualPropertiesEndpoint extends EndpointAbstract {
     protected string $endpoint = 'individual-properties';
 
     public function get(?ID $id = null): ?IndividualProperties {
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}");
+        return $this->logDebugWithTimer(function () {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return IndividualProperties::fromJson($response, self::$logger);
+            return IndividualProperties::fromJson($response, self::$logger);
+        }, 'Fetching IndividualProperties');
     }
 }

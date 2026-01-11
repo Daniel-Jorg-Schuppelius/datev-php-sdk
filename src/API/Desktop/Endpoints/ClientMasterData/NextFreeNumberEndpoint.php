@@ -25,12 +25,14 @@ class NextFreeNumberEndpoint extends EndpointAbstract {
     }
 
     public function get(?ID $id = null): ?NextFreeNumber {
-        $response = parent::getContents([], [], $this->getBaseUrl());
+        return $this->logDebugWithTimer(function () {
+            $response = parent::getContents([], [], $this->getBaseUrl());
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return NextFreeNumber::fromJson($response, self::$logger);
+            return NextFreeNumber::fromJson($response, self::$logger);
+        }, 'Fetching NextFreeNumber');
     }
 }

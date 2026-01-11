@@ -20,12 +20,14 @@ class AddressEndpoint extends PayrollEndpointAbstract implements SearchableEndpo
     protected string $endpointSuffix = 'address';
 
     public function search(array $queryParams = [], array $options = []): ?Addresses {
-        $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->endpointSuffix}");
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->endpointSuffix}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Addresses::fromJson($response, self::$logger);
+            return Addresses::fromJson($response, self::$logger);
+        }, "Searching Addresses");
     }
 }

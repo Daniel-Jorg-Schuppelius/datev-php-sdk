@@ -41,12 +41,14 @@ class ClientGroupsEndpoint extends EndpointAbstract implements SearchableEndpoin
     }
 
     public function search(array $queryParams = [], array $options = []): ?ClientGroups {
-        $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return ClientGroups::fromJson($response, self::$logger);
+            return ClientGroups::fromJson($response, self::$logger);
+        }, 'Searching ClientGroups');
     }
 }

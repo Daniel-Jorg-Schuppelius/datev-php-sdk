@@ -27,22 +27,26 @@ class EmployeesCostRateEndpoint extends EndpointAbstract implements SearchableEn
             return null;
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
+        return $this->logDebugWithTimer(function () use ($id) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return EmployeeCostRate::fromJson($response, self::$logger);
+            return EmployeeCostRate::fromJson($response, self::$logger);
+        }, "Fetching EmployeeCostRate (ID: {$id})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?EmployeesCostRate {
-        $response = parent::getContents($queryParams, $options);
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options);
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return EmployeesCostRate::fromJson($response, self::$logger);
+            return EmployeesCostRate::fromJson($response, self::$logger);
+        }, 'Searching EmployeesCostRate');
     }
 }

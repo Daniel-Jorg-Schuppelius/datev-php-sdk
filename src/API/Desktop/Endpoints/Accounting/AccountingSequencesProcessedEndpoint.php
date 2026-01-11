@@ -36,13 +36,11 @@ class AccountingSequencesProcessedEndpoint extends EndpointAbstract implements S
 
     protected function getBaseUrl(): string {
         if (!isset($this->clientId)) {
-            $this->logError('Client ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID is required');
         }
 
         if (!isset($this->fiscalYearId)) {
-            $this->logError('Fiscal Year ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Fiscal Year ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Fiscal Year ID is required');
         }
 
         return "{$this->getEndpointUrl()}/{$this->clientId->toString()}/fiscal-years/{$this->fiscalYearId->toString()}/accounting-sequences-processed";
@@ -57,26 +55,29 @@ class AccountingSequencesProcessedEndpoint extends EndpointAbstract implements S
 
     public function getById(?string $sequenceId = null): ?SequenceRead {
         if (is_null($sequenceId)) {
-            $this->logError('Sequence ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Sequence ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Sequence ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getBaseUrl()}/{$sequenceId}");
+        return $this->logDebugWithTimer(function () use ($sequenceId) {
+            $response = parent::getContents([], [], "{$this->getBaseUrl()}/{$sequenceId}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return SequenceRead::fromJson($response, self::$logger);
+            return SequenceRead::fromJson($response, self::$logger);
+        }, "Fetching SequenceRead (ID: {$sequenceId})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?SequenceReads {
-        $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return SequenceReads::fromJson($response, self::$logger);
+            return SequenceReads::fromJson($response, self::$logger);
+        }, 'Searching SequenceReads');
     }
 }

@@ -23,35 +23,38 @@ class ClientsEndpoint extends EndpointAbstract implements SearchableEndpointInte
 
     public function get(?ID $id = null, ?string $select = null, ?string $expand = "all"): ?Client {
         if (is_null($id)) {
-            $this->logError('ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'ID is required');
         }
 
-        $queryParams = [];
-        if (!empty($select)) {
-            $queryParams[] = "select=" . urlencode($select);
-        }
-        if (!empty($expand)) {
-            $queryParams[] = "expand=" . urlencode($expand);
-        }
+        return $this->logDebugWithTimer(function () use ($id, $select, $expand) {
+            $queryParams = [];
+            if (!empty($select)) {
+                $queryParams[] = "select=" . urlencode($select);
+            }
+            if (!empty($expand)) {
+                $queryParams[] = "expand=" . urlencode($expand);
+            }
 
-        $queryString = !empty($queryParams) ? '?' . implode('&', $queryParams) : '';
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}{$queryString}");
+            $queryString = !empty($queryParams) ? '?' . implode('&', $queryParams) : '';
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}{$queryString}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Client::fromJson($response, self::$logger);
+            return Client::fromJson($response, self::$logger);
+        }, "Fetching Client (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?Clients {
-        $response = parent::getContents($queryParams, $options);
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options);
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Clients::fromJson($response, self::$logger);
+            return Clients::fromJson($response, self::$logger);
+        }, 'Searching Clients');
     }
 }

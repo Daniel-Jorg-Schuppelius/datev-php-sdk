@@ -19,12 +19,14 @@ class EchoEndpoint extends EndpointAbstract {
     protected string $endpoint = 'echo';
 
     public function get(?ID $id = null): ?EchoResponse {
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}");
+        return $this->logDebugWithTimer(function () {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return EchoResponse::fromJson($response, self::$logger);
+            return EchoResponse::fromJson($response, self::$logger);
+        }, 'Fetching EchoResponse');
     }
 }

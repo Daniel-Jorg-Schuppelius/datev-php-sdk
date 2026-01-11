@@ -20,12 +20,14 @@ class FinancialAccountingEndpoint extends PayrollEndpointAbstract implements Sea
     protected string $endpointSuffix = 'financial-accounting';
 
     public function search(array $queryParams = [], array $options = []): ?FinancialAccountings {
-        $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->endpointSuffix}");
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->endpointSuffix}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return FinancialAccountings::fromJson($response, self::$logger);
+            return FinancialAccountings::fromJson($response, self::$logger);
+        }, "Searching FinancialAccountings");
     }
 }

@@ -27,22 +27,26 @@ class EmployeeCapacitiesEndpoint extends EndpointAbstract implements SearchableE
             return null;
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
+        return $this->logDebugWithTimer(function () use ($id) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return EmployeeCapacity::fromJson($response, self::$logger);
+            return EmployeeCapacity::fromJson($response, self::$logger);
+        }, "Fetching EmployeeCapacity (ID: {$id})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?EmployeeCapacities {
-        $response = parent::getContents($queryParams, $options);
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options);
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return EmployeeCapacities::fromJson($response, self::$logger);
+            return EmployeeCapacities::fromJson($response, self::$logger);
+        }, 'Searching EmployeeCapacities');
     }
 }

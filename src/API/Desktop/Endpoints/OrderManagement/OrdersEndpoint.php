@@ -32,32 +32,37 @@ class OrdersEndpoint extends EndpointAbstract implements SearchableEndpointInter
 
     public function getById(?int $orderId = null, array $queryParams = []): ?Order {
         if (is_null($orderId)) {
-            $this->logError('Order ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Order ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Order ID is required');
         }
 
-        $response = parent::getContents($queryParams, [], "{$this->getEndpointUrl()}/{$orderId}");
+        return $this->logDebugWithTimer(function () use ($orderId, $queryParams) {
+            $response = parent::getContents($queryParams, [], "{$this->getEndpointUrl()}/{$orderId}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Order::fromJson($response, self::$logger);
+            return Order::fromJson($response, self::$logger);
+        }, "Fetching Order (ID: {$orderId})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?Orders {
-        $response = parent::getContents($queryParams, $options);
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options);
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Orders::fromJson($response, self::$logger);
+            return Orders::fromJson($response, self::$logger);
+        }, 'Searching Orders');
     }
 
     public function update(int $orderId, Order $order): bool {
-        $response = parent::putContents($order->toArray(), [], "{$this->getEndpointUrl()}/{$orderId}");
+        return $this->logDebugWithTimer(function () use ($orderId, $order) {
+            $response = parent::putContents($order->toArray(), [], "{$this->getEndpointUrl()}/{$orderId}");
 
-        return $response !== false;
+            return $response !== false;
+        }, "Updating Order (ID: {$orderId})");
     }
 }

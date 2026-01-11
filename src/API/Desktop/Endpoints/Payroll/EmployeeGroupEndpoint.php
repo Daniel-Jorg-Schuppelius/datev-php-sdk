@@ -20,12 +20,14 @@ class EmployeeGroupEndpoint extends PayrollEndpointAbstract implements Searchabl
     protected string $endpointSuffix = 'employee-group';
 
     public function search(array $queryParams = [], array $options = []): ?EmployeeGroups {
-        $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->endpointSuffix}");
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->endpointSuffix}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return EmployeeGroups::fromJson($response, self::$logger);
+            return EmployeeGroups::fromJson($response, self::$logger);
+        }, "Searching EmployeeGroups");
     }
 }

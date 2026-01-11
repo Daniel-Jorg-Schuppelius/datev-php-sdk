@@ -21,12 +21,14 @@ class ResourceTypesEndpoint extends EndpointAbstract {
     protected string $endpoint = 'ResourceTypes';
 
     public function get(?ID $id = null): ?ResourceTypes {
-        $response = parent::getContents();
+        return $this->logDebugWithTimer(function () {
+            $response = parent::getContents();
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return ResourceTypes::fromJson($response, self::$logger);
+            return ResourceTypes::fromJson($response, self::$logger);
+        }, 'Fetching ResourceTypes');
     }
 }

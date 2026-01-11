@@ -30,16 +30,17 @@ class CostItemsEndpoint extends EndpointAbstract {
 
     public function getByOrderId(?int $orderId = null, array $queryParams = []): ?CostItems {
         if (is_null($orderId)) {
-            $this->logError('Order ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Order ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Order ID is required');
         }
 
-        $response = parent::getContents($queryParams, [], "{$this->getEndpointUrl()}/{$orderId}/costitems");
+        return $this->logDebugWithTimer(function () use ($orderId, $queryParams) {
+            $response = parent::getContents($queryParams, [], "{$this->getEndpointUrl()}/{$orderId}/costitems");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return CostItems::fromJson($response, self::$logger);
+            return CostItems::fromJson($response, self::$logger);
+        }, "Fetching CostItems for Order (ID: {$orderId})");
     }
 }

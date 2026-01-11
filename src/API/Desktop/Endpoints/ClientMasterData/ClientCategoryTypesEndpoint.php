@@ -32,26 +32,29 @@ class ClientCategoryTypesEndpoint extends EndpointAbstract implements Searchable
 
     public function getById(?string $id = null): ?ClientCategoryType {
         if (is_null($id)) {
-            $this->logError('ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id}");
+        return $this->logDebugWithTimer(function () use ($id) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return ClientCategoryType::fromJson($response, self::$logger);
+            return ClientCategoryType::fromJson($response, self::$logger);
+        }, "Fetching ClientCategoryType (ID: {$id})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?ClientCategoryTypes {
-        $response = parent::getContents($queryParams, $options);
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options);
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return ClientCategoryTypes::fromJson($response, self::$logger);
+            return ClientCategoryTypes::fromJson($response, self::$logger);
+        }, 'Searching ClientCategoryTypes');
     }
 }

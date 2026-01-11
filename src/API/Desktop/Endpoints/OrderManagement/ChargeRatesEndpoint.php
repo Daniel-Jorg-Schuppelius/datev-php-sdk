@@ -29,32 +29,38 @@ class ChargeRatesEndpoint extends EndpointAbstract implements SearchableEndpoint
             return null;
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
+        return $this->logDebugWithTimer(function () use ($id) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return ChargeRate::fromJson($response, self::$logger);
+            return ChargeRate::fromJson($response, self::$logger);
+        }, "Fetching ChargeRate (ID: {$id})");
     }
 
     public function getForEmployee(GUID $employeeId, array $queryParams = []): ?ChargeRates {
-        $response = parent::getContents($queryParams, [], "{$this->getEndpointUrl()}/employees/{$employeeId->toString()}");
+        return $this->logDebugWithTimer(function () use ($employeeId, $queryParams) {
+            $response = parent::getContents($queryParams, [], "{$this->getEndpointUrl()}/employees/{$employeeId->toString()}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return ChargeRates::fromJson($response, self::$logger);
+            return ChargeRates::fromJson($response, self::$logger);
+        }, "Fetching ChargeRates for Employee (ID: {$employeeId})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?ChargeRates {
-        $response = parent::getContents($queryParams, $options);
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options);
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return ChargeRates::fromJson($response, self::$logger);
+            return ChargeRates::fromJson($response, self::$logger);
+        }, 'Searching ChargeRates');
     }
 }

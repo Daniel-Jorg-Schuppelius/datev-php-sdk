@@ -32,27 +32,30 @@ class OrderStateWorkEndpoint extends EndpointAbstract implements SearchableEndpo
 
     public function getByOrderId(?int $orderId = null, array $queryParams = []): ?OrderStateWork {
         if (is_null($orderId)) {
-            $this->logError('Order ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Order ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Order ID is required');
         }
 
-        $response = parent::getContents($queryParams, [], $this->buildOrderUrl($orderId));
+        return $this->logDebugWithTimer(function () use ($orderId, $queryParams) {
+            $response = parent::getContents($queryParams, [], $this->buildOrderUrl($orderId));
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return OrderStateWork::fromJson($response, self::$logger);
+            return OrderStateWork::fromJson($response, self::$logger);
+        }, "Fetching OrderStateWork (OrderID: {$orderId})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?OrderStateWorks {
-        $response = parent::getContents($queryParams, $options);
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options);
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return OrderStateWorks::fromJson($response, self::$logger);
+            return OrderStateWorks::fromJson($response, self::$logger);
+        }, 'Searching OrderStateWorks');
     }
 
     private function buildOrderUrl(int $orderId): string {

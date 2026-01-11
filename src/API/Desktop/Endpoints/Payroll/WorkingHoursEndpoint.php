@@ -20,12 +20,14 @@ class WorkingHoursEndpoint extends PayrollEndpointAbstract implements Searchable
     protected string $endpointSuffix = 'working-hours';
 
     public function search(array $queryParams = [], array $options = []): ?WorkingHours {
-        $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->endpointSuffix}");
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->endpointSuffix}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return WorkingHours::fromJson($response, self::$logger);
+            return WorkingHours::fromJson($response, self::$logger);
+        }, "Searching WorkingHours");
     }
 }

@@ -24,20 +24,21 @@ class ClientsEndpoint extends EndpointAbstract implements SearchableEndpointInte
 
     public function get(?ID $id = null, ?string $expand = "all", DateTime $referenceDate = new DateTime()): ?Client {
         if (is_null($id)) {
-            $this->logError('ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'ID is required');
         }
 
         $referenceDateFormatted = $referenceDate->format('Y-m-d');
         $expand = urlencode($expand);
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}?expand={$expand}&reference-date={$referenceDateFormatted}");
+        return $this->logDebugWithTimer(function () use ($id, $expand, $referenceDateFormatted) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}?expand={$expand}&reference-date={$referenceDateFormatted}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Client::fromJson($response, self::$logger);
+            return Client::fromJson($response, self::$logger);
+        }, "Fetching Payroll Client (ID: {$id})");
     }
 
 
@@ -46,16 +47,17 @@ class ClientsEndpoint extends EndpointAbstract implements SearchableEndpointInte
             $this->logInfo('No reference-date provided. Using current date.');
             $queryParams['reference-date'] = date('Y-m-d');
         } elseif (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $queryParams['reference-date'])) {
-            $this->logError('Invalid reference-date provided.');
-            throw new InvalidArgumentException('reference-date must be in the format yyyy-mm-dd');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'reference-date must be in the format yyyy-mm-dd');
         }
 
-        $response = parent::getContents($queryParams, $options);
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options);
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Clients::fromJson($response, self::$logger);
+            return Clients::fromJson($response, self::$logger);
+        }, "Searching Payroll Clients");
     }
 }

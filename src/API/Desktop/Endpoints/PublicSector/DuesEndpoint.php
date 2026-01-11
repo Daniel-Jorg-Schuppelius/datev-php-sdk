@@ -42,35 +42,37 @@ class DuesEndpoint extends EndpointAbstract implements SearchableEndpointInterfa
 
     public function get(?ID $id = null): ?Due {
         if (!isset($this->clientId) || !isset($this->citizenId) || !isset($this->feeId)) {
-            $this->logError('Client ID, Citizen ID and Fee ID are required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID, Citizen ID and Fee ID are required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID, Citizen ID and Fee ID are required');
         }
 
         if (is_null($id)) {
             return null;
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/dues/{$id->toString()}");
+        return $this->logDebugWithTimer(function () use ($id) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/dues/{$id->toString()}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Due::fromJson($response, self::$logger);
+            return Due::fromJson($response, self::$logger);
+        }, "Fetching Due (ID: {$id})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?Dues {
         if (!isset($this->clientId) || !isset($this->citizenId) || !isset($this->feeId)) {
-            $this->logError('Client ID, Citizen ID and Fee ID are required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID, Citizen ID and Fee ID are required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID, Citizen ID and Fee ID are required');
         }
 
-        $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/dues");
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/dues");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Dues::fromJson($response, self::$logger);
+            return Dues::fromJson($response, self::$logger);
+        }, "Searching Dues");
     }
 }

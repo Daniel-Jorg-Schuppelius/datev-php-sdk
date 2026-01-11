@@ -41,51 +41,53 @@ class NotificationsEndpoint extends EndpointAbstract implements SearchableEndpoi
 
     public function getById(?string $notificationId = null): ?Notification {
         if (!isset($this->clientId) || !isset($this->citizenId)) {
-            $this->logError('Client ID and Citizen ID are required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID and Citizen ID are required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID and Citizen ID are required');
         }
 
         if (is_null($notificationId)) {
-            $this->logError('Notification ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Notification ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Notification ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/notifications/{$notificationId}");
+        return $this->logDebugWithTimer(function () use ($notificationId) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/notifications/{$notificationId}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Notification::fromJson($response, self::$logger);
+            return Notification::fromJson($response, self::$logger);
+        }, "Fetching Notification (ID: {$notificationId})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?Notifications {
         if (!isset($this->clientId) || !isset($this->citizenId)) {
-            $this->logError('Client ID and Citizen ID are required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID and Citizen ID are required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID and Citizen ID are required');
         }
 
-        $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/notifications");
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/notifications");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Notifications::fromJson($response, self::$logger);
+            return Notifications::fromJson($response, self::$logger);
+        }, "Searching Notifications");
     }
 
     public function getDocument(string $notificationId): ?string {
         if (!isset($this->clientId) || !isset($this->citizenId)) {
-            $this->logError('Client ID and Citizen ID are required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID and Citizen ID are required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID and Citizen ID are required');
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/notifications/{$notificationId}/document");
+        return $this->logDebugWithTimer(function () use ($notificationId) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/notifications/{$notificationId}/document");
 
-        if (empty($response)) {
-            return null;
-        }
+            if (empty($response)) {
+                return null;
+            }
 
-        return $response;
+            return $response;
+        }, "Fetching Notification Document (ID: {$notificationId})");
     }
 }

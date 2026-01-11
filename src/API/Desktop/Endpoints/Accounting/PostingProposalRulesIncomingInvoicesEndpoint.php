@@ -36,13 +36,11 @@ class PostingProposalRulesIncomingInvoicesEndpoint extends EndpointAbstract impl
 
     protected function getBaseUrl(): string {
         if (!isset($this->clientId)) {
-            $this->logError('Client ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID is required');
         }
 
         if (!isset($this->fiscalYearId)) {
-            $this->logError('Fiscal Year ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Fiscal Year ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Fiscal Year ID is required');
         }
 
         return "{$this->getEndpointUrl()}/{$this->clientId->toString()}/fiscal-years/{$this->fiscalYearId->toString()}/posting-proposal-rules-incoming-invoices";
@@ -57,26 +55,29 @@ class PostingProposalRulesIncomingInvoicesEndpoint extends EndpointAbstract impl
 
     public function getById(?string $ruleId = null): ?PostingProposalRule {
         if (is_null($ruleId)) {
-            $this->logError('Posting Proposal Rule ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Posting Proposal Rule ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Posting Proposal Rule ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getBaseUrl()}/{$ruleId}");
+        return $this->logDebugWithTimer(function () use ($ruleId) {
+            $response = parent::getContents([], [], "{$this->getBaseUrl()}/{$ruleId}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return PostingProposalRule::fromJson($response, self::$logger);
+            return PostingProposalRule::fromJson($response, self::$logger);
+        }, "Fetching PostingProposalRule (ID: {$ruleId})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?PostingProposalRules {
-        $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return PostingProposalRules::fromJson($response, self::$logger);
+            return PostingProposalRules::fromJson($response, self::$logger);
+        }, 'Searching PostingProposalRules (IncomingInvoices)');
     }
 }

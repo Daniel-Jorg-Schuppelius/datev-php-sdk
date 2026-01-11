@@ -20,12 +20,14 @@ class PrivateInsuranceEndpoint extends PayrollEndpointAbstract implements Search
     protected string $endpointSuffix = 'private-insurance';
 
     public function search(array $queryParams = [], array $options = []): ?PrivateInsurances {
-        $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->endpointSuffix}");
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->endpointSuffix}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return PrivateInsurances::fromJson($response, self::$logger);
+            return PrivateInsurances::fromJson($response, self::$logger);
+        }, "Searching PrivateInsurances");
     }
 }

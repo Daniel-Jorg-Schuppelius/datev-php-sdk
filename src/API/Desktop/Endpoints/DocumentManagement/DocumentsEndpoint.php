@@ -24,43 +24,50 @@ class DocumentsEndpoint extends EndpointAbstract implements SearchableEndpointIn
 
     public function get(?ID $id = null): ?Document {
         if (is_null($id)) {
-            $this->logError('ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
+        return $this->logDebugWithTimer(function () use ($id) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Document::fromJson($response, self::$logger);
+            return Document::fromJson($response, self::$logger);
+        }, "Fetching Document (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?Documents {
-        $response = parent::getContents($queryParams, $options);
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options);
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Documents::fromJson($response, self::$logger);
+            return Documents::fromJson($response, self::$logger);
+        }, 'Searching Documents');
     }
 
     public function deletePermanently(ID $id): bool {
-        $response = parent::deleteContents([], "{$this->getEndpointUrl()}/{$id->toString()}/delete-permanently");
+        return $this->logDebugWithTimer(function () use ($id) {
+            $response = parent::deleteContents([], "{$this->getEndpointUrl()}/{$id->toString()}/delete-permanently");
 
-        return $response === 'success';
+            return $response === 'success';
+        }, "Deleting Document permanently (ID: {$id->toString()})");
     }
 
     public function addDispatcherInformation(ID $documentId, DispatcherInformation $dispatcherInfo): bool {
-        $response = parent::postContents(
-            $dispatcherInfo->toArray(),
-            [],
-            "{$this->getEndpointUrl()}/{$documentId->toString()}/dispatcher-information",
-            204
-        );
+        return $this->logDebugWithTimer(function () use ($documentId, $dispatcherInfo) {
+            $response = parent::postContents(
+                $dispatcherInfo->toArray(),
+                [],
+                "{$this->getEndpointUrl()}/{$documentId->toString()}/dispatcher-information",
+                204
+            );
 
-        return $response === 'success';
+            return $response === 'success';
+        }, "Adding DispatcherInformation to Document (ID: {$documentId->toString()})");
     }
 }

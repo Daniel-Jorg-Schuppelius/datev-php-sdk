@@ -34,38 +34,43 @@ class ClientCategoriesEndpoint extends EndpointAbstract implements SearchableEnd
 
     public function get(?ID $id = null): ?ClientCategory {
         if (is_null($id)) {
-            $this->logError('ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
+        return $this->logDebugWithTimer(function () use ($id) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return ClientCategory::fromJson($response, self::$logger);
+            return ClientCategory::fromJson($response, self::$logger);
+        }, "Fetching ClientCategory (ID: {$id->toString()})");
     }
 
     public function searchByClient(array $queryParams = [], array $options = []): ?ClientCategories {
-        $response = parent::getContents($queryParams, $options);
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options);
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return ClientCategories::fromJson($response, self::$logger);
+            return ClientCategories::fromJson($response, self::$logger);
+        }, 'Searching ClientCategories by Client');
     }
 
     public function search(array $queryParams = [], array $options = []): ?ClientCategories {
         // TODO: Check API, on documentation, this endpoint exists but it is not implemented?
-        $response = parent::getContents($queryParams, $options, "{$this->endpointPrefix}/{$this->endpointSuffix}");
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, "{$this->endpointPrefix}/{$this->endpointSuffix}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return ClientCategories::fromJson($response, self::$logger);
+            return ClientCategories::fromJson($response, self::$logger);
+        }, 'Searching ClientCategories');
     }
 
     public function getClientID(): ClientID {

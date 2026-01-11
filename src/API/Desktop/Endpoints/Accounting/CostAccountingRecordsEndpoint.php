@@ -46,23 +46,19 @@ class CostAccountingRecordsEndpoint extends EndpointAbstract implements Searchab
 
     protected function getBaseUrl(): string {
         if (!isset($this->clientId)) {
-            $this->logError('Client ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID is required');
         }
 
         if (!isset($this->fiscalYearId)) {
-            $this->logError('Fiscal Year ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Fiscal Year ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Fiscal Year ID is required');
         }
 
         if (!isset($this->costSystemId)) {
-            $this->logError('Cost System ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Cost System ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Cost System ID is required');
         }
 
         if (!isset($this->costSequenceId)) {
-            $this->logError('Cost Sequence ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Cost Sequence ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Cost Sequence ID is required');
         }
 
         return "{$this->getEndpointUrl()}/{$this->clientId->toString()}/fiscal-years/{$this->fiscalYearId->toString()}/cost-systems/{$this->costSystemId->toString()}/cost-sequences/{$this->costSequenceId->toString()}/cost-accounting-records";
@@ -77,26 +73,29 @@ class CostAccountingRecordsEndpoint extends EndpointAbstract implements Searchab
 
     public function getById(?string $recordId = null): ?CostAccountingRecord {
         if (is_null($recordId)) {
-            $this->logError('Cost Accounting Record ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Cost Accounting Record ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Cost Accounting Record ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getBaseUrl()}/{$recordId}");
+        return $this->logDebugWithTimer(function () use ($recordId) {
+            $response = parent::getContents([], [], "{$this->getBaseUrl()}/{$recordId}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return CostAccountingRecord::fromJson($response, self::$logger);
+            return CostAccountingRecord::fromJson($response, self::$logger);
+        }, "Fetching CostAccountingRecord (ID: {$recordId})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?CostAccountingRecords {
-        $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return CostAccountingRecords::fromJson($response, self::$logger);
+            return CostAccountingRecords::fromJson($response, self::$logger);
+        }, 'Searching CostAccountingRecords');
     }
 }

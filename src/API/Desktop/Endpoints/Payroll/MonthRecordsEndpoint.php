@@ -25,30 +25,35 @@ class MonthRecordsEndpoint extends PayrollEndpointAbstract implements Searchable
 
     public function get(?ID $id = null): ?MonthlyRecord {
         if (is_null($id)) {
-            $this->logError('ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->endpointSuffix}/{$id->toString()}");
+        return $this->logDebugWithTimer(function () use ($id) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->endpointSuffix}/{$id->toString()}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return MonthlyRecord::fromJson($response, self::$logger);
+            return MonthlyRecord::fromJson($response, self::$logger);
+        }, "Fetching MonthlyRecord (ID: {$id})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?MonthlyRecords {
-        $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->endpointSuffix}");
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->endpointSuffix}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return MonthlyRecords::fromJson($response, self::$logger);
+            return MonthlyRecords::fromJson($response, self::$logger);
+        }, "Searching MonthlyRecords");
     }
 
     public function createBatch(MonthlyRecords $records): ResponseInterface {
-        return $this->postContent($records, [], "{$this->getEndpointUrl()}/{$this->endpointSuffix}/batch");
+        return $this->logDebugWithTimer(function () use ($records) {
+            return $this->postContent($records, [], "{$this->getEndpointUrl()}/{$this->endpointSuffix}/batch");
+        }, "Creating batch MonthlyRecords");
     }
 }

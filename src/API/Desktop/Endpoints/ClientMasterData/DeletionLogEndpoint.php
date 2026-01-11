@@ -40,12 +40,14 @@ class DeletionLogEndpoint extends EndpointAbstract implements SearchableEndpoint
     }
 
     public function search(array $queryParams = [], array $options = []): ?DeletionLogs {
-        $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return DeletionLogs::fromJson($response, self::$logger);
+            return DeletionLogs::fromJson($response, self::$logger);
+        }, 'Searching DeletionLogs');
     }
 }

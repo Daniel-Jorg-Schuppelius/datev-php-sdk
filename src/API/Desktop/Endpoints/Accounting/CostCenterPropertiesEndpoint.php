@@ -41,18 +41,15 @@ class CostCenterPropertiesEndpoint extends EndpointAbstract implements Searchabl
 
     protected function getBaseUrl(): string {
         if (!isset($this->clientId)) {
-            $this->logError('Client ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID is required');
         }
 
         if (!isset($this->fiscalYearId)) {
-            $this->logError('Fiscal Year ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Fiscal Year ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Fiscal Year ID is required');
         }
 
         if (!isset($this->costSystemId)) {
-            $this->logError('Cost System ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Cost System ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Cost System ID is required');
         }
 
         return "{$this->getEndpointUrl()}/{$this->clientId->toString()}/fiscal-years/{$this->fiscalYearId->toString()}/cost-systems/{$this->costSystemId->toString()}/cost-center-properties";
@@ -67,26 +64,29 @@ class CostCenterPropertiesEndpoint extends EndpointAbstract implements Searchabl
 
     public function getById(?string $id = null): ?CostCenterProperty {
         if (is_null($id)) {
-            $this->logError('ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getBaseUrl()}/{$id}");
+        return $this->logDebugWithTimer(function () use ($id) {
+            $response = parent::getContents([], [], "{$this->getBaseUrl()}/{$id}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return CostCenterProperty::fromJson($response, self::$logger);
+            return CostCenterProperty::fromJson($response, self::$logger);
+        }, "Fetching CostCenterProperty (ID: {$id})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?CostCenterProperties {
-        $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return CostCenterProperties::fromJson($response, self::$logger);
+            return CostCenterProperties::fromJson($response, self::$logger);
+        }, 'Searching CostCenterProperties');
     }
 }

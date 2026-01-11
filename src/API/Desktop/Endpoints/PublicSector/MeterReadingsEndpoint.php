@@ -51,47 +51,49 @@ class MeterReadingsEndpoint extends EndpointAbstract implements SearchableEndpoi
 
     public function getById(?string $meterReadingId = null): ?MeterReading {
         if (!isset($this->clientId) || !isset($this->citizenId) || !isset($this->feeId) || !isset($this->meterId)) {
-            $this->logError('Client ID, Citizen ID, Fee ID and Meter ID are required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID, Citizen ID, Fee ID and Meter ID are required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID, Citizen ID, Fee ID and Meter ID are required');
         }
 
         if (is_null($meterReadingId)) {
-            $this->logError('Meter Reading ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Meter Reading ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Meter Reading ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/meters/{$this->meterId}/meterreadings/{$meterReadingId}");
+        return $this->logDebugWithTimer(function () use ($meterReadingId) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/meters/{$this->meterId}/meterreadings/{$meterReadingId}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return MeterReading::fromJson($response, self::$logger);
+            return MeterReading::fromJson($response, self::$logger);
+        }, "Fetching MeterReading (ID: {$meterReadingId})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?MeterReadings {
         if (!isset($this->clientId) || !isset($this->citizenId) || !isset($this->feeId) || !isset($this->meterId)) {
-            $this->logError('Client ID, Citizen ID, Fee ID and Meter ID are required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID, Citizen ID, Fee ID and Meter ID are required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID, Citizen ID, Fee ID and Meter ID are required');
         }
 
-        $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/meters/{$this->meterId}/meterreadings");
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/meters/{$this->meterId}/meterreadings");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return MeterReadings::fromJson($response, self::$logger);
+            return MeterReadings::fromJson($response, self::$logger);
+        }, "Searching MeterReadings");
     }
 
     public function create(MeterReading $meterReading): bool {
         if (!isset($this->clientId) || !isset($this->citizenId) || !isset($this->feeId) || !isset($this->meterId)) {
-            $this->logError('Client ID, Citizen ID, Fee ID and Meter ID are required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID, Citizen ID, Fee ID and Meter ID are required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID, Citizen ID, Fee ID and Meter ID are required');
         }
 
-        $response = parent::postContents($meterReading->toArray(), [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/meters/{$this->meterId}/meterreadings");
+        return $this->logDebugWithTimer(function () use ($meterReading) {
+            $response = parent::postContents($meterReading->toArray(), [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/meters/{$this->meterId}/meterreadings");
 
-        return $response !== false;
+            return $response !== false;
+        }, "Creating MeterReading");
     }
 }

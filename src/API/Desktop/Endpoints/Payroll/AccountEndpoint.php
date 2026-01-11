@@ -23,26 +23,29 @@ class AccountEndpoint extends EndpointAbstract implements SearchableEndpointInte
 
     public function get(?ID $id = null): ?Account {
         if (is_null($id)) {
-            $this->logError('ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}/account");
+        return $this->logDebugWithTimer(function () use ($id) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}/account");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Account::fromJson($response, self::$logger);
+            return Account::fromJson($response, self::$logger);
+        }, "Fetching Account for Client (ID: {$id})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?Accounts {
-        $response = parent::getContents($queryParams, $options);
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options);
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Accounts::fromJson($response, self::$logger);
+            return Accounts::fromJson($response, self::$logger);
+        }, "Searching Accounts");
     }
 }

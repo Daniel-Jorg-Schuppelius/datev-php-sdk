@@ -36,13 +36,11 @@ class VariousAddressesEndpoint extends EndpointAbstract implements SearchableEnd
 
     protected function getBaseUrl(): string {
         if (!isset($this->clientId)) {
-            $this->logError('Client ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID is required');
         }
 
         if (!isset($this->fiscalYearId)) {
-            $this->logError('Fiscal Year ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Fiscal Year ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Fiscal Year ID is required');
         }
 
         return "{$this->getEndpointUrl()}/{$this->clientId->toString()}/fiscal-years/{$this->fiscalYearId->toString()}/various-addresses";
@@ -57,26 +55,29 @@ class VariousAddressesEndpoint extends EndpointAbstract implements SearchableEnd
 
     public function getById(?string $id = null): ?VariousAddress {
         if (is_null($id)) {
-            $this->logError('ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getBaseUrl()}/{$id}");
+        return $this->logDebugWithTimer(function () use ($id) {
+            $response = parent::getContents([], [], "{$this->getBaseUrl()}/{$id}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return VariousAddress::fromJson($response, self::$logger);
+            return VariousAddress::fromJson($response, self::$logger);
+        }, "Fetching VariousAddress (ID: {$id})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?VariousAddresses {
-        $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return VariousAddresses::fromJson($response, self::$logger);
+            return VariousAddresses::fromJson($response, self::$logger);
+        }, 'Searching VariousAddresses');
     }
 }

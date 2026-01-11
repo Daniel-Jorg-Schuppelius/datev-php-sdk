@@ -34,22 +34,26 @@ class ExpenseCategoriesEndpoint extends EndpointAbstract implements SearchableEn
             return null;
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$number}");
+        return $this->logDebugWithTimer(function () use ($number) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$number}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return ExpenseCategory::fromJson($response, self::$logger);
+            return ExpenseCategory::fromJson($response, self::$logger);
+        }, "Fetching ExpenseCategory (Number: {$number})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?ExpenseCategories {
-        $response = parent::getContents($queryParams, $options);
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options);
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return ExpenseCategories::fromJson($response, self::$logger);
+            return ExpenseCategories::fromJson($response, self::$logger);
+        }, 'Searching ExpenseCategories');
     }
 }

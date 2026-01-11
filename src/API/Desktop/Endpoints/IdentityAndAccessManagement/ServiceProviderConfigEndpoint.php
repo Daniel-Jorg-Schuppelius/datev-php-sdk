@@ -21,12 +21,14 @@ class ServiceProviderConfigEndpoint extends EndpointAbstract {
     protected string $endpoint = 'ServiceProviderConfig';
 
     public function get(?ID $id = null): ?ServiceProviderConfig {
-        $response = parent::getContents();
+        return $this->logDebugWithTimer(function () {
+            $response = parent::getContents();
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return ServiceProviderConfig::fromJson($response, self::$logger);
+            return ServiceProviderConfig::fromJson($response, self::$logger);
+        }, 'Fetching ServiceProviderConfig');
     }
 }

@@ -21,12 +21,14 @@ class VersionEndpoint extends EndpointAbstract {
     protected string $endpoint = 'version';
 
     public function get(?ID $id = null): ?Version {
-        $response = parent::getContents();
+        return $this->logDebugWithTimer(function () {
+            $response = parent::getContents();
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Version::fromJson($response, self::$logger);
+            return Version::fromJson($response, self::$logger);
+        }, 'Fetching Version');
     }
 }

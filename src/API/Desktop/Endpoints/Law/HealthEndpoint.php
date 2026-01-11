@@ -21,12 +21,14 @@ class HealthEndpoint extends EndpointAbstract {
     protected string $endpoint = 'health';
 
     public function get(?ID $id = null): ?Health {
-        $response = parent::getContents();
+        return $this->logDebugWithTimer(function () {
+            $response = parent::getContents();
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Health::fromJson($response, self::$logger);
+            return Health::fromJson($response, self::$logger);
+        }, 'Fetching Health');
     }
 }

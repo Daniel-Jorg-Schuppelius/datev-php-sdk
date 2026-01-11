@@ -25,26 +25,29 @@ class PartyRolesEndpoint extends EndpointAbstract implements SearchableEndpointI
 
     public function get(?ID $id = null): ?PartyRole {
         if (is_null($id)) {
-            $this->logError('ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
+        return $this->logDebugWithTimer(function () use ($id) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return PartyRole::fromJson($response, self::$logger);
+            return PartyRole::fromJson($response, self::$logger);
+        }, "Fetching PartyRole (ID: {$id})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?PartyRoles {
-        $response = parent::getContents($queryParams, $options);
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options);
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return PartyRoles::fromJson($response, self::$logger);
+            return PartyRoles::fromJson($response, self::$logger);
+        }, 'Searching PartyRoles');
     }
 }

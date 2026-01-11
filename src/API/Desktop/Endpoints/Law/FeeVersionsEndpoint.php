@@ -34,22 +34,26 @@ class FeeVersionsEndpoint extends EndpointAbstract implements SearchableEndpoint
             return null;
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$number}");
+        return $this->logDebugWithTimer(function () use ($number) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$number}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return FeeVersion::fromJson($response, self::$logger);
+            return FeeVersion::fromJson($response, self::$logger);
+        }, "Fetching FeeVersion (Number: {$number})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?FeeVersions {
-        $response = parent::getContents($queryParams, $options);
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options);
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return FeeVersions::fromJson($response, self::$logger);
+            return FeeVersions::fromJson($response, self::$logger);
+        }, 'Searching FeeVersions');
     }
 }

@@ -38,36 +38,37 @@ class FiscalYearsEndpoint extends EndpointAbstract implements SearchableEndpoint
 
     public function getById(?string $fiscalYearId = null): ?FiscalYear {
         if (!isset($this->clientId)) {
-            $this->logError('Client ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID is required');
         }
 
         if (is_null($fiscalYearId)) {
-            $this->logError('Fiscal Year ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Fiscal Year ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Fiscal Year ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/fiscal-years/{$fiscalYearId}");
+        return $this->logDebugWithTimer(function () use ($fiscalYearId) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/fiscal-years/{$fiscalYearId}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return FiscalYear::fromJson($response, self::$logger);
+            return FiscalYear::fromJson($response, self::$logger);
+        }, "Fetching FiscalYear (ID: {$fiscalYearId})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?FiscalYears {
         if (!isset($this->clientId)) {
-            $this->logError('Client ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID is required');
         }
 
-        $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/fiscal-years");
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/fiscal-years");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return FiscalYears::fromJson($response, self::$logger);
+            return FiscalYears::fromJson($response, self::$logger);
+        }, 'Searching FiscalYears');
     }
 }

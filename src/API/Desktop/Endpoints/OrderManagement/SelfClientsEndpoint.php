@@ -27,22 +27,26 @@ class SelfClientsEndpoint extends EndpointAbstract implements SearchableEndpoint
             return null;
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
+        return $this->logDebugWithTimer(function () use ($id) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return SelfClient::fromJson($response, self::$logger);
+            return SelfClient::fromJson($response, self::$logger);
+        }, "Fetching SelfClient (ID: {$id})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?SelfClients {
-        $response = parent::getContents($queryParams, $options);
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options);
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return SelfClients::fromJson($response, self::$logger);
+            return SelfClients::fromJson($response, self::$logger);
+        }, 'Searching SelfClients');
     }
 }

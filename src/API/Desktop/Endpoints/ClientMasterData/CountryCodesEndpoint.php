@@ -27,12 +27,14 @@ class CountryCodesEndpoint extends EndpointAbstract implements SearchableEndpoin
     }
 
     public function search(array $queryParams = [], array $options = []): ?CountryCodes {
-        $response = parent::getContents($queryParams, $options);
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options);
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return CountryCodes::fromJson($response, self::$logger);
+            return CountryCodes::fromJson($response, self::$logger);
+        }, 'Searching CountryCodes');
     }
 }

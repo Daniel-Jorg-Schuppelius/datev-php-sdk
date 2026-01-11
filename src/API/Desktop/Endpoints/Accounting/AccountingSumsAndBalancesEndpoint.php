@@ -36,13 +36,11 @@ class AccountingSumsAndBalancesEndpoint extends EndpointAbstract implements Sear
 
     protected function getBaseUrl(): string {
         if (!isset($this->clientId)) {
-            $this->logError('Client ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID is required');
         }
 
         if (!isset($this->fiscalYearId)) {
-            $this->logError('Fiscal Year ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Fiscal Year ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Fiscal Year ID is required');
         }
 
         return "{$this->getEndpointUrl()}/{$this->clientId->toString()}/fiscal-years/{$this->fiscalYearId->toString()}/accounting-sums-and-balances";
@@ -57,26 +55,29 @@ class AccountingSumsAndBalancesEndpoint extends EndpointAbstract implements Sear
 
     public function getById(?string $id = null): ?AccountingSumsAndBalance {
         if (is_null($id)) {
-            $this->logError('ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getBaseUrl()}/{$id}");
+        return $this->logDebugWithTimer(function () use ($id) {
+            $response = parent::getContents([], [], "{$this->getBaseUrl()}/{$id}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return AccountingSumsAndBalance::fromJson($response, self::$logger);
+            return AccountingSumsAndBalance::fromJson($response, self::$logger);
+        }, "Fetching AccountingSumsAndBalance (ID: {$id})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?AccountingSumsAndBalances {
-        $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return AccountingSumsAndBalances::fromJson($response, self::$logger);
+            return AccountingSumsAndBalances::fromJson($response, self::$logger);
+        }, 'Searching AccountingSumsAndBalances');
     }
 }

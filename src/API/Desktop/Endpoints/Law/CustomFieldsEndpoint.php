@@ -25,26 +25,29 @@ class CustomFieldsEndpoint extends EndpointAbstract implements SearchableEndpoin
 
     public function get(?ID $id = null): ?CustomField {
         if (is_null($id)) {
-            $this->logError('ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
+        return $this->logDebugWithTimer(function () use ($id) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return CustomField::fromJson($response, self::$logger);
+            return CustomField::fromJson($response, self::$logger);
+        }, "Fetching CustomField (ID: {$id})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?CustomFields {
-        $response = parent::getContents($queryParams, $options);
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options);
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return CustomFields::fromJson($response, self::$logger);
+            return CustomFields::fromJson($response, self::$logger);
+        }, 'Searching CustomFields');
     }
 }

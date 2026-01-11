@@ -41,18 +41,15 @@ class AccountingRecordsEndpoint extends EndpointAbstract implements SearchableEn
 
     protected function getBaseUrl(): string {
         if (!isset($this->clientId)) {
-            $this->logError('Client ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID is required');
         }
 
         if (!isset($this->fiscalYearId)) {
-            $this->logError('Fiscal Year ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Fiscal Year ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Fiscal Year ID is required');
         }
 
         if (!isset($this->sequenceId)) {
-            $this->logError('Sequence ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Sequence ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Sequence ID is required    ');
         }
 
         return "{$this->getEndpointUrl()}/{$this->clientId->toString()}/fiscal-years/{$this->fiscalYearId->toString()}/accounting-sequences-processed/{$this->sequenceId->toString()}/accounting-records";
@@ -67,26 +64,29 @@ class AccountingRecordsEndpoint extends EndpointAbstract implements SearchableEn
 
     public function getById(?string $recordId = null): ?RecordRead {
         if (is_null($recordId)) {
-            $this->logError('Record ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Record ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Record ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getBaseUrl()}/{$recordId}");
+        return $this->logDebugWithTimer(function () use ($recordId) {
+            $response = parent::getContents([], [], "{$this->getBaseUrl()}/{$recordId}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return RecordRead::fromJson($response, self::$logger);
+            return RecordRead::fromJson($response, self::$logger);
+        }, "Fetching RecordRead (ID: {$recordId})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?RecordReads {
-        $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return RecordReads::fromJson($response, self::$logger);
+            return RecordReads::fromJson($response, self::$logger);
+        }, 'Searching RecordReads');
     }
 }

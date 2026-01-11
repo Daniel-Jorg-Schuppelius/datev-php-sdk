@@ -32,26 +32,29 @@ class InvoicesEndpoint extends EndpointAbstract implements SearchableEndpointInt
 
     public function getById(?int $invoiceId = null): ?Invoice {
         if (is_null($invoiceId)) {
-            $this->logError('Invoice ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Invoice ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Invoice ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$invoiceId}");
+        return $this->logDebugWithTimer(function () use ($invoiceId) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$invoiceId}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Invoice::fromJson($response, self::$logger);
+            return Invoice::fromJson($response, self::$logger);
+        }, "Fetching Invoice (ID: {$invoiceId})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?Invoices {
-        $response = parent::getContents($queryParams, $options);
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options);
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Invoices::fromJson($response, self::$logger);
+            return Invoices::fromJson($response, self::$logger);
+        }, 'Searching Invoices');
     }
 }

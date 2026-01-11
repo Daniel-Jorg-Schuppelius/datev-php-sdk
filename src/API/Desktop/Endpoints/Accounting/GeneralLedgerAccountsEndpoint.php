@@ -36,13 +36,11 @@ class GeneralLedgerAccountsEndpoint extends EndpointAbstract implements Searchab
 
     protected function getBaseUrl(): string {
         if (!isset($this->clientId)) {
-            $this->logError('Client ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID is required');
         }
 
         if (!isset($this->fiscalYearId)) {
-            $this->logError('Fiscal Year ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Fiscal Year ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Fiscal Year ID is required');
         }
 
         return "{$this->getEndpointUrl()}/{$this->clientId->toString()}/fiscal-years/{$this->fiscalYearId->toString()}/general-ledger-accounts";
@@ -57,36 +55,41 @@ class GeneralLedgerAccountsEndpoint extends EndpointAbstract implements Searchab
 
     public function getById(?string $accountId = null): ?GeneralLedgerAccount {
         if (is_null($accountId)) {
-            $this->logError('General Ledger Account ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('General Ledger Account ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'General Ledger Account ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getBaseUrl()}/{$accountId}");
+        return $this->logDebugWithTimer(function () use ($accountId) {
+            $response = parent::getContents([], [], "{$this->getBaseUrl()}/{$accountId}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return GeneralLedgerAccount::fromJson($response, self::$logger);
+            return GeneralLedgerAccount::fromJson($response, self::$logger);
+        }, "Fetching GeneralLedgerAccount (ID: {$accountId})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?GeneralLedgerAccounts {
-        $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return GeneralLedgerAccounts::fromJson($response, self::$logger);
+            return GeneralLedgerAccounts::fromJson($response, self::$logger);
+        }, 'Searching GeneralLedgerAccounts');
     }
 
     public function searchUtilized(array $queryParams = [], array $options = []): ?GeneralLedgerAccounts {
-        $response = parent::getContents($queryParams, $options, "{$this->getBaseUrl()}/utilized");
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, "{$this->getBaseUrl()}/utilized");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return GeneralLedgerAccounts::fromJson($response, self::$logger);
+            return GeneralLedgerAccounts::fromJson($response, self::$logger);
+        }, 'Searching GeneralLedgerAccounts (Utilized)');
     }
 }

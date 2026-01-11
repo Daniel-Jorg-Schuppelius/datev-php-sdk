@@ -36,13 +36,11 @@ class TermsOfPaymentEndpoint extends EndpointAbstract implements SearchableEndpo
 
     protected function getBaseUrl(): string {
         if (!isset($this->clientId)) {
-            $this->logError('Client ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID is required');
         }
 
         if (!isset($this->fiscalYearId)) {
-            $this->logError('Fiscal Year ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Fiscal Year ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Fiscal Year ID is required');
         }
 
         return "{$this->getEndpointUrl()}/{$this->clientId->toString()}/fiscal-years/{$this->fiscalYearId->toString()}/terms-of-payment";
@@ -57,26 +55,29 @@ class TermsOfPaymentEndpoint extends EndpointAbstract implements SearchableEndpo
 
     public function getById(?string $termId = null): ?TermOfPayment {
         if (is_null($termId)) {
-            $this->logError('Term of Payment ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Term of Payment ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Term of Payment ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getBaseUrl()}/{$termId}");
+        return $this->logDebugWithTimer(function () use ($termId) {
+            $response = parent::getContents([], [], "{$this->getBaseUrl()}/{$termId}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return TermOfPayment::fromJson($response, self::$logger);
+            return TermOfPayment::fromJson($response, self::$logger);
+        }, "Fetching TermOfPayment (ID: {$termId})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?TermsOfPayment {
-        $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return TermsOfPayment::fromJson($response, self::$logger);
+            return TermsOfPayment::fromJson($response, self::$logger);
+        }, 'Searching TermsOfPayment');
     }
 }

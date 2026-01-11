@@ -23,8 +23,7 @@ class SecureAreasEndpoint extends EndpointAbstract implements SearchableEndpoint
 
     public function get(?ID $id = null): ?SecureArea {
         if (is_null($id)) {
-            $this->logError('ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'ID is required');
         }
 
         $result = $this->search()->getFirstValue("id", $id->toString());
@@ -33,12 +32,14 @@ class SecureAreasEndpoint extends EndpointAbstract implements SearchableEndpoint
     }
 
     public function search(array $queryParams = [], array $options = []): ?SecureAreas {
-        $response = parent::getContents($queryParams, $options);
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options);
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return SecureAreas::fromJson($response, self::$logger);
+            return SecureAreas::fromJson($response, self::$logger);
+        }, 'Searching SecureAreas');
     }
 }

@@ -25,36 +25,41 @@ class UsersEndpoint extends EndpointAbstract implements SearchableEndpointInterf
 
     public function get(?ID $id = null): ?User {
         if (is_null($id)) {
-            $this->logError('ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
+        return $this->logDebugWithTimer(function () use ($id) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return User::fromJson($response, self::$logger);
+            return User::fromJson($response, self::$logger);
+        }, "Fetching User (ID: {$id})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?Users {
-        $response = parent::getContents($queryParams, $options);
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options);
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Users::fromJson($response, self::$logger);
+            return Users::fromJson($response, self::$logger);
+        }, 'Searching Users');
     }
 
     public function me(): ?User {
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/me");
+        return $this->logDebugWithTimer(function () {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/me");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return User::fromJson($response, self::$logger);
+            return User::fromJson($response, self::$logger);
+        }, 'Fetching current User (me)');
     }
 }

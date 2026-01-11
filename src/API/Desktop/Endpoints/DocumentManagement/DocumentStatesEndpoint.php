@@ -23,26 +23,29 @@ class DocumentStatesEndpoint extends EndpointAbstract implements SearchableEndpo
 
     public function get(?ID $id = null): ?DocumentState {
         if (is_null($id)) {
-            $this->logError('ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
+        return $this->logDebugWithTimer(function () use ($id) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return DocumentState::fromJson($response, self::$logger);
+            return DocumentState::fromJson($response, self::$logger);
+        }, "Fetching DocumentState (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?DocumentStates {
-        $response = parent::getContents($queryParams, $options);
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options);
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return DocumentStates::fromJson($response, self::$logger);
+            return DocumentStates::fromJson($response, self::$logger);
+        }, 'Searching DocumentStates');
     }
 }

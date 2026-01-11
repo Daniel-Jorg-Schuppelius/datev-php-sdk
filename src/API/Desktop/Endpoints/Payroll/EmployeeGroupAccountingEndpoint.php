@@ -20,12 +20,14 @@ class EmployeeGroupAccountingEndpoint extends PayrollEndpointAbstract implements
     protected string $endpointSuffix = 'employee-group-accounting';
 
     public function search(array $queryParams = [], array $options = []): ?EmployeeGroupAccountings {
-        $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->endpointSuffix}");
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->endpointSuffix}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return EmployeeGroupAccountings::fromJson($response, self::$logger);
+            return EmployeeGroupAccountings::fromJson($response, self::$logger);
+        }, "Searching EmployeeGroupAccountings");
     }
 }

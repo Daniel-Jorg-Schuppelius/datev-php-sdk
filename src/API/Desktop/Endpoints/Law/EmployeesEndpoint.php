@@ -27,46 +27,53 @@ class EmployeesEndpoint extends EndpointAbstract implements SearchableEndpointIn
 
     public function get(?ID $id = null): ?Employee {
         if (is_null($id)) {
-            $this->logError('ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
+        return $this->logDebugWithTimer(function () use ($id) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Employee::fromJson($response, self::$logger);
+            return Employee::fromJson($response, self::$logger);
+        }, "Fetching Employee (ID: {$id})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?Employees {
-        $response = parent::getContents($queryParams, $options);
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options);
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Employees::fromJson($response, self::$logger);
+            return Employees::fromJson($response, self::$logger);
+        }, 'Searching Employees');
     }
 
     public function getContingencyFees(ID $id): ?ContingencyFees {
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}/contingency-fees");
+        return $this->logDebugWithTimer(function () use ($id) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}/contingency-fees");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return ContingencyFees::fromJson($response, self::$logger);
+            return ContingencyFees::fromJson($response, self::$logger);
+        }, "Fetching ContingencyFees for Employee (ID: {$id})");
     }
 
     public function getCustomFields(ID $id): ?CustomFields {
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}/custom-fields");
+        return $this->logDebugWithTimer(function () use ($id) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}/custom-fields");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return CustomFields::fromJson($response, self::$logger);
+            return CustomFields::fromJson($response, self::$logger);
+        }, "Fetching CustomFields for Employee (ID: {$id})");
     }
 }

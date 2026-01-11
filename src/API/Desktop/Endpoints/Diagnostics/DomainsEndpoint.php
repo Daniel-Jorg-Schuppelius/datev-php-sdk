@@ -19,12 +19,14 @@ class DomainsEndpoint extends EndpointAbstract {
     protected string $endpoint = 'domains';
 
     public function get(?ID $id = null): ?Domains {
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}");
+        return $this->logDebugWithTimer(function () {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Domains::fromJson($response, self::$logger);
+            return Domains::fromJson($response, self::$logger);
+        }, 'Fetching Domains (Diagnostics)');
     }
 }

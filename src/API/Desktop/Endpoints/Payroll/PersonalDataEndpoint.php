@@ -20,12 +20,14 @@ class PersonalDataEndpoint extends PayrollEndpointAbstract implements Searchable
     protected string $endpointSuffix = 'personal-data';
 
     public function search(array $queryParams = [], array $options = []): ?PersonalData {
-        $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->endpointSuffix}");
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->endpointSuffix}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return PersonalData::fromJson($response, self::$logger);
+            return PersonalData::fromJson($response, self::$logger);
+        }, "Searching PersonalData");
     }
 }

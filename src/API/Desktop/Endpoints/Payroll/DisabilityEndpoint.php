@@ -20,12 +20,14 @@ class DisabilityEndpoint extends PayrollEndpointAbstract implements SearchableEn
     protected string $endpointSuffix = 'disability';
 
     public function search(array $queryParams = [], array $options = []): ?Disabilities {
-        $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->endpointSuffix}");
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->endpointSuffix}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Disabilities::fromJson($response, self::$logger);
+            return Disabilities::fromJson($response, self::$logger);
+        }, "Searching Disabilities");
     }
 }

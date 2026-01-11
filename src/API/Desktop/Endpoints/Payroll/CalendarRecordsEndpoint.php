@@ -25,30 +25,35 @@ class CalendarRecordsEndpoint extends PayrollEndpointAbstract implements Searcha
 
     public function get(?ID $id = null): ?CalendarRecord {
         if (is_null($id)) {
-            $this->logError('ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->endpointSuffix}/{$id->toString()}");
+        return $this->logDebugWithTimer(function () use ($id) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->endpointSuffix}/{$id->toString()}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return CalendarRecord::fromJson($response, self::$logger);
+            return CalendarRecord::fromJson($response, self::$logger);
+        }, "Fetching CalendarRecord (ID: {$id})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?CalendarRecords {
-        $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->endpointSuffix}");
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->endpointSuffix}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return CalendarRecords::fromJson($response, self::$logger);
+            return CalendarRecords::fromJson($response, self::$logger);
+        }, "Searching CalendarRecords");
     }
 
     public function createBatch(CalendarRecords $records): ResponseInterface {
-        return $this->postContent($records, [], "{$this->getEndpointUrl()}/{$this->endpointSuffix}/batch");
+        return $this->logDebugWithTimer(function () use ($records) {
+            return $this->postContent($records, [], "{$this->getEndpointUrl()}/{$this->endpointSuffix}/batch");
+        }, "Creating batch CalendarRecords");
     }
 }

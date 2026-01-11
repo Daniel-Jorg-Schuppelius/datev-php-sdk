@@ -34,22 +34,26 @@ class BillingCategoriesEndpoint extends EndpointAbstract implements SearchableEn
             return null;
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$number}");
+        return $this->logDebugWithTimer(function () use ($number) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$number}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return BillingCategory::fromJson($response, self::$logger);
+            return BillingCategory::fromJson($response, self::$logger);
+        }, "Fetching BillingCategory (Number: {$number})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?BillingCategories {
-        $response = parent::getContents($queryParams, $options);
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options);
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return BillingCategories::fromJson($response, self::$logger);
+            return BillingCategories::fromJson($response, self::$logger);
+        }, 'Searching BillingCategories');
     }
 }

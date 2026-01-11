@@ -39,25 +39,25 @@ class PostingProposalsCashRegisterBatchEndpoint extends EndpointAbstract impleme
 
     protected function getBaseUrl(): string {
         if (!isset($this->clientId)) {
-            $this->logError('Client ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID is required');
         }
 
         if (!isset($this->fiscalYearId)) {
-            $this->logError('Fiscal Year ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Fiscal Year ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Fiscal Year ID is required');
         }
 
         return "{$this->getEndpointUrl()}/{$this->clientId->toString()}/fiscal-years/{$this->fiscalYearId->toString()}/posting-proposals-cash-register/batch";
     }
 
     public function create($data): ?array {
-        $response = parent::postContents($data, [], $this->getBaseUrl());
+        return $this->logDebugWithTimer(function () use ($data) {
+            $response = parent::postContents($data, [], $this->getBaseUrl());
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return json_decode($response, true);
+            return json_decode($response, true);
+        }, 'Creating PostingProposals (CashRegister Batch)');
     }
 }

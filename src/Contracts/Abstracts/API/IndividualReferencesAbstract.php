@@ -23,8 +23,7 @@ abstract class IndividualReferencesAbstract extends EndpointAbstract implements 
 
     public function get(?ID $id = null): ?IndividualReference {
         if (is_null($id)) {
-            $this->logError('ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'ID is required');
         }
         $result = $this->search()->getFirstValue("id", $id->toString());
 
@@ -32,12 +31,14 @@ abstract class IndividualReferencesAbstract extends EndpointAbstract implements 
     }
 
     public function search(array $queryParams = [], array $options = []): ?IndividualReferences {
-        $response = parent::getContents($queryParams, $options);
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options);
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return IndividualReferences::fromJson($response, self::$logger);
+            return IndividualReferences::fromJson($response, self::$logger);
+        }, 'Searching IndividualReferences');
     }
 }

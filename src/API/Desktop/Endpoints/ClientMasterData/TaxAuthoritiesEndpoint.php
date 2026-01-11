@@ -27,12 +27,14 @@ class TaxAuthoritiesEndpoint extends EndpointAbstract implements SearchableEndpo
     }
 
     public function search(array $queryParams = [], array $options = []): ?TaxAuthorities {
-        $response = parent::getContents($queryParams, $options);
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options);
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return TaxAuthorities::fromJson($response, self::$logger);
+            return TaxAuthorities::fromJson($response, self::$logger);
+        }, 'Searching TaxAuthorities');
     }
 }

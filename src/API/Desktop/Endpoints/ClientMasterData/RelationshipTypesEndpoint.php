@@ -27,12 +27,14 @@ class RelationshipTypesEndpoint extends EndpointAbstract implements SearchableEn
     }
 
     public function search(array $queryParams = [], array $options = []): ?RelationshipTypes {
-        $response = parent::getContents($queryParams, $options);
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options);
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return RelationshipTypes::fromJson($response, self::$logger);
+            return RelationshipTypes::fromJson($response, self::$logger);
+        }, 'Searching RelationshipTypes');
     }
 }

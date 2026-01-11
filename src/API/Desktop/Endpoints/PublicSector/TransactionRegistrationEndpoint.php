@@ -45,45 +45,47 @@ class TransactionRegistrationEndpoint extends EndpointAbstract implements Search
 
     public function getById(?int $transactionId = null): ?TransactionRegistration {
         if (!isset($this->clientId) || !isset($this->citizenId)) {
-            $this->logError('Client ID and Citizen ID are required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID and Citizen ID are required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID and Citizen ID are required');
         }
 
         if (is_null($transactionId)) {
-            $this->logError('Transaction ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Transaction ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Transaction ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/transaction-registration/{$transactionId}");
+        return $this->logDebugWithTimer(function () use ($transactionId) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/transaction-registration/{$transactionId}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return TransactionRegistration::fromJson($response, self::$logger);
+            return TransactionRegistration::fromJson($response, self::$logger);
+        }, "Fetching TransactionRegistration (ID: {$transactionId})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?TransactionRegistrations {
         if (!isset($this->clientId) || !isset($this->citizenId)) {
-            $this->logError('Client ID and Citizen ID are required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID and Citizen ID are required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID and Citizen ID are required');
         }
 
-        $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/transaction-registration");
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/transaction-registration");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return TransactionRegistrations::fromJson($response, self::$logger);
+            return TransactionRegistrations::fromJson($response, self::$logger);
+        }, "Searching TransactionRegistrations");
     }
 
     public function create(TransactionRegistration $transaction): ?ResponseInterface {
         if (!isset($this->clientId) || !isset($this->citizenId)) {
-            $this->logError('Client ID and Citizen ID are required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID and Citizen ID are required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID and Citizen ID are required');
         }
 
-        return parent::postContent($transaction, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/transaction-registration");
+        return $this->logDebugWithTimer(function () use ($transaction) {
+            return parent::postContent($transaction, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/transaction-registration");
+        }, "Creating TransactionRegistration");
     }
 }

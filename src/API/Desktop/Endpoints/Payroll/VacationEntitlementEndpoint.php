@@ -20,12 +20,14 @@ class VacationEntitlementEndpoint extends PayrollEndpointAbstract implements Sea
     protected string $endpointSuffix = 'vacation-entitlement';
 
     public function search(array $queryParams = [], array $options = []): ?VacationEntitlements {
-        $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->endpointSuffix}");
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->endpointSuffix}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return VacationEntitlements::fromJson($response, self::$logger);
+            return VacationEntitlements::fromJson($response, self::$logger);
+        }, "Searching VacationEntitlements");
     }
 }

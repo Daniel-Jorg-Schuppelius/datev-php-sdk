@@ -36,13 +36,11 @@ class CostSystemsEndpoint extends EndpointAbstract implements SearchableEndpoint
 
     protected function getBaseUrl(): string {
         if (!isset($this->clientId)) {
-            $this->logError('Client ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID is required');
         }
 
         if (!isset($this->fiscalYearId)) {
-            $this->logError('Fiscal Year ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Fiscal Year ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Fiscal Year ID is required');
         }
 
         return "{$this->getEndpointUrl()}/{$this->clientId->toString()}/fiscal-years/{$this->fiscalYearId->toString()}/cost-systems";
@@ -57,26 +55,29 @@ class CostSystemsEndpoint extends EndpointAbstract implements SearchableEndpoint
 
     public function getById(?string $costSystemId = null): ?CostSystem {
         if (is_null($costSystemId)) {
-            $this->logError('Cost System ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Cost System ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Cost System ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getBaseUrl()}/{$costSystemId}");
+        return $this->logDebugWithTimer(function () use ($costSystemId) {
+            $response = parent::getContents([], [], "{$this->getBaseUrl()}/{$costSystemId}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return CostSystem::fromJson($response, self::$logger);
+            return CostSystem::fromJson($response, self::$logger);
+        }, "Fetching CostSystem (ID: {$costSystemId})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?CostSystems {
-        $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return CostSystems::fromJson($response, self::$logger);
+            return CostSystems::fromJson($response, self::$logger);
+        }, 'Searching CostSystems');
     }
 }

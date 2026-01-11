@@ -36,13 +36,11 @@ class AccountsReceivableEndpoint extends EndpointAbstract implements SearchableE
 
     protected function getBaseUrl(): string {
         if (!isset($this->clientId)) {
-            $this->logError('Client ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID is required');
         }
 
         if (!isset($this->fiscalYearId)) {
-            $this->logError('Fiscal Year ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Fiscal Year ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Fiscal Year ID is required');
         }
 
         return "{$this->getEndpointUrl()}/{$this->clientId->toString()}/fiscal-years/{$this->fiscalYearId->toString()}/accounts-receivable";
@@ -57,36 +55,41 @@ class AccountsReceivableEndpoint extends EndpointAbstract implements SearchableE
 
     public function getById(?string $openItemId = null): ?OpenItem {
         if (is_null($openItemId)) {
-            $this->logError('Open Item ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Open Item ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Open Item ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getBaseUrl()}/{$openItemId}");
+        return $this->logDebugWithTimer(function () use ($openItemId) {
+            $response = parent::getContents([], [], "{$this->getBaseUrl()}/{$openItemId}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return OpenItem::fromJson($response, self::$logger);
+            return OpenItem::fromJson($response, self::$logger);
+        }, "Fetching OpenItem (ID: {$openItemId})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?OpenItems {
-        $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return OpenItems::fromJson($response, self::$logger);
+            return OpenItems::fromJson($response, self::$logger);
+        }, 'Searching OpenItems (Accounts Receivable)');
     }
 
     public function searchCondensed(array $queryParams = [], array $options = []): ?OpenItems {
-        $response = parent::getContents($queryParams, $options, "{$this->getBaseUrl()}/condense");
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, "{$this->getBaseUrl()}/condense");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return OpenItems::fromJson($response, self::$logger);
+            return OpenItems::fromJson($response, self::$logger);
+        }, 'Searching OpenItems (Accounts Receivable Condensed)');
     }
 }

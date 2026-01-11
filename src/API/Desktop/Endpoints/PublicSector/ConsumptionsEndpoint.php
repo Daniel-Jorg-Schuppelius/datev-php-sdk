@@ -49,36 +49,37 @@ class ConsumptionsEndpoint extends EndpointAbstract implements SearchableEndpoin
 
     public function getById(?string $consumptionId = null): ?Consumption {
         if (!isset($this->clientId) || !isset($this->citizenId) || !isset($this->feeId)) {
-            $this->logError('Client ID, Citizen ID and Fee ID are required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID, Citizen ID and Fee ID are required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID, Citizen ID and Fee ID are required');
         }
 
         if (is_null($consumptionId)) {
-            $this->logError('Consumption ID is required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Consumption ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Consumption ID is required');
         }
 
-        $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/consumptions/{$consumptionId}");
+        return $this->logDebugWithTimer(function () use ($consumptionId) {
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/consumptions/{$consumptionId}");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Consumption::fromJson($response, self::$logger);
+            return Consumption::fromJson($response, self::$logger);
+        }, "Fetching Consumption (ID: {$consumptionId})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?Consumptions {
         if (!isset($this->clientId) || !isset($this->citizenId) || !isset($this->feeId)) {
-            $this->logError('Client ID, Citizen ID and Fee ID are required (Class:' . static::class . ')');
-            throw new InvalidArgumentException('Client ID, Citizen ID and Fee ID are required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID, Citizen ID and Fee ID are required');
         }
 
-        $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/consumptions");
+        return $this->logDebugWithTimer(function () use ($queryParams, $options) {
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/consumptions");
 
-        if (empty($response) || $response === '[]') {
-            return null;
-        }
+            if (empty($response) || $response === '[]') {
+                return null;
+            }
 
-        return Consumptions::fromJson($response, self::$logger);
+            return Consumptions::fromJson($response, self::$logger);
+        }, "Searching Consumptions");
     }
 }
