@@ -12,20 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\IdentityAndAccessManagement;
 
-use ERRORToolkit\Logger\ConsoleLogger;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\IdentityAndAccessManagement\Groups\Group;
 use Datev\Entities\IdentityAndAccessManagement\Groups\Groups;
-use PHPUnit\Framework\TestCase;
 
-class GroupTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class GroupTest extends EntityTest {
     public function testCreateGroup() {
         $data = [
             "id" => "g1234567-8901-2345-6789-012345678901",
@@ -33,7 +25,7 @@ class GroupTest extends TestCase {
             "schemas" => ["urn:ietf:params:scim:schemas:core:2.0:Group"]
         ];
 
-        $group = new Group($data, $this->logger);
+        $group = new Group($data);
         $this->assertInstanceOf(Group::class, new Group());
         $this->assertInstanceOf(Group::class, $group);
         $this->assertEquals("Administratoren", $group->getDisplayName());
@@ -53,7 +45,7 @@ class GroupTest extends TestCase {
             ]
         ];
 
-        $groups = new Groups($data, $this->logger);
+        $groups = new Groups($data);
         $this->assertInstanceOf(Groups::class, $groups);
         $this->assertCount(2, $groups->getValues());
     }

@@ -12,20 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\FederalStatesMAD\FederalStateMADOfLegalPerson;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class FederalStateMADOfLegalPersonTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class FederalStateMADOfLegalPersonTest extends EntityTest {
     public function testCreateFromString(): void {
-        $federalState = new FederalStateMADOfLegalPerson("BY", $this->logger);
+        $federalState = new FederalStateMADOfLegalPerson("BY");
 
         $this->assertEquals("BY", $federalState->getValue());
         $this->assertEquals('current_federal_state_mad_of_legal_person', $federalState->getEntityName());

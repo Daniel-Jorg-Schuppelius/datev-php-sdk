@@ -12,21 +12,19 @@ declare(strict_types=1);
 
 namespace Tests\Entities\IdentityAndAccessManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\IdentityAndAccessManagement\Users\ScimName;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class ScimNameTest extends TestCase {
+class ScimNameTest extends EntityTest {
     public function testCreateScimName(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "given_name" => "Max",
             "family_name" => "Mustermann",
             "honorific_prefix" => "Dr."
         ];
 
-        $name = new ScimName($data, $logger);
+        $name = new ScimName($data);
 
         $this->assertInstanceOf(ScimName::class, $name);
         $this->assertEquals("Max", $name->getGivenName());
@@ -35,14 +33,12 @@ class ScimNameTest extends TestCase {
     }
 
     public function testCreateScimNameMinimal(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "given_name" => "Erika",
             "family_name" => "Musterfrau"
         ];
 
-        $name = new ScimName($data, $logger);
+        $name = new ScimName($data);
 
         $this->assertInstanceOf(ScimName::class, $name);
         $this->assertEquals("Erika", $name->getGivenName());

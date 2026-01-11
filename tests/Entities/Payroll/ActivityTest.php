@@ -12,16 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\Activities\Activity;
 use Datev\Entities\Payroll\Activities\Activities;
 use Datev\Entities\Payroll\Activities\ActivityID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class ActivityTest extends TestCase {
+class ActivityTest extends EntityTest {
     public function testCreateActivity(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "act-001",
             "activity_type" => "Vollzeit",
@@ -30,7 +28,7 @@ class ActivityTest extends TestCase {
             "weekly_working_hours" => 40.0
         ];
 
-        $activity = new Activity($data, $logger);
+        $activity = new Activity($data);
 
         $this->assertInstanceOf(Activity::class, $activity);
         $this->assertInstanceOf(ActivityID::class, $activity->getID());
@@ -38,8 +36,6 @@ class ActivityTest extends TestCase {
     }
 
     public function testCreateActivities(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -55,7 +51,7 @@ class ActivityTest extends TestCase {
             ]
         ];
 
-        $activities = new Activities($data, $logger);
+        $activities = new Activities($data);
 
         $this->assertInstanceOf(Activities::class, $activities);
         $this->assertCount(2, $activities);

@@ -12,21 +12,18 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Accounting\CostCenterPropertyCharacteristics\CostCenterPropertyCharacteristic;
 use Datev\Entities\Accounting\CostCenterPropertyCharacteristics\CostCenterPropertyCharacteristics;
 use Datev\Entities\Accounting\CostCenterPropertyCharacteristics\CostCenterPropertyCharacteristicID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class CostCenterPropertyCharacteristicTest extends TestCase {
+class CostCenterPropertyCharacteristicTest extends EntityTest {
     public function testCreateCostCenterPropertyCharacteristic() {
         $data = [
             "id" => 1,
             "description" => "Characteristic Description"
-        ];
-
-        $logger = ConsoleLoggerFactory::getLogger();
-        $characteristic = new CostCenterPropertyCharacteristic($data, $logger);
+        ];        $characteristic = new CostCenterPropertyCharacteristic($data);
 
         $this->assertInstanceOf(CostCenterPropertyCharacteristic::class, $characteristic);
         $this->assertInstanceOf(CostCenterPropertyCharacteristicID::class, $characteristic->getID());
@@ -44,10 +41,7 @@ class CostCenterPropertyCharacteristicTest extends TestCase {
                     "description" => "Characteristic Two"
                 ]
             ]
-        ];
-
-        $logger = ConsoleLoggerFactory::getLogger();
-        $characteristics = new CostCenterPropertyCharacteristics($data, $logger);
+        ];        $characteristics = new CostCenterPropertyCharacteristics($data);
 
         $this->assertInstanceOf(CostCenterPropertyCharacteristics::class, $characteristics);
         $this->assertCount(2, $characteristics->getValues());

@@ -12,20 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
-use ERRORToolkit\Logger\ConsoleLogger;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Accounting\Sequences\Sequence;
 use Datev\Entities\Accounting\Sequences\Sequences;
-use PHPUnit\Framework\TestCase;
 
-class SequenceTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class SequenceTest extends EntityTest {
     public function testCreateSequence() {
         $data = [
             "application_information" => "DATEV SDK",
@@ -36,7 +28,7 @@ class SequenceTest extends TestCase {
             "is_committed" => false
         ];
 
-        $sequence = new Sequence($data, $this->logger);
+        $sequence = new Sequence($data);
         $this->assertInstanceOf(Sequence::class, new Sequence());
         $this->assertInstanceOf(Sequence::class, $sequence);
     }
@@ -59,7 +51,7 @@ class SequenceTest extends TestCase {
             ]
         ];
 
-        $sequences = new Sequences($data, $this->logger);
+        $sequences = new Sequences($data);
         $this->assertInstanceOf(Sequences::class, $sequences);
         $this->assertCount(2, $sequences->getValues());
     }

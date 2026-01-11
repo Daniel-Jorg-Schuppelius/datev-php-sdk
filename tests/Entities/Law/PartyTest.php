@@ -12,20 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
-use ERRORToolkit\Logger\ConsoleLogger;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Law\Parties\Party;
 use Datev\Entities\Law\Parties\Parties;
-use PHPUnit\Framework\TestCase;
 
-class PartyTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class PartyTest extends EntityTest {
     public function testCreateParty() {
         $data = [
             "id" => "32e6f021-8174-42c3-9d1a-d5eb3b636a1d",
@@ -43,7 +35,7 @@ class PartyTest extends TestCase {
             "official_party_type" => "Kfz-Halter"
         ];
 
-        $party = new Party($data, $this->logger);
+        $party = new Party($data);
         $this->assertInstanceOf(Party::class, new Party());
         $this->assertInstanceOf(Party::class, $party);
         $this->assertNotNull($party->getID());
@@ -72,7 +64,7 @@ class PartyTest extends TestCase {
             ]
         ];
 
-        $parties = new Parties($data, $this->logger);
+        $parties = new Parties($data);
         $this->assertInstanceOf(Parties::class, $parties);
         $this->assertCount(2, $parties->getValues());
     }

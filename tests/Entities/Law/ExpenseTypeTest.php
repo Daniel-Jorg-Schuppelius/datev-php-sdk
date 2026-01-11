@@ -12,20 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Law\ExpenseTypes\ExpenseType;
 use Datev\Entities\Law\ExpenseTypes\ExpenseTypes;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class ExpenseTypeTest extends TestCase {
-    private ?LoggerInterface $logger = null;
-
-    public function __construct(string $name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class ExpenseTypeTest extends EntityTest {
+    
     public function testCreateExpenseType(): void {
         $data = [
             "id" => "test-id",
@@ -37,7 +30,7 @@ class ExpenseTypeTest extends TestCase {
             "default_display" => true
         ];
 
-        $expenseType = new ExpenseType($data, $this->logger);
+        $expenseType = new ExpenseType($data);
 
         $this->assertInstanceOf(ExpenseType::class, $expenseType);
         $this->assertEquals("RK", $expenseType->getShortName());
@@ -62,7 +55,7 @@ class ExpenseTypeTest extends TestCase {
             ]
         ];
 
-        $expenseTypes = new ExpenseTypes($data, $this->logger);
+        $expenseTypes = new ExpenseTypes($data);
 
         $this->assertInstanceOf(ExpenseTypes::class, $expenseTypes);
         $this->assertCount(2, $expenseTypes);

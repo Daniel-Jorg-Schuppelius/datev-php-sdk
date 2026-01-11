@@ -12,11 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\DistributionsOfProfit\DistributionOfProfit;
 use Datev\Entities\ClientMasterData\DistributionsOfProfit\DistributionsOfProfit;
-use PHPUnit\Framework\TestCase;
 
-class DistributionOfProfitTest extends TestCase {
+class DistributionOfProfitTest extends EntityTest {
     public function testCreateDistributionOfProfit() {
         $data = [
             "percentage" => 50.0,

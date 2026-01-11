@@ -12,23 +12,21 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\FinancialAccountings\FinancialAccounting;
 use Datev\Entities\Payroll\FinancialAccountings\FinancialAccountings;
 use Datev\Entities\Payroll\FinancialAccountings\FinancialAccountingID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class FinancialAccountingTest extends TestCase {
+class FinancialAccountingTest extends EntityTest {
     public function testCreateFinancialAccounting(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "fa-001",
             "different_consultant_number" => "54321",
             "different_client_number" => "98765"
         ];
 
-        $financialAccounting = new FinancialAccounting($data, $logger);
+        $financialAccounting = new FinancialAccounting($data);
 
         $this->assertInstanceOf(FinancialAccounting::class, $financialAccounting);
         $this->assertInstanceOf(FinancialAccountingID::class, $financialAccounting->getID());
@@ -38,8 +36,6 @@ class FinancialAccountingTest extends TestCase {
     }
 
     public function testCreateFinancialAccountings(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -53,7 +49,7 @@ class FinancialAccountingTest extends TestCase {
             ]
         ];
 
-        $financialAccountings = new FinancialAccountings($data, $logger);
+        $financialAccountings = new FinancialAccountings($data);
 
         $this->assertInstanceOf(FinancialAccountings::class, $financialAccountings);
         $this->assertCount(2, $financialAccountings);

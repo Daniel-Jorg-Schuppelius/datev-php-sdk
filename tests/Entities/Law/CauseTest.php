@@ -12,20 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
-use ERRORToolkit\Logger\ConsoleLogger;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Law\Causes\Cause;
 use Datev\Entities\Law\Causes\Causes;
-use PHPUnit\Framework\TestCase;
 
-class CauseTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class CauseTest extends EntityTest {
     public function testCreateCause() {
         $data = [
             "id" => "c1234567-8901-2345-6789-012345678901",
@@ -33,7 +25,7 @@ class CauseTest extends TestCase {
             "departments" => ["Zivilrecht", "Arbeitsrecht"]
         ];
 
-        $cause = new Cause($data, $this->logger);
+        $cause = new Cause($data);
         $this->assertInstanceOf(Cause::class, new Cause());
         $this->assertInstanceOf(Cause::class, $cause);
         $this->assertEquals("Rechtsstreit Müller", $cause->getName());
@@ -54,7 +46,7 @@ class CauseTest extends TestCase {
             ]
         ];
 
-        $causes = new Causes($data, $this->logger);
+        $causes = new Causes($data);
         $this->assertInstanceOf(Causes::class, $causes);
         $this->assertCount(2, $causes->getValues());
     }

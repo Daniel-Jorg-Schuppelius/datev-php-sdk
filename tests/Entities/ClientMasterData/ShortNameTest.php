@@ -12,11 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\ShortNames\ShortName;
 use Datev\Entities\ClientMasterData\ShortNames\ShortNames;
-use PHPUnit\Framework\TestCase;
 
-class ShortNameTest extends TestCase {
+class ShortNameTest extends EntityTest {
     public function testCreateShortName() {
         $data = [
             "value" => "MUSTER",

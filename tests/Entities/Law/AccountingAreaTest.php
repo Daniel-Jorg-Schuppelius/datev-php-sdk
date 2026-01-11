@@ -12,20 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Law\AccountingAreas\AccountingArea;
 use Datev\Entities\Law\AccountingAreas\AccountingAreas;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class AccountingAreaTest extends TestCase {
-    private ?LoggerInterface $logger = null;
-
-    public function __construct(string $name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class AccountingAreaTest extends EntityTest {
+    
     public function testCreateAccountingArea(): void {
         $data = [
             "id" => "test-id",
@@ -36,7 +29,7 @@ class AccountingAreaTest extends TestCase {
             "taxation_method" => "Sollversteuerung"
         ];
 
-        $accountingArea = new AccountingArea($data, $this->logger);
+        $accountingArea = new AccountingArea($data);
 
         $this->assertInstanceOf(AccountingArea::class, $accountingArea);
         $this->assertEquals(1, $accountingArea->getNumber());
@@ -60,7 +53,7 @@ class AccountingAreaTest extends TestCase {
             ]
         ];
 
-        $accountingAreas = new AccountingAreas($data, $this->logger);
+        $accountingAreas = new AccountingAreas($data);
 
         $this->assertInstanceOf(AccountingAreas::class, $accountingAreas);
         $this->assertCount(2, $accountingAreas);

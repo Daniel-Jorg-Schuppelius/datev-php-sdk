@@ -12,12 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\CorporateStructures\CorporateStructure;
 use Datev\Entities\ClientMasterData\CorporateStructures\CorporateStructureID;
 use Datev\Entities\ClientMasterData\CorporateStructures\CorporateStructures;
-use PHPUnit\Framework\TestCase;
 
-class CorporateStructureTest extends TestCase {
+class CorporateStructureTest extends EntityTest {
     public function testCreateCorporateStructureID() {
         $id = new CorporateStructureID("12345678-1234-1234-1234-123456789012");
         $this->assertInstanceOf(CorporateStructureID::class, $id);

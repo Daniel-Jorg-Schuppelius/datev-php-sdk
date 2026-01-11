@@ -12,11 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\MADCodesOfClassificationOfEconomicActivities2008\MADCodeOfClassificationOfEconomicActivities2008;
 use Datev\Entities\ClientMasterData\MADCodesOfClassificationOfEconomicActivities2008\MADCodesOfClassificationOfEconomicActivities2008;
-use PHPUnit\Framework\TestCase;
 
-class MADCodeOfClassificationOfEconomicActivities2008Test extends TestCase {
+class MADCodeOfClassificationOfEconomicActivities2008Test extends EntityTest {
     public function testCreateMADCodeOfClassificationOfEconomicActivities2008(): void {
         $data = [
             "value" => "01.11",

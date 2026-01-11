@@ -12,20 +12,18 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\DocumentManagement\Documents\Domains\DocumentDomain;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class DocumentDomainTest extends TestCase {
+class DocumentDomainTest extends EntityTest {
     public function testCreateDocumentDomain(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "550e8400-e29b-41d4-a716-446655440000",
             "name" => "Rechnungen"
         ];
 
-        $domain = new DocumentDomain($data, $logger);
+        $domain = new DocumentDomain($data);
 
         $this->assertInstanceOf(DocumentDomain::class, $domain);
         $this->assertEquals("Rechnungen", $domain->getName());

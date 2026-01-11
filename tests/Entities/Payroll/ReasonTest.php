@@ -12,28 +12,24 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\BatchResponse\Failed\Reason;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class ReasonTest extends TestCase {
+class ReasonTest extends EntityTest {
     public function testCreateReason(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "error" => "REW11041",
             "error_description" => "Validation failed for field XYZ",
             "request_id" => "req-12345"
         ];
 
-        $reason = new Reason($data, $logger);
+        $reason = new Reason($data);
 
         $this->assertInstanceOf(Reason::class, $reason);
     }
 
     public function testCreateReasonWithAdditionalMessages(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "error" => "REW11042",
             "error_description" => "Multiple validation errors",
@@ -50,7 +46,7 @@ class ReasonTest extends TestCase {
             ]
         ];
 
-        $reason = new Reason($data, $logger);
+        $reason = new Reason($data);
 
         $this->assertInstanceOf(Reason::class, $reason);
     }

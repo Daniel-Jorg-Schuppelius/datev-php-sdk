@@ -12,19 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Common\BankAccounts\BankAccounts;
 use Datev\Entities\Common\BankAccounts\BankAccount;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class BankAccountsTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class BankAccountsTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -41,7 +34,7 @@ class BankAccountsTest extends TestCase {
             ]
         ];
 
-        $bankAccounts = new BankAccounts($data, $this->logger);
+        $bankAccounts = new BankAccounts($data);
 
         $this->assertCount(2, $bankAccounts->getValues());
         $this->assertInstanceOf(BankAccount::class, $bankAccounts->getValues()[0]);

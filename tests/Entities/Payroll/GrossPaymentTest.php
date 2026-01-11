@@ -12,16 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\GrossPayments\GrossPayment;
 use Datev\Entities\Payroll\GrossPayments\GrossPayments;
 use Datev\Entities\Payroll\GrossPayments\GrossPaymentID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class GrossPaymentTest extends TestCase {
+class GrossPaymentTest extends EntityTest {
     public function testCreateGrossPayment(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "gp-001",
             "personnel_number" => "12345",
@@ -29,7 +27,7 @@ class GrossPaymentTest extends TestCase {
             "payment_interval" => "monthly"
         ];
 
-        $grossPayment = new GrossPayment($data, $logger);
+        $grossPayment = new GrossPayment($data);
 
         $this->assertInstanceOf(GrossPayment::class, $grossPayment);
         $this->assertInstanceOf(GrossPaymentID::class, $grossPayment->getID());
@@ -39,8 +37,6 @@ class GrossPaymentTest extends TestCase {
     }
 
     public function testCreateGrossPayments(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -56,7 +52,7 @@ class GrossPaymentTest extends TestCase {
             ]
         ];
 
-        $grossPayments = new GrossPayments($data, $logger);
+        $grossPayments = new GrossPayments($data);
 
         $this->assertInstanceOf(GrossPayments::class, $grossPayments);
         $this->assertCount(2, $grossPayments);

@@ -12,12 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\OrderManagement\EmployeesCostRate\EmployeeCostRate;
 use Datev\Entities\OrderManagement\EmployeesCostRate\EmployeesCostRate;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class EmployeeCostRateTest extends TestCase {
+class EmployeeCostRateTest extends EntityTest {
     public function testCreateEmployeeCostRate() {
         $data = [
             "id" => "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
@@ -29,10 +29,7 @@ class EmployeeCostRateTest extends TestCase {
             "cost_rate_1" => 75.00,
             "cost_rate_2" => 85.00,
             "cost_rate_active" => true
-        ];
-
-        $logger = ConsoleLoggerFactory::getLogger();
-        $costRate = new EmployeeCostRate($data, $logger);
+        ];        $costRate = new EmployeeCostRate($data);
 
         $this->assertInstanceOf(EmployeeCostRate::class, $costRate);
         $this->assertEquals(100, $costRate->getEmployeeNumber());
@@ -57,10 +54,7 @@ class EmployeeCostRateTest extends TestCase {
                     "cost_rate_1" => 80.00
                 ]
             ]
-        ];
-
-        $logger = ConsoleLoggerFactory::getLogger();
-        $costRates = new EmployeesCostRate($data, $logger);
+        ];        $costRates = new EmployeesCostRate($data);
 
         $this->assertInstanceOf(EmployeesCostRate::class, $costRates);
         $this->assertCount(2, $costRates->getValues());

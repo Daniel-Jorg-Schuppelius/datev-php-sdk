@@ -12,20 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\OrderManagement\SelfClients\SelfClient;
 use Datev\Entities\OrderManagement\SelfClients\SelfClients;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class SelfClientTest extends TestCase {
-    private ?LoggerInterface $logger = null;
-
-    public function __construct(string $name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class SelfClientTest extends EntityTest {
+    
     public function testCreateSelfClient(): void {
         $data = [
             "id" => "test-id",
@@ -34,7 +27,7 @@ class SelfClientTest extends TestCase {
             "client_name" => "Eigene Kanzlei GmbH"
         ];
 
-        $selfClient = new SelfClient($data, $this->logger);
+        $selfClient = new SelfClient($data);
 
         $this->assertInstanceOf(SelfClient::class, $selfClient);
         $this->assertEquals(10001, $selfClient->getClientNumber());
@@ -57,7 +50,7 @@ class SelfClientTest extends TestCase {
             ]
         ];
 
-        $selfClients = new SelfClients($data, $this->logger);
+        $selfClients = new SelfClients($data);
 
         $this->assertInstanceOf(SelfClients::class, $selfClients);
         $this->assertCount(2, $selfClients);

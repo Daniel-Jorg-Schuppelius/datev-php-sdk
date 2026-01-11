@@ -4,19 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\DocumentManagement\StructureItems\StructureItems;
 use Datev\Entities\DocumentManagement\StructureItems\StructureItem;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class StructureItemsTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class StructureItemsTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -24,7 +17,7 @@ class StructureItemsTest extends TestCase {
                 ["id" => "si-2", "name" => "Document.pdf", "type" => 1]
             ]
         ];
-        $collection = new StructureItems($data, $this->logger);
+        $collection = new StructureItems($data);
         $this->assertCount(2, $collection->getValues());
         $this->assertInstanceOf(StructureItem::class, $collection->getValues()[0]);
     }

@@ -12,21 +12,19 @@ declare(strict_types=1);
 
 namespace Tests\Entities\IdentityAndAccessManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\IdentityAndAccessManagement\Users\ScimLinkage;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class ScimLinkageTest extends TestCase {
+class ScimLinkageTest extends EntityTest {
     public function testCreateScimLinkage(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "value" => "user-123-456",
             "display" => "Max Mustermann",
             "ref" => "https://example.com/Users/user-123-456"
         ];
 
-        $linkage = new ScimLinkage($data, $logger);
+        $linkage = new ScimLinkage($data);
 
         $this->assertInstanceOf(ScimLinkage::class, $linkage);
         $this->assertEquals("user-123-456", $linkage->getValue());

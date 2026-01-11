@@ -12,19 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\Departments\Departments;
 use Datev\Entities\Payroll\Departments\Department;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class DepartmentsTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class DepartmentsTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -41,7 +34,7 @@ class DepartmentsTest extends TestCase {
             ]
         ];
 
-        $departments = new Departments($data, $this->logger);
+        $departments = new Departments($data);
 
         $this->assertCount(2, $departments->getValues());
         $this->assertInstanceOf(Department::class, $departments->getValues()[0]);

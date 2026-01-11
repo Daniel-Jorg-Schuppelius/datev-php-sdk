@@ -12,15 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Common\ConsultantNumber;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class ConsultantNumberTest extends TestCase {
+class ConsultantNumberTest extends EntityTest {
     public function testCreateConsultantNumber(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
-        $consultantNumber = new ConsultantNumber("12345", $logger);
+        $consultantNumber = new ConsultantNumber("12345");
 
         $this->assertInstanceOf(ConsultantNumber::class, $consultantNumber);
         $this->assertEquals("12345", $consultantNumber->getValue());

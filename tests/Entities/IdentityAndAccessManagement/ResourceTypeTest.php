@@ -12,12 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\IdentityAndAccessManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\IdentityAndAccessManagement\Schemas\ResourceType;
 use Datev\Entities\IdentityAndAccessManagement\Schemas\ResourceTypes;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class ResourceTypeTest extends TestCase {
+class ResourceTypeTest extends EntityTest {
     public function testCreateResourceType() {
         $data = [
             "id" => "User",
@@ -27,10 +27,7 @@ class ResourceTypeTest extends TestCase {
             "schema" => "urn:ietf:params:scim:schemas:core:2.0:User",
             "schema_extensions" => [],
             "meta" => []
-        ];
-
-        $logger = ConsoleLoggerFactory::getLogger();
-        $resourceType = new ResourceType($data, $logger);
+        ];        $resourceType = new ResourceType($data);
 
         $this->assertInstanceOf(ResourceType::class, $resourceType);
         $this->assertEquals("User", $resourceType->getID());
@@ -53,10 +50,7 @@ class ResourceTypeTest extends TestCase {
                     "meta" => []
                 ]
             ]
-        ];
-
-        $logger = ConsoleLoggerFactory::getLogger();
-        $resourceTypes = new ResourceTypes($data, $logger);
+        ];        $resourceTypes = new ResourceTypes($data);
 
         $this->assertInstanceOf(ResourceTypes::class, $resourceTypes);
         $this->assertGreaterThanOrEqual(1, count($resourceTypes->getValues()));

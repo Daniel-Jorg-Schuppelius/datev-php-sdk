@@ -12,26 +12,19 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\DocumentManagement\Documents\Classes\DocumentClass;
 use Datev\Entities\DocumentManagement\Documents\Classes\DocumentClassID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class DocumentClassTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class DocumentClassTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "id" => 1,
             "name" => "Invoice"
         ];
 
-        $documentClass = new DocumentClass($data, $this->logger);
+        $documentClass = new DocumentClass($data);
 
         $this->assertInstanceOf(DocumentClassID::class, $documentClass->getID());
         $this->assertEquals(1, $documentClass->getID()->getValue());
@@ -39,7 +32,7 @@ class DocumentClassTest extends TestCase {
     }
 
     public function testCreateFromInteger(): void {
-        $documentClass = new DocumentClass(42, $this->logger);
+        $documentClass = new DocumentClass(42);
 
         $this->assertInstanceOf(DocumentClassID::class, $documentClass->getID());
         $this->assertEquals(42, $documentClass->getID()->getValue());
@@ -51,7 +44,7 @@ class DocumentClassTest extends TestCase {
             "id" => 2
         ];
 
-        $documentClass = new DocumentClass($data, $this->logger);
+        $documentClass = new DocumentClass($data);
 
         $this->assertInstanceOf(DocumentClassID::class, $documentClass->getID());
         $this->assertEquals(2, $documentClass->getID()->getValue());

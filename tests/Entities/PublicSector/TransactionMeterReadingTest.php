@@ -12,27 +12,19 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
-use ERRORToolkit\Logger\ConsoleLogger;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\PublicSector\TransactionMeterReadings\TransactionMeterReading;
 use Datev\Entities\PublicSector\TransactionMeterReadings\TransactionMeterReadings;
-use PHPUnit\Framework\TestCase;
 
-class TransactionMeterReadingTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class TransactionMeterReadingTest extends EntityTest {
     public function testCreateTransactionMeterReading() {
         $data = [
             "id" => 12345,
             "status" => "confirmed"
         ];
 
-        $reading = new TransactionMeterReading($data, $this->logger);
+        $reading = new TransactionMeterReading($data);
         $this->assertInstanceOf(TransactionMeterReading::class, new TransactionMeterReading());
         $this->assertInstanceOf(TransactionMeterReading::class, $reading);
         $this->assertEquals(12345, $reading->getID());
@@ -53,7 +45,7 @@ class TransactionMeterReadingTest extends TestCase {
             ]
         ];
 
-        $readings = new TransactionMeterReadings($data, $this->logger);
+        $readings = new TransactionMeterReadings($data);
         $this->assertInstanceOf(TransactionMeterReadings::class, $readings);
         $this->assertCount(2, $readings->getValues());
     }

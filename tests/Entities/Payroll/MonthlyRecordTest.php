@@ -12,16 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\MonthlyRecords\MonthlyRecord;
 use Datev\Entities\Payroll\MonthlyRecords\MonthlyRecords;
 use Datev\Entities\Payroll\MonthlyRecords\MonthlyRecordID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class MonthlyRecordTest extends TestCase {
+class MonthlyRecordTest extends EntityTest {
     public function testCreateMonthlyRecord(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "mr-001",
             "personnel_number" => "12345",
@@ -29,7 +27,7 @@ class MonthlyRecordTest extends TestCase {
             "origin" => "manual"
         ];
 
-        $monthlyRecord = new MonthlyRecord($data, $logger);
+        $monthlyRecord = new MonthlyRecord($data);
 
         $this->assertInstanceOf(MonthlyRecord::class, $monthlyRecord);
         $this->assertInstanceOf(MonthlyRecordID::class, $monthlyRecord->getID());
@@ -40,8 +38,6 @@ class MonthlyRecordTest extends TestCase {
     }
 
     public function testCreateMonthlyRecords(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -57,7 +53,7 @@ class MonthlyRecordTest extends TestCase {
             ]
         ];
 
-        $monthlyRecords = new MonthlyRecords($data, $logger);
+        $monthlyRecords = new MonthlyRecords($data);
 
         $this->assertInstanceOf(MonthlyRecords::class, $monthlyRecords);
         $this->assertCount(2, $monthlyRecords);

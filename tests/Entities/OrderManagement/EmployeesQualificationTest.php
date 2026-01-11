@@ -12,19 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\OrderManagement\EmployeesQualification\EmployeesQualification;
 use Datev\Entities\OrderManagement\EmployeesQualification\EmployeeQualification;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class EmployeesQualificationTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class EmployeesQualificationTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -43,7 +36,7 @@ class EmployeesQualificationTest extends TestCase {
             ]
         ];
 
-        $qualifications = new EmployeesQualification($data, $this->logger);
+        $qualifications = new EmployeesQualification($data);
 
         $this->assertCount(2, $qualifications->getValues());
         $this->assertInstanceOf(EmployeeQualification::class, $qualifications->getValues()[0]);

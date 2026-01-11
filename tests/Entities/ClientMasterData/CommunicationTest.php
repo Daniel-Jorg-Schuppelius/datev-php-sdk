@@ -12,20 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
-use ERRORToolkit\Logger\ConsoleLogger;;
+use Tests\Contracts\EntityTest;
 
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
 use Datev\Entities\ClientMasterData\Communications\Communication;
-use PHPUnit\Framework\TestCase;
 
-class CommunicationTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class CommunicationTest extends EntityTest {
     public function testCreateCommunication() {
         $data = [
             "id" => "20b9d6d9-117b-4555-b0b0-3659eb0279d9",
@@ -37,7 +28,7 @@ class CommunicationTest extends TestCase {
             "is_management_phone" => true
         ];
 
-        $communication = new Communication($data, $this->logger);
+        $communication = new Communication($data);
         $this->assertTrue($communication->isValid());
         $this->assertInstanceOf(Communication::class, new Communication());
         $this->assertInstanceOf(Communication::class, $communication);

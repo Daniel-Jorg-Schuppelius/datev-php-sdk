@@ -12,15 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Common\NaturalPersonID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class NaturalPersonIDTest extends TestCase {
+class NaturalPersonIDTest extends EntityTest {
     public function testCreateNaturalPersonID(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
-        $naturalPersonID = new NaturalPersonID("550e8400-e29b-41d4-a716-446655440001", $logger);
+        $naturalPersonID = new NaturalPersonID("550e8400-e29b-41d4-a716-446655440001");
 
         $this->assertInstanceOf(NaturalPersonID::class, $naturalPersonID);
         $this->assertEquals("550e8400-e29b-41d4-a716-446655440001", $naturalPersonID->getValue());

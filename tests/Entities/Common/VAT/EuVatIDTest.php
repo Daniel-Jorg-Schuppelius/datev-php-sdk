@@ -12,15 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common\VAT;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Common\VAT\EuVatID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class EuVatIDTest extends TestCase {
+class EuVatIDTest extends EntityTest {
     public function testCreateEuVatID(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
-        $euVatID = new EuVatID("DE123456789", $logger);
+        $euVatID = new EuVatID("DE123456789");
 
         $this->assertInstanceOf(EuVatID::class, $euVatID);
         $this->assertEquals("DE123456789", $euVatID->getValue());

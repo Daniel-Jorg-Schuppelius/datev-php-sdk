@@ -12,20 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Law\SecurityZones\SecurityZone;
 use Datev\Entities\Law\SecurityZones\SecurityZones;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class SecurityZoneTest extends TestCase {
-    private ?LoggerInterface $logger = null;
-
-    public function __construct(string $name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class SecurityZoneTest extends EntityTest {
+    
     public function testCreateSecurityZone(): void {
         $data = [
             "id" => "test-id",
@@ -33,7 +26,7 @@ class SecurityZoneTest extends TestCase {
             "name" => "Sicherheitszone 1"
         ];
 
-        $securityZone = new SecurityZone($data, $this->logger);
+        $securityZone = new SecurityZone($data);
 
         $this->assertInstanceOf(SecurityZone::class, $securityZone);
         $this->assertEquals("SZ1", $securityZone->getShortName());
@@ -56,7 +49,7 @@ class SecurityZoneTest extends TestCase {
             ]
         ];
 
-        $securityZones = new SecurityZones($data, $this->logger);
+        $securityZones = new SecurityZones($data);
 
         $this->assertInstanceOf(SecurityZones::class, $securityZones);
         $this->assertCount(2, $securityZones);

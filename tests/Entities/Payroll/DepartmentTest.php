@@ -12,21 +12,18 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\Departments\Department;
 use Datev\Entities\Payroll\Departments\Departments;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class DepartmentTest extends TestCase {
+class DepartmentTest extends EntityTest {
     public function testCreateDepartment() {
         $data = [
             "id" => 1,
             "name" => "Buchhaltung",
             "contact_person" => "Max Mustermann"
-        ];
-
-        $logger = ConsoleLoggerFactory::getLogger();
-        $department = new Department($data, $logger);
+        ];        $department = new Department($data);
 
         $this->assertInstanceOf(Department::class, $department);
         $this->assertEquals("Buchhaltung", $department->getName());
@@ -45,10 +42,7 @@ class DepartmentTest extends TestCase {
                     "name" => "Personal"
                 ]
             ]
-        ];
-
-        $logger = ConsoleLoggerFactory::getLogger();
-        $departments = new Departments($data, $logger);
+        ];        $departments = new Departments($data);
 
         $this->assertInstanceOf(Departments::class, $departments);
         $this->assertCount(2, $departments->getValues());

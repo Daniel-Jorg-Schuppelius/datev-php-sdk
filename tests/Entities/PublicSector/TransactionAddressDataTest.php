@@ -12,14 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\PublicSector\TransactionAddresses\TransactionAddressData;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class TransactionAddressDataTest extends TestCase {
+class TransactionAddressDataTest extends EntityTest {
     public function testCreateTransactionAddressData(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "addr-123",
             "street" => "Musterstraße",
@@ -27,7 +25,7 @@ class TransactionAddressDataTest extends TestCase {
             "city" => "Berlin"
         ];
 
-        $addressData = new TransactionAddressData($data, $logger);
+        $addressData = new TransactionAddressData($data);
 
         $this->assertInstanceOf(TransactionAddressData::class, $addressData);
     }

@@ -12,15 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Common\FaxNumber;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class FaxNumberTest extends TestCase {
+class FaxNumberTest extends EntityTest {
     public function testCreateFaxNumber(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
-        $faxNumber = new FaxNumber("+49 89 12345678", $logger);
+        $faxNumber = new FaxNumber("+49 89 12345678");
 
         $this->assertInstanceOf(FaxNumber::class, $faxNumber);
         $this->assertEquals("+49 89 12345678", $faxNumber->getValue());

@@ -12,20 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
-use ERRORToolkit\Logger\ConsoleLogger;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\OrderManagement\Suborders\Suborder;
 use Datev\Entities\OrderManagement\Suborders\Suborders;
-use PHPUnit\Framework\TestCase;
 
-class SuborderTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class SuborderTest extends EntityTest {
     public function testCreateSuborder() {
         $data = [
             "suborder_id" => "s1234567-8901-2345-6789-012345678901",
@@ -36,7 +28,7 @@ class SuborderTest extends TestCase {
             "accounting_allowed" => true
         ];
 
-        $suborder = new Suborder($data, $this->logger);
+        $suborder = new Suborder($data);
         $this->assertInstanceOf(Suborder::class, new Suborder());
         $this->assertInstanceOf(Suborder::class, $suborder);
     }
@@ -55,7 +47,7 @@ class SuborderTest extends TestCase {
             ]
         ];
 
-        $suborders = new Suborders($data, $this->logger);
+        $suborders = new Suborders($data);
         $this->assertInstanceOf(Suborders::class, $suborders);
         $this->assertCount(2, $suborders->getValues());
     }

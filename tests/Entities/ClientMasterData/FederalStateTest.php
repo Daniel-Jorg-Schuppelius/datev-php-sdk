@@ -12,11 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\FederalStates\FederalState;
 use Datev\Entities\ClientMasterData\FederalStates\FederalStates;
-use PHPUnit\Framework\TestCase;
 
-class FederalStateTest extends TestCase {
+class FederalStateTest extends EntityTest {
     public function testCreateFederalState() {
         $data = [
             "value" => "BY",

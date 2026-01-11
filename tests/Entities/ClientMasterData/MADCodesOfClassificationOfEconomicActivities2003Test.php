@@ -12,19 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\MADCodesOfClassificationOfEconomicActivities2003\MADCodesOfClassificationOfEconomicActivities2003;
 use Datev\Entities\ClientMasterData\MADCodesOfClassificationOfEconomicActivities2003\MADCodeOfClassificationOfEconomicActivities2003;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class MADCodesOfClassificationOfEconomicActivities2003Test extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class MADCodesOfClassificationOfEconomicActivities2003Test extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -33,7 +26,7 @@ class MADCodesOfClassificationOfEconomicActivities2003Test extends TestCase {
             ]
         ];
 
-        $codes = new MADCodesOfClassificationOfEconomicActivities2003($data, $this->logger);
+        $codes = new MADCodesOfClassificationOfEconomicActivities2003($data);
 
         $this->assertCount(2, $codes->getValues());
         $this->assertInstanceOf(MADCodeOfClassificationOfEconomicActivities2003::class, $codes->getValues()[0]);

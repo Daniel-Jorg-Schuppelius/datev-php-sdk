@@ -12,19 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Accounting\Sequences\Sequences;
 use Datev\Entities\Accounting\Sequences\Sequence;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class SequencesTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class SequencesTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -41,7 +34,7 @@ class SequencesTest extends TestCase {
             ]
         ];
 
-        $sequences = new Sequences($data, $this->logger);
+        $sequences = new Sequences($data);
 
         $this->assertCount(2, $sequences->getValues());
         $this->assertInstanceOf(Sequence::class, $sequences->getValues()[0]);

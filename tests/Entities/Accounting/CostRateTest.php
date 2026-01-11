@@ -12,20 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Accounting\CostRates\CostRate;
 use Datev\Entities\Accounting\CostRates\CostRates;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class CostRateTest extends TestCase {
-    private ?LoggerInterface $logger = null;
-
-    public function __construct(string $name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class CostRateTest extends EntityTest {
+    
     public function testCreateCostRate(): void {
         $data = [
             "valid_from" => 202401,
@@ -33,7 +26,7 @@ class CostRateTest extends TestCase {
             "rate" => 125.50
         ];
 
-        $costRate = new CostRate($data, $this->logger);
+        $costRate = new CostRate($data);
 
         $this->assertInstanceOf(CostRate::class, $costRate);
     }
@@ -52,7 +45,7 @@ class CostRateTest extends TestCase {
             ]
         ];
 
-        $costRates = new CostRates($data, $this->logger);
+        $costRates = new CostRates($data);
 
         $this->assertInstanceOf(CostRates::class, $costRates);
         $this->assertCount(2, $costRates);

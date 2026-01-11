@@ -12,19 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\TaxAuthorities\TaxAuthorities;
 use Datev\Entities\ClientMasterData\TaxAuthorities\TaxAuthority;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class TaxAuthoritiesTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class TaxAuthoritiesTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -41,7 +34,7 @@ class TaxAuthoritiesTest extends TestCase {
             ]
         ];
 
-        $taxAuthorities = new TaxAuthorities($data, $this->logger);
+        $taxAuthorities = new TaxAuthorities($data);
 
         $this->assertCount(2, $taxAuthorities->getValues());
         $this->assertInstanceOf(TaxAuthority::class, $taxAuthorities->getValues()[0]);

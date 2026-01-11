@@ -12,19 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Law\Parties\Parties;
 use Datev\Entities\Law\Parties\Party;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class PartiesTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class PartiesTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -41,7 +34,7 @@ class PartiesTest extends TestCase {
             ]
         ];
 
-        $parties = new Parties($data, $this->logger);
+        $parties = new Parties($data);
 
         $this->assertCount(2, $parties->getValues());
         $this->assertInstanceOf(Party::class, $parties->getValues()[0]);

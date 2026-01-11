@@ -12,11 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\IdentityAndAccessManagement;
 
-use Datev\Entities\IdentityAndAccessManagement\ServiceProvider\ServiceProviderConfig;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
+use Tests\Contracts\EntityTest;
 
-class ServiceProviderConfigTest extends TestCase {
+use Datev\Entities\IdentityAndAccessManagement\ServiceProvider\ServiceProviderConfig;
+
+class ServiceProviderConfigTest extends EntityTest {
     public function testCreateServiceProviderConfig() {
         $data = [
             "schemas" => ["urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig"],
@@ -42,10 +42,7 @@ class ServiceProviderConfigTest extends TestCase {
             "etag" => [
                 "supported" => false
             ]
-        ];
-
-        $logger = ConsoleLoggerFactory::getLogger();
-        $config = new ServiceProviderConfig($data, $logger);
+        ];        $config = new ServiceProviderConfig($data);
 
         $this->assertInstanceOf(ServiceProviderConfig::class, $config);
         $this->assertIsArray($config->getSchemas());

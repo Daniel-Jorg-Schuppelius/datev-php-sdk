@@ -12,14 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\PublicSector\Meters\MeterLocalization;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class MeterLocalizationTest extends TestCase {
+class MeterLocalizationTest extends EntityTest {
     public function testCreateMeterLocalization(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "is_located" => "yes",
             "location_description" => "Keller, linke Seite",
@@ -31,7 +29,7 @@ class MeterLocalizationTest extends TestCase {
             "reading_district" => "Bezirk Nord"
         ];
 
-        $localization = new MeterLocalization($data, $logger);
+        $localization = new MeterLocalization($data);
 
         $this->assertInstanceOf(MeterLocalization::class, $localization);
         $this->assertEquals("yes", $localization->getIsLocated());

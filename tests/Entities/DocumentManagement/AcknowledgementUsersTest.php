@@ -4,19 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\DocumentManagement\AcknowledgementUsers\AcknowledgementUsers;
 use Datev\Entities\DocumentManagement\AcknowledgementUsers\AcknowledgementUser;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class AcknowledgementUsersTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class AcknowledgementUsersTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -24,7 +17,7 @@ class AcknowledgementUsersTest extends TestCase {
                 ["id" => "au-2", "name" => "Anna Schmidt", "is_deleted" => false]
             ]
         ];
-        $collection = new AcknowledgementUsers($data, $this->logger);
+        $collection = new AcknowledgementUsers($data);
         $this->assertCount(2, $collection->getValues());
         $this->assertInstanceOf(AcknowledgementUser::class, $collection->getValues()[0]);
     }

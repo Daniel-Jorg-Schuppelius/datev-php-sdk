@@ -12,11 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\LocationsOfHeadOffice\LocationOfHeadOffice;
 use Datev\Entities\ClientMasterData\LocationsOfHeadOffice\LocationsOfHeadOffice;
-use PHPUnit\Framework\TestCase;
 
-class LocationOfHeadOfficeTest extends TestCase {
+class LocationOfHeadOfficeTest extends EntityTest {
     public function testCreateLocationOfHeadOffice() {
         $data = [
             "value" => "München",

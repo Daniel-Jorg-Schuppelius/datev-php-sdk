@@ -12,19 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\ReasonsForAbsence\ReasonsForAbsence;
 use Datev\Entities\Payroll\ReasonsForAbsence\ReasonForAbsence;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class ReasonsForAbsenceTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class ReasonsForAbsenceTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -33,7 +26,7 @@ class ReasonsForAbsenceTest extends TestCase {
             ]
         ];
 
-        $reasons = new ReasonsForAbsence($data, $this->logger);
+        $reasons = new ReasonsForAbsence($data);
 
         $this->assertCount(2, $reasons->getValues());
         $this->assertInstanceOf(ReasonForAbsence::class, $reasons->getValues()[0]);

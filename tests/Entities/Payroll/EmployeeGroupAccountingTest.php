@@ -12,29 +12,25 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\Employees\Groups\Accountings\EmployeeGroupAccounting;
 use Datev\Entities\Payroll\Employees\Groups\Accountings\EmployeeGroupAccountings;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class EmployeeGroupAccountingTest extends TestCase {
+class EmployeeGroupAccountingTest extends EntityTest {
     public function testCreateEmployeeGroupAccounting(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "number" => "001",
             "name" => "Buchhaltung Team A",
             "contact_person" => "Max Mustermann"
         ];
 
-        $employeeGroupAccounting = new EmployeeGroupAccounting($data, $logger);
+        $employeeGroupAccounting = new EmployeeGroupAccounting($data);
 
         $this->assertInstanceOf(EmployeeGroupAccounting::class, $employeeGroupAccounting);
     }
 
     public function testCreateEmployeeGroupsAccounting(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -48,7 +44,7 @@ class EmployeeGroupAccountingTest extends TestCase {
             ]
         ];
 
-        $employeeGroupsAccounting = new EmployeeGroupAccountings($data, $logger);
+        $employeeGroupsAccounting = new EmployeeGroupAccountings($data);
 
         $this->assertInstanceOf(EmployeeGroupAccountings::class, $employeeGroupsAccounting);
         $this->assertCount(2, $employeeGroupsAccounting);

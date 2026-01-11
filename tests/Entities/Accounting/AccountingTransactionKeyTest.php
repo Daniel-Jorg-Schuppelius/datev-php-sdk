@@ -12,20 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
-use ERRORToolkit\Logger\ConsoleLogger;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Accounting\AccountingTransactionKeys\AccountingTransactionKey;
 use Datev\Entities\Accounting\AccountingTransactionKeys\AccountingTransactionKeys;
-use PHPUnit\Framework\TestCase;
 
-class AccountingTransactionKeyTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class AccountingTransactionKeyTest extends EntityTest {
     public function testCreateAccountingTransactionKey() {
         $data = [
             "id" => "BU-1",
@@ -39,7 +31,7 @@ class AccountingTransactionKeyTest extends TestCase {
             "group" => "Standard"
         ];
 
-        $transactionKey = new AccountingTransactionKey($data, $this->logger);
+        $transactionKey = new AccountingTransactionKey($data);
         $this->assertInstanceOf(AccountingTransactionKey::class, new AccountingTransactionKey());
         $this->assertInstanceOf(AccountingTransactionKey::class, $transactionKey);
         $this->assertNotNull($transactionKey->getID());
@@ -65,7 +57,7 @@ class AccountingTransactionKeyTest extends TestCase {
             ]
         ];
 
-        $transactionKeys = new AccountingTransactionKeys($data, $this->logger);
+        $transactionKeys = new AccountingTransactionKeys($data);
         $this->assertInstanceOf(AccountingTransactionKeys::class, $transactionKeys);
         $this->assertCount(2, $transactionKeys->getValues());
     }

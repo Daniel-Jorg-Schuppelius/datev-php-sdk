@@ -12,20 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\OrderManagement\EmployeeCapacities\EmployeeCapacity;
 use Datev\Entities\OrderManagement\EmployeeCapacities\EmployeeCapacities;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class EmployeeCapacityTest extends TestCase {
-    private ?LoggerInterface $logger = null;
-
-    public function __construct(string $name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class EmployeeCapacityTest extends EntityTest {
+    
     public function testCreateEmployeeCapacity(): void {
         $data = [
             "id" => "test-id",
@@ -37,7 +30,7 @@ class EmployeeCapacityTest extends TestCase {
             "spare_hours_time_units" => 4.0
         ];
 
-        $employeeCapacity = new EmployeeCapacity($data, $this->logger);
+        $employeeCapacity = new EmployeeCapacity($data);
 
         $this->assertInstanceOf(EmployeeCapacity::class, $employeeCapacity);
         $this->assertEquals(40.0, $employeeCapacity->getTotalHoursTimeUnits());
@@ -57,7 +50,7 @@ class EmployeeCapacityTest extends TestCase {
             ]
         ];
 
-        $employeeCapacities = new EmployeeCapacities($data, $this->logger);
+        $employeeCapacities = new EmployeeCapacities($data);
 
         $this->assertInstanceOf(EmployeeCapacities::class, $employeeCapacities);
         $this->assertCount(2, $employeeCapacities);

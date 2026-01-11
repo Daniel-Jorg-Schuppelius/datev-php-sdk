@@ -12,15 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Common\VariousAddressID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class VariousAddressIDTest extends TestCase {
+class VariousAddressIDTest extends EntityTest {
     public function testCreateVariousAddressID(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
-        $variousAddressID = new VariousAddressID("addr-12345", $logger);
+        $variousAddressID = new VariousAddressID("addr-12345");
 
         $this->assertInstanceOf(VariousAddressID::class, $variousAddressID);
         $this->assertEquals("addr-12345", $variousAddressID->getValue());

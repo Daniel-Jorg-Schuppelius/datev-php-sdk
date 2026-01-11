@@ -12,20 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Accounting\AdvancePayments\AdvancePayment;
 use Datev\Entities\Accounting\AdvancePayments\AdvancePayments;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class AdvancePaymentTest extends TestCase {
-    private ?LoggerInterface $logger = null;
-
-    public function __construct(string $name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class AdvancePaymentTest extends EntityTest {
+    
     public function testCreateAdvancePayment(): void {
         $data = [
             "eu_member_state" => "DE",
@@ -35,7 +28,7 @@ class AdvancePaymentTest extends TestCase {
             "tax_key" => 3
         ];
 
-        $advancePayment = new AdvancePayment($data, $this->logger);
+        $advancePayment = new AdvancePayment($data);
 
         $this->assertInstanceOf(AdvancePayment::class, $advancePayment);
     }
@@ -54,7 +47,7 @@ class AdvancePaymentTest extends TestCase {
             ]
         ];
 
-        $advancePayments = new AdvancePayments($data, $this->logger);
+        $advancePayments = new AdvancePayments($data);
 
         $this->assertInstanceOf(AdvancePayments::class, $advancePayments);
         $this->assertCount(2, $advancePayments);

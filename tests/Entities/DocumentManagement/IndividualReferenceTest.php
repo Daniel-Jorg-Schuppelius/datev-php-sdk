@@ -12,22 +12,20 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\DocumentManagement\IndividualReferences\IndividualReference;
 use Datev\Entities\DocumentManagement\IndividualReferences\IndividualReferences;
 use Datev\Entities\DocumentManagement\IndividualReferences\IndividualReferenceID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class IndividualReferenceTest extends TestCase {
+class IndividualReferenceTest extends EntityTest {
     public function testCreateIndividualReference(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "ref-001",
             "name" => "Projekt Alpha"
         ];
 
-        $individualReference = new IndividualReference($data, $logger);
+        $individualReference = new IndividualReference($data);
 
         $this->assertInstanceOf(IndividualReference::class, $individualReference);
         $this->assertInstanceOf(IndividualReferenceID::class, $individualReference->getID());
@@ -36,8 +34,6 @@ class IndividualReferenceTest extends TestCase {
     }
 
     public function testCreateIndividualReferences(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -51,7 +47,7 @@ class IndividualReferenceTest extends TestCase {
             ]
         ];
 
-        $individualReferences = new IndividualReferences($data, $logger);
+        $individualReferences = new IndividualReferences($data);
 
         $this->assertInstanceOf(IndividualReferences::class, $individualReferences);
         $this->assertCount(2, $individualReferences);

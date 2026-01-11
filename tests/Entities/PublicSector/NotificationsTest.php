@@ -4,19 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\PublicSector\Notifications\Notifications;
 use Datev\Entities\PublicSector\Notifications\Notification;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class NotificationsTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class NotificationsTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -24,7 +17,7 @@ class NotificationsTest extends TestCase {
                 ["id" => "not-2", "number" => "2024-002", "state" => "pending", "type" => "reminder"]
             ]
         ];
-        $collection = new Notifications($data, $this->logger);
+        $collection = new Notifications($data);
         $this->assertCount(2, $collection->getValues());
         $this->assertInstanceOf(Notification::class, $collection->getValues()[0]);
     }

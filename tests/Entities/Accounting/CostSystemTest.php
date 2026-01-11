@@ -12,20 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
-use ERRORToolkit\Logger\ConsoleLogger;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Accounting\CostSystems\CostSystem;
 use Datev\Entities\Accounting\CostSystems\CostSystems;
-use PHPUnit\Framework\TestCase;
 
-class CostSystemTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class CostSystemTest extends EntityTest {
     public function testCreateCostSystem() {
         $data = [
             "id" => 1,
@@ -35,7 +27,7 @@ class CostSystemTest extends TestCase {
             "is_active" => true
         ];
 
-        $costSystem = new CostSystem($data, $this->logger);
+        $costSystem = new CostSystem($data);
         $this->assertInstanceOf(CostSystem::class, new CostSystem());
         $this->assertInstanceOf(CostSystem::class, $costSystem);
         $this->assertEquals("Standard-Kostenrechnung", $costSystem->getCaption());
@@ -60,7 +52,7 @@ class CostSystemTest extends TestCase {
             ]
         ];
 
-        $costSystems = new CostSystems($data, $this->logger);
+        $costSystems = new CostSystems($data);
         $this->assertInstanceOf(CostSystems::class, $costSystems);
         $this->assertCount(2, $costSystems->getValues());
     }

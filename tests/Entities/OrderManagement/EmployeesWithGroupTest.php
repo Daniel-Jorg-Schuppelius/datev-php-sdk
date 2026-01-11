@@ -12,19 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\OrderManagement\EmployeesWithGroup\EmployeesWithGroup;
 use Datev\Entities\OrderManagement\EmployeesWithGroup\EmployeeWithGroup;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class EmployeesWithGroupTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class EmployeesWithGroupTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -43,7 +36,7 @@ class EmployeesWithGroupTest extends TestCase {
             ]
         ];
 
-        $employees = new EmployeesWithGroup($data, $this->logger);
+        $employees = new EmployeesWithGroup($data);
 
         $this->assertCount(2, $employees->getValues());
         $this->assertInstanceOf(EmployeeWithGroup::class, $employees->getValues()[0]);

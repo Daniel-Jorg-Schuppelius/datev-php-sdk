@@ -4,19 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\JobTitles\JobTitles;
 use Datev\Entities\ClientMasterData\JobTitles\JobTitle;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class JobTitlesTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class JobTitlesTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -24,7 +17,7 @@ class JobTitlesTest extends TestCase {
                 ["id" => "jt-2", "title" => "Director"]
             ]
         ];
-        $collection = new JobTitles($data, $this->logger);
+        $collection = new JobTitles($data);
         $this->assertCount(2, $collection->getValues());
         $this->assertInstanceOf(JobTitle::class, $collection->getValues()[0]);
     }

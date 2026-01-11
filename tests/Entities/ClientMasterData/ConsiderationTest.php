@@ -12,11 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\Considerations\Consideration;
 use Datev\Entities\ClientMasterData\Considerations\Considerations;
-use PHPUnit\Framework\TestCase;
 
-class ConsiderationTest extends TestCase {
+class ConsiderationTest extends EntityTest {
     public function testCreateConsideration() {
         $data = [
             "value" => "2024-01-15",

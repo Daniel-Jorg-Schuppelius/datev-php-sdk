@@ -12,19 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
-use ERRORToolkit\Logger\ConsoleLogger;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Law\Budgets\Budget;
-use PHPUnit\Framework\TestCase;
 
-class BudgetTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class BudgetTest extends EntityTest {
     public function testCreateBudget() {
         $data = [
             "id" => 1,
@@ -35,7 +27,7 @@ class BudgetTest extends TestCase {
             "currency_unit" => "EUR"
         ];
 
-        $budget = new Budget($data, $this->logger);
+        $budget = new Budget($data);
         $this->assertInstanceOf(Budget::class, new Budget());
         $this->assertInstanceOf(Budget::class, $budget);
         $this->assertEquals(1, $budget->getID());
@@ -47,7 +39,7 @@ class BudgetTest extends TestCase {
     }
 
     public function testCreateEmptyBudget() {
-        $budget = new Budget(null, $this->logger);
+        $budget = new Budget(null);
         $this->assertInstanceOf(Budget::class, $budget);
         $this->assertNull($budget->getID());
         $this->assertNull($budget->getBudget());

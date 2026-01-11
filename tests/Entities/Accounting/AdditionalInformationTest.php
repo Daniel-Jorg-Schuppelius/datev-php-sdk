@@ -12,19 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Accounting\AdditionalInformations\AdditionalInformation;
 use Datev\Entities\Accounting\AdditionalInformations\AdditionalInformations;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class AdditionalInformationTest extends TestCase {
-    private ?LoggerInterface $logger = null;
-
-    public function __construct(string $name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
+class AdditionalInformationTest extends EntityTest {
 
     public function testCreateAdditionalInformation(): void {
         $data = [
@@ -32,7 +25,7 @@ class AdditionalInformationTest extends TestCase {
             "additional_information_content" => "Testkommentar zur Buchung"
         ];
 
-        $additionalInformation = new AdditionalInformation($data, $this->logger);
+        $additionalInformation = new AdditionalInformation($data);
 
         $this->assertInstanceOf(AdditionalInformation::class, $additionalInformation);
     }
@@ -51,7 +44,7 @@ class AdditionalInformationTest extends TestCase {
             ]
         ];
 
-        $additionalInformations = new AdditionalInformations($data, $this->logger);
+        $additionalInformations = new AdditionalInformations($data);
 
         $this->assertInstanceOf(AdditionalInformations::class, $additionalInformations);
         $this->assertCount(2, $additionalInformations);

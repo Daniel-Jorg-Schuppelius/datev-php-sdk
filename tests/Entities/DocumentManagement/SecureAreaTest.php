@@ -12,22 +12,20 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\DocumentManagement\SecureAreas\SecureArea;
 use Datev\Entities\DocumentManagement\SecureAreas\SecureAreas;
 use Datev\Entities\DocumentManagement\SecureAreas\SecureAreaID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class SecureAreaTest extends TestCase {
+class SecureAreaTest extends EntityTest {
     public function testCreateSecureArea(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "secure-001",
             "name" => "Vertrauliche Dokumente"
         ];
 
-        $secureArea = new SecureArea($data, $logger);
+        $secureArea = new SecureArea($data);
 
         $this->assertInstanceOf(SecureArea::class, $secureArea);
         $this->assertInstanceOf(SecureAreaID::class, $secureArea->getID());
@@ -36,8 +34,6 @@ class SecureAreaTest extends TestCase {
     }
 
     public function testCreateSecureAreas(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -51,7 +47,7 @@ class SecureAreaTest extends TestCase {
             ]
         ];
 
-        $secureAreas = new SecureAreas($data, $logger);
+        $secureAreas = new SecureAreas($data);
 
         $this->assertInstanceOf(SecureAreas::class, $secureAreas);
         $this->assertCount(2, $secureAreas);

@@ -12,20 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
-use ERRORToolkit\Logger\ConsoleLogger;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Law\Expenses\Expense;
 use Datev\Entities\Law\Expenses\Expenses;
-use PHPUnit\Framework\TestCase;
 
-class ExpenseTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class ExpenseTest extends EntityTest {
     public function testCreateExpense() {
         $data = [
             "id" => "exp-12345",
@@ -37,7 +29,7 @@ class ExpenseTest extends TestCase {
             "note" => "Fahrtkosten Gerichtstermin"
         ];
 
-        $expense = new Expense($data, $this->logger);
+        $expense = new Expense($data);
         $this->assertInstanceOf(Expense::class, new Expense());
         $this->assertInstanceOf(Expense::class, $expense);
         $this->assertNotNull($expense->getID());
@@ -57,7 +49,7 @@ class ExpenseTest extends TestCase {
             ]
         ];
 
-        $expenses = new Expenses($data, $this->logger);
+        $expenses = new Expenses($data);
         $this->assertInstanceOf(Expenses::class, $expenses);
         $this->assertCount(2, $expenses->getValues());
     }

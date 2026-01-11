@@ -12,16 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Common\BankAccounts\BankAccount;
 use Datev\Entities\Common\BankAccounts\BankAccounts;
 use Datev\Entities\Common\BankAccounts\BankAccountID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class BankAccountTest extends TestCase {
+class BankAccountTest extends EntityTest {
     public function testCreateBankAccount(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "bank-001",
             "bank_account_number" => "1234567890",
@@ -31,7 +29,7 @@ class BankAccountTest extends TestCase {
             "bic" => "DEUTDEDB"
         ];
 
-        $bankAccount = new BankAccount($data, $logger);
+        $bankAccount = new BankAccount($data);
 
         $this->assertInstanceOf(BankAccount::class, $bankAccount);
         $this->assertInstanceOf(BankAccountID::class, $bankAccount->getID());
@@ -42,8 +40,6 @@ class BankAccountTest extends TestCase {
     }
 
     public function testCreateBankAccounts(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -59,7 +55,7 @@ class BankAccountTest extends TestCase {
             ]
         ];
 
-        $bankAccounts = new BankAccounts($data, $logger);
+        $bankAccounts = new BankAccounts($data);
 
         $this->assertInstanceOf(BankAccounts::class, $bankAccounts);
         $this->assertCount(2, $bankAccounts);

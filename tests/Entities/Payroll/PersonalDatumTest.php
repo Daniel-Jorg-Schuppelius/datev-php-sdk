@@ -12,14 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\Data\Personal\PersonalDatum;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class PersonalDatumTest extends TestCase {
+class PersonalDatumTest extends EntityTest {
     public function testCreatePersonalDatum(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "pd-001",
             "first_name" => "Max",
@@ -34,7 +32,7 @@ class PersonalDatumTest extends TestCase {
             "social_security_number" => "12345678901"
         ];
 
-        $personalDatum = new PersonalDatum($data, $logger);
+        $personalDatum = new PersonalDatum($data);
 
         $this->assertInstanceOf(PersonalDatum::class, $personalDatum);
         $this->assertEquals("Max", $personalDatum->getFirstName());

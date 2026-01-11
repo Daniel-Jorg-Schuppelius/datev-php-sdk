@@ -12,19 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\Data\Individual\IndividualData;
 use Datev\Entities\Payroll\Data\Individual\IndividualDatum;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class IndividualDataTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class IndividualDataTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -45,7 +38,7 @@ class IndividualDataTest extends TestCase {
             ]
         ];
 
-        $individualData = new IndividualData($data, $this->logger);
+        $individualData = new IndividualData($data);
 
         $this->assertCount(2, $individualData->getValues());
         $this->assertInstanceOf(IndividualDatum::class, $individualData->getValues()[0]);

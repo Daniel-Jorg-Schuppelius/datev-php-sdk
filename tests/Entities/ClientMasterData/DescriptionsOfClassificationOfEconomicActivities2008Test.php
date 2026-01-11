@@ -12,19 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\DescriptionsOfClassificationOfEconomicActivities2008\DescriptionsOfClassificationOfEconomicActivities2008;
 use Datev\Entities\ClientMasterData\DescriptionsOfClassificationOfEconomicActivities2008\DescriptionOfClassificationOfEconomicActivities2008;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class DescriptionsOfClassificationOfEconomicActivities2008Test extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class DescriptionsOfClassificationOfEconomicActivities2008Test extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -33,7 +26,7 @@ class DescriptionsOfClassificationOfEconomicActivities2008Test extends TestCase 
             ]
         ];
 
-        $descriptions = new DescriptionsOfClassificationOfEconomicActivities2008($data, $this->logger);
+        $descriptions = new DescriptionsOfClassificationOfEconomicActivities2008($data);
 
         $this->assertCount(2, $descriptions->getValues());
         $this->assertInstanceOf(DescriptionOfClassificationOfEconomicActivities2008::class, $descriptions->getValues()[0]);

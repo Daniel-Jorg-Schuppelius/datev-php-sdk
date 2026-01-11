@@ -12,19 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Common\Errors\Errors;
 use Datev\Entities\Common\Errors\Error;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class ErrorsTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class ErrorsTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -39,7 +32,7 @@ class ErrorsTest extends TestCase {
             ]
         ];
 
-        $errors = new Errors($data, $this->logger);
+        $errors = new Errors($data);
 
         $this->assertCount(2, $errors->getValues());
         $this->assertInstanceOf(Error::class, $errors->getValues()[0]);

@@ -12,23 +12,21 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll\Insurances;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\Insurances\Voluntary\VoluntaryInsurance;
 use Datev\Entities\Payroll\Insurances\Voluntary\VoluntaryInsurances;
 use Datev\Entities\Payroll\Insurances\Voluntary\VoluntaryInsuranceID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class VoluntaryInsuranceTest extends TestCase {
+class VoluntaryInsuranceTest extends EntityTest {
     public function testCreateVoluntaryInsurance(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "vi-001",
             "maximal_premium_for_voluntary_health_insurance" => "1000.00",
             "maximal_premium_for_voluntary_nursing_insurance" => "200.00"
         ];
 
-        $voluntaryInsurance = new VoluntaryInsurance($data, $logger);
+        $voluntaryInsurance = new VoluntaryInsurance($data);
 
         $this->assertInstanceOf(VoluntaryInsurance::class, $voluntaryInsurance);
         $this->assertInstanceOf(VoluntaryInsuranceID::class, $voluntaryInsurance->getID());
@@ -38,8 +36,6 @@ class VoluntaryInsuranceTest extends TestCase {
     }
 
     public function testCreateVoluntaryInsurances(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -53,7 +49,7 @@ class VoluntaryInsuranceTest extends TestCase {
             ]
         ];
 
-        $voluntaryInsurances = new VoluntaryInsurances($data, $logger);
+        $voluntaryInsurances = new VoluntaryInsurances($data);
 
         $this->assertInstanceOf(VoluntaryInsurances::class, $voluntaryInsurances);
         $this->assertCount(2, $voluntaryInsurances);

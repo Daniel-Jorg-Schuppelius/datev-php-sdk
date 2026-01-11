@@ -12,15 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\Employees\Accountable\AccountableEmployee;
 use Datev\Entities\Payroll\Employees\Accountable\AccountableEmployees;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class AccountableEmployeeTest extends TestCase {
+class AccountableEmployeeTest extends EntityTest {
     public function testCreateAccountableEmployee(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "ae-001",
             "surname" => "Mustermann",
@@ -30,15 +28,13 @@ class AccountableEmployeeTest extends TestCase {
             "date_of_termination_of_employment" => "2024-12-31T00:00:00.000+00:00"
         ];
 
-        $employee = new AccountableEmployee($data, $logger);
+        $employee = new AccountableEmployee($data);
 
         $this->assertInstanceOf(AccountableEmployee::class, $employee);
         $this->assertNotNull($employee->getDateOfTerminationOfEmployment());
     }
 
     public function testCreateAccountableEmployees(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -54,7 +50,7 @@ class AccountableEmployeeTest extends TestCase {
             ]
         ];
 
-        $employees = new AccountableEmployees($data, $logger);
+        $employees = new AccountableEmployees($data);
 
         $this->assertInstanceOf(AccountableEmployees::class, $employees);
         $this->assertCount(2, $employees);

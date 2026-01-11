@@ -12,23 +12,21 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\DocumentManagement\AcknowledgementUsers\AcknowledgementUser;
 use Datev\Entities\DocumentManagement\AcknowledgementUsers\AcknowledgementUsers;
 use Datev\Entities\DocumentManagement\AcknowledgementUsers\AcknowledgementUserID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class AcknowledgementUserTest extends TestCase {
+class AcknowledgementUserTest extends EntityTest {
     public function testCreateAcknowledgementUser(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "550e8400-e29b-41d4-a716-446655440000",
             "name" => "Max Mustermann",
             "is_deleted" => false
         ];
 
-        $acknowledgementUser = new AcknowledgementUser($data, $logger);
+        $acknowledgementUser = new AcknowledgementUser($data);
 
         $this->assertInstanceOf(AcknowledgementUser::class, $acknowledgementUser);
         $this->assertInstanceOf(AcknowledgementUserID::class, $acknowledgementUser->getID());
@@ -38,8 +36,6 @@ class AcknowledgementUserTest extends TestCase {
     }
 
     public function testCreateAcknowledgementUsers(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -55,7 +51,7 @@ class AcknowledgementUserTest extends TestCase {
             ]
         ];
 
-        $acknowledgementUsers = new AcknowledgementUsers($data, $logger);
+        $acknowledgementUsers = new AcknowledgementUsers($data);
 
         $this->assertInstanceOf(AcknowledgementUsers::class, $acknowledgementUsers);
         $this->assertCount(2, $acknowledgementUsers);

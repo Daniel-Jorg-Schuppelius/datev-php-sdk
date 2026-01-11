@@ -12,20 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
-use ERRORToolkit\Logger\ConsoleLogger;;
+use Tests\Contracts\EntityTest;
 
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
 use Datev\Entities\ClientMasterData\Clients\Client;
-use PHPUnit\Framework\TestCase;
 
-class ClientTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class ClientTest extends EntityTest {
     public function testCreateAddress() {
         $data = [
             "id" => "d13f9c3c-380c-494e-97c8-d12fff738189",
@@ -52,9 +43,9 @@ class ClientTest extends TestCase {
             "functional_area_short_name" => "999"
         ];
 
-        $client = new Client($data, $this->logger);
+        $client = new Client($data);
         $this->assertFalse($client->isValid());
-        $client = new Client($data, $this->logger);
+        $client = new Client($data);
         $this->assertInstanceOf(Client::class, new Client());
         $this->assertInstanceOf(Client::class, $client);
         $this->assertEquals($data, $client->toArray());

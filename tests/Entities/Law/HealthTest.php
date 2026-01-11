@@ -12,26 +12,19 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Law\Health\Health;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class HealthTest extends TestCase {
-    private ?LoggerInterface $logger = null;
-
-    public function __construct(string $name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class HealthTest extends EntityTest {
+    
     public function testCreateHealth(): void {
         $data = [
             "status" => "ok",
             "version" => "1.0.0"
         ];
 
-        $health = new Health($data, $this->logger);
+        $health = new Health($data);
 
         $this->assertInstanceOf(Health::class, $health);
         $this->assertEquals("ok", $health->getStatus());
@@ -45,7 +38,7 @@ class HealthTest extends TestCase {
             "version" => "1.0.0"
         ];
 
-        $health = new Health($data, $this->logger);
+        $health = new Health($data);
 
         $this->assertInstanceOf(Health::class, $health);
         $this->assertFalse($health->isHealthy());

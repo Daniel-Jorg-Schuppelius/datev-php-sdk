@@ -12,20 +12,18 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\DocumentManagement\Documents\States\DocumentState;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class DocumentStateTest extends TestCase {
+class DocumentStateTest extends EntityTest {
     public function testCreateDocumentState(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "550e8400-e29b-41d4-a716-446655440000",
             "name" => "Gebucht"
         ];
 
-        $state = new DocumentState($data, $logger);
+        $state = new DocumentState($data);
 
         $this->assertInstanceOf(DocumentState::class, $state);
         $this->assertEquals("Gebucht", $state->getName());

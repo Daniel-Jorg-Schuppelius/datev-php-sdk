@@ -12,21 +12,19 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\DocumentManagement\Notes\Note;
 use Datev\Entities\DocumentManagement\Notes\Notes;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class NoteTest extends TestCase {
+class NoteTest extends EntityTest {
     public function testCreateNote(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "text" => "Bitte überprüfen Sie die Belege",
             "popup" => true
         ];
 
-        $note = new Note($data, $logger);
+        $note = new Note($data);
 
         $this->assertInstanceOf(Note::class, $note);
         $this->assertEquals("Bitte überprüfen Sie die Belege", $note->getText());
@@ -34,8 +32,6 @@ class NoteTest extends TestCase {
     }
 
     public function testCreateNotes(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -49,7 +45,7 @@ class NoteTest extends TestCase {
             ]
         ];
 
-        $notes = new Notes($data, $logger);
+        $notes = new Notes($data);
 
         $this->assertInstanceOf(Notes::class, $notes);
         $this->assertCount(2, $notes);

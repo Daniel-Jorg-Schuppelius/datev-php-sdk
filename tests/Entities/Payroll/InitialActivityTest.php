@@ -12,16 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\InitialActivities\InitialActivity;
 use Datev\Entities\Payroll\InitialActivities\InitialActivities;
 use Datev\Entities\Payroll\InitialActivities\InitialActivityID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class InitialActivityTest extends TestCase {
+class InitialActivityTest extends EntityTest {
     public function testCreateInitialActivity(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "ia-001",
             "activity_type" => "full_time",
@@ -34,7 +32,7 @@ class InitialActivityTest extends TestCase {
             "allocation_of_working_hours_friday" => 8.0
         ];
 
-        $initialActivity = new InitialActivity($data, $logger);
+        $initialActivity = new InitialActivity($data);
 
         $this->assertInstanceOf(InitialActivity::class, $initialActivity);
         $this->assertInstanceOf(InitialActivityID::class, $initialActivity->getID());
@@ -44,8 +42,6 @@ class InitialActivityTest extends TestCase {
     }
 
     public function testCreateInitialActivities(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -59,7 +55,7 @@ class InitialActivityTest extends TestCase {
             ]
         ];
 
-        $initialActivities = new InitialActivities($data, $logger);
+        $initialActivities = new InitialActivities($data);
 
         $this->assertInstanceOf(InitialActivities::class, $initialActivities);
         $this->assertCount(2, $initialActivities);

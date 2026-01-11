@@ -12,21 +12,18 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Accounting\Clients\Client;
 use Datev\Entities\Accounting\Clients\Clients;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class ClientTest extends TestCase {
+class ClientTest extends EntityTest {
     public function testCreateClient() {
         $data = [
             "id" => "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
             "name" => "Test Client",
             "number" => 12345
-        ];
-
-        $logger = ConsoleLoggerFactory::getLogger();
-        $client = new Client($data, $logger);
+        ];        $client = new Client($data);
 
         $this->assertInstanceOf(Client::class, $client);
         $this->assertEquals("Test Client", $client->getName());
@@ -48,10 +45,7 @@ class ClientTest extends TestCase {
                     "number" => 10002
                 ]
             ]
-        ];
-
-        $logger = ConsoleLoggerFactory::getLogger();
-        $clients = new Clients($data, $logger);
+        ];        $clients = new Clients($data);
 
         $this->assertInstanceOf(Clients::class, $clients);
         $this->assertCount(2, $clients->getValues());

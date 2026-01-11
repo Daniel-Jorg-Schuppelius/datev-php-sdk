@@ -12,11 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\NextFreeNumbers\NextFreeNumber;
 use Datev\Entities\ClientMasterData\NextFreeNumbers\NextFreeNumbers;
-use PHPUnit\Framework\TestCase;
 
-class NextFreeNumberTest extends TestCase {
+class NextFreeNumberTest extends EntityTest {
     public function testCreateNextFreeNumber() {
         $data = [
             "value" => 1001

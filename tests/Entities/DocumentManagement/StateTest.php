@@ -12,22 +12,20 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\DocumentManagement\States\State;
 use Datev\Entities\DocumentManagement\States\States;
 use Datev\Entities\DocumentManagement\States\StateID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class StateTest extends TestCase {
+class StateTest extends EntityTest {
     public function testCreateState(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "state-001",
             "name" => "In Bearbeitung"
         ];
 
-        $state = new State($data, $logger);
+        $state = new State($data);
 
         $this->assertInstanceOf(State::class, $state);
         $this->assertInstanceOf(StateID::class, $state->getID());
@@ -36,8 +34,6 @@ class StateTest extends TestCase {
     }
 
     public function testCreateStates(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -51,7 +47,7 @@ class StateTest extends TestCase {
             ]
         ];
 
-        $states = new States($data, $logger);
+        $states = new States($data);
 
         $this->assertInstanceOf(States::class, $states);
         $this->assertCount(2, $states);

@@ -12,19 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\DistributionsOfProfit\DistributionsOfProfit;
 use Datev\Entities\ClientMasterData\DistributionsOfProfit\DistributionOfProfit;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class DistributionsOfProfitTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class DistributionsOfProfitTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -33,7 +26,7 @@ class DistributionsOfProfitTest extends TestCase {
             ]
         ];
 
-        $distributions = new DistributionsOfProfit($data, $this->logger);
+        $distributions = new DistributionsOfProfit($data);
 
         $this->assertCount(2, $distributions->getValues());
         $this->assertInstanceOf(DistributionOfProfit::class, $distributions->getValues()[0]);

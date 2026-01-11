@@ -12,15 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Common\HelpURI;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class HelpURITest extends TestCase {
+class HelpURITest extends EntityTest {
     public function testCreateHelpURI(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
-        $helpURI = new HelpURI("https://developer.datev.de/help/api", $logger);
+        $helpURI = new HelpURI("https://developer.datev.de/help/api");
 
         $this->assertInstanceOf(HelpURI::class, $helpURI);
         $this->assertEquals("https://developer.datev.de/help/api", $helpURI->getValue());

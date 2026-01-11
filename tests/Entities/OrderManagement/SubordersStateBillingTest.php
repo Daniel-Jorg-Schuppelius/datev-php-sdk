@@ -12,19 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\OrderManagement\SuborderStateBilling\SubordersStateBilling;
 use Datev\Entities\OrderManagement\SuborderStateBilling\SuborderStateBilling;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class SubordersStateBillingTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class SubordersStateBillingTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -45,7 +38,7 @@ class SubordersStateBillingTest extends TestCase {
             ]
         ];
 
-        $suborders = new SubordersStateBilling($data, $this->logger);
+        $suborders = new SubordersStateBilling($data);
 
         $this->assertCount(2, $suborders->getValues());
         $this->assertInstanceOf(SuborderStateBilling::class, $suborders->getValues()[0]);

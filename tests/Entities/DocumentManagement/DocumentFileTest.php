@@ -12,19 +12,17 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\DocumentManagement\DocumentFiles\DocumentFile;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class DocumentFileTest extends TestCase {
+class DocumentFileTest extends EntityTest {
     public function testCreateDocumentFile(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "file-001"
         ];
 
-        $documentFile = new DocumentFile($data, $logger);
+        $documentFile = new DocumentFile($data);
 
         $this->assertInstanceOf(DocumentFile::class, $documentFile);
         $this->assertEquals("file-001", $documentFile->getID());

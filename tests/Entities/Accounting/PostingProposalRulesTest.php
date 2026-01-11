@@ -4,19 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Accounting\PostingProposalRules\PostingProposalRules;
 use Datev\Entities\Accounting\PostingProposalRules\PostingProposalRule;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class PostingProposalRulesTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class PostingProposalRulesTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -24,7 +17,7 @@ class PostingProposalRulesTest extends TestCase {
                 ["id" => "rule-2", "account_number" => 1400, "contra_account_number" => 8300, "posting_description" => "Regel Büromaterial"]
             ]
         ];
-        $collection = new PostingProposalRules($data, $this->logger);
+        $collection = new PostingProposalRules($data);
         $this->assertCount(2, $collection->getValues());
         $this->assertInstanceOf(PostingProposalRule::class, $collection->getValues()[0]);
     }

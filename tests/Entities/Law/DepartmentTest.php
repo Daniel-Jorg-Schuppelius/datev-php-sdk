@@ -12,20 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
-use ERRORToolkit\Logger\ConsoleLogger;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Law\Departments\Department;
 use Datev\Entities\Law\Departments\Departments;
-use PHPUnit\Framework\TestCase;
 
-class DepartmentTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class DepartmentTest extends EntityTest {
     public function testCreateDepartment() {
         $data = [
             "id" => "d1234567-8901-2345-6789-012345678901",
@@ -34,7 +26,7 @@ class DepartmentTest extends TestCase {
             "name" => "Zivilrecht"
         ];
 
-        $department = new Department($data, $this->logger);
+        $department = new Department($data);
         $this->assertInstanceOf(Department::class, new Department());
         $this->assertInstanceOf(Department::class, $department);
         $this->assertEquals("ZR", $department->getShortName());
@@ -56,7 +48,7 @@ class DepartmentTest extends TestCase {
             ]
         ];
 
-        $departments = new Departments($data, $this->logger);
+        $departments = new Departments($data);
         $this->assertInstanceOf(Departments::class, $departments);
         $this->assertCount(2, $departments->getValues());
     }

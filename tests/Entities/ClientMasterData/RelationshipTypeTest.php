@@ -12,11 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\RelationshipTypes\RelationshipType;
 use Datev\Entities\ClientMasterData\RelationshipTypes\RelationshipTypes;
-use PHPUnit\Framework\TestCase;
 
-class RelationshipTypeTest extends TestCase {
+class RelationshipTypeTest extends EntityTest {
     public function testCreateRelationshipType() {
         $data = [
             "id" => "type-123",

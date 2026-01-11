@@ -12,11 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Diagnostics;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Diagnostics\Domains\Domain;
 use Datev\Entities\Diagnostics\Domains\Domains;
-use PHPUnit\Framework\TestCase;
 
-class DomainTest extends TestCase {
+class DomainTest extends EntityTest {
     public function testCreateDomain() {
         $data = [
             "Key" => "test-domain",

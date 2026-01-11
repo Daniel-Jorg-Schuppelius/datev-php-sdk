@@ -4,19 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\OrderManagement\SelfClients\SelfClients;
 use Datev\Entities\OrderManagement\SelfClients\SelfClient;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class SelfClientsTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class SelfClientsTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -24,7 +17,7 @@ class SelfClientsTest extends TestCase {
                 ["id" => "sc-2", "client_name" => "Self Client 2"]
             ]
         ];
-        $collection = new SelfClients($data, $this->logger);
+        $collection = new SelfClients($data);
         $this->assertCount(2, $collection->getValues());
         $this->assertInstanceOf(SelfClient::class, $collection->getValues()[0]);
     }

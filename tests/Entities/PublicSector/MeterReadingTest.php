@@ -12,20 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
-use ERRORToolkit\Logger\ConsoleLogger;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\PublicSector\MeterReadings\MeterReading;
 use Datev\Entities\PublicSector\MeterReadings\MeterReadings;
-use PHPUnit\Framework\TestCase;
 
-class MeterReadingTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class MeterReadingTest extends EntityTest {
     public function testCreateMeterReading() {
         $data = [
             "id" => "r1234567-8901-2345-6789-012345678901",
@@ -40,7 +32,7 @@ class MeterReadingTest extends TestCase {
             "comment" => "Regelablesung"
         ];
 
-        $meterReading = new MeterReading($data, $this->logger);
+        $meterReading = new MeterReading($data);
         $this->assertInstanceOf(MeterReading::class, new MeterReading());
         $this->assertInstanceOf(MeterReading::class, $meterReading);
         $this->assertEquals(1250.5, $meterReading->getValue());
@@ -58,7 +50,7 @@ class MeterReadingTest extends TestCase {
             ]
         ];
 
-        $meterReadings = new MeterReadings($data, $this->logger);
+        $meterReadings = new MeterReadings($data);
         $this->assertInstanceOf(MeterReadings::class, $meterReadings);
         $this->assertCount(2, $meterReadings->getValues());
     }

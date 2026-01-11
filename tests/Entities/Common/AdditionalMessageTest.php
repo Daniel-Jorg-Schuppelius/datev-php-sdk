@@ -12,12 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Common\AdditionalMessages\AdditionalMessage;
 use Datev\Entities\Common\AdditionalMessages\AdditionalMessageID;
 use Datev\Entities\Common\AdditionalMessages\AdditionalMessages;
-use PHPUnit\Framework\TestCase;
 
-class AdditionalMessageTest extends TestCase {
+class AdditionalMessageTest extends EntityTest {
     public function testCreateAdditionalMessageID() {
         $id = new AdditionalMessageID("12345678-1234-1234-1234-123456789012");
         $this->assertInstanceOf(AdditionalMessageID::class, $id);

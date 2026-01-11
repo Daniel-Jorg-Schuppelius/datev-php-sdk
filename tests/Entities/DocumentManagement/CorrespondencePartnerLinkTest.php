@@ -12,28 +12,21 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\DocumentManagement\CorrespondencePartners\CorrespondencePartnerLink;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class CorrespondencePartnerLinkTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class CorrespondencePartnerLinkTest extends EntityTest {
     public function testCreateFromString(): void {
         $url = "https://example.com/partner/12345";
-        $link = new CorrespondencePartnerLink($url, $this->logger);
+        $link = new CorrespondencePartnerLink($url);
 
         $this->assertEquals($url, $link->getValue());
         $this->assertEquals('correspondence_partner_link', $link->getEntityName());
     }
 
     public function testIsValid(): void {
-        $link = new CorrespondencePartnerLink("https://example.com/partner", $this->logger);
+        $link = new CorrespondencePartnerLink("https://example.com/partner");
         $this->assertTrue($link->isValid());
     }
 }

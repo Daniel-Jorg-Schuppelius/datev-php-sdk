@@ -12,20 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\OrderManagement\ClientGroups\ClientGroup;
 use Datev\Entities\OrderManagement\ClientGroups\ClientGroups;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class ClientGroupTest extends TestCase {
-    private ?LoggerInterface $logger = null;
-
-    public function __construct(string $name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class ClientGroupTest extends EntityTest {
+    
     public function testCreateClientGroup(): void {
         $data = [
             "id" => "550e8400-e29b-41d4-a716-446655440000",
@@ -37,7 +30,7 @@ class ClientGroupTest extends TestCase {
             "group_name" => "Hauptgruppe"
         ];
 
-        $clientGroup = new ClientGroup($data, $this->logger);
+        $clientGroup = new ClientGroup($data);
 
         $this->assertInstanceOf(ClientGroup::class, $clientGroup);
         $this->assertNotNull($clientGroup->getID());
@@ -62,7 +55,7 @@ class ClientGroupTest extends TestCase {
             ]
         ];
 
-        $clientGroups = new ClientGroups($data, $this->logger);
+        $clientGroups = new ClientGroups($data);
 
         $this->assertInstanceOf(ClientGroups::class, $clientGroups);
         $this->assertCount(2, $clientGroups);

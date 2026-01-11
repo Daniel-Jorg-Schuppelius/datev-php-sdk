@@ -12,11 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\MaritalStatuses\MaritalStatus;
 use Datev\Entities\ClientMasterData\MaritalStatuses\MaritalStatuses;
-use PHPUnit\Framework\TestCase;
 
-class MaritalStatusTest extends TestCase {
+class MaritalStatusTest extends EntityTest {
     public function testCreateMaritalStatus() {
         $data = [
             "value" => "verheiratet",

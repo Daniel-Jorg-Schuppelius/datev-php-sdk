@@ -12,21 +12,19 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\DocumentManagement\Documents\PropertyTemplates\DocumentPropertyTemplate;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class DocumentPropertyTemplateTest extends TestCase {
+class DocumentPropertyTemplateTest extends EntityTest {
     public function testCreateDocumentPropertyTemplate(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "550e8400-e29b-41d4-a716-446655440000",
             "name" => "Rechnungsvorlage",
             "supplement" => "Standard"
         ];
 
-        $template = new DocumentPropertyTemplate($data, $logger);
+        $template = new DocumentPropertyTemplate($data);
 
         $this->assertInstanceOf(DocumentPropertyTemplate::class, $template);
         $this->assertEquals("Rechnungsvorlage", $template->getName());

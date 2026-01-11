@@ -12,20 +12,17 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\CostUnits\CostUnit;
 use Datev\Entities\Payroll\CostUnits\CostUnits;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class CostUnitTest extends TestCase {
+class CostUnitTest extends EntityTest {
     public function testCreateCostUnit() {
         $data = [
             "id" => "A001",
             "name" => "Projekt Alpha"
-        ];
-
-        $logger = ConsoleLoggerFactory::getLogger();
-        $costUnit = new CostUnit($data, $logger);
+        ];        $costUnit = new CostUnit($data);
 
         $this->assertInstanceOf(CostUnit::class, $costUnit);
         $this->assertEquals("Projekt Alpha", $costUnit->getName());
@@ -43,10 +40,7 @@ class CostUnitTest extends TestCase {
                     "name" => "Projekt Beta"
                 ]
             ]
-        ];
-
-        $logger = ConsoleLoggerFactory::getLogger();
-        $costUnits = new CostUnits($data, $logger);
+        ];        $costUnits = new CostUnits($data);
 
         $this->assertInstanceOf(CostUnits::class, $costUnits);
         $this->assertCount(2, $costUnits->getValues());

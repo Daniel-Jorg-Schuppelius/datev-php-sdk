@@ -12,16 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\DocumentManagement\IndividualProperties\IndividualProperty;
 use Datev\Entities\DocumentManagement\IndividualProperties\IndividualProperties;
 use Datev\Entities\DocumentManagement\IndividualProperties\IndividualPropertyID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class IndividualPropertyTest extends TestCase {
+class IndividualPropertyTest extends EntityTest {
     public function testCreateIndividualProperty(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "prop-001",
             "data_name" => "CustomField1",
@@ -32,7 +30,7 @@ class IndividualPropertyTest extends TestCase {
             "reference_item" => false
         ];
 
-        $individualProperty = new IndividualProperty($data, $logger);
+        $individualProperty = new IndividualProperty($data);
 
         $this->assertInstanceOf(IndividualProperty::class, $individualProperty);
         $this->assertInstanceOf(IndividualPropertyID::class, $individualProperty->getID());
@@ -44,8 +42,6 @@ class IndividualPropertyTest extends TestCase {
     }
 
     public function testCreateIndividualProperties(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -63,7 +59,7 @@ class IndividualPropertyTest extends TestCase {
             ]
         ];
 
-        $individualProperties = new IndividualProperties($data, $logger);
+        $individualProperties = new IndividualProperties($data);
 
         $this->assertInstanceOf(IndividualProperties::class, $individualProperties);
         $this->assertCount(2, $individualProperties);

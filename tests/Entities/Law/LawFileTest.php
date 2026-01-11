@@ -12,20 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Law\Files\LawFile;
 use Datev\Entities\Law\Files\LawFiles;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class LawFileTest extends TestCase {
-    private ?LoggerInterface $logger = null;
-
-    public function __construct(string $name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class LawFileTest extends EntityTest {
+    
     public function testCreateLawFile(): void {
         $data = [
             "id" => "test-id",
@@ -39,7 +32,7 @@ class LawFileTest extends TestCase {
             "long_reason" => "Streit über Kaufvertrag"
         ];
 
-        $lawFile = new LawFile($data, $this->logger);
+        $lawFile = new LawFile($data);
 
         $this->assertInstanceOf(LawFile::class, $lawFile);
         $this->assertEquals("2024-001", $lawFile->getFileNumberShort());
@@ -64,7 +57,7 @@ class LawFileTest extends TestCase {
             ]
         ];
 
-        $lawFiles = new LawFiles($data, $this->logger);
+        $lawFiles = new LawFiles($data);
 
         $this->assertInstanceOf(LawFiles::class, $lawFiles);
         $this->assertCount(2, $lawFiles);

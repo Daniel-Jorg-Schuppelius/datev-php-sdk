@@ -12,22 +12,20 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\DocumentManagement\Folders\Folder;
 use Datev\Entities\DocumentManagement\Folders\Folders;
 use Datev\Entities\DocumentManagement\Folders\FolderID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class FolderTest extends TestCase {
+class FolderTest extends EntityTest {
     public function testCreateFolder(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "12345",
             "name" => "Steuerunterlagen"
         ];
 
-        $folder = new Folder($data, $logger);
+        $folder = new Folder($data);
 
         $this->assertInstanceOf(Folder::class, $folder);
         $this->assertInstanceOf(FolderID::class, $folder->getID());
@@ -36,8 +34,6 @@ class FolderTest extends TestCase {
     }
 
     public function testCreateFolders(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -51,7 +47,7 @@ class FolderTest extends TestCase {
             ]
         ];
 
-        $folders = new Folders($data, $logger);
+        $folders = new Folders($data);
 
         $this->assertInstanceOf(Folders::class, $folders);
         $this->assertCount(2, $folders);

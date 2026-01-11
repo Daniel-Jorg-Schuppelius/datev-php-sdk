@@ -12,20 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
-use ERRORToolkit\Logger\ConsoleLogger;;
+use Tests\Contracts\EntityTest;
 
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
 use Datev\Entities\DocumentManagement\Documents\Document;
-use PHPUnit\Framework\TestCase;
 
-class DocumentTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class DocumentTest extends EntityTest {
     public function testCreateDocument() {
         $data = [
             "acknowledge_by" => [
@@ -159,7 +150,7 @@ class DocumentTest extends TestCase {
             "id" => "e602ddcb-e479-4cee-b268-e53bbecf6dc9"
         ];
 
-        $document = new Document($data, $this->logger);
+        $document = new Document($data);
         $this->assertTrue($document->isValid());
         $this->assertInstanceOf(Document::class, new Document());
         $this->assertTrue((new Document())->isValid());

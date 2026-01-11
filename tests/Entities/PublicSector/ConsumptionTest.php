@@ -12,20 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
-use ERRORToolkit\Logger\ConsoleLogger;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\PublicSector\Consumptions\Consumption;
 use Datev\Entities\PublicSector\Consumptions\Consumptions;
-use PHPUnit\Framework\TestCase;
 
-class ConsumptionTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class ConsumptionTest extends EntityTest {
     public function testCreateConsumption() {
         $data = [
             "id" => "c1234567-8901-2345-6789-012345678901",
@@ -41,7 +33,7 @@ class ConsumptionTest extends TestCase {
             "last_date" => "2024-03-31T00:00:00.000+00:00"
         ];
 
-        $consumption = new Consumption($data, $this->logger);
+        $consumption = new Consumption($data);
         $this->assertInstanceOf(Consumption::class, new Consumption());
         $this->assertInstanceOf(Consumption::class, $consumption);
         $this->assertEquals(2024, $consumption->getAssessmentYear());
@@ -66,7 +58,7 @@ class ConsumptionTest extends TestCase {
             ]
         ];
 
-        $consumptions = new Consumptions($data, $this->logger);
+        $consumptions = new Consumptions($data);
         $this->assertInstanceOf(Consumptions::class, $consumptions);
         $this->assertCount(2, $consumptions->getValues());
     }

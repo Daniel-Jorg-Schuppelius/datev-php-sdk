@@ -12,11 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\RegistrationNumbers\RegistrationNumber;
 use Datev\Entities\ClientMasterData\RegistrationNumbers\RegistrationNumbers;
-use PHPUnit\Framework\TestCase;
 
-class RegistrationNumberTest extends TestCase {
+class RegistrationNumberTest extends EntityTest {
     public function testCreateRegistrationNumber() {
         $data = [
             "value" => "HRB 12345",

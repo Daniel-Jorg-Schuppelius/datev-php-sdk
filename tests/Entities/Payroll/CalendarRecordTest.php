@@ -12,16 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\CalendarRecords\CalendarRecord;
 use Datev\Entities\Payroll\CalendarRecords\CalendarRecords;
 use Datev\Entities\Payroll\CalendarRecords\CalendarRecordID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class CalendarRecordTest extends TestCase {
+class CalendarRecordTest extends EntityTest {
     public function testCreateCalendarRecord(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "cr-001",
             "personnel_number" => "12345",
@@ -29,7 +27,7 @@ class CalendarRecordTest extends TestCase {
             "days" => 1.0
         ];
 
-        $calendarRecord = new CalendarRecord($data, $logger);
+        $calendarRecord = new CalendarRecord($data);
 
         $this->assertInstanceOf(CalendarRecord::class, $calendarRecord);
         $this->assertInstanceOf(CalendarRecordID::class, $calendarRecord->getID());
@@ -40,8 +38,6 @@ class CalendarRecordTest extends TestCase {
     }
 
     public function testCreateCalendarRecords(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -57,7 +53,7 @@ class CalendarRecordTest extends TestCase {
             ]
         ];
 
-        $calendarRecords = new CalendarRecords($data, $logger);
+        $calendarRecords = new CalendarRecords($data);
 
         $this->assertInstanceOf(CalendarRecords::class, $calendarRecords);
         $this->assertCount(2, $calendarRecords);

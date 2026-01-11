@@ -12,16 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\DocumentManagement\Orders\Order;
 use Datev\Entities\DocumentManagement\Orders\Orders;
 use Datev\Entities\DocumentManagement\Orders\OrderID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class OrderTest extends TestCase {
+class OrderTest extends EntityTest {
     public function testCreateOrder(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "order-001",
             "name" => "Jahresabschluss",
@@ -30,7 +28,7 @@ class OrderTest extends TestCase {
             "number" => 1
         ];
 
-        $order = new Order($data, $logger);
+        $order = new Order($data);
 
         $this->assertInstanceOf(Order::class, $order);
         $this->assertInstanceOf(OrderID::class, $order->getID());
@@ -42,8 +40,6 @@ class OrderTest extends TestCase {
     }
 
     public function testCreateOrders(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -59,7 +55,7 @@ class OrderTest extends TestCase {
             ]
         ];
 
-        $orders = new Orders($data, $logger);
+        $orders = new Orders($data);
 
         $this->assertInstanceOf(Orders::class, $orders);
         $this->assertCount(2, $orders);

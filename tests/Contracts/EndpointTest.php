@@ -44,35 +44,4 @@ abstract class EndpointTest extends TestCase {
             }
         }
     }
-
-    /**
-     * Führt einen Test-Callback mit Timer-Logging aus.
-     *
-     * @template T
-     * @param callable(): T $callback
-     * @param string $description
-     * @return T
-     */
-    protected function runWithTiming(callable $callback, string $description): mixed {
-        return $this->logDebugWithTimer($callback, $description);
-    }
-
-    /**
-     * Loggt eine Warnung, wenn die Bedingung erfüllt ist.
-     */
-    protected function warnIf(bool $condition, string $message): void {
-        $this->logWarningIf($condition, $message);
-    }
-
-    /**
-     * Loggt den Wert und gibt ihn zurück - nützlich für Debugging.
-     *
-     * @template T
-     * @param T $value
-     * @param string $message
-     * @return T
-     */
-    protected function logAndReturn(mixed $value, string $message): mixed {
-        return $this->logDebugAndReturn($value, $message);
-    }
 }

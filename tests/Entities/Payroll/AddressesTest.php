@@ -4,19 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\Addresses\Addresses;
 use Datev\Entities\Payroll\Addresses\Address;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class AddressesTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class AddressesTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -24,7 +17,7 @@ class AddressesTest extends TestCase {
                 ["id" => "00002", "street" => "Testweg", "house_number" => "45", "city" => "Berlin", "postal_code" => "10115", "country" => "DE"]
             ]
         ];
-        $collection = new Addresses($data, $this->logger);
+        $collection = new Addresses($data);
         $this->assertCount(2, $collection->getValues());
         $this->assertInstanceOf(Address::class, $collection->getValues()[0]);
     }

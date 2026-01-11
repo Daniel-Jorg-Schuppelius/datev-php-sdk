@@ -12,14 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\PublicSector\TransactionMeterReadings\TransactionMeterReadingData;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class TransactionMeterReadingDataTest extends TestCase {
+class TransactionMeterReadingDataTest extends EntityTest {
     public function testCreateTransactionMeterReadingData(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "meter_id" => "MTR-001",
             "identification_number" => "12345678",
@@ -36,7 +34,7 @@ class TransactionMeterReadingDataTest extends TestCase {
             "comment" => "Keine Auffälligkeiten"
         ];
 
-        $meterReading = new TransactionMeterReadingData($data, $logger);
+        $meterReading = new TransactionMeterReadingData($data);
 
         $this->assertInstanceOf(TransactionMeterReadingData::class, $meterReading);
         $this->assertEquals("MTR-001", $meterReading->getMeterId());

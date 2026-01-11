@@ -12,20 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
-use ERRORToolkit\Logger\ConsoleLogger;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\OrderManagement\Clients\Client;
 use Datev\Entities\OrderManagement\Clients\Clients;
-use PHPUnit\Framework\TestCase;
 
-class ClientTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class ClientTest extends EntityTest {
     public function testCreateClient() {
         $data = [
             "id" => "c1234567-8901-2345-6789-012345678901",
@@ -34,7 +26,7 @@ class ClientTest extends TestCase {
             "isactive" => true
         ];
 
-        $client = new Client($data, $this->logger);
+        $client = new Client($data);
         $this->assertInstanceOf(Client::class, new Client());
         $this->assertInstanceOf(Client::class, $client);
         $this->assertEquals("10001", $client->getClientNumber());
@@ -56,7 +48,7 @@ class ClientTest extends TestCase {
             ]
         ];
 
-        $clients = new Clients($data, $this->logger);
+        $clients = new Clients($data);
         $this->assertInstanceOf(Clients::class, $clients);
         $this->assertCount(2, $clients->getValues());
     }

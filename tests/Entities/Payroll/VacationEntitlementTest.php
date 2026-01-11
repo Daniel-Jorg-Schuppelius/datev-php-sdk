@@ -12,16 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\VacationEntitlements\VacationEntitlement;
 use Datev\Entities\Payroll\VacationEntitlements\VacationEntitlements;
 use Datev\Entities\Payroll\VacationEntitlements\VacationEntitlementID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class VacationEntitlementTest extends TestCase {
+class VacationEntitlementTest extends EntityTest {
     public function testCreateVacationEntitlement(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "vac-001",
             "basic_vacation_entitlement" => 30.0,
@@ -29,7 +27,7 @@ class VacationEntitlementTest extends TestCase {
             "remaining_days_of_vacation_previous_year" => 5.0
         ];
 
-        $vacationEntitlement = new VacationEntitlement($data, $logger);
+        $vacationEntitlement = new VacationEntitlement($data);
 
         $this->assertInstanceOf(VacationEntitlement::class, $vacationEntitlement);
         $this->assertInstanceOf(VacationEntitlementID::class, $vacationEntitlement->getID());
@@ -40,8 +38,6 @@ class VacationEntitlementTest extends TestCase {
     }
 
     public function testCreateVacationEntitlements(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -55,7 +51,7 @@ class VacationEntitlementTest extends TestCase {
             ]
         ];
 
-        $vacationEntitlements = new VacationEntitlements($data, $logger);
+        $vacationEntitlements = new VacationEntitlements($data);
 
         $this->assertInstanceOf(VacationEntitlements::class, $vacationEntitlements);
         $this->assertCount(2, $vacationEntitlements);

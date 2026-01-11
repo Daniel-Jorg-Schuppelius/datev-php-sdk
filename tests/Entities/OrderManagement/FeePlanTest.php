@@ -12,20 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\OrderManagement\FeePlans\FeePlan;
 use Datev\Entities\OrderManagement\FeePlans\FeePlans;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class FeePlanTest extends TestCase {
-    private ?LoggerInterface $logger = null;
-
-    public function __construct(string $name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class FeePlanTest extends EntityTest {
+    
     public function testCreateFeePlan(): void {
         $data = [
             "id" => "test-id",
@@ -36,7 +29,7 @@ class FeePlanTest extends TestCase {
             "fee_plan_active" => true
         ];
 
-        $feePlan = new FeePlan($data, $this->logger);
+        $feePlan = new FeePlan($data);
 
         $this->assertInstanceOf(FeePlan::class, $feePlan);
         $this->assertEquals(1, $feePlan->getFeePlanNumber());
@@ -59,7 +52,7 @@ class FeePlanTest extends TestCase {
             ]
         ];
 
-        $feePlans = new FeePlans($data, $this->logger);
+        $feePlans = new FeePlans($data);
 
         $this->assertInstanceOf(FeePlans::class, $feePlans);
         $this->assertCount(2, $feePlans);

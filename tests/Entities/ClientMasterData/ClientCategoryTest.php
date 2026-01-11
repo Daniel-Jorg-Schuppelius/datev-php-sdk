@@ -12,20 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
-use ERRORToolkit\Logger\ConsoleLogger;;
+use Tests\Contracts\EntityTest;
 
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
 use Datev\Entities\ClientMasterData\ClientCategories\ClientCategory;
-use PHPUnit\Framework\TestCase;
 
-class ClientCategoryTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class ClientCategoryTest extends EntityTest {
     public function testCreateClientCategory() {
         $data = [
             "id" => "76579af6-3272-4116-9ee1-d7e4a385256a",
@@ -38,7 +29,7 @@ class ClientCategoryTest extends TestCase {
             "timestamp" => "2020-03-31T00:00:00.000+00:00"
         ];
 
-        $clientCategory = new ClientCategory($data, $this->logger);
+        $clientCategory = new ClientCategory($data);
         $this->assertTrue($clientCategory->isValid());
         $this->assertInstanceOf(ClientCategory::class, new ClientCategory());
         $this->assertInstanceOf(ClientCategory::class, $clientCategory);

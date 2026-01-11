@@ -12,14 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\DocumentManagement\StructureItems\Updates\StructureItemUpdate;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class StructureItemUpdateTest extends TestCase {
+class StructureItemUpdateTest extends EntityTest {
     public function testCreateStructureItemUpdate(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "550e8400-e29b-41d4-a716-446655440000",
             "name" => "Aktualisiertes Element",
@@ -28,7 +26,7 @@ class StructureItemUpdateTest extends TestCase {
             "revision_comment" => "Version 2.0"
         ];
 
-        $update = new StructureItemUpdate($data, $logger);
+        $update = new StructureItemUpdate($data);
 
         $this->assertInstanceOf(StructureItemUpdate::class, $update);
         $this->assertEquals("Aktualisiertes Element", $update->getName());

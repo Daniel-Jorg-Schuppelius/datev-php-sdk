@@ -12,20 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
-use ERRORToolkit\Logger\ConsoleLogger;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Accounting\CostAccountingRecords\CostAccountingRecord;
 use Datev\Entities\Accounting\CostAccountingRecords\CostAccountingRecords;
-use PHPUnit\Framework\TestCase;
 
-class CostAccountingRecordTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class CostAccountingRecordTest extends EntityTest {
     public function testCreateCostAccountingRecord() {
         $data = [
             "id" => 1,
@@ -37,7 +29,7 @@ class CostAccountingRecordTest extends TestCase {
             "record_number" => 1
         ];
 
-        $record = new CostAccountingRecord($data, $this->logger);
+        $record = new CostAccountingRecord($data);
         $this->assertInstanceOf(CostAccountingRecord::class, new CostAccountingRecord());
         $this->assertInstanceOf(CostAccountingRecord::class, $record);
         $this->assertEquals(1500.50, $record->getAmount());
@@ -63,7 +55,7 @@ class CostAccountingRecordTest extends TestCase {
             ]
         ];
 
-        $records = new CostAccountingRecords($data, $this->logger);
+        $records = new CostAccountingRecords($data);
         $this->assertInstanceOf(CostAccountingRecords::class, $records);
         $this->assertCount(2, $records->getValues());
     }

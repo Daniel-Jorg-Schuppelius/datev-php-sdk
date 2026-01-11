@@ -12,15 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\Taxations\TaxCards\TaxCard;
 use Datev\Entities\Payroll\Taxations\TaxCards\TaxCards;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class TaxCardTest extends TestCase {
+class TaxCardTest extends EntityTest {
     public function testCreateTaxCard(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "tc-001",
             "tax_class" => 1,
@@ -28,14 +26,12 @@ class TaxCardTest extends TestCase {
             "denomination" => "Hauptlohnsteuerkarte"
         ];
 
-        $taxCard = new TaxCard($data, $logger);
+        $taxCard = new TaxCard($data);
 
         $this->assertInstanceOf(TaxCard::class, $taxCard);
     }
 
     public function testCreateTaxCards(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -49,7 +45,7 @@ class TaxCardTest extends TestCase {
             ]
         ];
 
-        $taxCards = new TaxCards($data, $logger);
+        $taxCards = new TaxCards($data);
 
         $this->assertInstanceOf(TaxCards::class, $taxCards);
         $this->assertCount(2, $taxCards);

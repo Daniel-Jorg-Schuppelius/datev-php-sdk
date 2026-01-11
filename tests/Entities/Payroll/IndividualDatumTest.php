@@ -12,21 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
-use ERRORToolkit\Logger\ConsoleLogger;;
+use Tests\Contracts\EntityTest;
 
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
 use Datev\Entities\Payroll\Data\Individual\IndividualData;
 use Datev\Entities\Payroll\Data\Individual\IndividualDatum;
-use PHPUnit\Framework\TestCase;
 
-class IndividualDatumTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class IndividualDatumTest extends EntityTest {
     public function testCreateIndividualDatum() {
         $data = [
             'id' => '00001',
@@ -64,7 +55,7 @@ class IndividualDatumTest extends TestCase {
             'amount8' => '149.98'
         ];
 
-        $individualDatum = new IndividualDatum($data, $this->logger);
+        $individualDatum = new IndividualDatum($data);
         $this->assertTrue($individualDatum->isValid());
         $this->assertInstanceOf(IndividualDatum::class, new IndividualDatum());
         $this->assertInstanceOf(IndividualDatum::class, $individualDatum);

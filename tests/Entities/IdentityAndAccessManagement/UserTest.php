@@ -12,20 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\IdentityAndAccessManagement;
 
-use ERRORToolkit\Logger\ConsoleLogger;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\IdentityAndAccessManagement\Users\User;
 use Datev\Entities\IdentityAndAccessManagement\Users\Users;
-use PHPUnit\Framework\TestCase;
 
-class UserTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class UserTest extends EntityTest {
     public function testCreateUser() {
         $data = [
             "id" => "u1234567-8901-2345-6789-012345678901",
@@ -34,7 +26,7 @@ class UserTest extends TestCase {
             "schemas" => ["urn:ietf:params:scim:schemas:core:2.0:User"]
         ];
 
-        $user = new User($data, $this->logger);
+        $user = new User($data);
         $this->assertInstanceOf(User::class, new User());
         $this->assertInstanceOf(User::class, $user);
         $this->assertEquals("Max Mustermann", $user->getDisplayName());
@@ -55,7 +47,7 @@ class UserTest extends TestCase {
             ]
         ];
 
-        $users = new Users($data, $this->logger);
+        $users = new Users($data);
         $this->assertInstanceOf(Users::class, $users);
         $this->assertCount(2, $users->getValues());
     }

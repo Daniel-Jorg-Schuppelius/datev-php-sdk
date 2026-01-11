@@ -12,20 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
-use ERRORToolkit\Logger\ConsoleLogger;;
+use Tests\Contracts\EntityTest;
 
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
 use Datev\Entities\ClientMasterData\AreaOfResponsibilities\AreaOfResponsibility;
-use PHPUnit\Framework\TestCase;
 
-class AreaOfResponsibilityTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class AreaOfResponsibilityTest extends EntityTest {
     public function testCreateAddress() {
         $data = [
             "id" => "NA",
@@ -35,7 +26,7 @@ class AreaOfResponsibilityTest extends TestCase {
             "status" => "inactive"
         ];
 
-        $areaOfResponsibility = new AreaOfResponsibility($data, $this->logger);
+        $areaOfResponsibility = new AreaOfResponsibility($data);
         $this->assertTrue($areaOfResponsibility->isValid());
         $this->assertInstanceOf(AreaOfResponsibility::class, new AreaOfResponsibility());
         $this->assertInstanceOf(AreaOfResponsibility::class, $areaOfResponsibility);

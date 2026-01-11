@@ -12,14 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\PublicSector\Meters\MeterType;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class MeterTypeTest extends TestCase {
+class MeterTypeTest extends EntityTest {
     public function testCreateMeterType(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => 1,
             "name" => "Wasserzähler Standard",
@@ -31,7 +29,7 @@ class MeterTypeTest extends TestCase {
             "periodicity_of_calibration" => "6 years"
         ];
 
-        $meterType = new MeterType($data, $logger);
+        $meterType = new MeterType($data);
 
         $this->assertInstanceOf(MeterType::class, $meterType);
         $this->assertEquals(1, $meterType->getID());

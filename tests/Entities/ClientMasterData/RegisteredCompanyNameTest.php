@@ -12,11 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\RegisteredCompanyNames\RegisteredCompanyName;
 use Datev\Entities\ClientMasterData\RegisteredCompanyNames\RegisteredCompanyNames;
-use PHPUnit\Framework\TestCase;
 
-class RegisteredCompanyNameTest extends TestCase {
+class RegisteredCompanyNameTest extends EntityTest {
     public function testCreateRegisteredCompanyName() {
         $data = [
             "value" => "Muster GmbH",

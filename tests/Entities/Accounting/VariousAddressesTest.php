@@ -12,19 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Accounting\VariousAddresses\VariousAddresses;
 use Datev\Entities\Accounting\VariousAddresses\VariousAddress;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class VariousAddressesTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class VariousAddressesTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -41,7 +34,7 @@ class VariousAddressesTest extends TestCase {
             ]
         ];
 
-        $addresses = new VariousAddresses($data, $this->logger);
+        $addresses = new VariousAddresses($data);
 
         $this->assertCount(2, $addresses->getValues());
         $this->assertInstanceOf(VariousAddress::class, $addresses->getValues()[0]);

@@ -12,20 +12,18 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\FederalStates\FederalStateOfNaturalPerson;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class FederalStateOfNaturalPersonTest extends TestCase {
+class FederalStateOfNaturalPersonTest extends EntityTest {
     public function testCreateFederalStateOfNaturalPerson(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "BY",
             "name" => "Bayern"
         ];
 
-        $state = new FederalStateOfNaturalPerson($data, $logger);
+        $state = new FederalStateOfNaturalPerson($data);
 
         $this->assertInstanceOf(FederalStateOfNaturalPerson::class, $state);
     }

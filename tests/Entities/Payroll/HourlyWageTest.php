@@ -12,23 +12,21 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\HourlyWages\HourlyWage;
 use Datev\Entities\Payroll\HourlyWages\HourlyWages;
 use Datev\Entities\Payroll\HourlyWages\HourlyWageID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class HourlyWageTest extends TestCase {
+class HourlyWageTest extends EntityTest {
     public function testCreateHourlyWage(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "hw-001",
             "personnel_number" => "12345",
             "amount" => 25.50
         ];
 
-        $hourlyWage = new HourlyWage($data, $logger);
+        $hourlyWage = new HourlyWage($data);
 
         $this->assertInstanceOf(HourlyWage::class, $hourlyWage);
         $this->assertInstanceOf(HourlyWageID::class, $hourlyWage->getID());
@@ -38,8 +36,6 @@ class HourlyWageTest extends TestCase {
     }
 
     public function testCreateHourlyWages(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -55,7 +51,7 @@ class HourlyWageTest extends TestCase {
             ]
         ];
 
-        $hourlyWages = new HourlyWages($data, $logger);
+        $hourlyWages = new HourlyWages($data);
 
         $this->assertInstanceOf(HourlyWages::class, $hourlyWages);
         $this->assertCount(2, $hourlyWages);

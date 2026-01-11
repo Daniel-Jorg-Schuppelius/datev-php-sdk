@@ -12,20 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
-use ERRORToolkit\Logger\ConsoleLogger;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Accounting\InternalCostServices\InternalCostService;
 use Datev\Entities\Accounting\InternalCostServices\InternalCostServices;
-use PHPUnit\Framework\TestCase;
 
-class InternalCostServiceTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class InternalCostServiceTest extends EntityTest {
     public function testCreateInternalCostService() {
         $data = [
             "amount" => 1500.00,
@@ -40,7 +32,7 @@ class InternalCostServiceTest extends TestCase {
             "text" => "Interne Verrechnung IT"
         ];
 
-        $costService = new InternalCostService($data, $this->logger);
+        $costService = new InternalCostService($data);
         $this->assertInstanceOf(InternalCostService::class, new InternalCostService());
         $this->assertInstanceOf(InternalCostService::class, $costService);
         $this->assertEquals(1500.00, $costService->getAmount());
@@ -65,7 +57,7 @@ class InternalCostServiceTest extends TestCase {
             ]
         ];
 
-        $costServices = new InternalCostServices($data, $this->logger);
+        $costServices = new InternalCostServices($data);
         $this->assertInstanceOf(InternalCostServices::class, $costServices);
         $this->assertCount(2, $costServices->getValues());
     }

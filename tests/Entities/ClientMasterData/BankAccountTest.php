@@ -12,20 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
-use ERRORToolkit\Logger\ConsoleLogger;;
+use Tests\Contracts\EntityTest;
 
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
 use Datev\Entities\ClientMasterData\BankAccounts\BankAccount;
-use PHPUnit\Framework\TestCase;
 
-class BankAccountTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class BankAccountTest extends EntityTest {
     public function testCreateBankAccount() {
         $data = [
             "id" => "31b9d6d9-117b-4555-b0b0-3659eb0279d0",
@@ -45,7 +36,7 @@ class BankAccountTest extends TestCase {
 
         $bankAccount = new BankAccount($data);
         $this->assertTrue($bankAccount->isValid());
-        $bankAccount = new BankAccount($data, $this->logger);
+        $bankAccount = new BankAccount($data);
         $this->assertInstanceOf(BankAccount::class, new BankAccount());
         $this->assertInstanceOf(BankAccount::class, $bankAccount);
         $this->assertEquals($data, $bankAccount->toArray());

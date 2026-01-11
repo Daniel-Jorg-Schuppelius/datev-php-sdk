@@ -12,23 +12,21 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\EmploymentPeriods\EmploymentPeriod;
 use Datev\Entities\Payroll\EmploymentPeriods\EmploymentPeriods;
 use Datev\Entities\Payroll\EmploymentPeriods\EmploymentPeriodID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class EmploymentPeriodTest extends TestCase {
+class EmploymentPeriodTest extends EntityTest {
     public function testCreateEmploymentPeriod(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "emp-001",
             "personnel_number" => "12345",
             "date_of_commencement_of_employment" => "2020-01-01T00:00:00.000+00:00"
         ];
 
-        $employmentPeriod = new EmploymentPeriod($data, $logger);
+        $employmentPeriod = new EmploymentPeriod($data);
 
         $this->assertInstanceOf(EmploymentPeriod::class, $employmentPeriod);
         $this->assertInstanceOf(EmploymentPeriodID::class, $employmentPeriod->getID());
@@ -38,8 +36,6 @@ class EmploymentPeriodTest extends TestCase {
     }
 
     public function testCreateEmploymentPeriods(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -53,7 +49,7 @@ class EmploymentPeriodTest extends TestCase {
             ]
         ];
 
-        $employmentPeriods = new EmploymentPeriods($data, $logger);
+        $employmentPeriods = new EmploymentPeriods($data);
 
         $this->assertInstanceOf(EmploymentPeriods::class, $employmentPeriods);
         $this->assertCount(2, $employmentPeriods);

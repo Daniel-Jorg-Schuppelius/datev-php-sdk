@@ -12,21 +12,19 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\DocumentManagement\Employees\Employee;
 use Datev\Entities\DocumentManagement\Employees\Employees;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class EmployeeTest extends TestCase {
+class EmployeeTest extends EntityTest {
     public function testCreateEmployee(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "name" => "Max Mustermann",
             "is_active" => true
         ];
 
-        $employee = new Employee($data, $logger);
+        $employee = new Employee($data);
 
         $this->assertInstanceOf(Employee::class, $employee);
         $this->assertEquals("Max Mustermann", $employee->getName());
@@ -34,8 +32,6 @@ class EmployeeTest extends TestCase {
     }
 
     public function testCreateEmployees(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -49,7 +45,7 @@ class EmployeeTest extends TestCase {
             ]
         ];
 
-        $employees = new Employees($data, $logger);
+        $employees = new Employees($data);
 
         $this->assertInstanceOf(Employees::class, $employees);
         $this->assertCount(2, $employees);

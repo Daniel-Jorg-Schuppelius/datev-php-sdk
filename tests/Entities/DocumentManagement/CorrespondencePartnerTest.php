@@ -12,28 +12,24 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\DocumentManagement\CorrespondencePartners\CorrespondencePartner;
 use Datev\Entities\DocumentManagement\CorrespondencePartners\CorrespondencePartners;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class CorrespondencePartnerTest extends TestCase {
+class CorrespondencePartnerTest extends EntityTest {
     public function testCreateCorrespondencePartner(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "domain" => "Mandant-12345"
         ];
 
-        $correspondencePartner = new CorrespondencePartner($data, $logger);
+        $correspondencePartner = new CorrespondencePartner($data);
 
         $this->assertInstanceOf(CorrespondencePartner::class, $correspondencePartner);
         $this->assertEquals("Mandant-12345", $correspondencePartner->getDomain());
     }
 
     public function testCreateCorrespondencePartners(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -45,7 +41,7 @@ class CorrespondencePartnerTest extends TestCase {
             ]
         ];
 
-        $correspondencePartners = new CorrespondencePartners($data, $logger);
+        $correspondencePartners = new CorrespondencePartners($data);
 
         $this->assertInstanceOf(CorrespondencePartners::class, $correspondencePartners);
         $this->assertCount(2, $correspondencePartners);

@@ -12,27 +12,20 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Law\LevelsOfJurisdiction\LevelOfJurisdiction;
 use Datev\Entities\Law\LevelsOfJurisdiction\LevelsOfJurisdiction;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class LevelOfJurisdictionTest extends TestCase {
-    private ?LoggerInterface $logger = null;
-
-    public function __construct(string $name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class LevelOfJurisdictionTest extends EntityTest {
+    
     public function testCreateLevelOfJurisdiction(): void {
         $data = [
             "id" => "test-id",
             "name" => "Landgericht"
         ];
 
-        $levelOfJurisdiction = new LevelOfJurisdiction($data, $this->logger);
+        $levelOfJurisdiction = new LevelOfJurisdiction($data);
 
         $this->assertInstanceOf(LevelOfJurisdiction::class, $levelOfJurisdiction);
         $this->assertEquals("Landgericht", $levelOfJurisdiction->getName());
@@ -52,7 +45,7 @@ class LevelOfJurisdictionTest extends TestCase {
             ]
         ];
 
-        $levelsOfJurisdiction = new LevelsOfJurisdiction($data, $this->logger);
+        $levelsOfJurisdiction = new LevelsOfJurisdiction($data);
 
         $this->assertInstanceOf(LevelsOfJurisdiction::class, $levelsOfJurisdiction);
         $this->assertCount(2, $levelsOfJurisdiction);

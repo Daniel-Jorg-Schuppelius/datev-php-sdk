@@ -12,11 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\JobTitles\JobTitle;
 use Datev\Entities\ClientMasterData\JobTitles\JobTitles;
-use PHPUnit\Framework\TestCase;
 
-class JobTitleTest extends TestCase {
+class JobTitleTest extends EntityTest {
     public function testCreateJobTitle() {
         $data = [
             "value" => "Geschäftsführer",

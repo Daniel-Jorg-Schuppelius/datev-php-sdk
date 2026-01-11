@@ -12,20 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\OrderManagement\CostItems\CostItem;
 use Datev\Entities\OrderManagement\CostItems\CostItems;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class CostItemTest extends TestCase {
-    private ?LoggerInterface $logger = null;
-
-    public function __construct(string $name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class CostItemTest extends EntityTest {
+    
     public function testCreateCostItem(): void {
         $data = [
             "id" => "test-id",
@@ -42,7 +35,7 @@ class CostItemTest extends TestCase {
             "fee_position" => "2000"
         ];
 
-        $costItem = new CostItem($data, $this->logger);
+        $costItem = new CostItem($data);
 
         $this->assertInstanceOf(CostItem::class, $costItem);
         $this->assertEquals(2024001, $costItem->getOrderId());
@@ -66,7 +59,7 @@ class CostItemTest extends TestCase {
             ]
         ];
 
-        $costItems = new CostItems($data, $this->logger);
+        $costItems = new CostItems($data);
 
         $this->assertInstanceOf(CostItems::class, $costItems);
         $this->assertCount(2, $costItems);

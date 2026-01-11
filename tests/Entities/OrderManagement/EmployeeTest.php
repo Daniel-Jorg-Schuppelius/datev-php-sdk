@@ -12,20 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
-use ERRORToolkit\Logger\ConsoleLogger;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\OrderManagement\Employees\Employee;
 use Datev\Entities\OrderManagement\Employees\Employees;
-use PHPUnit\Framework\TestCase;
 
-class EmployeeTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class EmployeeTest extends EntityTest {
     public function testCreateEmployee() {
         $data = [
             "id" => "e1234567-8901-2345-6789-012345678901",
@@ -36,7 +28,7 @@ class EmployeeTest extends TestCase {
             "isactive" => true
         ];
 
-        $employee = new Employee($data, $this->logger);
+        $employee = new Employee($data);
         $this->assertInstanceOf(Employee::class, new Employee());
         $this->assertInstanceOf(Employee::class, $employee);
         $this->assertEquals("1001", $employee->getPersonnelNumber());
@@ -58,7 +50,7 @@ class EmployeeTest extends TestCase {
             ]
         ];
 
-        $employees = new Employees($data, $this->logger);
+        $employees = new Employees($data);
         $this->assertInstanceOf(Employees::class, $employees);
         $this->assertCount(2, $employees->getValues());
     }

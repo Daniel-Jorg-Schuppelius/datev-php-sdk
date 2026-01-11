@@ -12,16 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\Disabilities\Disability;
 use Datev\Entities\Payroll\Disabilities\Disabilities;
 use Datev\Entities\Payroll\Disabilities\DisabilityID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class DisabilityTest extends TestCase {
+class DisabilityTest extends EntityTest {
     public function testCreateDisability(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "dis-001",
             "degree_of_disability" => 50.0,
@@ -29,7 +27,7 @@ class DisabilityTest extends TestCase {
             "disability_group" => "Schwerbehindert"
         ];
 
-        $disability = new Disability($data, $logger);
+        $disability = new Disability($data);
 
         $this->assertInstanceOf(Disability::class, $disability);
         $this->assertInstanceOf(DisabilityID::class, $disability->getID());
@@ -40,8 +38,6 @@ class DisabilityTest extends TestCase {
     }
 
     public function testCreateDisabilities(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -57,7 +53,7 @@ class DisabilityTest extends TestCase {
             ]
         ];
 
-        $disabilities = new Disabilities($data, $logger);
+        $disabilities = new Disabilities($data);
 
         $this->assertInstanceOf(Disabilities::class, $disabilities);
         $this->assertCount(2, $disabilities);

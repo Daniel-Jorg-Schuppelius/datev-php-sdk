@@ -4,19 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\PublicSector\TransactionAddresses\TransactionAddresses;
 use Datev\Entities\PublicSector\TransactionAddresses\TransactionAddress;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class TransactionAddressesTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class TransactionAddressesTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -24,7 +17,7 @@ class TransactionAddressesTest extends TestCase {
                 ["id" => 2, "status" => "pending", "notification_e_mail" => "test2@example.com"]
             ]
         ];
-        $collection = new TransactionAddresses($data, $this->logger);
+        $collection = new TransactionAddresses($data);
         $this->assertCount(2, $collection->getValues());
         $this->assertInstanceOf(TransactionAddress::class, $collection->getValues()[0]);
     }

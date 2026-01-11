@@ -12,14 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\IdentityAndAccessManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\IdentityAndAccessManagement\Users\ScimMeta;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class ScimMetaTest extends TestCase {
+class ScimMetaTest extends EntityTest {
     public function testCreateScimMeta(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "resource_type" => "User",
             "location" => "https://api.datev.de/scim/v2/Users/12345",
@@ -28,7 +26,7 @@ class ScimMetaTest extends TestCase {
             "version" => "W/\"abc123\""
         ];
 
-        $meta = new ScimMeta($data, $logger);
+        $meta = new ScimMeta($data);
 
         $this->assertInstanceOf(ScimMeta::class, $meta);
         $this->assertEquals("User", $meta->getResourceType());

@@ -12,12 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\Establishments\Establishment;
 use Datev\Entities\ClientMasterData\Establishments\EstablishmentID;
 use Datev\Entities\ClientMasterData\Establishments\Establishments;
-use PHPUnit\Framework\TestCase;
 
-class EstablishmentTest extends TestCase {
+class EstablishmentTest extends EntityTest {
     public function testCreateEstablishmentID() {
         $id = new EstablishmentID("12345678-1234-1234-1234-123456789012");
         $this->assertInstanceOf(EstablishmentID::class, $id);

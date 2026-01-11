@@ -12,14 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\IdentityAndAccessManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\IdentityAndAccessManagement\Users\DatevUserExtension;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class DatevUserExtensionTest extends TestCase {
+class DatevUserExtensionTest extends EntityTest {
     public function testCreateDatevUserExtension(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "valid_from" => "2024-01-01T00:00:00.000+00:00",
             "valid_to" => "2025-12-31T23:59:59.000+00:00",
@@ -32,7 +30,7 @@ class DatevUserExtensionTest extends TestCase {
             ]
         ];
 
-        $extension = new DatevUserExtension($data, $logger);
+        $extension = new DatevUserExtension($data);
 
         $this->assertInstanceOf(DatevUserExtension::class, $extension);
         $this->assertEquals("DJS", $extension->getInitials());

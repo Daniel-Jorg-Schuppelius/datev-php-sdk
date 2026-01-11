@@ -12,27 +12,20 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Law\BillingCategories\BillingCategory;
 use Datev\Entities\Law\BillingCategories\BillingCategories;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class BillingCategoryTest extends TestCase {
-    private ?LoggerInterface $logger = null;
-
-    public function __construct(string $name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class BillingCategoryTest extends EntityTest {
+    
     public function testCreateBillingCategory(): void {
         $data = [
             "number" => 1,
             "name" => "Standard-Abrechnung"
         ];
 
-        $billingCategory = new BillingCategory($data, $this->logger);
+        $billingCategory = new BillingCategory($data);
 
         $this->assertInstanceOf(BillingCategory::class, $billingCategory);
         $this->assertEquals(1, $billingCategory->getNumber());
@@ -53,7 +46,7 @@ class BillingCategoryTest extends TestCase {
             ]
         ];
 
-        $billingCategories = new BillingCategories($data, $this->logger);
+        $billingCategories = new BillingCategories($data);
 
         $this->assertInstanceOf(BillingCategories::class, $billingCategories);
         $this->assertCount(2, $billingCategories);

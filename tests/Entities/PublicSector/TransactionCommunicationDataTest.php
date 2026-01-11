@@ -12,14 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\PublicSector\TransactionCommunications\TransactionCommunicationData;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class TransactionCommunicationDataTest extends TestCase {
+class TransactionCommunicationDataTest extends EntityTest {
     public function testCreateTransactionCommunicationData(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "comm-001",
             "communication_data_content" => "test@example.com",
@@ -32,7 +30,7 @@ class TransactionCommunicationDataTest extends TestCase {
             ]
         ];
 
-        $commData = new TransactionCommunicationData($data, $logger);
+        $commData = new TransactionCommunicationData($data);
 
         $this->assertInstanceOf(TransactionCommunicationData::class, $commData);
         $this->assertEquals("comm-001", $commData->getID());

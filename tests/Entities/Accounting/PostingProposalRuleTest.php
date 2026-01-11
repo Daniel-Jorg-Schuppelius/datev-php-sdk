@@ -12,20 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
-use ERRORToolkit\Logger\ConsoleLogger;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Accounting\PostingProposalRules\PostingProposalRule;
 use Datev\Entities\Accounting\PostingProposalRules\PostingProposalRules;
-use PHPUnit\Framework\TestCase;
 
-class PostingProposalRuleTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class PostingProposalRuleTest extends EntityTest {
     public function testCreatePostingProposalRule() {
         $data = [
             "id" => 1,
@@ -39,7 +31,7 @@ class PostingProposalRuleTest extends TestCase {
             "iban" => "DE89370400440532013000"
         ];
 
-        $rule = new PostingProposalRule($data, $this->logger);
+        $rule = new PostingProposalRule($data);
         $this->assertInstanceOf(PostingProposalRule::class, new PostingProposalRule());
         $this->assertInstanceOf(PostingProposalRule::class, $rule);
         $this->assertEquals(4400, $rule->getAccountNumber());
@@ -64,7 +56,7 @@ class PostingProposalRuleTest extends TestCase {
             ]
         ];
 
-        $rules = new PostingProposalRules($data, $this->logger);
+        $rules = new PostingProposalRules($data);
         $this->assertInstanceOf(PostingProposalRules::class, $rules);
         $this->assertCount(2, $rules->getValues());
     }

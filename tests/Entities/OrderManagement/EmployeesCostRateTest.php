@@ -12,19 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\OrderManagement\EmployeesCostRate\EmployeesCostRate;
 use Datev\Entities\OrderManagement\EmployeesCostRate\EmployeeCostRate;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class EmployeesCostRateTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class EmployeesCostRateTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -43,7 +36,7 @@ class EmployeesCostRateTest extends TestCase {
             ]
         ];
 
-        $rates = new EmployeesCostRate($data, $this->logger);
+        $rates = new EmployeesCostRate($data);
 
         $this->assertCount(2, $rates->getValues());
         $this->assertInstanceOf(EmployeeCostRate::class, $rates->getValues()[0]);

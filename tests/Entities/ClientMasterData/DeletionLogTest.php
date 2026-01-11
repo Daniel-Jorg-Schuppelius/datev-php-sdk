@@ -12,11 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\DeletionLogs\DeletionLog;
 use Datev\Entities\ClientMasterData\DeletionLogs\DeletionLogs;
-use PHPUnit\Framework\TestCase;
 
-class DeletionLogTest extends TestCase {
+class DeletionLogTest extends EntityTest {
     public function testCreateDeletionLog() {
         $data = [
             "id" => "d13f9c3c-380c-494e-97c8-d12fff738189",

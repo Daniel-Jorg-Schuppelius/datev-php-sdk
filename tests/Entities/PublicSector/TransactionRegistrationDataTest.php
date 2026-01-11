@@ -12,21 +12,19 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\PublicSector\TransactionRegistrations\TransactionRegistrationData;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class TransactionRegistrationDataTest extends TestCase {
+class TransactionRegistrationDataTest extends EntityTest {
     public function testCreateTransactionRegistrationData(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "reg-001",
             "is_registered" => true,
             "registration_email" => "user@example.com"
         ];
 
-        $registrationData = new TransactionRegistrationData($data, $logger);
+        $registrationData = new TransactionRegistrationData($data);
 
         $this->assertInstanceOf(TransactionRegistrationData::class, $registrationData);
         $this->assertEquals("reg-001", $registrationData->getID());
@@ -35,15 +33,13 @@ class TransactionRegistrationDataTest extends TestCase {
     }
 
     public function testUnregisteredData(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "reg-002",
             "is_registered" => false,
             "registration_email" => null
         ];
 
-        $registrationData = new TransactionRegistrationData($data, $logger);
+        $registrationData = new TransactionRegistrationData($data);
 
         $this->assertFalse($registrationData->isRegistered());
         $this->assertNull($registrationData->getRegistrationEmail());

@@ -12,15 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\WorkingHours\WorkingHours;
 use Datev\Entities\Payroll\WorkingHours\WorkingHoursID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class WorkingHoursTest extends TestCase {
+class WorkingHoursTest extends EntityTest {
     public function testCreateWorkingHours(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "wh-001",
             "weekly_working_hours" => 40.0,
@@ -33,7 +31,7 @@ class WorkingHoursTest extends TestCase {
             "allocation_of_working_hours_sunday" => 0.0
         ];
 
-        $workingHours = new WorkingHours($data, $logger);
+        $workingHours = new WorkingHours($data);
 
         $this->assertInstanceOf(WorkingHours::class, $workingHours);
         $this->assertInstanceOf(WorkingHoursID::class, $workingHours->getID());

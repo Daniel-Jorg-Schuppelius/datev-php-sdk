@@ -12,27 +12,19 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
-use ERRORToolkit\Logger\ConsoleLogger;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\PublicSector\TransactionRegistrations\TransactionRegistration;
 use Datev\Entities\PublicSector\TransactionRegistrations\TransactionRegistrations;
-use PHPUnit\Framework\TestCase;
 
-class TransactionRegistrationTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class TransactionRegistrationTest extends EntityTest {
     public function testCreateTransactionRegistration() {
         $data = [
             "id" => 12345,
             "status" => "registered"
         ];
 
-        $reg = new TransactionRegistration($data, $this->logger);
+        $reg = new TransactionRegistration($data);
         $this->assertInstanceOf(TransactionRegistration::class, new TransactionRegistration());
         $this->assertInstanceOf(TransactionRegistration::class, $reg);
         $this->assertEquals(12345, $reg->getID());
@@ -53,7 +45,7 @@ class TransactionRegistrationTest extends TestCase {
             ]
         ];
 
-        $regs = new TransactionRegistrations($data, $this->logger);
+        $regs = new TransactionRegistrations($data);
         $this->assertInstanceOf(TransactionRegistrations::class, $regs);
         $this->assertCount(2, $regs->getValues());
     }

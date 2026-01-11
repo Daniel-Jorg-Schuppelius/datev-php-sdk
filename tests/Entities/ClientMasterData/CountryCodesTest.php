@@ -4,19 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\CountryCodes\CountryCodes;
 use Datev\Entities\ClientMasterData\CountryCodes\CountryCode;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class CountryCodesTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class CountryCodesTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -24,7 +17,7 @@ class CountryCodesTest extends TestCase {
                 ["id" => "AT", "name" => "Austria"]
             ]
         ];
-        $collection = new CountryCodes($data, $this->logger);
+        $collection = new CountryCodes($data);
         $this->assertCount(2, $collection->getValues());
         $this->assertInstanceOf(CountryCode::class, $collection->getValues()[0]);
     }

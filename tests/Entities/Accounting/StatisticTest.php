@@ -12,20 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
-use ERRORToolkit\Logger\ConsoleLogger;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Accounting\Statistics\Statistic;
 use Datev\Entities\Accounting\Statistics\Statistics;
-use PHPUnit\Framework\TestCase;
 
-class StatisticTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class StatisticTest extends EntityTest {
     public function testCreateStatistic() {
         $data = [
             "id" => 1,
@@ -34,7 +26,7 @@ class StatisticTest extends TestCase {
             "count_of_accounting_prima_nota" => 75
         ];
 
-        $statistic = new Statistic($data, $this->logger);
+        $statistic = new Statistic($data);
         $this->assertInstanceOf(Statistic::class, $statistic);
         $this->assertNotNull($statistic->getID());
     }
@@ -53,7 +45,7 @@ class StatisticTest extends TestCase {
             ]
         ];
 
-        $statistics = new Statistics($data, $this->logger);
+        $statistics = new Statistics($data);
         $this->assertInstanceOf(Statistics::class, $statistics);
         $this->assertCount(2, $statistics->getValues());
     }

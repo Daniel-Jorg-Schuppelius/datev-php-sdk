@@ -12,11 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\CountryCodes\CountryCode;
 use Datev\Entities\ClientMasterData\CountryCodes\CountryCodes;
-use PHPUnit\Framework\TestCase;
 
-class CountryCodeTest extends TestCase {
+class CountryCodeTest extends EntityTest {
     public function testCreateCountryCode() {
         $data = [
             "id" => "DE",

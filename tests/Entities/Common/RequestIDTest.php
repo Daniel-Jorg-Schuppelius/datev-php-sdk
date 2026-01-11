@@ -12,15 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Common\RequestID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class RequestIDTest extends TestCase {
+class RequestIDTest extends EntityTest {
     public function testCreateRequestID(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
-        $requestID = new RequestID("req-123456789", $logger);
+        $requestID = new RequestID("req-123456789");
 
         $this->assertInstanceOf(RequestID::class, $requestID);
         $this->assertEquals("req-123456789", $requestID->getValue());

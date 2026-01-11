@@ -12,11 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\CodesOfClassificationOfEconomicActivities2003\CodeOfClassificationOfEconomicActivities2003;
 use Datev\Entities\ClientMasterData\CodesOfClassificationOfEconomicActivities2003\CodesOfClassificationOfEconomicActivities2003;
-use PHPUnit\Framework\TestCase;
 
-class CodeOfClassificationOfEconomicActivities2003Test extends TestCase {
+class CodeOfClassificationOfEconomicActivities2003Test extends EntityTest {
     public function testCreateCodeOfClassificationOfEconomicActivities2003(): void {
         $data = [
             "value" => "01.11",

@@ -12,20 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\OrderManagement\OrderStateWork\OrderStateWork;
 use Datev\Entities\OrderManagement\OrderStateWork\OrderStateWorks;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class OrderStateWorkTest extends TestCase {
-    private ?LoggerInterface $logger = null;
-
-    public function __construct(string $name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class OrderStateWorkTest extends EntityTest {
+    
     public function testCreateOrderStateWork(): void {
         $data = [
             "id" => "test-id",
@@ -38,7 +31,7 @@ class OrderStateWorkTest extends TestCase {
             "done_date" => "2024-03-15"
         ];
 
-        $orderStateWork = new OrderStateWork($data, $this->logger);
+        $orderStateWork = new OrderStateWork($data);
 
         $this->assertInstanceOf(OrderStateWork::class, $orderStateWork);
         $this->assertEquals(2024001, $orderStateWork->getOrderId());
@@ -59,7 +52,7 @@ class OrderStateWorkTest extends TestCase {
             ]
         ];
 
-        $orderStateWorks = new OrderStateWorks($data, $this->logger);
+        $orderStateWorks = new OrderStateWorks($data);
 
         $this->assertInstanceOf(OrderStateWorks::class, $orderStateWorks);
         $this->assertCount(2, $orderStateWorks);

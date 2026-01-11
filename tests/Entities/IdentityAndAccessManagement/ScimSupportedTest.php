@@ -12,32 +12,28 @@ declare(strict_types=1);
 
 namespace Tests\Entities\IdentityAndAccessManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\IdentityAndAccessManagement\ServiceProvider\ScimSupported;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class ScimSupportedTest extends TestCase {
+class ScimSupportedTest extends EntityTest {
     public function testCreateScimSupported(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "supported" => true
         ];
 
-        $supported = new ScimSupported($data, $logger);
+        $supported = new ScimSupported($data);
 
         $this->assertInstanceOf(ScimSupported::class, $supported);
         $this->assertTrue($supported->isSupported());
     }
 
     public function testScimNotSupported(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "supported" => false
         ];
 
-        $supported = new ScimSupported($data, $logger);
+        $supported = new ScimSupported($data);
 
         $this->assertFalse($supported->isSupported());
     }

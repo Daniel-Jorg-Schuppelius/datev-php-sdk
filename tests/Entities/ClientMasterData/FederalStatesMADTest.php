@@ -12,19 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\FederalStatesMAD\FederalStatesMAD;
 use Datev\Entities\ClientMasterData\FederalStatesMAD\FederalStateMAD;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class FederalStatesMADTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class FederalStatesMADTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -33,7 +26,7 @@ class FederalStatesMADTest extends TestCase {
             ]
         ];
 
-        $states = new FederalStatesMAD($data, $this->logger);
+        $states = new FederalStatesMAD($data);
 
         $this->assertCount(2, $states->getValues());
         $this->assertInstanceOf(FederalStateMAD::class, $states->getValues()[0]);

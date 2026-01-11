@@ -4,19 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\ClientGroups\ClientGroups;
 use Datev\Entities\ClientMasterData\ClientGroups\ClientGroup;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class ClientGroupsTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class ClientGroupsTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -24,7 +17,7 @@ class ClientGroupsTest extends TestCase {
                 ["id" => "cg-2", "client_group_type_short_name" => "Group B"]
             ]
         ];
-        $collection = new ClientGroups($data, $this->logger);
+        $collection = new ClientGroups($data);
         $this->assertCount(2, $collection->getValues());
         $this->assertInstanceOf(ClientGroup::class, $collection->getValues()[0]);
     }

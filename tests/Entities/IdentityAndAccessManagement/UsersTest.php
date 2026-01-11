@@ -12,19 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\IdentityAndAccessManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\IdentityAndAccessManagement\Users\Users;
 use Datev\Entities\IdentityAndAccessManagement\Users\User;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class UsersTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class UsersTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -41,7 +34,7 @@ class UsersTest extends TestCase {
             ]
         ];
 
-        $users = new Users($data, $this->logger);
+        $users = new Users($data);
 
         $this->assertCount(2, $users->getValues());
         $this->assertInstanceOf(User::class, $users->getValues()[0]);

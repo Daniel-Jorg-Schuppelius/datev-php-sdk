@@ -12,20 +12,17 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\CostCenters\CostCenter;
 use Datev\Entities\Payroll\CostCenters\CostCenters;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class CostCenterTest extends TestCase {
+class CostCenterTest extends EntityTest {
     public function testCreateCostCenter() {
         $data = [
             "id" => "100",
             "name" => "Verwaltung"
-        ];
-
-        $logger = ConsoleLoggerFactory::getLogger();
-        $costCenter = new CostCenter($data, $logger);
+        ];        $costCenter = new CostCenter($data);
 
         $this->assertInstanceOf(CostCenter::class, $costCenter);
         $this->assertEquals("Verwaltung", $costCenter->getName());
@@ -43,10 +40,7 @@ class CostCenterTest extends TestCase {
                     "name" => "Produktion"
                 ]
             ]
-        ];
-
-        $logger = ConsoleLoggerFactory::getLogger();
-        $costCenters = new CostCenters($data, $logger);
+        ];        $costCenters = new CostCenters($data);
 
         $this->assertInstanceOf(CostCenters::class, $costCenters);
         $this->assertCount(2, $costCenters->getValues());

@@ -12,11 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\TaxOffices\TaxOffice;
 use Datev\Entities\ClientMasterData\TaxOffices\TaxOffices;
-use PHPUnit\Framework\TestCase;
 
-class TaxOfficeTest extends TestCase {
+class TaxOfficeTest extends EntityTest {
     public function testCreateTaxOffice() {
         $data = [
             "id" => "43b9d6d9-117b-4555-b0b0-3659eb0279d4",

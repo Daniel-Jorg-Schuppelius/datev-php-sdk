@@ -12,20 +12,18 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\PublicSector\TransactionCommunications\CommunicationUsageType;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class CommunicationUsageTypeTest extends TestCase {
+class CommunicationUsageTypeTest extends EntityTest {
     public function testCreateCommunicationUsageType(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "is_main_communication_usage_type" => true,
             "is_main_management_phone" => false
         ];
 
-        $usageType = new CommunicationUsageType($data, $logger);
+        $usageType = new CommunicationUsageType($data);
 
         $this->assertInstanceOf(CommunicationUsageType::class, $usageType);
     }

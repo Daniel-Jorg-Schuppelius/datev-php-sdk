@@ -12,21 +12,18 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Accounting\CostCenterProperties\CostCenterProperties;
 use Datev\Entities\Accounting\CostCenterProperties\CostCenterProperty;
 use Datev\Entities\Accounting\CostCenterProperties\CostCenterPropertyID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class CostCenterPropertyTest extends TestCase {
+class CostCenterPropertyTest extends EntityTest {
     public function testCreateCostCenterProperty() {
         $data = [
             "id" => 1,
             "description" => "Property Description"
-        ];
-
-        $logger = ConsoleLoggerFactory::getLogger();
-        $property = new CostCenterProperty($data, $logger);
+        ];        $property = new CostCenterProperty($data);
 
         $this->assertInstanceOf(CostCenterProperty::class, $property);
         $this->assertInstanceOf(CostCenterPropertyID::class, $property->getID());
@@ -44,10 +41,7 @@ class CostCenterPropertyTest extends TestCase {
                     "description" => "Property Two"
                 ]
             ]
-        ];
-
-        $logger = ConsoleLoggerFactory::getLogger();
-        $properties = new CostCenterProperties($data, $logger);
+        ];        $properties = new CostCenterProperties($data);
 
         $this->assertInstanceOf(CostCenterProperties::class, $properties);
         $this->assertCount(2, $properties->getValues());

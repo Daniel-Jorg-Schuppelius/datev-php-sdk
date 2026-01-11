@@ -12,20 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
-use ERRORToolkit\Logger\ConsoleLogger;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Accounting\TermsOfPayment\TermOfPayment;
 use Datev\Entities\Accounting\TermsOfPayment\TermsOfPayment;
-use PHPUnit\Framework\TestCase;
 
-class TermOfPaymentTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class TermOfPaymentTest extends EntityTest {
     public function testCreateTermOfPayment() {
         $data = [
             "id" => 1,
@@ -39,7 +31,7 @@ class TermOfPaymentTest extends TestCase {
             "is_locked" => false
         ];
 
-        $term = new TermOfPayment($data, $this->logger);
+        $term = new TermOfPayment($data);
         $this->assertInstanceOf(TermOfPayment::class, new TermOfPayment());
         $this->assertInstanceOf(TermOfPayment::class, $term);
         $this->assertEquals("14 Tage 2% Skonto, 30 Tage netto", $term->getCaption());
@@ -65,7 +57,7 @@ class TermOfPaymentTest extends TestCase {
             ]
         ];
 
-        $terms = new TermsOfPayment($data, $this->logger);
+        $terms = new TermsOfPayment($data);
         $this->assertInstanceOf(TermsOfPayment::class, $terms);
         $this->assertCount(2, $terms->getValues());
     }

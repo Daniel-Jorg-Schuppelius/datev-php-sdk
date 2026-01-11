@@ -12,15 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Common\NumberStandardized;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class NumberStandardizedTest extends TestCase {
+class NumberStandardizedTest extends EntityTest {
     public function testCreateNumberStandardized(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
-        $numberStandardized = new NumberStandardized("0049891234567890", $logger);
+        $numberStandardized = new NumberStandardized("0049891234567890");
 
         $this->assertInstanceOf(NumberStandardized::class, $numberStandardized);
         $this->assertEquals("0049891234567890", $numberStandardized->getValue());
@@ -28,9 +26,7 @@ class NumberStandardizedTest extends TestCase {
     }
 
     public function testInvalidNumberStandardized(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
-        $numberStandardized = new NumberStandardized("+49 89 12345678", $logger);
+        $numberStandardized = new NumberStandardized("+49 89 12345678");
 
         $this->assertInstanceOf(NumberStandardized::class, $numberStandardized);
         $this->assertFalse($numberStandardized->isValid());

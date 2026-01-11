@@ -12,20 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
-use ERRORToolkit\Logger\ConsoleLogger;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Accounting\Debitors\Debitor;
 use Datev\Entities\Accounting\Debitors\Debitors;
-use PHPUnit\Framework\TestCase;
 
-class DebitorTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class DebitorTest extends EntityTest {
     public function testCreateDebitor() {
         $data = [
             "id" => 10001,
@@ -40,7 +32,7 @@ class DebitorTest extends TestCase {
             "date_last_modification" => "2024-12-28T10:30:00.000+00:00"
         ];
 
-        $debitor = new Debitor($data, $this->logger);
+        $debitor = new Debitor($data);
         $this->assertInstanceOf(Debitor::class, new Debitor());
         $this->assertInstanceOf(Debitor::class, $debitor);
         $this->assertEquals(10001, $debitor->getAccountNumber());
@@ -65,7 +57,7 @@ class DebitorTest extends TestCase {
             ]
         ];
 
-        $debitors = new Debitors($data, $this->logger);
+        $debitors = new Debitors($data);
         $this->assertInstanceOf(Debitors::class, $debitors);
         $this->assertCount(2, $debitors->getValues());
     }

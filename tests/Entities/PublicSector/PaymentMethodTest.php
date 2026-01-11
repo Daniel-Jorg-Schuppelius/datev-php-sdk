@@ -12,10 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
-use Datev\Entities\PublicSector\Common\PaymentMethod;
-use PHPUnit\Framework\TestCase;
+use Tests\Contracts\EntityTest;
 
-class PaymentMethodTest extends TestCase {
+use Datev\Entities\PublicSector\Common\PaymentMethod;
+
+class PaymentMethodTest extends EntityTest {
     public function testCreatePaymentMethod(): void {
         $data = [
             "id" => "PM001",

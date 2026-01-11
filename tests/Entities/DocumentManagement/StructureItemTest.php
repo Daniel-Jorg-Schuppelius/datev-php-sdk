@@ -12,16 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\DocumentManagement\StructureItems\StructureItem;
 use Datev\Entities\DocumentManagement\StructureItems\StructureItems;
 use Datev\Enums\StructureItemType;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class StructureItemTest extends TestCase {
+class StructureItemTest extends EntityTest {
     public function testCreateStructureItem(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "name" => "Jahresabschluss_2024.pdf",
             "counter" => 1,
@@ -30,7 +28,7 @@ class StructureItemTest extends TestCase {
             "parent_counter" => 0
         ];
 
-        $structureItem = new StructureItem($data, $logger);
+        $structureItem = new StructureItem($data);
 
         $this->assertInstanceOf(StructureItem::class, $structureItem);
         $this->assertEquals("Jahresabschluss_2024.pdf", $structureItem->getName());
@@ -40,8 +38,6 @@ class StructureItemTest extends TestCase {
     }
 
     public function testCreateStructureItems(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -60,7 +56,7 @@ class StructureItemTest extends TestCase {
             ]
         ];
 
-        $structureItems = new StructureItems($data, $logger);
+        $structureItems = new StructureItems($data);
 
         $this->assertInstanceOf(StructureItems::class, $structureItems);
         $this->assertCount(2, $structureItems);

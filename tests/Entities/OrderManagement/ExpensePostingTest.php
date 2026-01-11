@@ -12,20 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\OrderManagement\ExpensePostings\ExpensePosting;
 use Datev\Entities\OrderManagement\ExpensePostings\ExpensePostings;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class ExpensePostingTest extends TestCase {
-    private ?LoggerInterface $logger = null;
-
-    public function __construct(string $name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class ExpensePostingTest extends EntityTest {
+    
     public function testCreateExpensePosting(): void {
         $data = [
             "id" => "EP-001",
@@ -42,7 +35,7 @@ class ExpensePostingTest extends TestCase {
             "cost_amount" => 500.00
         ];
 
-        $expensePosting = new ExpensePosting($data, $this->logger);
+        $expensePosting = new ExpensePosting($data);
 
         $this->assertInstanceOf(ExpensePosting::class, $expensePosting);
         $this->assertEquals("EP-001", $expensePosting->getID());
@@ -63,7 +56,7 @@ class ExpensePostingTest extends TestCase {
             ]
         ];
 
-        $expensePostings = new ExpensePostings($data, $this->logger);
+        $expensePostings = new ExpensePostings($data);
 
         $this->assertInstanceOf(ExpensePostings::class, $expensePostings);
         $this->assertCount(2, $expensePostings);

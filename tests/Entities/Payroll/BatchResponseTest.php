@@ -12,14 +12,15 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\BatchResponse\BatchResponse;
 use Datev\Entities\Payroll\BatchResponse\Failed\FailedResponse;
 use Datev\Entities\Payroll\BatchResponse\Failed\FailedResponses;
 use Datev\Entities\Payroll\BatchResponse\Succeeded\SucceededResponse;
 use Datev\Entities\Payroll\BatchResponse\Succeeded\SucceededResponses;
-use PHPUnit\Framework\TestCase;
 
-class BatchResponseTest extends TestCase {
+class BatchResponseTest extends EntityTest {
     public function testCreateBatchResponse(): void {
         $data = [
             "succeeded" => [

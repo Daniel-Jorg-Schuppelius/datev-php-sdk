@@ -12,20 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
-use ERRORToolkit\Logger\ConsoleLogger;;
+use Tests\Contracts\EntityTest;
 
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
 use Datev\Entities\ClientMasterData\Versions\Version;
-use PHPUnit\Framework\TestCase;
 
-class VersionTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class VersionTest extends EntityTest {
     public function testCreateVersion() {
         $data = [
             "adress_country" => "DE",
@@ -57,8 +48,8 @@ class VersionTest extends TestCase {
             "version_name" => "Kernstammdaten - Daten V.9.2A"
         ];
 
-        $version = new Version($data, $this->logger);
-        $version1 = new Version($data1, $this->logger);
+        $version = new Version($data);
+        $version1 = new Version($data1);
         $this->assertTrue($version->isValid());
         $this->assertInstanceOf(Version::class, new Version());
         $this->assertInstanceOf(Version::class, $version);

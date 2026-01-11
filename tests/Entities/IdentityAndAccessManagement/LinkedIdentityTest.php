@@ -12,19 +12,17 @@ declare(strict_types=1);
 
 namespace Tests\Entities\IdentityAndAccessManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\IdentityAndAccessManagement\Users\LinkedIdentity;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class LinkedIdentityTest extends TestCase {
+class LinkedIdentityTest extends EntityTest {
     public function testCreateLinkedIdentity(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "value" => "DOMAIN\\username"
         ];
 
-        $identity = new LinkedIdentity($data, $logger);
+        $identity = new LinkedIdentity($data);
 
         $this->assertInstanceOf(LinkedIdentity::class, $identity);
         $this->assertEquals("DOMAIN\\username", $identity->getValue());

@@ -12,15 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\IdentityAndAccessManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\IdentityAndAccessManagement\ServiceProvider\AuthenticationScheme;
 use Datev\Entities\IdentityAndAccessManagement\ServiceProvider\AuthenticationSchemes;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class AuthenticationSchemeTest extends TestCase {
+class AuthenticationSchemeTest extends EntityTest {
     public function testCreateAuthenticationScheme(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "type" => "oauth2",
             "name" => "OAuth 2.0 Bearer Token",
@@ -29,14 +27,12 @@ class AuthenticationSchemeTest extends TestCase {
             "documentation_uri" => "https://developer.datev.de/auth"
         ];
 
-        $scheme = new AuthenticationScheme($data, $logger);
+        $scheme = new AuthenticationScheme($data);
 
         $this->assertInstanceOf(AuthenticationScheme::class, $scheme);
     }
 
     public function testCreateAuthenticationSchemes(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             [
                 "type" => "oauth2",
@@ -48,7 +44,7 @@ class AuthenticationSchemeTest extends TestCase {
             ]
         ];
 
-        $schemes = new AuthenticationSchemes($data, $logger);
+        $schemes = new AuthenticationSchemes($data);
 
         $this->assertInstanceOf(AuthenticationSchemes::class, $schemes);
         $this->assertCount(2, $schemes->getValues());

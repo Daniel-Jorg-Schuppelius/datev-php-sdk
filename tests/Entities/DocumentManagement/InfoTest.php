@@ -12,12 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\DocumentManagement\Infos\Info;
 use Datev\Entities\DocumentManagement\Infos\InfoID;
 use Datev\Entities\DocumentManagement\Infos\Infos;
-use PHPUnit\Framework\TestCase;
 
-class InfoTest extends TestCase {
+class InfoTest extends EntityTest {
     public function testCreateInfoID(): void {
         $id = new InfoID("12345678-1234-1234-1234-123456789012");
         $this->assertInstanceOf(InfoID::class, $id);

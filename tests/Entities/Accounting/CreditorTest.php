@@ -12,20 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
-use ERRORToolkit\Logger\ConsoleLogger;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Accounting\Creditors\Creditor;
 use Datev\Entities\Accounting\Creditors\Creditors;
-use PHPUnit\Framework\TestCase;
 
-class CreditorTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class CreditorTest extends EntityTest {
     public function testCreateCreditor() {
         $data = [
             "id" => 70001,
@@ -40,7 +32,7 @@ class CreditorTest extends TestCase {
             "date_last_modification" => "2024-12-28T10:30:00.000+00:00"
         ];
 
-        $creditor = new Creditor($data, $this->logger);
+        $creditor = new Creditor($data);
         $this->assertInstanceOf(Creditor::class, new Creditor());
         $this->assertInstanceOf(Creditor::class, $creditor);
         $this->assertEquals(70001, $creditor->getAccountNumber());
@@ -65,7 +57,7 @@ class CreditorTest extends TestCase {
             ]
         ];
 
-        $creditors = new Creditors($data, $this->logger);
+        $creditors = new Creditors($data);
         $this->assertInstanceOf(Creditors::class, $creditors);
         $this->assertCount(2, $creditors->getValues());
     }

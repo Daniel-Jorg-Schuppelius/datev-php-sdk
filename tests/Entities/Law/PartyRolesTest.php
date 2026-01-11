@@ -4,19 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Law\PartyRoles\PartyRoles;
 use Datev\Entities\Law\PartyRoles\PartyRole;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class PartyRolesTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class PartyRolesTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -24,7 +17,7 @@ class PartyRolesTest extends TestCase {
                 ["id" => "pr-2", "name" => "Defendant", "short_name" => "DEF"]
             ]
         ];
-        $collection = new PartyRoles($data, $this->logger);
+        $collection = new PartyRoles($data);
         $this->assertCount(2, $collection->getValues());
         $this->assertInstanceOf(PartyRole::class, $collection->getValues()[0]);
     }

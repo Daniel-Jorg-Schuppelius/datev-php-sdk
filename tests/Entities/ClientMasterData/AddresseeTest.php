@@ -12,20 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
-use ERRORToolkit\Logger\ConsoleLogger;;
+use Tests\Contracts\EntityTest;
 
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
 use Datev\Entities\ClientMasterData\Addressees\Addressee;
-use PHPUnit\Framework\TestCase;
 
-class AddresseeTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class AddresseeTest extends EntityTest {
     public function testCreateAddressee() {
         $data = [
             "id" => "16b9d6d3-117b-4553-b0b0-3659eb0279d7",
@@ -372,7 +363,7 @@ class AddresseeTest extends TestCase {
             ]
         ];
 
-        $addressee = new Addressee($data, $this->logger);
+        $addressee = new Addressee($data);
         $this->assertTrue($addressee->isValid());
         $this->assertInstanceOf(Addressee::class, new Addressee());
         $this->assertInstanceOf(Addressee::class, $addressee);

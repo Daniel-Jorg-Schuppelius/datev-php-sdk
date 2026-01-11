@@ -12,14 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\DocumentManagement\StructureItems\BaseStructureItem;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class BaseStructureItemTest extends TestCase {
+class BaseStructureItemTest extends EntityTest {
     public function testCreateBaseStructureItem(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "550e8400-e29b-41d4-a716-446655440000",
             "creation_date" => "2024-01-15T10:30:00.000+00:00",
@@ -27,7 +25,7 @@ class BaseStructureItemTest extends TestCase {
             "revision_comment" => "Initial version"
         ];
 
-        $item = new BaseStructureItem($data, $logger);
+        $item = new BaseStructureItem($data);
 
         $this->assertInstanceOf(BaseStructureItem::class, $item);
     }

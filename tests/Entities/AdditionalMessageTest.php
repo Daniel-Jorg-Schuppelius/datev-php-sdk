@@ -12,20 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities;
 
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use ERRORToolkit\Logger\ConsoleLogger;;
+use Tests\Contracts\EntityTest;
 
 use Datev\Entities\Common\AdditionalMessages\AdditionalMessage;
-use PHPUnit\Framework\TestCase;
 
-class AdditionalMessageTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class AdditionalMessageTest extends EntityTest {
     public function testCreateAdditionalMessage() {
         $data = [
             "id" => "abc",
@@ -36,7 +27,7 @@ class AdditionalMessageTest extends TestCase {
 
         $additionalMessage = new AdditionalMessage($data);
         $this->assertTrue($additionalMessage->isValid());
-        $additionalMessage = new AdditionalMessage($data, $this->logger);
+        $additionalMessage = new AdditionalMessage($data);
         $this->assertInstanceOf(AdditionalMessage::class, new AdditionalMessage());
         $this->assertInstanceOf(AdditionalMessage::class, $additionalMessage);
         $this->assertEquals($data, $additionalMessage->toArray());

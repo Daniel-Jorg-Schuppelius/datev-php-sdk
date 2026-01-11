@@ -12,20 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\Versions\ResourceRevision;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class ResourceRevisionTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class ResourceRevisionTest extends EntityTest {
     public function testCreateFromString(): void {
-        $revision = new ResourceRevision("1.2.3", $this->logger);
+        $revision = new ResourceRevision("1.2.3");
 
         $this->assertEquals("1.2.3", $revision->getValue());
         $this->assertEquals('resource_revision', $revision->getEntityName());

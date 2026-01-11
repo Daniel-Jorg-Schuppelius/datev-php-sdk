@@ -12,23 +12,21 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\DocumentManagement\PropertyTemplates\PropertyTemplate;
 use Datev\Entities\DocumentManagement\PropertyTemplates\PropertyTemplates;
 use Datev\Entities\DocumentManagement\PropertyTemplates\PropertyTemplateID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class PropertyTemplateTest extends TestCase {
+class PropertyTemplateTest extends EntityTest {
     public function testCreatePropertyTemplate(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "tpl-001",
             "name" => "Standardvorlage Rechnung",
             "supplement" => "Eingangsrechnungen"
         ];
 
-        $propertyTemplate = new PropertyTemplate($data, $logger);
+        $propertyTemplate = new PropertyTemplate($data);
 
         $this->assertInstanceOf(PropertyTemplate::class, $propertyTemplate);
         $this->assertInstanceOf(PropertyTemplateID::class, $propertyTemplate->getID());
@@ -38,8 +36,6 @@ class PropertyTemplateTest extends TestCase {
     }
 
     public function testCreatePropertyTemplates(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -53,7 +49,7 @@ class PropertyTemplateTest extends TestCase {
             ]
         ];
 
-        $propertyTemplates = new PropertyTemplates($data, $logger);
+        $propertyTemplates = new PropertyTemplates($data);
 
         $this->assertInstanceOf(PropertyTemplates::class, $propertyTemplates);
         $this->assertCount(2, $propertyTemplates);

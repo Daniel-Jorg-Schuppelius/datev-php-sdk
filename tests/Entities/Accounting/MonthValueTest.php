@@ -12,15 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Accounting\AccountingSumsAndBalances\MonthValue;
 use Datev\Entities\Accounting\AccountingSumsAndBalances\MonthValues;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class MonthValueTest extends TestCase {
+class MonthValueTest extends EntityTest {
     public function testCreateMonthValue(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "monthly_balance" => 1234.56,
             "debit_credit_identifier" => "D",
@@ -29,7 +27,7 @@ class MonthValueTest extends TestCase {
             "month" => 6
         ];
 
-        $monthValue = new MonthValue($data, $logger);
+        $monthValue = new MonthValue($data);
 
         $this->assertInstanceOf(MonthValue::class, $monthValue);
         $this->assertEquals(1234.56, $monthValue->getMonthlyBalance());
@@ -40,8 +38,6 @@ class MonthValueTest extends TestCase {
     }
 
     public function testCreateMonthValues(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             [
                 "monthly_balance" => 1000.00,
@@ -53,7 +49,7 @@ class MonthValueTest extends TestCase {
             ]
         ];
 
-        $monthValues = new MonthValues($data, $logger);
+        $monthValues = new MonthValues($data);
 
         $this->assertInstanceOf(MonthValues::class, $monthValues);
         $this->assertCount(2, $monthValues);

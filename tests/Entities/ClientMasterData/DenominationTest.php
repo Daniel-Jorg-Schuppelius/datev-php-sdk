@@ -12,11 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\Denominations\Denomination;
 use Datev\Entities\ClientMasterData\Denominations\Denominations;
-use PHPUnit\Framework\TestCase;
 
-class DenominationTest extends TestCase {
+class DenominationTest extends EntityTest {
     public function testCreateDenomination() {
         $data = [
             "value" => "Evangelisch",

@@ -12,20 +12,18 @@ declare(strict_types=1);
 
 namespace Tests\Entities\IdentityAndAccessManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\IdentityAndAccessManagement\ServiceProvider\ScimFilter;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class ScimFilterTest extends TestCase {
+class ScimFilterTest extends EntityTest {
     public function testCreateScimFilter(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "supported" => true,
             "max_results" => 500
         ];
 
-        $filter = new ScimFilter($data, $logger);
+        $filter = new ScimFilter($data);
 
         $this->assertInstanceOf(ScimFilter::class, $filter);
         $this->assertTrue($filter->isSupported());
@@ -33,13 +31,11 @@ class ScimFilterTest extends TestCase {
     }
 
     public function testUnsupportedScimFilter(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "supported" => false
         ];
 
-        $filter = new ScimFilter($data, $logger);
+        $filter = new ScimFilter($data);
 
         $this->assertFalse($filter->isSupported());
     }

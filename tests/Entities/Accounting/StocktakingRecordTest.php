@@ -12,20 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
-use ERRORToolkit\Logger\ConsoleLogger;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Accounting\Stocktakings\StocktakingRecord;
 use Datev\Entities\Accounting\Stocktakings\StocktakingRecords;
-use PHPUnit\Framework\TestCase;
 
-class StocktakingRecordTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class StocktakingRecordTest extends EntityTest {
     public function testCreateStocktakingRecord() {
         $data = [
             "id" => "INV-2024-001",
@@ -45,7 +37,7 @@ class StocktakingRecordTest extends TestCase {
             "location" => "Büro 101"
         ];
 
-        $stocktakingRecord = new StocktakingRecord($data, $this->logger);
+        $stocktakingRecord = new StocktakingRecord($data);
         $this->assertInstanceOf(StocktakingRecord::class, new StocktakingRecord());
         $this->assertInstanceOf(StocktakingRecord::class, $stocktakingRecord);
         $this->assertNotNull($stocktakingRecord->getID());
@@ -71,7 +63,7 @@ class StocktakingRecordTest extends TestCase {
             ]
         ];
 
-        $stocktakingRecords = new StocktakingRecords($data, $this->logger);
+        $stocktakingRecords = new StocktakingRecords($data);
         $this->assertInstanceOf(StocktakingRecords::class, $stocktakingRecords);
         $this->assertCount(2, $stocktakingRecords->getValues());
     }

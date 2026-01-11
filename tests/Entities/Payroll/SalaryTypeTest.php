@@ -12,23 +12,21 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\Salaries\SalaryTypes\SalaryType;
 use Datev\Entities\Payroll\Salaries\SalaryTypes\SalaryTypes;
 use Datev\Entities\Payroll\Salaries\SalaryTypes\SalaryTypeID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class SalaryTypeTest extends TestCase {
+class SalaryTypeTest extends EntityTest {
     public function testCreateSalaryType(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "st-001",
             "name" => "Grundgehalt",
             "core" => "base"
         ];
 
-        $salaryType = new SalaryType($data, $logger);
+        $salaryType = new SalaryType($data);
 
         $this->assertInstanceOf(SalaryType::class, $salaryType);
         $this->assertInstanceOf(SalaryTypeID::class, $salaryType->getID());
@@ -38,8 +36,6 @@ class SalaryTypeTest extends TestCase {
     }
 
     public function testCreateSalaryTypes(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -53,7 +49,7 @@ class SalaryTypeTest extends TestCase {
             ]
         ];
 
-        $salaryTypes = new SalaryTypes($data, $logger);
+        $salaryTypes = new SalaryTypes($data);
 
         $this->assertInstanceOf(SalaryTypes::class, $salaryTypes);
         $this->assertCount(2, $salaryTypes);

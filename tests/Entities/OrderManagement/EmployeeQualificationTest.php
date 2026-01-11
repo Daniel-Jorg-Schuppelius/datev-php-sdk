@@ -12,12 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\OrderManagement\EmployeesQualification\EmployeeQualification;
 use Datev\Entities\OrderManagement\EmployeesQualification\EmployeesQualification;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class EmployeeQualificationTest extends TestCase {
+class EmployeeQualificationTest extends EntityTest {
     public function testCreateEmployeeQualification() {
         $data = [
             "id" => "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
@@ -29,10 +29,7 @@ class EmployeeQualificationTest extends TestCase {
             "qualification_short_name" => "Wirtschaftsprüfer",
             "qualification_long_name" => "Wirtschaftsprüfer (WP)",
             "qualification_active" => true
-        ];
-
-        $logger = ConsoleLoggerFactory::getLogger();
-        $qualification = new EmployeeQualification($data, $logger);
+        ];        $qualification = new EmployeeQualification($data);
 
         $this->assertInstanceOf(EmployeeQualification::class, $qualification);
         $this->assertEquals(100, $qualification->getEmployeeNumber());
@@ -57,10 +54,7 @@ class EmployeeQualificationTest extends TestCase {
                     "qualification_short_name" => "Wirtschaftsprüfer"
                 ]
             ]
-        ];
-
-        $logger = ConsoleLoggerFactory::getLogger();
-        $qualifications = new EmployeesQualification($data, $logger);
+        ];        $qualifications = new EmployeesQualification($data);
 
         $this->assertInstanceOf(EmployeesQualification::class, $qualifications);
         $this->assertCount(2, $qualifications->getValues());

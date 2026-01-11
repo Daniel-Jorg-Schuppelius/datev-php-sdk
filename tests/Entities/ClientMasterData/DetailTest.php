@@ -12,20 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
-use ERRORToolkit\Logger\ConsoleLogger;;
+use Tests\Contracts\EntityTest;
 
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
 use Datev\Entities\ClientMasterData\Details\Detail;
-use PHPUnit\Framework\TestCase;
 
-class DetailTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class DetailTest extends EntityTest {
     public function testCreateDetail() {
         $data = [
             "complimentary_close" => "Mit freundlichen Grüßen",
@@ -246,7 +237,7 @@ class DetailTest extends TestCase {
             "winding_up_proceedings" => "IA"
         ];
 
-        $detail = new Detail($data, $this->logger);
+        $detail = new Detail($data);
         $this->assertTrue($detail->isValid());
         $this->assertInstanceOf(Detail::class, new Detail());
         $this->assertInstanceOf(Detail::class, $detail);

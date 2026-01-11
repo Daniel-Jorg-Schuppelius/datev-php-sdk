@@ -12,20 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
-use ERRORToolkit\Logger\ConsoleLogger;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Accounting\AccountPostings\AccountPosting;
 use Datev\Entities\Accounting\AccountPostings\AccountPostings;
-use PHPUnit\Framework\TestCase;
 
-class AccountPostingTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class AccountPostingTest extends EntityTest {
     public function testCreateAccountPosting() {
         $data = [
             "id" => 1,
@@ -35,7 +27,7 @@ class AccountPostingTest extends TestCase {
             "billing_reference" => "RE-2024-001"
         ];
 
-        $posting = new AccountPosting($data, $this->logger);
+        $posting = new AccountPosting($data);
         $this->assertInstanceOf(AccountPosting::class, new AccountPosting());
         $this->assertInstanceOf(AccountPosting::class, $posting);
         $this->assertNotNull($posting->getID());
@@ -57,7 +49,7 @@ class AccountPostingTest extends TestCase {
             ]
         ];
 
-        $postings = new AccountPostings($data, $this->logger);
+        $postings = new AccountPostings($data);
         $this->assertInstanceOf(AccountPostings::class, $postings);
         $this->assertCount(2, $postings->getValues());
     }

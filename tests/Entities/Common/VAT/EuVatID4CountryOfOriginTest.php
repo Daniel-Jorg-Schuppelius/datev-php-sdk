@@ -12,15 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common\VAT;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Common\VAT\EuVatID4CountryOfOrigin;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class EuVatID4CountryOfOriginTest extends TestCase {
+class EuVatID4CountryOfOriginTest extends EntityTest {
     public function testCreateEuVatID4CountryOfOrigin(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
-        $euVatID4Country = new EuVatID4CountryOfOrigin("DE987654321", $logger);
+        $euVatID4Country = new EuVatID4CountryOfOrigin("DE987654321");
 
         $this->assertInstanceOf(EuVatID4CountryOfOrigin::class, $euVatID4Country);
         $this->assertEquals("DE987654321", $euVatID4Country->getValue());

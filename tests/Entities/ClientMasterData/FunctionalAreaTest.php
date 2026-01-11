@@ -12,12 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\FunctionalAreas\FunctionalArea;
 use Datev\Entities\ClientMasterData\FunctionalAreas\FunctionalAreas;
 use Datev\Entities\ClientMasterData\FunctionalAreas\ID\FunctionalAreaID;
-use PHPUnit\Framework\TestCase;
 
-class FunctionalAreaTest extends TestCase {
+class FunctionalAreaTest extends EntityTest {
     public function testCreateFunctionalAreaID() {
         $id = new FunctionalAreaID("12345678-1234-1234-1234-123456789012");
         $this->assertInstanceOf(FunctionalAreaID::class, $id);

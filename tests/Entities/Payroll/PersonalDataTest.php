@@ -12,12 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\Data\Personal\PersonalData;
 use Datev\Entities\Payroll\Data\Personal\PersonalDataID;
 use Datev\Entities\Payroll\Data\Personal\PersonalDatum;
-use PHPUnit\Framework\TestCase;
 
-class PersonalDataTest extends TestCase {
+class PersonalDataTest extends EntityTest {
     public function testCreatePersonalDataID(): void {
         $id = new PersonalDataID("12345678-1234-1234-1234-123456789012");
         $this->assertInstanceOf(PersonalDataID::class, $id);

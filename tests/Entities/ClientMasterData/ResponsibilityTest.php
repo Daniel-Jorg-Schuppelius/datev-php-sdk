@@ -12,11 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\Responsibilities\Responsibility;
 use Datev\Entities\ClientMasterData\Responsibilities\Responsibilities;
-use PHPUnit\Framework\TestCase;
 
-class ResponsibilityTest extends TestCase {
+class ResponsibilityTest extends EntityTest {
     public function testCreateResponsibility() {
         $data = [
             "id" => 123,

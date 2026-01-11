@@ -12,15 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\IdentityAndAccessManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\IdentityAndAccessManagement\Schemas\ScimSchemaAttribute;
 use Datev\Entities\IdentityAndAccessManagement\Schemas\ScimSchemaAttributes;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class ScimSchemaAttributeTest extends TestCase {
+class ScimSchemaAttributeTest extends EntityTest {
     public function testCreateScimSchemaAttribute(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "name" => "userName",
             "type" => "string",
@@ -32,14 +30,12 @@ class ScimSchemaAttributeTest extends TestCase {
             "uniqueness" => "server"
         ];
 
-        $attribute = new ScimSchemaAttribute($data, $logger);
+        $attribute = new ScimSchemaAttribute($data);
 
         $this->assertInstanceOf(ScimSchemaAttribute::class, $attribute);
     }
 
     public function testCreateScimSchemaAttributes(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             [
                 "name" => "userName",
@@ -51,7 +47,7 @@ class ScimSchemaAttributeTest extends TestCase {
             ]
         ];
 
-        $attributes = new ScimSchemaAttributes($data, $logger);
+        $attributes = new ScimSchemaAttributes($data);
 
         $this->assertInstanceOf(ScimSchemaAttributes::class, $attributes);
         $this->assertCount(2, $attributes->getValues());

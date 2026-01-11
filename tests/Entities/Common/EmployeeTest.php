@@ -12,12 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Common\Employees\Employee;
 use Datev\Entities\Common\Employees\EmployeeID;
 use Datev\Entities\Common\Employees\Employees;
-use PHPUnit\Framework\TestCase;
 
-class EmployeeTest extends TestCase {
+class EmployeeTest extends EntityTest {
     public function testCreateEmployeeID() {
         $id = new EmployeeID("12345678-1234-1234-1234-123456789012");
         $this->assertInstanceOf(EmployeeID::class, $id);

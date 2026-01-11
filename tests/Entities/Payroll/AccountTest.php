@@ -12,16 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\Accounts\Account;
 use Datev\Entities\Payroll\Accounts\Accounts;
 use Datev\Entities\Payroll\Accounts\AccountID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class AccountTest extends TestCase {
+class AccountTest extends EntityTest {
     public function testCreateAccount(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "acc-001",
             "iban" => "DE89370400440532013000",
@@ -29,7 +27,7 @@ class AccountTest extends TestCase {
             "differing_account_holder" => "Max Mustermann"
         ];
 
-        $account = new Account($data, $logger);
+        $account = new Account($data);
 
         $this->assertInstanceOf(Account::class, $account);
         $this->assertInstanceOf(AccountID::class, $account->getID());
@@ -38,8 +36,6 @@ class AccountTest extends TestCase {
     }
 
     public function testCreateAccounts(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -53,7 +49,7 @@ class AccountTest extends TestCase {
             ]
         ];
 
-        $accounts = new Accounts($data, $logger);
+        $accounts = new Accounts($data);
 
         $this->assertInstanceOf(Accounts::class, $accounts);
         $this->assertCount(2, $accounts);

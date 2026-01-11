@@ -12,11 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\Surnames\Surname;
 use Datev\Entities\ClientMasterData\Surnames\Surnames;
-use PHPUnit\Framework\TestCase;
 
-class SurnameTest extends TestCase {
+class SurnameTest extends EntityTest {
     public function testCreateSurname() {
         $data = [
             "value" => "Mustermann",

@@ -12,23 +12,21 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\VocationalTrainings\VocationalTraining;
 use Datev\Entities\Payroll\VocationalTrainings\VocationalTrainings;
 use Datev\Entities\Payroll\VocationalTrainings\VocationalTrainingID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class VocationalTrainingTest extends TestCase {
+class VocationalTrainingTest extends EntityTest {
     public function testCreateVocationalTraining(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "vt-001",
             "personnel_number" => "12345",
             "amount" => 750.00
         ];
 
-        $vocationalTraining = new VocationalTraining($data, $logger);
+        $vocationalTraining = new VocationalTraining($data);
 
         $this->assertInstanceOf(VocationalTraining::class, $vocationalTraining);
         $this->assertInstanceOf(VocationalTrainingID::class, $vocationalTraining->getID());
@@ -38,8 +36,6 @@ class VocationalTrainingTest extends TestCase {
     }
 
     public function testCreateVocationalTrainings(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -55,7 +51,7 @@ class VocationalTrainingTest extends TestCase {
             ]
         ];
 
-        $vocationalTrainings = new VocationalTrainings($data, $logger);
+        $vocationalTrainings = new VocationalTrainings($data);
 
         $this->assertInstanceOf(VocationalTrainings::class, $vocationalTrainings);
         $this->assertCount(2, $vocationalTrainings);

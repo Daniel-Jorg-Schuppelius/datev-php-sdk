@@ -12,16 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\Taxations\Taxation;
 use Datev\Entities\Payroll\Taxations\Taxations;
 use Datev\Entities\Payroll\Taxations\TaxationID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class TaxationTest extends TestCase {
+class TaxationTest extends EntityTest {
     public function testCreateTaxation(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "tax-001",
             "tax_identification_number" => "12345678901",
@@ -30,7 +28,7 @@ class TaxationTest extends TestCase {
             "is_two_percent_flat_rate_taxation" => false
         ];
 
-        $taxation = new Taxation($data, $logger);
+        $taxation = new Taxation($data);
 
         $this->assertInstanceOf(Taxation::class, $taxation);
         $this->assertInstanceOf(TaxationID::class, $taxation->getID());
@@ -42,8 +40,6 @@ class TaxationTest extends TestCase {
     }
 
     public function testCreateTaxations(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -59,7 +55,7 @@ class TaxationTest extends TestCase {
             ]
         ];
 
-        $taxations = new Taxations($data, $logger);
+        $taxations = new Taxations($data);
 
         $this->assertInstanceOf(Taxations::class, $taxations);
         $this->assertCount(2, $taxations);

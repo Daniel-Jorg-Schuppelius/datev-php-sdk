@@ -12,11 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\EnterprisePurposes\EnterprisePurpose;
 use Datev\Entities\ClientMasterData\EnterprisePurposes\EnterprisePurposes;
-use PHPUnit\Framework\TestCase;
 
-class EnterprisePurposeTest extends TestCase {
+class EnterprisePurposeTest extends EntityTest {
     public function testCreateEnterprisePurpose() {
         $data = [
             "value" => "Handel und Vertrieb",

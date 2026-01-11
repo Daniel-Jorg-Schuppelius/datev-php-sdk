@@ -12,20 +12,18 @@ declare(strict_types=1);
 
 namespace Tests\Entities\IdentityAndAccessManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\IdentityAndAccessManagement\Schemas\SchemaExtension;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class SchemaExtensionTest extends TestCase {
+class SchemaExtensionTest extends EntityTest {
     public function testCreateSchemaExtension(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "schema" => "urn:ietf:params:scim:schemas:extension:enterprise:2.0:User",
             "required" => false
         ];
 
-        $extension = new SchemaExtension($data, $logger);
+        $extension = new SchemaExtension($data);
 
         $this->assertInstanceOf(SchemaExtension::class, $extension);
         $this->assertEquals("urn:ietf:params:scim:schemas:extension:enterprise:2.0:User", $extension->getSchema());
@@ -33,14 +31,12 @@ class SchemaExtensionTest extends TestCase {
     }
 
     public function testRequiredSchemaExtension(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "schema" => "urn:ietf:params:scim:schemas:core:2.0:User",
             "required" => true
         ];
 
-        $extension = new SchemaExtension($data, $logger);
+        $extension = new SchemaExtension($data);
 
         $this->assertTrue($extension->isRequired());
     }

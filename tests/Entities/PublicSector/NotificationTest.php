@@ -12,20 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
-use ERRORToolkit\Logger\ConsoleLogger;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\PublicSector\Notifications\Notification;
 use Datev\Entities\PublicSector\Notifications\Notifications;
-use PHPUnit\Framework\TestCase;
 
-class NotificationTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class NotificationTest extends EntityTest {
     public function testCreateNotification() {
         $data = [
             "id" => "n1234567-8901-2345-6789-012345678901",
@@ -36,7 +28,7 @@ class NotificationTest extends TestCase {
             "fee_type_list" => "water,sewage"
         ];
 
-        $notification = new Notification($data, $this->logger);
+        $notification = new Notification($data);
         $this->assertInstanceOf(Notification::class, new Notification());
         $this->assertInstanceOf(Notification::class, $notification);
         $this->assertEquals("2024-001", $notification->getNumber());
@@ -58,7 +50,7 @@ class NotificationTest extends TestCase {
             ]
         ];
 
-        $notifications = new Notifications($data, $this->logger);
+        $notifications = new Notifications($data);
         $this->assertInstanceOf(Notifications::class, $notifications);
         $this->assertCount(2, $notifications->getValues());
     }

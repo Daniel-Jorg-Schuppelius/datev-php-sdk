@@ -12,19 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\IdentityAndAccessManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\IdentityAndAccessManagement\Groups\Groups;
 use Datev\Entities\IdentityAndAccessManagement\Groups\Group;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class GroupsTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class GroupsTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -39,7 +32,7 @@ class GroupsTest extends TestCase {
             ]
         ];
 
-        $groups = new Groups($data, $this->logger);
+        $groups = new Groups($data);
 
         $this->assertCount(2, $groups->getValues());
         $this->assertInstanceOf(Group::class, $groups->getValues()[0]);

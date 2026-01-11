@@ -12,20 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
-use ERRORToolkit\Logger\ConsoleLogger;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\OrderManagement\Fees\Fee;
 use Datev\Entities\OrderManagement\Fees\Fees;
-use PHPUnit\Framework\TestCase;
 
-class FeeTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class FeeTest extends EntityTest {
     public function testCreateFee() {
         $data = [
             "id" => 1,
@@ -38,7 +30,7 @@ class FeeTest extends TestCase {
             "default_factor" => 1.0
         ];
 
-        $fee = new Fee($data, $this->logger);
+        $fee = new Fee($data);
         $this->assertInstanceOf(Fee::class, new Fee());
         $this->assertInstanceOf(Fee::class, $fee);
         $this->assertEquals(1, $fee->getID());
@@ -60,7 +52,7 @@ class FeeTest extends TestCase {
             ]
         ];
 
-        $fees = new Fees($data, $this->logger);
+        $fees = new Fees($data);
         $this->assertInstanceOf(Fees::class, $fees);
         $this->assertCount(2, $fees->getValues());
     }

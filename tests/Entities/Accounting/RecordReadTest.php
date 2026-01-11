@@ -12,20 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
-use ERRORToolkit\Logger\ConsoleLogger;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Accounting\RecordReads\RecordRead;
 use Datev\Entities\Accounting\RecordReads\RecordReads;
-use PHPUnit\Framework\TestCase;
 
-class RecordReadTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class RecordReadTest extends EntityTest {
     public function testCreateRecordRead() {
         $data = [
             "id" => 1,
@@ -36,7 +28,7 @@ class RecordReadTest extends TestCase {
             "posting_description" => "Umsatzerlöse"
         ];
 
-        $recordRead = new RecordRead($data, $this->logger);
+        $recordRead = new RecordRead($data);
         $this->assertInstanceOf(RecordRead::class, new RecordRead());
         $this->assertInstanceOf(RecordRead::class, $recordRead);
     }
@@ -57,7 +49,7 @@ class RecordReadTest extends TestCase {
             ]
         ];
 
-        $recordReads = new RecordReads($data, $this->logger);
+        $recordReads = new RecordReads($data);
         $this->assertInstanceOf(RecordReads::class, $recordReads);
         $this->assertCount(2, $recordReads->getValues());
     }

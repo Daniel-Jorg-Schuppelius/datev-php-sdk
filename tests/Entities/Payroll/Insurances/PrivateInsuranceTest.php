@@ -12,16 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll\Insurances;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\Insurances\Private\PrivateInsurance;
 use Datev\Entities\Payroll\Insurances\Private\PrivateInsurances;
 use Datev\Entities\Payroll\Insurances\Private\PrivateInsuranceID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class PrivateInsuranceTest extends TestCase {
+class PrivateInsuranceTest extends EntityTest {
     public function testCreatePrivateInsurance(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "pi-001",
             "is_private_health_insured" => true,
@@ -31,7 +29,7 @@ class PrivateInsuranceTest extends TestCase {
             "monthly_contribution_to_basic_health_insurance" => 400.00
         ];
 
-        $privateInsurance = new PrivateInsurance($data, $logger);
+        $privateInsurance = new PrivateInsurance($data);
 
         $this->assertInstanceOf(PrivateInsurance::class, $privateInsurance);
         $this->assertInstanceOf(PrivateInsuranceID::class, $privateInsurance->getID());
@@ -42,8 +40,6 @@ class PrivateInsuranceTest extends TestCase {
     }
 
     public function testCreatePrivateInsurances(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -57,7 +53,7 @@ class PrivateInsuranceTest extends TestCase {
             ]
         ];
 
-        $privateInsurances = new PrivateInsurances($data, $logger);
+        $privateInsurances = new PrivateInsurances($data);
 
         $this->assertInstanceOf(PrivateInsurances::class, $privateInsurances);
         $this->assertCount(2, $privateInsurances);

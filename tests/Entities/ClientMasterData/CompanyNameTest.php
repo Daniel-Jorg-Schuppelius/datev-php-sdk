@@ -12,29 +12,20 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
-use ERRORToolkit\Logger\ConsoleLogger;;
+use Tests\Contracts\EntityTest;
 
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
 use DateTime;
 use Datev\Entities\ClientMasterData\CompanyNames\CompanyName;
 use Datev\Entities\ClientMasterData\CompanyNames\CompanyNames;
-use PHPUnit\Framework\TestCase;
 
-class CompanyNameTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class CompanyNameTest extends EntityTest {
     public function testCreateCompanyName() {
         $data = [
             "valid_from" => "2024-09-30",
             "value" => "Mustermeier GmbH"
         ];
 
-        $companyName = new CompanyName($data, $this->logger);
+        $companyName = new CompanyName($data);
         $this->assertTrue($companyName->isValid());
         $this->assertInstanceOf(CompanyName::class, new CompanyName());
         $this->assertInstanceOf(CompanyName::class, $companyName);
@@ -65,7 +56,7 @@ class CompanyNameTest extends TestCase {
             ]
         ];
 
-        $companyNames = new CompanyNames($data, $this->logger);
+        $companyNames = new CompanyNames($data);
         $this->assertInstanceOf(CompanyNames::class, $companyNames);
         $this->assertEquals($data, $companyNames->toArray(true, "Y-m-d"));
         $this->assertEquals($data1, $companyNames->toArray());

@@ -12,20 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
-use ERRORToolkit\Logger\ConsoleLogger;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\OrderManagement\Invoices\Invoice;
 use Datev\Entities\OrderManagement\Invoices\Invoices;
-use PHPUnit\Framework\TestCase;
 
-class InvoiceTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class InvoiceTest extends EntityTest {
     public function testCreateInvoice() {
         $data = [
             "id" => 12345,
@@ -40,7 +32,7 @@ class InvoiceTest extends TestCase {
             "cancellation_flag" => false
         ];
 
-        $invoice = new Invoice($data, $this->logger);
+        $invoice = new Invoice($data);
         $this->assertInstanceOf(Invoice::class, new Invoice());
         $this->assertInstanceOf(Invoice::class, $invoice);
         $this->assertEquals(12345, $invoice->getID());
@@ -62,7 +54,7 @@ class InvoiceTest extends TestCase {
             ]
         ];
 
-        $invoices = new Invoices($data, $this->logger);
+        $invoices = new Invoices($data);
         $this->assertInstanceOf(Invoices::class, $invoices);
         $this->assertCount(2, $invoices->getValues());
     }

@@ -12,19 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\PublicSector\Citizens\Citizens;
 use Datev\Entities\PublicSector\Citizens\Citizen;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class CitizensTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class CitizensTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -41,7 +34,7 @@ class CitizensTest extends TestCase {
             ]
         ];
 
-        $citizens = new Citizens($data, $this->logger);
+        $citizens = new Citizens($data);
 
         $this->assertCount(2, $citizens->getValues());
         $this->assertInstanceOf(Citizen::class, $citizens->getValues()[0]);

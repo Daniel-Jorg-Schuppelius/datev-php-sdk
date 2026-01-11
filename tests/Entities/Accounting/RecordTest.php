@@ -12,12 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Accounting\Records\Record;
 use Datev\Entities\Accounting\Records\Records;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class RecordTest extends TestCase {
+class RecordTest extends EntityTest {
     public function testCreateRecord() {
         $data = [
             "account_number" => 1200,
@@ -25,10 +25,7 @@ class RecordTest extends TestCase {
             "amount" => 119.00,
             "debit_credit" => "S",
             "date" => "2025-01-15"
-        ];
-
-        $logger = ConsoleLoggerFactory::getLogger();
-        $record = new Record($data, $logger);
+        ];        $record = new Record($data);
 
         $this->assertInstanceOf(Record::class, $record);
     }
@@ -49,10 +46,7 @@ class RecordTest extends TestCase {
                     "debit_credit" => "H"
                 ]
             ]
-        ];
-
-        $logger = ConsoleLoggerFactory::getLogger();
-        $records = new Records($data, $logger);
+        ];        $records = new Records($data);
 
         $this->assertInstanceOf(Records::class, $records);
         $this->assertCount(2, $records->getValues());

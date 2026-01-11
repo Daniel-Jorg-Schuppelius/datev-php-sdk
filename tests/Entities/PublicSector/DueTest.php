@@ -12,27 +12,19 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
-use ERRORToolkit\Logger\ConsoleLogger;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\PublicSector\Dues\Due;
 use Datev\Entities\PublicSector\Dues\Dues;
-use PHPUnit\Framework\TestCase;
 
-class DueTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class DueTest extends EntityTest {
     public function testCreateDue() {
         $data = [
             "amount" => 250.75,
             "date" => "2024-02-15T00:00:00.000+00:00"
         ];
 
-        $due = new Due($data, $this->logger);
+        $due = new Due($data);
         $this->assertInstanceOf(Due::class, new Due());
         $this->assertInstanceOf(Due::class, $due);
         $this->assertEquals(250.75, $due->getAmount());
@@ -50,7 +42,7 @@ class DueTest extends TestCase {
             ]
         ];
 
-        $dues = new Dues($data, $this->logger);
+        $dues = new Dues($data);
         $this->assertInstanceOf(Dues::class, $dues);
         $this->assertCount(2, $dues->getValues());
     }

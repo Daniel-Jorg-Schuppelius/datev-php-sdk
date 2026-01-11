@@ -12,20 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\OrderManagement\CostCenters\CostCenter;
 use Datev\Entities\OrderManagement\CostCenters\CostCenters;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class CostCenterTest extends TestCase {
-    private ?LoggerInterface $logger = null;
-
-    public function __construct(string $name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class CostCenterTest extends EntityTest {
+    
     public function testCreateCostCenter(): void {
         $data = [
             "id" => "550e8400-e29b-41d4-a716-446655440000",
@@ -35,7 +28,7 @@ class CostCenterTest extends TestCase {
             "isactive" => true
         ];
 
-        $costCenter = new CostCenter($data, $this->logger);
+        $costCenter = new CostCenter($data);
 
         $this->assertInstanceOf(CostCenter::class, $costCenter);
         $this->assertNotNull($costCenter->getID());
@@ -60,7 +53,7 @@ class CostCenterTest extends TestCase {
             ]
         ];
 
-        $costCenters = new CostCenters($data, $this->logger);
+        $costCenters = new CostCenters($data);
 
         $this->assertInstanceOf(CostCenters::class, $costCenters);
         $this->assertCount(2, $costCenters);

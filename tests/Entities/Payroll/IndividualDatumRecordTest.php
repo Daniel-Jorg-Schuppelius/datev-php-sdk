@@ -12,14 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\Data\Individual\IndividualDatumRecord;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class IndividualDatumRecordTest extends TestCase {
+class IndividualDatumRecordTest extends EntityTest {
     public function testCreateIndividualDatumRecord(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "long_field_name" => "Sonderzahlung Weihnachtsgeld",
             "short_field_name" => "SZW",
@@ -27,7 +25,7 @@ class IndividualDatumRecordTest extends TestCase {
             "amount" => 1500.00
         ];
 
-        $record = new IndividualDatumRecord($data, $logger);
+        $record = new IndividualDatumRecord($data);
 
         $this->assertInstanceOf(IndividualDatumRecord::class, $record);
         $this->assertEquals("Sonderzahlung Weihnachtsgeld", $record->getLongFieldName());

@@ -12,19 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Accounting\Records\Records;
 use Datev\Entities\Accounting\Records\Record;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class RecordsTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class RecordsTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -43,7 +36,7 @@ class RecordsTest extends TestCase {
             ]
         ];
 
-        $records = new Records($data, $this->logger);
+        $records = new Records($data);
 
         $this->assertCount(2, $records->getValues());
         $this->assertInstanceOf(Record::class, $records->getValues()[0]);

@@ -12,21 +12,19 @@ declare(strict_types=1);
 
 namespace Tests\Entities\IdentityAndAccessManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\IdentityAndAccessManagement\Groups\GroupMember;
 use Datev\Entities\IdentityAndAccessManagement\Groups\GroupMembers;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class GroupMemberTest extends TestCase {
+class GroupMemberTest extends EntityTest {
     public function testCreateGroupMember(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "value" => "user-12345",
             '$ref' => "https://api.datev.de/scim/v2/Users/user-12345"
         ];
 
-        $member = new GroupMember($data, $logger);
+        $member = new GroupMember($data);
 
         $this->assertInstanceOf(GroupMember::class, $member);
         $this->assertEquals("user-12345", $member->getValue());
@@ -34,8 +32,6 @@ class GroupMemberTest extends TestCase {
     }
 
     public function testCreateGroupMembers(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             [
                 "value" => "user-001",
@@ -47,7 +43,7 @@ class GroupMemberTest extends TestCase {
             ]
         ];
 
-        $members = new GroupMembers($data, $logger);
+        $members = new GroupMembers($data);
 
         $this->assertInstanceOf(GroupMembers::class, $members);
         $this->assertCount(2, $members->getValues());

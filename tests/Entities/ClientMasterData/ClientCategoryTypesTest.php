@@ -4,19 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\ClientCategoryTypes\ClientCategoryTypes;
 use Datev\Entities\ClientMasterData\ClientCategoryTypes\ClientCategoryType;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class ClientCategoryTypesTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class ClientCategoryTypesTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -24,7 +17,7 @@ class ClientCategoryTypesTest extends TestCase {
                 ["id" => "cct-2", "name" => "Type 2"]
             ]
         ];
-        $collection = new ClientCategoryTypes($data, $this->logger);
+        $collection = new ClientCategoryTypes($data);
         $this->assertCount(2, $collection->getValues());
         $this->assertInstanceOf(ClientCategoryType::class, $collection->getValues()[0]);
     }

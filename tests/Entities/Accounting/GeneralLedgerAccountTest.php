@@ -12,20 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
-use ERRORToolkit\Logger\ConsoleLogger;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Accounting\GeneralLedgerAccounts\GeneralLedgerAccount;
 use Datev\Entities\Accounting\GeneralLedgerAccounts\GeneralLedgerAccounts;
-use PHPUnit\Framework\TestCase;
 
-class GeneralLedgerAccountTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class GeneralLedgerAccountTest extends EntityTest {
     public function testCreateGeneralLedgerAccount() {
         $data = [
             "id" => 1800,
@@ -37,7 +29,7 @@ class GeneralLedgerAccountTest extends TestCase {
             "date_last_modification" => "2024-12-28T10:30:00.000+00:00"
         ];
 
-        $account = new GeneralLedgerAccount($data, $this->logger);
+        $account = new GeneralLedgerAccount($data);
         $this->assertInstanceOf(GeneralLedgerAccount::class, new GeneralLedgerAccount());
         $this->assertInstanceOf(GeneralLedgerAccount::class, $account);
         $this->assertEquals(1800, $account->getAccountNumber());
@@ -62,7 +54,7 @@ class GeneralLedgerAccountTest extends TestCase {
             ]
         ];
 
-        $accounts = new GeneralLedgerAccounts($data, $this->logger);
+        $accounts = new GeneralLedgerAccounts($data);
         $this->assertInstanceOf(GeneralLedgerAccounts::class, $accounts);
         $this->assertCount(2, $accounts->getValues());
     }

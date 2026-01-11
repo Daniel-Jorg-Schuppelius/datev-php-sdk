@@ -12,16 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\DocumentManagement\Users\User;
 use Datev\Entities\DocumentManagement\Users\Users;
 use Datev\Entities\DocumentManagement\Users\UserID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class UserTest extends TestCase {
+class UserTest extends EntityTest {
     public function testCreateUser(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "550e8400-e29b-41d4-a716-446655440000",
             "name" => "Max Mustermann",
@@ -29,7 +27,7 @@ class UserTest extends TestCase {
             "is_user_group" => false
         ];
 
-        $user = new User($data, $logger);
+        $user = new User($data);
 
         $this->assertInstanceOf(User::class, $user);
         $this->assertInstanceOf(UserID::class, $user->getID());
@@ -40,8 +38,6 @@ class UserTest extends TestCase {
     }
 
     public function testCreateUsers(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -59,7 +55,7 @@ class UserTest extends TestCase {
             ]
         ];
 
-        $users = new Users($data, $logger);
+        $users = new Users($data);
 
         $this->assertInstanceOf(Users::class, $users);
         $this->assertCount(2, $users);

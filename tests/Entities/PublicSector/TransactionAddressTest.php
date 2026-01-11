@@ -12,20 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
-use ERRORToolkit\Logger\ConsoleLogger;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\PublicSector\TransactionAddresses\TransactionAddress;
 use Datev\Entities\PublicSector\TransactionAddresses\TransactionAddresses;
-use PHPUnit\Framework\TestCase;
 
-class TransactionAddressTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class TransactionAddressTest extends EntityTest {
     public function testCreateTransactionAddress() {
         $data = [
             "id" => 12345,
@@ -33,7 +25,7 @@ class TransactionAddressTest extends TestCase {
             "notification_e_mail" => "test@example.com"
         ];
 
-        $address = new TransactionAddress($data, $this->logger);
+        $address = new TransactionAddress($data);
         $this->assertInstanceOf(TransactionAddress::class, new TransactionAddress());
         $this->assertInstanceOf(TransactionAddress::class, $address);
         $this->assertEquals(12345, $address->getID());
@@ -55,7 +47,7 @@ class TransactionAddressTest extends TestCase {
             ]
         ];
 
-        $addresses = new TransactionAddresses($data, $this->logger);
+        $addresses = new TransactionAddresses($data);
         $this->assertInstanceOf(TransactionAddresses::class, $addresses);
         $this->assertCount(2, $addresses->getValues());
     }

@@ -12,20 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
-use ERRORToolkit\Logger\ConsoleLogger;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Accounting\OpenItems\OpenItem;
 use Datev\Entities\Accounting\OpenItems\OpenItems;
-use PHPUnit\Framework\TestCase;
 
-class OpenItemTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class OpenItemTest extends EntityTest {
     public function testCreateOpenItem() {
         $data = [
             "assessment_year" => 2024,
@@ -36,7 +28,7 @@ class OpenItemTest extends TestCase {
             "receivable_type_id" => "RT-001"
         ];
 
-        $openItem = new OpenItem($data, $this->logger);
+        $openItem = new OpenItem($data);
         $this->assertInstanceOf(OpenItem::class, new OpenItem());
         $this->assertInstanceOf(OpenItem::class, $openItem);
     }
@@ -55,7 +47,7 @@ class OpenItemTest extends TestCase {
             ]
         ];
 
-        $openItems = new OpenItems($data, $this->logger);
+        $openItems = new OpenItems($data);
         $this->assertInstanceOf(OpenItems::class, $openItems);
         $this->assertCount(2, $openItems->getValues());
     }

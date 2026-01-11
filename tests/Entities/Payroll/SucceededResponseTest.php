@@ -12,28 +12,24 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\BatchResponse\Succeeded\SucceededResponse;
 use Datev\Entities\Payroll\BatchResponse\Succeeded\SucceededResponses;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class SucceededResponseTest extends TestCase {
+class SucceededResponseTest extends EntityTest {
     public function testCreateSucceededResponse(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "index" => 0,
             "created_id" => "12345678"
         ];
 
-        $response = new SucceededResponse($data, $logger);
+        $response = new SucceededResponse($data);
 
         $this->assertInstanceOf(SucceededResponse::class, $response);
     }
 
     public function testCreateSucceededResponses(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             [
                 "index" => 0,
@@ -45,7 +41,7 @@ class SucceededResponseTest extends TestCase {
             ]
         ];
 
-        $responses = new SucceededResponses($data, $logger);
+        $responses = new SucceededResponses($data);
 
         $this->assertInstanceOf(SucceededResponses::class, $responses);
         $this->assertCount(2, $responses->getValues());

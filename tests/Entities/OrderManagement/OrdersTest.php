@@ -12,19 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\OrderManagement\Orders\Orders;
 use Datev\Entities\OrderManagement\Orders\Order;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class OrdersTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class OrdersTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -41,7 +34,7 @@ class OrdersTest extends TestCase {
             ]
         ];
 
-        $orders = new Orders($data, $this->logger);
+        $orders = new Orders($data);
 
         $this->assertCount(2, $orders->getValues());
         $this->assertInstanceOf(Order::class, $orders->getValues()[0]);

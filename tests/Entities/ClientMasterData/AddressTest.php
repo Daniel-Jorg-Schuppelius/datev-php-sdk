@@ -12,21 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
-use ERRORToolkit\Logger\ConsoleLogger;;
+use Tests\Contracts\EntityTest;
 
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
 use DateTime;
 use Datev\Entities\ClientMasterData\Addresses\Address;
-use PHPUnit\Framework\TestCase;
 
-class AddressTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class AddressTest extends EntityTest {
     public function testCreateAddress() {
         $data = [
             "id" => "17b9d6d3-117b-4555-b0b0-3659eb0279d7",
@@ -54,7 +45,7 @@ class AddressTest extends TestCase {
             "is_management_address" => true
         ];
 
-        $address = new Address($data, $this->logger);
+        $address = new Address($data);
         $this->assertTrue($address->isValid());
         $this->assertInstanceOf(Address::class, new Address());
         $this->assertInstanceOf(Address::class, $address);

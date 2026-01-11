@@ -12,12 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\TaxAuthorities\TaxAuthority;
 use Datev\Entities\ClientMasterData\TaxAuthorities\TaxAuthorityID;
 use Datev\Entities\ClientMasterData\TaxAuthorities\TaxAuthorities;
-use PHPUnit\Framework\TestCase;
 
-class TaxAuthorityTest extends TestCase {
+class TaxAuthorityTest extends EntityTest {
     public function testCreateTaxAuthorityID() {
         $id = new TaxAuthorityID("12345678-1234-1234-1234-123456789012");
         $this->assertInstanceOf(TaxAuthorityID::class, $id);

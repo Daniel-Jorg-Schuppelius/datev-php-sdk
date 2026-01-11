@@ -12,20 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
-use ERRORToolkit\Logger\ConsoleLogger;;
+use Tests\Contracts\EntityTest;
 
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
 use Datev\Entities\DocumentManagement\Domains\Domain;
-use PHPUnit\Framework\TestCase;
 
-class DomainTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class DomainTest extends EntityTest {
     public function testCreateDocument() {
         $data = [
             "correspondence_partner" => [
@@ -49,7 +40,7 @@ class DomainTest extends TestCase {
             "id" => "1"
         ];
 
-        $domain = new Domain($data, $this->logger);
+        $domain = new Domain($data);
         $this->assertTrue($domain->isValid());
         $this->assertInstanceOf(Domain::class, new Domain());
         $this->assertInstanceOf(Domain::class, $domain);

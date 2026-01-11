@@ -12,19 +12,17 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\DocumentManagement\Documents\IndividualReferences\DocumentIndividualReference;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class DocumentIndividualReferenceTest extends TestCase {
+class DocumentIndividualReferenceTest extends EntityTest {
     public function testCreateDocumentIndividualReference(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "550e8400-e29b-41d4-a716-446655440000"
         ];
 
-        $reference = new DocumentIndividualReference($data, $logger);
+        $reference = new DocumentIndividualReference($data);
 
         $this->assertInstanceOf(DocumentIndividualReference::class, $reference);
     }

@@ -4,19 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Law\AccountingAreas\AccountingAreas;
 use Datev\Entities\Law\AccountingAreas\AccountingArea;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class AccountingAreasTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class AccountingAreasTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -24,7 +17,7 @@ class AccountingAreasTest extends TestCase {
                 ["id" => "aa-2", "name" => "Area 2", "number" => 2]
             ]
         ];
-        $collection = new AccountingAreas($data, $this->logger);
+        $collection = new AccountingAreas($data);
         $this->assertCount(2, $collection->getValues());
         $this->assertInstanceOf(AccountingArea::class, $collection->getValues()[0]);
     }

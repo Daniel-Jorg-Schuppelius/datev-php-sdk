@@ -12,15 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\BatchResponse\Failed\FailedResponse;
 use Datev\Entities\Payroll\BatchResponse\Failed\FailedResponses;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class FailedResponseTest extends TestCase {
+class FailedResponseTest extends EntityTest {
     public function testCreateFailedResponse(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "index" => 0,
             "reason" => [
@@ -29,14 +27,12 @@ class FailedResponseTest extends TestCase {
             ]
         ];
 
-        $response = new FailedResponse($data, $logger);
+        $response = new FailedResponse($data);
 
         $this->assertInstanceOf(FailedResponse::class, $response);
     }
 
     public function testCreateFailedResponses(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             [
                 "index" => 0,
@@ -54,7 +50,7 @@ class FailedResponseTest extends TestCase {
             ]
         ];
 
-        $responses = new FailedResponses($data, $logger);
+        $responses = new FailedResponses($data);
 
         $this->assertInstanceOf(FailedResponses::class, $responses);
         $this->assertCount(2, $responses->getValues());

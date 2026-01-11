@@ -12,29 +12,20 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
-use ERRORToolkit\Logger\ConsoleLogger;;
+use Tests\Contracts\EntityTest;
 
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
 use DateTime;
 use Datev\Entities\ClientMasterData\LegalForms\LegalFormID;
 use Datev\Entities\ClientMasterData\LegalForms\LegalFormIDs;
-use PHPUnit\Framework\TestCase;
 
-class LegalFormIDTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class LegalFormIDTest extends EntityTest {
     public function testCreateLegalFormID() {
         $data = [
             "valid_from" => "2024-09-30",
             "value" => "S00009"
         ];
 
-        $legalFormID = new LegalFormID($data, $this->logger);
+        $legalFormID = new LegalFormID($data);
         $this->assertTrue($legalFormID->isValid());
         $this->assertInstanceOf(LegalFormID::class, new LegalFormID());
         $this->assertInstanceOf(LegalFormID::class, $legalFormID);
@@ -65,7 +56,7 @@ class LegalFormIDTest extends TestCase {
             ]
         ];
 
-        $legalFormIDs = new LegalFormIDs($data, $this->logger);
+        $legalFormIDs = new LegalFormIDs($data);
         $this->assertInstanceOf(LegalFormIDs::class, $legalFormIDs);
         $this->assertEquals($data, $legalFormIDs->toArray(true, "Y-m-d"));
         $this->assertEquals($data1, $legalFormIDs->toArray());

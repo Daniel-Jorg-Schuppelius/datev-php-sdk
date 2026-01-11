@@ -12,20 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\OrderManagement\OrderTypes\OrderType;
 use Datev\Entities\OrderManagement\OrderTypes\OrderTypes;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class OrderTypeTest extends TestCase {
-    private ?LoggerInterface $logger = null;
-
-    public function __construct(string $name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class OrderTypeTest extends EntityTest {
+    
     public function testCreateOrderType(): void {
         $data = [
             "id" => "test-id",
@@ -35,7 +28,7 @@ class OrderTypeTest extends TestCase {
             "ordertype_group_name" => "Buchhaltung"
         ];
 
-        $orderType = new OrderType($data, $this->logger);
+        $orderType = new OrderType($data);
 
         $this->assertInstanceOf(OrderType::class, $orderType);
         $this->assertEquals("FIBU", $orderType->getOrderType());
@@ -60,7 +53,7 @@ class OrderTypeTest extends TestCase {
             ]
         ];
 
-        $orderTypes = new OrderTypes($data, $this->logger);
+        $orderTypes = new OrderTypes($data);
 
         $this->assertInstanceOf(OrderTypes::class, $orderTypes);
         $this->assertCount(2, $orderTypes);

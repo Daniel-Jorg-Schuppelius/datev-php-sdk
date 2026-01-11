@@ -12,19 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\DocumentManagement\Folders\Folders;
 use Datev\Entities\DocumentManagement\Folders\Folder;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class FoldersTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class FoldersTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -39,7 +32,7 @@ class FoldersTest extends TestCase {
             ]
         ];
 
-        $folders = new Folders($data, $this->logger);
+        $folders = new Folders($data);
 
         $this->assertCount(2, $folders->getValues());
         $this->assertInstanceOf(Folder::class, $folders->getValues()[0]);

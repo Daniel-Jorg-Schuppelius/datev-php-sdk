@@ -12,22 +12,20 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\ReasonsForAbsence\ReasonForAbsence;
 use Datev\Entities\Payroll\ReasonsForAbsence\ReasonsForAbsence;
 use Datev\Entities\Payroll\ReasonsForAbsence\ReasonForAbsenceID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class ReasonForAbsenceTest extends TestCase {
+class ReasonForAbsenceTest extends EntityTest {
     public function testCreateReasonForAbsence(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "rfa-001",
             "name" => "Krankheit"
         ];
 
-        $reasonForAbsence = new ReasonForAbsence($data, $logger);
+        $reasonForAbsence = new ReasonForAbsence($data);
 
         $this->assertInstanceOf(ReasonForAbsence::class, $reasonForAbsence);
         $this->assertInstanceOf(ReasonForAbsenceID::class, $reasonForAbsence->getID());
@@ -36,8 +34,6 @@ class ReasonForAbsenceTest extends TestCase {
     }
 
     public function testCreateReasonsForAbsence(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -51,7 +47,7 @@ class ReasonForAbsenceTest extends TestCase {
             ]
         ];
 
-        $reasonsForAbsence = new ReasonsForAbsence($data, $logger);
+        $reasonsForAbsence = new ReasonsForAbsence($data);
 
         $this->assertInstanceOf(ReasonsForAbsence::class, $reasonsForAbsence);
         $this->assertCount(2, $reasonsForAbsence);

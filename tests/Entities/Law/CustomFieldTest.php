@@ -12,20 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Law\CustomFields\CustomField;
 use Datev\Entities\Law\CustomFields\CustomFields;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class CustomFieldTest extends TestCase {
-    private ?LoggerInterface $logger = null;
-
-    public function __construct(string $name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class CustomFieldTest extends EntityTest {
+    
     public function testCreateCustomField(): void {
         $data = [
             "id" => "test-id",
@@ -35,7 +28,7 @@ class CustomFieldTest extends TestCase {
             "length" => 50
         ];
 
-        $customField = new CustomField($data, $this->logger);
+        $customField = new CustomField($data);
 
         $this->assertInstanceOf(CustomField::class, $customField);
         $this->assertEquals("file", $customField->getRelation());
@@ -57,7 +50,7 @@ class CustomFieldTest extends TestCase {
             ]
         ];
 
-        $customFields = new CustomFields($data, $this->logger);
+        $customFields = new CustomFields($data);
 
         $this->assertInstanceOf(CustomFields::class, $customFields);
         $this->assertCount(2, $customFields);

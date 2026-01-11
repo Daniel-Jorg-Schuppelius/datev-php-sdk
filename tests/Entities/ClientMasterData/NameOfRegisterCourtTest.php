@@ -12,11 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\NamesOfRegisterCourt\NameOfRegisterCourt;
 use Datev\Entities\ClientMasterData\NamesOfRegisterCourt\NamesOfRegisterCourt;
-use PHPUnit\Framework\TestCase;
 
-class NameOfRegisterCourtTest extends TestCase {
+class NameOfRegisterCourtTest extends EntityTest {
     public function testCreateNameOfRegisterCourt() {
         $data = [
             "value" => "Amtsgericht München",

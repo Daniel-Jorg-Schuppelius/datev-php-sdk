@@ -12,21 +12,19 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\DocumentManagement\Versions\Version;
 use Datev\Entities\DocumentManagement\Versions\Versions;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class VersionTest extends TestCase {
+class VersionTest extends EntityTest {
     public function testCreateVersion(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "name" => "Initiale Version",
             "number" => "1.0"
         ];
 
-        $version = new Version($data, $logger);
+        $version = new Version($data);
 
         $this->assertInstanceOf(Version::class, $version);
         $this->assertEquals("Initiale Version", $version->getName());
@@ -34,8 +32,6 @@ class VersionTest extends TestCase {
     }
 
     public function testCreateVersions(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -49,7 +45,7 @@ class VersionTest extends TestCase {
             ]
         ];
 
-        $versions = new Versions($data, $logger);
+        $versions = new Versions($data);
 
         $this->assertInstanceOf(Versions::class, $versions);
         $this->assertCount(2, $versions);

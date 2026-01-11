@@ -12,23 +12,21 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\DocumentManagement\DispatcherInformations\DispatcherInformation;
 use Datev\Entities\DocumentManagement\DispatcherInformations\DispatcherInformations;
 use Datev\Entities\DocumentManagement\DispatcherInformations\ExternalDocumentID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class DispatcherInformationTest extends TestCase {
+class DispatcherInformationTest extends EntityTest {
     public function testCreateDispatcherInformation(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "external_id" => "ext-001",
             "application" => "DATEV Unternehmen online",
             "comment" => "Automatisch importiert"
         ];
 
-        $dispatcherInformation = new DispatcherInformation($data, $logger);
+        $dispatcherInformation = new DispatcherInformation($data);
 
         $this->assertInstanceOf(DispatcherInformation::class, $dispatcherInformation);
         $this->assertInstanceOf(ExternalDocumentID::class, $dispatcherInformation->getID());
@@ -38,8 +36,6 @@ class DispatcherInformationTest extends TestCase {
     }
 
     public function testCreateDispatcherInformations(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -55,7 +51,7 @@ class DispatcherInformationTest extends TestCase {
             ]
         ];
 
-        $dispatcherInformations = new DispatcherInformations($data, $logger);
+        $dispatcherInformations = new DispatcherInformations($data);
 
         $this->assertInstanceOf(DispatcherInformations::class, $dispatcherInformations);
         $this->assertCount(2, $dispatcherInformations);

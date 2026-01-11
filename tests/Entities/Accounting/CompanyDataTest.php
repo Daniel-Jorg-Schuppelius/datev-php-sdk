@@ -12,10 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
-use Datev\Entities\Accounting\CompanyData;
-use PHPUnit\Framework\TestCase;
+use Tests\Contracts\EntityTest;
 
-class CompanyDataTest extends TestCase {
+use Datev\Entities\Accounting\CompanyData;
+
+class CompanyDataTest extends EntityTest {
     public function testCreateCompanyData(): void {
         $data = "DE98ZZZ09999999999";
         $companyData = new CompanyData($data);

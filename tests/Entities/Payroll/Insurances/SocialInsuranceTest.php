@@ -12,16 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll\Insurances;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\Insurances\Social\SocialInsurance;
 use Datev\Entities\Payroll\Insurances\Social\SocialInsurances;
 use Datev\Entities\Payroll\Insurances\Social\SocialInsuranceID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class SocialInsuranceTest extends TestCase {
+class SocialInsuranceTest extends EntityTest {
     public function testCreateSocialInsurance(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "si-001",
             "contribution_class_health_insurance" => "general",
@@ -32,7 +30,7 @@ class SocialInsuranceTest extends TestCase {
             "legal_treatment" => "employee"
         ];
 
-        $socialInsurance = new SocialInsurance($data, $logger);
+        $socialInsurance = new SocialInsurance($data);
 
         $this->assertInstanceOf(SocialInsurance::class, $socialInsurance);
         $this->assertInstanceOf(SocialInsuranceID::class, $socialInsurance->getID());
@@ -42,8 +40,6 @@ class SocialInsuranceTest extends TestCase {
     }
 
     public function testCreateSocialInsurances(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -57,7 +53,7 @@ class SocialInsuranceTest extends TestCase {
             ]
         ];
 
-        $socialInsurances = new SocialInsurances($data, $logger);
+        $socialInsurances = new SocialInsurances($data);
 
         $this->assertInstanceOf(SocialInsurances::class, $socialInsurances);
         $this->assertCount(2, $socialInsurances);

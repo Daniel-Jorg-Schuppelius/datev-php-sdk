@@ -12,20 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
-use ERRORToolkit\Logger\ConsoleLogger;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Accounting\AccountingSumsAndBalances\AccountingSumsAndBalance;
 use Datev\Entities\Accounting\AccountingSumsAndBalances\AccountingSumsAndBalances;
-use PHPUnit\Framework\TestCase;
 
-class AccountingSumsAndBalanceTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class AccountingSumsAndBalanceTest extends EntityTest {
     public function testCreateAccountingSumsAndBalance() {
         $data = [
             "id" => "1200-2024",
@@ -39,7 +31,7 @@ class AccountingSumsAndBalanceTest extends TestCase {
             "opening_balance_sheet_debit_credit_identifier" => "D"
         ];
 
-        $sumsAndBalance = new AccountingSumsAndBalance($data, $this->logger);
+        $sumsAndBalance = new AccountingSumsAndBalance($data);
         $this->assertInstanceOf(AccountingSumsAndBalance::class, new AccountingSumsAndBalance());
         $this->assertInstanceOf(AccountingSumsAndBalance::class, $sumsAndBalance);
         $this->assertNotNull($sumsAndBalance->getID());
@@ -67,7 +59,7 @@ class AccountingSumsAndBalanceTest extends TestCase {
             ]
         ];
 
-        $sumsAndBalances = new AccountingSumsAndBalances($data, $this->logger);
+        $sumsAndBalances = new AccountingSumsAndBalances($data);
         $this->assertInstanceOf(AccountingSumsAndBalances::class, $sumsAndBalances);
         $this->assertCount(2, $sumsAndBalances->getValues());
     }

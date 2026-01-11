@@ -12,19 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\DocumentManagement\Domains\Domains;
 use Datev\Entities\DocumentManagement\Domains\Domain;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class DomainsTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class DomainsTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -39,7 +32,7 @@ class DomainsTest extends TestCase {
             ]
         ];
 
-        $domains = new Domains($data, $this->logger);
+        $domains = new Domains($data);
 
         $this->assertCount(2, $domains->getValues());
         $this->assertInstanceOf(Domain::class, $domains->getValues()[0]);

@@ -12,28 +12,21 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Common\Errors\ErrorURI;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class ErrorURITest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class ErrorURITest extends EntityTest {
     public function testCreateFromString(): void {
         $url = "https://docs.datev.de/errors/404";
-        $errorUri = new ErrorURI($url, $this->logger);
+        $errorUri = new ErrorURI($url);
 
         $this->assertEquals($url, $errorUri->getValue());
         $this->assertEquals('error_uri', $errorUri->getEntityName());
     }
 
     public function testIsValid(): void {
-        $errorUri = new ErrorURI("https://docs.datev.de/errors/400", $this->logger);
+        $errorUri = new ErrorURI("https://docs.datev.de/errors/400");
         $this->assertTrue($errorUri->isValid());
     }
 }

@@ -12,19 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\GrossPayments\GrossPayments;
 use Datev\Entities\Payroll\GrossPayments\GrossPayment;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class GrossPaymentsTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class GrossPaymentsTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -43,7 +36,7 @@ class GrossPaymentsTest extends TestCase {
             ]
         ];
 
-        $grossPayments = new GrossPayments($data, $this->logger);
+        $grossPayments = new GrossPayments($data);
 
         $this->assertCount(2, $grossPayments->getValues());
         $this->assertInstanceOf(GrossPayment::class, $grossPayments->getValues()[0]);

@@ -12,20 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
-use ERRORToolkit\Logger\ConsoleLogger;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Law\ContingencyFees\ContingencyFee;
 use Datev\Entities\Law\ContingencyFees\ContingencyFees;
-use PHPUnit\Framework\TestCase;
 
-class ContingencyFeeTest extends TestCase {
-    private ?ConsoleLogger $logger = null;
-
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class ContingencyFeeTest extends EntityTest {
     public function testCreateContingencyFee() {
         $data = [
             "id" => "9ed35edf-dd17-456c-857d-b895a6859cf0",
@@ -38,7 +30,7 @@ class ContingencyFeeTest extends TestCase {
             "file_id" => "3fa85f64-5717-4562-b3fc-2c963f66afa6"
         ];
 
-        $contingencyFee = new ContingencyFee($data, $this->logger);
+        $contingencyFee = new ContingencyFee($data);
         $this->assertInstanceOf(ContingencyFee::class, new ContingencyFee());
         $this->assertInstanceOf(ContingencyFee::class, $contingencyFee);
         $this->assertNotNull($contingencyFee->getID());
@@ -64,7 +56,7 @@ class ContingencyFeeTest extends TestCase {
             ]
         ];
 
-        $contingencyFees = new ContingencyFees($data, $this->logger);
+        $contingencyFees = new ContingencyFees($data);
         $this->assertInstanceOf(ContingencyFees::class, $contingencyFees);
         $this->assertCount(2, $contingencyFees->getValues());
     }

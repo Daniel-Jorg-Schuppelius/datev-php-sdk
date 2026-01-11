@@ -12,19 +12,17 @@ declare(strict_types=1);
 
 namespace Tests\Entities\IdentityAndAccessManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\IdentityAndAccessManagement\Groups\DatevGroupExtension;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class DatevGroupExtensionTest extends TestCase {
+class DatevGroupExtensionTest extends EntityTest {
     public function testCreateDatevGroupExtension(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "description" => "Administrative Benutzergruppe für IT-Mitarbeiter"
         ];
 
-        $extension = new DatevGroupExtension($data, $logger);
+        $extension = new DatevGroupExtension($data);
 
         $this->assertInstanceOf(DatevGroupExtension::class, $extension);
         $this->assertEquals("Administrative Benutzergruppe für IT-Mitarbeiter", $extension->getDescription());

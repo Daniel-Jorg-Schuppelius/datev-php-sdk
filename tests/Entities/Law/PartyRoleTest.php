@@ -12,20 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Law\PartyRoles\PartyRole;
 use Datev\Entities\Law\PartyRoles\PartyRoles;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class PartyRoleTest extends TestCase {
-    private ?LoggerInterface $logger = null;
-
-    public function __construct(string $name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class PartyRoleTest extends EntityTest {
+    
     public function testCreatePartyRole(): void {
         $data = [
             "id" => "test-id",
@@ -35,7 +28,7 @@ class PartyRoleTest extends TestCase {
             "name" => "Kläger"
         ];
 
-        $partyRole = new PartyRole($data, $this->logger);
+        $partyRole = new PartyRole($data);
 
         $this->assertInstanceOf(PartyRole::class, $partyRole);
         $this->assertEquals(1, $partyRole->getNumber());
@@ -60,7 +53,7 @@ class PartyRoleTest extends TestCase {
             ]
         ];
 
-        $partyRoles = new PartyRoles($data, $this->logger);
+        $partyRoles = new PartyRoles($data);
 
         $this->assertInstanceOf(PartyRoles::class, $partyRoles);
         $this->assertCount(2, $partyRoles);

@@ -12,22 +12,20 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\DocumentManagement\Registers\Register;
 use Datev\Entities\DocumentManagement\Registers\Registers;
 use Datev\Entities\DocumentManagement\Registers\RegisterID;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class RegisterTest extends TestCase {
+class RegisterTest extends EntityTest {
     public function testCreateRegister(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "id" => "reg-001",
             "name" => "Rechnungen 2024"
         ];
 
-        $register = new Register($data, $logger);
+        $register = new Register($data);
 
         $this->assertInstanceOf(Register::class, $register);
         $this->assertInstanceOf(RegisterID::class, $register->getID());
@@ -36,8 +34,6 @@ class RegisterTest extends TestCase {
     }
 
     public function testCreateRegisters(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
         $data = [
             "content" => [
                 [
@@ -51,7 +47,7 @@ class RegisterTest extends TestCase {
             ]
         ];
 
-        $registers = new Registers($data, $logger);
+        $registers = new Registers($data);
 
         $this->assertInstanceOf(Registers::class, $registers);
         $this->assertCount(2, $registers);

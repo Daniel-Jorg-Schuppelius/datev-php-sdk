@@ -12,19 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Accounting\FiscalYears\FiscalYears;
 use Datev\Entities\Accounting\FiscalYears\FiscalYear;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class FiscalYearsTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class FiscalYearsTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -41,7 +34,7 @@ class FiscalYearsTest extends TestCase {
             ]
         ];
 
-        $fiscalYears = new FiscalYears($data, $this->logger);
+        $fiscalYears = new FiscalYears($data);
 
         $this->assertCount(2, $fiscalYears->getValues());
         $this->assertInstanceOf(FiscalYear::class, $fiscalYears->getValues()[0]);

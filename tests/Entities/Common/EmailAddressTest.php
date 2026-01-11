@@ -12,15 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Common\EmailAddress;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class EmailAddressTest extends TestCase {
+class EmailAddressTest extends EntityTest {
     public function testCreateEmailAddress(): void {
-        $logger = ConsoleLoggerFactory::getLogger();
-
-        $emailAddress = new EmailAddress("max.mustermann@example.de", $logger);
+        $emailAddress = new EmailAddress("max.mustermann@example.de");
 
         $this->assertInstanceOf(EmailAddress::class, $emailAddress);
         $this->assertEquals("max.mustermann@example.de", $emailAddress->getValue());

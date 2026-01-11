@@ -12,20 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\OrderManagement\ChargeRates\ChargeRate;
 use Datev\Entities\OrderManagement\ChargeRates\ChargeRates;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class ChargeRateTest extends TestCase {
-    private ?LoggerInterface $logger = null;
-
-    public function __construct(string $name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class ChargeRateTest extends EntityTest {
+    
     public function testCreateChargeRate(): void {
         $data = [
             "id" => "550e8400-e29b-41d4-a716-446655440000",
@@ -36,7 +29,7 @@ class ChargeRateTest extends TestCase {
             "charge_rate_3" => 200.00
         ];
 
-        $chargeRate = new ChargeRate($data, $this->logger);
+        $chargeRate = new ChargeRate($data);
 
         $this->assertInstanceOf(ChargeRate::class, $chargeRate);
         $this->assertNotNull($chargeRate->getID());
@@ -60,7 +53,7 @@ class ChargeRateTest extends TestCase {
             ]
         ];
 
-        $chargeRates = new ChargeRates($data, $this->logger);
+        $chargeRates = new ChargeRates($data);
 
         $this->assertInstanceOf(ChargeRates::class, $chargeRates);
         $this->assertCount(2, $chargeRates);

@@ -12,12 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\OrderManagement\EmployeesWithGroup\EmployeeWithGroup;
 use Datev\Entities\OrderManagement\EmployeesWithGroup\EmployeesWithGroup;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
 
-class EmployeeWithGroupTest extends TestCase {
+class EmployeeWithGroupTest extends EntityTest {
     public function testCreateEmployeeWithGroup() {
         $data = [
             "id" => "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
@@ -28,10 +28,7 @@ class EmployeeWithGroupTest extends TestCase {
             "employee_group_id_guid" => "c3d4e5f6-a7b8-9012-cdef-123456789012",
             "employee_group_short_name" => "Team A",
             "employee_group_long_name" => "Team A - Steuerberatung"
-        ];
-
-        $logger = ConsoleLoggerFactory::getLogger();
-        $employeeGroup = new EmployeeWithGroup($data, $logger);
+        ];        $employeeGroup = new EmployeeWithGroup($data);
 
         $this->assertInstanceOf(EmployeeWithGroup::class, $employeeGroup);
         $this->assertEquals(100, $employeeGroup->getEmployeeNumber());
@@ -56,10 +53,7 @@ class EmployeeWithGroupTest extends TestCase {
                     "employee_group_short_name" => "Team B"
                 ]
             ]
-        ];
-
-        $logger = ConsoleLoggerFactory::getLogger();
-        $employees = new EmployeesWithGroup($data, $logger);
+        ];        $employees = new EmployeesWithGroup($data);
 
         $this->assertInstanceOf(EmployeesWithGroup::class, $employees);
         $this->assertCount(2, $employees->getValues());

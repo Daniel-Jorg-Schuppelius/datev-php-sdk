@@ -12,12 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\LegalForms\LegalForm;
 use Datev\Entities\ClientMasterData\LegalForms\LegalForms;
 use Datev\Enums\LegalFormType;
-use PHPUnit\Framework\TestCase;
 
-class LegalFormTest extends TestCase {
+class LegalFormTest extends EntityTest {
     public function testCreateLegalForm() {
         $data = [
             "id" => "legal-form-123",

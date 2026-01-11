@@ -12,19 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\Communications\Communications;
 use Datev\Entities\ClientMasterData\Communications\Communication;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class CommunicationsTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class CommunicationsTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -39,7 +32,7 @@ class CommunicationsTest extends TestCase {
             ]
         ];
 
-        $communications = new Communications($data, $this->logger);
+        $communications = new Communications($data);
 
         $this->assertCount(2, $communications->getValues());
         $this->assertInstanceOf(Communication::class, $communications->getValues()[0]);

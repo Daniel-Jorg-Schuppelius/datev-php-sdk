@@ -12,12 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\ContactPersons\ContactPerson;
 use Datev\Entities\ClientMasterData\ContactPersons\ContactPersonID;
 use Datev\Entities\ClientMasterData\ContactPersons\ContactPersons;
-use PHPUnit\Framework\TestCase;
 
-class ContactPersonTest extends TestCase {
+class ContactPersonTest extends EntityTest {
     public function testCreateContactPersonID() {
         $id = new ContactPersonID("12345678-1234-1234-1234-123456789012");
         $this->assertInstanceOf(ContactPersonID::class, $id);

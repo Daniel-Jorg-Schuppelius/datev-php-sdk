@@ -12,19 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Accounting\GeneralLedgerAccounts\GeneralLedgerAccounts;
 use Datev\Entities\Accounting\GeneralLedgerAccounts\GeneralLedgerAccount;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class GeneralLedgerAccountsTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class GeneralLedgerAccountsTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -41,7 +34,7 @@ class GeneralLedgerAccountsTest extends TestCase {
             ]
         ];
 
-        $accounts = new GeneralLedgerAccounts($data, $this->logger);
+        $accounts = new GeneralLedgerAccounts($data);
 
         $this->assertCount(2, $accounts->getValues());
         $this->assertInstanceOf(GeneralLedgerAccount::class, $accounts->getValues()[0]);

@@ -12,19 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Payroll\CostCenters\CostCenters;
 use Datev\Entities\Payroll\CostCenters\CostCenter;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class CostCentersTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class CostCentersTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -39,7 +32,7 @@ class CostCentersTest extends TestCase {
             ]
         ];
 
-        $costCenters = new CostCenters($data, $this->logger);
+        $costCenters = new CostCenters($data);
 
         $this->assertCount(2, $costCenters->getValues());
         $this->assertInstanceOf(CostCenter::class, $costCenters->getValues()[0]);

@@ -12,20 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\OrderManagement\SuborderStateBilling\SuborderStateBilling;
 use Datev\Entities\OrderManagement\SuborderStateBilling\SubordersStateBilling;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class SuborderStateBillingTest extends TestCase {
-    private ?LoggerInterface $logger = null;
-
-    public function __construct(string $name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class SuborderStateBillingTest extends EntityTest {
+    
     public function testCreateSuborderStateBilling(): void {
         $data = [
             "id" => "test-id",
@@ -40,7 +33,7 @@ class SuborderStateBillingTest extends TestCase {
             "invoice_billing_date" => "2024-03-15"
         ];
 
-        $suborderStateBilling = new SuborderStateBilling($data, $this->logger);
+        $suborderStateBilling = new SuborderStateBilling($data);
 
         $this->assertInstanceOf(SuborderStateBilling::class, $suborderStateBilling);
         $this->assertEquals(2024001, $suborderStateBilling->getOrderId());
@@ -64,7 +57,7 @@ class SuborderStateBillingTest extends TestCase {
             ]
         ];
 
-        $subordersStateBilling = new SubordersStateBilling($data, $this->logger);
+        $subordersStateBilling = new SubordersStateBilling($data);
 
         $this->assertInstanceOf(SubordersStateBilling::class, $subordersStateBilling);
         $this->assertCount(2, $subordersStateBilling);

@@ -12,10 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
-use Datev\Entities\PublicSector\Common\Location;
-use PHPUnit\Framework\TestCase;
+use Tests\Contracts\EntityTest;
 
-class LocationTest extends TestCase {
+use Datev\Entities\PublicSector\Common\Location;
+
+class LocationTest extends EntityTest {
     public function testCreateLocation(): void {
         $data = [
             "id" => 1,

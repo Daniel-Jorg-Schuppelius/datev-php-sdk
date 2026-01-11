@@ -12,19 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\Addressees\Addressees;
 use Datev\Entities\ClientMasterData\Addressees\Addressee;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class AddresseesTest extends TestCase {
-    private LoggerInterface $logger;
-
-    public function setUp(): void {
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class AddresseesTest extends EntityTest {
     public function testCreateFromArray(): void {
         $data = [
             "content" => [
@@ -41,7 +34,7 @@ class AddresseesTest extends TestCase {
             ]
         ];
 
-        $addressees = new Addressees($data, $this->logger);
+        $addressees = new Addressees($data);
 
         $this->assertCount(2, $addressees->getValues());
         $this->assertInstanceOf(Addressee::class, $addressees->getValues()[0]);

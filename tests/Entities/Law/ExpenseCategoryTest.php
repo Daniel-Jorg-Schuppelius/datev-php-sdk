@@ -12,27 +12,20 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\Law\ExpenseCategories\ExpenseCategory;
 use Datev\Entities\Law\ExpenseCategories\ExpenseCategories;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class ExpenseCategoryTest extends TestCase {
-    private ?LoggerInterface $logger = null;
-
-    public function __construct(string $name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class ExpenseCategoryTest extends EntityTest {
+    
     public function testCreateExpenseCategory(): void {
         $data = [
             "number" => 1,
             "name" => "Reisekosten"
         ];
 
-        $expenseCategory = new ExpenseCategory($data, $this->logger);
+        $expenseCategory = new ExpenseCategory($data);
 
         $this->assertInstanceOf(ExpenseCategory::class, $expenseCategory);
         $this->assertEquals(1, $expenseCategory->getNumber());
@@ -53,7 +46,7 @@ class ExpenseCategoryTest extends TestCase {
             ]
         ];
 
-        $expenseCategories = new ExpenseCategories($data, $this->logger);
+        $expenseCategories = new ExpenseCategories($data);
 
         $this->assertInstanceOf(ExpenseCategories::class, $expenseCategories);
         $this->assertCount(2, $expenseCategories);

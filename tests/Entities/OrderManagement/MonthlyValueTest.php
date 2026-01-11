@@ -12,20 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\OrderManagement\MonthlyValues\MonthlyValue;
 use Datev\Entities\OrderManagement\MonthlyValues\MonthlyValues;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 
-class MonthlyValueTest extends TestCase {
-    private ?LoggerInterface $logger = null;
-
-    public function __construct(string $name) {
-        parent::__construct($name);
-        $this->logger = ConsoleLoggerFactory::getLogger();
-    }
-
+class MonthlyValueTest extends EntityTest {
+    
     public function testCreateMonthlyValue(): void {
         $data = [
             "id" => "test-id",
@@ -41,7 +34,7 @@ class MonthlyValueTest extends TestCase {
             "total_turnover" => 18000.00
         ];
 
-        $monthlyValue = new MonthlyValue($data, $this->logger);
+        $monthlyValue = new MonthlyValue($data);
 
         $this->assertInstanceOf(MonthlyValue::class, $monthlyValue);
         $this->assertEquals(2024001, $monthlyValue->getOrderId());
@@ -65,7 +58,7 @@ class MonthlyValueTest extends TestCase {
             ]
         ];
 
-        $monthlyValues = new MonthlyValues($data, $this->logger);
+        $monthlyValues = new MonthlyValues($data);
 
         $this->assertInstanceOf(MonthlyValues::class, $monthlyValues);
         $this->assertCount(2, $monthlyValues);

@@ -12,11 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Tests\Contracts\EntityTest;
+
 use Datev\Entities\ClientMasterData\FiscalYears\FiscalYear;
 use Datev\Entities\ClientMasterData\FiscalYears\FiscalYears;
-use PHPUnit\Framework\TestCase;
 
-class FiscalYearTest extends TestCase {
+class FiscalYearTest extends EntityTest {
     public function testCreateFiscalYear() {
         $data = [
             "start_date" => "2024-01-01",
