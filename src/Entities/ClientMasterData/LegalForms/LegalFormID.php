@@ -39,7 +39,7 @@ class LegalFormID extends ID {
     }
 
     public function isValid(): bool {
-        return !is_null($this->value) && ($this->valid_from === null || $this->valid_from <= new DateTime());
+        return !is_null($this->value) && ($this->valid_from === null || $this->valid_from <= new DateTime);
     }
 
     public function toArray(bool $fullEntity = false, string $dateFormat = DateTime::RFC3339_EXTENDED): array {

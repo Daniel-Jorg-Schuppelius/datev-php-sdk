@@ -12,19 +12,16 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\VacationEntitlements\{VacationEntitlement, VacationEntitlementID, VacationEntitlements};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\VacationEntitlements\VacationEntitlement;
-use Datev\Entities\Payroll\VacationEntitlements\VacationEntitlements;
-use Datev\Entities\Payroll\VacationEntitlements\VacationEntitlementID;
-
 class VacationEntitlementTest extends EntityTest {
-    public function testCreateVacationEntitlement(): void {
+    public function test_create_vacation_entitlement(): void {
         $data = [
             "id" => "vac-001",
             "basic_vacation_entitlement" => 30.0,
             "current_year_vacation_entitlement" => 25.0,
-            "remaining_days_of_vacation_previous_year" => 5.0
+            "remaining_days_of_vacation_previous_year" => 5.0,
         ];
 
         $vacationEntitlement = new VacationEntitlement($data);
@@ -37,18 +34,18 @@ class VacationEntitlementTest extends EntityTest {
         $this->assertEquals(5.0, $vacationEntitlement->getRemainingDaysOfVacationPreviousYear());
     }
 
-    public function testCreateVacationEntitlements(): void {
+    public function test_create_vacation_entitlements(): void {
         $data = [
             "content" => [
                 [
                     "id" => "vac-001",
-                    "basic_vacation_entitlement" => 30.0
+                    "basic_vacation_entitlement" => 30.0,
                 ],
                 [
                     "id" => "vac-002",
-                    "basic_vacation_entitlement" => 28.0
-                ]
-            ]
+                    "basic_vacation_entitlement" => 28.0,
+                ],
+            ],
         ];
 
         $vacationEntitlements = new VacationEntitlements($data);

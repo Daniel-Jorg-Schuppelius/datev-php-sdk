@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\Law;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\Law\Departments\Department;
-use Datev\Entities\Law\Departments\Departments;
+use Datev\Entities\Law\Departments\{Department, Departments};
 use InvalidArgumentException;
 
 class DepartmentsEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
@@ -36,7 +35,7 @@ class DepartmentsEndpoint extends EndpointAbstract implements SearchableEndpoint
             }
 
             return Department::fromJson($response, self::$logger);
-        }, "Fetching Department (ID: {$id})");
+        }, "Fetching Department (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?Departments {

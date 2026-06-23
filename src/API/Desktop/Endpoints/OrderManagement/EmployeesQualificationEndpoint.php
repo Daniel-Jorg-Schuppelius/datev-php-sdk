@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\OrderManagement;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\OrderManagement\EmployeesQualification\EmployeesQualification;
-use Datev\Entities\OrderManagement\EmployeesQualification\EmployeeQualification;
+use Datev\Entities\OrderManagement\EmployeesQualification\{EmployeeQualification, EmployeesQualification};
 
 class EmployeesQualificationEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointPrefix = 'order-management/v1';
@@ -35,7 +34,7 @@ class EmployeesQualificationEndpoint extends EndpointAbstract implements Searcha
             }
 
             return EmployeeQualification::fromJson($response, self::$logger);
-        }, "Fetching EmployeeQualification (ID: {$id})");
+        }, "Fetching EmployeeQualification (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?EmployeesQualification {

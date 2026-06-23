@@ -12,24 +12,22 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Datev\Entities\DocumentManagement\Domains\{Domain, Domains};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\DocumentManagement\Domains\Domains;
-use Datev\Entities\DocumentManagement\Domains\Domain;
-
 class DomainsTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "id" => "dom-1",
-                    "name" => "Rechnungen"
+                    "name" => "Rechnungen",
                 ],
                 [
                     "id" => "dom-2",
-                    "name" => "Verträge"
-                ]
-            ]
+                    "name" => "Verträge",
+                ],
+            ],
         ];
 
         $domains = new Domains($data);

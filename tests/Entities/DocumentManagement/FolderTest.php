@@ -12,17 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Datev\Entities\DocumentManagement\Folders\{Folder, FolderID, Folders};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\DocumentManagement\Folders\Folder;
-use Datev\Entities\DocumentManagement\Folders\Folders;
-use Datev\Entities\DocumentManagement\Folders\FolderID;
-
 class FolderTest extends EntityTest {
-    public function testCreateFolder(): void {
+    public function test_create_folder(): void {
         $data = [
             "id" => "12345",
-            "name" => "Steuerunterlagen"
+            "name" => "Steuerunterlagen",
         ];
 
         $folder = new Folder($data);
@@ -33,18 +30,18 @@ class FolderTest extends EntityTest {
         $this->assertEquals("Steuerunterlagen", $folder->getName());
     }
 
-    public function testCreateFolders(): void {
+    public function test_create_folders(): void {
         $data = [
             "content" => [
                 [
                     "id" => "12345",
-                    "name" => "Steuerunterlagen"
+                    "name" => "Steuerunterlagen",
                 ],
                 [
                     "id" => "67890",
-                    "name" => "Jahresabschluss"
-                ]
-            ]
+                    "name" => "Jahresabschluss",
+                ],
+            ],
         ];
 
         $folders = new Folders($data);

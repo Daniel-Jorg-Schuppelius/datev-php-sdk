@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\ClientMasterData;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\ClientMasterData\TaxAuthorities\TaxAuthority;
-use Datev\Entities\ClientMasterData\TaxAuthorities\TaxAuthorities;
+use Datev\Entities\ClientMasterData\TaxAuthorities\{TaxAuthorities, TaxAuthority};
 
 class TaxAuthoritiesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointPrefix = 'master-data/v1';

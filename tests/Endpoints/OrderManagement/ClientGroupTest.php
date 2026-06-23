@@ -22,7 +22,7 @@ class ClientGroupTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetClientGroup() {
+    public function test_get_client_group() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

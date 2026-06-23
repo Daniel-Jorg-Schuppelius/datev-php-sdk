@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\Law;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\Law\CustomFields\CustomField;
-use Datev\Entities\Law\CustomFields\CustomFields;
+use Datev\Entities\Law\CustomFields\{CustomField, CustomFields};
 use InvalidArgumentException;
 
 class CustomFieldsEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
@@ -36,7 +35,7 @@ class CustomFieldsEndpoint extends EndpointAbstract implements SearchableEndpoin
             }
 
             return CustomField::fromJson($response, self::$logger);
-        }, "Fetching CustomField (ID: {$id})");
+        }, "Fetching CustomField (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?CustomFields {

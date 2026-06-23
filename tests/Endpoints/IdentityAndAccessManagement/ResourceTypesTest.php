@@ -22,7 +22,7 @@ class ResourceTypesTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetResourceTypes() {
+    public function test_get_resource_types() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

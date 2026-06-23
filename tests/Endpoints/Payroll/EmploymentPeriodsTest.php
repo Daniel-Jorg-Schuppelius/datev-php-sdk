@@ -13,8 +13,7 @@ declare(strict_types=1);
 namespace Tests\Endpoints\Payroll;
 
 use Datev\API\Desktop\Endpoints\Payroll\EmploymentPeriodsEndpoint;
-use Datev\Entities\Payroll\EmploymentPeriods\EmploymentPeriod;
-use Datev\Entities\Payroll\EmploymentPeriods\EmploymentPeriods;
+use Datev\Entities\Payroll\EmploymentPeriods\{EmploymentPeriod, EmploymentPeriods};
 use Tests\Contracts\EndpointTest;
 
 class EmploymentPeriodsTest extends EndpointTest {
@@ -25,21 +24,21 @@ class EmploymentPeriodsTest extends EndpointTest {
         return new EmploymentPeriodsEndpoint($this->client, self::getLogger());
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
             'id' => '12345',
             'start_date' => '2024-01-01',
-            'end_date' => '2024-12-31'
+            'end_date' => '2024-12-31',
         ];
 
         $period = EmploymentPeriod::fromJson(json_encode($data));
         $this->assertInstanceOf(EmploymentPeriod::class, $period);
     }
 
-    public function testJsonSerializeCollection() {
+    public function test_json_serialize_collection() {
         $data = [
             ['id' => '12345', 'start_date' => '2024-01-01'],
-            ['id' => '12346', 'start_date' => '2023-01-01']
+            ['id' => '12346', 'start_date' => '2023-01-01'],
         ];
 
         $periods = EmploymentPeriods::fromJson(json_encode($data));
@@ -47,7 +46,7 @@ class EmploymentPeriodsTest extends EndpointTest {
         $this->assertCount(2, $periods->getValues());
     }
 
-    public function testGetEmploymentPeriods() {
+    public function test_get_employment_periods() {
         $this->endpoint = $this->createEndpoint();
         $periods = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

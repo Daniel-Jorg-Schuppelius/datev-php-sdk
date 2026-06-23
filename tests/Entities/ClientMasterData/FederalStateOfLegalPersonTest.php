@@ -12,15 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\FederalStates\FederalStateOfLegalPerson;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\FederalStates\FederalStateOfLegalPerson;
-
 class FederalStateOfLegalPersonTest extends EntityTest {
-    public function testCreateFederalStateOfLegalPerson(): void {
+    public function test_create_federal_state_of_legal_person(): void {
         $data = [
             "id" => "NW",
-            "name" => "Nordrhein-Westfalen"
+            "name" => "Nordrhein-Westfalen",
         ];
 
         $state = new FederalStateOfLegalPerson($data);

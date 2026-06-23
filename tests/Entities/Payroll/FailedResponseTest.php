@@ -12,19 +12,17 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\BatchResponse\Failed\{FailedResponse, FailedResponses};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\BatchResponse\Failed\FailedResponse;
-use Datev\Entities\Payroll\BatchResponse\Failed\FailedResponses;
-
 class FailedResponseTest extends EntityTest {
-    public function testCreateFailedResponse(): void {
+    public function test_create_failed_response(): void {
         $data = [
             "index" => 0,
             "reason" => [
                 "error" => "REW11041",
-                "error_description" => "Validation failed"
-            ]
+                "error_description" => "Validation failed",
+            ],
         ];
 
         $response = new FailedResponse($data);
@@ -32,22 +30,22 @@ class FailedResponseTest extends EntityTest {
         $this->assertInstanceOf(FailedResponse::class, $response);
     }
 
-    public function testCreateFailedResponses(): void {
+    public function test_create_failed_responses(): void {
         $data = [
             [
                 "index" => 0,
                 "reason" => [
                     "error" => "REW11041",
-                    "error_description" => "Validation failed"
-                ]
+                    "error_description" => "Validation failed",
+                ],
             ],
             [
                 "index" => 1,
                 "reason" => [
                     "error" => "REW11042",
-                    "error_description" => "Field required"
-                ]
-            ]
+                    "error_description" => "Field required",
+                ],
+            ],
         ];
 
         $responses = new FailedResponses($data);

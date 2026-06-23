@@ -21,7 +21,7 @@ class AccountTest extends EndpointTest {
         return new AccountEndpoint($this->client, self::getLogger());
     }
 
-    public function testGetAccount() {
+    public function test_get_account() {
         $this->endpoint = $this->createEndpoint();
         $accounts = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

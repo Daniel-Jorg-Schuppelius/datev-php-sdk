@@ -12,12 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common;
 
+use Datev\Entities\Common\HelpURI;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Common\HelpURI;
-
 class HelpURITest extends EntityTest {
-    public function testCreateHelpURI(): void {
+    public function test_create_help_uri(): void {
         $helpURI = new HelpURI("https://developer.datev.de/help/api");
 
         $this->assertInstanceOf(HelpURI::class, $helpURI);

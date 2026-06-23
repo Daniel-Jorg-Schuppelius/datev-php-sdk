@@ -12,26 +12,24 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Datev\Entities\Accounting\Sequences\{Sequence, Sequences};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Accounting\Sequences\Sequences;
-use Datev\Entities\Accounting\Sequences\Sequence;
-
 class SequencesTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "description" => "Bankbuchungen",
                     "date_from" => "2024-01-01",
-                    "is_committed" => true
+                    "is_committed" => true,
                 ],
                 [
                     "description" => "Kassenbuchungen",
                     "date_from" => "2024-01-01",
-                    "is_committed" => false
-                ]
-            ]
+                    "is_committed" => false,
+                ],
+            ],
         ];
 
         $sequences = new Sequences($data);

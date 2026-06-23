@@ -12,41 +12,41 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Datev\Entities\Accounting\Records\{Record, Records};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Accounting\Records\Record;
-use Datev\Entities\Accounting\Records\Records;
-
 class RecordTest extends EntityTest {
-    public function testCreateRecord() {
+    public function test_create_record() {
         $data = [
             "account_number" => 1200,
             "contra_account_number" => 8400,
             "amount" => 119.00,
             "debit_credit" => "S",
-            "date" => "2025-01-15"
-        ];        $record = new Record($data);
+            "date" => "2025-01-15",
+        ];
+        $record = new Record($data);
 
         $this->assertInstanceOf(Record::class, $record);
     }
 
-    public function testCreateRecords() {
+    public function test_create_records() {
         $data = [
             "content" => [
                 [
                     "account_number" => 1200,
                     "contra_account_number" => 8400,
                     "amount" => 119.00,
-                    "debit_credit" => "S"
+                    "debit_credit" => "S",
                 ],
                 [
                     "account_number" => 1400,
                     "contra_account_number" => 8401,
                     "amount" => 238.00,
-                    "debit_credit" => "H"
-                ]
-            ]
-        ];        $records = new Records($data);
+                    "debit_credit" => "H",
+                ],
+            ],
+        ];
+        $records = new Records($data);
 
         $this->assertInstanceOf(Records::class, $records);
         $this->assertCount(2, $records->getValues());

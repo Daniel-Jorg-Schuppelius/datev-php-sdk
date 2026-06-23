@@ -31,10 +31,10 @@ class DocumentFilesBinaryTest extends TestCase {
         return "%PDF-1.7\x00\x01\x02\xFF\xFE\xFD\r\n" . random_bytes(64) . "%%EOF";
     }
 
-    public function testGetFileByIdReturnsBytesVerbatim(): void {
+    public function test_get_file_by_id_returns_bytes_verbatim(): void {
         $binary = $this->binaryFixture();
 
-        $mock = new MockClient();
+        $mock = new MockClient;
         $mock->registerMockResponse(
             'GET',
             '/datev/api/dms/v2/document-files/abc-123',
@@ -49,10 +49,10 @@ class DocumentFilesBinaryTest extends TestCase {
         $this->assertSame($binary, $result, 'Downloaded file content must be byte-identical to the server response.');
     }
 
-    public function testGetFileByIdViaIdObject(): void {
+    public function test_get_file_by_id_via_id_object(): void {
         $binary = $this->binaryFixture();
 
-        $mock = new MockClient();
+        $mock = new MockClient;
         $mock->registerMockResponse(
             'GET',
             '/datev/api/dms/v2/document-files/11111111-2222-3333-4444-555555555555',
@@ -67,10 +67,10 @@ class DocumentFilesBinaryTest extends TestCase {
         $this->assertSame($binary, $result);
     }
 
-    public function testUploadSendsBodyVerbatim(): void {
+    public function test_upload_sends_body_verbatim(): void {
         $binary = $this->binaryFixture();
 
-        $mock = new MockClient();
+        $mock = new MockClient;
         $mock->registerMockResponse(
             'POST',
             '/datev/api/dms/v2/document-files',

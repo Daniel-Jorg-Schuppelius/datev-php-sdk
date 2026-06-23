@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\Accounting;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\Accounting\Debitors\Debitor;
-use Datev\Entities\Accounting\Debitors\Debitors;
+use Datev\Entities\Accounting\Debitors\{Debitor, Debitors};
 use InvalidArgumentException;
 
 class DebitorsEndpoint extends EndpointAbstract implements SearchableEndpointInterface {

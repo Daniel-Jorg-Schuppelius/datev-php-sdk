@@ -12,16 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\DeletionLogs\{DeletionLog, DeletionLogs};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\DeletionLogs\DeletionLog;
-use Datev\Entities\ClientMasterData\DeletionLogs\DeletionLogs;
-
 class DeletionLogTest extends EntityTest {
-    public function testCreateDeletionLog() {
+    public function test_create_deletion_log() {
         $data = [
             "id" => "d13f9c3c-380c-494e-97c8-d12fff738189",
-            "timestamp" => "2024-01-15"
+            "timestamp" => "2024-01-15",
         ];
 
         $log = new DeletionLog($data);
@@ -31,12 +29,12 @@ class DeletionLogTest extends EntityTest {
         $this->assertNotNull($log->getTimestamp());
     }
 
-    public function testCreateDeletionLogs() {
+    public function test_create_deletion_logs() {
         $data = [
             [
                 "id" => "d13f9c3c-380c-494e-97c8-d12fff738189",
-                "timestamp" => "2024-01-15"
-            ]
+                "timestamp" => "2024-01-15",
+            ],
         ];
 
         $logs = new DeletionLogs($data);

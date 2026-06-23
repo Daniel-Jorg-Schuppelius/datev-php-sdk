@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\Accounting;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\Accounting\AccountPostings\AccountPosting;
-use Datev\Entities\Accounting\AccountPostings\AccountPostings;
+use Datev\Entities\Accounting\AccountPostings\{AccountPosting, AccountPostings};
 use InvalidArgumentException;
 
 class AccountPostingsEndpoint extends EndpointAbstract implements SearchableEndpointInterface {

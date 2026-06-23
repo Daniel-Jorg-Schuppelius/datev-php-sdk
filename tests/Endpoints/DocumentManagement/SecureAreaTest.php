@@ -11,8 +11,7 @@
 namespace Tests\Endpoints\DocumentManagement;
 
 use Datev\API\Desktop\Endpoints\DocumentManagement\SecureAreasEndpoint;
-use Datev\Entities\DocumentManagement\SecureAreas\SecureArea;
-use Datev\Entities\DocumentManagement\SecureAreas\SecureAreas;
+use Datev\Entities\DocumentManagement\SecureAreas\{SecureArea, SecureAreas};
 use Tests\Contracts\EndpointTest;
 
 class SecureAreaTest extends EndpointTest {
@@ -24,7 +23,7 @@ class SecureAreaTest extends EndpointTest {
         $this->apiDisabled = true; // API is disabled
     }
 
-    public function testGetSecureAreasAPI() {
+    public function test_get_secure_areas_api() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

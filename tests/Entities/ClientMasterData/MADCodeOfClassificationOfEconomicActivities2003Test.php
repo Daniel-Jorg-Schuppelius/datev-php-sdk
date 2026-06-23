@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\MADCodesOfClassificationOfEconomicActivities2003\{MADCodeOfClassificationOfEconomicActivities2003, MADCodesOfClassificationOfEconomicActivities2003};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\MADCodesOfClassificationOfEconomicActivities2003\MADCodeOfClassificationOfEconomicActivities2003;
-use Datev\Entities\ClientMasterData\MADCodesOfClassificationOfEconomicActivities2003\MADCodesOfClassificationOfEconomicActivities2003;
-
 class MADCodeOfClassificationOfEconomicActivities2003Test extends EntityTest {
-    public function testCreateMADCodeOfClassificationOfEconomicActivities2003(): void {
+    public function test_create_mad_code_of_classification_of_economic_activities2003(): void {
         $data = [
             "value" => "01.11",
             "valid_from" => "2020-01-01",
@@ -28,7 +26,7 @@ class MADCodeOfClassificationOfEconomicActivities2003Test extends EntityTest {
         $this->assertInstanceOf(MADCodeOfClassificationOfEconomicActivities2003::class, $madCode);
     }
 
-    public function testCreateMADCodesOfClassificationOfEconomicActivities2003(): void {
+    public function test_create_mad_codes_of_classification_of_economic_activities2003(): void {
         $data = [
             [
                 "value" => "01.11",

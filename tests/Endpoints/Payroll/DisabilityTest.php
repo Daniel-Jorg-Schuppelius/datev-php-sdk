@@ -13,8 +13,7 @@ declare(strict_types=1);
 namespace Tests\Endpoints\Payroll;
 
 use Datev\API\Desktop\Endpoints\Payroll\DisabilityEndpoint;
-use Datev\Entities\Payroll\Disabilities\Disability;
-use Datev\Entities\Payroll\Disabilities\Disabilities;
+use Datev\Entities\Payroll\Disabilities\{Disabilities, Disability};
 use Tests\Contracts\EndpointTest;
 
 class DisabilityTest extends EndpointTest {
@@ -25,21 +24,21 @@ class DisabilityTest extends EndpointTest {
         return new DisabilityEndpoint($this->client, self::getLogger());
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
             'id' => '12345',
             'degree_of_disability' => 50,
-            'valid_from' => '2024-01-01'
+            'valid_from' => '2024-01-01',
         ];
 
         $disability = Disability::fromJson(json_encode($data));
         $this->assertInstanceOf(Disability::class, $disability);
     }
 
-    public function testJsonSerializeCollection() {
+    public function test_json_serialize_collection() {
         $data = [
             ['id' => '12345', 'degree_of_disability' => 50],
-            ['id' => '12346', 'degree_of_disability' => 30]
+            ['id' => '12346', 'degree_of_disability' => 30],
         ];
 
         $disabilities = Disabilities::fromJson(json_encode($data));
@@ -47,7 +46,7 @@ class DisabilityTest extends EndpointTest {
         $this->assertCount(2, $disabilities->getValues());
     }
 
-    public function testGetDisabilities() {
+    public function test_get_disabilities() {
         $this->endpoint = $this->createEndpoint();
         $disabilities = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

@@ -23,7 +23,7 @@ class CostCentersTest extends EndpointTest {
         return new CostCentersEndpoint($this->client, self::getLogger());
     }
 
-    public function testGetCostCenters() {
+    public function test_get_cost_centers() {
         $this->skipMockIfComplexEntity();
 
         $this->endpoint = $this->createEndpoint();

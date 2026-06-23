@@ -12,16 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
+use Datev\Entities\Law\FeeVersions\{FeeVersion, FeeVersions};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Law\FeeVersions\FeeVersion;
-use Datev\Entities\Law\FeeVersions\FeeVersions;
-
 class FeeVersionTest extends EntityTest {
-    public function testCreateFeeVersion(): void {
+    public function test_create_fee_version(): void {
         $data = [
             "id" => 1,
-            "name" => "RVG 2021"
+            "name" => "RVG 2021",
         ];
 
         $feeVersion = new FeeVersion($data);
@@ -31,18 +29,18 @@ class FeeVersionTest extends EntityTest {
         $this->assertEquals("RVG 2021", $feeVersion->getName());
     }
 
-    public function testCreateFeeVersions(): void {
+    public function test_create_fee_versions(): void {
         $data = [
             "content" => [
                 [
                     "id" => 1,
-                    "name" => "RVG 2021"
+                    "name" => "RVG 2021",
                 ],
                 [
                     "id" => 2,
-                    "name" => "RVG 2024"
-                ]
-            ]
+                    "name" => "RVG 2024",
+                ],
+            ],
         ];
 
         $feeVersions = new FeeVersions($data);

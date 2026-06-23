@@ -12,20 +12,18 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
+use Datev\Entities\Law\AccountingAreas\{AccountingArea, AccountingAreas};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Law\AccountingAreas\AccountingArea;
-use Datev\Entities\Law\AccountingAreas\AccountingAreas;
-
 class AccountingAreaTest extends EntityTest {
-    public function testCreateAccountingArea(): void {
+    public function test_create_accounting_area(): void {
         $data = [
             "id" => "test-id",
             "number" => 1,
             "name" => "Finanzbuchhaltung",
             "general_ledger_account_length" => 4,
             "general_ledger_accounts_frame" => 2,
-            "taxation_method" => "Sollversteuerung"
+            "taxation_method" => "Sollversteuerung",
         ];
 
         $accountingArea = new AccountingArea($data);
@@ -36,20 +34,20 @@ class AccountingAreaTest extends EntityTest {
         $this->assertEquals(4, $accountingArea->getGeneralLedgerAccountLength());
     }
 
-    public function testCreateAccountingAreas(): void {
+    public function test_create_accounting_areas(): void {
         $data = [
             "content" => [
                 [
                     "id" => "test-id-1",
                     "number" => 1,
-                    "name" => "Finanzbuchhaltung"
+                    "name" => "Finanzbuchhaltung",
                 ],
                 [
                     "id" => "test-id-2",
                     "number" => 2,
-                    "name" => "Kostenrechnung"
-                ]
-            ]
+                    "name" => "Kostenrechnung",
+                ],
+            ],
         ];
 
         $accountingAreas = new AccountingAreas($data);

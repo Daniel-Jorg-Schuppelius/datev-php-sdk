@@ -10,10 +10,8 @@
 
 namespace Tests\Endpoints\DocumentManagement;
 
-use Datev\API\Desktop\Endpoints\DocumentManagement\DocumentsEndpoint;
-use Datev\API\Desktop\Endpoints\DocumentManagement\StructureItemsEndpoint;
-use Datev\Entities\DocumentManagement\StructureItems\StructureItem;
-use Datev\Entities\DocumentManagement\StructureItems\StructureItems;
+use Datev\API\Desktop\Endpoints\DocumentManagement\{DocumentsEndpoint, StructureItemsEndpoint};
+use Datev\Entities\DocumentManagement\StructureItems\{StructureItem, StructureItems};
 use Tests\Contracts\EndpointTest;
 
 class StructureItemTest extends EndpointTest {
@@ -27,7 +25,7 @@ class StructureItemTest extends EndpointTest {
         $this->apiDisabled = true; // API is disabled
     }
 
-    public function testGetSecureAreasAPI() {
+    public function test_get_secure_areas_api() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

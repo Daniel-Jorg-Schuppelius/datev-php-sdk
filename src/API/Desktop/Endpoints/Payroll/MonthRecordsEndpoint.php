@@ -15,10 +15,8 @@ namespace Datev\API\Desktop\Endpoints\Payroll;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\Payroll\PayrollEndpointAbstract;
-use Datev\Entities\Payroll\MonthlyRecords\MonthlyRecord;
-use Datev\Entities\Payroll\MonthlyRecords\MonthlyRecords;
+use Datev\Entities\Payroll\MonthlyRecords\{MonthlyRecord, MonthlyRecords};
 use InvalidArgumentException;
-use Psr\Http\Message\ResponseInterface;
 
 class MonthRecordsEndpoint extends PayrollEndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointSuffix = 'month-records';
@@ -36,7 +34,7 @@ class MonthRecordsEndpoint extends PayrollEndpointAbstract implements Searchable
             }
 
             return MonthlyRecord::fromJson($response, self::$logger);
-        }, "Fetching MonthlyRecord (ID: {$id})");
+        }, "Fetching MonthlyRecord (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?MonthlyRecords {
@@ -51,9 +49,11 @@ class MonthRecordsEndpoint extends PayrollEndpointAbstract implements Searchable
         }, "Searching MonthlyRecords");
     }
 
-    public function createBatch(MonthlyRecords $records): ResponseInterface {
+    public function createBatch(MonthlyRecords $records): bool {
         return $this->logDebugWithTimer(function () use ($records) {
-            return $this->postContent($records, [], "{$this->getEndpointUrl()}/{$this->endpointSuffix}/batch");
+            $response = parent::postContents($records->toArray(), [], "{$this->getEndpointUrl()}/{$this->endpointSuffix}/batch");
+
+            return $response !== '';
         }, "Creating batch MonthlyRecords");
     }
 }

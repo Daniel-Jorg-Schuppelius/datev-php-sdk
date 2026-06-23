@@ -12,12 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\FederalStatesMAD\FederalStateMADOfLegalPerson;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\FederalStatesMAD\FederalStateMADOfLegalPerson;
-
 class FederalStateMADOfLegalPersonTest extends EntityTest {
-    public function testCreateFromString(): void {
+    public function test_create_from_string(): void {
         $federalState = new FederalStateMADOfLegalPerson("BY");
 
         $this->assertEquals("BY", $federalState->getValue());

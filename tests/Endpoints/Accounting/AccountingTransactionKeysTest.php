@@ -23,7 +23,7 @@ class AccountingTransactionKeysTest extends EndpointTest {
         return new AccountingTransactionKeysEndpoint($this->client, self::getLogger());
     }
 
-    public function testGetTransactionKeys() {
+    public function test_get_transaction_keys() {
         $this->skipMockIfComplexEntity();
 
         $this->endpoint = $this->createEndpoint();

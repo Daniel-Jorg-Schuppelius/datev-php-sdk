@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\OrderManagement;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\OrderManagement\OrderStateWork\OrderStateWork;
-use Datev\Entities\OrderManagement\OrderStateWork\OrderStateWorks;
+use Datev\Entities\OrderManagement\OrderStateWork\{OrderStateWork, OrderStateWorks};
 use InvalidArgumentException;
 
 class OrderStateWorkEndpoint extends EndpointAbstract implements SearchableEndpointInterface {

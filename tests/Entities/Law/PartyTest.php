@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
+use Datev\Entities\Law\Parties\{Parties, Party};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Law\Parties\Party;
-use Datev\Entities\Law\Parties\Parties;
-
 class PartyTest extends EntityTest {
-    public function testCreateParty() {
+    public function test_create_party() {
         $data = [
             "id" => "32e6f021-8174-42c3-9d1a-d5eb3b636a1d",
             "party_role_id" => "ebd93cfc-1c2e-4927-aee5-24b448b050fd",
@@ -32,11 +30,11 @@ class PartyTest extends EntityTest {
             "entitled_to_deduct_input_vat" => false,
             "party_name" => "Manfred Musterhinz, Berliner Str. 3, 01067 Dresden",
             "party_name_modified" => true,
-            "official_party_type" => "Kfz-Halter"
+            "official_party_type" => "Kfz-Halter",
         ];
 
         $party = new Party($data);
-        $this->assertInstanceOf(Party::class, new Party());
+        $this->assertInstanceOf(Party::class, new Party);
         $this->assertInstanceOf(Party::class, $party);
         $this->assertNotNull($party->getID());
         $this->assertEquals("Musterhinz", $party->getSurname());
@@ -48,20 +46,20 @@ class PartyTest extends EntityTest {
         $this->assertEquals("Kfz-Halter", $party->getOfficialPartyType());
     }
 
-    public function testCreateParties() {
+    public function test_create_parties() {
         $data = [
             "content" => [
                 [
                     "id" => "32e6f021-8174-42c3-9d1a-d5eb3b636a1d",
                     "surname" => "Musterhinz",
-                    "first_name" => "Manfred"
+                    "first_name" => "Manfred",
                 ],
                 [
                     "id" => "82b31bfc-7e44-4554-adb4-7c596d7e855b",
                     "surname" => "Traumustername",
-                    "first_name" => "Ernst"
-                ]
-            ]
+                    "first_name" => "Ernst",
+                ],
+            ],
         ];
 
         $parties = new Parties($data);

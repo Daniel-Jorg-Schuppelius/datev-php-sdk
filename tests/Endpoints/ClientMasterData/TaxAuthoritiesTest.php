@@ -24,7 +24,7 @@ class TaxAuthoritiesTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetTaxAuthorities() {
+    public function test_get_tax_authorities() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

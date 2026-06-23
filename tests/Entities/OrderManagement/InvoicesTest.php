@@ -12,26 +12,24 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Datev\Entities\OrderManagement\Invoices\{Invoice, Invoices};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\OrderManagement\Invoices\Invoices;
-use Datev\Entities\OrderManagement\Invoices\Invoice;
-
 class InvoicesTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "id" => 1,
                     "invoice_number" => 20240001,
-                    "gross_amount" => 1500.00
+                    "gross_amount" => 1500.00,
                 ],
                 [
                     "id" => 2,
                     "invoice_number" => 20240002,
-                    "gross_amount" => 2500.00
-                ]
-            ]
+                    "gross_amount" => 2500.00,
+                ],
+            ],
         ];
 
         $invoices = new Invoices($data);

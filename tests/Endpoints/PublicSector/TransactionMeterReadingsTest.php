@@ -22,7 +22,7 @@ class TransactionMeterReadingsTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetTransactionMeterReadings() {
+    public function test_get_transaction_meter_readings() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

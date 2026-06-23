@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Datev\Entities\Accounting\Banks\{Bank, Banks};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Accounting\Banks\Banks;
-use Datev\Entities\Accounting\Banks\Bank;
-
 class BanksTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
@@ -26,16 +24,16 @@ class BanksTest extends EntityTest {
                     "bic" => "COBADEFFXXX",
                     "bank_name" => "Commerzbank",
                     "business_partner_bank_position" => 1,
-                    "is_business_partner_bank" => true
+                    "is_business_partner_bank" => true,
                 ],
                 [
                     "iban" => "DE91100000000123456789",
                     "bic" => "DEUTDEFF",
                     "bank_name" => "Deutsche Bank",
                     "business_partner_bank_position" => 2,
-                    "is_business_partner_bank" => false
-                ]
-            ]
+                    "is_business_partner_bank" => false,
+                ],
+            ],
         ];
 
         $banks = new Banks($data);

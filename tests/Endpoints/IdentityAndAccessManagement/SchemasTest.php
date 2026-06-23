@@ -22,7 +22,7 @@ class SchemasTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetSchemas() {
+    public function test_get_schemas() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

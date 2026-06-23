@@ -13,8 +13,7 @@ declare(strict_types=1);
 namespace Tests\Endpoints\Payroll;
 
 use Datev\API\Desktop\Endpoints\Payroll\MonthRecordsEndpoint;
-use Datev\Entities\Payroll\MonthlyRecords\MonthlyRecord;
-use Datev\Entities\Payroll\MonthlyRecords\MonthlyRecords;
+use Datev\Entities\Payroll\MonthlyRecords\{MonthlyRecord, MonthlyRecords};
 use Tests\Contracts\EndpointTest;
 
 class MonthRecordsTest extends EndpointTest {
@@ -25,21 +24,21 @@ class MonthRecordsTest extends EndpointTest {
         return new MonthRecordsEndpoint($this->client, self::getLogger());
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
             'id' => '12345',
             'month' => 1,
-            'year' => 2025
+            'year' => 2025,
         ];
 
         $record = MonthlyRecord::fromJson(json_encode($data));
         $this->assertInstanceOf(MonthlyRecord::class, $record);
     }
 
-    public function testJsonSerializeCollection() {
+    public function test_json_serialize_collection() {
         $data = [
             ['id' => '12345', 'month' => 1],
-            ['id' => '12346', 'month' => 2]
+            ['id' => '12346', 'month' => 2],
         ];
 
         $records = MonthlyRecords::fromJson(json_encode($data));
@@ -47,7 +46,7 @@ class MonthRecordsTest extends EndpointTest {
         $this->assertCount(2, $records->getValues());
     }
 
-    public function testGetMonthRecords() {
+    public function test_get_month_records() {
         $this->endpoint = $this->createEndpoint();
         $records = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

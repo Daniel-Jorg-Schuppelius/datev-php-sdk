@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\Accounting;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\Accounting\FiscalYears\FiscalYear;
-use Datev\Entities\Accounting\FiscalYears\FiscalYears;
+use Datev\Entities\Accounting\FiscalYears\{FiscalYear, FiscalYears};
 use InvalidArgumentException;
 
 class FiscalYearsEndpoint extends EndpointAbstract implements SearchableEndpointInterface {

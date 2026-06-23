@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\Accounting;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\Accounting\AccountingTransactionKeys\AccountingTransactionKey;
-use Datev\Entities\Accounting\AccountingTransactionKeys\AccountingTransactionKeys;
+use Datev\Entities\Accounting\AccountingTransactionKeys\{AccountingTransactionKey, AccountingTransactionKeys};
 use InvalidArgumentException;
 
 class AccountingTransactionKeysEndpoint extends EndpointAbstract implements SearchableEndpointInterface {

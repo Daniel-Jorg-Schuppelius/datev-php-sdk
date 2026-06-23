@@ -18,7 +18,7 @@ use APIToolkit\Entities\ID;
 use Datev\Contracts\Interfaces\ResourceInterface;
 
 interface ExtendedEndpointInterface extends EndpointInterface {
-    public function create(NamedEntityInterface $data, ID $id = null): ResourceInterface;
+    public function create(NamedEntityInterface $data, ?ID $id = null): ResourceInterface;
     public function update(ID $id, NamedEntityInterface $data): ResourceInterface;
     public function delete(ID $id): bool;
 }

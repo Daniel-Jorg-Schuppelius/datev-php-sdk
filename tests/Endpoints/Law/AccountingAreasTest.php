@@ -22,7 +22,7 @@ class AccountingAreasTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetAccountingAreas() {
+    public function test_get_accounting_areas() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

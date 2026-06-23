@@ -13,8 +13,7 @@ declare(strict_types=1);
 namespace Tests\Endpoints\Payroll;
 
 use Datev\API\Desktop\Endpoints\Payroll\AddressEndpoint;
-use Datev\Entities\Payroll\Addresses\Address;
-use Datev\Entities\Payroll\Addresses\Addresses;
+use Datev\Entities\Payroll\Addresses\{Address, Addresses};
 use Tests\Contracts\EndpointTest;
 
 class AddressTest extends EndpointTest {
@@ -25,23 +24,23 @@ class AddressTest extends EndpointTest {
         return new AddressEndpoint($this->client, self::getLogger());
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
             'street' => 'Musterstraße',
             'house_number' => '123',
             'zip_code' => '12345',
             'city' => 'Musterstadt',
-            'country' => 'DE'
+            'country' => 'DE',
         ];
 
         $address = Address::fromJson(json_encode($data));
         $this->assertInstanceOf(Address::class, $address);
     }
 
-    public function testJsonSerializeCollection() {
+    public function test_json_serialize_collection() {
         $data = [
             ['street' => 'Musterstraße', 'city' => 'Musterstadt'],
-            ['street' => 'Beispielweg', 'city' => 'Beispielstadt']
+            ['street' => 'Beispielweg', 'city' => 'Beispielstadt'],
         ];
 
         $addresses = Addresses::fromJson(json_encode($data));
@@ -49,7 +48,7 @@ class AddressTest extends EndpointTest {
         $this->assertCount(2, $addresses->getValues());
     }
 
-    public function testGetAddresses() {
+    public function test_get_addresses() {
         $this->endpoint = $this->createEndpoint();
         $addresses = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

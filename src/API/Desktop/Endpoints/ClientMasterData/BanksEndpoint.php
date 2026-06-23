@@ -13,8 +13,7 @@ namespace Datev\API\Desktop\Endpoints\ClientMasterData;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\ClientMasterData\Banks\Bank;
-use Datev\Entities\ClientMasterData\Banks\Banks;
+use Datev\Entities\ClientMasterData\Banks\{Bank, Banks};
 use InvalidArgumentException;
 
 class BanksEndpoint extends EndpointAbstract implements SearchableEndpointInterface {

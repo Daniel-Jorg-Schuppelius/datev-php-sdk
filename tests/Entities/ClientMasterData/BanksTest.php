@@ -12,26 +12,24 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\Banks\{Bank, Banks};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\Banks\Banks;
-use Datev\Entities\ClientMasterData\Banks\Bank;
-
 class BanksTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "id" => "bank-1",
                     "bic" => "COBADEFFXXX",
-                    "country_code" => "DE"
+                    "country_code" => "DE",
                 ],
                 [
                     "id" => "bank-2",
                     "bic" => "DEUTDEFF",
-                    "country_code" => "DE"
-                ]
-            ]
+                    "country_code" => "DE",
+                ],
+            ],
         ];
 
         $banks = new Banks($data);

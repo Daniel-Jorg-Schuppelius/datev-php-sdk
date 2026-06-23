@@ -12,26 +12,24 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Datev\Entities\DocumentManagement\Documents\{Document, Documents};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\DocumentManagement\Documents\Documents;
-use Datev\Entities\DocumentManagement\Documents\Document;
-
 class DocumentsTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "id" => "doc-1",
                     "description" => "Rechnung 2024-001",
-                    "extension" => ".pdf"
+                    "extension" => ".pdf",
                 ],
                 [
                     "id" => "doc-2",
                     "description" => "Vertrag XY",
-                    "extension" => ".pdf"
-                ]
-            ]
+                    "extension" => ".pdf",
+                ],
+            ],
         ];
 
         $documents = new Documents($data);

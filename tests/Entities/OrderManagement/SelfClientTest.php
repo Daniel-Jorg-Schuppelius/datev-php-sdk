@@ -12,19 +12,16 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Datev\Entities\OrderManagement\SelfClients\{SelfClient, SelfClients};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\OrderManagement\SelfClients\SelfClient;
-use Datev\Entities\OrderManagement\SelfClients\SelfClients;
-
 class SelfClientTest extends EntityTest {
-    
-    public function testCreateSelfClient(): void {
+    public function test_create_self_client(): void {
         $data = [
             "id" => "test-id",
             "client_id" => "550e8400-e29b-41d4-a716-446655440000",
             "client_number" => 10001,
-            "client_name" => "Eigene Kanzlei GmbH"
+            "client_name" => "Eigene Kanzlei GmbH",
         ];
 
         $selfClient = new SelfClient($data);
@@ -34,20 +31,20 @@ class SelfClientTest extends EntityTest {
         $this->assertEquals("Eigene Kanzlei GmbH", $selfClient->getClientName());
     }
 
-    public function testCreateSelfClients(): void {
+    public function test_create_self_clients(): void {
         $data = [
             "content" => [
                 [
                     "id" => "test-id-1",
                     "client_number" => 10001,
-                    "client_name" => "Eigene Kanzlei GmbH"
+                    "client_name" => "Eigene Kanzlei GmbH",
                 ],
                 [
                     "id" => "test-id-2",
                     "client_number" => 10002,
-                    "client_name" => "Zweite Niederlassung"
-                ]
-            ]
+                    "client_name" => "Zweite Niederlassung",
+                ],
+            ],
         ];
 
         $selfClients = new SelfClients($data);

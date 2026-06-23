@@ -12,20 +12,17 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Datev\Entities\DocumentManagement\Orders\{Order, OrderID, Orders};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\DocumentManagement\Orders\Order;
-use Datev\Entities\DocumentManagement\Orders\Orders;
-use Datev\Entities\DocumentManagement\Orders\OrderID;
-
 class OrderTest extends EntityTest {
-    public function testCreateOrder(): void {
+    public function test_create_order(): void {
         $data = [
             "id" => "order-001",
             "name" => "Jahresabschluss",
             "assessment_year" => 2024,
             "creation_year" => 2024,
-            "number" => 1
+            "number" => 1,
         ];
 
         $order = new Order($data);
@@ -39,20 +36,20 @@ class OrderTest extends EntityTest {
         $this->assertEquals(1, $order->getNumber());
     }
 
-    public function testCreateOrders(): void {
+    public function test_create_orders(): void {
         $data = [
             "content" => [
                 [
                     "id" => "order-001",
                     "name" => "Jahresabschluss",
-                    "number" => 1
+                    "number" => 1,
                 ],
                 [
                     "id" => "order-002",
                     "name" => "Steuererklärung",
-                    "number" => 2
-                ]
-            ]
+                    "number" => 2,
+                ],
+            ],
         ];
 
         $orders = new Orders($data);

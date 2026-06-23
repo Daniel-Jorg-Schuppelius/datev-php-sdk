@@ -12,24 +12,22 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\CostCenters\{CostCenter, CostCenters};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\CostCenters\CostCenters;
-use Datev\Entities\Payroll\CostCenters\CostCenter;
-
 class CostCentersTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "id" => "1",
-                    "name" => "Hauptkostenstelle"
+                    "name" => "Hauptkostenstelle",
                 ],
                 [
                     "id" => "2",
-                    "name" => "Nebenkostenstelle"
-                ]
-            ]
+                    "name" => "Nebenkostenstelle",
+                ],
+            ],
         ];
 
         $costCenters = new CostCenters($data);

@@ -12,17 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Datev\Entities\DocumentManagement\SecureAreas\{SecureArea, SecureAreaID, SecureAreas};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\DocumentManagement\SecureAreas\SecureArea;
-use Datev\Entities\DocumentManagement\SecureAreas\SecureAreas;
-use Datev\Entities\DocumentManagement\SecureAreas\SecureAreaID;
-
 class SecureAreaTest extends EntityTest {
-    public function testCreateSecureArea(): void {
+    public function test_create_secure_area(): void {
         $data = [
             "id" => "secure-001",
-            "name" => "Vertrauliche Dokumente"
+            "name" => "Vertrauliche Dokumente",
         ];
 
         $secureArea = new SecureArea($data);
@@ -33,18 +30,18 @@ class SecureAreaTest extends EntityTest {
         $this->assertEquals("Vertrauliche Dokumente", $secureArea->getName());
     }
 
-    public function testCreateSecureAreas(): void {
+    public function test_create_secure_areas(): void {
         $data = [
             "content" => [
                 [
                     "id" => "secure-001",
-                    "name" => "Vertrauliche Dokumente"
+                    "name" => "Vertrauliche Dokumente",
                 ],
                 [
                     "id" => "secure-002",
-                    "name" => "Personaldaten"
-                ]
-            ]
+                    "name" => "Personaldaten",
+                ],
+            ],
         ];
 
         $secureAreas = new SecureAreas($data);

@@ -12,18 +12,15 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Datev\Entities\DocumentManagement\DispatcherInformations\{DispatcherInformation, DispatcherInformations, ExternalDocumentID};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\DocumentManagement\DispatcherInformations\DispatcherInformation;
-use Datev\Entities\DocumentManagement\DispatcherInformations\DispatcherInformations;
-use Datev\Entities\DocumentManagement\DispatcherInformations\ExternalDocumentID;
-
 class DispatcherInformationTest extends EntityTest {
-    public function testCreateDispatcherInformation(): void {
+    public function test_create_dispatcher_information(): void {
         $data = [
             "external_id" => "ext-001",
             "application" => "DATEV Unternehmen online",
-            "comment" => "Automatisch importiert"
+            "comment" => "Automatisch importiert",
         ];
 
         $dispatcherInformation = new DispatcherInformation($data);
@@ -35,20 +32,20 @@ class DispatcherInformationTest extends EntityTest {
         $this->assertEquals("Automatisch importiert", $dispatcherInformation->getComment());
     }
 
-    public function testCreateDispatcherInformations(): void {
+    public function test_create_dispatcher_informations(): void {
         $data = [
             "content" => [
                 [
                     "external_id" => "ext-001",
                     "application" => "DATEV Unternehmen online",
-                    "comment" => "Automatisch importiert"
+                    "comment" => "Automatisch importiert",
                 ],
                 [
                     "external_id" => "ext-002",
                     "application" => "DATEV Lohn",
-                    "comment" => "Manuell hinzugefügt"
-                ]
-            ]
+                    "comment" => "Manuell hinzugefügt",
+                ],
+            ],
         ];
 
         $dispatcherInformations = new DispatcherInformations($data);

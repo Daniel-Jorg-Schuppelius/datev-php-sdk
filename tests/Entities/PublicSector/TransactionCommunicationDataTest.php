@@ -12,12 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
+use Datev\Entities\PublicSector\TransactionCommunications\TransactionCommunicationData;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\PublicSector\TransactionCommunications\TransactionCommunicationData;
-
 class TransactionCommunicationDataTest extends EntityTest {
-    public function testCreateTransactionCommunicationData(): void {
+    public function test_create_transaction_communication_data(): void {
         $data = [
             "id" => "comm-001",
             "communication_data_content" => "test@example.com",
@@ -26,8 +25,8 @@ class TransactionCommunicationDataTest extends EntityTest {
             "note" => "Primäre E-Mail",
             "communication_usage_type" => [
                 "is_main_communication_usage_type" => true,
-                "is_main_management_phone" => false
-            ]
+                "is_main_management_phone" => false,
+            ],
         ];
 
         $commData = new TransactionCommunicationData($data);

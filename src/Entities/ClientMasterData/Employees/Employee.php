@@ -15,11 +15,8 @@ namespace Datev\Entities\ClientMasterData\Employees;
 use DateTime;
 use Datev\Entities\ClientMasterData\Establishments\ID\EstablishmentID;
 use Datev\Entities\ClientMasterData\FunctionalAreas\ID\FunctionalAreaID;
-use Datev\Entities\Common\EmailAddress;
+use Datev\Entities\Common\{EmailAddress, FaxNumber, NaturalPersonID, OrganizationID};
 use Datev\Entities\Common\Employees\Employee as BaseEmployee;
-use Datev\Entities\Common\FaxNumber;
-use Datev\Entities\Common\NaturalPersonID;
-use Datev\Entities\Common\OrganizationID;
 use Datev\Enums\Status;
 
 class Employee extends BaseEmployee {

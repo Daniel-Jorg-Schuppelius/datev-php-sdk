@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
+use Datev\Entities\PublicSector\Meters\{Meter, Meters};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\PublicSector\Meters\Meter;
-use Datev\Entities\PublicSector\Meters\Meters;
-
 class MeterTest extends EntityTest {
-    public function testCreateMeter() {
+    public function test_create_meter() {
         $data = [
             "id" => "m1234567-8901-2345-6789-012345678901",
             "number" => "WZ-001",
@@ -29,28 +27,28 @@ class MeterTest extends EntityTest {
             "year_of_manufacture" => 2019,
             "year_of_calibration" => 2020,
             "owner" => "Stadtwerke",
-            "comment" => "Hauptwasserzähler"
+            "comment" => "Hauptwasserzähler",
         ];
 
         $meter = new Meter($data);
-        $this->assertInstanceOf(Meter::class, new Meter());
+        $this->assertInstanceOf(Meter::class, new Meter);
         $this->assertInstanceOf(Meter::class, $meter);
         $this->assertEquals("WZ-001", $meter->getNumber());
         $this->assertEquals("12345678", $meter->getMeterNumber());
     }
 
-    public function testCreateMeters() {
+    public function test_create_meters() {
         $data = [
             "content" => [
                 [
                     "id" => "m1234567-8901-2345-6789-012345678901",
-                    "number" => "WZ-001"
+                    "number" => "WZ-001",
                 ],
                 [
                     "id" => "m2234567-8901-2345-6789-012345678902",
-                    "number" => "WZ-002"
-                ]
-            ]
+                    "number" => "WZ-002",
+                ],
+            ],
         ];
 
         $meters = new Meters($data);

@@ -12,18 +12,16 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\Taxations\TaxCards\{TaxCard, TaxCards};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\Taxations\TaxCards\TaxCard;
-use Datev\Entities\Payroll\Taxations\TaxCards\TaxCards;
-
 class TaxCardTest extends EntityTest {
-    public function testCreateTaxCard(): void {
+    public function test_create_tax_card(): void {
         $data = [
             "id" => "tc-001",
             "tax_class" => 1,
             "factor" => 1.0,
-            "denomination" => "Hauptlohnsteuerkarte"
+            "denomination" => "Hauptlohnsteuerkarte",
         ];
 
         $taxCard = new TaxCard($data);
@@ -31,18 +29,18 @@ class TaxCardTest extends EntityTest {
         $this->assertInstanceOf(TaxCard::class, $taxCard);
     }
 
-    public function testCreateTaxCards(): void {
+    public function test_create_tax_cards(): void {
         $data = [
             "content" => [
                 [
                     "id" => "tc-001",
-                    "tax_class" => 1
+                    "tax_class" => 1,
                 ],
                 [
                     "id" => "tc-002",
-                    "tax_class" => 3
-                ]
-            ]
+                    "tax_class" => 3,
+                ],
+            ],
         ];
 
         $taxCards = new TaxCards($data);

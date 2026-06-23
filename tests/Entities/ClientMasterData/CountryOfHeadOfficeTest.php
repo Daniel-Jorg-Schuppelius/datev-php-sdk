@@ -12,28 +12,26 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\CountriesOfHeadOffice\{CountriesOfHeadOffice, CountryOfHeadOffice};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\CountriesOfHeadOffice\CountryOfHeadOffice;
-use Datev\Entities\ClientMasterData\CountriesOfHeadOffice\CountriesOfHeadOffice;
-
 class CountryOfHeadOfficeTest extends EntityTest {
-    public function testCreateCountryOfHeadOffice() {
+    public function test_create_country_of_head_office() {
         $data = [
             "value" => "DE",
-            "valid_from" => "2024-01-01"
+            "valid_from" => "2024-01-01",
         ];
 
         $country = new CountryOfHeadOffice($data);
         $this->assertInstanceOf(CountryOfHeadOffice::class, $country);
     }
 
-    public function testCreateCountriesOfHeadOffice() {
+    public function test_create_countries_of_head_office() {
         $data = [
             [
                 "value" => "DE",
-                "valid_from" => "2024-01-01"
-            ]
+                "valid_from" => "2024-01-01",
+            ],
         ];
 
         $countries = new CountriesOfHeadOffice($data);

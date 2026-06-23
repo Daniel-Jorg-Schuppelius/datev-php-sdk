@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\Accounting;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\Accounting\GeneralLedgerAccounts\GeneralLedgerAccount;
-use Datev\Entities\Accounting\GeneralLedgerAccounts\GeneralLedgerAccounts;
+use Datev\Entities\Accounting\GeneralLedgerAccounts\{GeneralLedgerAccount, GeneralLedgerAccounts};
 use InvalidArgumentException;
 
 class GeneralLedgerAccountsEndpoint extends EndpointAbstract implements SearchableEndpointInterface {

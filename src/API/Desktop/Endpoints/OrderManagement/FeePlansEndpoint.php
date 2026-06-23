@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\OrderManagement;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\OrderManagement\FeePlans\FeePlan;
-use Datev\Entities\OrderManagement\FeePlans\FeePlans;
+use Datev\Entities\OrderManagement\FeePlans\{FeePlan, FeePlans};
 
 class FeePlansEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointPrefix = 'order-management/v1';
@@ -35,7 +34,7 @@ class FeePlansEndpoint extends EndpointAbstract implements SearchableEndpointInt
             }
 
             return FeePlan::fromJson($response, self::$logger);
-        }, "Fetching FeePlan (ID: {$id})");
+        }, "Fetching FeePlan (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?FeePlans {

@@ -69,10 +69,9 @@ class IndividualDatum extends NamedEntity implements IdentifiableNamedEntityInte
         return $this;
     }
 
-
     public function toArray(): array {
         $result = [
-            'id' => $this->getID()->toString()
+            'id' => $this->getID()->toString(),
         ];
 
         if (isset($this->data[0])) {

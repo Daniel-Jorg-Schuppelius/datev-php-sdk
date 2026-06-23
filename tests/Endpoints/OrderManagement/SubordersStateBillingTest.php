@@ -22,7 +22,7 @@ class SubordersStateBillingTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetSubordersStateBilling() {
+    public function test_get_suborders_state_billing() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

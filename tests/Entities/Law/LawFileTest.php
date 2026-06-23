@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
+use Datev\Entities\Law\Files\{LawFile, LawFiles};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Law\Files\LawFile;
-use Datev\Entities\Law\Files\LawFiles;
-
 class LawFileTest extends EntityTest {
-    public function testCreateLawFile(): void {
+    public function test_create_law_file(): void {
         $data = [
             "id" => "test-id",
             "file_number_short" => "2024-001",
@@ -28,7 +26,7 @@ class LawFileTest extends EntityTest {
             "category" => "Zivilrecht",
             "project_number" => "P-001",
             "short_reason" => "Kaufvertrag",
-            "long_reason" => "Streit über Kaufvertrag"
+            "long_reason" => "Streit über Kaufvertrag",
         ];
 
         $lawFile = new LawFile($data);
@@ -40,20 +38,20 @@ class LawFileTest extends EntityTest {
         $this->assertEquals("Zivilrecht", $lawFile->getCategory());
     }
 
-    public function testCreateLawFiles(): void {
+    public function test_create_law_files(): void {
         $data = [
             "content" => [
                 [
                     "id" => "test-id-1",
                     "file_number" => "2024-001",
-                    "file_name" => "Mustermann"
+                    "file_name" => "Mustermann",
                 ],
                 [
                     "id" => "test-id-2",
                     "file_number" => "2024-002",
-                    "file_name" => "Meyer"
-                ]
-            ]
+                    "file_name" => "Meyer",
+                ],
+            ],
         ];
 
         $lawFiles = new LawFiles($data);

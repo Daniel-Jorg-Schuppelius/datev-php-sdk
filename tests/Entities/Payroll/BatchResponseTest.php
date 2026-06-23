@@ -12,16 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\BatchResponse\BatchResponse;
+use Datev\Entities\Payroll\BatchResponse\Failed\{FailedResponse, FailedResponses};
+use Datev\Entities\Payroll\BatchResponse\Succeeded\{SucceededResponse, SucceededResponses};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\BatchResponse\BatchResponse;
-use Datev\Entities\Payroll\BatchResponse\Failed\FailedResponse;
-use Datev\Entities\Payroll\BatchResponse\Failed\FailedResponses;
-use Datev\Entities\Payroll\BatchResponse\Succeeded\SucceededResponse;
-use Datev\Entities\Payroll\BatchResponse\Succeeded\SucceededResponses;
-
 class BatchResponseTest extends EntityTest {
-    public function testCreateBatchResponse(): void {
+    public function test_create_batch_response(): void {
         $data = [
             "succeeded" => [
                 [
@@ -42,7 +39,7 @@ class BatchResponseTest extends EntityTest {
         $this->assertInstanceOf(BatchResponse::class, $batchResponse);
     }
 
-    public function testCreateSucceededResponse(): void {
+    public function test_create_succeeded_response(): void {
         $data = [
             "created_id" => "12345678",
         ];
@@ -51,7 +48,7 @@ class BatchResponseTest extends EntityTest {
         $this->assertInstanceOf(SucceededResponse::class, $succeededResponse);
     }
 
-    public function testCreateSucceededResponses(): void {
+    public function test_create_succeeded_responses(): void {
         $data = [
             [
                 "created_id" => "12345678",
@@ -66,7 +63,7 @@ class BatchResponseTest extends EntityTest {
         $this->assertCount(2, $succeededResponses->getValues());
     }
 
-    public function testCreateFailedResponse(): void {
+    public function test_create_failed_response(): void {
         $data = [
             "reason" => [
                 "error" => "REW11041",
@@ -78,7 +75,7 @@ class BatchResponseTest extends EntityTest {
         $this->assertInstanceOf(FailedResponse::class, $failedResponse);
     }
 
-    public function testCreateFailedResponses(): void {
+    public function test_create_failed_responses(): void {
         $data = [
             [
                 "reason" => [

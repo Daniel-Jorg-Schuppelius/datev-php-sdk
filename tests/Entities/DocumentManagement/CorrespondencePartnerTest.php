@@ -12,15 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Datev\Entities\DocumentManagement\CorrespondencePartners\{CorrespondencePartner, CorrespondencePartners};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\DocumentManagement\CorrespondencePartners\CorrespondencePartner;
-use Datev\Entities\DocumentManagement\CorrespondencePartners\CorrespondencePartners;
-
 class CorrespondencePartnerTest extends EntityTest {
-    public function testCreateCorrespondencePartner(): void {
+    public function test_create_correspondence_partner(): void {
         $data = [
-            "domain" => "Mandant-12345"
+            "domain" => "Mandant-12345",
         ];
 
         $correspondencePartner = new CorrespondencePartner($data);
@@ -29,16 +27,16 @@ class CorrespondencePartnerTest extends EntityTest {
         $this->assertEquals("Mandant-12345", $correspondencePartner->getDomain());
     }
 
-    public function testCreateCorrespondencePartners(): void {
+    public function test_create_correspondence_partners(): void {
         $data = [
             "content" => [
                 [
-                    "domain" => "Mandant-12345"
+                    "domain" => "Mandant-12345",
                 ],
                 [
-                    "domain" => "Mandant-67890"
-                ]
-            ]
+                    "domain" => "Mandant-67890",
+                ],
+            ],
         ];
 
         $correspondencePartners = new CorrespondencePartners($data);

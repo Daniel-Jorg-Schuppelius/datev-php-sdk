@@ -16,11 +16,8 @@ use DateTime;
 use Datev\Entities\ClientMasterData\Establishments\ID\EstablishmentID;
 use Datev\Entities\ClientMasterData\FunctionalAreas\ID\FunctionalAreaID;
 use Datev\Entities\Common\Clients\Client as CommonClient;
-use Datev\Entities\Common\LegalPersonID;
-use Datev\Entities\Common\NaturalPersonID;
-use Datev\Entities\Common\OrganizationID;
-use Datev\Enums\PersonType;
-use Datev\Enums\Status;
+use Datev\Entities\Common\{LegalPersonID, NaturalPersonID, OrganizationID};
+use Datev\Enums\{PersonType, Status};
 use Psr\Log\LoggerInterface;
 
 class Client extends CommonClient {

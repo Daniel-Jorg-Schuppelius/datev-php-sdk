@@ -15,7 +15,6 @@ namespace Datev\API\Desktop\Endpoints\OrderManagement;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use Datev\Entities\OrderManagement\Suborders\Suborder;
-use Datev\Entities\OrderManagement\Suborders\Suborders;
 use InvalidArgumentException;
 
 class SubordersEndpoint extends EndpointAbstract {
@@ -46,7 +45,7 @@ class SubordersEndpoint extends EndpointAbstract {
         return $this->logDebugWithTimer(function () use ($orderId, $suborderId, $suborder) {
             $response = parent::putContents($suborder->toArray(), [], "{$this->getEndpointUrl()}/{$orderId}/suborders/{$suborderId}");
 
-            return $response !== false;
+            return $response !== '';
         }, "Updating Suborder (OrderID: {$orderId}, SuborderID: {$suborderId})");
     }
 }

@@ -13,8 +13,8 @@ declare(strict_types=1);
 namespace Datev\Entities\PublicSector\Notifications;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
-use Datev\Entities\PublicSector\Common\Location;
 use DateTime;
+use Datev\Entities\PublicSector\Common\Location;
 use Psr\Log\LoggerInterface;
 
 class Notification extends NamedEntity {

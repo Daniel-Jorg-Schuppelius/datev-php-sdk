@@ -13,11 +13,9 @@ declare(strict_types=1);
 namespace Datev\API\Desktop\Endpoints\PublicSector;
 
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
-use APIToolkit\Entities\GUID;
-use APIToolkit\Entities\ID;
+use APIToolkit\Entities\{GUID, ID};
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\PublicSector\MeterReadings\MeterReading;
-use Datev\Entities\PublicSector\MeterReadings\MeterReadings;
+use Datev\Entities\PublicSector\MeterReadings\{MeterReading, MeterReadings};
 use InvalidArgumentException;
 
 class MeterReadingsEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
@@ -93,7 +91,7 @@ class MeterReadingsEndpoint extends EndpointAbstract implements SearchableEndpoi
         return $this->logDebugWithTimer(function () use ($meterReading) {
             $response = parent::postContents($meterReading->toArray(), [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/meters/{$this->meterId}/meterreadings");
 
-            return $response !== false;
+            return $response !== '';
         }, "Creating MeterReading");
     }
 }

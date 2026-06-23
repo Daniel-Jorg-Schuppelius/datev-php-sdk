@@ -12,19 +12,16 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\MonthlyRecords\{MonthlyRecord, MonthlyRecordID, MonthlyRecords};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\MonthlyRecords\MonthlyRecord;
-use Datev\Entities\Payroll\MonthlyRecords\MonthlyRecords;
-use Datev\Entities\Payroll\MonthlyRecords\MonthlyRecordID;
-
 class MonthlyRecordTest extends EntityTest {
-    public function testCreateMonthlyRecord(): void {
+    public function test_create_monthly_record(): void {
         $data = [
             "id" => "mr-001",
             "personnel_number" => "12345",
             "value" => 5000.00,
-            "origin" => "manual"
+            "origin" => "manual",
         ];
 
         $monthlyRecord = new MonthlyRecord($data);
@@ -37,20 +34,20 @@ class MonthlyRecordTest extends EntityTest {
         $this->assertEquals("manual", $monthlyRecord->getOrigin());
     }
 
-    public function testCreateMonthlyRecords(): void {
+    public function test_create_monthly_records(): void {
         $data = [
             "content" => [
                 [
                     "id" => "mr-001",
                     "personnel_number" => "12345",
-                    "value" => 5000.00
+                    "value" => 5000.00,
                 ],
                 [
                     "id" => "mr-002",
                     "personnel_number" => "67890",
-                    "value" => 4500.00
-                ]
-            ]
+                    "value" => 4500.00,
+                ],
+            ],
         ];
 
         $monthlyRecords = new MonthlyRecords($data);

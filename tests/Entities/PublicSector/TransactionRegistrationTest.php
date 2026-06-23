@@ -12,37 +12,35 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
+use Datev\Entities\PublicSector\TransactionRegistrations\{TransactionRegistration, TransactionRegistrations};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\PublicSector\TransactionRegistrations\TransactionRegistration;
-use Datev\Entities\PublicSector\TransactionRegistrations\TransactionRegistrations;
-
 class TransactionRegistrationTest extends EntityTest {
-    public function testCreateTransactionRegistration() {
+    public function test_create_transaction_registration() {
         $data = [
             "id" => 12345,
-            "status" => "registered"
+            "status" => "registered",
         ];
 
         $reg = new TransactionRegistration($data);
-        $this->assertInstanceOf(TransactionRegistration::class, new TransactionRegistration());
+        $this->assertInstanceOf(TransactionRegistration::class, new TransactionRegistration);
         $this->assertInstanceOf(TransactionRegistration::class, $reg);
         $this->assertEquals(12345, $reg->getID());
         $this->assertEquals("registered", $reg->getStatus());
     }
 
-    public function testCreateTransactionRegistrations() {
+    public function test_create_transaction_registrations() {
         $data = [
             "content" => [
                 [
                     "id" => 1,
-                    "status" => "registered"
+                    "status" => "registered",
                 ],
                 [
                     "id" => 2,
-                    "status" => "pending"
-                ]
-            ]
+                    "status" => "pending",
+                ],
+            ],
         ];
 
         $regs = new TransactionRegistrations($data);

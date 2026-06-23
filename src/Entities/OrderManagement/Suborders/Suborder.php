@@ -13,8 +13,8 @@ declare(strict_types=1);
 namespace Datev\Entities\OrderManagement\Suborders;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
-use Datev\Entities\OrderManagement\Orders\OrderID;
 use DateTime;
+use Datev\Entities\OrderManagement\Orders\OrderID;
 use Psr\Log\LoggerInterface;
 
 class Suborder extends NamedEntity {

@@ -13,11 +13,9 @@ declare(strict_types=1);
 namespace Datev\Entities\Accounting\Sequences;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
-use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use DateTime;
 use Datev\Entities\Accounting\Records\Records;
-use Datev\Enums\AccountingReason;
-use Datev\Enums\AccountingRecordType;
+use Datev\Enums\{AccountingReason, AccountingRecordType};
 use Psr\Log\LoggerInterface;
 
 class Sequence extends NamedEntity {

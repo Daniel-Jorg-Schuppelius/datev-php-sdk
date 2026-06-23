@@ -13,8 +13,7 @@ declare(strict_types=1);
 namespace Tests\Endpoints\Payroll;
 
 use Datev\API\Desktop\Endpoints\Payroll\EmployeeGroupAccountingEndpoint;
-use Datev\Entities\Payroll\Employees\Groups\Accountings\EmployeeGroupAccounting;
-use Datev\Entities\Payroll\Employees\Groups\Accountings\EmployeeGroupAccountings;
+use Datev\Entities\Payroll\Employees\Groups\Accountings\{EmployeeGroupAccounting, EmployeeGroupAccountings};
 use Tests\Contracts\EndpointTest;
 
 class EmployeeGroupAccountingTest extends EndpointTest {
@@ -25,20 +24,20 @@ class EmployeeGroupAccountingTest extends EndpointTest {
         return new EmployeeGroupAccountingEndpoint($this->client, self::getLogger());
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
             'id' => 'EGA001',
-            'name' => 'Abrechnungsgruppe Standard'
+            'name' => 'Abrechnungsgruppe Standard',
         ];
 
         $accounting = EmployeeGroupAccounting::fromJson(json_encode($data));
         $this->assertInstanceOf(EmployeeGroupAccounting::class, $accounting);
     }
 
-    public function testJsonSerializeCollection() {
+    public function test_json_serialize_collection() {
         $data = [
             ['id' => 'EGA001', 'name' => 'Standard'],
-            ['id' => 'EGA002', 'name' => 'Führungskräfte']
+            ['id' => 'EGA002', 'name' => 'Führungskräfte'],
         ];
 
         $accountings = EmployeeGroupAccountings::fromJson(json_encode($data));
@@ -46,7 +45,7 @@ class EmployeeGroupAccountingTest extends EndpointTest {
         $this->assertCount(2, $accountings->getValues());
     }
 
-    public function testGetEmployeeGroupAccountings() {
+    public function test_get_employee_group_accountings() {
         $this->endpoint = $this->createEndpoint();
         $accountings = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

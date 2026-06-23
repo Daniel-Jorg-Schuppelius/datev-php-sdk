@@ -12,35 +12,35 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\CostUnits\{CostUnit, CostUnits};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\CostUnits\CostUnit;
-use Datev\Entities\Payroll\CostUnits\CostUnits;
-
 class CostUnitTest extends EntityTest {
-    public function testCreateCostUnit() {
+    public function test_create_cost_unit() {
         $data = [
             "id" => "A001",
-            "name" => "Projekt Alpha"
-        ];        $costUnit = new CostUnit($data);
+            "name" => "Projekt Alpha",
+        ];
+        $costUnit = new CostUnit($data);
 
         $this->assertInstanceOf(CostUnit::class, $costUnit);
         $this->assertEquals("Projekt Alpha", $costUnit->getName());
     }
 
-    public function testCreateCostUnits() {
+    public function test_create_cost_units() {
         $data = [
             "content" => [
                 [
                     "id" => "A001",
-                    "name" => "Projekt Alpha"
+                    "name" => "Projekt Alpha",
                 ],
                 [
                     "id" => "B002",
-                    "name" => "Projekt Beta"
-                ]
-            ]
-        ];        $costUnits = new CostUnits($data);
+                    "name" => "Projekt Beta",
+                ],
+            ],
+        ];
+        $costUnits = new CostUnits($data);
 
         $this->assertInstanceOf(CostUnits::class, $costUnits);
         $this->assertCount(2, $costUnits->getValues());

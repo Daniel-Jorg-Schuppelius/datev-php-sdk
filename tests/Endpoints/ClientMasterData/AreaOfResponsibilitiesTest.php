@@ -8,11 +8,10 @@
  * License Uri  : https://opensource.org/license/mit
  */
 
-namespace Tests\Endpoints\Diagnostics;
+namespace Tests\Endpoints\ClientMasterData;
 
 use Datev\API\Desktop\Endpoints\ClientMasterData\AreaOfResponsibilitiesEndpoint;
-use Datev\Entities\ClientMasterData\AreaOfResponsibilities\AreaOfResponsibilities;
-use Datev\Entities\ClientMasterData\AreaOfResponsibilities\AreaOfResponsibility;
+use Datev\Entities\ClientMasterData\AreaOfResponsibilities\{AreaOfResponsibilities, AreaOfResponsibility};
 use Tests\Contracts\EndpointTest;
 
 class AreaOfResponsibilitiesTest extends EndpointTest {
@@ -24,7 +23,7 @@ class AreaOfResponsibilitiesTest extends EndpointTest {
         $this->apiDisabled = true; // API is disabled
     }
 
-    public function testGetAddressees() {
+    public function test_get_addressees() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

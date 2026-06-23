@@ -12,18 +12,16 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
+use Datev\Entities\Law\LevelsOfJurisdiction\{LevelOfJurisdiction, LevelsOfJurisdiction};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Law\LevelsOfJurisdiction\LevelsOfJurisdiction;
-use Datev\Entities\Law\LevelsOfJurisdiction\LevelOfJurisdiction;
-
 class LevelsOfJurisdictionTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 ["id" => 1, "name" => "Amtsgericht"],
-                ["id" => 2, "name" => "Landgericht"]
-            ]
+                ["id" => 2, "name" => "Landgericht"],
+            ],
         ];
 
         $levels = new LevelsOfJurisdiction($data);

@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Datev\Entities\Accounting\Creditors\{Creditor, Creditors};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Accounting\Creditors\Creditor;
-use Datev\Entities\Accounting\Creditors\Creditors;
-
 class CreditorTest extends EntityTest {
-    public function testCreateCreditor() {
+    public function test_create_creditor() {
         $data = [
             "id" => 70001,
             "account_number" => 70001,
@@ -29,11 +27,11 @@ class CreditorTest extends EntityTest {
             "eu_vat_id_country_code" => "DE",
             "eu_vat_id_number" => "987654321",
             "is_business_partner_active" => true,
-            "date_last_modification" => "2024-12-28T10:30:00.000+00:00"
+            "date_last_modification" => "2024-12-28T10:30:00.000+00:00",
         ];
 
         $creditor = new Creditor($data);
-        $this->assertInstanceOf(Creditor::class, new Creditor());
+        $this->assertInstanceOf(Creditor::class, new Creditor);
         $this->assertInstanceOf(Creditor::class, $creditor);
         $this->assertEquals(70001, $creditor->getAccountNumber());
         $this->assertEquals("Lieferant GmbH", $creditor->getCaption());
@@ -41,20 +39,20 @@ class CreditorTest extends EntityTest {
         $this->assertTrue($creditor->isBusinessPartnerActive());
     }
 
-    public function testCreateCreditors() {
+    public function test_create_creditors() {
         $data = [
             "content" => [
                 [
                     "id" => 70001,
                     "account_number" => 70001,
-                    "caption" => "Kreditor 1"
+                    "caption" => "Kreditor 1",
                 ],
                 [
                     "id" => 70002,
                     "account_number" => 70002,
-                    "caption" => "Kreditor 2"
-                ]
-            ]
+                    "caption" => "Kreditor 2",
+                ],
+            ],
         ];
 
         $creditors = new Creditors($data);

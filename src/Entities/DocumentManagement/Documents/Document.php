@@ -161,7 +161,7 @@ class Document extends NamedEntity implements IdentifiableNamedEntityInterface {
         return $this->create_date_time ?? null;
     }
 
-    public function getCreationUser(): ?string {
+    public function getCreationUser(): ?User {
         return $this->creation_user ?? null;
     }
 
@@ -277,7 +277,7 @@ class Document extends NamedEntity implements IdentifiableNamedEntityInterface {
         return $this->receipt_date ?? null;
     }
 
-    public function getReceiptNumber(): ?int {
+    public function getReceiptNumber(): ?ReceiptNumber {
         return $this->receipt_number ?? null;
     }
 
@@ -289,7 +289,7 @@ class Document extends NamedEntity implements IdentifiableNamedEntityInterface {
         return $this->register ?? null;
     }
 
-    public function getRevisionUser(): ?string {
+    public function getRevisionUser(): ?User {
         return $this->revision_user ?? null;
     }
 

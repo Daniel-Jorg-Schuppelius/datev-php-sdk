@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\Accounting;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\Accounting\VariousAddresses\VariousAddress;
-use Datev\Entities\Accounting\VariousAddresses\VariousAddresses;
+use Datev\Entities\Accounting\VariousAddresses\{VariousAddress, VariousAddresses};
 use InvalidArgumentException;
 
 class VariousAddressesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {

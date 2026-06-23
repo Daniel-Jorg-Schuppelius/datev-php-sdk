@@ -22,7 +22,7 @@ class AccountsReceivableTest extends EndpointTest {
         return new AccountsReceivableEndpoint($this->client, self::getLogger());
     }
 
-    public function testGetAccountsReceivable() {
+    public function test_get_accounts_receivable() {
         $this->skipMockIfComplexEntity();
 
         $this->endpoint = $this->createEndpoint();

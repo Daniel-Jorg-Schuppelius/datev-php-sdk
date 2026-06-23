@@ -12,16 +12,15 @@ declare(strict_types=1);
 
 namespace Tests\Entities\IdentityAndAccessManagement;
 
+use Datev\Entities\IdentityAndAccessManagement\ServiceProvider\ScimBulk;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\IdentityAndAccessManagement\ServiceProvider\ScimBulk;
-
 class ScimBulkTest extends EntityTest {
-    public function testCreateScimBulk(): void {
+    public function test_create_scim_bulk(): void {
         $data = [
             "supported" => true,
             "max_operations" => 1000,
-            "max_payload_size" => 1048576
+            "max_payload_size" => 1048576,
         ];
 
         $bulk = new ScimBulk($data);
@@ -32,9 +31,9 @@ class ScimBulkTest extends EntityTest {
         $this->assertEquals(1048576, $bulk->getMaxPayloadSize());
     }
 
-    public function testUnsupportedScimBulk(): void {
+    public function test_unsupported_scim_bulk(): void {
         $data = [
-            "supported" => false
+            "supported" => false,
         ];
 
         $bulk = new ScimBulk($data);

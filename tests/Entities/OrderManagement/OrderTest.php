@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Datev\Entities\OrderManagement\Orders\{Order, Orders};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\OrderManagement\Orders\Order;
-use Datev\Entities\OrderManagement\Orders\Orders;
-
 class OrderTest extends EntityTest {
-    public function testCreateOrder() {
+    public function test_create_order() {
         $data = [
             "order_id" => "o1234567-8901-2345-6789-012345678901",
             "creation_year" => 2024,
@@ -28,28 +26,28 @@ class OrderTest extends EntityTest {
             "ordertype_name" => "Jahresabschluss",
             "client_name" => "Mustermann GmbH",
             "assessment_year" => 2024,
-            "fiscal_year" => 2024
+            "fiscal_year" => 2024,
         ];
 
         $order = new Order($data);
-        $this->assertInstanceOf(Order::class, new Order());
+        $this->assertInstanceOf(Order::class, new Order);
         $this->assertInstanceOf(Order::class, $order);
         $this->assertEquals("Jahresabschluss 2024", $order->getOrderName());
         $this->assertEquals(2024, $order->getCreationYear());
     }
 
-    public function testCreateOrders() {
+    public function test_create_orders() {
         $data = [
             "content" => [
                 [
                     "order_id" => "o1234567-8901-2345-6789-012345678901",
-                    "order_name" => "Auftrag 1"
+                    "order_name" => "Auftrag 1",
                 ],
                 [
                     "order_id" => "o2234567-8901-2345-6789-012345678902",
-                    "order_name" => "Auftrag 2"
-                ]
-            ]
+                    "order_name" => "Auftrag 2",
+                ],
+            ],
         ];
 
         $orders = new Orders($data);

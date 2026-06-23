@@ -12,14 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Datev\Entities\OrderManagement\ClientGroups\{ClientGroup, ClientGroups};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\OrderManagement\ClientGroups\ClientGroup;
-use Datev\Entities\OrderManagement\ClientGroups\ClientGroups;
-
 class ClientGroupTest extends EntityTest {
-    
-    public function testCreateClientGroup(): void {
+    public function test_create_client_group(): void {
         $data = [
             "id" => "550e8400-e29b-41d4-a716-446655440000",
             "client_id" => "660e8400-e29b-41d4-a716-446655440001",
@@ -27,7 +24,7 @@ class ClientGroupTest extends EntityTest {
             "client_name" => "Test GmbH",
             "group_id" => "770e8400-e29b-41d4-a716-446655440002",
             "group_number" => "1",
-            "group_name" => "Hauptgruppe"
+            "group_name" => "Hauptgruppe",
         ];
 
         $clientGroup = new ClientGroup($data);
@@ -39,20 +36,20 @@ class ClientGroupTest extends EntityTest {
         $this->assertEquals("Hauptgruppe", $clientGroup->getGroupName());
     }
 
-    public function testCreateClientGroups(): void {
+    public function test_create_client_groups(): void {
         $data = [
             "content" => [
                 [
                     "id" => "550e8400-e29b-41d4-a716-446655440000",
                     "client_number" => "10001",
-                    "client_name" => "Test GmbH"
+                    "client_name" => "Test GmbH",
                 ],
                 [
                     "id" => "550e8400-e29b-41d4-a716-446655440001",
                     "client_number" => "10002",
-                    "client_name" => "Beispiel AG"
-                ]
-            ]
+                    "client_name" => "Beispiel AG",
+                ],
+            ],
         ];
 
         $clientGroups = new ClientGroups($data);

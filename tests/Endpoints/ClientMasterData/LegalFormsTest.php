@@ -24,7 +24,7 @@ class LegalFormsTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetLegalForms() {
+    public function test_get_legal_forms() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

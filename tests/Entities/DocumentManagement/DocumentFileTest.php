@@ -12,14 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Datev\Entities\DocumentManagement\DocumentFiles\DocumentFile;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\DocumentManagement\DocumentFiles\DocumentFile;
-
 class DocumentFileTest extends EntityTest {
-    public function testCreateDocumentFile(): void {
+    public function test_create_document_file(): void {
         $data = [
-            "id" => "file-001"
+            "id" => "file-001",
         ];
 
         $documentFile = new DocumentFile($data);

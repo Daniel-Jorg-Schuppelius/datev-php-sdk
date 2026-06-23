@@ -13,8 +13,7 @@ declare(strict_types=1);
 namespace Tests\Endpoints\Payroll;
 
 use Datev\API\Desktop\Endpoints\Payroll\TaxationEndpoint;
-use Datev\Entities\Payroll\Taxations\Taxation;
-use Datev\Entities\Payroll\Taxations\Taxations;
+use Datev\Entities\Payroll\Taxations\{Taxation, Taxations};
 use Tests\Contracts\EndpointTest;
 
 class TaxationTest extends EndpointTest {
@@ -25,21 +24,21 @@ class TaxationTest extends EndpointTest {
         return new TaxationEndpoint($this->client, self::getLogger());
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
             'id' => '12345',
             'tax_class' => 1,
-            'church_tax' => true
+            'church_tax' => true,
         ];
 
         $taxation = Taxation::fromJson(json_encode($data));
         $this->assertInstanceOf(Taxation::class, $taxation);
     }
 
-    public function testJsonSerializeCollection() {
+    public function test_json_serialize_collection() {
         $data = [
             ['id' => '12345', 'tax_class' => 1],
-            ['id' => '12346', 'tax_class' => 3]
+            ['id' => '12346', 'tax_class' => 3],
         ];
 
         $taxations = Taxations::fromJson(json_encode($data));
@@ -47,7 +46,7 @@ class TaxationTest extends EndpointTest {
         $this->assertCount(2, $taxations->getValues());
     }
 
-    public function testGetTaxations() {
+    public function test_get_taxations() {
         $this->endpoint = $this->createEndpoint();
         $taxations = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

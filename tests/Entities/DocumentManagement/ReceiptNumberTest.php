@@ -12,19 +12,18 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Datev\Entities\DocumentManagement\Documents\ReceiptNumber;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\DocumentManagement\Documents\ReceiptNumber;
-
 class ReceiptNumberTest extends EntityTest {
-    public function testCreateFromString(): void {
+    public function test_create_from_string(): void {
         $receiptNumber = new ReceiptNumber("RE-2024-001234");
 
         $this->assertEquals("RE-2024-001234", $receiptNumber->getValue());
         $this->assertEquals('receipt_number', $receiptNumber->getEntityName());
     }
 
-    public function testCreateFromInteger(): void {
+    public function test_create_from_integer(): void {
         $receiptNumber = new ReceiptNumber(12345);
 
         $this->assertEquals(12345, $receiptNumber->getValue());

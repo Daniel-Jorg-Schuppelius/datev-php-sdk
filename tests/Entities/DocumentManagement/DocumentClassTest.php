@@ -12,16 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Datev\Entities\DocumentManagement\Documents\Classes\{DocumentClass, DocumentClassID};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\DocumentManagement\Documents\Classes\DocumentClass;
-use Datev\Entities\DocumentManagement\Documents\Classes\DocumentClassID;
-
 class DocumentClassTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "id" => 1,
-            "name" => "Invoice"
+            "name" => "Invoice",
         ];
 
         $documentClass = new DocumentClass($data);
@@ -31,7 +29,7 @@ class DocumentClassTest extends EntityTest {
         $this->assertEquals("Invoice", $documentClass->getName());
     }
 
-    public function testCreateFromInteger(): void {
+    public function test_create_from_integer(): void {
         $documentClass = new DocumentClass(42);
 
         $this->assertInstanceOf(DocumentClassID::class, $documentClass->getID());
@@ -39,9 +37,9 @@ class DocumentClassTest extends EntityTest {
         $this->assertNull($documentClass->getName());
     }
 
-    public function testCreateWithNullName(): void {
+    public function test_create_with_null_name(): void {
         $data = [
-            "id" => 2
+            "id" => 2,
         ];
 
         $documentClass = new DocumentClass($data);

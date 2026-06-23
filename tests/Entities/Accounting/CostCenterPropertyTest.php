@@ -12,36 +12,35 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Datev\Entities\Accounting\CostCenterProperties\{CostCenterProperties, CostCenterProperty, CostCenterPropertyID};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Accounting\CostCenterProperties\CostCenterProperties;
-use Datev\Entities\Accounting\CostCenterProperties\CostCenterProperty;
-use Datev\Entities\Accounting\CostCenterProperties\CostCenterPropertyID;
-
 class CostCenterPropertyTest extends EntityTest {
-    public function testCreateCostCenterProperty() {
+    public function test_create_cost_center_property() {
         $data = [
             "id" => 1,
-            "description" => "Property Description"
-        ];        $property = new CostCenterProperty($data);
+            "description" => "Property Description",
+        ];
+        $property = new CostCenterProperty($data);
 
         $this->assertInstanceOf(CostCenterProperty::class, $property);
         $this->assertInstanceOf(CostCenterPropertyID::class, $property->getID());
     }
 
-    public function testCreateCostCenterProperties() {
+    public function test_create_cost_center_properties() {
         $data = [
             "content" => [
                 [
                     "id" => 1,
-                    "description" => "Property One"
+                    "description" => "Property One",
                 ],
                 [
                     "id" => 2,
-                    "description" => "Property Two"
-                ]
-            ]
-        ];        $properties = new CostCenterProperties($data);
+                    "description" => "Property Two",
+                ],
+            ],
+        ];
+        $properties = new CostCenterProperties($data);
 
         $this->assertInstanceOf(CostCenterProperties::class, $properties);
         $this->assertCount(2, $properties->getValues());

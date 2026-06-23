@@ -12,18 +12,16 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common;
 
+use Datev\Entities\Common\Errors\{Error, Errors};
+use Datev\Entities\Common\RequestID;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Common\Errors\Error;
-use Datev\Entities\Common\Errors\Errors;
-use Datev\Entities\Common\RequestID;
-
 class ErrorTest extends EntityTest {
-    public function testCreateError(): void {
+    public function test_create_error(): void {
         $data = [
             "request_id" => "req-001",
             "error" => "invalid_request",
-            "error_description" => "Die Anfrage ist ungültig"
+            "error_description" => "Die Anfrage ist ungültig",
         ];
 
         $error = new Error($data);
@@ -35,20 +33,20 @@ class ErrorTest extends EntityTest {
         $this->assertEquals("Die Anfrage ist ungültig", $error->getErrorDescription());
     }
 
-    public function testCreateErrors(): void {
+    public function test_create_errors(): void {
         $data = [
             "content" => [
                 [
                     "request_id" => "req-001",
                     "error" => "invalid_request",
-                    "error_description" => "Die Anfrage ist ungültig"
+                    "error_description" => "Die Anfrage ist ungültig",
                 ],
                 [
                     "request_id" => "req-002",
                     "error" => "unauthorized",
-                    "error_description" => "Nicht autorisiert"
-                ]
-            ]
+                    "error_description" => "Nicht autorisiert",
+                ],
+            ],
         ];
 
         $errors = new Errors($data);

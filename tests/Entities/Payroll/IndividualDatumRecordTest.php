@@ -12,17 +12,16 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\Data\Individual\IndividualDatumRecord;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\Data\Individual\IndividualDatumRecord;
-
 class IndividualDatumRecordTest extends EntityTest {
-    public function testCreateIndividualDatumRecord(): void {
+    public function test_create_individual_datum_record(): void {
         $data = [
             "long_field_name" => "Sonderzahlung Weihnachtsgeld",
             "short_field_name" => "SZW",
             "date" => "2024-12-15T00:00:00.000+00:00",
-            "amount" => 1500.00
+            "amount" => 1500.00,
         ];
 
         $record = new IndividualDatumRecord($data);

@@ -12,26 +12,24 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common;
 
+use Datev\Entities\Common\AdditionalMessages\{AdditionalMessage, AdditionalMessages};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Common\AdditionalMessages\AdditionalMessages;
-use Datev\Entities\Common\AdditionalMessages\AdditionalMessage;
-
 class AdditionalMessagesTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "id" => "msg-1",
                     "description" => "Processing completed",
-                    "severity" => "info"
+                    "severity" => "info",
                 ],
                 [
                     "id" => "msg-2",
                     "description" => "Deprecated field used",
-                    "severity" => "warning"
-                ]
-            ]
+                    "severity" => "warning",
+                ],
+            ],
         ];
 
         $messages = new AdditionalMessages($data);

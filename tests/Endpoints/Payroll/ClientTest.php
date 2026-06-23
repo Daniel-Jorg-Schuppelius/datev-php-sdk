@@ -12,8 +12,7 @@ namespace Tests\Endpoints\Payroll;
 
 use DateTime;
 use Datev\API\Desktop\Endpoints\Payroll\ClientsEndpoint;
-use Datev\Entities\Payroll\Clients\Client;
-use Datev\Entities\Payroll\Clients\Clients;
+use Datev\Entities\Payroll\Clients\{Client, Clients};
 use Tests\Contracts\EndpointTest;
 
 class ClientTest extends EndpointTest {
@@ -25,18 +24,18 @@ class ClientTest extends EndpointTest {
         return new ClientsEndpoint($this->client, self::getLogger());
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
             "consultant_number" => "29115",
             "id" => "9351b0e3-e96b-4bb0-b94e-018b13d1db28",
             "name" => "Küchenbeispiel",
-            "number" => 55039
+            "number" => 55039,
         ];
 
         $data1 = [
             "id" => "9351b0e3-e96b-4bb0-b94e-018b13d1db28",
             "name" => "Küchenbeispiel",
-            "number" => 55039
+            "number" => 55039,
         ];
 
         $client = new Client($data);
@@ -46,7 +45,7 @@ class ClientTest extends EndpointTest {
         $this->assertEquals(json_encode($data), $client->toJson());  // the order of the $data array is important for this test.
     }
 
-    public function testGetClientsAPI() {
+    public function test_get_clients_api() {
         $this->endpoint = $this->createEndpoint();
 
         $clients = $this->endpoint->search(["reference-date" => "2021-01-01"]);

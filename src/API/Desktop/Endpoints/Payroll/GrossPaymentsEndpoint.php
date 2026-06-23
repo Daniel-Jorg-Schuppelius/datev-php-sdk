@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\Payroll;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\Payroll\PayrollEndpointAbstract;
-use Datev\Entities\Payroll\GrossPayments\GrossPayment;
-use Datev\Entities\Payroll\GrossPayments\GrossPayments;
+use Datev\Entities\Payroll\GrossPayments\{GrossPayment, GrossPayments};
 use InvalidArgumentException;
 
 class GrossPaymentsEndpoint extends PayrollEndpointAbstract implements SearchableEndpointInterface {
@@ -35,7 +34,7 @@ class GrossPaymentsEndpoint extends PayrollEndpointAbstract implements Searchabl
             }
 
             return GrossPayment::fromJson($response, self::$logger);
-        }, "Fetching GrossPayment (ID: {$id})");
+        }, "Fetching GrossPayment (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?GrossPayments {

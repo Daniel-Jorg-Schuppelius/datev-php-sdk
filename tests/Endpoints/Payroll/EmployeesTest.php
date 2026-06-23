@@ -21,7 +21,7 @@ class EmployeesTest extends EndpointTest {
         return new EmployeesEndpoint($this->client, self::getLogger());
     }
 
-    public function testGetEmployees() {
+    public function test_get_employees() {
         // Employees hat eine sehr komplexe Entity-Struktur mit verschachtelten Objekten
         // Mock-Daten können diese Struktur nicht vollständig abbilden
         if ($this->isUsingMock()) {

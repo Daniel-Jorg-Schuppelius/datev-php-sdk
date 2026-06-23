@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\OrderManagement;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\OrderManagement\CostCenters\CostCenter;
-use Datev\Entities\OrderManagement\CostCenters\CostCenters;
+use Datev\Entities\OrderManagement\CostCenters\{CostCenter, CostCenters};
 use InvalidArgumentException;
 
 class CostCentersEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
@@ -36,7 +35,7 @@ class CostCentersEndpoint extends EndpointAbstract implements SearchableEndpoint
             }
 
             return CostCenter::fromJson($response, self::$logger);
-        }, "Fetching CostCenter (ID: {$id})");
+        }, "Fetching CostCenter (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?CostCenters {

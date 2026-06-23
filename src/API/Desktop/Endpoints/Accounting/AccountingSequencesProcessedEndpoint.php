@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\Accounting;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\Accounting\SequenceReads\SequenceRead;
-use Datev\Entities\Accounting\SequenceReads\SequenceReads;
+use Datev\Entities\Accounting\SequenceReads\{SequenceRead, SequenceReads};
 use InvalidArgumentException;
 
 class AccountingSequencesProcessedEndpoint extends EndpointAbstract implements SearchableEndpointInterface {

@@ -12,28 +12,26 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Datev\Entities\OrderManagement\EmployeesWithGroup\{EmployeeWithGroup, EmployeesWithGroup};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\OrderManagement\EmployeesWithGroup\EmployeesWithGroup;
-use Datev\Entities\OrderManagement\EmployeesWithGroup\EmployeeWithGroup;
-
 class EmployeesWithGroupTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "id" => "550e8400-e29b-41d4-a716-446655440000",
                     "employee_number" => 1001,
                     "employee_name" => "Max Mustermann",
-                    "employee_group_short_name" => "DEV"
+                    "employee_group_short_name" => "DEV",
                 ],
                 [
                     "id" => "550e8400-e29b-41d4-a716-446655440001",
                     "employee_number" => 1002,
                     "employee_name" => "Erika Musterfrau",
-                    "employee_group_short_name" => "QA"
-                ]
-            ]
+                    "employee_group_short_name" => "QA",
+                ],
+            ],
         ];
 
         $employees = new EmployeesWithGroup($data);

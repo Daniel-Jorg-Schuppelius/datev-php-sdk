@@ -14,8 +14,7 @@ namespace Tests\Endpoints\Payroll;
 
 use Datev\API\Desktop\Endpoints\Payroll\InitialActivitiesEndpoint;
 use Datev\Entities\Common\Employees\EmployeeID;
-use Datev\Entities\Payroll\InitialActivities\InitialActivity;
-use Datev\Entities\Payroll\InitialActivities\InitialActivities;
+use Datev\Entities\Payroll\InitialActivities\{InitialActivities, InitialActivity};
 use Tests\Contracts\EndpointTest;
 
 class InitialActivitiesTest extends EndpointTest {
@@ -26,21 +25,21 @@ class InitialActivitiesTest extends EndpointTest {
         return new InitialActivitiesEndpoint($this->client, self::getLogger());
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
             'id' => '12345',
             'activity_type' => 'Erstanstellung',
-            'start_date' => '2024-01-01'
+            'start_date' => '2024-01-01',
         ];
 
         $activity = InitialActivity::fromJson(json_encode($data));
         $this->assertInstanceOf(InitialActivity::class, $activity);
     }
 
-    public function testJsonSerializeCollection() {
+    public function test_json_serialize_collection() {
         $data = [
             ['id' => '12345', 'activity_type' => 'Erstanstellung'],
-            ['id' => '12346', 'activity_type' => 'Wiedereinstellung']
+            ['id' => '12346', 'activity_type' => 'Wiedereinstellung'],
         ];
 
         $activities = InitialActivities::fromJson(json_encode($data));
@@ -48,7 +47,7 @@ class InitialActivitiesTest extends EndpointTest {
         $this->assertCount(2, $activities->getValues());
     }
 
-    public function testGetInitialActivities() {
+    public function test_get_initial_activities() {
         // Dieser Endpoint benötigt eine gültige Employee-ID, die nur mit echter API funktioniert
         if ($this->isUsingMock()) {
             $this->markTestSkipped('InitialActivities endpoint requires valid Employee ID from real API');

@@ -12,36 +12,35 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Datev\Entities\Accounting\CostCenterPropertyCharacteristics\{CostCenterPropertyCharacteristic, CostCenterPropertyCharacteristicID, CostCenterPropertyCharacteristics};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Accounting\CostCenterPropertyCharacteristics\CostCenterPropertyCharacteristic;
-use Datev\Entities\Accounting\CostCenterPropertyCharacteristics\CostCenterPropertyCharacteristics;
-use Datev\Entities\Accounting\CostCenterPropertyCharacteristics\CostCenterPropertyCharacteristicID;
-
 class CostCenterPropertyCharacteristicTest extends EntityTest {
-    public function testCreateCostCenterPropertyCharacteristic() {
+    public function test_create_cost_center_property_characteristic() {
         $data = [
             "id" => 1,
-            "description" => "Characteristic Description"
-        ];        $characteristic = new CostCenterPropertyCharacteristic($data);
+            "description" => "Characteristic Description",
+        ];
+        $characteristic = new CostCenterPropertyCharacteristic($data);
 
         $this->assertInstanceOf(CostCenterPropertyCharacteristic::class, $characteristic);
         $this->assertInstanceOf(CostCenterPropertyCharacteristicID::class, $characteristic->getID());
     }
 
-    public function testCreateCostCenterPropertyCharacteristics() {
+    public function test_create_cost_center_property_characteristics() {
         $data = [
             "content" => [
                 [
                     "id" => 1,
-                    "description" => "Characteristic One"
+                    "description" => "Characteristic One",
                 ],
                 [
                     "id" => 2,
-                    "description" => "Characteristic Two"
-                ]
-            ]
-        ];        $characteristics = new CostCenterPropertyCharacteristics($data);
+                    "description" => "Characteristic Two",
+                ],
+            ],
+        ];
+        $characteristics = new CostCenterPropertyCharacteristics($data);
 
         $this->assertInstanceOf(CostCenterPropertyCharacteristics::class, $characteristics);
         $this->assertCount(2, $characteristics->getValues());

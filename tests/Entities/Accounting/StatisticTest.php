@@ -12,18 +12,16 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Datev\Entities\Accounting\Statistics\{Statistic, Statistics};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Accounting\Statistics\Statistic;
-use Datev\Entities\Accounting\Statistics\Statistics;
-
 class StatisticTest extends EntityTest {
-    public function testCreateStatistic() {
+    public function test_create_statistic() {
         $data = [
             "id" => 1,
             "month" => 6,
             "count_of_accounting_journal" => 150,
-            "count_of_accounting_prima_nota" => 75
+            "count_of_accounting_prima_nota" => 75,
         ];
 
         $statistic = new Statistic($data);
@@ -31,18 +29,18 @@ class StatisticTest extends EntityTest {
         $this->assertNotNull($statistic->getID());
     }
 
-    public function testCreateStatistics() {
+    public function test_create_statistics() {
         $data = [
             "content" => [
                 [
                     "id" => 1,
-                    "month" => 1
+                    "month" => 1,
                 ],
                 [
                     "id" => 2,
-                    "month" => 2
-                ]
-            ]
+                    "month" => 2,
+                ],
+            ],
         ];
 
         $statistics = new Statistics($data);

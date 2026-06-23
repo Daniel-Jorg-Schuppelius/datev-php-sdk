@@ -13,8 +13,7 @@ declare(strict_types=1);
 namespace Tests\Endpoints\OrderManagement;
 
 use Datev\API\Desktop\Endpoints\OrderManagement\OrderTypesEndpoint;
-use Datev\Entities\OrderManagement\OrderTypes\OrderType;
-use Datev\Entities\OrderManagement\OrderTypes\OrderTypes;
+use Datev\Entities\OrderManagement\OrderTypes\{OrderType, OrderTypes};
 use Tests\Contracts\EndpointTest;
 
 class OrderTypesTest extends EndpointTest {
@@ -26,13 +25,13 @@ class OrderTypesTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
             'id' => 100,
             'ordertype' => 'FiBu',
             'ordertype_name' => 'Finanzbuchhaltung',
             'ordertype_group' => 50,
-            'ordertype_group_name' => 'Buchhaltung'
+            'ordertype_group_name' => 'Buchhaltung',
         ];
 
         $orderType = OrderType::fromJson(json_encode($data));
@@ -43,18 +42,18 @@ class OrderTypesTest extends EndpointTest {
         $this->assertEquals(50, $orderType->getOrderTypeGroup());
     }
 
-    public function testJsonSerializeCollection() {
+    public function test_json_serialize_collection() {
         $data = [
             [
                 'id' => 100,
                 'ordertype' => 'FiBu',
-                'ordertype_name' => 'Finanzbuchhaltung'
+                'ordertype_name' => 'Finanzbuchhaltung',
             ],
             [
                 'id' => 101,
                 'ordertype' => 'Lohn',
-                'ordertype_name' => 'Lohnbuchhaltung'
-            ]
+                'ordertype_name' => 'Lohnbuchhaltung',
+            ],
         ];
 
         $orderTypes = OrderTypes::fromJson(json_encode($data));
@@ -63,7 +62,7 @@ class OrderTypesTest extends EndpointTest {
         $this->assertCount(2, $orderTypes->getValues());
     }
 
-    public function testSearchOrderTypes() {
+    public function test_search_order_types() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

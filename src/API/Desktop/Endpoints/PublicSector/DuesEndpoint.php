@@ -13,11 +13,9 @@ declare(strict_types=1);
 namespace Datev\API\Desktop\Endpoints\PublicSector;
 
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
-use APIToolkit\Entities\GUID;
-use APIToolkit\Entities\ID;
+use APIToolkit\Entities\{GUID, ID};
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\PublicSector\Dues\Due;
-use Datev\Entities\PublicSector\Dues\Dues;
+use Datev\Entities\PublicSector\Dues\{Due, Dues};
 use InvalidArgumentException;
 
 class DuesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
@@ -57,7 +55,7 @@ class DuesEndpoint extends EndpointAbstract implements SearchableEndpointInterfa
             }
 
             return Due::fromJson($response, self::$logger);
-        }, "Fetching Due (ID: {$id})");
+        }, "Fetching Due (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?Dues {

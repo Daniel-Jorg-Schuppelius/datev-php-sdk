@@ -12,12 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\Versions\Version;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\Versions\Version;
-
 class VersionTest extends EntityTest {
-    public function testCreateVersion() {
+    public function test_create_version() {
         $data = [
             "adress_country" => "DE",
             "client_number_maximum_number_of_digits" => 5,
@@ -30,7 +29,7 @@ class VersionTest extends EntityTest {
             "resource_revision" => "1.3.0",
             "resource_version" => "1",
             "version" => "9.2A",
-            "version_name" => "Kernstammdaten - Daten V.9.2A"
+            "version_name" => "Kernstammdaten - Daten V.9.2A",
         ];
 
         $data1 = [
@@ -45,13 +44,13 @@ class VersionTest extends EntityTest {
             "resource_revision" => "1.3.0",
             "resource_version" => "1",
             "version" => "9.2A",
-            "version_name" => "Kernstammdaten - Daten V.9.2A"
+            "version_name" => "Kernstammdaten - Daten V.9.2A",
         ];
 
         $version = new Version($data);
         $version1 = new Version($data1);
         $this->assertTrue($version->isValid());
-        $this->assertInstanceOf(Version::class, new Version());
+        $this->assertInstanceOf(Version::class, new Version);
         $this->assertInstanceOf(Version::class, $version);
         $this->assertInstanceOf(Version::class, $version1);
         $this->assertEquals($data1, $version1->toArray());

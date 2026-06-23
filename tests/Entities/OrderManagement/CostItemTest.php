@@ -12,14 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Datev\Entities\OrderManagement\CostItems\{CostItem, CostItems};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\OrderManagement\CostItems\CostItem;
-use Datev\Entities\OrderManagement\CostItems\CostItems;
-
 class CostItemTest extends EntityTest {
-    
-    public function testCreateCostItem(): void {
+    public function test_create_cost_item(): void {
         $data = [
             "id" => "test-id",
             "order_id" => 2024001,
@@ -32,7 +29,7 @@ class CostItemTest extends EntityTest {
             "cost_position" => "1000",
             "cost_position_name" => "Allgemeine Kosten",
             "cost_type" => "direct",
-            "fee_position" => "2000"
+            "fee_position" => "2000",
         ];
 
         $costItem = new CostItem($data);
@@ -43,20 +40,20 @@ class CostItemTest extends EntityTest {
         $this->assertEquals("1000", $costItem->getCostPosition());
     }
 
-    public function testCreateCostItems(): void {
+    public function test_create_cost_items(): void {
         $data = [
             "content" => [
                 [
                     "id" => "test-id-1",
                     "order_id" => 2024001,
-                    "cost_position" => "1000"
+                    "cost_position" => "1000",
                 ],
                 [
                     "id" => "test-id-2",
                     "order_id" => 2024002,
-                    "cost_position" => "2000"
-                ]
-            ]
+                    "cost_position" => "2000",
+                ],
+            ],
         ];
 
         $costItems = new CostItems($data);

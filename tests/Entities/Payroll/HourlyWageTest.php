@@ -12,18 +12,15 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\HourlyWages\{HourlyWage, HourlyWageID, HourlyWages};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\HourlyWages\HourlyWage;
-use Datev\Entities\Payroll\HourlyWages\HourlyWages;
-use Datev\Entities\Payroll\HourlyWages\HourlyWageID;
-
 class HourlyWageTest extends EntityTest {
-    public function testCreateHourlyWage(): void {
+    public function test_create_hourly_wage(): void {
         $data = [
             "id" => "hw-001",
             "personnel_number" => "12345",
-            "amount" => 25.50
+            "amount" => 25.50,
         ];
 
         $hourlyWage = new HourlyWage($data);
@@ -35,20 +32,20 @@ class HourlyWageTest extends EntityTest {
         $this->assertEquals(25.50, $hourlyWage->getAmount());
     }
 
-    public function testCreateHourlyWages(): void {
+    public function test_create_hourly_wages(): void {
         $data = [
             "content" => [
                 [
                     "id" => "hw-001",
                     "personnel_number" => "12345",
-                    "amount" => 25.50
+                    "amount" => 25.50,
                 ],
                 [
                     "id" => "hw-002",
                     "personnel_number" => "67890",
-                    "amount" => 30.00
-                ]
-            ]
+                    "amount" => 30.00,
+                ],
+            ],
         ];
 
         $hourlyWages = new HourlyWages($data);

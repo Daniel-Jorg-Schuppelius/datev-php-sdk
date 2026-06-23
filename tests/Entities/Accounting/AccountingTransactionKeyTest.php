@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Datev\Entities\Accounting\AccountingTransactionKeys\{AccountingTransactionKey, AccountingTransactionKeys};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Accounting\AccountingTransactionKeys\AccountingTransactionKey;
-use Datev\Entities\Accounting\AccountingTransactionKeys\AccountingTransactionKeys;
-
 class AccountingTransactionKeyTest extends EntityTest {
-    public function testCreateAccountingTransactionKey() {
+    public function test_create_accounting_transaction_key() {
         $data = [
             "id" => "BU-1",
             "number" => 1,
@@ -28,11 +26,11 @@ class AccountingTransactionKeyTest extends EntityTest {
             "is_tax_rate_selectable" => false,
             "date_from" => "2020-01-01",
             "date_to" => "2099-12-31",
-            "group" => "Standard"
+            "group" => "Standard",
         ];
 
         $transactionKey = new AccountingTransactionKey($data);
-        $this->assertInstanceOf(AccountingTransactionKey::class, new AccountingTransactionKey());
+        $this->assertInstanceOf(AccountingTransactionKey::class, new AccountingTransactionKey);
         $this->assertInstanceOf(AccountingTransactionKey::class, $transactionKey);
         $this->assertNotNull($transactionKey->getID());
         $this->assertEquals(1, $transactionKey->getNumber());
@@ -41,20 +39,20 @@ class AccountingTransactionKeyTest extends EntityTest {
         $this->assertFalse($transactionKey->isTaxRateSelectable());
     }
 
-    public function testCreateAccountingTransactionKeys() {
+    public function test_create_accounting_transaction_keys() {
         $data = [
             "content" => [
                 [
                     "id" => "BU-1",
                     "number" => 1,
-                    "caption" => "Nicht steuerbar (USt)"
+                    "caption" => "Nicht steuerbar (USt)",
                 ],
                 [
                     "id" => "BU-2",
                     "number" => 2,
-                    "caption" => "Umsatzsteuerfrei"
-                ]
-            ]
+                    "caption" => "Umsatzsteuerfrei",
+                ],
+            ],
         ];
 
         $transactionKeys = new AccountingTransactionKeys($data);

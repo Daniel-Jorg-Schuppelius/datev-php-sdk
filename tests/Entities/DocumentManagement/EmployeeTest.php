@@ -12,16 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Datev\Entities\DocumentManagement\Employees\{Employee, Employees};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\DocumentManagement\Employees\Employee;
-use Datev\Entities\DocumentManagement\Employees\Employees;
-
 class EmployeeTest extends EntityTest {
-    public function testCreateEmployee(): void {
+    public function test_create_employee(): void {
         $data = [
             "name" => "Max Mustermann",
-            "is_active" => true
+            "is_active" => true,
         ];
 
         $employee = new Employee($data);
@@ -31,18 +29,18 @@ class EmployeeTest extends EntityTest {
         $this->assertTrue($employee->isActive());
     }
 
-    public function testCreateEmployees(): void {
+    public function test_create_employees(): void {
         $data = [
             "content" => [
                 [
                     "name" => "Max Mustermann",
-                    "is_active" => true
+                    "is_active" => true,
                 ],
                 [
                     "name" => "Erika Musterfrau",
-                    "is_active" => false
-                ]
-            ]
+                    "is_active" => false,
+                ],
+            ],
         ];
 
         $employees = new Employees($data);

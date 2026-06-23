@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Datev\Entities\OrderManagement\SuborderStateBilling\{SuborderStateBilling, SubordersStateBilling};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\OrderManagement\SuborderStateBilling\SubordersStateBilling;
-use Datev\Entities\OrderManagement\SuborderStateBilling\SuborderStateBilling;
-
 class SubordersStateBillingTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
@@ -26,16 +24,16 @@ class SubordersStateBillingTest extends EntityTest {
                     "order_id" => 1001,
                     "suborder_id" => 1,
                     "order_number" => 2024001,
-                    "suborder_number" => 1
+                    "suborder_number" => 1,
                 ],
                 [
                     "id" => "550e8400-e29b-41d4-a716-446655440001",
                     "order_id" => 1002,
                     "suborder_id" => 2,
                     "order_number" => 2024002,
-                    "suborder_number" => 1
-                ]
-            ]
+                    "suborder_number" => 1,
+                ],
+            ],
         ];
 
         $suborders = new SubordersStateBilling($data);

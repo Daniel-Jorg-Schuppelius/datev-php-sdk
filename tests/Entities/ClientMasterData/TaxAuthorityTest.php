@@ -12,26 +12,23 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\TaxAuthorities\{TaxAuthorities, TaxAuthority, TaxAuthorityID};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\TaxAuthorities\TaxAuthority;
-use Datev\Entities\ClientMasterData\TaxAuthorities\TaxAuthorityID;
-use Datev\Entities\ClientMasterData\TaxAuthorities\TaxAuthorities;
-
 class TaxAuthorityTest extends EntityTest {
-    public function testCreateTaxAuthorityID() {
+    public function test_create_tax_authority_id() {
         $id = new TaxAuthorityID("12345678-1234-1234-1234-123456789012");
         $this->assertInstanceOf(TaxAuthorityID::class, $id);
         $this->assertEquals("12345678-1234-1234-1234-123456789012", $id->toString());
     }
 
-    public function testCreateTaxAuthority() {
+    public function test_create_tax_authority() {
         $data = [
             "id" => "000645",
             "name" => "Finanzamt München",
             "city" => "München",
             "number" => 9181,
-            "country_code" => "DE"
+            "country_code" => "DE",
         ];
 
         $authority = new TaxAuthority($data);
@@ -41,18 +38,18 @@ class TaxAuthorityTest extends EntityTest {
         $this->assertEquals(9181, $authority->getNumber());
     }
 
-    public function testCreateTaxAuthorities() {
+    public function test_create_tax_authorities() {
         $data = [
             [
                 "id" => "000645",
                 "name" => "Finanzamt München",
-                "city" => "München"
+                "city" => "München",
             ],
             [
                 "id" => "000646",
                 "name" => "Finanzamt Nürnberg",
-                "city" => "Nürnberg"
-            ]
+                "city" => "Nürnberg",
+            ],
         ];
 
         $authorities = new TaxAuthorities($data);

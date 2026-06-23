@@ -12,40 +12,38 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
+use Datev\Entities\Law\Departments\{Department, Departments};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Law\Departments\Department;
-use Datev\Entities\Law\Departments\Departments;
-
 class DepartmentTest extends EntityTest {
-    public function testCreateDepartment() {
+    public function test_create_department() {
         $data = [
             "id" => "d1234567-8901-2345-6789-012345678901",
             "number" => 1,
             "short_name" => "ZR",
-            "name" => "Zivilrecht"
+            "name" => "Zivilrecht",
         ];
 
         $department = new Department($data);
-        $this->assertInstanceOf(Department::class, new Department());
+        $this->assertInstanceOf(Department::class, new Department);
         $this->assertInstanceOf(Department::class, $department);
         $this->assertEquals("ZR", $department->getShortName());
         $this->assertEquals("Zivilrecht", $department->getName());
         $this->assertEquals(1, $department->getNumber());
     }
 
-    public function testCreateDepartments() {
+    public function test_create_departments() {
         $data = [
             "content" => [
                 [
                     "id" => "d1234567-8901-2345-6789-012345678901",
-                    "name" => "Zivilrecht"
+                    "name" => "Zivilrecht",
                 ],
                 [
                     "id" => "d2234567-8901-2345-6789-012345678902",
-                    "name" => "Strafrecht"
-                ]
-            ]
+                    "name" => "Strafrecht",
+                ],
+            ],
         ];
 
         $departments = new Departments($data);

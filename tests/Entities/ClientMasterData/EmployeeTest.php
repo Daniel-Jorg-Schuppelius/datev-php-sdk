@@ -12,20 +12,18 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\Employees\{Employee, Employees};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\Employees\Employee;
-use Datev\Entities\ClientMasterData\Employees\Employees;
-
 class EmployeeTest extends EntityTest {
-    public function testCreateEmployee() {
+    public function test_create_employee() {
         $data = [
             "id" => "e23f9c3c-380c-494e-97c8-d12fff738189",
             "name" => "Mustermann, Max",
             "display_name" => "Mustermann, Max",
             "number" => 1001,
             "natural_person_id" => "d13f9c3c-380c-494e-97c8-d12fff738189",
-            "functional_area_id" => "f23f9c3c-380c-494e-97c8-d12fff738189"
+            "functional_area_id" => "f23f9c3c-380c-494e-97c8-d12fff738189",
         ];
 
         $employee = new Employee($data);
@@ -35,14 +33,14 @@ class EmployeeTest extends EntityTest {
         $this->assertEquals(1001, $employee->getNumber());
     }
 
-    public function testCreateEmployees() {
+    public function test_create_employees() {
         $data = [
             [
                 "id" => "e23f9c3c-380c-494e-97c8-d12fff738189",
                 "name" => "Mustermann, Max",
                 "natural_person_id" => "d13f9c3c-380c-494e-97c8-d12fff738189",
-                "functional_area_id" => "f23f9c3c-380c-494e-97c8-d12fff738189"
-            ]
+                "functional_area_id" => "f23f9c3c-380c-494e-97c8-d12fff738189",
+            ],
         ];
 
         $employees = new Employees($data);

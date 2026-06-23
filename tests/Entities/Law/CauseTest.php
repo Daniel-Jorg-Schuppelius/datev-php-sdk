@@ -12,38 +12,36 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
+use Datev\Entities\Law\Causes\{Cause, Causes};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Law\Causes\Cause;
-use Datev\Entities\Law\Causes\Causes;
-
 class CauseTest extends EntityTest {
-    public function testCreateCause() {
+    public function test_create_cause() {
         $data = [
             "id" => "c1234567-8901-2345-6789-012345678901",
             "name" => "Rechtsstreit Müller",
-            "departments" => ["Zivilrecht", "Arbeitsrecht"]
+            "departments" => ["Zivilrecht", "Arbeitsrecht"],
         ];
 
         $cause = new Cause($data);
-        $this->assertInstanceOf(Cause::class, new Cause());
+        $this->assertInstanceOf(Cause::class, new Cause);
         $this->assertInstanceOf(Cause::class, $cause);
         $this->assertEquals("Rechtsstreit Müller", $cause->getName());
         $this->assertIsArray($cause->getDepartments());
     }
 
-    public function testCreateCauses() {
+    public function test_create_causes() {
         $data = [
             "content" => [
                 [
                     "id" => "c1234567-8901-2345-6789-012345678901",
-                    "name" => "Fall 1"
+                    "name" => "Fall 1",
                 ],
                 [
                     "id" => "c2234567-8901-2345-6789-012345678902",
-                    "name" => "Fall 2"
-                ]
-            ]
+                    "name" => "Fall 2",
+                ],
+            ],
         ];
 
         $causes = new Causes($data);

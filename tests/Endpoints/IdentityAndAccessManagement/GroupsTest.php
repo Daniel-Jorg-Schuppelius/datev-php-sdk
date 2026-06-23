@@ -13,9 +13,7 @@ declare(strict_types=1);
 namespace Tests\Endpoints\IdentityAndAccessManagement;
 
 use Datev\API\Desktop\Endpoints\IdentityAndAccessManagement\GroupsEndpoint;
-use Datev\Entities\IdentityAndAccessManagement\Groups\Group;
-use Datev\Entities\IdentityAndAccessManagement\Groups\Groups;
-use Datev\Entities\IdentityAndAccessManagement\Groups\GroupID;
+use Datev\Entities\IdentityAndAccessManagement\Groups\{Group, GroupID, Groups};
 use Tests\Contracts\EndpointTest;
 
 class GroupsTest extends EndpointTest {
@@ -27,27 +25,27 @@ class GroupsTest extends EndpointTest {
         $this->apiDisabled = true; // API is disabled
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
             "id" => "a077bae8-e669-4b3a-851b-35b2079d2acd",
             "meta" => [
                 "resource_type" => "group",
-                "location" => "/iam/v1/groups/a077bae8-e669-4b3a-851b-35b2079d2acd"
+                "location" => "/iam/v1/groups/a077bae8-e669-4b3a-851b-35b2079d2acd",
             ],
             "schemas" => [
                 "urn:ietf:params:scim:schemas:core:2.0:Group",
-                "urn:ietf:params:scim:schemas:extension:datev:2.0:group"
+                "urn:ietf:params:scim:schemas:extension:datev:2.0:group",
             ],
             "display_name" => "Sachbearbeiter",
             "members" => [
                 [
                     "value" => "f66a81fb-2681-45ec-81b0-ce8346baac07",
-                    "\$ref" => "/iam/v1/users/f66a81fb-2681-45ec-81b0-ce8346baac07"
-                ]
+                    "\$ref" => "/iam/v1/users/f66a81fb-2681-45ec-81b0-ce8346baac07",
+                ],
             ],
             "urn:ietf:params:scim:schemas:extension:datev:2.0:group" => [
-                "description" => "MitarbeiterInnen der Sachbearbeitung"
-            ]
+                "description" => "MitarbeiterInnen der Sachbearbeitung",
+            ],
         ];
 
         $group = new Group($data);
@@ -56,7 +54,7 @@ class GroupsTest extends EndpointTest {
         $this->assertEquals("MitarbeiterInnen der Sachbearbeitung", $group->getDatevExtension()->getDescription());
     }
 
-    public function testGetGroups() {
+    public function test_get_groups() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }
@@ -65,7 +63,7 @@ class GroupsTest extends EndpointTest {
         $this->assertInstanceOf(Groups::class, $groups);
     }
 
-    public function testGetGroup() {
+    public function test_get_group() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

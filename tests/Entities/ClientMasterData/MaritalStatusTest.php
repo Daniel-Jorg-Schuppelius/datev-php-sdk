@@ -12,28 +12,26 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\MaritalStatuses\{MaritalStatus, MaritalStatuses};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\MaritalStatuses\MaritalStatus;
-use Datev\Entities\ClientMasterData\MaritalStatuses\MaritalStatuses;
-
 class MaritalStatusTest extends EntityTest {
-    public function testCreateMaritalStatus() {
+    public function test_create_marital_status() {
         $data = [
             "value" => "verheiratet",
-            "valid_from" => "2024-01-01"
+            "valid_from" => "2024-01-01",
         ];
 
         $status = new MaritalStatus($data);
         $this->assertInstanceOf(MaritalStatus::class, $status);
     }
 
-    public function testCreateMaritalStatuses() {
+    public function test_create_marital_statuses() {
         $data = [
             [
                 "value" => "verheiratet",
-                "valid_from" => "2024-01-01"
-            ]
+                "valid_from" => "2024-01-01",
+            ],
         ];
 
         $statuses = new MaritalStatuses($data);

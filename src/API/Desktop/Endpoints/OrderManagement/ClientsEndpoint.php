@@ -13,11 +13,9 @@ declare(strict_types=1);
 namespace Datev\API\Desktop\Endpoints\OrderManagement;
 
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
-use APIToolkit\Entities\GUID;
-use APIToolkit\Entities\ID;
+use APIToolkit\Entities\{GUID, ID};
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\OrderManagement\Clients\Client;
-use Datev\Entities\OrderManagement\Clients\Clients;
+use Datev\Entities\OrderManagement\Clients\{Client, Clients};
 use InvalidArgumentException;
 
 class ClientsEndpoint extends EndpointAbstract implements SearchableEndpointInterface {

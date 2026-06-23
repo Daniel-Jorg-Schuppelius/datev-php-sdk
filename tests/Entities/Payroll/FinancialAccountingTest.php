@@ -12,18 +12,15 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\FinancialAccountings\{FinancialAccounting, FinancialAccountingID, FinancialAccountings};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\FinancialAccountings\FinancialAccounting;
-use Datev\Entities\Payroll\FinancialAccountings\FinancialAccountings;
-use Datev\Entities\Payroll\FinancialAccountings\FinancialAccountingID;
-
 class FinancialAccountingTest extends EntityTest {
-    public function testCreateFinancialAccounting(): void {
+    public function test_create_financial_accounting(): void {
         $data = [
             "id" => "fa-001",
             "different_consultant_number" => "54321",
-            "different_client_number" => "98765"
+            "different_client_number" => "98765",
         ];
 
         $financialAccounting = new FinancialAccounting($data);
@@ -35,18 +32,18 @@ class FinancialAccountingTest extends EntityTest {
         $this->assertEquals("98765", $financialAccounting->getDifferentClientNumber());
     }
 
-    public function testCreateFinancialAccountings(): void {
+    public function test_create_financial_accountings(): void {
         $data = [
             "content" => [
                 [
                     "id" => "fa-001",
-                    "different_consultant_number" => "54321"
+                    "different_consultant_number" => "54321",
                 ],
                 [
                     "id" => "fa-002",
-                    "different_consultant_number" => "11111"
-                ]
-            ]
+                    "different_consultant_number" => "11111",
+                ],
+            ],
         ];
 
         $financialAccountings = new FinancialAccountings($data);

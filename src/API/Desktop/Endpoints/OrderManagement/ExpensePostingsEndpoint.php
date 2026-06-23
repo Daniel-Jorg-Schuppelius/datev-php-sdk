@@ -15,9 +15,7 @@ namespace Datev\API\Desktop\Endpoints\OrderManagement;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\OrderManagement\ExpensePostings\ExpensePosting;
-use Datev\Entities\OrderManagement\ExpensePostings\ExpensePostings;
-use InvalidArgumentException;
+use Datev\Entities\OrderManagement\ExpensePostings\{ExpensePosting, ExpensePostings};
 
 class ExpensePostingsEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointPrefix = 'order-management/v1';
@@ -36,7 +34,7 @@ class ExpensePostingsEndpoint extends EndpointAbstract implements SearchableEndp
             }
 
             return ExpensePosting::fromJson($response, self::$logger);
-        }, "Fetching ExpensePosting (ID: {$id})");
+        }, "Fetching ExpensePosting (ID: {$id->toString()})");
     }
 
     public function getForOrder(int $orderId, array $queryParams = []): ?ExpensePostings {
@@ -67,7 +65,7 @@ class ExpensePostingsEndpoint extends EndpointAbstract implements SearchableEndp
         return $this->logDebugWithTimer(function () use ($orderId, $expensePosting, $queryParams) {
             $response = parent::postContents($expensePosting->toArray(), $queryParams, "{$this->getEndpointUrl()}/{$orderId}/expensepostings");
 
-            return $response !== false;
+            return $response !== '';
         }, "Creating ExpensePosting for Order (ID: {$orderId})");
     }
 }

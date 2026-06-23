@@ -12,26 +12,24 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
+use Datev\Entities\PublicSector\Consumptions\{Consumption, Consumptions};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\PublicSector\Consumptions\Consumptions;
-use Datev\Entities\PublicSector\Consumptions\Consumption;
-
 class ConsumptionsTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "id" => "cons-1",
                     "description" => "WATER",
-                    "quantity" => 1000.0
+                    "quantity" => 1000.0,
                 ],
                 [
                     "id" => "cons-2",
                     "description" => "ELECTRICITY",
-                    "quantity" => 500.0
-                ]
-            ]
+                    "quantity" => 500.0,
+                ],
+            ],
         ];
 
         $consumptions = new Consumptions($data);

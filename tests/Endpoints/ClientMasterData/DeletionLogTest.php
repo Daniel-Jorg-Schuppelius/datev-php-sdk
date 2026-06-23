@@ -24,7 +24,7 @@ class DeletionLogTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetDeletionLog() {
+    public function test_get_deletion_log() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

@@ -12,24 +12,22 @@ declare(strict_types=1);
 
 namespace Tests\Entities\IdentityAndAccessManagement;
 
+use Datev\Entities\IdentityAndAccessManagement\Groups\{Group, Groups};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\IdentityAndAccessManagement\Groups\Groups;
-use Datev\Entities\IdentityAndAccessManagement\Groups\Group;
-
 class GroupsTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "id" => "grp-1",
-                    "display_name" => "Administrators"
+                    "display_name" => "Administrators",
                 ],
                 [
                     "id" => "grp-2",
-                    "display_name" => "Users"
-                ]
-            ]
+                    "display_name" => "Users",
+                ],
+            ],
         ];
 
         $groups = new Groups($data);

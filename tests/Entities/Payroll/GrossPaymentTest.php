@@ -12,19 +12,16 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\GrossPayments\{GrossPayment, GrossPaymentID, GrossPayments};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\GrossPayments\GrossPayment;
-use Datev\Entities\Payroll\GrossPayments\GrossPayments;
-use Datev\Entities\Payroll\GrossPayments\GrossPaymentID;
-
 class GrossPaymentTest extends EntityTest {
-    public function testCreateGrossPayment(): void {
+    public function test_create_gross_payment(): void {
         $data = [
             "id" => "gp-001",
             "personnel_number" => "12345",
             "amount" => 5000.00,
-            "payment_interval" => "monthly"
+            "payment_interval" => "monthly",
         ];
 
         $grossPayment = new GrossPayment($data);
@@ -36,20 +33,20 @@ class GrossPaymentTest extends EntityTest {
         $this->assertEquals(5000.00, $grossPayment->getAmount());
     }
 
-    public function testCreateGrossPayments(): void {
+    public function test_create_gross_payments(): void {
         $data = [
             "content" => [
                 [
                     "id" => "gp-001",
                     "personnel_number" => "12345",
-                    "amount" => 5000.00
+                    "amount" => 5000.00,
                 ],
                 [
                     "id" => "gp-002",
                     "personnel_number" => "67890",
-                    "amount" => 4500.00
-                ]
-            ]
+                    "amount" => 4500.00,
+                ],
+            ],
         ];
 
         $grossPayments = new GrossPayments($data);

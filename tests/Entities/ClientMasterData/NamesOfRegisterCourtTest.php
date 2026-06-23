@@ -12,18 +12,16 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\NamesOfRegisterCourt\{NameOfRegisterCourt, NamesOfRegisterCourt};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\NamesOfRegisterCourt\NamesOfRegisterCourt;
-use Datev\Entities\ClientMasterData\NamesOfRegisterCourt\NameOfRegisterCourt;
-
 class NamesOfRegisterCourtTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 ["current_name_of_register_court" => "Amtsgericht München"],
-                ["current_name_of_register_court" => "Amtsgericht Hamburg"]
-            ]
+                ["current_name_of_register_court" => "Amtsgericht Hamburg"],
+            ],
         ];
 
         $names = new NamesOfRegisterCourt($data);

@@ -22,7 +22,7 @@ class AccountPostingsTest extends EndpointTest {
         return new AccountPostingsEndpoint($this->client, self::getLogger());
     }
 
-    public function testGetAccountPostings() {
+    public function test_get_account_postings() {
         $this->skipMockIfComplexEntity();
 
         $this->endpoint = $this->createEndpoint();

@@ -12,26 +12,24 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
+use Datev\Entities\Law\Files\{LawFile, LawFiles};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Law\Files\LawFiles;
-use Datev\Entities\Law\Files\LawFile;
-
 class LawFilesTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "id" => "file-1",
                     "file_number" => "2024/001",
-                    "file_name" => "Mandant A vs. B"
+                    "file_name" => "Mandant A vs. B",
                 ],
                 [
                     "id" => "file-2",
                     "file_number" => "2024/002",
-                    "file_name" => "Beratung C"
-                ]
-            ]
+                    "file_name" => "Beratung C",
+                ],
+            ],
         ];
 
         $files = new LawFiles($data);

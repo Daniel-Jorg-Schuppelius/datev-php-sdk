@@ -15,8 +15,7 @@ use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInt
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use Datev\Entities\Common\Clients\ClientID;
-use Datev\Entities\Payroll\Employees\Employee;
-use Datev\Entities\Payroll\Employees\Employees;
+use Datev\Entities\Payroll\Employees\{Employee, Employees};
 use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 
@@ -27,7 +26,7 @@ class EmployeesEndpoint extends EndpointAbstract implements SearchableEndpointIn
 
     protected ClientID $clientID;
 
-    public function __construct(ApiClientInterface $client, ?LoggerInterface $logger = null, ClientID $clientID = new ClientID()) {
+    public function __construct(ApiClientInterface $client, ?LoggerInterface $logger = null, ClientID $clientID = new ClientID) {
         parent::__construct($client, $logger);
         $this->clientID = $clientID;
     }
@@ -45,7 +44,7 @@ class EmployeesEndpoint extends EndpointAbstract implements SearchableEndpointIn
             }
 
             return Employee::fromJson($response, self::$logger);
-        }, "Fetching Employee (ID: {$id})");
+        }, "Fetching Employee (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?Employees {

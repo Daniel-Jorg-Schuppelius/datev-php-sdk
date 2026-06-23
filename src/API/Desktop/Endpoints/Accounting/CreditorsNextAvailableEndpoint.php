@@ -12,8 +12,8 @@ declare(strict_types=1);
 
 namespace Datev\API\Desktop\Endpoints\Accounting;
 
-use APIToolkit\Entities\ID;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterface;
+use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use InvalidArgumentException;
 

@@ -12,19 +12,16 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\CalendarRecords\{CalendarRecord, CalendarRecordID, CalendarRecords};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\CalendarRecords\CalendarRecord;
-use Datev\Entities\Payroll\CalendarRecords\CalendarRecords;
-use Datev\Entities\Payroll\CalendarRecords\CalendarRecordID;
-
 class CalendarRecordTest extends EntityTest {
-    public function testCreateCalendarRecord(): void {
+    public function test_create_calendar_record(): void {
         $data = [
             "id" => "cr-001",
             "personnel_number" => "12345",
             "hours" => 8.0,
-            "days" => 1.0
+            "days" => 1.0,
         ];
 
         $calendarRecord = new CalendarRecord($data);
@@ -37,20 +34,20 @@ class CalendarRecordTest extends EntityTest {
         $this->assertEquals(1.0, $calendarRecord->getDays());
     }
 
-    public function testCreateCalendarRecords(): void {
+    public function test_create_calendar_records(): void {
         $data = [
             "content" => [
                 [
                     "id" => "cr-001",
                     "personnel_number" => "12345",
-                    "hours" => 8.0
+                    "hours" => 8.0,
                 ],
                 [
                     "id" => "cr-002",
                     "personnel_number" => "67890",
-                    "hours" => 4.0
-                ]
-            ]
+                    "hours" => 4.0,
+                ],
+            ],
         ];
 
         $calendarRecords = new CalendarRecords($data);

@@ -12,39 +12,37 @@ declare(strict_types=1);
 
 namespace Tests\Entities\IdentityAndAccessManagement;
 
+use Datev\Entities\IdentityAndAccessManagement\Users\{User, Users};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\IdentityAndAccessManagement\Users\User;
-use Datev\Entities\IdentityAndAccessManagement\Users\Users;
-
 class UserTest extends EntityTest {
-    public function testCreateUser() {
+    public function test_create_user() {
         $data = [
             "id" => "u1234567-8901-2345-6789-012345678901",
             "display_name" => "Max Mustermann",
             "active" => true,
-            "schemas" => ["urn:ietf:params:scim:schemas:core:2.0:User"]
+            "schemas" => ["urn:ietf:params:scim:schemas:core:2.0:User"],
         ];
 
         $user = new User($data);
-        $this->assertInstanceOf(User::class, new User());
+        $this->assertInstanceOf(User::class, new User);
         $this->assertInstanceOf(User::class, $user);
         $this->assertEquals("Max Mustermann", $user->getDisplayName());
         $this->assertTrue($user->isActive());
     }
 
-    public function testCreateUsers() {
+    public function test_create_users() {
         $data = [
             "content" => [
                 [
                     "id" => "u1234567-8901-2345-6789-012345678901",
-                    "display_name" => "User 1"
+                    "display_name" => "User 1",
                 ],
                 [
                     "id" => "u2234567-8901-2345-6789-012345678902",
-                    "display_name" => "User 2"
-                ]
-            ]
+                    "display_name" => "User 2",
+                ],
+            ],
         ];
 
         $users = new Users($data);

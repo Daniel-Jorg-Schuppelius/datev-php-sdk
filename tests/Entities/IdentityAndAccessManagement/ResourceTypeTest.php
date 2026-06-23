@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\IdentityAndAccessManagement;
 
+use Datev\Entities\IdentityAndAccessManagement\Schemas\{ResourceType, ResourceTypes};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\IdentityAndAccessManagement\Schemas\ResourceType;
-use Datev\Entities\IdentityAndAccessManagement\Schemas\ResourceTypes;
-
 class ResourceTypeTest extends EntityTest {
-    public function testCreateResourceType() {
+    public function test_create_resource_type() {
         $data = [
             "id" => "User",
             "name" => "User",
@@ -26,8 +24,9 @@ class ResourceTypeTest extends EntityTest {
             "endpoint" => "/Users",
             "schema" => "urn:ietf:params:scim:schemas:core:2.0:User",
             "schema_extensions" => [],
-            "meta" => []
-        ];        $resourceType = new ResourceType($data);
+            "meta" => [],
+        ];
+        $resourceType = new ResourceType($data);
 
         $this->assertInstanceOf(ResourceType::class, $resourceType);
         $this->assertEquals("User", $resourceType->getID());
@@ -37,7 +36,7 @@ class ResourceTypeTest extends EntityTest {
         $this->assertEquals("urn:ietf:params:scim:schemas:core:2.0:User", $resourceType->getSchema());
     }
 
-    public function testCreateResourceTypes() {
+    public function test_create_resource_types() {
         $data = [
             "Resources" => [
                 [
@@ -47,10 +46,11 @@ class ResourceTypeTest extends EntityTest {
                     "endpoint" => "/Users",
                     "schema" => "urn:ietf:params:scim:schemas:core:2.0:User",
                     "schema_extensions" => [],
-                    "meta" => []
-                ]
-            ]
-        ];        $resourceTypes = new ResourceTypes($data);
+                    "meta" => [],
+                ],
+            ],
+        ];
+        $resourceTypes = new ResourceTypes($data);
 
         $this->assertInstanceOf(ResourceTypes::class, $resourceTypes);
         $this->assertGreaterThanOrEqual(1, count($resourceTypes->getValues()));

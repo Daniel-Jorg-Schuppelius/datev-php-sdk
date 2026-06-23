@@ -12,14 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Datev\Entities\OrderManagement\SuborderStateBilling\{SuborderStateBilling, SubordersStateBilling};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\OrderManagement\SuborderStateBilling\SuborderStateBilling;
-use Datev\Entities\OrderManagement\SuborderStateBilling\SubordersStateBilling;
-
 class SuborderStateBillingTest extends EntityTest {
-    
-    public function testCreateSuborderStateBilling(): void {
+    public function test_create_suborder_state_billing(): void {
         $data = [
             "id" => "test-id",
             "order_id" => 2024001,
@@ -30,7 +27,7 @@ class SuborderStateBillingTest extends EntityTest {
             "accounting_year" => 2024,
             "invoice_number" => 50001,
             "invoice_calculation_date" => "2024-03-01",
-            "invoice_billing_date" => "2024-03-15"
+            "invoice_billing_date" => "2024-03-15",
         ];
 
         $suborderStateBilling = new SuborderStateBilling($data);
@@ -41,20 +38,20 @@ class SuborderStateBillingTest extends EntityTest {
         $this->assertEquals(50001, $suborderStateBilling->getInvoiceNumber());
     }
 
-    public function testCreateSubordersStateBilling(): void {
+    public function test_create_suborders_state_billing(): void {
         $data = [
             "content" => [
                 [
                     "id" => "test-id-1",
                     "order_id" => 2024001,
-                    "invoice_number" => 50001
+                    "invoice_number" => 50001,
                 ],
                 [
                     "id" => "test-id-2",
                     "order_id" => 2024002,
-                    "invoice_number" => 50002
-                ]
-            ]
+                    "invoice_number" => 50002,
+                ],
+            ],
         ];
 
         $subordersStateBilling = new SubordersStateBilling($data);

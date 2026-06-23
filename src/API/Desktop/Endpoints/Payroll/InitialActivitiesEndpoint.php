@@ -12,9 +12,8 @@ declare(strict_types=1);
 
 namespace Datev\API\Desktop\Endpoints\Payroll;
 
-use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
-use APIToolkit\Entities\ID;
 use APIToolkit\Contracts\Interfaces\API\ApiClientInterface;
+use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use Datev\Contracts\Abstracts\API\Desktop\Payroll\PayrollEndpointAbstract;
 use Datev\Entities\Common\Clients\ClientID;
 use Datev\Entities\Common\Employees\EmployeeID;
@@ -27,7 +26,7 @@ class InitialActivitiesEndpoint extends PayrollEndpointAbstract implements Searc
 
     protected EmployeeID $employeeID;
 
-    public function __construct(ApiClientInterface $client, ?LoggerInterface $logger = null, ClientID $clientID = new ClientID(), EmployeeID $employeeID = new EmployeeID()) {
+    public function __construct(ApiClientInterface $client, ?LoggerInterface $logger = null, ClientID $clientID = new ClientID, EmployeeID $employeeID = new EmployeeID) {
         parent::__construct($client, $logger, $clientID);
         $this->employeeID = $employeeID;
     }
@@ -53,6 +52,6 @@ class InitialActivitiesEndpoint extends PayrollEndpointAbstract implements Searc
             }
 
             return InitialActivities::fromJson($response, self::$logger);
-        }, "Searching InitialActivities for Employee (ID: {$this->employeeID})");
+        }, "Searching InitialActivities for Employee (ID: {$this->employeeID->toString()})");
     }
 }

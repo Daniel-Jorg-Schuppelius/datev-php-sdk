@@ -13,8 +13,7 @@ declare(strict_types=1);
 namespace Tests\Endpoints\PublicSector;
 
 use Datev\API\Desktop\Endpoints\PublicSector\FeesEndpoint;
-use Datev\Entities\PublicSector\Fees\Fee;
-use Datev\Entities\PublicSector\Fees\Fees;
+use Datev\Entities\PublicSector\Fees\{Fee, Fees};
 use Tests\Contracts\EndpointTest;
 
 class FeesTest extends EndpointTest {
@@ -26,7 +25,7 @@ class FeesTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
             'id' => 12345,
             'fee_name' => 'Wassergebühr',
@@ -37,8 +36,8 @@ class FeesTest extends EndpointTest {
             'payment_method' => [
                 'bank_name' => 'Musterbank',
                 'account_holder' => 'Max Mustermann',
-                'iban' => 'DE89370400440532013000'
-            ]
+                'iban' => 'DE89370400440532013000',
+            ],
         ];
 
         $fee = Fee::fromJson(json_encode($data));
@@ -50,18 +49,18 @@ class FeesTest extends EndpointTest {
         $this->assertEquals('Musterbank', $fee->getPaymentMethod()->getBankName());
     }
 
-    public function testJsonSerializeCollection() {
+    public function test_json_serialize_collection() {
         $data = [
             [
                 'id' => 12345,
                 'fee_name' => 'Wassergebühr',
-                'invoice_recipient' => 'Max Mustermann'
+                'invoice_recipient' => 'Max Mustermann',
             ],
             [
                 'id' => 12346,
                 'fee_name' => 'Müllgebühr',
-                'invoice_recipient' => 'Erika Musterfrau'
-            ]
+                'invoice_recipient' => 'Erika Musterfrau',
+            ],
         ];
 
         $fees = Fees::fromJson(json_encode($data));

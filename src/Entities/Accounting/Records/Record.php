@@ -17,13 +17,9 @@ use CommonToolkit\Enums\CurrencyCode;
 use DateTime;
 use Datev\Entities\Accounting\AdditionalInformations\AdditionalInformation;
 use Datev\Entities\Accounting\AdvancePayments\AdvancePayment;
-use Datev\Entities\Common\VAT\EuVatID;
-use Datev\Entities\Common\VAT\EuVatID4CountryOfOrigin;
+use Datev\Entities\Common\VAT\{EuVatID, EuVatID4CountryOfOrigin};
 use Datev\Entities\DocumentManagement\Documents\DocumentID;
-use Datev\Enums\BVVPosition;
-use Datev\Enums\CashDiscountType;
-use Datev\Enums\DebitCredit;
-use Datev\Enums\TaxationMethod;
+use Datev\Enums\{BVVPosition, CashDiscountType, DebitCredit, TaxationMethod};
 use Psr\Log\LoggerInterface;
 
 class Record extends NamedEntity {
@@ -63,9 +59,6 @@ class Record extends NamedEntity {
     protected ?bool $has_cash_discount_block;
     protected ?bool $has_dunning_block;
     protected ?bool $has_interest_block;
-
-
-
 
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);

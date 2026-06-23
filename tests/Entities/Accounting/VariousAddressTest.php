@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Datev\Entities\Accounting\VariousAddresses\{VariousAddress, VariousAddresses};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Accounting\VariousAddresses\VariousAddress;
-use Datev\Entities\Accounting\VariousAddresses\VariousAddresses;
-
 class VariousAddressTest extends EntityTest {
-    public function testCreateVariousAddress() {
+    public function test_create_various_address() {
         $data = [
             "id" => "VA-10000",
             "account_number" => 10000,
@@ -26,11 +24,11 @@ class VariousAddressTest extends EntityTest {
             "caption" => "Musterfirma GmbH",
             "correspondence_title" => "Sehr geehrte Damen und Herren",
             "date_last_modification" => "2024-06-15",
-            "legal_entity_type" => "GmbH"
+            "legal_entity_type" => "GmbH",
         ];
 
         $variousAddress = new VariousAddress($data);
-        $this->assertInstanceOf(VariousAddress::class, new VariousAddress());
+        $this->assertInstanceOf(VariousAddress::class, new VariousAddress);
         $this->assertInstanceOf(VariousAddress::class, $variousAddress);
         $this->assertNotNull($variousAddress->getID());
         $this->assertEquals(10000, $variousAddress->getAccountNumber());
@@ -39,20 +37,20 @@ class VariousAddressTest extends EntityTest {
         $this->assertEquals("GmbH", $variousAddress->getLegalEntityType());
     }
 
-    public function testCreateVariousAddresses() {
+    public function test_create_various_addresses() {
         $data = [
             "content" => [
                 [
                     "id" => "VA-10000",
                     "account_number" => 10000,
-                    "caption" => "Musterfirma GmbH"
+                    "caption" => "Musterfirma GmbH",
                 ],
                 [
                     "id" => "VA-20000",
                     "account_number" => 20000,
-                    "caption" => "Beispiel AG"
-                ]
-            ]
+                    "caption" => "Beispiel AG",
+                ],
+            ],
         ];
 
         $variousAddresses = new VariousAddresses($data);

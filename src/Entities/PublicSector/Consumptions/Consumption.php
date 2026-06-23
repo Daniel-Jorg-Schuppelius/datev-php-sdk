@@ -13,9 +13,9 @@ declare(strict_types=1);
 namespace Datev\Entities\PublicSector\Consumptions;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
-use Datev\Entities\PublicSector\Meters\Meter;
-use Datev\Entities\PublicSector\MeterReadings\MeterReading;
 use DateTime;
+use Datev\Entities\PublicSector\MeterReadings\MeterReading;
+use Datev\Entities\PublicSector\Meters\Meter;
 use Psr\Log\LoggerInterface;
 
 class Consumption extends NamedEntity {

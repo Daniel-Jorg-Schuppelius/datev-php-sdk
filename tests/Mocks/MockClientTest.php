@@ -31,7 +31,7 @@ class MockClientTest extends TestCase {
         parent::tearDown();
     }
 
-    public function testRegisterMockResponse(): void {
+    public function test_register_mock_response(): void {
         $this->mockClient->registerMockResponse(
             'GET',
             '/datev/api/test',
@@ -46,7 +46,7 @@ class MockClientTest extends TestCase {
         $this->assertEquals('success', $body['message']);
     }
 
-    public function testWildcardMatching(): void {
+    public function test_wildcard_matching(): void {
         $this->mockClient->registerMockResponse(
             'GET',
             '/datev/api/clients/*/records',
@@ -59,7 +59,7 @@ class MockClientTest extends TestCase {
         $this->assertEquals(200, $response->getStatusCode());
     }
 
-    public function testIdPlaceholderMatching(): void {
+    public function test_id_placeholder_matching(): void {
         $this->mockClient->registerMockResponse(
             'GET',
             '/datev/api/clients/{id}',
@@ -72,7 +72,7 @@ class MockClientTest extends TestCase {
         $this->assertEquals(200, $response->getStatusCode());
     }
 
-    public function testGuidPlaceholderMatching(): void {
+    public function test_guid_placeholder_matching(): void {
         $this->mockClient->registerMockResponse(
             'GET',
             '/datev/api/items/{guid}',
@@ -85,13 +85,13 @@ class MockClientTest extends TestCase {
         $this->assertEquals(200, $response->getStatusCode());
     }
 
-    public function testUnregisteredEndpointReturns404(): void {
+    public function test_unregistered_endpoint_returns404(): void {
         $response = $this->mockClient->get('/datev/api/unknown');
 
         $this->assertEquals(404, $response->getStatusCode());
     }
 
-    public function testRecordsRequests(): void {
+    public function test_records_requests(): void {
         $this->mockClient->registerMockResponse('GET', '/datev/api/test', 200, []);
         $this->mockClient->registerMockResponse('POST', '/datev/api/test', 201, []);
 
@@ -105,7 +105,7 @@ class MockClientTest extends TestCase {
         $this->assertEquals('POST', $requests[1]['method']);
     }
 
-    public function testClearRecordedRequests(): void {
+    public function test_clear_recorded_requests(): void {
         $this->mockClient->registerMockResponse('GET', '/datev/api/test', 200, []);
         $this->mockClient->get('/datev/api/test');
 
@@ -116,7 +116,7 @@ class MockClientTest extends TestCase {
         $this->assertCount(0, $this->mockClient->getRecordedRequests());
     }
 
-    public function testReset(): void {
+    public function test_reset(): void {
         $this->mockClient->registerMockResponse('GET', '/datev/api/test', 200, ['data' => 'value']);
         $this->mockClient->get('/datev/api/test');
 
@@ -130,7 +130,7 @@ class MockClientTest extends TestCase {
         $this->assertCount(1, $this->mockClient->getRecordedRequests());
     }
 
-    public function testHttpMethods(): void {
+    public function test_http_methods(): void {
         $this->mockClient->registerMockResponse('GET', '/datev/api/test', 200, ['method' => 'GET']);
         $this->mockClient->registerMockResponse('POST', '/datev/api/test', 201, ['method' => 'POST']);
         $this->mockClient->registerMockResponse('PUT', '/datev/api/test', 200, ['method' => 'PUT']);
@@ -144,7 +144,7 @@ class MockClientTest extends TestCase {
         $this->assertEquals(204, $this->mockClient->delete('/datev/api/test')->getStatusCode());
     }
 
-    public function testRegisterMultipleResponses(): void {
+    public function test_register_multiple_responses(): void {
         $responses = [
             'GET:/datev/api/clients' => [
                 'statusCode' => 200,
@@ -165,7 +165,7 @@ class MockClientTest extends TestCase {
         $this->assertEquals(201, $postResponse->getStatusCode());
     }
 
-    public function testFluentInterface(): void {
+    public function test_fluent_interface(): void {
         $result = $this->mockClient
             ->registerMockResponse('GET', '/api/test1', 200, [])
             ->registerMockResponse('GET', '/api/test2', 200, []);
@@ -173,7 +173,7 @@ class MockClientTest extends TestCase {
         $this->assertInstanceOf(MockClient::class, $result);
     }
 
-    public function testBaseUrlGetterAndSetter(): void {
+    public function test_base_url_getter_and_setter(): void {
         $this->assertEquals('https://127.0.0.1:58452', $this->mockClient->getBaseUrl());
 
         $this->mockClient->setBaseUrl('https://localhost:9999/');
@@ -181,7 +181,7 @@ class MockClientTest extends TestCase {
         $this->assertEquals('https://localhost:9999', $this->mockClient->getBaseUrl());
     }
 
-    public function testDefaultHeaders(): void {
+    public function test_default_headers(): void {
         $this->mockClient->addDefaultHeader('X-Custom-Header', 'value');
         $headers = $this->mockClient->getDefaultHeaders();
 

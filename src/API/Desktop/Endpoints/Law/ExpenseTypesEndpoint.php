@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\Law;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\Law\ExpenseTypes\ExpenseType;
-use Datev\Entities\Law\ExpenseTypes\ExpenseTypes;
+use Datev\Entities\Law\ExpenseTypes\{ExpenseType, ExpenseTypes};
 use InvalidArgumentException;
 
 class ExpenseTypesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
@@ -36,7 +35,7 @@ class ExpenseTypesEndpoint extends EndpointAbstract implements SearchableEndpoin
             }
 
             return ExpenseType::fromJson($response, self::$logger);
-        }, "Fetching ExpenseType (ID: {$id})");
+        }, "Fetching ExpenseType (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?ExpenseTypes {

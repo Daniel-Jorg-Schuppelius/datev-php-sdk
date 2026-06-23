@@ -13,8 +13,7 @@ declare(strict_types=1);
 namespace Tests\Endpoints\Payroll;
 
 use Datev\API\Desktop\Endpoints\Payroll\CostUnitsEndpoint;
-use Datev\Entities\Payroll\CostUnits\CostUnit;
-use Datev\Entities\Payroll\CostUnits\CostUnits;
+use Datev\Entities\Payroll\CostUnits\{CostUnit, CostUnits};
 use Tests\Contracts\EndpointTest;
 
 class CostUnitsTest extends EndpointTest {
@@ -25,20 +24,20 @@ class CostUnitsTest extends EndpointTest {
         return new CostUnitsEndpoint($this->client, self::getLogger());
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
             'id' => 'CU001',
-            'name' => 'Kostenträger Projekt A'
+            'name' => 'Kostenträger Projekt A',
         ];
 
         $costUnit = CostUnit::fromJson(json_encode($data));
         $this->assertInstanceOf(CostUnit::class, $costUnit);
     }
 
-    public function testJsonSerializeCollection() {
+    public function test_json_serialize_collection() {
         $data = [
             ['id' => 'CU001', 'name' => 'Projekt A'],
-            ['id' => 'CU002', 'name' => 'Projekt B']
+            ['id' => 'CU002', 'name' => 'Projekt B'],
         ];
 
         $costUnits = CostUnits::fromJson(json_encode($data));
@@ -46,7 +45,7 @@ class CostUnitsTest extends EndpointTest {
         $this->assertCount(2, $costUnits->getValues());
     }
 
-    public function testGetCostUnits() {
+    public function test_get_cost_units() {
         $this->endpoint = $this->createEndpoint();
         $costUnits = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

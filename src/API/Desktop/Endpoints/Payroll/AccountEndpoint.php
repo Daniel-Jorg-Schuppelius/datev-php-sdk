@@ -13,8 +13,7 @@ namespace Datev\API\Desktop\Endpoints\Payroll;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\Payroll\Accounts\Account;
-use Datev\Entities\Payroll\Accounts\Accounts;
+use Datev\Entities\Payroll\Accounts\{Account, Accounts};
 use InvalidArgumentException;
 
 class AccountEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
@@ -34,7 +33,7 @@ class AccountEndpoint extends EndpointAbstract implements SearchableEndpointInte
             }
 
             return Account::fromJson($response, self::$logger);
-        }, "Fetching Account for Client (ID: {$id})");
+        }, "Fetching Account for Client (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?Accounts {

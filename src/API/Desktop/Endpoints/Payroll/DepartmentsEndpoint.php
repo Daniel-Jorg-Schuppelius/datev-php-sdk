@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\Payroll;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\Payroll\PayrollEndpointAbstract;
-use Datev\Entities\Payroll\Departments\Department;
-use Datev\Entities\Payroll\Departments\Departments;
+use Datev\Entities\Payroll\Departments\{Department, Departments};
 use InvalidArgumentException;
 
 class DepartmentsEndpoint extends PayrollEndpointAbstract implements SearchableEndpointInterface {
@@ -35,7 +34,7 @@ class DepartmentsEndpoint extends PayrollEndpointAbstract implements SearchableE
             }
 
             return Department::fromJson($response, self::$logger);
-        }, "Fetching Department (ID: {$id})");
+        }, "Fetching Department (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?Departments {

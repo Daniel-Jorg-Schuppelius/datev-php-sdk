@@ -27,6 +27,6 @@ class IndividualData extends NamedValues {
     }
 
     public function toJson(int $flags = 0): string {
-        return Parent::toJson($flags);
+        return parent::toJson($flags);
     }
 }

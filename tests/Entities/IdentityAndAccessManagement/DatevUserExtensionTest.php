@@ -12,22 +12,21 @@ declare(strict_types=1);
 
 namespace Tests\Entities\IdentityAndAccessManagement;
 
+use Datev\Entities\IdentityAndAccessManagement\Users\DatevUserExtension;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\IdentityAndAccessManagement\Users\DatevUserExtension;
-
 class DatevUserExtensionTest extends EntityTest {
-    public function testCreateDatevUserExtension(): void {
+    public function test_create_datev_user_extension(): void {
         $data = [
             "valid_from" => "2024-01-01T00:00:00.000+00:00",
             "valid_to" => "2025-12-31T23:59:59.000+00:00",
             "initials" => "DJS",
             "linked_windows_identity" => [
-                "value" => "DOMAIN\\user"
+                "value" => "DOMAIN\\user",
             ],
             "linked_nuko_identity" => [
-                "value" => "nuko-user-123"
-            ]
+                "value" => "nuko-user-123",
+            ],
         ];
 
         $extension = new DatevUserExtension($data);

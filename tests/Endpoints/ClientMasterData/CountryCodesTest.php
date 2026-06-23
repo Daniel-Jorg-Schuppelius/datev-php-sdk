@@ -24,7 +24,7 @@ class CountryCodesTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetCountryCodes() {
+    public function test_get_country_codes() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

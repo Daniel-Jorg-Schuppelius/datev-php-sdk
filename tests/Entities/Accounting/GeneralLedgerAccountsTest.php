@@ -12,26 +12,24 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Datev\Entities\Accounting\GeneralLedgerAccounts\{GeneralLedgerAccount, GeneralLedgerAccounts};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Accounting\GeneralLedgerAccounts\GeneralLedgerAccounts;
-use Datev\Entities\Accounting\GeneralLedgerAccounts\GeneralLedgerAccount;
-
 class GeneralLedgerAccountsTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "id" => "gla-1",
                     "account_number" => 1200,
-                    "caption" => "Bank"
+                    "caption" => "Bank",
                 ],
                 [
                     "id" => "gla-2",
                     "account_number" => 1400,
-                    "caption" => "Forderungen"
-                ]
-            ]
+                    "caption" => "Forderungen",
+                ],
+            ],
         ];
 
         $accounts = new GeneralLedgerAccounts($data);

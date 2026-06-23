@@ -14,8 +14,7 @@ namespace Datev\Entities\DocumentManagement\IndividualReferences;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
-use Datev\Entities\DocumentManagement\CorrespondencePartners\CorrespondencePartnerGUID;
-use Datev\Entities\DocumentManagement\CorrespondencePartners\CorrespondencePartnerLink;
+use Datev\Entities\DocumentManagement\CorrespondencePartners\{CorrespondencePartnerGUID, CorrespondencePartnerLink};
 use Psr\Log\LoggerInterface;
 
 class IndividualReference extends NamedEntity implements IdentifiableNamedEntityInterface {
@@ -23,7 +22,6 @@ class IndividualReference extends NamedEntity implements IdentifiableNamedEntity
     protected string $name;
     protected ?CorrespondencePartnerGUID $correspondence_partner_guid;
     protected ?CorrespondencePartnerLink $correspondence_partner_link;
-
 
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);

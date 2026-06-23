@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\Accounting;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\Accounting\PostingProposalRules\PostingProposalRule;
-use Datev\Entities\Accounting\PostingProposalRules\PostingProposalRules;
+use Datev\Entities\Accounting\PostingProposalRules\{PostingProposalRule, PostingProposalRules};
 use InvalidArgumentException;
 
 class PostingProposalRulesIncomingInvoicesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {

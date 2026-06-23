@@ -12,12 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Datev\Entities\DocumentManagement\CorrespondencePartners\CorrespondencePartnerLink;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\DocumentManagement\CorrespondencePartners\CorrespondencePartnerLink;
-
 class CorrespondencePartnerLinkTest extends EntityTest {
-    public function testCreateFromString(): void {
+    public function test_create_from_string(): void {
         $url = "https://example.com/partner/12345";
         $link = new CorrespondencePartnerLink($url);
 
@@ -25,7 +24,7 @@ class CorrespondencePartnerLinkTest extends EntityTest {
         $this->assertEquals('correspondence_partner_link', $link->getEntityName());
     }
 
-    public function testIsValid(): void {
+    public function test_is_valid(): void {
         $link = new CorrespondencePartnerLink("https://example.com/partner");
         $this->assertTrue($link->isValid());
     }

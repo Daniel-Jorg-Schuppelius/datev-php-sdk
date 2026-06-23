@@ -22,7 +22,7 @@ class SubordersTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetSuborders() {
+    public function test_get_suborders() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

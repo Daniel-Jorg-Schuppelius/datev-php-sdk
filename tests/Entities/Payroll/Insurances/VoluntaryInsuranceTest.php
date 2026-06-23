@@ -12,18 +12,15 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll\Insurances;
 
+use Datev\Entities\Payroll\Insurances\Voluntary\{VoluntaryInsurance, VoluntaryInsuranceID, VoluntaryInsurances};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\Insurances\Voluntary\VoluntaryInsurance;
-use Datev\Entities\Payroll\Insurances\Voluntary\VoluntaryInsurances;
-use Datev\Entities\Payroll\Insurances\Voluntary\VoluntaryInsuranceID;
-
 class VoluntaryInsuranceTest extends EntityTest {
-    public function testCreateVoluntaryInsurance(): void {
+    public function test_create_voluntary_insurance(): void {
         $data = [
             "id" => "vi-001",
             "maximal_premium_for_voluntary_health_insurance" => "1000.00",
-            "maximal_premium_for_voluntary_nursing_insurance" => "200.00"
+            "maximal_premium_for_voluntary_nursing_insurance" => "200.00",
         ];
 
         $voluntaryInsurance = new VoluntaryInsurance($data);
@@ -35,18 +32,18 @@ class VoluntaryInsuranceTest extends EntityTest {
         $this->assertEquals("200.00", $voluntaryInsurance->getMaximalPremiumForVoluntaryNursingInsurance());
     }
 
-    public function testCreateVoluntaryInsurances(): void {
+    public function test_create_voluntary_insurances(): void {
         $data = [
             "content" => [
                 [
                     "id" => "vi-001",
-                    "maximal_premium_for_voluntary_health_insurance" => "1000.00"
+                    "maximal_premium_for_voluntary_health_insurance" => "1000.00",
                 ],
                 [
                     "id" => "vi-002",
-                    "maximal_premium_for_voluntary_health_insurance" => "1200.00"
-                ]
-            ]
+                    "maximal_premium_for_voluntary_health_insurance" => "1200.00",
+                ],
+            ],
         ];
 
         $voluntaryInsurances = new VoluntaryInsurances($data);

@@ -12,14 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Datev\Entities\OrderManagement\OrderStateWork\{OrderStateWork, OrderStateWorks};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\OrderManagement\OrderStateWork\OrderStateWork;
-use Datev\Entities\OrderManagement\OrderStateWork\OrderStateWorks;
-
 class OrderStateWorkTest extends EntityTest {
-    
-    public function testCreateOrderStateWork(): void {
+    public function test_create_order_state_work(): void {
         $data = [
             "id" => "test-id",
             "order_id" => 2024001,
@@ -28,7 +25,7 @@ class OrderStateWorkTest extends EntityTest {
             "creation_date" => "2024-01-15",
             "creation_employee_id" => "550e8400-e29b-41d4-a716-446655440000",
             "start_date" => "2024-01-20",
-            "done_date" => "2024-03-15"
+            "done_date" => "2024-03-15",
         ];
 
         $orderStateWork = new OrderStateWork($data);
@@ -38,18 +35,18 @@ class OrderStateWorkTest extends EntityTest {
         $this->assertEquals(2024, $orderStateWork->getCreationYear());
     }
 
-    public function testCreateOrderStateWorks(): void {
+    public function test_create_order_state_works(): void {
         $data = [
             "content" => [
                 [
                     "id" => "test-id-1",
-                    "order_id" => 2024001
+                    "order_id" => 2024001,
                 ],
                 [
                     "id" => "test-id-2",
-                    "order_id" => 2024002
-                ]
-            ]
+                    "order_id" => 2024002,
+                ],
+            ],
         ];
 
         $orderStateWorks = new OrderStateWorks($data);

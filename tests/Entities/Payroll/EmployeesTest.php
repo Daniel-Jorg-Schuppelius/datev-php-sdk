@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\Employees\{Employee, Employees};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\Employees\Employees;
-use Datev\Entities\Payroll\Employees\Employee;
-
 class EmployeesTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
@@ -26,16 +24,16 @@ class EmployeesTest extends EntityTest {
                     "surname" => "Mustermann",
                     "first_name" => "Max",
                     "company_personnel_number" => "00001",
-                    "date_of_commencement_of_employment" => "2024-01-01"
+                    "date_of_commencement_of_employment" => "2024-01-01",
                 ],
                 [
                     "id" => "00002",
                     "surname" => "Musterfrau",
                     "first_name" => "Erika",
                     "company_personnel_number" => "00002",
-                    "date_of_commencement_of_employment" => "2024-02-01"
-                ]
-            ]
+                    "date_of_commencement_of_employment" => "2024-02-01",
+                ],
+            ],
         ];
 
         $employees = new Employees($data);

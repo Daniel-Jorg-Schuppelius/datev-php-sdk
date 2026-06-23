@@ -12,12 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common;
 
+use Datev\Entities\Common\RequestID;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Common\RequestID;
-
 class RequestIDTest extends EntityTest {
-    public function testCreateRequestID(): void {
+    public function test_create_request_id(): void {
         $requestID = new RequestID("req-123456789");
 
         $this->assertInstanceOf(RequestID::class, $requestID);

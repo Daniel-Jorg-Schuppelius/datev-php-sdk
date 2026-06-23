@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Datev\Entities\OrderManagement\EmployeesQualification\{EmployeeQualification, EmployeesQualification};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\OrderManagement\EmployeesQualification\EmployeeQualification;
-use Datev\Entities\OrderManagement\EmployeesQualification\EmployeesQualification;
-
 class EmployeeQualificationTest extends EntityTest {
-    public function testCreateEmployeeQualification() {
+    public function test_create_employee_qualification() {
         $data = [
             "id" => "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
             "employee_id" => "b2c3d4e5-f6a7-8901-bcde-f12345678901",
@@ -28,8 +26,9 @@ class EmployeeQualificationTest extends EntityTest {
             "qualification_abbreviation" => "WP",
             "qualification_short_name" => "Wirtschaftsprüfer",
             "qualification_long_name" => "Wirtschaftsprüfer (WP)",
-            "qualification_active" => true
-        ];        $qualification = new EmployeeQualification($data);
+            "qualification_active" => true,
+        ];
+        $qualification = new EmployeeQualification($data);
 
         $this->assertInstanceOf(EmployeeQualification::class, $qualification);
         $this->assertEquals(100, $qualification->getEmployeeNumber());
@@ -38,23 +37,24 @@ class EmployeeQualificationTest extends EntityTest {
         $this->assertEquals("Wirtschaftsprüfer", $qualification->getQualificationShortName());
     }
 
-    public function testCreateEmployeesQualification() {
+    public function test_create_employees_qualification() {
         $data = [
             "content" => [
                 [
                     "id" => "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
                     "employee_number" => 100,
                     "qualification_id" => 1,
-                    "qualification_short_name" => "Steuerberater"
+                    "qualification_short_name" => "Steuerberater",
                 ],
                 [
                     "id" => "b2c3d4e5-f6a7-8901-bcde-f12345678901",
                     "employee_number" => 101,
                     "qualification_id" => 2,
-                    "qualification_short_name" => "Wirtschaftsprüfer"
-                ]
-            ]
-        ];        $qualifications = new EmployeesQualification($data);
+                    "qualification_short_name" => "Wirtschaftsprüfer",
+                ],
+            ],
+        ];
+        $qualifications = new EmployeesQualification($data);
 
         $this->assertInstanceOf(EmployeesQualification::class, $qualifications);
         $this->assertCount(2, $qualifications->getValues());

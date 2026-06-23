@@ -12,14 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Datev\Entities\DocumentManagement\IndividualProperties\{IndividualProperties, IndividualProperty, IndividualPropertyID};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\DocumentManagement\IndividualProperties\IndividualProperty;
-use Datev\Entities\DocumentManagement\IndividualProperties\IndividualProperties;
-use Datev\Entities\DocumentManagement\IndividualProperties\IndividualPropertyID;
-
 class IndividualPropertyTest extends EntityTest {
-    public function testCreateIndividualProperty(): void {
+    public function test_create_individual_property(): void {
         $data = [
             "id" => "prop-001",
             "data_name" => "CustomField1",
@@ -27,7 +24,7 @@ class IndividualPropertyTest extends EntityTest {
             "display_name" => "Benutzerdefiniertes Feld",
             "order" => 1,
             "active" => true,
-            "reference_item" => false
+            "reference_item" => false,
         ];
 
         $individualProperty = new IndividualProperty($data);
@@ -41,22 +38,22 @@ class IndividualPropertyTest extends EntityTest {
         $this->assertEquals(1, $individualProperty->getOrder());
     }
 
-    public function testCreateIndividualProperties(): void {
+    public function test_create_individual_properties(): void {
         $data = [
             "content" => [
                 [
                     "id" => "prop-001",
                     "data_name" => "CustomField1",
                     "display_name" => "Feld 1",
-                    "active" => true
+                    "active" => true,
                 ],
                 [
                     "id" => "prop-002",
                     "data_name" => "CustomField2",
                     "display_name" => "Feld 2",
-                    "active" => true
-                ]
-            ]
+                    "active" => true,
+                ],
+            ],
         ];
 
         $individualProperties = new IndividualProperties($data);

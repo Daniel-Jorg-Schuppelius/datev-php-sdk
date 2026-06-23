@@ -12,12 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Datev\Entities\DocumentManagement\Documents\Document;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\DocumentManagement\Documents\Document;
-
 class DocumentTest extends EntityTest {
-    public function testCreateDocument() {
+    public function test_create_document() {
         $data = [
             "acknowledge_by" => [
                 [
@@ -25,8 +24,8 @@ class DocumentTest extends EntityTest {
                     "removed_acknowledgement" => "2021-03-04T14:03:58.310",
                     "acknowledged" => "2021-03-04T14:03:58.310",
                     "is_deleted" => "false",
-                    "id" => "35e98168-01dd-4104-a273-79e38b3c3b22"
-                ]
+                    "id" => "35e98168-01dd-4104-a273-79e38b3c3b22",
+                ],
             ],
             "amount" => "150,95",
             "application" => "KARE",
@@ -35,7 +34,7 @@ class DocumentTest extends EntityTest {
             "checked_out" => "true",
             "class" => [
                 "name" => "Dokument",
-                "id" => 1
+                "id" => 1,
             ],
             "correspondence_partner_guid" => "e602ddcb-e479-4cee-b268-e53bbecf6dc9",
             "correspondence_partner_firm_number" => 0,
@@ -49,18 +48,18 @@ class DocumentTest extends EntityTest {
             "description" => "Eingangsrechnung 19.01.2021",
             "domain" => [
                 "name" => "Mandanten",
-                "id" => "1"
+                "id" => "1",
             ],
             "employee" => [
                 "name" => "Mustermann, Max",
                 "is_active" => "true",
-                "id" => 11
+                "id" => 11,
             ],
             "export_date_time" => "2020-01-14T00:00:00",
             "extension" => "docx",
             "folder" => [
                 "name" => "Stammakte",
-                "id" => 3
+                "id" => 3,
             ],
             "is_binder" => "false",
             "is_shared" => "false",
@@ -79,18 +78,18 @@ class DocumentTest extends EntityTest {
             "individual_property10" => "2020-01-14T00:00:00",
             "individual_reference1" => [
                 "name" => "Bob",
-                "id" => "1"
+                "id" => "1",
             ],
             "individual_reference2" => [
                 "name" => "Bob",
-                "id" => "1"
+                "id" => "1",
             ],
             "keywords" => "These, are, keywords",
             "month" => 11,
             "more_years" => "2015,2016,2017",
             "note" => [
                 "text" => "This is an example of a note",
-                "popup" => "true"
+                "popup" => "true",
             ],
             "number" => 3001,
             "order" => [
@@ -98,7 +97,7 @@ class DocumentTest extends EntityTest {
                 "creation_year" => "2021",
                 "name" => "Jahresurlaub",
                 "number" => 92,
-                "id" => 1056
+                "id" => 1056,
             ],
             "outbox" => "true",
             "outbox_date" => "2021-03-31",
@@ -107,7 +106,7 @@ class DocumentTest extends EntityTest {
             "property_template" => [
                 "name" => "BaM ESt-Bescheid",
                 "supplement" => "Eine Ergänzung",
-                "id" => 1056
+                "id" => 1056,
             ],
             "read_only" => "true",
             "receipt_date" => "2020-12-14T00:00:00",
@@ -115,16 +114,16 @@ class DocumentTest extends EntityTest {
             "reference_file" => "true",
             "register" => [
                 "name" => "Korrespondenz",
-                "id" => 2
+                "id" => 2,
             ],
             "revision_user" => "unknown",
             "secure_area" => [
                 "name" => "Kanzleileitung",
-                "id" => "1"
+                "id" => "1",
             ],
             "state" => [
                 "name" => "offen",
-                "id" => 5
+                "id" => 5,
             ],
             "structure_items" => [
                 [
@@ -137,23 +136,23 @@ class DocumentTest extends EntityTest {
                     "document_link" => "96e01d5b-952d-4c1f-a634-76bebcc7ee99",
                     "document_file_id" => 1489,
                     "revision_comment" => "Datei XY zu der Struktur unter den Ordner 4. Quartal hinzugefügt",
-                    "id" => 976058
-                ]
+                    "id" => 976058,
+                ],
             ],
             "user" => [
                 "name" => "Mustermann, Bob, BobM13",
                 "is_deleted" => "false",
                 "is_user_group" => "false",
-                "id" => "35e98168-01dd-4104-a273-79e38b3c3b22"
+                "id" => "35e98168-01dd-4104-a273-79e38b3c3b22",
             ],
             "year" => 2021,
-            "id" => "e602ddcb-e479-4cee-b268-e53bbecf6dc9"
+            "id" => "e602ddcb-e479-4cee-b268-e53bbecf6dc9",
         ];
 
         $document = new Document($data);
         $this->assertTrue($document->isValid());
-        $this->assertInstanceOf(Document::class, new Document());
-        $this->assertTrue((new Document())->isValid());
+        $this->assertInstanceOf(Document::class, new Document);
+        $this->assertTrue((new Document)->isValid());
         $this->assertInstanceOf(Document::class, $document);
         $this->assertEquals('e602ddcb-e479-4cee-b268-e53bbecf6dc9', $document->getID()->getValue());
         $this->assertTrue($document->getID()->isValid());

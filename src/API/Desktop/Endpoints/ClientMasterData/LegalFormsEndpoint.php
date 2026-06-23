@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\ClientMasterData;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\ClientMasterData\LegalForms\LegalForm;
-use Datev\Entities\ClientMasterData\LegalForms\LegalForms;
+use Datev\Entities\ClientMasterData\LegalForms\{LegalForm, LegalForms};
 
 class LegalFormsEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointPrefix = 'master-data/v1';

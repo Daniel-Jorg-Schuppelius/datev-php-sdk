@@ -12,19 +12,16 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Datev\Entities\DocumentManagement\Users\{User, UserID, Users};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\DocumentManagement\Users\User;
-use Datev\Entities\DocumentManagement\Users\Users;
-use Datev\Entities\DocumentManagement\Users\UserID;
-
 class UserTest extends EntityTest {
-    public function testCreateUser(): void {
+    public function test_create_user(): void {
         $data = [
             "id" => "550e8400-e29b-41d4-a716-446655440000",
             "name" => "Max Mustermann",
             "is_deleted" => false,
-            "is_user_group" => false
+            "is_user_group" => false,
         ];
 
         $user = new User($data);
@@ -37,22 +34,22 @@ class UserTest extends EntityTest {
         $this->assertFalse($user->isUserGroup());
     }
 
-    public function testCreateUsers(): void {
+    public function test_create_users(): void {
         $data = [
             "content" => [
                 [
                     "id" => "550e8400-e29b-41d4-a716-446655440000",
                     "name" => "Max Mustermann",
                     "is_deleted" => false,
-                    "is_user_group" => false
+                    "is_user_group" => false,
                 ],
                 [
                     "id" => "550e8400-e29b-41d4-a716-446655440001",
                     "name" => "Buchhaltung",
                     "is_deleted" => false,
-                    "is_user_group" => true
-                ]
-            ]
+                    "is_user_group" => true,
+                ],
+            ],
         ];
 
         $users = new Users($data);

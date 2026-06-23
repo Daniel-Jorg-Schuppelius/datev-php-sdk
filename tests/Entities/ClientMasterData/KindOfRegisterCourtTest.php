@@ -12,28 +12,26 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\KindOfRegisterCourts\{KindOfRegisterCourt, KindOfRegisterCourts};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\KindOfRegisterCourts\KindOfRegisterCourt;
-use Datev\Entities\ClientMasterData\KindOfRegisterCourts\KindOfRegisterCourts;
-
 class KindOfRegisterCourtTest extends EntityTest {
-    public function testCreateKindOfRegisterCourt() {
+    public function test_create_kind_of_register_court() {
         $data = [
             "value" => "HRB",
-            "valid_from" => "2024-01-01"
+            "valid_from" => "2024-01-01",
         ];
 
         $kind = new KindOfRegisterCourt($data);
         $this->assertInstanceOf(KindOfRegisterCourt::class, $kind);
     }
 
-    public function testCreateKindOfRegisterCourts() {
+    public function test_create_kind_of_register_courts() {
         $data = [
             [
                 "value" => "HRB",
-                "valid_from" => "2024-01-01"
-            ]
+                "valid_from" => "2024-01-01",
+            ],
         ];
 
         $kinds = new KindOfRegisterCourts($data);

@@ -20,7 +20,6 @@ use Datev\Entities\Payroll\Departments\Departments;
 use Datev\Entities\Payroll\Employees\Accountable\AccountableEmployees;
 use Datev\Entities\Payroll\Employees\Employees;
 use Datev\Entities\Payroll\Employees\Groups\Accountings\EmployeeGroupAccountings;
-use Datev\Entities\Payroll\Employees\Groups\EmployeeGroup;
 use Datev\Entities\Payroll\Employees\Groups\EmployeeGroups;
 use Datev\Entities\Payroll\FinancialAccountings\FinancialAccounting;
 use Datev\Entities\Payroll\ReasonsForAbsence\ReasonsForAbsence;
@@ -66,7 +65,7 @@ class Client extends CommonClient {
         return $this->departments ?? null;
     }
 
-    public function getEmployeeGroup(): ?EmployeeGroup {
+    public function getEmployeeGroup(): ?EmployeeGroups {
         return $this->employee_group ?? null;
     }
 

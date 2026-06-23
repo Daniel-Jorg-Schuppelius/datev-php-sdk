@@ -12,23 +12,22 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\ClientGroupTypes\ClientGroupType;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\ClientGroupTypes\ClientGroupType;
-
 class ClientGroupTypeTest extends EntityTest {
-    public function testCreateClientGroupTypeTest() {
+    public function test_create_client_group_type_test() {
         $data = [
             "id" => "e93f9cab-380c-494e-47c8-d12fff738192",
             "name" => "Rechnungsgruppe A",
             "note" => "Bemerkung zu Rechnungsgruppe A",
             "short_name" => "RG A",
-            "timestamp" => "2019-03-31T00:00:00.000+00:00"
+            "timestamp" => "2019-03-31T00:00:00.000+00:00",
         ];
 
         $clientGroupType = new ClientGroupType($data);
         $this->assertTrue($clientGroupType->isValid());
-        $this->assertInstanceOf(ClientGroupType::class, new ClientGroupType());
+        $this->assertInstanceOf(ClientGroupType::class, new ClientGroupType);
         $this->assertInstanceOf(ClientGroupType::class, $clientGroupType);
         $this->assertEquals($data, $clientGroupType->toArray());
     }

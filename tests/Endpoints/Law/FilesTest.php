@@ -13,8 +13,7 @@ declare(strict_types=1);
 namespace Tests\Endpoints\Law;
 
 use Datev\API\Desktop\Endpoints\Law\FilesEndpoint;
-use Datev\Entities\Law\Files\LawFile;
-use Datev\Entities\Law\Files\LawFiles;
+use Datev\Entities\Law\Files\{LawFile, LawFiles};
 use Tests\Contracts\EndpointTest;
 
 class FilesTest extends EndpointTest {
@@ -26,12 +25,12 @@ class FilesTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
             'id' => '550e8400-e29b-41d4-a716-446655440000',
             'file_number' => 'AZ-2024-001',
             'short_name' => 'Mustermann vs. Example',
-            'category' => 'Zivilrecht'
+            'category' => 'Zivilrecht',
         ];
 
         $file = LawFile::fromJson(json_encode($data));
@@ -42,18 +41,18 @@ class FilesTest extends EndpointTest {
         $this->assertEquals('Mustermann vs. Example', $file->getShortName());
     }
 
-    public function testJsonSerializeCollection() {
+    public function test_json_serialize_collection() {
         $data = [
             [
                 'id' => '550e8400-e29b-41d4-a716-446655440000',
                 'file_number' => 'AZ-2024-001',
-                'short_name' => 'Mustermann vs. Example'
+                'short_name' => 'Mustermann vs. Example',
             ],
             [
                 'id' => '550e8400-e29b-41d4-a716-446655440001',
                 'file_number' => 'AZ-2024-002',
-                'short_name' => 'Sample vs. Test'
-            ]
+                'short_name' => 'Sample vs. Test',
+            ],
         ];
 
         $files = LawFiles::fromJson(json_encode($data));
@@ -62,7 +61,7 @@ class FilesTest extends EndpointTest {
         $this->assertCount(2, $files->getValues());
     }
 
-    public function testSearchFiles() {
+    public function test_search_files() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

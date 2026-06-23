@@ -14,8 +14,7 @@ use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInt
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use Datev\Entities\DocumentManagement\DispatcherInformations\DispatcherInformation;
-use Datev\Entities\DocumentManagement\Documents\Document;
-use Datev\Entities\DocumentManagement\Documents\Documents;
+use Datev\Entities\DocumentManagement\Documents\{Document, Documents};
 use InvalidArgumentException;
 
 class DocumentsEndpoint extends EndpointAbstract implements SearchableEndpointInterface {

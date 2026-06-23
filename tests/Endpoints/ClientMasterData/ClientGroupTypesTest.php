@@ -24,7 +24,7 @@ class ClientGroupTypesTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetClientGroupTypes() {
+    public function test_get_client_group_types() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

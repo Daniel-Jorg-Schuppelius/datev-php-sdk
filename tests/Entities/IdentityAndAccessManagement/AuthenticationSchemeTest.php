@@ -12,19 +12,17 @@ declare(strict_types=1);
 
 namespace Tests\Entities\IdentityAndAccessManagement;
 
+use Datev\Entities\IdentityAndAccessManagement\ServiceProvider\{AuthenticationScheme, AuthenticationSchemes};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\IdentityAndAccessManagement\ServiceProvider\AuthenticationScheme;
-use Datev\Entities\IdentityAndAccessManagement\ServiceProvider\AuthenticationSchemes;
-
 class AuthenticationSchemeTest extends EntityTest {
-    public function testCreateAuthenticationScheme(): void {
+    public function test_create_authentication_scheme(): void {
         $data = [
             "type" => "oauth2",
             "name" => "OAuth 2.0 Bearer Token",
             "description" => "Authentication scheme using OAuth 2.0 Bearer Token",
             "spec_uri" => "https://tools.ietf.org/html/rfc6750",
-            "documentation_uri" => "https://developer.datev.de/auth"
+            "documentation_uri" => "https://developer.datev.de/auth",
         ];
 
         $scheme = new AuthenticationScheme($data);
@@ -32,16 +30,16 @@ class AuthenticationSchemeTest extends EntityTest {
         $this->assertInstanceOf(AuthenticationScheme::class, $scheme);
     }
 
-    public function testCreateAuthenticationSchemes(): void {
+    public function test_create_authentication_schemes(): void {
         $data = [
             [
                 "type" => "oauth2",
-                "name" => "OAuth 2.0"
+                "name" => "OAuth 2.0",
             ],
             [
                 "type" => "httpbasic",
-                "name" => "HTTP Basic"
-            ]
+                "name" => "HTTP Basic",
+            ],
         ];
 
         $schemes = new AuthenticationSchemes($data);

@@ -12,15 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\IdentityAndAccessManagement;
 
+use Datev\Entities\IdentityAndAccessManagement\ServiceProvider\ScimFilter;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\IdentityAndAccessManagement\ServiceProvider\ScimFilter;
-
 class ScimFilterTest extends EntityTest {
-    public function testCreateScimFilter(): void {
+    public function test_create_scim_filter(): void {
         $data = [
             "supported" => true,
-            "max_results" => 500
+            "max_results" => 500,
         ];
 
         $filter = new ScimFilter($data);
@@ -30,9 +29,9 @@ class ScimFilterTest extends EntityTest {
         $this->assertEquals(500, $filter->getMaxResults());
     }
 
-    public function testUnsupportedScimFilter(): void {
+    public function test_unsupported_scim_filter(): void {
         $data = [
-            "supported" => false
+            "supported" => false,
         ];
 
         $filter = new ScimFilter($data);

@@ -18,14 +18,14 @@ use PHPUnit\Framework\TestCase;
  * Tests für den OpenApiMockGenerator.
  */
 class OpenApiMockGeneratorTest extends TestCase {
-    public function testLoadSpecDiagnostics(): void {
+    public function test_load_spec_diagnostics(): void {
         $spec = OpenApiMockGenerator::loadSpec('diagnostics');
 
         $this->assertNotNull($spec);
         $this->assertArrayHasKey('paths', $spec);
     }
 
-    public function testLoadSpecClientMasterData(): void {
+    public function test_load_spec_client_master_data(): void {
         $spec = OpenApiMockGenerator::loadSpec('clientmasterdata');
 
         $this->assertNotNull($spec);
@@ -33,28 +33,28 @@ class OpenApiMockGeneratorTest extends TestCase {
         $this->assertArrayHasKey('/clients', $spec['paths']);
     }
 
-    public function testLoadSpecAccounting(): void {
+    public function test_load_spec_accounting(): void {
         $spec = OpenApiMockGenerator::loadSpec('accounting');
 
         $this->assertNotNull($spec);
         $this->assertArrayHasKey('paths', $spec);
     }
 
-    public function testLoadSpecPayroll(): void {
+    public function test_load_spec_payroll(): void {
         $spec = OpenApiMockGenerator::loadSpec('payroll');
 
         $this->assertNotNull($spec);
         $this->assertArrayHasKey('paths', $spec);
     }
 
-    public function testGetBasePath(): void {
+    public function test_get_base_path(): void {
         $basePath = OpenApiMockGenerator::getBasePath('clientmasterdata');
 
         $this->assertNotEmpty($basePath);
         $this->assertStringContainsString('master-data', $basePath);
     }
 
-    public function testExtractExamplesClientMasterData(): void {
+    public function test_extract_examples_client_master_data(): void {
         $examples = OpenApiMockGenerator::extractExamples('clientmasterdata');
 
         $this->assertNotEmpty($examples);
@@ -71,7 +71,7 @@ class OpenApiMockGeneratorTest extends TestCase {
         $this->assertTrue($hasClientsEndpoint, 'Clients endpoint should be present');
     }
 
-    public function testExtractExamplesAccounting(): void {
+    public function test_extract_examples_accounting(): void {
         $examples = OpenApiMockGenerator::extractExamples('accounting');
 
         // Accounting spec hat möglicherweise nur Schema-Definitionen ohne explizite Beispiele
@@ -79,7 +79,7 @@ class OpenApiMockGeneratorTest extends TestCase {
         $this->assertIsArray($examples);
     }
 
-    public function testCreateMockClientFromOpenApi(): void {
+    public function test_create_mock_client_from_open_api(): void {
         $client = OpenApiMockGenerator::createMockClientFromOpenApi('clientmasterdata');
 
         $this->assertInstanceOf(MockClient::class, $client);
@@ -90,7 +90,7 @@ class OpenApiMockGeneratorTest extends TestCase {
         $this->assertContains($response->getStatusCode(), [200, 404]);
     }
 
-    public function testGetAvailableDomains(): void {
+    public function test_get_available_domains(): void {
         $domains = OpenApiMockGenerator::getAvailableDomains();
 
         $this->assertNotEmpty($domains);
@@ -100,29 +100,29 @@ class OpenApiMockGeneratorTest extends TestCase {
         $this->assertContains('payroll', $domains);
     }
 
-    public function testGetEndpointCount(): void {
+    public function test_get_endpoint_count(): void {
         $count = OpenApiMockGenerator::getEndpointCount('clientmasterdata');
 
         $this->assertGreaterThan(0, $count);
     }
 
-    public function testRegisterFromOpenApi(): void {
-        $client = new MockClient();
+    public function test_register_from_open_api(): void {
+        $client = new MockClient;
         OpenApiMockGenerator::registerFromOpenApi($client, 'clientmasterdata');
 
         // Der Client sollte jetzt Responses registriert haben
         $this->assertInstanceOf(MockClient::class, $client);
     }
 
-    public function testRegisterAllFromOpenApi(): void {
-        $client = new MockClient();
+    public function test_register_all_from_open_api(): void {
+        $client = new MockClient;
         OpenApiMockGenerator::registerAllFromOpenApi($client);
 
         // Der Client sollte jetzt Responses für alle Domains haben
         $this->assertInstanceOf(MockClient::class, $client);
     }
 
-    public function testUnknownDomainReturnsNull(): void {
+    public function test_unknown_domain_returns_null(): void {
         $spec = OpenApiMockGenerator::loadSpec('unknown-domain');
 
         $this->assertNull($spec);

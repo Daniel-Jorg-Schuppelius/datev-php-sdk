@@ -13,8 +13,7 @@ declare(strict_types=1);
 namespace Tests\Endpoints\Payroll;
 
 use Datev\API\Desktop\Endpoints\Payroll\VocationalTrainingsEndpoint;
-use Datev\Entities\Payroll\VocationalTrainings\VocationalTraining;
-use Datev\Entities\Payroll\VocationalTrainings\VocationalTrainings;
+use Datev\Entities\Payroll\VocationalTrainings\{VocationalTraining, VocationalTrainings};
 use Tests\Contracts\EndpointTest;
 
 class VocationalTrainingsTest extends EndpointTest {
@@ -25,21 +24,21 @@ class VocationalTrainingsTest extends EndpointTest {
         return new VocationalTrainingsEndpoint($this->client, self::getLogger());
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
             'id' => '12345',
             'training_type' => 'Ausbildung',
-            'start_date' => '2024-01-01'
+            'start_date' => '2024-01-01',
         ];
 
         $training = VocationalTraining::fromJson(json_encode($data));
         $this->assertInstanceOf(VocationalTraining::class, $training);
     }
 
-    public function testJsonSerializeCollection() {
+    public function test_json_serialize_collection() {
         $data = [
             ['id' => '12345', 'training_type' => 'Ausbildung'],
-            ['id' => '12346', 'training_type' => 'Weiterbildung']
+            ['id' => '12346', 'training_type' => 'Weiterbildung'],
         ];
 
         $trainings = VocationalTrainings::fromJson(json_encode($data));
@@ -47,7 +46,7 @@ class VocationalTrainingsTest extends EndpointTest {
         $this->assertCount(2, $trainings->getValues());
     }
 
-    public function testGetVocationalTrainings() {
+    public function test_get_vocational_trainings() {
         $this->endpoint = $this->createEndpoint();
         $trainings = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

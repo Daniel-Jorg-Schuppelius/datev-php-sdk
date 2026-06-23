@@ -12,39 +12,37 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
+use Datev\Entities\PublicSector\TransactionAddresses\{TransactionAddress, TransactionAddresses};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\PublicSector\TransactionAddresses\TransactionAddress;
-use Datev\Entities\PublicSector\TransactionAddresses\TransactionAddresses;
-
 class TransactionAddressTest extends EntityTest {
-    public function testCreateTransactionAddress() {
+    public function test_create_transaction_address() {
         $data = [
             "id" => 12345,
             "status" => "active",
-            "notification_e_mail" => "test@example.com"
+            "notification_e_mail" => "test@example.com",
         ];
 
         $address = new TransactionAddress($data);
-        $this->assertInstanceOf(TransactionAddress::class, new TransactionAddress());
+        $this->assertInstanceOf(TransactionAddress::class, new TransactionAddress);
         $this->assertInstanceOf(TransactionAddress::class, $address);
         $this->assertEquals(12345, $address->getID());
         $this->assertEquals("active", $address->getStatus());
         $this->assertEquals("test@example.com", $address->getNotificationEmail());
     }
 
-    public function testCreateTransactionAddresses() {
+    public function test_create_transaction_addresses() {
         $data = [
             "content" => [
                 [
                     "id" => 1,
-                    "status" => "active"
+                    "status" => "active",
                 ],
                 [
                     "id" => 2,
-                    "status" => "inactive"
-                ]
-            ]
+                    "status" => "inactive",
+                ],
+            ],
         ];
 
         $addresses = new TransactionAddresses($data);

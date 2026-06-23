@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\Payroll;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\Payroll\PayrollEndpointAbstract;
-use Datev\Entities\Payroll\Salaries\Salary;
-use Datev\Entities\Payroll\Salaries\Salaries;
+use Datev\Entities\Payroll\Salaries\{Salaries, Salary};
 use InvalidArgumentException;
 
 class SalariesEndpoint extends PayrollEndpointAbstract implements SearchableEndpointInterface {
@@ -35,7 +34,7 @@ class SalariesEndpoint extends PayrollEndpointAbstract implements SearchableEndp
             }
 
             return Salary::fromJson($response, self::$logger);
-        }, "Fetching Salary (ID: {$id})");
+        }, "Fetching Salary (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?Salaries {

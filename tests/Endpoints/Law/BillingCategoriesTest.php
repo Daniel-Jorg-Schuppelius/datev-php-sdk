@@ -22,7 +22,7 @@ class BillingCategoriesTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetBillingCategories() {
+    public function test_get_billing_categories() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

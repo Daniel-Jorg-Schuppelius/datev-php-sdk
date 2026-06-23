@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\Law;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\Law\Causes\Cause;
-use Datev\Entities\Law\Causes\Causes;
+use Datev\Entities\Law\Causes\{Cause, Causes};
 use InvalidArgumentException;
 
 class CausesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
@@ -36,7 +35,7 @@ class CausesEndpoint extends EndpointAbstract implements SearchableEndpointInter
             }
 
             return Cause::fromJson($response, self::$logger);
-        }, "Fetching Cause (ID: {$id})");
+        }, "Fetching Cause (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?Causes {

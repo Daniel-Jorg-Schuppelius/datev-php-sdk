@@ -22,7 +22,7 @@ class TransactionAddressesTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetTransactionAddresses() {
+    public function test_get_transaction_addresses() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

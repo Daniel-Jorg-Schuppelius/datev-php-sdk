@@ -12,20 +12,18 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\Responsibilities\{Responsibilities, Responsibility};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\Responsibilities\Responsibility;
-use Datev\Entities\ClientMasterData\Responsibilities\Responsibilities;
-
 class ResponsibilityTest extends EntityTest {
-    public function testCreateResponsibility() {
+    public function test_create_responsibility() {
         $data = [
             "id" => 123,
             "area_of_responsibility_id" => "MV",
             "area_of_responsibility_name" => "Mandatsverantwortung",
             "employee_id" => "e23f9c3c-380c-494e-97c8-d12fff738189",
             "employee_display_name" => "Mustermann, Max",
-            "employee_number" => 1001
+            "employee_number" => 1001,
         ];
 
         $responsibility = new Responsibility($data);
@@ -33,18 +31,18 @@ class ResponsibilityTest extends EntityTest {
         $this->assertNotNull($responsibility->getID());
     }
 
-    public function testCreateResponsibilities() {
+    public function test_create_responsibilities() {
         $data = [
             [
                 "id" => 123,
                 "area_of_responsibility_id" => "MV",
-                "employee_number" => 1001
+                "employee_number" => 1001,
             ],
             [
                 "id" => 124,
                 "area_of_responsibility_id" => "AB",
-                "employee_number" => 1002
-            ]
+                "employee_number" => 1002,
+            ],
         ];
 
         $responsibilities = new Responsibilities($data);

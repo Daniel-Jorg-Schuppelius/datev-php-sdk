@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\ClientMasterData;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\ClientMasterData\Responsibilities\Responsibility;
-use Datev\Entities\ClientMasterData\Responsibilities\Responsibilities;
+use Datev\Entities\ClientMasterData\Responsibilities\{Responsibilities, Responsibility};
 
 class ResponsibilitiesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointPrefix = 'master-data/v1';

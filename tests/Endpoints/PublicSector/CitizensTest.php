@@ -13,8 +13,7 @@ declare(strict_types=1);
 namespace Tests\Endpoints\PublicSector;
 
 use Datev\API\Desktop\Endpoints\PublicSector\CitizensEndpoint;
-use Datev\Entities\PublicSector\Citizens\Citizen;
-use Datev\Entities\PublicSector\Citizens\Citizens;
+use Datev\Entities\PublicSector\Citizens\{Citizen, Citizens};
 use Tests\Contracts\EndpointTest;
 
 class CitizensTest extends EndpointTest {
@@ -26,7 +25,7 @@ class CitizensTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
             'id' => '550e8400-e29b-41d4-a716-446655440000',
             'first_name' => 'Max',
@@ -38,8 +37,8 @@ class CitizensTest extends EndpointTest {
                 'street' => 'Musterstraße',
                 'house_number' => '123',
                 'zip_code' => '12345',
-                'city' => 'Musterstadt'
-            ]
+                'city' => 'Musterstadt',
+            ],
         ];
 
         $citizen = Citizen::fromJson(json_encode($data));
@@ -51,18 +50,18 @@ class CitizensTest extends EndpointTest {
         $this->assertEquals('Musterstraße', $citizen->getLocation()->getStreet());
     }
 
-    public function testJsonSerializeCollection() {
+    public function test_json_serialize_collection() {
         $data = [
             [
                 'id' => '550e8400-e29b-41d4-a716-446655440000',
                 'first_name' => 'Max',
-                'last_name' => 'Mustermann'
+                'last_name' => 'Mustermann',
             ],
             [
                 'id' => '660e8400-e29b-41d4-a716-446655440001',
                 'first_name' => 'Erika',
-                'last_name' => 'Musterfrau'
-            ]
+                'last_name' => 'Musterfrau',
+            ],
         ];
 
         $citizens = Citizens::fromJson(json_encode($data));

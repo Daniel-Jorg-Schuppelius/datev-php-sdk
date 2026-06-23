@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\Accounting;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\Accounting\AccountingSumsAndBalances\AccountingSumsAndBalance;
-use Datev\Entities\Accounting\AccountingSumsAndBalances\AccountingSumsAndBalances;
+use Datev\Entities\Accounting\AccountingSumsAndBalances\{AccountingSumsAndBalance, AccountingSumsAndBalances};
 use InvalidArgumentException;
 
 class AccountingSumsAndBalancesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {

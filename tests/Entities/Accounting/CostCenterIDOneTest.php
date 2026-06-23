@@ -12,19 +12,18 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Datev\Entities\Accounting\CostCenters\ID\CostCenterIDOne;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Accounting\CostCenters\ID\CostCenterIDOne;
-
 class CostCenterIDOneTest extends EntityTest {
-    public function testCreateFromInteger(): void {
+    public function test_create_from_integer(): void {
         $costCenterId = new CostCenterIDOne(100);
 
         $this->assertEquals(100, $costCenterId->getValue());
         $this->assertEquals('kost1_cost_center_id', $costCenterId->getEntityName());
     }
 
-    public function testCreateFromString(): void {
+    public function test_create_from_string(): void {
         $costCenterId = new CostCenterIDOne("CC001");
 
         $this->assertEquals("CC001", $costCenterId->getValue());

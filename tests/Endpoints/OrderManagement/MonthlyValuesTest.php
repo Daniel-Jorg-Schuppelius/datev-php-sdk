@@ -22,7 +22,7 @@ class MonthlyValuesTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetMonthlyValues() {
+    public function test_get_monthly_values() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

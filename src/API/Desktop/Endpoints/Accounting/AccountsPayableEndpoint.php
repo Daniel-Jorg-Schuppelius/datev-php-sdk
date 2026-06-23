@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\Accounting;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\Accounting\OpenItems\OpenItem;
-use Datev\Entities\Accounting\OpenItems\OpenItems;
+use Datev\Entities\Accounting\OpenItems\{OpenItem, OpenItems};
 use InvalidArgumentException;
 
 class AccountsPayableEndpoint extends EndpointAbstract implements SearchableEndpointInterface {

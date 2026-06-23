@@ -13,8 +13,7 @@ declare(strict_types=1);
 namespace Tests\Endpoints\Payroll;
 
 use Datev\API\Desktop\Endpoints\Payroll\FinancialAccountingEndpoint;
-use Datev\Entities\Payroll\FinancialAccountings\FinancialAccounting;
-use Datev\Entities\Payroll\FinancialAccountings\FinancialAccountings;
+use Datev\Entities\Payroll\FinancialAccountings\{FinancialAccounting, FinancialAccountings};
 use Tests\Contracts\EndpointTest;
 
 class FinancialAccountingTest extends EndpointTest {
@@ -25,20 +24,20 @@ class FinancialAccountingTest extends EndpointTest {
         return new FinancialAccountingEndpoint($this->client, self::getLogger());
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
             'id' => '12345',
-            'account_number' => '4000'
+            'account_number' => '4000',
         ];
 
         $accounting = FinancialAccounting::fromJson(json_encode($data));
         $this->assertInstanceOf(FinancialAccounting::class, $accounting);
     }
 
-    public function testJsonSerializeCollection() {
+    public function test_json_serialize_collection() {
         $data = [
             ['id' => '12345', 'account_number' => '4000'],
-            ['id' => '12346', 'account_number' => '4100']
+            ['id' => '12346', 'account_number' => '4100'],
         ];
 
         $accountings = FinancialAccountings::fromJson(json_encode($data));
@@ -46,7 +45,7 @@ class FinancialAccountingTest extends EndpointTest {
         $this->assertCount(2, $accountings->getValues());
     }
 
-    public function testGetFinancialAccountings() {
+    public function test_get_financial_accountings() {
         $this->endpoint = $this->createEndpoint();
         $accountings = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

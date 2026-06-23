@@ -4,18 +4,16 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\MaritalStatuses\{MaritalStatus, MaritalStatuses};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\MaritalStatuses\MaritalStatuses;
-use Datev\Entities\ClientMasterData\MaritalStatuses\MaritalStatus;
-
 class MaritalStatusesTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 ["id" => "ms-1", "status" => "SINGLE"],
-                ["id" => "ms-2", "status" => "MARRIED"]
-            ]
+                ["id" => "ms-2", "status" => "MARRIED"],
+            ],
         ];
         $collection = new MaritalStatuses($data);
         $this->assertCount(2, $collection->getValues());

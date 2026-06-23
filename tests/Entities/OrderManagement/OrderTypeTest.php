@@ -12,20 +12,17 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Datev\Entities\OrderManagement\OrderTypes\{OrderType, OrderTypes};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\OrderManagement\OrderTypes\OrderType;
-use Datev\Entities\OrderManagement\OrderTypes\OrderTypes;
-
 class OrderTypeTest extends EntityTest {
-    
-    public function testCreateOrderType(): void {
+    public function test_create_order_type(): void {
         $data = [
             "id" => "test-id",
             "ordertype" => "FIBU",
             "ordertype_name" => "Finanzbuchhaltung",
             "ordertype_group" => 1,
-            "ordertype_group_name" => "Buchhaltung"
+            "ordertype_group_name" => "Buchhaltung",
         ];
 
         $orderType = new OrderType($data);
@@ -37,20 +34,20 @@ class OrderTypeTest extends EntityTest {
         $this->assertEquals("Buchhaltung", $orderType->getOrderTypeGroupName());
     }
 
-    public function testCreateOrderTypes(): void {
+    public function test_create_order_types(): void {
         $data = [
             "content" => [
                 [
                     "id" => "test-id-1",
                     "ordertype" => "FIBU",
-                    "ordertype_name" => "Finanzbuchhaltung"
+                    "ordertype_name" => "Finanzbuchhaltung",
                 ],
                 [
                     "id" => "test-id-2",
                     "ordertype" => "LOHN",
-                    "ordertype_name" => "Lohnbuchhaltung"
-                ]
-            ]
+                    "ordertype_name" => "Lohnbuchhaltung",
+                ],
+            ],
         ];
 
         $orderTypes = new OrderTypes($data);

@@ -13,11 +13,9 @@ declare(strict_types=1);
 namespace Datev\API\Desktop\Endpoints\PublicSector;
 
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
-use APIToolkit\Entities\GUID;
-use APIToolkit\Entities\ID;
+use APIToolkit\Entities\{GUID, ID};
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\PublicSector\Meters\Meter;
-use Datev\Entities\PublicSector\Meters\Meters;
+use Datev\Entities\PublicSector\Meters\{Meter, Meters};
 use InvalidArgumentException;
 
 class MetersEndpoint extends EndpointAbstract implements SearchableEndpointInterface {

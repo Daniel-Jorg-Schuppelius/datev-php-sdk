@@ -13,16 +13,13 @@ declare(strict_types=1);
 namespace Tests\Mocks;
 
 use PHPUnit\Framework\TestCase;
-use Tests\Mocks\Fixtures\AccountingFixtures;
-use Tests\Mocks\Fixtures\ClientMasterDataFixtures;
-use Tests\Mocks\Fixtures\DiagnosticsFixtures;
-use Tests\Mocks\Fixtures\PayrollFixtures;
+use Tests\Mocks\Fixtures\{AccountingFixtures, ClientMasterDataFixtures, DiagnosticsFixtures, PayrollFixtures};
 
 /**
  * Tests für den MockDataLoader.
  */
 class MockDataLoaderTest extends TestCase {
-    public function testCreateFullyConfiguredMockClient(): void {
+    public function test_create_fully_configured_mock_client(): void {
         $client = MockDataLoader::createFullyConfiguredMockClient();
 
         $this->assertInstanceOf(MockClient::class, $client);
@@ -32,14 +29,14 @@ class MockDataLoaderTest extends TestCase {
         $this->assertEquals(200, $response->getStatusCode());
     }
 
-    public function testCreateMockClientForDomainDiagnostics(): void {
+    public function test_create_mock_client_for_domain_diagnostics(): void {
         $client = MockDataLoader::createMockClientForDomain('diagnostics');
 
         $response = $client->get('/datev/api/diagnostics/v1/echo');
         $this->assertEquals(200, $response->getStatusCode());
     }
 
-    public function testCreateMockClientForDomainAccounting(): void {
+    public function test_create_mock_client_for_domain_accounting(): void {
         $client = MockDataLoader::createMockClientForDomain('accounting');
 
         // Diagnostics sollte auch verfügbar sein
@@ -51,28 +48,28 @@ class MockDataLoaderTest extends TestCase {
         $this->assertEquals(200, $clientsResponse->getStatusCode());
     }
 
-    public function testCreateMockClientForDomainClientMasterData(): void {
+    public function test_create_mock_client_for_domain_client_master_data(): void {
         $client = MockDataLoader::createMockClientForDomain('clientmasterdata');
 
         $response = $client->get('/datev/api/master-data/v1/clients');
         $this->assertEquals(200, $response->getStatusCode());
     }
 
-    public function testCreateMockClientForDomainPayroll(): void {
+    public function test_create_mock_client_for_domain_payroll(): void {
         $client = MockDataLoader::createMockClientForDomain('payroll');
 
         $response = $client->get('/datev/api/hr/v3/clients');
         $this->assertEquals(200, $response->getStatusCode());
     }
 
-    public function testCreateMockClientForDomainHr(): void {
+    public function test_create_mock_client_for_domain_hr(): void {
         $client = MockDataLoader::createMockClientForDomain('hr');
 
         $response = $client->get('/datev/api/hr/v3/clients');
         $this->assertEquals(200, $response->getStatusCode());
     }
 
-    public function testDiagnosticsFixtures(): void {
+    public function test_diagnostics_fixtures(): void {
         $echo = DiagnosticsFixtures::getEcho();
 
         $this->assertArrayHasKey('id', $echo);
@@ -80,7 +77,7 @@ class MockDataLoaderTest extends TestCase {
         $this->assertStringContainsString('echo-', $echo['id']);
     }
 
-    public function testAccountingFixtures(): void {
+    public function test_accounting_fixtures(): void {
         $clients = AccountingFixtures::getClients();
 
         $this->assertIsArray($clients);
@@ -88,14 +85,14 @@ class MockDataLoaderTest extends TestCase {
         $this->assertArrayHasKey('consultant_number', $clients[0]);
     }
 
-    public function testClientMasterDataFixtures(): void {
+    public function test_client_master_data_fixtures(): void {
         $addressees = ClientMasterDataFixtures::getAddressees();
 
         $this->assertIsArray($addressees);
         $this->assertNotEmpty($addressees);
     }
 
-    public function testPayrollFixtures(): void {
+    public function test_payroll_fixtures(): void {
         $employees = PayrollFixtures::getEmployees();
 
         $this->assertIsArray($employees);
@@ -104,8 +101,8 @@ class MockDataLoaderTest extends TestCase {
         $this->assertArrayHasKey('first_name', $employees['content'][0]);
     }
 
-    public function testRegisterAllFixtures(): void {
-        $client = new MockClient();
+    public function test_register_all_fixtures(): void {
+        $client = new MockClient;
         MockDataLoader::registerAllFixtures($client);
 
         // Alle Domains sollten verfügbar sein

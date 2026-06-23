@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\Payroll;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\Payroll\PayrollEndpointAbstract;
-use Datev\Entities\Payroll\Salaries\SalaryTypes\SalaryType;
-use Datev\Entities\Payroll\Salaries\SalaryTypes\SalaryTypes;
+use Datev\Entities\Payroll\Salaries\SalaryTypes\{SalaryType, SalaryTypes};
 use InvalidArgumentException;
 
 class SalaryTypesEndpoint extends PayrollEndpointAbstract implements SearchableEndpointInterface {
@@ -35,7 +34,7 @@ class SalaryTypesEndpoint extends PayrollEndpointAbstract implements SearchableE
             }
 
             return SalaryType::fromJson($response, self::$logger);
-        }, "Fetching SalaryType (ID: {$id})");
+        }, "Fetching SalaryType (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?SalaryTypes {

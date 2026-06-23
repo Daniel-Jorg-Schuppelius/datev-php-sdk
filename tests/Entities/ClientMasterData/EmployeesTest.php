@@ -12,26 +12,24 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\Employees\{Employee, Employees};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\Employees\Employees;
-use Datev\Entities\ClientMasterData\Employees\Employee;
-
 class EmployeesTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "id" => "emp-md-1",
                     "name" => "Mitarbeiter 1",
-                    "number" => 1001
+                    "number" => 1001,
                 ],
                 [
                     "id" => "emp-md-2",
                     "name" => "Mitarbeiter 2",
-                    "number" => 1002
-                ]
-            ]
+                    "number" => 1002,
+                ],
+            ],
         ];
 
         $employees = new Employees($data);

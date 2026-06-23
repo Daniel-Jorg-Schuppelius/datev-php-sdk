@@ -11,8 +11,7 @@
 namespace Tests\Endpoints\DocumentManagement;
 
 use Datev\API\Desktop\Endpoints\DocumentManagement\IndividualReferences1Endpoint;
-use Datev\Entities\DocumentManagement\IndividualReferences\IndividualReference;
-use Datev\Entities\DocumentManagement\IndividualReferences\IndividualReferences;
+use Datev\Entities\DocumentManagement\IndividualReferences\{IndividualReference, IndividualReferences};
 use Tests\Contracts\EndpointTest;
 
 class IndividualReference1Test extends EndpointTest {
@@ -24,7 +23,7 @@ class IndividualReference1Test extends EndpointTest {
         $this->apiDisabled = true; // API is disabled
     }
 
-    public function testGetIndividualReferencesAPI() {
+    public function test_get_individual_references_api() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

@@ -4,18 +4,16 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\CostUnits\{CostUnit, CostUnits};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\CostUnits\CostUnits;
-use Datev\Entities\Payroll\CostUnits\CostUnit;
-
 class CostUnitsTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 ["id" => "1", "name" => "Hauptkostenträger"],
-                ["id" => "2", "name" => "Nebenkostenträger"]
-            ]
+                ["id" => "2", "name" => "Nebenkostenträger"],
+            ],
         ];
         $collection = new CostUnits($data);
         $this->assertCount(2, $collection->getValues());

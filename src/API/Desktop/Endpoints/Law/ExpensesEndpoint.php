@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\Law;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\Law\Expenses\Expense;
-use Datev\Entities\Law\Expenses\Expenses;
+use Datev\Entities\Law\Expenses\{Expense, Expenses};
 use InvalidArgumentException;
 
 class ExpensesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
@@ -36,7 +35,7 @@ class ExpensesEndpoint extends EndpointAbstract implements SearchableEndpointInt
             }
 
             return Expense::fromJson($response, self::$logger);
-        }, "Fetching Expense (ID: {$id})");
+        }, "Fetching Expense (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?Expenses {

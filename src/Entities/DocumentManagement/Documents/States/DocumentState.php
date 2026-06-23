@@ -22,7 +22,6 @@ class DocumentState extends NamedEntity implements IdentifiableNamedEntityInterf
     protected ?string $name;
     protected ?DocumentClasses $valid_document_classes;
 
-
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

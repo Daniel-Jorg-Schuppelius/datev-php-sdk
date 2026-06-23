@@ -12,12 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common;
 
+use Datev\Entities\Common\ConsultantNumber;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Common\ConsultantNumber;
-
 class ConsultantNumberTest extends EntityTest {
-    public function testCreateConsultantNumber(): void {
+    public function test_create_consultant_number(): void {
         $consultantNumber = new ConsultantNumber("12345");
 
         $this->assertInstanceOf(ConsultantNumber::class, $consultantNumber);

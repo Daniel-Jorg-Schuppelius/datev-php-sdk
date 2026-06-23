@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\Accounting;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\Accounting\CostSystems\CostSystem;
-use Datev\Entities\Accounting\CostSystems\CostSystems;
+use Datev\Entities\Accounting\CostSystems\{CostSystem, CostSystems};
 use InvalidArgumentException;
 
 class CostSystemsEndpoint extends EndpointAbstract implements SearchableEndpointInterface {

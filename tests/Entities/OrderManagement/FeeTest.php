@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Datev\Entities\OrderManagement\Fees\{Fee, Fees};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\OrderManagement\Fees\Fee;
-use Datev\Entities\OrderManagement\Fees\Fees;
-
 class FeeTest extends EntityTest {
-    public function testCreateFee() {
+    public function test_create_fee() {
         $data = [
             "id" => 1,
             "fee_position" => "2300",
@@ -27,29 +25,29 @@ class FeeTest extends EntityTest {
             "fee_plan_name" => "Standardgebührenordnung",
             "factor_from" => 0.5,
             "factor_to" => 3.0,
-            "default_factor" => 1.0
+            "default_factor" => 1.0,
         ];
 
         $fee = new Fee($data);
-        $this->assertInstanceOf(Fee::class, new Fee());
+        $this->assertInstanceOf(Fee::class, new Fee);
         $this->assertInstanceOf(Fee::class, $fee);
         $this->assertEquals(1, $fee->getID());
         $this->assertEquals("2300", $fee->getFeePosition());
         $this->assertEquals("Buchführung", $fee->getFeePositionName());
     }
 
-    public function testCreateFees() {
+    public function test_create_fees() {
         $data = [
             "content" => [
                 [
                     "id" => 1,
-                    "fee_position" => "2300"
+                    "fee_position" => "2300",
                 ],
                 [
                     "id" => 2,
-                    "fee_position" => "2301"
-                ]
-            ]
+                    "fee_position" => "2301",
+                ],
+            ],
         ];
 
         $fees = new Fees($data);

@@ -12,10 +12,7 @@ declare(strict_types=1);
 
 namespace Tests\Mocks;
 
-use Tests\Mocks\Fixtures\AccountingFixtures;
-use Tests\Mocks\Fixtures\ClientMasterDataFixtures;
-use Tests\Mocks\Fixtures\DiagnosticsFixtures;
-use Tests\Mocks\Fixtures\PayrollFixtures;
+use Tests\Mocks\Fixtures\{AccountingFixtures, ClientMasterDataFixtures, DiagnosticsFixtures, PayrollFixtures};
 
 /**
  * Lädt Mock-Daten aus Fixtures, JSON-Dateien und OpenAPI-Spezifikationen.
@@ -144,7 +141,7 @@ class MockDataLoader {
      * Erstellt einen vollständig konfigurierten MockClient mit allen Fixtures.
      */
     public static function createFullyConfiguredMockClient(): MockClient {
-        $client = new MockClient();
+        $client = new MockClient;
         self::registerAllFixtures($client);
         self::registerFromJsonFiles($client);
         return $client;
@@ -156,7 +153,7 @@ class MockDataLoader {
      * @param string $domain 'diagnostics', 'accounting', 'clientmasterdata', 'payroll'
      */
     public static function createMockClientForDomain(string $domain): MockClient {
-        $client = new MockClient();
+        $client = new MockClient;
 
         // Immer Diagnostics laden für Echo-Test
         self::registerDiagnosticsFixtures($client);
@@ -213,7 +210,7 @@ class MockDataLoader {
     /**
      * Erstellt einen MockClient nur mit OpenAPI-Daten (ohne statische Fixtures).
      */
-    public static function createOpenApiMockClient(string $domain = null): MockClient {
+    public static function createOpenApiMockClient(?string $domain = null): MockClient {
         return OpenApiMockGenerator::createMockClientFromOpenApi($domain);
     }
 }

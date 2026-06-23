@@ -12,19 +12,17 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
+use Datev\Entities\Law\CustomFields\{CustomField, CustomFields};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Law\CustomFields\CustomField;
-use Datev\Entities\Law\CustomFields\CustomFields;
-
 class CustomFieldTest extends EntityTest {
-    public function testCreateCustomField(): void {
+    public function test_create_custom_field(): void {
         $data = [
             "id" => "test-id",
             "relation" => "file",
             "name" => "Priorität",
             "datatype" => "string",
-            "length" => 50
+            "length" => 50,
         ];
 
         $customField = new CustomField($data);
@@ -35,18 +33,18 @@ class CustomFieldTest extends EntityTest {
         $this->assertEquals("string", $customField->getDatatype());
     }
 
-    public function testCreateCustomFields(): void {
+    public function test_create_custom_fields(): void {
         $data = [
             "content" => [
                 [
                     "id" => "test-id-1",
-                    "name" => "Priorität"
+                    "name" => "Priorität",
                 ],
                 [
                     "id" => "test-id-2",
-                    "name" => "Status"
-                ]
-            ]
+                    "name" => "Status",
+                ],
+            ],
         ];
 
         $customFields = new CustomFields($data);

@@ -12,14 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll\Insurances;
 
+use Datev\Entities\Payroll\Insurances\Social\{SocialInsurance, SocialInsuranceID, SocialInsurances};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\Insurances\Social\SocialInsurance;
-use Datev\Entities\Payroll\Insurances\Social\SocialInsurances;
-use Datev\Entities\Payroll\Insurances\Social\SocialInsuranceID;
-
 class SocialInsuranceTest extends EntityTest {
-    public function testCreateSocialInsurance(): void {
+    public function test_create_social_insurance(): void {
         $data = [
             "id" => "si-001",
             "contribution_class_health_insurance" => "general",
@@ -27,7 +24,7 @@ class SocialInsuranceTest extends EntityTest {
             "contribution_class_unemployment_insurance" => "full",
             "contribution_class_nursing_insurance" => "general",
             "allocation_method" => "standard",
-            "legal_treatment" => "employee"
+            "legal_treatment" => "employee",
         ];
 
         $socialInsurance = new SocialInsurance($data);
@@ -39,18 +36,18 @@ class SocialInsuranceTest extends EntityTest {
         $this->assertEquals("full", $socialInsurance->getContributionClassPensionInsurance());
     }
 
-    public function testCreateSocialInsurances(): void {
+    public function test_create_social_insurances(): void {
         $data = [
             "content" => [
                 [
                     "id" => "si-001",
-                    "contribution_class_health_insurance" => "general"
+                    "contribution_class_health_insurance" => "general",
                 ],
                 [
                     "id" => "si-002",
-                    "contribution_class_health_insurance" => "reduced"
-                ]
-            ]
+                    "contribution_class_health_insurance" => "reduced",
+                ],
+            ],
         ];
 
         $socialInsurances = new SocialInsurances($data);

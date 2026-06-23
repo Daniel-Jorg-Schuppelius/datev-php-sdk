@@ -12,12 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\Data\Personal\PersonalDatum;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\Data\Personal\PersonalDatum;
-
 class PersonalDatumTest extends EntityTest {
-    public function testCreatePersonalDatum(): void {
+    public function test_create_personal_datum(): void {
         $data = [
             "id" => "pd-001",
             "first_name" => "Max",
@@ -29,7 +28,7 @@ class PersonalDatumTest extends EntityTest {
             "nationality" => "DE",
             "marital_status" => "married",
             "sex" => "male",
-            "social_security_number" => "12345678901"
+            "social_security_number" => "12345678901",
         ];
 
         $personalDatum = new PersonalDatum($data);

@@ -22,7 +22,7 @@ class EmployeesCostRateTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetEmployeesCostRate() {
+    public function test_get_employees_cost_rate() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\Law;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\Law\AccountingAreas\AccountingArea;
-use Datev\Entities\Law\AccountingAreas\AccountingAreas;
+use Datev\Entities\Law\AccountingAreas\{AccountingArea, AccountingAreas};
 use InvalidArgumentException;
 
 class AccountingAreasEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
@@ -36,7 +35,7 @@ class AccountingAreasEndpoint extends EndpointAbstract implements SearchableEndp
             }
 
             return AccountingArea::fromJson($response, self::$logger);
-        }, "Fetching AccountingArea (ID: {$id})");
+        }, "Fetching AccountingArea (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?AccountingAreas {

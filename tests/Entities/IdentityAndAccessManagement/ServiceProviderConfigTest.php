@@ -12,37 +12,37 @@ declare(strict_types=1);
 
 namespace Tests\Entities\IdentityAndAccessManagement;
 
+use Datev\Entities\IdentityAndAccessManagement\ServiceProvider\ServiceProviderConfig;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\IdentityAndAccessManagement\ServiceProvider\ServiceProviderConfig;
-
 class ServiceProviderConfigTest extends EntityTest {
-    public function testCreateServiceProviderConfig() {
+    public function test_create_service_provider_config() {
         $data = [
             "schemas" => ["urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig"],
             "documentation_uri" => "https://example.com/scim/docs",
             "patch" => [
-                "supported" => true
+                "supported" => true,
             ],
             "bulk" => [
                 "supported" => false,
                 "max_operations" => 1000,
-                "max_payload_size" => 1048576
+                "max_payload_size" => 1048576,
             ],
             "filter" => [
                 "supported" => true,
-                "max_results" => 200
+                "max_results" => 200,
             ],
             "change_password" => [
-                "supported" => false
+                "supported" => false,
             ],
             "sort" => [
-                "supported" => false
+                "supported" => false,
             ],
             "etag" => [
-                "supported" => false
-            ]
-        ];        $config = new ServiceProviderConfig($data);
+                "supported" => false,
+            ],
+        ];
+        $config = new ServiceProviderConfig($data);
 
         $this->assertInstanceOf(ServiceProviderConfig::class, $config);
         $this->assertIsArray($config->getSchemas());

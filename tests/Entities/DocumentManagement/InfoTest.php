@@ -12,20 +12,17 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Datev\Entities\DocumentManagement\Infos\{Info, InfoID, Infos};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\DocumentManagement\Infos\Info;
-use Datev\Entities\DocumentManagement\Infos\InfoID;
-use Datev\Entities\DocumentManagement\Infos\Infos;
-
 class InfoTest extends EntityTest {
-    public function testCreateInfoID(): void {
+    public function test_create_info_id(): void {
         $id = new InfoID("12345678-1234-1234-1234-123456789012");
         $this->assertInstanceOf(InfoID::class, $id);
         $this->assertEquals("12345678-1234-1234-1234-123456789012", $id->toString());
     }
 
-    public function testCreateInfo(): void {
+    public function test_create_info(): void {
         $data = [
             "id" => "12345678-1234-1234-1234-123456789012",
             "environment" => "Production",
@@ -41,7 +38,7 @@ class InfoTest extends EntityTest {
         $this->assertEquals("C:\\DATEV\\Data", $info->getDataPath());
     }
 
-    public function testCreateInfos(): void {
+    public function test_create_infos(): void {
         $data = [
             [
                 "id" => "12345678-1234-1234-1234-123456789012",

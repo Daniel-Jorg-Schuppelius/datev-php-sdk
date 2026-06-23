@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\Accounting;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\Accounting\Stocktakings\StocktakingRecord;
-use Datev\Entities\Accounting\Stocktakings\StocktakingRecords;
+use Datev\Entities\Accounting\Stocktakings\{StocktakingRecord, StocktakingRecords};
 use InvalidArgumentException;
 
 class AssetsStocktakingsEndpoint extends EndpointAbstract implements SearchableEndpointInterface {

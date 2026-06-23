@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\Law;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\Law\FeeVersions\FeeVersion;
-use Datev\Entities\Law\FeeVersions\FeeVersions;
+use Datev\Entities\Law\FeeVersions\{FeeVersion, FeeVersions};
 
 class FeeVersionsEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointPrefix = 'law/v1';

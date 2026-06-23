@@ -12,14 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Datev\Entities\OrderManagement\MonthlyValues\{MonthlyValue, MonthlyValues};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\OrderManagement\MonthlyValues\MonthlyValue;
-use Datev\Entities\OrderManagement\MonthlyValues\MonthlyValues;
-
 class MonthlyValueTest extends EntityTest {
-    
-    public function testCreateMonthlyValue(): void {
+    public function test_create_monthly_value(): void {
         $data = [
             "id" => "test-id",
             "order_id" => 2024001,
@@ -31,7 +28,7 @@ class MonthlyValueTest extends EntityTest {
             "month" => 6,
             "total_hours" => 120.5,
             "total_costs" => 15000.00,
-            "total_turnover" => 18000.00
+            "total_turnover" => 18000.00,
         ];
 
         $monthlyValue = new MonthlyValue($data);
@@ -42,20 +39,20 @@ class MonthlyValueTest extends EntityTest {
         $this->assertEquals(6, $monthlyValue->getMonth());
     }
 
-    public function testCreateMonthlyValues(): void {
+    public function test_create_monthly_values(): void {
         $data = [
             "content" => [
                 [
                     "id" => "test-id-1",
                     "order_id" => 2024001,
-                    "month" => 6
+                    "month" => 6,
                 ],
                 [
                     "id" => "test-id-2",
                     "order_id" => 2024002,
-                    "month" => 7
-                ]
-            ]
+                    "month" => 7,
+                ],
+            ],
         ];
 
         $monthlyValues = new MonthlyValues($data);

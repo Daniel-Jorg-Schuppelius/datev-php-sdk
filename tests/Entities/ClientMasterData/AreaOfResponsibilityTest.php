@@ -12,23 +12,22 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\AreaOfResponsibilities\AreaOfResponsibility;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\AreaOfResponsibilities\AreaOfResponsibility;
-
 class AreaOfResponsibilityTest extends EntityTest {
-    public function testCreateAddress() {
+    public function test_create_address() {
         $data = [
             "id" => "NA",
             "name" => "Notariatsaufgaben",
             "description" => "Zuständigkeitsbereich wird nicht genutzt.",
             "standard" => true,
-            "status" => "inactive"
+            "status" => "inactive",
         ];
 
         $areaOfResponsibility = new AreaOfResponsibility($data);
         $this->assertTrue($areaOfResponsibility->isValid());
-        $this->assertInstanceOf(AreaOfResponsibility::class, new AreaOfResponsibility());
+        $this->assertInstanceOf(AreaOfResponsibility::class, new AreaOfResponsibility);
         $this->assertInstanceOf(AreaOfResponsibility::class, $areaOfResponsibility);
         $this->assertEquals($data, $areaOfResponsibility->toArray());
     }

@@ -22,7 +22,7 @@ class ExpenseCategoriesTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetExpenseCategories() {
+    public function test_get_expense_categories() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

@@ -14,8 +14,7 @@ use APIToolkit\Contracts\Interfaces\API\ApiClientInterface;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\ClientMasterData\ClientCategories\ClientCategories;
-use Datev\Entities\ClientMasterData\ClientCategories\ClientCategory;
+use Datev\Entities\ClientMasterData\ClientCategories\{ClientCategories, ClientCategory};
 use Datev\Entities\Common\Clients\ClientID;
 use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
@@ -27,7 +26,7 @@ class ClientCategoriesEndpoint extends EndpointAbstract implements SearchableEnd
 
     protected ClientID $clientID;
 
-    public function __construct(ApiClientInterface $client, ?LoggerInterface $logger = null, ClientID $clientID = new ClientID()) {
+    public function __construct(ApiClientInterface $client, ?LoggerInterface $logger = null, ClientID $clientID = new ClientID) {
         parent::__construct($client, $logger);
         $this->clientID = $clientID;
     }

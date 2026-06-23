@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\Salaries\{Salaries, Salary};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\Salaries\Salaries;
-use Datev\Entities\Payroll\Salaries\Salary;
-
 class SalariesTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
@@ -26,16 +24,16 @@ class SalariesTest extends EntityTest {
                     "personnel_number" => "00001",
                     "current_gross_payment" => 3500.00,
                     "net_income" => 2500.00,
-                    "tax_class" => 1
+                    "tax_class" => 1,
                 ],
                 [
                     "id" => "00002",
                     "personnel_number" => "00002",
                     "current_gross_payment" => 4000.00,
                     "net_income" => 2800.00,
-                    "tax_class" => 3
-                ]
-            ]
+                    "tax_class" => 3,
+                ],
+            ],
         ];
 
         $salaries = new Salaries($data);

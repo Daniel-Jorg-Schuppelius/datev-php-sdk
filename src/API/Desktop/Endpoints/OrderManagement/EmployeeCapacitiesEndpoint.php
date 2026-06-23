@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\OrderManagement;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\OrderManagement\EmployeeCapacities\EmployeeCapacities;
-use Datev\Entities\OrderManagement\EmployeeCapacities\EmployeeCapacity;
+use Datev\Entities\OrderManagement\EmployeeCapacities\{EmployeeCapacities, EmployeeCapacity};
 
 class EmployeeCapacitiesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointPrefix = 'order-management/v1';
@@ -35,7 +34,7 @@ class EmployeeCapacitiesEndpoint extends EndpointAbstract implements SearchableE
             }
 
             return EmployeeCapacity::fromJson($response, self::$logger);
-        }, "Fetching EmployeeCapacity (ID: {$id})");
+        }, "Fetching EmployeeCapacity (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?EmployeeCapacities {

@@ -22,7 +22,7 @@ class FeePlansTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetFeePlans() {
+    public function test_get_fee_plans() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

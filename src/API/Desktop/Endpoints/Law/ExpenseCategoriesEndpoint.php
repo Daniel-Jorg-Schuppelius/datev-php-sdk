@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\Law;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\Law\ExpenseCategories\ExpenseCategory;
-use Datev\Entities\Law\ExpenseCategories\ExpenseCategories;
+use Datev\Entities\Law\ExpenseCategories\{ExpenseCategories, ExpenseCategory};
 
 class ExpenseCategoriesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointPrefix = 'law/v1';

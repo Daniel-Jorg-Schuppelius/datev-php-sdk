@@ -22,7 +22,7 @@ class DuesTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetDues() {
+    public function test_get_dues() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

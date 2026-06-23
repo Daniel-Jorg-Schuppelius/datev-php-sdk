@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\IdentityAndAccessManagement;
 
+use Datev\Entities\IdentityAndAccessManagement\Schemas\{ScimSchemaAttribute, ScimSchemaAttributes};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\IdentityAndAccessManagement\Schemas\ScimSchemaAttribute;
-use Datev\Entities\IdentityAndAccessManagement\Schemas\ScimSchemaAttributes;
-
 class ScimSchemaAttributeTest extends EntityTest {
-    public function testCreateScimSchemaAttribute(): void {
+    public function test_create_scim_schema_attribute(): void {
         $data = [
             "name" => "userName",
             "type" => "string",
@@ -27,7 +25,7 @@ class ScimSchemaAttributeTest extends EntityTest {
             "case_exact" => false,
             "mutability" => "readWrite",
             "returned" => "default",
-            "uniqueness" => "server"
+            "uniqueness" => "server",
         ];
 
         $attribute = new ScimSchemaAttribute($data);
@@ -35,16 +33,16 @@ class ScimSchemaAttributeTest extends EntityTest {
         $this->assertInstanceOf(ScimSchemaAttribute::class, $attribute);
     }
 
-    public function testCreateScimSchemaAttributes(): void {
+    public function test_create_scim_schema_attributes(): void {
         $data = [
             [
                 "name" => "userName",
-                "type" => "string"
+                "type" => "string",
             ],
             [
                 "name" => "displayName",
-                "type" => "string"
-            ]
+                "type" => "string",
+            ],
         ];
 
         $attributes = new ScimSchemaAttributes($data);

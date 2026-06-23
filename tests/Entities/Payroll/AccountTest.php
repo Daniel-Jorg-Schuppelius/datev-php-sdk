@@ -12,19 +12,16 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\Accounts\{Account, AccountID, Accounts};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\Accounts\Account;
-use Datev\Entities\Payroll\Accounts\Accounts;
-use Datev\Entities\Payroll\Accounts\AccountID;
-
 class AccountTest extends EntityTest {
-    public function testCreateAccount(): void {
+    public function test_create_account(): void {
         $data = [
             "id" => "acc-001",
             "iban" => "DE89370400440532013000",
             "bic" => "DEUTDEDB",
-            "differing_account_holder" => "Max Mustermann"
+            "differing_account_holder" => "Max Mustermann",
         ];
 
         $account = new Account($data);
@@ -35,18 +32,18 @@ class AccountTest extends EntityTest {
         $this->assertEquals("Max Mustermann", $account->getDifferingAccountHolder());
     }
 
-    public function testCreateAccounts(): void {
+    public function test_create_accounts(): void {
         $data = [
             "content" => [
                 [
                     "id" => "acc-001",
-                    "iban" => "DE89370400440532013000"
+                    "iban" => "DE89370400440532013000",
                 ],
                 [
                     "id" => "acc-002",
-                    "iban" => "DE91100000000123456789"
-                ]
-            ]
+                    "iban" => "DE91100000000123456789",
+                ],
+            ],
         ];
 
         $accounts = new Accounts($data);

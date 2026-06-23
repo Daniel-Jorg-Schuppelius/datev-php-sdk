@@ -12,24 +12,22 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Datev\Entities\DocumentManagement\Folders\{Folder, Folders};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\DocumentManagement\Folders\Folders;
-use Datev\Entities\DocumentManagement\Folders\Folder;
-
 class FoldersTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "id" => "folder-1",
-                    "name" => "2024"
+                    "name" => "2024",
                 ],
                 [
                     "id" => "folder-2",
-                    "name" => "2023"
-                ]
-            ]
+                    "name" => "2023",
+                ],
+            ],
         ];
 
         $folders = new Folders($data);

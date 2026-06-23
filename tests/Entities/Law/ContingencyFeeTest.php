@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
+use Datev\Entities\Law\ContingencyFees\{ContingencyFee, ContingencyFees};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Law\ContingencyFees\ContingencyFee;
-use Datev\Entities\Law\ContingencyFees\ContingencyFees;
-
 class ContingencyFeeTest extends EntityTest {
-    public function testCreateContingencyFee() {
+    public function test_create_contingency_fee() {
         $data = [
             "id" => "9ed35edf-dd17-456c-857d-b895a6859cf0",
             "object_type" => "Contingency-Fee-By-File",
@@ -27,11 +25,11 @@ class ContingencyFeeTest extends EntityTest {
             "document_currency" => "EUR",
             "valid_from" => "2018-02-01",
             "expense_type_id" => "a8d0e39f-a217-4744-b3a9-e253c7ac60a1",
-            "file_id" => "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+            "file_id" => "3fa85f64-5717-4562-b3fc-2c963f66afa6",
         ];
 
         $contingencyFee = new ContingencyFee($data);
-        $this->assertInstanceOf(ContingencyFee::class, new ContingencyFee());
+        $this->assertInstanceOf(ContingencyFee::class, new ContingencyFee);
         $this->assertInstanceOf(ContingencyFee::class, $contingencyFee);
         $this->assertNotNull($contingencyFee->getID());
         $this->assertEquals("Contingency-Fee-By-File", $contingencyFee->getObjectType());
@@ -40,20 +38,20 @@ class ContingencyFeeTest extends EntityTest {
         $this->assertEquals("Sondervereinbarung", $contingencyFee->getNote());
     }
 
-    public function testCreateContingencyFees() {
+    public function test_create_contingency_fees() {
         $data = [
             "content" => [
                 [
                     "id" => "9ed35edf-dd17-456c-857d-b895a6859cf0",
                     "object_type" => "Contingency-Fee-By-File",
-                    "unit_rate" => 125.00
+                    "unit_rate" => 125.00,
                 ],
                 [
                     "id" => "f8fad058-bdba-4313-85e1-ff99f57da9e0",
                     "object_type" => "Contingency-Fee-By-Client",
-                    "unit_rate" => 150.00
-                ]
-            ]
+                    "unit_rate" => 150.00,
+                ],
+            ],
         ];
 
         $contingencyFees = new ContingencyFees($data);

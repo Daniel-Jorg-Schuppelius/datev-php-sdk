@@ -11,8 +11,7 @@
 namespace Tests\Endpoints\ClientMasterData;
 
 use Datev\API\Desktop\Endpoints\ClientMasterData\ClientsEndpoint;
-use Datev\Entities\ClientMasterData\Clients\Client;
-use Datev\Entities\ClientMasterData\Clients\Clients;
+use Datev\Entities\ClientMasterData\Clients\{Client, Clients};
 use Tests\Contracts\EndpointTest;
 
 class ClientsTest extends EndpointTest {
@@ -24,7 +23,7 @@ class ClientsTest extends EndpointTest {
         return new ClientsEndpoint($this->client, self::getLogger());
     }
 
-    public function testGetClients(): void {
+    public function test_get_clients(): void {
         $this->endpoint = $this->createEndpoint();
 
         $clients = $this->endpoint->search();

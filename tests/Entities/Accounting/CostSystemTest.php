@@ -12,23 +12,21 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Datev\Entities\Accounting\CostSystems\{CostSystem, CostSystems};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Accounting\CostSystems\CostSystem;
-use Datev\Entities\Accounting\CostSystems\CostSystems;
-
 class CostSystemTest extends EntityTest {
-    public function testCreateCostSystem() {
+    public function test_create_cost_system() {
         $data = [
             "id" => 1,
             "caption" => "Standard-Kostenrechnung",
             "cost_system_type" => "standard",
             "cost_length" => 5,
-            "is_active" => true
+            "is_active" => true,
         ];
 
         $costSystem = new CostSystem($data);
-        $this->assertInstanceOf(CostSystem::class, new CostSystem());
+        $this->assertInstanceOf(CostSystem::class, new CostSystem);
         $this->assertInstanceOf(CostSystem::class, $costSystem);
         $this->assertEquals("Standard-Kostenrechnung", $costSystem->getCaption());
         $this->assertEquals("standard", $costSystem->getCostSystemType());
@@ -36,20 +34,20 @@ class CostSystemTest extends EntityTest {
         $this->assertTrue($costSystem->isActive());
     }
 
-    public function testCreateCostSystems() {
+    public function test_create_cost_systems() {
         $data = [
             "content" => [
                 [
                     "id" => 1,
                     "caption" => "KoRe 1",
-                    "is_active" => true
+                    "is_active" => true,
                 ],
                 [
                     "id" => 2,
                     "caption" => "KoRe 2",
-                    "is_active" => false
-                ]
-            ]
+                    "is_active" => false,
+                ],
+            ],
         ];
 
         $costSystems = new CostSystems($data);

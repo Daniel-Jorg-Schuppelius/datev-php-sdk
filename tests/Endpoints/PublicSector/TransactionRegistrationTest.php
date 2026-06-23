@@ -22,7 +22,7 @@ class TransactionRegistrationTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetTransactionRegistration() {
+    public function test_get_transaction_registration() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

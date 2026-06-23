@@ -12,37 +12,35 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
+use Datev\Entities\PublicSector\TransactionCommunications\{TransactionCommunication, TransactionCommunications};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\PublicSector\TransactionCommunications\TransactionCommunication;
-use Datev\Entities\PublicSector\TransactionCommunications\TransactionCommunications;
-
 class TransactionCommunicationTest extends EntityTest {
-    public function testCreateTransactionCommunication() {
+    public function test_create_transaction_communication() {
         $data = [
             "id" => 12345,
-            "status" => "sent"
+            "status" => "sent",
         ];
 
         $comm = new TransactionCommunication($data);
-        $this->assertInstanceOf(TransactionCommunication::class, new TransactionCommunication());
+        $this->assertInstanceOf(TransactionCommunication::class, new TransactionCommunication);
         $this->assertInstanceOf(TransactionCommunication::class, $comm);
         $this->assertEquals(12345, $comm->getID());
         $this->assertEquals("sent", $comm->getStatus());
     }
 
-    public function testCreateTransactionCommunications() {
+    public function test_create_transaction_communications() {
         $data = [
             "content" => [
                 [
                     "id" => 1,
-                    "status" => "sent"
+                    "status" => "sent",
                 ],
                 [
                     "id" => 2,
-                    "status" => "pending"
-                ]
-            ]
+                    "status" => "pending",
+                ],
+            ],
         ];
 
         $comms = new TransactionCommunications($data);

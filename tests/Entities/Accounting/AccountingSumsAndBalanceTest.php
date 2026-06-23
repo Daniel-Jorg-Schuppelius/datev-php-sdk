@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Datev\Entities\Accounting\AccountingSumsAndBalances\{AccountingSumsAndBalance, AccountingSumsAndBalances};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Accounting\AccountingSumsAndBalances\AccountingSumsAndBalance;
-use Datev\Entities\Accounting\AccountingSumsAndBalances\AccountingSumsAndBalances;
-
 class AccountingSumsAndBalanceTest extends EntityTest {
-    public function testCreateAccountingSumsAndBalance() {
+    public function test_create_accounting_sums_and_balance() {
         $data = [
             "id" => "1200-2024",
             "account_number" => 1200,
@@ -28,11 +26,11 @@ class AccountingSumsAndBalanceTest extends EntityTest {
             "balance_debit_credit_identifier" => "D",
             "caption" => "Bank",
             "opening_balance_sheet" => 5000.00,
-            "opening_balance_sheet_debit_credit_identifier" => "D"
+            "opening_balance_sheet_debit_credit_identifier" => "D",
         ];
 
         $sumsAndBalance = new AccountingSumsAndBalance($data);
-        $this->assertInstanceOf(AccountingSumsAndBalance::class, new AccountingSumsAndBalance());
+        $this->assertInstanceOf(AccountingSumsAndBalance::class, new AccountingSumsAndBalance);
         $this->assertInstanceOf(AccountingSumsAndBalance::class, $sumsAndBalance);
         $this->assertNotNull($sumsAndBalance->getID());
         $this->assertEquals(1200, $sumsAndBalance->getAccountNumber());
@@ -43,20 +41,20 @@ class AccountingSumsAndBalanceTest extends EntityTest {
         $this->assertEquals("Bank", $sumsAndBalance->getCaption());
     }
 
-    public function testCreateAccountingSumsAndBalances() {
+    public function test_create_accounting_sums_and_balances() {
         $data = [
             "content" => [
                 [
                     "id" => "1200-2024",
                     "account_number" => 1200,
-                    "caption" => "Bank"
+                    "caption" => "Bank",
                 ],
                 [
                     "id" => "1400-2024",
                     "account_number" => 1400,
-                    "caption" => "Forderungen"
-                ]
-            ]
+                    "caption" => "Forderungen",
+                ],
+            ],
         ];
 
         $sumsAndBalances = new AccountingSumsAndBalances($data);

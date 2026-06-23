@@ -12,12 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common;
 
+use Datev\Entities\Common\OrganizationID;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Common\OrganizationID;
-
 class OrganizationIDTest extends EntityTest {
-    public function testCreateOrganizationID(): void {
+    public function test_create_organization_id(): void {
         $organizationID = new OrganizationID("550e8400-e29b-41d4-a716-446655440002");
 
         $this->assertInstanceOf(OrganizationID::class, $organizationID);

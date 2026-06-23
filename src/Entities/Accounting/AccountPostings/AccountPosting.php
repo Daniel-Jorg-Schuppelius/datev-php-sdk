@@ -18,17 +18,12 @@ use CommonToolkit\Enums\CurrencyCode;
 use DateTime;
 use Datev\Entities\Accounting\AdditionalInformations\AdditionalInformations;
 use Datev\Entities\Accounting\AdvancePayments\AdvancePayment;
-use Datev\Entities\Accounting\CostCenters\ID\CostCenterIDOne;
-use Datev\Entities\Accounting\CostCenters\ID\CostCenterIDTwo;
+use Datev\Entities\Accounting\CostCenters\ID\{CostCenterIDOne, CostCenterIDTwo};
 use Datev\Entities\Accounting\OpenItems\OpenItem;
 use Datev\Entities\Accounting\Sequences\SequenceID;
-use Datev\Entities\Common\VAT\EuVatID;
-use Datev\Entities\Common\VAT\EuVatID4CountryOfOrigin;
+use Datev\Entities\Common\VAT\{EuVatID, EuVatID4CountryOfOrigin};
 use Datev\Entities\DocumentManagement\Documents\DocumentID;
-use Datev\Enums\AccountingReason;
-use Datev\Enums\AccountingRecordType;
-use Datev\Enums\CashDiscountType;
-use Datev\Enums\TaxationMethod;
+use Datev\Enums\{AccountingReason, AccountingRecordType, CashDiscountType, TaxationMethod};
 use Psr\Log\LoggerInterface;
 
 class AccountPosting extends NamedEntity implements IdentifiableNamedEntityInterface {

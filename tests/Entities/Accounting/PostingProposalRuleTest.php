@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Datev\Entities\Accounting\PostingProposalRules\{PostingProposalRule, PostingProposalRules};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Accounting\PostingProposalRules\PostingProposalRule;
-use Datev\Entities\Accounting\PostingProposalRules\PostingProposalRules;
-
 class PostingProposalRuleTest extends EntityTest {
-    public function testCreatePostingProposalRule() {
+    public function test_create_posting_proposal_rule() {
         $data = [
             "id" => 1,
             "account_number" => 4400,
@@ -28,11 +26,11 @@ class PostingProposalRuleTest extends EntityTest {
             "cost_center_2" => null,
             "business_partner_name" => "Kunde GmbH",
             "business_partner_number" => "K-001",
-            "iban" => "DE89370400440532013000"
+            "iban" => "DE89370400440532013000",
         ];
 
         $rule = new PostingProposalRule($data);
-        $this->assertInstanceOf(PostingProposalRule::class, new PostingProposalRule());
+        $this->assertInstanceOf(PostingProposalRule::class, new PostingProposalRule);
         $this->assertInstanceOf(PostingProposalRule::class, $rule);
         $this->assertEquals(4400, $rule->getAccountNumber());
         $this->assertEquals(1800, $rule->getContraAccountNumber());
@@ -40,20 +38,20 @@ class PostingProposalRuleTest extends EntityTest {
         $this->assertEquals("10000", $rule->getCostCenter1());
     }
 
-    public function testCreatePostingProposalRules() {
+    public function test_create_posting_proposal_rules() {
         $data = [
             "content" => [
                 [
                     "id" => 1,
                     "account_number" => 4400,
-                    "posting_description" => "Regel 1"
+                    "posting_description" => "Regel 1",
                 ],
                 [
                     "id" => 2,
                     "account_number" => 4300,
-                    "posting_description" => "Regel 2"
-                ]
-            ]
+                    "posting_description" => "Regel 2",
+                ],
+            ],
         ];
 
         $rules = new PostingProposalRules($data);

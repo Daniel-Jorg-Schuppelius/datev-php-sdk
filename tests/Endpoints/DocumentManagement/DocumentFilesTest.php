@@ -22,7 +22,7 @@ class DocumentFilesTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetDocumentFiles() {
+    public function test_get_document_files() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

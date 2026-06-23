@@ -12,26 +12,24 @@ declare(strict_types=1);
 
 namespace Tests\Entities\IdentityAndAccessManagement;
 
+use Datev\Entities\IdentityAndAccessManagement\Users\{User, Users};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\IdentityAndAccessManagement\Users\Users;
-use Datev\Entities\IdentityAndAccessManagement\Users\User;
-
 class UsersTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "id" => "usr-1",
                     "display_name" => "Administrator",
-                    "active" => true
+                    "active" => true,
                 ],
                 [
                     "id" => "usr-2",
                     "display_name" => "User 1",
-                    "active" => true
-                ]
-            ]
+                    "active" => true,
+                ],
+            ],
         ];
 
         $users = new Users($data);

@@ -12,28 +12,26 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Datev\Entities\OrderManagement\EmployeesQualification\{EmployeeQualification, EmployeesQualification};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\OrderManagement\EmployeesQualification\EmployeesQualification;
-use Datev\Entities\OrderManagement\EmployeesQualification\EmployeeQualification;
-
 class EmployeesQualificationTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "id" => "550e8400-e29b-41d4-a716-446655440000",
                     "employee_number" => 1001,
                     "qualification_abbreviation" => "PHP",
-                    "qualification_short_name" => "PHP Developer"
+                    "qualification_short_name" => "PHP Developer",
                 ],
                 [
                     "id" => "550e8400-e29b-41d4-a716-446655440001",
                     "employee_number" => 1002,
                     "qualification_abbreviation" => "JS",
-                    "qualification_short_name" => "JavaScript Developer"
-                ]
-            ]
+                    "qualification_short_name" => "JavaScript Developer",
+                ],
+            ],
         ];
 
         $qualifications = new EmployeesQualification($data);

@@ -12,19 +12,17 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
+use Datev\Entities\Law\PartyRoles\{PartyRole, PartyRoles};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Law\PartyRoles\PartyRole;
-use Datev\Entities\Law\PartyRoles\PartyRoles;
-
 class PartyRoleTest extends EntityTest {
-    public function testCreatePartyRole(): void {
+    public function test_create_party_role(): void {
         $data = [
             "id" => "test-id",
             "number" => 1,
             "type" => "plaintiff",
             "short_name" => "KL",
-            "name" => "Kläger"
+            "name" => "Kläger",
         ];
 
         $partyRole = new PartyRole($data);
@@ -36,20 +34,20 @@ class PartyRoleTest extends EntityTest {
         $this->assertEquals("Kläger", $partyRole->getName());
     }
 
-    public function testCreatePartyRoles(): void {
+    public function test_create_party_roles(): void {
         $data = [
             "content" => [
                 [
                     "id" => "test-id-1",
                     "short_name" => "KL",
-                    "name" => "Kläger"
+                    "name" => "Kläger",
                 ],
                 [
                     "id" => "test-id-2",
                     "short_name" => "BK",
-                    "name" => "Beklagter"
-                ]
-            ]
+                    "name" => "Beklagter",
+                ],
+            ],
         ];
 
         $partyRoles = new PartyRoles($data);

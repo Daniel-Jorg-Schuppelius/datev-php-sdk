@@ -12,35 +12,35 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\CostCenters\{CostCenter, CostCenters};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\CostCenters\CostCenter;
-use Datev\Entities\Payroll\CostCenters\CostCenters;
-
 class CostCenterTest extends EntityTest {
-    public function testCreateCostCenter() {
+    public function test_create_cost_center() {
         $data = [
             "id" => "100",
-            "name" => "Verwaltung"
-        ];        $costCenter = new CostCenter($data);
+            "name" => "Verwaltung",
+        ];
+        $costCenter = new CostCenter($data);
 
         $this->assertInstanceOf(CostCenter::class, $costCenter);
         $this->assertEquals("Verwaltung", $costCenter->getName());
     }
 
-    public function testCreateCostCenters() {
+    public function test_create_cost_centers() {
         $data = [
             "content" => [
                 [
                     "id" => "100",
-                    "name" => "Verwaltung"
+                    "name" => "Verwaltung",
                 ],
                 [
                     "id" => "200",
-                    "name" => "Produktion"
-                ]
-            ]
-        ];        $costCenters = new CostCenters($data);
+                    "name" => "Produktion",
+                ],
+            ],
+        ];
+        $costCenters = new CostCenters($data);
 
         $this->assertInstanceOf(CostCenters::class, $costCenters);
         $this->assertCount(2, $costCenters->getValues());

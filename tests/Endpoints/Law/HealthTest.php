@@ -25,9 +25,9 @@ class HealthTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
-            'status' => 'healthy'
+            'status' => 'healthy',
         ];
 
         $health = Health::fromJson(json_encode($data));
@@ -36,7 +36,7 @@ class HealthTest extends EndpointTest {
         $this->assertEquals('healthy', $health->getStatus());
     }
 
-    public function testGetHealth() {
+    public function test_get_health() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

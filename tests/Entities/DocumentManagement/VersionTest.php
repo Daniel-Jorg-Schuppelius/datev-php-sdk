@@ -12,16 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Datev\Entities\DocumentManagement\Versions\{Version, Versions};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\DocumentManagement\Versions\Version;
-use Datev\Entities\DocumentManagement\Versions\Versions;
-
 class VersionTest extends EntityTest {
-    public function testCreateVersion(): void {
+    public function test_create_version(): void {
         $data = [
             "name" => "Initiale Version",
-            "number" => "1.0"
+            "number" => "1.0",
         ];
 
         $version = new Version($data);
@@ -31,18 +29,18 @@ class VersionTest extends EntityTest {
         $this->assertEquals("1.0", $version->getNumber());
     }
 
-    public function testCreateVersions(): void {
+    public function test_create_versions(): void {
         $data = [
             "content" => [
                 [
                     "name" => "Initiale Version",
-                    "number" => "1.0"
+                    "number" => "1.0",
                 ],
                 [
                     "name" => "Aktualisierte Version",
-                    "number" => "2.0"
-                ]
-            ]
+                    "number" => "2.0",
+                ],
+            ],
         ];
 
         $versions = new Versions($data);

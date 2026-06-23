@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Datev\Entities\OrderManagement\EmployeesCostRate\{EmployeeCostRate, EmployeesCostRate};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\OrderManagement\EmployeesCostRate\EmployeeCostRate;
-use Datev\Entities\OrderManagement\EmployeesCostRate\EmployeesCostRate;
-
 class EmployeeCostRateTest extends EntityTest {
-    public function testCreateEmployeeCostRate() {
+    public function test_create_employee_cost_rate() {
         $data = [
             "id" => "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
             "employee_id" => "b2c3d4e5-f6a7-8901-bcde-f12345678901",
@@ -28,8 +26,9 @@ class EmployeeCostRateTest extends EntityTest {
             "cost_rate_date_to" => "2025-12-31",
             "cost_rate_1" => 75.00,
             "cost_rate_2" => 85.00,
-            "cost_rate_active" => true
-        ];        $costRate = new EmployeeCostRate($data);
+            "cost_rate_active" => true,
+        ];
+        $costRate = new EmployeeCostRate($data);
 
         $this->assertInstanceOf(EmployeeCostRate::class, $costRate);
         $this->assertEquals(100, $costRate->getEmployeeNumber());
@@ -38,23 +37,24 @@ class EmployeeCostRateTest extends EntityTest {
         $this->assertEquals(85.00, $costRate->getCostRate2());
     }
 
-    public function testCreateEmployeesCostRate() {
+    public function test_create_employees_cost_rate() {
         $data = [
             "content" => [
                 [
                     "id" => "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
                     "employee_number" => 100,
                     "cost_rate_number" => 1,
-                    "cost_rate_1" => 75.00
+                    "cost_rate_1" => 75.00,
                 ],
                 [
                     "id" => "b2c3d4e5-f6a7-8901-bcde-f12345678901",
                     "employee_number" => 101,
                     "cost_rate_number" => 2,
-                    "cost_rate_1" => 80.00
-                ]
-            ]
-        ];        $costRates = new EmployeesCostRate($data);
+                    "cost_rate_1" => 80.00,
+                ],
+            ],
+        ];
+        $costRates = new EmployeesCostRate($data);
 
         $this->assertInstanceOf(EmployeesCostRate::class, $costRates);
         $this->assertCount(2, $costRates->getValues());

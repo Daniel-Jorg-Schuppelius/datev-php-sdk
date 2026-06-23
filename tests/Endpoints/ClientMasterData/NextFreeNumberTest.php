@@ -24,7 +24,7 @@ class NextFreeNumberTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetNextFreeNumber() {
+    public function test_get_next_free_number() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

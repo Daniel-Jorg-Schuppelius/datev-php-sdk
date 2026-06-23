@@ -22,7 +22,7 @@ class OrderStateWorkTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetOrderStateWork() {
+    public function test_get_order_state_work() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

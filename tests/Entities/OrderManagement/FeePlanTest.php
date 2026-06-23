@@ -12,21 +12,18 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Datev\Entities\OrderManagement\FeePlans\{FeePlan, FeePlans};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\OrderManagement\FeePlans\FeePlan;
-use Datev\Entities\OrderManagement\FeePlans\FeePlans;
-
 class FeePlanTest extends EntityTest {
-    
-    public function testCreateFeePlan(): void {
+    public function test_create_fee_plan(): void {
         $data = [
             "id" => "test-id",
             "fee_plan_number" => 1,
             "fee_plan_name" => "Standardgebührenplan",
             "fee_plan_date_from" => "2024-01-01",
             "fee_plan_date_to" => "2024-12-31",
-            "fee_plan_active" => true
+            "fee_plan_active" => true,
         ];
 
         $feePlan = new FeePlan($data);
@@ -36,20 +33,20 @@ class FeePlanTest extends EntityTest {
         $this->assertEquals("Standardgebührenplan", $feePlan->getFeePlanName());
     }
 
-    public function testCreateFeePlans(): void {
+    public function test_create_fee_plans(): void {
         $data = [
             "content" => [
                 [
                     "id" => "test-id-1",
                     "fee_plan_number" => 1,
-                    "fee_plan_name" => "Plan A"
+                    "fee_plan_name" => "Plan A",
                 ],
                 [
                     "id" => "test-id-2",
                     "fee_plan_number" => 2,
-                    "fee_plan_name" => "Plan B"
-                ]
-            ]
+                    "fee_plan_name" => "Plan B",
+                ],
+            ],
         ];
 
         $feePlans = new FeePlans($data);

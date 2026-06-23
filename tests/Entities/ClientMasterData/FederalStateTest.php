@@ -12,28 +12,26 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\FederalStates\{FederalState, FederalStates};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\FederalStates\FederalState;
-use Datev\Entities\ClientMasterData\FederalStates\FederalStates;
-
 class FederalStateTest extends EntityTest {
-    public function testCreateFederalState() {
+    public function test_create_federal_state() {
         $data = [
             "value" => "BY",
-            "valid_from" => "2024-01-01"
+            "valid_from" => "2024-01-01",
         ];
 
         $state = new FederalState($data);
         $this->assertInstanceOf(FederalState::class, $state);
     }
 
-    public function testCreateFederalStates() {
+    public function test_create_federal_states() {
         $data = [
             [
                 "value" => "BY",
-                "valid_from" => "2024-01-01"
-            ]
+                "valid_from" => "2024-01-01",
+            ],
         ];
 
         $states = new FederalStates($data);

@@ -12,12 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common\VAT;
 
+use Datev\Entities\Common\VAT\EuVatID;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Common\VAT\EuVatID;
-
 class EuVatIDTest extends EntityTest {
-    public function testCreateEuVatID(): void {
+    public function test_create_eu_vat_id(): void {
         $euVatID = new EuVatID("DE123456789");
 
         $this->assertInstanceOf(EuVatID::class, $euVatID);

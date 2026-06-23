@@ -12,26 +12,24 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Datev\Entities\Accounting\VariousAddresses\{VariousAddress, VariousAddresses};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Accounting\VariousAddresses\VariousAddresses;
-use Datev\Entities\Accounting\VariousAddresses\VariousAddress;
-
 class VariousAddressesTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "id" => "va-1",
                     "account_number" => 90001,
-                    "caption" => "Sonstige Adresse 1"
+                    "caption" => "Sonstige Adresse 1",
                 ],
                 [
                     "id" => "va-2",
                     "account_number" => 90002,
-                    "caption" => "Sonstige Adresse 2"
-                ]
-            ]
+                    "caption" => "Sonstige Adresse 2",
+                ],
+            ],
         ];
 
         $addresses = new VariousAddresses($data);

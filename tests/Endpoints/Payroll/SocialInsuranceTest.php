@@ -13,8 +13,7 @@ declare(strict_types=1);
 namespace Tests\Endpoints\Payroll;
 
 use Datev\API\Desktop\Endpoints\Payroll\SocialInsuranceEndpoint;
-use Datev\Entities\Payroll\Insurances\Social\SocialInsurance;
-use Datev\Entities\Payroll\Insurances\Social\SocialInsurances;
+use Datev\Entities\Payroll\Insurances\Social\{SocialInsurance, SocialInsurances};
 use Tests\Contracts\EndpointTest;
 
 class SocialInsuranceTest extends EndpointTest {
@@ -25,21 +24,21 @@ class SocialInsuranceTest extends EndpointTest {
         return new SocialInsuranceEndpoint($this->client, self::getLogger());
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
             'id' => '12345',
             'insurance_number' => '12345678A',
-            'insurance_type' => 'Gesetzlich'
+            'insurance_type' => 'Gesetzlich',
         ];
 
         $insurance = SocialInsurance::fromJson(json_encode($data));
         $this->assertInstanceOf(SocialInsurance::class, $insurance);
     }
 
-    public function testJsonSerializeCollection() {
+    public function test_json_serialize_collection() {
         $data = [
             ['id' => '12345', 'insurance_number' => '12345678A'],
-            ['id' => '12346', 'insurance_number' => '12345679B']
+            ['id' => '12346', 'insurance_number' => '12345679B'],
         ];
 
         $insurances = SocialInsurances::fromJson(json_encode($data));
@@ -47,7 +46,7 @@ class SocialInsuranceTest extends EndpointTest {
         $this->assertCount(2, $insurances->getValues());
     }
 
-    public function testGetSocialInsurances() {
+    public function test_get_social_insurances() {
         $this->endpoint = $this->createEndpoint();
         $insurances = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

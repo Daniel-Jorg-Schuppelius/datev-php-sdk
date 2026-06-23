@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\IdentityAndAccessManagement;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\IdentityAndAccessManagement\Users\User;
-use Datev\Entities\IdentityAndAccessManagement\Users\Users;
+use Datev\Entities\IdentityAndAccessManagement\Users\{User, Users};
 use InvalidArgumentException;
 
 class UsersEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
@@ -36,7 +35,7 @@ class UsersEndpoint extends EndpointAbstract implements SearchableEndpointInterf
             }
 
             return User::fromJson($response, self::$logger);
-        }, "Fetching User (ID: {$id})");
+        }, "Fetching User (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?Users {

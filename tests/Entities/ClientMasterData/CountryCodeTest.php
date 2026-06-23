@@ -12,16 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\CountryCodes\{CountryCode, CountryCodes};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\CountryCodes\CountryCode;
-use Datev\Entities\ClientMasterData\CountryCodes\CountryCodes;
-
 class CountryCodeTest extends EntityTest {
-    public function testCreateCountryCode() {
+    public function test_create_country_code() {
         $data = [
             "id" => "DE",
-            "name" => "Germany"
+            "name" => "Germany",
         ];
 
         $code = new CountryCode($data);
@@ -31,16 +29,16 @@ class CountryCodeTest extends EntityTest {
         $this->assertEquals("Germany", $code->getName());
     }
 
-    public function testCreateCountryCodes() {
+    public function test_create_country_codes() {
         $data = [
             [
                 "id" => "DE",
-                "name" => "Germany"
+                "name" => "Germany",
             ],
             [
                 "id" => "AT",
-                "name" => "Austria"
-            ]
+                "name" => "Austria",
+            ],
         ];
 
         $codes = new CountryCodes($data);

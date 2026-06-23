@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Datev\Entities\Accounting\InternalCostServices\{InternalCostService, InternalCostServices};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Accounting\InternalCostServices\InternalCostService;
-use Datev\Entities\Accounting\InternalCostServices\InternalCostServices;
-
 class InternalCostServiceTest extends EntityTest {
-    public function testCreateInternalCostService() {
+    public function test_create_internal_cost_service() {
         $data = [
             "amount" => 1500.00,
             "cost_center_from" => "10000",
@@ -29,11 +27,11 @@ class InternalCostServiceTest extends EntityTest {
             "date" => "2024-06-15",
             "kost_quantity" => 10.5,
             "month" => "2024-06-01",
-            "text" => "Interne Verrechnung IT"
+            "text" => "Interne Verrechnung IT",
         ];
 
         $costService = new InternalCostService($data);
-        $this->assertInstanceOf(InternalCostService::class, new InternalCostService());
+        $this->assertInstanceOf(InternalCostService::class, new InternalCostService);
         $this->assertInstanceOf(InternalCostService::class, $costService);
         $this->assertEquals(1500.00, $costService->getAmount());
         $this->assertEquals("10000", $costService->getCostCenterFrom());
@@ -41,20 +39,20 @@ class InternalCostServiceTest extends EntityTest {
         $this->assertEquals("Rechnung 2024-001", $costService->getDocumentField1());
     }
 
-    public function testCreateInternalCostServices() {
+    public function test_create_internal_cost_services() {
         $data = [
             "content" => [
                 [
                     "amount" => 1500.00,
                     "cost_center_from" => "10000",
-                    "cost_center_to" => "20000"
+                    "cost_center_to" => "20000",
                 ],
                 [
                     "amount" => 2500.00,
                     "cost_center_from" => "20000",
-                    "cost_center_to" => "30000"
-                ]
-            ]
+                    "cost_center_to" => "30000",
+                ],
+            ],
         ];
 
         $costServices = new InternalCostServices($data);

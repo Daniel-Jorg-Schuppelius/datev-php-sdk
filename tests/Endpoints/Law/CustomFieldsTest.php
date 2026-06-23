@@ -22,7 +22,7 @@ class CustomFieldsTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetCustomFields() {
+    public function test_get_custom_fields() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

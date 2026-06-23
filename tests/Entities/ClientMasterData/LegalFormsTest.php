@@ -12,26 +12,24 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\LegalForms\{LegalForm, LegalForms};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\LegalForms\LegalForms;
-use Datev\Entities\ClientMasterData\LegalForms\LegalForm;
-
 class LegalFormsTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "id" => "lf-1",
                     "short_name" => "GmbH",
-                    "long_name" => "Gesellschaft mit beschränkter Haftung"
+                    "long_name" => "Gesellschaft mit beschränkter Haftung",
                 ],
                 [
                     "id" => "lf-2",
                     "short_name" => "AG",
-                    "long_name" => "Aktiengesellschaft"
-                ]
-            ]
+                    "long_name" => "Aktiengesellschaft",
+                ],
+            ],
         ];
 
         $legalForms = new LegalForms($data);

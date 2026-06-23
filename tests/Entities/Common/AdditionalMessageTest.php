@@ -12,36 +12,33 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common;
 
+use Datev\Entities\Common\AdditionalMessages\{AdditionalMessage, AdditionalMessageID, AdditionalMessages};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Common\AdditionalMessages\AdditionalMessage;
-use Datev\Entities\Common\AdditionalMessages\AdditionalMessageID;
-use Datev\Entities\Common\AdditionalMessages\AdditionalMessages;
-
 class AdditionalMessageTest extends EntityTest {
-    public function testCreateAdditionalMessageID() {
+    public function test_create_additional_message_id() {
         $id = new AdditionalMessageID("12345678-1234-1234-1234-123456789012");
         $this->assertInstanceOf(AdditionalMessageID::class, $id);
         $this->assertEquals("12345678-1234-1234-1234-123456789012", $id->toString());
     }
 
-    public function testCreateAdditionalMessage() {
+    public function test_create_additional_message() {
         $data = [
             "id" => "12345678-1234-1234-1234-123456789012",
             "description" => "Test message",
-            "severity" => "info"
+            "severity" => "info",
         ];
 
         $message = new AdditionalMessage($data);
         $this->assertInstanceOf(AdditionalMessage::class, $message);
     }
 
-    public function testCreateAdditionalMessages() {
+    public function test_create_additional_messages() {
         $data = [
             [
                 "id" => "12345678-1234-1234-1234-123456789012",
-                "description" => "Test message"
-            ]
+                "description" => "Test message",
+            ],
         ];
 
         $messages = new AdditionalMessages($data);

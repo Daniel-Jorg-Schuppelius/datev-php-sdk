@@ -13,8 +13,7 @@ declare(strict_types=1);
 namespace Tests\Endpoints\Payroll;
 
 use Datev\API\Desktop\Endpoints\Payroll\CalendarRecordsEndpoint;
-use Datev\Entities\Payroll\CalendarRecords\CalendarRecord;
-use Datev\Entities\Payroll\CalendarRecords\CalendarRecords;
+use Datev\Entities\Payroll\CalendarRecords\{CalendarRecord, CalendarRecords};
 use Tests\Contracts\EndpointTest;
 
 class CalendarRecordsTest extends EndpointTest {
@@ -25,21 +24,21 @@ class CalendarRecordsTest extends EndpointTest {
         return new CalendarRecordsEndpoint($this->client, self::getLogger());
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
             'id' => '12345',
             'date' => '2025-01-15',
-            'type' => 'Urlaub'
+            'type' => 'Urlaub',
         ];
 
         $record = CalendarRecord::fromJson(json_encode($data));
         $this->assertInstanceOf(CalendarRecord::class, $record);
     }
 
-    public function testJsonSerializeCollection() {
+    public function test_json_serialize_collection() {
         $data = [
             ['id' => '12345', 'date' => '2025-01-15'],
-            ['id' => '12346', 'date' => '2025-01-16']
+            ['id' => '12346', 'date' => '2025-01-16'],
         ];
 
         $records = CalendarRecords::fromJson(json_encode($data));
@@ -47,7 +46,7 @@ class CalendarRecordsTest extends EndpointTest {
         $this->assertCount(2, $records->getValues());
     }
 
-    public function testGetCalendarRecords() {
+    public function test_get_calendar_records() {
         $this->endpoint = $this->createEndpoint();
         $records = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

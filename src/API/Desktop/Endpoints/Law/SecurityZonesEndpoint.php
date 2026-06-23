@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\Law;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\Law\SecurityZones\SecurityZone;
-use Datev\Entities\Law\SecurityZones\SecurityZones;
+use Datev\Entities\Law\SecurityZones\{SecurityZone, SecurityZones};
 use InvalidArgumentException;
 
 class SecurityZonesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
@@ -36,7 +35,7 @@ class SecurityZonesEndpoint extends EndpointAbstract implements SearchableEndpoi
             }
 
             return SecurityZone::fromJson($response, self::$logger);
-        }, "Fetching SecurityZone (ID: {$id})");
+        }, "Fetching SecurityZone (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?SecurityZones {

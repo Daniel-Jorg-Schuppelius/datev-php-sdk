@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Datev\Entities\Accounting\Stocktakings\{StocktakingRecord, StocktakingRecords};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Accounting\Stocktakings\StocktakingRecord;
-use Datev\Entities\Accounting\Stocktakings\StocktakingRecords;
-
 class StocktakingRecordTest extends EntityTest {
-    public function testCreateStocktakingRecord() {
+    public function test_create_stocktaking_record() {
         $data = [
             "id" => "INV-2024-001",
             "asset_number" => 1001,
@@ -34,11 +32,11 @@ class StocktakingRecordTest extends EntityTest {
             "stocktaking_date" => "2024-12-01",
             "unit" => "Stück",
             "serial_number" => "DELL-XPS-2024-ABC123",
-            "location" => "Büro 101"
+            "location" => "Büro 101",
         ];
 
         $stocktakingRecord = new StocktakingRecord($data);
-        $this->assertInstanceOf(StocktakingRecord::class, new StocktakingRecord());
+        $this->assertInstanceOf(StocktakingRecord::class, new StocktakingRecord);
         $this->assertInstanceOf(StocktakingRecord::class, $stocktakingRecord);
         $this->assertNotNull($stocktakingRecord->getID());
         $this->assertEquals(1001, $stocktakingRecord->getAssetNumber());
@@ -47,20 +45,20 @@ class StocktakingRecordTest extends EntityTest {
         $this->assertEquals(1599.00, $stocktakingRecord->getPrice());
     }
 
-    public function testCreateStocktakingRecords() {
+    public function test_create_stocktaking_records() {
         $data = [
             "content" => [
                 [
                     "id" => "INV-2024-001",
                     "inventory_number" => "PC-2024-001",
-                    "inventory_name" => "Laptop"
+                    "inventory_name" => "Laptop",
                 ],
                 [
                     "id" => "INV-2024-002",
                     "inventory_number" => "PC-2024-002",
-                    "inventory_name" => "Monitor"
-                ]
-            ]
+                    "inventory_name" => "Monitor",
+                ],
+            ],
         ];
 
         $stocktakingRecords = new StocktakingRecords($data);

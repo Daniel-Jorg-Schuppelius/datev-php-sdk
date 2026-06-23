@@ -24,7 +24,7 @@ class RelationshipTypesTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetRelationshipTypes() {
+    public function test_get_relationship_types() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

@@ -14,9 +14,9 @@ namespace Datev\Entities\OrderManagement\ExpensePostings;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Entities\GUID;
+use DateTime;
 use Datev\Entities\OrderManagement\Orders\OrderID;
 use Datev\Entities\OrderManagement\Suborders\SuborderID;
-use DateTime;
 use Psr\Log\LoggerInterface;
 
 class ExpensePosting extends NamedEntity {

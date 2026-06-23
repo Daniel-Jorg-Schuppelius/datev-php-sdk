@@ -12,26 +12,24 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Datev\Entities\Accounting\Creditors\{Creditor, Creditors};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Accounting\Creditors\Creditors;
-use Datev\Entities\Accounting\Creditors\Creditor;
-
 class CreditorsTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "id" => "cred-1",
                     "caption" => "Lieferant A",
-                    "account_number" => 70001
+                    "account_number" => 70001,
                 ],
                 [
                     "id" => "cred-2",
                     "caption" => "Lieferant B",
-                    "account_number" => 70002
-                ]
-            ]
+                    "account_number" => 70002,
+                ],
+            ],
         ];
 
         $creditors = new Creditors($data);

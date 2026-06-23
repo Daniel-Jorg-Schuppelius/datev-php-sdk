@@ -23,7 +23,7 @@ class AccountsReceivableCondenseTest extends EndpointTest {
         return new AccountsReceivableCondenseEndpoint($this->client, self::getLogger());
     }
 
-    public function testGetAccountsReceivableCondense() {
+    public function test_get_accounts_receivable_condense() {
         $this->skipMockIfComplexEntity();
 
         $this->endpoint = $this->createEndpoint();

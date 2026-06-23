@@ -12,16 +12,15 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\BatchResponse\Failed\Reason;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\BatchResponse\Failed\Reason;
-
 class ReasonTest extends EntityTest {
-    public function testCreateReason(): void {
+    public function test_create_reason(): void {
         $data = [
             "error" => "REW11041",
             "error_description" => "Validation failed for field XYZ",
-            "request_id" => "req-12345"
+            "request_id" => "req-12345",
         ];
 
         $reason = new Reason($data);
@@ -29,7 +28,7 @@ class ReasonTest extends EntityTest {
         $this->assertInstanceOf(Reason::class, $reason);
     }
 
-    public function testCreateReasonWithAdditionalMessages(): void {
+    public function test_create_reason_with_additional_messages(): void {
         $data = [
             "error" => "REW11042",
             "error_description" => "Multiple validation errors",
@@ -37,13 +36,13 @@ class ReasonTest extends EntityTest {
             "additional_messages" => [
                 [
                     "description" => "Field A is required",
-                    "severity" => "error"
+                    "severity" => "error",
                 ],
                 [
                     "description" => "Field B has invalid format",
-                    "severity" => "warning"
-                ]
-            ]
+                    "severity" => "warning",
+                ],
+            ],
         ];
 
         $reason = new Reason($data);

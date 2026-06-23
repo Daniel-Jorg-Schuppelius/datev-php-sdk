@@ -405,3 +405,6 @@ phpunit.xml
 
 # Schuppe
 /.samples/config.json
+
+# PHPStan tmpDir (Cache, nicht committen)
+/var/phpstan

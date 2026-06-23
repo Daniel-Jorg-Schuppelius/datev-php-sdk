@@ -11,10 +11,9 @@
 namespace Datev\Contracts\Abstracts\API;
 
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
-use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use APIToolkit\Entities\ID;
-use Datev\Entities\DocumentManagement\IndividualReferences\IndividualReference;
-use Datev\Entities\DocumentManagement\IndividualReferences\IndividualReferences;
+use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
+use Datev\Entities\DocumentManagement\IndividualReferences\{IndividualReference, IndividualReferences};
 use InvalidArgumentException;
 
 abstract class IndividualReferencesAbstract extends EndpointAbstract implements SearchableEndpointInterface {

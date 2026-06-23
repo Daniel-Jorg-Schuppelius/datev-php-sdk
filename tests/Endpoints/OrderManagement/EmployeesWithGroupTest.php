@@ -22,7 +22,7 @@ class EmployeesWithGroupTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetEmployeesWithGroup() {
+    public function test_get_employees_with_group() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

@@ -13,16 +13,19 @@ declare(strict_types=1);
 namespace Datev\Entities\Common\Employees;
 
 use APIToolkit\Contracts\Abstracts\NamedValues;
+use APIToolkit\Contracts\Interfaces\NamedEntityInterface;
 use Psr\Log\LoggerInterface;
 
 /**
- * @extends NamedValues<Employee>
+ * @template T of NamedEntityInterface
+ * @extends NamedValues<T>
  */
 class Employees extends NamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";
-        if (empty($this->valueClassName))
+        if (empty($this->valueClassName)) {
             $this->valueClassName = Employee::class;
+        }
 
         parent::__construct($data, $logger);
     }

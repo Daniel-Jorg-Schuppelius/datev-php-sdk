@@ -12,37 +12,35 @@ declare(strict_types=1);
 
 namespace Tests\Entities\IdentityAndAccessManagement;
 
+use Datev\Entities\IdentityAndAccessManagement\Groups\{Group, Groups};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\IdentityAndAccessManagement\Groups\Group;
-use Datev\Entities\IdentityAndAccessManagement\Groups\Groups;
-
 class GroupTest extends EntityTest {
-    public function testCreateGroup() {
+    public function test_create_group() {
         $data = [
             "id" => "g1234567-8901-2345-6789-012345678901",
             "display_name" => "Administratoren",
-            "schemas" => ["urn:ietf:params:scim:schemas:core:2.0:Group"]
+            "schemas" => ["urn:ietf:params:scim:schemas:core:2.0:Group"],
         ];
 
         $group = new Group($data);
-        $this->assertInstanceOf(Group::class, new Group());
+        $this->assertInstanceOf(Group::class, new Group);
         $this->assertInstanceOf(Group::class, $group);
         $this->assertEquals("Administratoren", $group->getDisplayName());
     }
 
-    public function testCreateGroups() {
+    public function test_create_groups() {
         $data = [
             "content" => [
                 [
                     "id" => "g1234567-8901-2345-6789-012345678901",
-                    "display_name" => "Gruppe 1"
+                    "display_name" => "Gruppe 1",
                 ],
                 [
                     "id" => "g2234567-8901-2345-6789-012345678902",
-                    "display_name" => "Gruppe 2"
-                ]
-            ]
+                    "display_name" => "Gruppe 2",
+                ],
+            ],
         ];
 
         $groups = new Groups($data);

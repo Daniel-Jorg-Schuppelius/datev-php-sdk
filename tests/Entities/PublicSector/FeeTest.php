@@ -12,36 +12,34 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
+use Datev\Entities\PublicSector\Fees\{Fee, Fees};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\PublicSector\Fees\Fee;
-use Datev\Entities\PublicSector\Fees\Fees;
-
 class FeeTest extends EntityTest {
-    public function testCreateFee() {
+    public function test_create_fee() {
         $data = [
             "id" => 123,
             "fee_name" => "Wassergebühr",
-            "type_name" => "water"
+            "type_name" => "water",
         ];
 
         $fee = new Fee($data);
-        $this->assertInstanceOf(Fee::class, new Fee());
+        $this->assertInstanceOf(Fee::class, new Fee);
         $this->assertInstanceOf(Fee::class, $fee);
         $this->assertEquals(123, $fee->getID());
         $this->assertEquals("Wassergebühr", $fee->getFeeName());
     }
 
-    public function testCreateFees() {
+    public function test_create_fees() {
         $data = [
             "content" => [
                 [
-                    "id" => 1
+                    "id" => 1,
                 ],
                 [
-                    "id" => 2
-                ]
-            ]
+                    "id" => 2,
+                ],
+            ],
         ];
 
         $fees = new Fees($data);

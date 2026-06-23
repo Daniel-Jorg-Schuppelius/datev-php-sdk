@@ -12,12 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\Versions\ResourceVersion;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\Versions\ResourceVersion;
-
 class ResourceVersionTest extends EntityTest {
-    public function testCreateFromString(): void {
+    public function test_create_from_string(): void {
         $version = new ResourceVersion("3.1.4");
 
         $this->assertEquals("3.1.4", $version->getValue());

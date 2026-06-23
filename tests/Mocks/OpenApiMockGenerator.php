@@ -141,7 +141,7 @@ class OpenApiMockGenerator {
 
     /**
      * Extrahiert das Beispiel aus einer Response-Definition.
-     * 
+     *
      * @return string|array|null Das Beispiel als String oder Array
      */
     private static function extractResponseExample(array $operation, array $spec): string|array|null {
@@ -290,8 +290,8 @@ class OpenApiMockGenerator {
     /**
      * Erstellt einen vollständig konfigurierten MockClient mit OpenAPI-Daten.
      */
-    public static function createMockClientFromOpenApi(string $domain = null): MockClient {
-        $client = new MockClient();
+    public static function createMockClientFromOpenApi(?string $domain = null): MockClient {
+        $client = new MockClient;
 
         if ($domain !== null) {
             self::registerFromOpenApi($client, $domain);

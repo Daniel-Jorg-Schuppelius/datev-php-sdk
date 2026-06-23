@@ -12,16 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
+use Datev\Entities\Law\BillingCategories\{BillingCategories, BillingCategory};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Law\BillingCategories\BillingCategory;
-use Datev\Entities\Law\BillingCategories\BillingCategories;
-
 class BillingCategoryTest extends EntityTest {
-    public function testCreateBillingCategory(): void {
+    public function test_create_billing_category(): void {
         $data = [
             "number" => 1,
-            "name" => "Standard-Abrechnung"
+            "name" => "Standard-Abrechnung",
         ];
 
         $billingCategory = new BillingCategory($data);
@@ -31,18 +29,18 @@ class BillingCategoryTest extends EntityTest {
         $this->assertEquals("Standard-Abrechnung", $billingCategory->getName());
     }
 
-    public function testCreateBillingCategories(): void {
+    public function test_create_billing_categories(): void {
         $data = [
             "content" => [
                 [
                     "number" => 1,
-                    "name" => "Standard-Abrechnung"
+                    "name" => "Standard-Abrechnung",
                 ],
                 [
                     "number" => 2,
-                    "name" => "Zusatzleistungen"
-                ]
-            ]
+                    "name" => "Zusatzleistungen",
+                ],
+            ],
         ];
 
         $billingCategories = new BillingCategories($data);

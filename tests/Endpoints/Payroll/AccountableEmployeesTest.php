@@ -13,8 +13,7 @@ declare(strict_types=1);
 namespace Tests\Endpoints\Payroll;
 
 use Datev\API\Desktop\Endpoints\Payroll\AccountableEmployeesEndpoint;
-use Datev\Entities\Payroll\Employees\Accountable\AccountableEmployee;
-use Datev\Entities\Payroll\Employees\Accountable\AccountableEmployees;
+use Datev\Entities\Payroll\Employees\Accountable\{AccountableEmployee, AccountableEmployees};
 use Tests\Contracts\EndpointTest;
 
 class AccountableEmployeesTest extends EndpointTest {
@@ -25,21 +24,21 @@ class AccountableEmployeesTest extends EndpointTest {
         return new AccountableEmployeesEndpoint($this->client, self::getLogger());
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
             'id' => '12345',
             'first_name' => 'Max',
-            'last_name' => 'Mustermann'
+            'last_name' => 'Mustermann',
         ];
 
         $employee = AccountableEmployee::fromJson(json_encode($data));
         $this->assertInstanceOf(AccountableEmployee::class, $employee);
     }
 
-    public function testJsonSerializeCollection() {
+    public function test_json_serialize_collection() {
         $data = [
             ['id' => '12345', 'first_name' => 'Max', 'last_name' => 'Mustermann'],
-            ['id' => '12346', 'first_name' => 'Erika', 'last_name' => 'Musterfrau']
+            ['id' => '12346', 'first_name' => 'Erika', 'last_name' => 'Musterfrau'],
         ];
 
         $employees = AccountableEmployees::fromJson(json_encode($data));
@@ -47,7 +46,7 @@ class AccountableEmployeesTest extends EndpointTest {
         $this->assertCount(2, $employees->getValues());
     }
 
-    public function testGetAccountableEmployees() {
+    public function test_get_accountable_employees() {
         $this->endpoint = $this->createEndpoint();
         $employees = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

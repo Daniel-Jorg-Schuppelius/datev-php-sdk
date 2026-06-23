@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\Data\Individual\{IndividualData, IndividualDatum};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\Data\Individual\IndividualData;
-use Datev\Entities\Payroll\Data\Individual\IndividualDatum;
-
 class IndividualDataTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
@@ -26,16 +24,16 @@ class IndividualDataTest extends EntityTest {
                     "long_field_name" => "Custom Field 1",
                     "short_field_name" => "CF1",
                     "date" => "2024-01-15",
-                    "amount" => 100.50
+                    "amount" => 100.50,
                 ],
                 [
                     "id" => 2,
                     "long_field_name" => "Custom Field 2",
                     "short_field_name" => "CF2",
                     "date" => "2024-02-20",
-                    "amount" => 250.00
-                ]
-            ]
+                    "amount" => 250.00,
+                ],
+            ],
         ];
 
         $individualData = new IndividualData($data);

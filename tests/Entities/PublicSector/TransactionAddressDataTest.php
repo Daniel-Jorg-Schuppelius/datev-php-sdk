@@ -12,17 +12,16 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
+use Datev\Entities\PublicSector\TransactionAddresses\TransactionAddressData;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\PublicSector\TransactionAddresses\TransactionAddressData;
-
 class TransactionAddressDataTest extends EntityTest {
-    public function testCreateTransactionAddressData(): void {
+    public function test_create_transaction_address_data(): void {
         $data = [
             "id" => "addr-123",
             "street" => "Musterstraße",
             "postal_code" => "12345",
-            "city" => "Berlin"
+            "city" => "Berlin",
         ];
 
         $addressData = new TransactionAddressData($data);

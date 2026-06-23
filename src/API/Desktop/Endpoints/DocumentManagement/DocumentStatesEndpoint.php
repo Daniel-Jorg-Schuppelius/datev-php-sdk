@@ -13,8 +13,7 @@ namespace Datev\API\Desktop\Endpoints\DocumentManagement;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\DocumentManagement\Documents\States\DocumentState;
-use Datev\Entities\DocumentManagement\Documents\States\DocumentStates;
+use Datev\Entities\DocumentManagement\Documents\States\{DocumentState, DocumentStates};
 use InvalidArgumentException;
 
 class DocumentStatesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {

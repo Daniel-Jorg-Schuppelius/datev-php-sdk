@@ -12,12 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
+use Datev\Entities\PublicSector\TransactionMeterReadings\TransactionMeterReadingData;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\PublicSector\TransactionMeterReadings\TransactionMeterReadingData;
-
 class TransactionMeterReadingDataTest extends EntityTest {
-    public function testCreateTransactionMeterReadingData(): void {
+    public function test_create_transaction_meter_reading_data(): void {
         $data = [
             "meter_id" => "MTR-001",
             "identification_number" => "12345678",
@@ -31,7 +30,7 @@ class TransactionMeterReadingDataTest extends EntityTest {
             "initialised" => true,
             "reader" => "Automatisch",
             "comment_for_notification" => "Turnusmäßige Ablesung",
-            "comment" => "Keine Auffälligkeiten"
+            "comment" => "Keine Auffälligkeiten",
         ];
 
         $meterReading = new TransactionMeterReadingData($data);

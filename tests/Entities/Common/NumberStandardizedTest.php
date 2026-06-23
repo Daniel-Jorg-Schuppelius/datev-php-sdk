@@ -12,12 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common;
 
+use Datev\Entities\Common\NumberStandardized;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Common\NumberStandardized;
-
 class NumberStandardizedTest extends EntityTest {
-    public function testCreateNumberStandardized(): void {
+    public function test_create_number_standardized(): void {
         $numberStandardized = new NumberStandardized("0049891234567890");
 
         $this->assertInstanceOf(NumberStandardized::class, $numberStandardized);
@@ -25,7 +24,7 @@ class NumberStandardizedTest extends EntityTest {
         $this->assertTrue($numberStandardized->isValid());
     }
 
-    public function testInvalidNumberStandardized(): void {
+    public function test_invalid_number_standardized(): void {
         $numberStandardized = new NumberStandardized("+49 89 12345678");
 
         $this->assertInstanceOf(NumberStandardized::class, $numberStandardized);

@@ -12,26 +12,24 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\Departments\{Department, Departments};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\Departments\Departments;
-use Datev\Entities\Payroll\Departments\Department;
-
 class DepartmentsTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "id" => "1",
                     "name" => "IT-Abteilung",
-                    "contact_person" => "Max Mustermann"
+                    "contact_person" => "Max Mustermann",
                 ],
                 [
                     "id" => "2",
                     "name" => "Personal",
-                    "contact_person" => "Erika Musterfrau"
-                ]
-            ]
+                    "contact_person" => "Erika Musterfrau",
+                ],
+            ],
         ];
 
         $departments = new Departments($data);

@@ -12,15 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
+use Datev\Entities\PublicSector\TransactionCommunications\CommunicationUsageType;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\PublicSector\TransactionCommunications\CommunicationUsageType;
-
 class CommunicationUsageTypeTest extends EntityTest {
-    public function testCreateCommunicationUsageType(): void {
+    public function test_create_communication_usage_type(): void {
         $data = [
             "is_main_communication_usage_type" => true,
-            "is_main_management_phone" => false
+            "is_main_management_phone" => false,
         ];
 
         $usageType = new CommunicationUsageType($data);

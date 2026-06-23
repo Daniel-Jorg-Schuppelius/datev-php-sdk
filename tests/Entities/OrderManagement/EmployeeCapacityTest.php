@@ -12,14 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Datev\Entities\OrderManagement\EmployeeCapacities\{EmployeeCapacities, EmployeeCapacity};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\OrderManagement\EmployeeCapacities\EmployeeCapacity;
-use Datev\Entities\OrderManagement\EmployeeCapacities\EmployeeCapacities;
-
 class EmployeeCapacityTest extends EntityTest {
-    
-    public function testCreateEmployeeCapacity(): void {
+    public function test_create_employee_capacity(): void {
         $data = [
             "id" => "test-id",
             "employee_id" => "550e8400-e29b-41d4-a716-446655440000",
@@ -27,7 +24,7 @@ class EmployeeCapacityTest extends EntityTest {
             "total_hours_time_units" => 40.0,
             "target_hours_time_units" => 38.5,
             "planned_hours_time_units" => 36.0,
-            "spare_hours_time_units" => 4.0
+            "spare_hours_time_units" => 4.0,
         ];
 
         $employeeCapacity = new EmployeeCapacity($data);
@@ -36,18 +33,18 @@ class EmployeeCapacityTest extends EntityTest {
         $this->assertEquals(40.0, $employeeCapacity->getTotalHoursTimeUnits());
     }
 
-    public function testCreateEmployeeCapacities(): void {
+    public function test_create_employee_capacities(): void {
         $data = [
             "content" => [
                 [
                     "id" => "test-id-1",
-                    "total_hours_time_units" => 40.0
+                    "total_hours_time_units" => 40.0,
                 ],
                 [
                     "id" => "test-id-2",
-                    "total_hours_time_units" => 35.0
-                ]
-            ]
+                    "total_hours_time_units" => 35.0,
+                ],
+            ],
         ];
 
         $employeeCapacities = new EmployeeCapacities($data);

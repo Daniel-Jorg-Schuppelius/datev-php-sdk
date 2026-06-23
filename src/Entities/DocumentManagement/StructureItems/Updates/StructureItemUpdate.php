@@ -12,8 +12,7 @@ declare(strict_types=1);
 
 namespace Datev\Entities\DocumentManagement\StructureItems\Updates;
 
-use Datev\Entities\DocumentManagement\StructureItems\BaseStructureItem;
-use Datev\Entities\DocumentManagement\StructureItems\StructureItemID;
+use Datev\Entities\DocumentManagement\StructureItems\{BaseStructureItem, StructureItemID};
 use Psr\Log\LoggerInterface;
 
 class StructureItemUpdate extends BaseStructureItem {

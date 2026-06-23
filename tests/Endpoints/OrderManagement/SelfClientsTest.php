@@ -22,7 +22,7 @@ class SelfClientsTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetSelfClients() {
+    public function test_get_self_clients() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

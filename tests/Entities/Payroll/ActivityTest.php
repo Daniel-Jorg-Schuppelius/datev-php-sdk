@@ -12,20 +12,17 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\Activities\{Activities, Activity, ActivityID};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\Activities\Activity;
-use Datev\Entities\Payroll\Activities\Activities;
-use Datev\Entities\Payroll\Activities\ActivityID;
-
 class ActivityTest extends EntityTest {
-    public function testCreateActivity(): void {
+    public function test_create_activity(): void {
         $data = [
             "id" => "act-001",
             "activity_type" => "Vollzeit",
             "employee_type" => "Angestellter",
             "job_title" => "Buchhalter",
-            "weekly_working_hours" => 40.0
+            "weekly_working_hours" => 40.0,
         ];
 
         $activity = new Activity($data);
@@ -35,20 +32,20 @@ class ActivityTest extends EntityTest {
         $this->assertEquals("act-001", $activity->getID()->getValue());
     }
 
-    public function testCreateActivities(): void {
+    public function test_create_activities(): void {
         $data = [
             "content" => [
                 [
                     "id" => "act-001",
                     "activity_type" => "Vollzeit",
-                    "job_title" => "Buchhalter"
+                    "job_title" => "Buchhalter",
                 ],
                 [
                     "id" => "act-002",
                     "activity_type" => "Teilzeit",
-                    "job_title" => "Assistent"
-                ]
-            ]
+                    "job_title" => "Assistent",
+                ],
+            ],
         ];
 
         $activities = new Activities($data);

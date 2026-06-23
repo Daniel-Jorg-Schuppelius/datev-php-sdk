@@ -13,8 +13,7 @@ namespace Datev\API\Desktop\Endpoints\ClientMasterData;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\ClientMasterData\Clients\Client;
-use Datev\Entities\ClientMasterData\Clients\Clients;
+use Datev\Entities\ClientMasterData\Clients\{Client, Clients};
 use InvalidArgumentException;
 
 class ClientsEndpoint extends EndpointAbstract implements SearchableEndpointInterface {

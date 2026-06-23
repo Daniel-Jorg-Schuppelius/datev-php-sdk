@@ -12,14 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\IdentityAndAccessManagement;
 
+use Datev\Entities\IdentityAndAccessManagement\ServiceProvider\ScimSupported;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\IdentityAndAccessManagement\ServiceProvider\ScimSupported;
-
 class ScimSupportedTest extends EntityTest {
-    public function testCreateScimSupported(): void {
+    public function test_create_scim_supported(): void {
         $data = [
-            "supported" => true
+            "supported" => true,
         ];
 
         $supported = new ScimSupported($data);
@@ -28,9 +27,9 @@ class ScimSupportedTest extends EntityTest {
         $this->assertTrue($supported->isSupported());
     }
 
-    public function testScimNotSupported(): void {
+    public function test_scim_not_supported(): void {
         $data = [
-            "supported" => false
+            "supported" => false,
         ];
 
         $supported = new ScimSupported($data);

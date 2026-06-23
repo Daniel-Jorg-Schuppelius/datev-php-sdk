@@ -13,9 +13,7 @@ declare(strict_types=1);
 namespace Tests\Endpoints\IdentityAndAccessManagement;
 
 use Datev\API\Desktop\Endpoints\IdentityAndAccessManagement\UsersEndpoint;
-use Datev\Entities\IdentityAndAccessManagement\Users\User;
-use Datev\Entities\IdentityAndAccessManagement\Users\Users;
-use Datev\Entities\IdentityAndAccessManagement\Users\UserID;
+use Datev\Entities\IdentityAndAccessManagement\Users\{User, UserID, Users};
 use Tests\Contracts\EndpointTest;
 
 class UsersTest extends EndpointTest {
@@ -27,27 +25,27 @@ class UsersTest extends EndpointTest {
         $this->apiDisabled = true; // API is disabled
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
             "id" => "f66a81fb-2681-45ec-81b0-ce8346baac07",
             "meta" => [
                 "resource_type" => "user",
-                "location" => "/iam/v1/users/f66a81fb-2681-45ec-81b0-ce8346baac07"
+                "location" => "/iam/v1/users/f66a81fb-2681-45ec-81b0-ce8346baac07",
             ],
             "schemas" => [
                 "urn:ietf:params:scim:schemas:core:2.0:User",
-                "urn:ietf:params:scim:schemas:extension:datev:2.0:user"
+                "urn:ietf:params:scim:schemas:extension:datev:2.0:user",
             ],
             "name" => [
                 "given_name" => "Max",
-                "family_name" => "Mustermann"
+                "family_name" => "Mustermann",
             ],
             "display_name" => "Mustermann, Max",
             "active" => true,
             "entitlements" => ["IamUser"],
             "urn:ietf:params:scim:schemas:extension:datev:2.0:user" => [
-                "initials" => "mm"
-            ]
+                "initials" => "mm",
+            ],
         ];
 
         $user = new User($data);
@@ -59,7 +57,7 @@ class UsersTest extends EndpointTest {
         $this->assertEquals("mm", $user->getDatevExtension()->getInitials());
     }
 
-    public function testGetUsers() {
+    public function test_get_users() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }
@@ -68,7 +66,7 @@ class UsersTest extends EndpointTest {
         $this->assertInstanceOf(Users::class, $users);
     }
 
-    public function testGetUser() {
+    public function test_get_user() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }
@@ -78,7 +76,7 @@ class UsersTest extends EndpointTest {
         $this->assertInstanceOf(User::class, $user);
     }
 
-    public function testGetMe() {
+    public function test_get_me() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

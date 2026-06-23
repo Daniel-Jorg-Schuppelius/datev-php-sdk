@@ -12,26 +12,24 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\NextFreeNumbers\{NextFreeNumber, NextFreeNumbers};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\NextFreeNumbers\NextFreeNumber;
-use Datev\Entities\ClientMasterData\NextFreeNumbers\NextFreeNumbers;
-
 class NextFreeNumberTest extends EntityTest {
-    public function testCreateNextFreeNumber() {
+    public function test_create_next_free_number() {
         $data = [
-            "value" => 1001
+            "value" => 1001,
         ];
 
         $number = new NextFreeNumber($data);
         $this->assertInstanceOf(NextFreeNumber::class, $number);
     }
 
-    public function testCreateNextFreeNumbers() {
+    public function test_create_next_free_numbers() {
         $data = [
             [
-                "value" => 1001
-            ]
+                "value" => 1001,
+            ],
         ];
 
         $numbers = new NextFreeNumbers($data);

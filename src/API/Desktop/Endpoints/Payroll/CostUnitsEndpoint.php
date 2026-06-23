@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\Payroll;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\Payroll\PayrollEndpointAbstract;
-use Datev\Entities\Payroll\CostUnits\CostUnit;
-use Datev\Entities\Payroll\CostUnits\CostUnits;
+use Datev\Entities\Payroll\CostUnits\{CostUnit, CostUnits};
 use InvalidArgumentException;
 
 class CostUnitsEndpoint extends PayrollEndpointAbstract implements SearchableEndpointInterface {
@@ -35,7 +34,7 @@ class CostUnitsEndpoint extends PayrollEndpointAbstract implements SearchableEnd
             }
 
             return CostUnit::fromJson($response, self::$logger);
-        }, "Fetching CostUnit (ID: {$id})");
+        }, "Fetching CostUnit (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?CostUnits {

@@ -13,8 +13,7 @@ declare(strict_types=1);
 namespace Tests\Endpoints\Payroll;
 
 use Datev\API\Desktop\Endpoints\Payroll\VoluntaryInsuranceEndpoint;
-use Datev\Entities\Payroll\Insurances\Voluntary\VoluntaryInsurance;
-use Datev\Entities\Payroll\Insurances\Voluntary\VoluntaryInsurances;
+use Datev\Entities\Payroll\Insurances\Voluntary\{VoluntaryInsurance, VoluntaryInsurances};
 use Tests\Contracts\EndpointTest;
 
 class VoluntaryInsuranceTest extends EndpointTest {
@@ -25,21 +24,21 @@ class VoluntaryInsuranceTest extends EndpointTest {
         return new VoluntaryInsuranceEndpoint($this->client, self::getLogger());
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
             'id' => '12345',
             'insurance_type' => 'Zusatzversicherung',
-            'monthly_contribution' => 100.00
+            'monthly_contribution' => 100.00,
         ];
 
         $insurance = VoluntaryInsurance::fromJson(json_encode($data));
         $this->assertInstanceOf(VoluntaryInsurance::class, $insurance);
     }
 
-    public function testJsonSerializeCollection() {
+    public function test_json_serialize_collection() {
         $data = [
             ['id' => '12345', 'insurance_type' => 'Zusatzversicherung'],
-            ['id' => '12346', 'insurance_type' => 'Betriebsrente']
+            ['id' => '12346', 'insurance_type' => 'Betriebsrente'],
         ];
 
         $insurances = VoluntaryInsurances::fromJson(json_encode($data));
@@ -47,7 +46,7 @@ class VoluntaryInsuranceTest extends EndpointTest {
         $this->assertCount(2, $insurances->getValues());
     }
 
-    public function testGetVoluntaryInsurances() {
+    public function test_get_voluntary_insurances() {
         $this->endpoint = $this->createEndpoint();
         $insurances = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

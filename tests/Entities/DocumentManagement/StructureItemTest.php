@@ -12,20 +12,18 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Datev\Entities\DocumentManagement\StructureItems\{StructureItem, StructureItems};
+use Datev\Enums\StructureItemType;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\DocumentManagement\StructureItems\StructureItem;
-use Datev\Entities\DocumentManagement\StructureItems\StructureItems;
-use Datev\Enums\StructureItemType;
-
 class StructureItemTest extends EntityTest {
-    public function testCreateStructureItem(): void {
+    public function test_create_structure_item(): void {
         $data = [
             "name" => "Jahresabschluss_2024.pdf",
             "counter" => 1,
             "size" => 1024000,
             "type" => 1,
-            "parent_counter" => 0
+            "parent_counter" => 0,
         ];
 
         $structureItem = new StructureItem($data);
@@ -37,23 +35,23 @@ class StructureItemTest extends EntityTest {
         $this->assertEquals(0, $structureItem->getParentCounter());
     }
 
-    public function testCreateStructureItems(): void {
+    public function test_create_structure_items(): void {
         $data = [
             "content" => [
                 [
                     "name" => "Belege",
                     "counter" => 1,
                     "type" => 2,
-                    "parent_counter" => 0
+                    "parent_counter" => 0,
                 ],
                 [
                     "name" => "Rechnung_001.pdf",
                     "counter" => 2,
                     "size" => 512000,
                     "type" => 1,
-                    "parent_counter" => 1
-                ]
-            ]
+                    "parent_counter" => 1,
+                ],
+            ],
         ];
 
         $structureItems = new StructureItems($data);

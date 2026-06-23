@@ -12,28 +12,26 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Datev\Entities\OrderManagement\EmployeesCostRate\{EmployeeCostRate, EmployeesCostRate};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\OrderManagement\EmployeesCostRate\EmployeesCostRate;
-use Datev\Entities\OrderManagement\EmployeesCostRate\EmployeeCostRate;
-
 class EmployeesCostRateTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "id" => "550e8400-e29b-41d4-a716-446655440000",
                     "employee_number" => 1001,
                     "cost_rate_number" => 1,
-                    "cost_rate_1" => 75.50
+                    "cost_rate_1" => 75.50,
                 ],
                 [
                     "id" => "550e8400-e29b-41d4-a716-446655440001",
                     "employee_number" => 1002,
                     "cost_rate_number" => 2,
-                    "cost_rate_1" => 85.00
-                ]
-            ]
+                    "cost_rate_1" => 85.00,
+                ],
+            ],
         ];
 
         $rates = new EmployeesCostRate($data);

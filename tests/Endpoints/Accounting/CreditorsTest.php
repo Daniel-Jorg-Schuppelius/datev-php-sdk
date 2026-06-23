@@ -23,7 +23,7 @@ class CreditorsTest extends EndpointTest {
         return new CreditorsEndpoint($this->client, self::getLogger());
     }
 
-    public function testGetCreditors() {
+    public function test_get_creditors() {
         $this->skipMockIfComplexEntity();
 
         $this->endpoint = $this->createEndpoint();

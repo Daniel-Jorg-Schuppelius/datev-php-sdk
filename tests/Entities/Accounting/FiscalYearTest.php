@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Datev\Entities\Accounting\FiscalYears\{FiscalYear, FiscalYears};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Accounting\FiscalYears\FiscalYear;
-use Datev\Entities\Accounting\FiscalYears\FiscalYears;
-
 class FiscalYearTest extends EntityTest {
-    public function testCreateFiscalYear() {
+    public function test_create_fiscal_year() {
         $data = [
             "id" => "2024",
             "account_length" => 4,
@@ -39,11 +37,11 @@ class FiscalYearTest extends EntityTest {
             "legal_form" => "GmbH",
             "method_of_determining_net_income" => "profit_comparison",
             "national_right" => "DE",
-            "taxation_method" => "standard"
+            "taxation_method" => "standard",
         ];
 
         $fiscalYear = new FiscalYear($data);
-        $this->assertInstanceOf(FiscalYear::class, new FiscalYear());
+        $this->assertInstanceOf(FiscalYear::class, new FiscalYear);
         $this->assertInstanceOf(FiscalYear::class, $fiscalYear);
         $this->assertEquals("2024", $fiscalYear->getID());
         $this->assertEquals(4, $fiscalYear->getAccountLength());
@@ -52,22 +50,22 @@ class FiscalYearTest extends EntityTest {
         $this->assertFalse($fiscalYear->isLocked());
     }
 
-    public function testCreateFiscalYears() {
+    public function test_create_fiscal_years() {
         $data = [
             "content" => [
                 [
                     "id" => "2024",
                     "client_number" => 10000,
                     "begin" => "2024-01-01T00:00:00.000+00:00",
-                    "end" => "2024-12-31T00:00:00.000+00:00"
+                    "end" => "2024-12-31T00:00:00.000+00:00",
                 ],
                 [
                     "id" => "2023",
                     "client_number" => 10000,
                     "begin" => "2023-01-01T00:00:00.000+00:00",
-                    "end" => "2023-12-31T00:00:00.000+00:00"
-                ]
-            ]
+                    "end" => "2023-12-31T00:00:00.000+00:00",
+                ],
+            ],
         ];
 
         $fiscalYears = new FiscalYears($data);

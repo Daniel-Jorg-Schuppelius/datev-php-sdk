@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\Payroll;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\Payroll\PayrollEndpointAbstract;
-use Datev\Entities\Payroll\HourlyWages\HourlyWage;
-use Datev\Entities\Payroll\HourlyWages\HourlyWages;
+use Datev\Entities\Payroll\HourlyWages\{HourlyWage, HourlyWages};
 use InvalidArgumentException;
 
 class HourlyWagesEndpoint extends PayrollEndpointAbstract implements SearchableEndpointInterface {
@@ -35,7 +34,7 @@ class HourlyWagesEndpoint extends PayrollEndpointAbstract implements SearchableE
             }
 
             return HourlyWage::fromJson($response, self::$logger);
-        }, "Fetching HourlyWage (ID: {$id})");
+        }, "Fetching HourlyWage (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?HourlyWages {

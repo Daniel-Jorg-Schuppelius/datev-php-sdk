@@ -12,12 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\Clients\Client;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\Clients\Client;
-
 class ClientTest extends EntityTest {
-    public function testCreateAddress() {
+    public function test_create_address() {
         $data = [
             "id" => "d13f9c3c-380c-494e-97c8-d12fff738189",
             "client_since" => "1999-04-15T00:00:00.000+00:00",
@@ -40,13 +39,13 @@ class ClientTest extends EntityTest {
             "establishment_short_name" => "Hauptsitz",
             "functional_area_id" => "g93e8c3g-380c-494e-97c8-d12fff738371",
             "functional_area_name" => "Gesamtunternehmen",
-            "functional_area_short_name" => "999"
+            "functional_area_short_name" => "999",
         ];
 
         $client = new Client($data);
         $this->assertFalse($client->isValid());
         $client = new Client($data);
-        $this->assertInstanceOf(Client::class, new Client());
+        $this->assertInstanceOf(Client::class, new Client);
         $this->assertInstanceOf(Client::class, $client);
         $this->assertEquals($data, $client->toArray());
     }

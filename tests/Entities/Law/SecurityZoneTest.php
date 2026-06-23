@@ -12,17 +12,15 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
+use Datev\Entities\Law\SecurityZones\{SecurityZone, SecurityZones};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Law\SecurityZones\SecurityZone;
-use Datev\Entities\Law\SecurityZones\SecurityZones;
-
 class SecurityZoneTest extends EntityTest {
-    public function testCreateSecurityZone(): void {
+    public function test_create_security_zone(): void {
         $data = [
             "id" => "test-id",
             "short_name" => "SZ1",
-            "name" => "Sicherheitszone 1"
+            "name" => "Sicherheitszone 1",
         ];
 
         $securityZone = new SecurityZone($data);
@@ -32,20 +30,20 @@ class SecurityZoneTest extends EntityTest {
         $this->assertEquals("Sicherheitszone 1", $securityZone->getName());
     }
 
-    public function testCreateSecurityZones(): void {
+    public function test_create_security_zones(): void {
         $data = [
             "content" => [
                 [
                     "id" => "test-id-1",
                     "short_name" => "SZ1",
-                    "name" => "Sicherheitszone 1"
+                    "name" => "Sicherheitszone 1",
                 ],
                 [
                     "id" => "test-id-2",
                     "short_name" => "SZ2",
-                    "name" => "Sicherheitszone 2"
-                ]
-            ]
+                    "name" => "Sicherheitszone 2",
+                ],
+            ],
         ];
 
         $securityZones = new SecurityZones($data);

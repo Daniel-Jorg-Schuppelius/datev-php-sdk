@@ -54,7 +54,7 @@ class AccountingSequencesEndpoint extends EndpointAbstract {
         return $this->logDebugWithTimer(function () use ($sequence) {
             $response = parent::postContents($sequence->toArray(), [], $this->getBaseUrl());
 
-            return $response !== null;
+            return $response !== '';
         }, 'Creating Sequence');
     }
 }

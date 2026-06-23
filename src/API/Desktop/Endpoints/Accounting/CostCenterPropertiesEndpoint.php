@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\Accounting;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\Accounting\CostCenterProperties\CostCenterProperties;
-use Datev\Entities\Accounting\CostCenterProperties\CostCenterProperty;
+use Datev\Entities\Accounting\CostCenterProperties\{CostCenterProperties, CostCenterProperty};
 use InvalidArgumentException;
 
 class CostCenterPropertiesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {

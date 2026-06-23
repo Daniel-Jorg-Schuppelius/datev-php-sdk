@@ -14,65 +14,33 @@ namespace Datev\Entities\ClientMasterData\Details;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use DateTime;
-use Datev\Entities\ClientMasterData\CodesOfClassificationOfEconomicActivities2003\CodeOfClassificationOfEconomicActivities2003;
-use Datev\Entities\ClientMasterData\CodesOfClassificationOfEconomicActivities2003\CodesOfClassificationOfEconomicActivities2003;
-use Datev\Entities\ClientMasterData\CodesOfClassificationOfEconomicActivities2008\CodeOfClassificationOfEconomicActivities2008;
-use Datev\Entities\ClientMasterData\CodesOfClassificationOfEconomicActivities2008\CodesOfClassificationOfEconomicActivities2008;
-use Datev\Entities\ClientMasterData\CompanyNames\ThreeLined\FirstLine\CompanyName as ThreeLinedFirstLineCompanyName;
-use Datev\Entities\ClientMasterData\CompanyNames\ThreeLined\FirstLine\CompanyNames as ThreeLinedFirstLineCompanyNames;
-use Datev\Entities\ClientMasterData\CompanyNames\ThreeLined\SecondLine\CompanyName as ThreeLinedSecondLineCompanyName;
-use Datev\Entities\ClientMasterData\CompanyNames\ThreeLined\SecondLine\CompanyNames as ThreeLinedSecondLineCompanyNames;
-use Datev\Entities\ClientMasterData\CompanyNames\ThreeLined\ThirdLine\CompanyName as ThreeLinedThirdLineCompanyName;
-use Datev\Entities\ClientMasterData\CompanyNames\ThreeLined\ThirdLine\CompanyNames as ThreeLinedThirdLineCompanyNames;
-use Datev\Entities\ClientMasterData\CompanyNames\TwoLined\FirstLine\CompanyName as TwoLinedFirstLineCompanyName;
-use Datev\Entities\ClientMasterData\CompanyNames\TwoLined\FirstLine\CompanyNames as TwoLinedFirstLineCompanyNames;
-use Datev\Entities\ClientMasterData\CompanyNames\TwoLined\SecondLine\CompanyName as TwoLinedSecondLineCompanyName;
-use Datev\Entities\ClientMasterData\CompanyNames\TwoLined\SecondLine\CompanyNames as TwoLinedSecondLineCompanyNames;
-use Datev\Entities\ClientMasterData\Considerations\Consideration;
-use Datev\Entities\ClientMasterData\Considerations\Considerations;
-use Datev\Entities\ClientMasterData\CountriesOfHeadOffice\CountriesOfHeadOffice;
-use Datev\Entities\ClientMasterData\CountriesOfHeadOffice\CountryOfHeadOffice;
-use Datev\Entities\ClientMasterData\Denominations\Denomination;
-use Datev\Entities\ClientMasterData\Denominations\Denominations;
-use Datev\Entities\ClientMasterData\DescriptionsOfClassificationOfEconomicActivities2003\DescriptionOfClassificationOfEconomicActivities2003;
-use Datev\Entities\ClientMasterData\DescriptionsOfClassificationOfEconomicActivities2003\DescriptionsOfClassificationOfEconomicActivities2003;
-use Datev\Entities\ClientMasterData\DescriptionsOfClassificationOfEconomicActivities2008\DescriptionOfClassificationOfEconomicActivities2008;
-use Datev\Entities\ClientMasterData\DescriptionsOfClassificationOfEconomicActivities2008\DescriptionsOfClassificationOfEconomicActivities2008;
-use Datev\Entities\ClientMasterData\DistributionsOfProfit\DistributionOfProfit;
-use Datev\Entities\ClientMasterData\DistributionsOfProfit\DistributionsOfProfit;
-use Datev\Entities\ClientMasterData\EnterprisePurposes\EnterprisePurpose;
-use Datev\Entities\ClientMasterData\EnterprisePurposes\EnterprisePurposes;
-use Datev\Entities\ClientMasterData\FederalStates\FederalStateOfLegalPerson;
-use Datev\Entities\ClientMasterData\FederalStates\FederalStateOfNaturalPerson;
-use Datev\Entities\ClientMasterData\FederalStates\FederalStates;
-use Datev\Entities\ClientMasterData\FederalStatesMAD\FederalStateMADOfLegalPerson;
-use Datev\Entities\ClientMasterData\FederalStatesMAD\FederalStatesMAD;
-use Datev\Entities\ClientMasterData\FiscalYears\FiscalYear;
-use Datev\Entities\ClientMasterData\FiscalYears\FiscalYears;
-use Datev\Entities\ClientMasterData\JobTitles\JobTitle;
-use Datev\Entities\ClientMasterData\JobTitles\JobTitles;
-use Datev\Entities\ClientMasterData\KindOfRegisterCourts\KindOfRegisterCourt;
-use Datev\Entities\ClientMasterData\KindOfRegisterCourts\KindOfRegisterCourts;
-use Datev\Entities\ClientMasterData\LocationsOfHeadOffice\LocationOfHeadOffice;
-use Datev\Entities\ClientMasterData\LocationsOfHeadOffice\LocationsOfHeadOffice;
-use Datev\Entities\ClientMasterData\MADCodesOfClassificationOfEconomicActivities2003\MADCodeOfClassificationOfEconomicActivities2003;
-use Datev\Entities\ClientMasterData\MADCodesOfClassificationOfEconomicActivities2003\MADCodesOfClassificationOfEconomicActivities2003;
-use Datev\Entities\ClientMasterData\MADCodesOfClassificationOfEconomicActivities2008\MADCodeOfClassificationOfEconomicActivities2008;
-use Datev\Entities\ClientMasterData\MADCodesOfClassificationOfEconomicActivities2008\MADCodesOfClassificationOfEconomicActivities2008;
-use Datev\Entities\ClientMasterData\MaritalStatuses\MaritalStatus;
-use Datev\Entities\ClientMasterData\MaritalStatuses\MaritalStatuses;
-use Datev\Entities\ClientMasterData\NamesOfRegisterCourt\NameOfRegisterCourt;
-use Datev\Entities\ClientMasterData\NamesOfRegisterCourt\NamesOfRegisterCourt;
-use Datev\Entities\ClientMasterData\RegisteredCompanyNames\RegisteredCompanyName;
-use Datev\Entities\ClientMasterData\RegisteredCompanyNames\RegisteredCompanyNames;
-use Datev\Entities\ClientMasterData\RegistrationNumbers\RegistrationNumber;
-use Datev\Entities\ClientMasterData\RegistrationNumbers\RegistrationNumbers;
-use Datev\Enums\Country;
-use Datev\Enums\MeansOfIdentification;
-use Datev\Enums\Nationality;
-use Datev\Enums\NationalLawType;
-use Datev\Enums\Preposition;
-use Datev\Enums\WindingUpStatus;
+use Datev\Entities\ClientMasterData\CodesOfClassificationOfEconomicActivities2003\{CodeOfClassificationOfEconomicActivities2003, CodesOfClassificationOfEconomicActivities2003};
+use Datev\Entities\ClientMasterData\CodesOfClassificationOfEconomicActivities2008\{CodeOfClassificationOfEconomicActivities2008, CodesOfClassificationOfEconomicActivities2008};
+use Datev\Entities\ClientMasterData\CompanyNames\ThreeLined\FirstLine\{CompanyName as ThreeLinedFirstLineCompanyName, CompanyNames as ThreeLinedFirstLineCompanyNames};
+use Datev\Entities\ClientMasterData\CompanyNames\ThreeLined\SecondLine\{CompanyName as ThreeLinedSecondLineCompanyName, CompanyNames as ThreeLinedSecondLineCompanyNames};
+use Datev\Entities\ClientMasterData\CompanyNames\ThreeLined\ThirdLine\{CompanyName as ThreeLinedThirdLineCompanyName, CompanyNames as ThreeLinedThirdLineCompanyNames};
+use Datev\Entities\ClientMasterData\CompanyNames\TwoLined\FirstLine\{CompanyName as TwoLinedFirstLineCompanyName, CompanyNames as TwoLinedFirstLineCompanyNames};
+use Datev\Entities\ClientMasterData\CompanyNames\TwoLined\SecondLine\{CompanyName as TwoLinedSecondLineCompanyName, CompanyNames as TwoLinedSecondLineCompanyNames};
+use Datev\Entities\ClientMasterData\Considerations\{Consideration, Considerations};
+use Datev\Entities\ClientMasterData\CountriesOfHeadOffice\{CountriesOfHeadOffice, CountryOfHeadOffice};
+use Datev\Entities\ClientMasterData\Denominations\{Denomination, Denominations};
+use Datev\Entities\ClientMasterData\DescriptionsOfClassificationOfEconomicActivities2003\{DescriptionOfClassificationOfEconomicActivities2003, DescriptionsOfClassificationOfEconomicActivities2003};
+use Datev\Entities\ClientMasterData\DescriptionsOfClassificationOfEconomicActivities2008\{DescriptionOfClassificationOfEconomicActivities2008, DescriptionsOfClassificationOfEconomicActivities2008};
+use Datev\Entities\ClientMasterData\DistributionsOfProfit\{DistributionOfProfit, DistributionsOfProfit};
+use Datev\Entities\ClientMasterData\EnterprisePurposes\{EnterprisePurpose, EnterprisePurposes};
+use Datev\Entities\ClientMasterData\FederalStates\{FederalStateOfLegalPerson, FederalStateOfNaturalPerson, FederalStates};
+use Datev\Entities\ClientMasterData\FederalStatesMAD\{FederalStateMADOfLegalPerson, FederalStatesMAD};
+use Datev\Entities\ClientMasterData\FiscalYears\{FiscalYear, FiscalYears};
+use Datev\Entities\ClientMasterData\JobTitles\{JobTitle, JobTitles};
+use Datev\Entities\ClientMasterData\KindOfRegisterCourts\{KindOfRegisterCourt, KindOfRegisterCourts};
+use Datev\Entities\ClientMasterData\LocationsOfHeadOffice\{LocationOfHeadOffice, LocationsOfHeadOffice};
+use Datev\Entities\ClientMasterData\MADCodesOfClassificationOfEconomicActivities2003\{MADCodeOfClassificationOfEconomicActivities2003, MADCodesOfClassificationOfEconomicActivities2003};
+use Datev\Entities\ClientMasterData\MADCodesOfClassificationOfEconomicActivities2008\{MADCodeOfClassificationOfEconomicActivities2008, MADCodesOfClassificationOfEconomicActivities2008};
+use Datev\Entities\ClientMasterData\MaritalStatuses\{MaritalStatus, MaritalStatuses};
+use Datev\Entities\ClientMasterData\NamesOfRegisterCourt\{NameOfRegisterCourt, NamesOfRegisterCourt};
+use Datev\Entities\ClientMasterData\RegisteredCompanyNames\{RegisteredCompanyName, RegisteredCompanyNames};
+use Datev\Entities\ClientMasterData\RegistrationNumbers\{RegistrationNumber, RegistrationNumbers};
+use Datev\Enums\{Country, MeansOfIdentification, NationalLawType, Nationality, Preposition, WindingUpStatus};
 use Psr\Log\LoggerInterface;
 
 class Detail extends NamedEntity {
@@ -451,19 +419,19 @@ class Detail extends NamedEntity {
     }
 
     public function getTwoLinedCompanyNamesFirstLine(): ?TwoLinedFirstLineCompanyNames {
-        return $this->three_lined_company_names_first_line ?? null;
+        return $this->two_lined_company_names_first_line ?? null;
     }
 
     public function getCurrentTwoLinedCompanyNameFirstLine(): ?TwoLinedFirstLineCompanyName {
-        return $this->current_three_lined_company_name_first_line ?? null;
+        return $this->current_two_lined_company_name_first_line ?? null;
     }
 
     public function getTwoLinedCompanyNamesSecondLine(): ?TwoLinedSecondLineCompanyNames {
-        return $this->three_lined_company_names_second_line ?? null;
+        return $this->two_lined_company_names_second_line ?? null;
     }
 
     public function getCurrentTwoLinedCompanyNameSecondLine(): ?TwoLinedSecondLineCompanyName {
-        return $this->current_three_lined_company_name_second_line ?? null;
+        return $this->current_two_lined_company_name_second_line ?? null;
     }
 
     public function getWindingUpDate(): ?DateTime {

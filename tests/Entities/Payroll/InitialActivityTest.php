@@ -12,14 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\InitialActivities\{InitialActivities, InitialActivity, InitialActivityID};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\InitialActivities\InitialActivity;
-use Datev\Entities\Payroll\InitialActivities\InitialActivities;
-use Datev\Entities\Payroll\InitialActivities\InitialActivityID;
-
 class InitialActivityTest extends EntityTest {
-    public function testCreateInitialActivity(): void {
+    public function test_create_initial_activity(): void {
         $data = [
             "id" => "ia-001",
             "activity_type" => "full_time",
@@ -29,7 +26,7 @@ class InitialActivityTest extends EntityTest {
             "allocation_of_working_hours_tuesday" => 8.0,
             "allocation_of_working_hours_wednesday" => 8.0,
             "allocation_of_working_hours_thursday" => 8.0,
-            "allocation_of_working_hours_friday" => 8.0
+            "allocation_of_working_hours_friday" => 8.0,
         ];
 
         $initialActivity = new InitialActivity($data);
@@ -41,18 +38,18 @@ class InitialActivityTest extends EntityTest {
         $this->assertEquals(40.0, $initialActivity->getWeeklyWorkingHours());
     }
 
-    public function testCreateInitialActivities(): void {
+    public function test_create_initial_activities(): void {
         $data = [
             "content" => [
                 [
                     "id" => "ia-001",
-                    "activity_type" => "full_time"
+                    "activity_type" => "full_time",
                 ],
                 [
                     "id" => "ia-002",
-                    "activity_type" => "part_time"
-                ]
-            ]
+                    "activity_type" => "part_time",
+                ],
+            ],
         ];
 
         $initialActivities = new InitialActivities($data);

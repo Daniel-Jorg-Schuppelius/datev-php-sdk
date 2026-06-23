@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Datev\Entities\Accounting\TermsOfPayment\{TermOfPayment, TermsOfPayment};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Accounting\TermsOfPayment\TermsOfPayment;
-use Datev\Entities\Accounting\TermsOfPayment\TermOfPayment;
-
 class TermsOfPaymentTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
@@ -26,16 +24,16 @@ class TermsOfPaymentTest extends EntityTest {
                     "caption" => "30 Tage netto",
                     "net_days" => 30,
                     "discount_percentage_1" => 2,
-                    "discount_days_1" => 10
+                    "discount_days_1" => 10,
                 ],
                 [
                     "id" => 2,
                     "caption" => "14 Tage 2% Skonto",
                     "net_days" => 14,
                     "discount_percentage_1" => 2,
-                    "discount_days_1" => 7
-                ]
-            ]
+                    "discount_days_1" => 7,
+                ],
+            ],
         ];
 
         $terms = new TermsOfPayment($data);

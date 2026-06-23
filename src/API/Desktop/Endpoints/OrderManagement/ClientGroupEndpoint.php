@@ -34,6 +34,6 @@ class ClientGroupEndpoint extends EndpointAbstract {
             }
 
             return ClientGroups::fromJson($response, self::$logger);
-        }, "Fetching ClientGroups (ClientID: {$clientId})");
+        }, "Fetching ClientGroups (ClientID: {$clientId->toString()})");
     }
 }

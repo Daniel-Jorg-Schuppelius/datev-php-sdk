@@ -13,9 +13,8 @@ declare(strict_types=1);
 namespace Datev\Entities\PublicSector\Fees;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
-use Datev\Entities\PublicSector\Common\Location;
-use Datev\Entities\PublicSector\Common\PaymentMethod;
 use DateTime;
+use Datev\Entities\PublicSector\Common\{Location, PaymentMethod};
 use Psr\Log\LoggerInterface;
 
 class Fee extends NamedEntity {

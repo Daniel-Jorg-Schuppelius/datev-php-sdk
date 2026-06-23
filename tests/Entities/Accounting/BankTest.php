@@ -12,38 +12,36 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Datev\Entities\Accounting\Banks\{Bank, Banks};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Accounting\Banks\Bank;
-use Datev\Entities\Accounting\Banks\Banks;
-
 class BankTest extends EntityTest {
-    public function testCreateBank() {
+    public function test_create_bank() {
         $data = [
             "bank_name" => "Deutsche Bank",
             "bic" => "DEUTDEDB",
             "iban" => "DE89370400440532013000",
             "business_partner_bank_position" => 1,
-            "is_business_partner_bank" => true
+            "is_business_partner_bank" => true,
         ];
 
         $bank = new Bank($data);
-        $this->assertInstanceOf(Bank::class, new Bank());
+        $this->assertInstanceOf(Bank::class, new Bank);
         $this->assertInstanceOf(Bank::class, $bank);
     }
 
-    public function testCreateBanks() {
+    public function test_create_banks() {
         $data = [
             "content" => [
                 [
                     "bank_name" => "Bank 1",
-                    "iban" => "DE89370400440532013001"
+                    "iban" => "DE89370400440532013001",
                 ],
                 [
                     "bank_name" => "Bank 2",
-                    "iban" => "DE89370400440532013002"
-                ]
-            ]
+                    "iban" => "DE89370400440532013002",
+                ],
+            ],
         ];
 
         $banks = new Banks($data);

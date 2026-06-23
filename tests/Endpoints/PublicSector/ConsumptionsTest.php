@@ -22,7 +22,7 @@ class ConsumptionsTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetConsumptions() {
+    public function test_get_consumptions() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

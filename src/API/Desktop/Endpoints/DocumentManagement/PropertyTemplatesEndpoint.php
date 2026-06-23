@@ -13,8 +13,7 @@ namespace Datev\API\Desktop\Endpoints\DocumentManagement;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\DocumentManagement\PropertyTemplates\PropertyTemplate;
-use Datev\Entities\DocumentManagement\PropertyTemplates\PropertyTemplates;
+use Datev\Entities\DocumentManagement\PropertyTemplates\{PropertyTemplate, PropertyTemplates};
 use InvalidArgumentException;
 
 class PropertyTemplatesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {

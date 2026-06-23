@@ -11,8 +11,7 @@
 namespace Tests\Endpoints\DocumentManagement;
 
 use Datev\API\Desktop\Endpoints\DocumentManagement\PropertyTemplatesEndpoint;
-use Datev\Entities\DocumentManagement\PropertyTemplates\PropertyTemplate;
-use Datev\Entities\DocumentManagement\PropertyTemplates\PropertyTemplates;
+use Datev\Entities\DocumentManagement\PropertyTemplates\{PropertyTemplate, PropertyTemplates};
 use Tests\Contracts\EndpointTest;
 
 class PropertyTemplateTest extends EndpointTest {
@@ -24,7 +23,7 @@ class PropertyTemplateTest extends EndpointTest {
         $this->apiDisabled = true; // API is disabled
     }
 
-    public function testCreateAndDeleteArticleAPI() {
+    public function test_create_and_delete_article_api() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

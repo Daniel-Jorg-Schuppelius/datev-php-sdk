@@ -24,7 +24,7 @@ class EmployeesTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetEmployees() {
+    public function test_get_employees() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

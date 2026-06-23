@@ -15,10 +15,8 @@ namespace Datev\API\Desktop\Endpoints\Payroll;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\Payroll\PayrollEndpointAbstract;
-use Datev\Entities\Payroll\CalendarRecords\CalendarRecord;
-use Datev\Entities\Payroll\CalendarRecords\CalendarRecords;
+use Datev\Entities\Payroll\CalendarRecords\{CalendarRecord, CalendarRecords};
 use InvalidArgumentException;
-use Psr\Http\Message\ResponseInterface;
 
 class CalendarRecordsEndpoint extends PayrollEndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointSuffix = 'calendar-records';
@@ -36,7 +34,7 @@ class CalendarRecordsEndpoint extends PayrollEndpointAbstract implements Searcha
             }
 
             return CalendarRecord::fromJson($response, self::$logger);
-        }, "Fetching CalendarRecord (ID: {$id})");
+        }, "Fetching CalendarRecord (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?CalendarRecords {
@@ -51,9 +49,11 @@ class CalendarRecordsEndpoint extends PayrollEndpointAbstract implements Searcha
         }, "Searching CalendarRecords");
     }
 
-    public function createBatch(CalendarRecords $records): ResponseInterface {
+    public function createBatch(CalendarRecords $records): bool {
         return $this->logDebugWithTimer(function () use ($records) {
-            return $this->postContent($records, [], "{$this->getEndpointUrl()}/{$this->endpointSuffix}/batch");
+            $response = parent::postContents($records->toArray(), [], "{$this->getEndpointUrl()}/{$this->endpointSuffix}/batch");
+
+            return $response !== '';
         }, "Creating batch CalendarRecords");
     }
 }

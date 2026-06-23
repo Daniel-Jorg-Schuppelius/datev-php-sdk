@@ -13,13 +13,10 @@ declare(strict_types=1);
 namespace Datev\API\Desktop\Endpoints\PublicSector;
 
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
-use APIToolkit\Entities\GUID;
-use APIToolkit\Entities\ID;
+use APIToolkit\Entities\{GUID, ID};
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\PublicSector\TransactionMeterReadings\TransactionMeterReading;
-use Datev\Entities\PublicSector\TransactionMeterReadings\TransactionMeterReadings;
+use Datev\Entities\PublicSector\TransactionMeterReadings\{TransactionMeterReading, TransactionMeterReadings};
 use InvalidArgumentException;
-use Psr\Http\Message\ResponseInterface;
 
 class TransactionMeterReadingsEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointPrefix = 'public-sector/v1';
@@ -89,13 +86,15 @@ class TransactionMeterReadingsEndpoint extends EndpointAbstract implements Searc
         }, "Searching TransactionMeterReadings");
     }
 
-    public function create(TransactionMeterReading $transaction): ?ResponseInterface {
+    public function create(TransactionMeterReading $transaction): bool {
         if (!isset($this->clientId) || !isset($this->citizenId) || !isset($this->feeId) || !isset($this->meterId)) {
             $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID, Citizen ID, Fee ID and Meter ID are required');
         }
 
         return $this->logDebugWithTimer(function () use ($transaction) {
-            return parent::postContent($transaction, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/meters/{$this->meterId}/transaction-meter-readings");
+            $response = parent::postContents($transaction->toArray(), [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/meters/{$this->meterId}/transaction-meter-readings");
+
+            return $response !== '';
         }, "Creating TransactionMeterReading");
     }
 }

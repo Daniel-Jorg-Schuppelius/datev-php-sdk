@@ -12,16 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\IdentityAndAccessManagement;
 
+use Datev\Entities\IdentityAndAccessManagement\Groups\{GroupMember, GroupMembers};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\IdentityAndAccessManagement\Groups\GroupMember;
-use Datev\Entities\IdentityAndAccessManagement\Groups\GroupMembers;
-
 class GroupMemberTest extends EntityTest {
-    public function testCreateGroupMember(): void {
+    public function test_create_group_member(): void {
         $data = [
             "value" => "user-12345",
-            '$ref' => "https://api.datev.de/scim/v2/Users/user-12345"
+            '$ref' => "https://api.datev.de/scim/v2/Users/user-12345",
         ];
 
         $member = new GroupMember($data);
@@ -31,16 +29,16 @@ class GroupMemberTest extends EntityTest {
         $this->assertEquals("https://api.datev.de/scim/v2/Users/user-12345", $member->getRef());
     }
 
-    public function testCreateGroupMembers(): void {
+    public function test_create_group_members(): void {
         $data = [
             [
                 "value" => "user-001",
-                '$ref' => "https://api.datev.de/scim/v2/Users/user-001"
+                '$ref' => "https://api.datev.de/scim/v2/Users/user-001",
             ],
             [
                 "value" => "user-002",
-                '$ref' => "https://api.datev.de/scim/v2/Users/user-002"
-            ]
+                '$ref' => "https://api.datev.de/scim/v2/Users/user-002",
+            ],
         ];
 
         $members = new GroupMembers($data);

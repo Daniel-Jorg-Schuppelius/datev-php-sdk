@@ -22,7 +22,7 @@ class MeterReadingsTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetMeterReadings() {
+    public function test_get_meter_readings() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

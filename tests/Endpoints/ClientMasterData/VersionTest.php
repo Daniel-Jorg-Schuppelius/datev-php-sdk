@@ -24,7 +24,7 @@ class VersionTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetVersion() {
+    public function test_get_version() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

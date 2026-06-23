@@ -13,8 +13,7 @@ declare(strict_types=1);
 namespace Tests\Endpoints\Payroll;
 
 use Datev\API\Desktop\Endpoints\Payroll\DepartmentsEndpoint;
-use Datev\Entities\Payroll\Departments\Department;
-use Datev\Entities\Payroll\Departments\Departments;
+use Datev\Entities\Payroll\Departments\{Department, Departments};
 use Tests\Contracts\EndpointTest;
 
 class DepartmentsTest extends EndpointTest {
@@ -25,11 +24,11 @@ class DepartmentsTest extends EndpointTest {
         return new DepartmentsEndpoint($this->client, self::getLogger());
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
             'id' => 'DEP001',
             'name' => 'Abteilung IT',
-            'contact_person' => 'Max Mustermann'
+            'contact_person' => 'Max Mustermann',
         ];
 
         $department = Department::fromJson(json_encode($data));
@@ -37,10 +36,10 @@ class DepartmentsTest extends EndpointTest {
         $this->assertEquals('Abteilung IT', $department->getName());
     }
 
-    public function testJsonSerializeCollection() {
+    public function test_json_serialize_collection() {
         $data = [
             ['id' => 'DEP001', 'name' => 'IT'],
-            ['id' => 'DEP002', 'name' => 'Vertrieb']
+            ['id' => 'DEP002', 'name' => 'Vertrieb'],
         ];
 
         $departments = Departments::fromJson(json_encode($data));
@@ -48,7 +47,7 @@ class DepartmentsTest extends EndpointTest {
         $this->assertCount(2, $departments->getValues());
     }
 
-    public function testGetDepartments() {
+    public function test_get_departments() {
         $this->endpoint = $this->createEndpoint();
         $departments = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

@@ -14,7 +14,6 @@ namespace Datev\Entities\OrderManagement\MonthlyValues;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Entities\GUID;
-use DateTime;
 use Psr\Log\LoggerInterface;
 
 class MonthlyValue extends NamedEntity {

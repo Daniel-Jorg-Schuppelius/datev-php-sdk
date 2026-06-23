@@ -25,7 +25,7 @@ abstract class PayrollEndpointAbstract extends EndpointAbstract {
 
     protected ClientID $clientID;
 
-    public function __construct(ApiClientInterface $client, ?LoggerInterface $logger = null, ClientID $clientID = new ClientID()) {
+    public function __construct(ApiClientInterface $client, ?LoggerInterface $logger = null, ClientID $clientID = new ClientID) {
         parent::__construct($client, $logger);
         $this->clientID = $clientID;
     }

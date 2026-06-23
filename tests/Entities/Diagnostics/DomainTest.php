@@ -12,16 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Diagnostics;
 
+use Datev\Entities\Diagnostics\Domains\{Domain, Domains};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Diagnostics\Domains\Domain;
-use Datev\Entities\Diagnostics\Domains\Domains;
-
 class DomainTest extends EntityTest {
-    public function testCreateDomain() {
+    public function test_create_domain() {
         $data = [
             "Key" => "test-domain",
-            "Value" => "Test Domain Value"
+            "Value" => "Test Domain Value",
         ];
 
         $domain = new Domain($data);
@@ -30,16 +28,16 @@ class DomainTest extends EntityTest {
         $this->assertEquals("Test Domain Value", $domain->getValue());
     }
 
-    public function testCreateDomains() {
+    public function test_create_domains() {
         $data = [
             [
                 "Key" => "test-domain-1",
-                "Value" => "Test Domain Value 1"
+                "Value" => "Test Domain Value 1",
             ],
             [
                 "Key" => "test-domain-2",
-                "Value" => "Test Domain Value 2"
-            ]
+                "Value" => "Test Domain Value 2",
+            ],
         ];
 
         $domains = new Domains($data);

@@ -12,26 +12,24 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\ContactPersons\{ContactPerson, ContactPersons};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\ContactPersons\ContactPersons;
-use Datev\Entities\ClientMasterData\ContactPersons\ContactPerson;
-
 class ContactPersonsTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "id" => "cp-1",
                     "display_name" => "Hans Meyer",
-                    "department" => "Buchhaltung"
+                    "department" => "Buchhaltung",
                 ],
                 [
                     "id" => "cp-2",
                     "display_name" => "Anna Schmidt",
-                    "department" => "Vertrieb"
-                ]
-            ]
+                    "department" => "Vertrieb",
+                ],
+            ],
         ];
 
         $contactPersons = new ContactPersons($data);

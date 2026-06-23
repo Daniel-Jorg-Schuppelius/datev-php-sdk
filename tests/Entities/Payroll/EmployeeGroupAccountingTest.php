@@ -12,17 +12,15 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\Employees\Groups\Accountings\{EmployeeGroupAccounting, EmployeeGroupAccountings};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\Employees\Groups\Accountings\EmployeeGroupAccounting;
-use Datev\Entities\Payroll\Employees\Groups\Accountings\EmployeeGroupAccountings;
-
 class EmployeeGroupAccountingTest extends EntityTest {
-    public function testCreateEmployeeGroupAccounting(): void {
+    public function test_create_employee_group_accounting(): void {
         $data = [
             "number" => "001",
             "name" => "Buchhaltung Team A",
-            "contact_person" => "Max Mustermann"
+            "contact_person" => "Max Mustermann",
         ];
 
         $employeeGroupAccounting = new EmployeeGroupAccounting($data);
@@ -30,18 +28,18 @@ class EmployeeGroupAccountingTest extends EntityTest {
         $this->assertInstanceOf(EmployeeGroupAccounting::class, $employeeGroupAccounting);
     }
 
-    public function testCreateEmployeeGroupsAccounting(): void {
+    public function test_create_employee_groups_accounting(): void {
         $data = [
             "content" => [
                 [
                     "number" => "001",
-                    "name" => "Buchhaltung Team A"
+                    "name" => "Buchhaltung Team A",
                 ],
                 [
                     "number" => "002",
-                    "name" => "Buchhaltung Team B"
-                ]
-            ]
+                    "name" => "Buchhaltung Team B",
+                ],
+            ],
         ];
 
         $employeeGroupsAccounting = new EmployeeGroupAccountings($data);

@@ -12,16 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\BatchResponse\Succeeded\{SucceededResponse, SucceededResponses};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\BatchResponse\Succeeded\SucceededResponse;
-use Datev\Entities\Payroll\BatchResponse\Succeeded\SucceededResponses;
-
 class SucceededResponseTest extends EntityTest {
-    public function testCreateSucceededResponse(): void {
+    public function test_create_succeeded_response(): void {
         $data = [
             "index" => 0,
-            "created_id" => "12345678"
+            "created_id" => "12345678",
         ];
 
         $response = new SucceededResponse($data);
@@ -29,16 +27,16 @@ class SucceededResponseTest extends EntityTest {
         $this->assertInstanceOf(SucceededResponse::class, $response);
     }
 
-    public function testCreateSucceededResponses(): void {
+    public function test_create_succeeded_responses(): void {
         $data = [
             [
                 "index" => 0,
-                "created_id" => "12345678"
+                "created_id" => "12345678",
             ],
             [
                 "index" => 1,
-                "created_id" => "87654321"
-            ]
+                "created_id" => "87654321",
+            ],
         ];
 
         $responses = new SucceededResponses($data);

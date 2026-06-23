@@ -12,18 +12,16 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\ReasonsForAbsence\{ReasonForAbsence, ReasonsForAbsence};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\ReasonsForAbsence\ReasonsForAbsence;
-use Datev\Entities\Payroll\ReasonsForAbsence\ReasonForAbsence;
-
 class ReasonsForAbsenceTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 ["id" => 1, "name" => "Urlaub"],
-                ["id" => 2, "name" => "Krankheit"]
-            ]
+                ["id" => 2, "name" => "Krankheit"],
+            ],
         ];
 
         $reasons = new ReasonsForAbsence($data);

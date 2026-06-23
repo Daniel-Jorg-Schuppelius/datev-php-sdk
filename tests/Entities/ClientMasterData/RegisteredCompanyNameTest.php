@@ -12,28 +12,26 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\RegisteredCompanyNames\{RegisteredCompanyName, RegisteredCompanyNames};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\RegisteredCompanyNames\RegisteredCompanyName;
-use Datev\Entities\ClientMasterData\RegisteredCompanyNames\RegisteredCompanyNames;
-
 class RegisteredCompanyNameTest extends EntityTest {
-    public function testCreateRegisteredCompanyName() {
+    public function test_create_registered_company_name() {
         $data = [
             "value" => "Muster GmbH",
-            "valid_from" => "2024-01-01"
+            "valid_from" => "2024-01-01",
         ];
 
         $name = new RegisteredCompanyName($data);
         $this->assertInstanceOf(RegisteredCompanyName::class, $name);
     }
 
-    public function testCreateRegisteredCompanyNames() {
+    public function test_create_registered_company_names() {
         $data = [
             [
                 "value" => "Muster GmbH",
-                "valid_from" => "2024-01-01"
-            ]
+                "valid_from" => "2024-01-01",
+            ],
         ];
 
         $names = new RegisteredCompanyNames($data);

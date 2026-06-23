@@ -12,28 +12,26 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\DistributionsOfProfit\{DistributionOfProfit, DistributionsOfProfit};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\DistributionsOfProfit\DistributionOfProfit;
-use Datev\Entities\ClientMasterData\DistributionsOfProfit\DistributionsOfProfit;
-
 class DistributionOfProfitTest extends EntityTest {
-    public function testCreateDistributionOfProfit() {
+    public function test_create_distribution_of_profit() {
         $data = [
             "percentage" => 50.0,
-            "valid_from" => "2024-01-01"
+            "valid_from" => "2024-01-01",
         ];
 
         $distribution = new DistributionOfProfit($data);
         $this->assertInstanceOf(DistributionOfProfit::class, $distribution);
     }
 
-    public function testCreateDistributionsOfProfit() {
+    public function test_create_distributions_of_profit() {
         $data = [
             [
                 "percentage" => 50.0,
-                "valid_from" => "2024-01-01"
-            ]
+                "valid_from" => "2024-01-01",
+            ],
         ];
 
         $distributions = new DistributionsOfProfit($data);

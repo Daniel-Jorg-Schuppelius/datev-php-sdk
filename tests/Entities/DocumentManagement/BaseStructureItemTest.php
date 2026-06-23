@@ -12,17 +12,16 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Datev\Entities\DocumentManagement\StructureItems\BaseStructureItem;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\DocumentManagement\StructureItems\BaseStructureItem;
-
 class BaseStructureItemTest extends EntityTest {
-    public function testCreateBaseStructureItem(): void {
+    public function test_create_base_structure_item(): void {
         $data = [
             "id" => "550e8400-e29b-41d4-a716-446655440000",
             "creation_date" => "2024-01-15T10:30:00.000+00:00",
             "last_modification_date" => "2024-06-20T14:45:00.000+00:00",
-            "revision_comment" => "Initial version"
+            "revision_comment" => "Initial version",
         ];
 
         $item = new BaseStructureItem($data);

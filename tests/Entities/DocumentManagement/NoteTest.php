@@ -12,16 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Datev\Entities\DocumentManagement\Notes\{Note, Notes};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\DocumentManagement\Notes\Note;
-use Datev\Entities\DocumentManagement\Notes\Notes;
-
 class NoteTest extends EntityTest {
-    public function testCreateNote(): void {
+    public function test_create_note(): void {
         $data = [
             "text" => "Bitte überprüfen Sie die Belege",
-            "popup" => true
+            "popup" => true,
         ];
 
         $note = new Note($data);
@@ -31,18 +29,18 @@ class NoteTest extends EntityTest {
         $this->assertTrue($note->getPopup());
     }
 
-    public function testCreateNotes(): void {
+    public function test_create_notes(): void {
         $data = [
             "content" => [
                 [
                     "text" => "Bitte überprüfen Sie die Belege",
-                    "popup" => true
+                    "popup" => true,
                 ],
                 [
                     "text" => "Dokument genehmigt",
-                    "popup" => false
-                ]
-            ]
+                    "popup" => false,
+                ],
+            ],
         ];
 
         $notes = new Notes($data);

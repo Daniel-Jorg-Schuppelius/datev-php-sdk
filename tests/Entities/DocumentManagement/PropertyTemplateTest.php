@@ -12,18 +12,15 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Datev\Entities\DocumentManagement\PropertyTemplates\{PropertyTemplate, PropertyTemplateID, PropertyTemplates};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\DocumentManagement\PropertyTemplates\PropertyTemplate;
-use Datev\Entities\DocumentManagement\PropertyTemplates\PropertyTemplates;
-use Datev\Entities\DocumentManagement\PropertyTemplates\PropertyTemplateID;
-
 class PropertyTemplateTest extends EntityTest {
-    public function testCreatePropertyTemplate(): void {
+    public function test_create_property_template(): void {
         $data = [
             "id" => "tpl-001",
             "name" => "Standardvorlage Rechnung",
-            "supplement" => "Eingangsrechnungen"
+            "supplement" => "Eingangsrechnungen",
         ];
 
         $propertyTemplate = new PropertyTemplate($data);
@@ -35,18 +32,18 @@ class PropertyTemplateTest extends EntityTest {
         $this->assertEquals("Eingangsrechnungen", $propertyTemplate->getSupplement());
     }
 
-    public function testCreatePropertyTemplates(): void {
+    public function test_create_property_templates(): void {
         $data = [
             "content" => [
                 [
                     "id" => "tpl-001",
-                    "name" => "Standardvorlage Rechnung"
+                    "name" => "Standardvorlage Rechnung",
                 ],
                 [
                     "id" => "tpl-002",
-                    "name" => "Standardvorlage Beleg"
-                ]
-            ]
+                    "name" => "Standardvorlage Beleg",
+                ],
+            ],
         ];
 
         $propertyTemplates = new PropertyTemplates($data);

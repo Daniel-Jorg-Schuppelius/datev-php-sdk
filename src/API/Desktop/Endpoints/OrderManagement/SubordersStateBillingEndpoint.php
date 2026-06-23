@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\OrderManagement;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\OrderManagement\SuborderStateBilling\SuborderStateBilling;
-use Datev\Entities\OrderManagement\SuborderStateBilling\SubordersStateBilling;
+use Datev\Entities\OrderManagement\SuborderStateBilling\{SuborderStateBilling, SubordersStateBilling};
 use InvalidArgumentException;
 
 class SubordersStateBillingEndpoint extends EndpointAbstract implements SearchableEndpointInterface {

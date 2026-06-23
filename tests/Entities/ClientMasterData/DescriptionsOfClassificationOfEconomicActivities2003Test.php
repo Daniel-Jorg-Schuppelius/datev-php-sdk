@@ -12,18 +12,16 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\DescriptionsOfClassificationOfEconomicActivities2003\{DescriptionOfClassificationOfEconomicActivities2003, DescriptionsOfClassificationOfEconomicActivities2003};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\DescriptionsOfClassificationOfEconomicActivities2003\DescriptionsOfClassificationOfEconomicActivities2003;
-use Datev\Entities\ClientMasterData\DescriptionsOfClassificationOfEconomicActivities2003\DescriptionOfClassificationOfEconomicActivities2003;
-
 class DescriptionsOfClassificationOfEconomicActivities2003Test extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 ["current_description_of_classification_of_economic_activities_2003" => "Einzelhandel mit Waren verschiedener Art"],
-                ["current_description_of_classification_of_economic_activities_2003" => "Großhandel mit Nahrungsmitteln"]
-            ]
+                ["current_description_of_classification_of_economic_activities_2003" => "Großhandel mit Nahrungsmitteln"],
+            ],
         ];
 
         $descriptions = new DescriptionsOfClassificationOfEconomicActivities2003($data);

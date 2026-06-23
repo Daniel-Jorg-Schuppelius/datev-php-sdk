@@ -12,18 +12,16 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\LocationsOfHeadOffice\{LocationOfHeadOffice, LocationsOfHeadOffice};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\LocationsOfHeadOffice\LocationsOfHeadOffice;
-use Datev\Entities\ClientMasterData\LocationsOfHeadOffice\LocationOfHeadOffice;
-
 class LocationsOfHeadOfficeTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 ["current_location_of_head_office" => "München"],
-                ["current_location_of_head_office" => "Berlin"]
-            ]
+                ["current_location_of_head_office" => "Berlin"],
+            ],
         ];
 
         $locations = new LocationsOfHeadOffice($data);

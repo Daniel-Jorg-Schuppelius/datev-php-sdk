@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\ClientMasterData;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\ClientMasterData\Employees\Employee;
-use Datev\Entities\ClientMasterData\Employees\Employees;
+use Datev\Entities\ClientMasterData\Employees\{Employee, Employees};
 use InvalidArgumentException;
 
 class EmployeesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {

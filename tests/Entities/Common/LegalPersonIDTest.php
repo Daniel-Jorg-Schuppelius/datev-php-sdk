@@ -12,12 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common;
 
+use Datev\Entities\Common\LegalPersonID;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Common\LegalPersonID;
-
 class LegalPersonIDTest extends EntityTest {
-    public function testCreateLegalPersonID(): void {
+    public function test_create_legal_person_id(): void {
         $legalPersonID = new LegalPersonID("550e8400-e29b-41d4-a716-446655440000");
 
         $this->assertInstanceOf(LegalPersonID::class, $legalPersonID);

@@ -12,22 +12,19 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common;
 
+use Datev\Entities\Common\Employees\{Employee, EmployeeID, Employees};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Common\Employees\Employee;
-use Datev\Entities\Common\Employees\EmployeeID;
-use Datev\Entities\Common\Employees\Employees;
-
 class EmployeeTest extends EntityTest {
-    public function testCreateEmployeeID() {
+    public function test_create_employee_id() {
         $id = new EmployeeID("12345678-1234-1234-1234-123456789012");
         $this->assertInstanceOf(EmployeeID::class, $id);
         $this->assertEquals("12345678-1234-1234-1234-123456789012", $id->toString());
     }
 
-    public function testCreateEmployee() {
+    public function test_create_employee() {
         $data = [
-            "id" => "12345678-1234-1234-1234-123456789012"
+            "id" => "12345678-1234-1234-1234-123456789012",
         ];
 
         $employee = new Employee($data);
@@ -36,14 +33,14 @@ class EmployeeTest extends EntityTest {
         $this->assertEquals("12345678-1234-1234-1234-123456789012", $employee->getID()->toString());
     }
 
-    public function testCreateEmployees() {
+    public function test_create_employees() {
         $data = [
             [
-                "id" => "12345678-1234-1234-1234-123456789012"
+                "id" => "12345678-1234-1234-1234-123456789012",
             ],
             [
-                "id" => "12345678-1234-1234-1234-123456789013"
-            ]
+                "id" => "12345678-1234-1234-1234-123456789013",
+            ],
         ];
 
         $employees = new Employees($data);

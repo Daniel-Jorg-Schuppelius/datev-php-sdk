@@ -12,25 +12,23 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\LegalForms\{LegalForm, LegalForms};
+use Datev\Enums\LegalFormType;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\LegalForms\LegalForm;
-use Datev\Entities\ClientMasterData\LegalForms\LegalForms;
-use Datev\Enums\LegalFormType;
-
 class LegalFormTest extends EntityTest {
-    public function testCreateLegalForm() {
+    public function test_create_legal_form() {
         $data = [
             "id" => "legal-form-123",
             "display_name" => "GmbH",
             "short_name" => "GmbH",
             "long_name" => "Gesellschaft mit beschränkter Haftung",
             "nation" => "DE",
-            "type" => 3
+            "type" => 3,
         ];
 
         $legalForm = new LegalForm($data);
-        $this->assertInstanceOf(LegalForm::class, new LegalForm());
+        $this->assertInstanceOf(LegalForm::class, new LegalForm);
         $this->assertInstanceOf(LegalForm::class, $legalForm);
         $this->assertNotNull($legalForm->getID());
         $this->assertEquals("GmbH", $legalForm->getDisplayName());
@@ -40,20 +38,20 @@ class LegalFormTest extends EntityTest {
         $this->assertEquals(LegalFormType::Kapitalgesellschaft, $legalForm->getType());
     }
 
-    public function testCreateLegalForms() {
+    public function test_create_legal_forms() {
         $data = [
             "content" => [
                 [
                     "id" => "lf-001",
                     "display_name" => "GmbH",
-                    "short_name" => "GmbH"
+                    "short_name" => "GmbH",
                 ],
                 [
                     "id" => "lf-002",
                     "display_name" => "AG",
-                    "short_name" => "AG"
-                ]
-            ]
+                    "short_name" => "AG",
+                ],
+            ],
         ];
 
         $legalForms = new LegalForms($data);

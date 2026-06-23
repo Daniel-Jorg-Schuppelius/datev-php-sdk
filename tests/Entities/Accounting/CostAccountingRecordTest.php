@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Datev\Entities\Accounting\CostAccountingRecords\{CostAccountingRecord, CostAccountingRecords};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Accounting\CostAccountingRecords\CostAccountingRecord;
-use Datev\Entities\Accounting\CostAccountingRecords\CostAccountingRecords;
-
 class CostAccountingRecordTest extends EntityTest {
-    public function testCreateCostAccountingRecord() {
+    public function test_create_cost_accounting_record() {
         $data = [
             "id" => 1,
             "amount" => 1500.50,
@@ -26,11 +24,11 @@ class CostAccountingRecordTest extends EntityTest {
             "contra_cost_center" => "20000",
             "date" => "2024-01-15T00:00:00.000+00:00",
             "posting_description" => "Kostenumbuchung",
-            "record_number" => 1
+            "record_number" => 1,
         ];
 
         $record = new CostAccountingRecord($data);
-        $this->assertInstanceOf(CostAccountingRecord::class, new CostAccountingRecord());
+        $this->assertInstanceOf(CostAccountingRecord::class, new CostAccountingRecord);
         $this->assertInstanceOf(CostAccountingRecord::class, $record);
         $this->assertEquals(1500.50, $record->getAmount());
         $this->assertEquals("10000", $record->getCostCenter());
@@ -39,20 +37,20 @@ class CostAccountingRecordTest extends EntityTest {
         $this->assertEquals(1, $record->getRecordNumber());
     }
 
-    public function testCreateCostAccountingRecords() {
+    public function test_create_cost_accounting_records() {
         $data = [
             "content" => [
                 [
                     "id" => 1,
                     "amount" => 1000.00,
-                    "cost_center" => "10000"
+                    "cost_center" => "10000",
                 ],
                 [
                     "id" => 2,
                     "amount" => 2000.00,
-                    "cost_center" => "20000"
-                ]
-            ]
+                    "cost_center" => "20000",
+                ],
+            ],
         ];
 
         $records = new CostAccountingRecords($data);

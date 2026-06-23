@@ -13,8 +13,7 @@ declare(strict_types=1);
 namespace Tests\Endpoints\Payroll;
 
 use Datev\API\Desktop\Endpoints\Payroll\SalaryTypesEndpoint;
-use Datev\Entities\Payroll\Salaries\SalaryTypes\SalaryType;
-use Datev\Entities\Payroll\Salaries\SalaryTypes\SalaryTypes;
+use Datev\Entities\Payroll\Salaries\SalaryTypes\{SalaryType, SalaryTypes};
 use Tests\Contracts\EndpointTest;
 
 class SalaryTypesTest extends EndpointTest {
@@ -25,21 +24,21 @@ class SalaryTypesTest extends EndpointTest {
         return new SalaryTypesEndpoint($this->client, self::getLogger());
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
             'id' => 'ST001',
             'name' => 'Grundgehalt',
-            'description' => 'Monatliches Grundgehalt'
+            'description' => 'Monatliches Grundgehalt',
         ];
 
         $salaryType = SalaryType::fromJson(json_encode($data));
         $this->assertInstanceOf(SalaryType::class, $salaryType);
     }
 
-    public function testJsonSerializeCollection() {
+    public function test_json_serialize_collection() {
         $data = [
             ['id' => 'ST001', 'name' => 'Grundgehalt'],
-            ['id' => 'ST002', 'name' => 'Bonus']
+            ['id' => 'ST002', 'name' => 'Bonus'],
         ];
 
         $salaryTypes = SalaryTypes::fromJson(json_encode($data));
@@ -47,7 +46,7 @@ class SalaryTypesTest extends EndpointTest {
         $this->assertCount(2, $salaryTypes->getValues());
     }
 
-    public function testGetSalaryTypes() {
+    public function test_get_salary_types() {
         $this->endpoint = $this->createEndpoint();
         $salaryTypes = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

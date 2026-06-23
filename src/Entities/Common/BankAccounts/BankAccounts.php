@@ -16,13 +16,15 @@ use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
 /**
- * @extends NamedValues<BankAccount>
+ * @template T of BankAccount
+ * @extends NamedValues<T>
  */
 class BankAccounts extends NamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";
-        if (empty($this->valueClassName))
+        if (empty($this->valueClassName)) {
             $this->valueClassName = BankAccount::class;
+        }
 
         parent::__construct($data, $logger);
     }

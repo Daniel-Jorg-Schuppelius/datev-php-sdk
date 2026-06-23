@@ -12,37 +12,35 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
+use Datev\Entities\PublicSector\TransactionMeterReadings\{TransactionMeterReading, TransactionMeterReadings};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\PublicSector\TransactionMeterReadings\TransactionMeterReading;
-use Datev\Entities\PublicSector\TransactionMeterReadings\TransactionMeterReadings;
-
 class TransactionMeterReadingTest extends EntityTest {
-    public function testCreateTransactionMeterReading() {
+    public function test_create_transaction_meter_reading() {
         $data = [
             "id" => 12345,
-            "status" => "confirmed"
+            "status" => "confirmed",
         ];
 
         $reading = new TransactionMeterReading($data);
-        $this->assertInstanceOf(TransactionMeterReading::class, new TransactionMeterReading());
+        $this->assertInstanceOf(TransactionMeterReading::class, new TransactionMeterReading);
         $this->assertInstanceOf(TransactionMeterReading::class, $reading);
         $this->assertEquals(12345, $reading->getID());
         $this->assertEquals("confirmed", $reading->getStatus());
     }
 
-    public function testCreateTransactionMeterReadings() {
+    public function test_create_transaction_meter_readings() {
         $data = [
             "content" => [
                 [
                     "id" => 1,
-                    "status" => "confirmed"
+                    "status" => "confirmed",
                 ],
                 [
                     "id" => 2,
-                    "status" => "pending"
-                ]
-            ]
+                    "status" => "pending",
+                ],
+            ],
         ];
 
         $readings = new TransactionMeterReadings($data);

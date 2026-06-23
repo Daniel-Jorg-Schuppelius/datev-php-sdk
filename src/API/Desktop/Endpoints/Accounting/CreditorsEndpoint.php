@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\Accounting;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\Accounting\Creditors\Creditor;
-use Datev\Entities\Accounting\Creditors\Creditors;
+use Datev\Entities\Accounting\Creditors\{Creditor, Creditors};
 use InvalidArgumentException;
 
 class CreditorsEndpoint extends EndpointAbstract implements SearchableEndpointInterface {

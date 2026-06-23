@@ -4,18 +4,16 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\JobTitles\{JobTitle, JobTitles};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\JobTitles\JobTitles;
-use Datev\Entities\ClientMasterData\JobTitles\JobTitle;
-
 class JobTitlesTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 ["id" => "jt-1", "title" => "Manager"],
-                ["id" => "jt-2", "title" => "Director"]
-            ]
+                ["id" => "jt-2", "title" => "Director"],
+            ],
         ];
         $collection = new JobTitles($data);
         $this->assertCount(2, $collection->getValues());

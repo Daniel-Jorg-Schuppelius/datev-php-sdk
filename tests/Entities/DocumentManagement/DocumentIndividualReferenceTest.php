@@ -12,14 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Datev\Entities\DocumentManagement\Documents\IndividualReferences\DocumentIndividualReference;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\DocumentManagement\Documents\IndividualReferences\DocumentIndividualReference;
-
 class DocumentIndividualReferenceTest extends EntityTest {
-    public function testCreateDocumentIndividualReference(): void {
+    public function test_create_document_individual_reference(): void {
         $data = [
-            "id" => "550e8400-e29b-41d4-a716-446655440000"
+            "id" => "550e8400-e29b-41d4-a716-446655440000",
         ];
 
         $reference = new DocumentIndividualReference($data);

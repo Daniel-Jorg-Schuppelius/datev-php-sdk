@@ -13,8 +13,7 @@ declare(strict_types=1);
 namespace Tests\Endpoints\Payroll;
 
 use Datev\API\Desktop\Endpoints\Payroll\HourlyWagesEndpoint;
-use Datev\Entities\Payroll\HourlyWages\HourlyWage;
-use Datev\Entities\Payroll\HourlyWages\HourlyWages;
+use Datev\Entities\Payroll\HourlyWages\{HourlyWage, HourlyWages};
 use Tests\Contracts\EndpointTest;
 
 class HourlyWagesTest extends EndpointTest {
@@ -25,20 +24,20 @@ class HourlyWagesTest extends EndpointTest {
         return new HourlyWagesEndpoint($this->client, self::getLogger());
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
             'id' => '12345',
-            'hourly_rate' => 25.50
+            'hourly_rate' => 25.50,
         ];
 
         $wage = HourlyWage::fromJson(json_encode($data));
         $this->assertInstanceOf(HourlyWage::class, $wage);
     }
 
-    public function testJsonSerializeCollection() {
+    public function test_json_serialize_collection() {
         $data = [
             ['id' => '12345', 'hourly_rate' => 25.50],
-            ['id' => '12346', 'hourly_rate' => 30.00]
+            ['id' => '12346', 'hourly_rate' => 30.00],
         ];
 
         $wages = HourlyWages::fromJson(json_encode($data));
@@ -46,7 +45,7 @@ class HourlyWagesTest extends EndpointTest {
         $this->assertCount(2, $wages->getValues());
     }
 
-    public function testGetHourlyWages() {
+    public function test_get_hourly_wages() {
         $this->endpoint = $this->createEndpoint();
         $wages = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

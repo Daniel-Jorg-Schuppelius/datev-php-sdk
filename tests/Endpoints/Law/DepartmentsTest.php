@@ -22,7 +22,7 @@ class DepartmentsTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetDepartments() {
+    public function test_get_departments() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

@@ -12,25 +12,22 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\CorporateStructures\{CorporateStructure, CorporateStructureID, CorporateStructures};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\CorporateStructures\CorporateStructure;
-use Datev\Entities\ClientMasterData\CorporateStructures\CorporateStructureID;
-use Datev\Entities\ClientMasterData\CorporateStructures\CorporateStructures;
-
 class CorporateStructureTest extends EntityTest {
-    public function testCreateCorporateStructureID() {
+    public function test_create_corporate_structure_id() {
         $id = new CorporateStructureID("12345678-1234-1234-1234-123456789012");
         $this->assertInstanceOf(CorporateStructureID::class, $id);
         $this->assertEquals("12345678-1234-1234-1234-123456789012", $id->toString());
     }
 
-    public function testCreateCorporateStructure() {
+    public function test_create_corporate_structure() {
         $data = [
             "id" => "12345678-1234-1234-1234-123456789012",
             "name" => "Hauptniederlassung",
             "number" => 1,
-            "status" => "active"
+            "status" => "active",
         ];
 
         $structure = new CorporateStructure($data);
@@ -39,13 +36,13 @@ class CorporateStructureTest extends EntityTest {
         $this->assertEquals("Hauptniederlassung", $structure->getName());
     }
 
-    public function testCreateCorporateStructures() {
+    public function test_create_corporate_structures() {
         $data = [
             [
                 "id" => "12345678-1234-1234-1234-123456789012",
                 "name" => "Hauptniederlassung",
-                "number" => 1
-            ]
+                "number" => 1,
+            ],
         ];
 
         $structures = new CorporateStructures($data);

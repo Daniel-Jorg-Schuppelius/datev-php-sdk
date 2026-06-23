@@ -13,8 +13,7 @@ declare(strict_types=1);
 namespace Tests\Endpoints\Payroll;
 
 use Datev\API\Desktop\Endpoints\Payroll\CostCentersEndpoint;
-use Datev\Entities\Payroll\CostCenters\CostCenter;
-use Datev\Entities\Payroll\CostCenters\CostCenters;
+use Datev\Entities\Payroll\CostCenters\{CostCenter, CostCenters};
 use Tests\Contracts\EndpointTest;
 
 class CostCentersTest extends EndpointTest {
@@ -25,10 +24,10 @@ class CostCentersTest extends EndpointTest {
         return new CostCentersEndpoint($this->client, self::getLogger());
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
             'id' => 'CC001',
-            'name' => 'Kostenstelle Vertrieb'
+            'name' => 'Kostenstelle Vertrieb',
         ];
 
         $costCenter = CostCenter::fromJson(json_encode($data));
@@ -36,10 +35,10 @@ class CostCentersTest extends EndpointTest {
         $this->assertEquals('Kostenstelle Vertrieb', $costCenter->getName());
     }
 
-    public function testJsonSerializeCollection() {
+    public function test_json_serialize_collection() {
         $data = [
             ['id' => 'CC001', 'name' => 'Vertrieb'],
-            ['id' => 'CC002', 'name' => 'Entwicklung']
+            ['id' => 'CC002', 'name' => 'Entwicklung'],
         ];
 
         $costCenters = CostCenters::fromJson(json_encode($data));
@@ -47,7 +46,7 @@ class CostCentersTest extends EndpointTest {
         $this->assertCount(2, $costCenters->getValues());
     }
 
-    public function testGetCostCenters() {
+    public function test_get_cost_centers() {
         $this->endpoint = $this->createEndpoint();
         $costCenters = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

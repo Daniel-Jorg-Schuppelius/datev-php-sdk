@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
+use Datev\Entities\PublicSector\MeterReadings\{MeterReading, MeterReadings};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\PublicSector\MeterReadings\MeterReading;
-use Datev\Entities\PublicSector\MeterReadings\MeterReadings;
-
 class MeterReadingTest extends EntityTest {
-    public function testCreateMeterReading() {
+    public function test_create_meter_reading() {
         $data = [
             "id" => "r1234567-8901-2345-6789-012345678901",
             "date" => "2024-03-15T00:00:00.000+00:00",
@@ -29,25 +27,25 @@ class MeterReadingTest extends EntityTest {
             "is_estimated" => false,
             "consumption" => 150.0,
             "reader" => "Müller",
-            "comment" => "Regelablesung"
+            "comment" => "Regelablesung",
         ];
 
         $meterReading = new MeterReading($data);
-        $this->assertInstanceOf(MeterReading::class, new MeterReading());
+        $this->assertInstanceOf(MeterReading::class, new MeterReading);
         $this->assertInstanceOf(MeterReading::class, $meterReading);
         $this->assertEquals(1250.5, $meterReading->getValue());
     }
 
-    public function testCreateMeterReadings() {
+    public function test_create_meter_readings() {
         $data = [
             "content" => [
                 [
-                    "id" => "r1234567-8901-2345-6789-012345678901"
+                    "id" => "r1234567-8901-2345-6789-012345678901",
                 ],
                 [
-                    "id" => "r2234567-8901-2345-6789-012345678902"
-                ]
-            ]
+                    "id" => "r2234567-8901-2345-6789-012345678902",
+                ],
+            ],
         ];
 
         $meterReadings = new MeterReadings($data);

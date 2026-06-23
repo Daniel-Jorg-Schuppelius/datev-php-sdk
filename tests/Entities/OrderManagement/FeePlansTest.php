@@ -12,26 +12,24 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Datev\Entities\OrderManagement\FeePlans\{FeePlan, FeePlans};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\OrderManagement\FeePlans\FeePlans;
-use Datev\Entities\OrderManagement\FeePlans\FeePlan;
-
 class FeePlansTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "id" => "fp-1",
                     "fee_plan_name" => "Standard Gebührenplan",
-                    "fee_plan_number" => 1
+                    "fee_plan_number" => 1,
                 ],
                 [
                     "id" => "fp-2",
                     "fee_plan_name" => "Premium Gebührenplan",
-                    "fee_plan_number" => 2
-                ]
-            ]
+                    "fee_plan_number" => 2,
+                ],
+            ],
         ];
 
         $feePlans = new FeePlans($data);

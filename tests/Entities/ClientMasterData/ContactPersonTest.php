@@ -12,26 +12,23 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\ContactPersons\{ContactPerson, ContactPersonID, ContactPersons};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\ContactPersons\ContactPerson;
-use Datev\Entities\ClientMasterData\ContactPersons\ContactPersonID;
-use Datev\Entities\ClientMasterData\ContactPersons\ContactPersons;
-
 class ContactPersonTest extends EntityTest {
-    public function testCreateContactPersonID() {
+    public function test_create_contact_person_id() {
         $id = new ContactPersonID("12345678-1234-1234-1234-123456789012");
         $this->assertInstanceOf(ContactPersonID::class, $id);
         $this->assertEquals("12345678-1234-1234-1234-123456789012", $id->toString());
     }
 
-    public function testCreateContactPerson() {
+    public function test_create_contact_person() {
         $data = [
             "id" => "12345678-1234-1234-1234-123456789012",
             "department" => "Buchhaltung",
             "display_name" => "Max Mustermann",
             "function" => "Leiter",
-            "note" => "Ansprechpartner für Finanzen"
+            "note" => "Ansprechpartner für Finanzen",
         ];
 
         $contactPerson = new ContactPerson($data);
@@ -39,14 +36,14 @@ class ContactPersonTest extends EntityTest {
         $this->assertInstanceOf(ContactPersonID::class, $contactPerson->getID());
     }
 
-    public function testCreateContactPersons() {
+    public function test_create_contact_persons() {
         $data = [
             [
                 "id" => "12345678-1234-1234-1234-123456789012",
                 "department" => "Buchhaltung",
                 "display_name" => "Max Mustermann",
-                "note" => ""
-            ]
+                "note" => "",
+            ],
         ];
 
         $contactPersons = new ContactPersons($data);

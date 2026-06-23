@@ -12,19 +12,16 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\Disabilities\{Disabilities, Disability, DisabilityID};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\Disabilities\Disability;
-use Datev\Entities\Payroll\Disabilities\Disabilities;
-use Datev\Entities\Payroll\Disabilities\DisabilityID;
-
 class DisabilityTest extends EntityTest {
-    public function testCreateDisability(): void {
+    public function test_create_disability(): void {
         $data = [
             "id" => "dis-001",
             "degree_of_disability" => 50.0,
             "issuing_authority" => "Versorgungsamt München",
-            "disability_group" => "Schwerbehindert"
+            "disability_group" => "Schwerbehindert",
         ];
 
         $disability = new Disability($data);
@@ -37,20 +34,20 @@ class DisabilityTest extends EntityTest {
         $this->assertEquals("Schwerbehindert", $disability->getDisabilityGroup());
     }
 
-    public function testCreateDisabilities(): void {
+    public function test_create_disabilities(): void {
         $data = [
             "content" => [
                 [
                     "id" => "dis-001",
                     "degree_of_disability" => 50.0,
-                    "disability_group" => "Schwerbehindert"
+                    "disability_group" => "Schwerbehindert",
                 ],
                 [
                     "id" => "dis-002",
                     "degree_of_disability" => 30.0,
-                    "disability_group" => "Gleichgestellt"
-                ]
-            ]
+                    "disability_group" => "Gleichgestellt",
+                ],
+            ],
         ];
 
         $disabilities = new Disabilities($data);

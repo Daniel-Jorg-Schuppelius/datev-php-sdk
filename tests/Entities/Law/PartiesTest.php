@@ -12,26 +12,24 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
+use Datev\Entities\Law\Parties\{Parties, Party};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Law\Parties\Parties;
-use Datev\Entities\Law\Parties\Party;
-
 class PartiesTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "id" => "party-1",
                     "surname" => "Mustermann",
-                    "party_name" => "Max Mustermann"
+                    "party_name" => "Max Mustermann",
                 ],
                 [
                     "id" => "party-2",
                     "surname" => "GmbH",
-                    "party_name" => "Firma XY GmbH"
-                ]
-            ]
+                    "party_name" => "Firma XY GmbH",
+                ],
+            ],
         ];
 
         $parties = new Parties($data);

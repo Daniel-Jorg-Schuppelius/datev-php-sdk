@@ -14,8 +14,7 @@ namespace Datev\Entities\Common\BankAccounts;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
-use APIToolkit\Entities\Bank\BIC;
-use APIToolkit\Entities\Bank\IBAN;
+use APIToolkit\Entities\Bank\{BIC, IBAN};
 use DateTime;
 use Datev\Entities\ClientMasterData\CountryCodes\Code\CountryCode;
 use Psr\Log\LoggerInterface;

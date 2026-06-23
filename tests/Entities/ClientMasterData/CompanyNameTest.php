@@ -12,48 +12,46 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use DateTime;
+use Datev\Entities\ClientMasterData\CompanyNames\{CompanyName, CompanyNames};
 use Tests\Contracts\EntityTest;
 
-use DateTime;
-use Datev\Entities\ClientMasterData\CompanyNames\CompanyName;
-use Datev\Entities\ClientMasterData\CompanyNames\CompanyNames;
-
 class CompanyNameTest extends EntityTest {
-    public function testCreateCompanyName() {
+    public function test_create_company_name() {
         $data = [
             "valid_from" => "2024-09-30",
-            "value" => "Mustermeier GmbH"
+            "value" => "Mustermeier GmbH",
         ];
 
         $companyName = new CompanyName($data);
         $this->assertTrue($companyName->isValid());
-        $this->assertInstanceOf(CompanyName::class, new CompanyName());
+        $this->assertInstanceOf(CompanyName::class, new CompanyName);
         $this->assertInstanceOf(CompanyName::class, $companyName);
         $this->assertEquals($data, $companyName->toArray(true, "Y-m-d"));
         $this->assertEquals(["current_company_name" => "Mustermeier GmbH"], $companyName->toArray());
         $this->assertEquals(new DateTime("2024-09-30"), $companyName->getValidFrom());
     }
 
-    public function testCreateCompanyNames() {
+    public function test_create_company_names() {
         $data = [
             [
                 "valid_from" => "2024-09-30",
-                "value" => "Mustermeier GmbH"
+                "value" => "Mustermeier GmbH",
             ],
             [
                 "valid_from" => "2024-06-20",
-                "value" => "Mustermax GmbH"
-            ]
+                "value" => "Mustermax GmbH",
+            ],
         ];
         $data1 = [
             [
                 "valid_from" => "2024-09-30T00:00:00.000+00:00",
-                "value" => "Mustermeier GmbH"
+                "value" => "Mustermeier GmbH",
             ],
             [
                 "valid_from" => "2024-06-20T00:00:00.000+00:00",
-                "value" => "Mustermax GmbH"
-            ]
+                "value" => "Mustermax GmbH",
+            ],
         ];
 
         $companyNames = new CompanyNames($data);

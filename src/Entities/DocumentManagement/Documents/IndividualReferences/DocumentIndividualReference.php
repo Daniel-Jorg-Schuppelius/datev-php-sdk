@@ -12,8 +12,7 @@ declare(strict_types=1);
 
 namespace Datev\Entities\DocumentManagement\Documents\IndividualReferences;
 
-use Datev\Entities\DocumentManagement\CorrespondencePartners\CorrespondencePartnerGUID;
-use Datev\Entities\DocumentManagement\CorrespondencePartners\CorrespondencePartnerLink;
+use Datev\Entities\DocumentManagement\CorrespondencePartners\{CorrespondencePartnerGUID, CorrespondencePartnerLink};
 use Datev\Entities\DocumentManagement\IndividualReferences\IndividualReference;
 use Exception;
 

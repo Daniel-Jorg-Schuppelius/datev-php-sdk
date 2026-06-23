@@ -16,7 +16,8 @@ use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
 /**
- * @extends NamedValues<Client>
+ * @template T of Client
+ * @extends NamedValues<T>
  */
 class Clients extends NamedValues {
     public function __construct($data = null, ?LoggerInterface $logger = null) {

@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Datev\Entities\OrderManagement\EmployeesWithGroup\{EmployeeWithGroup, EmployeesWithGroup};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\OrderManagement\EmployeesWithGroup\EmployeeWithGroup;
-use Datev\Entities\OrderManagement\EmployeesWithGroup\EmployeesWithGroup;
-
 class EmployeeWithGroupTest extends EntityTest {
-    public function testCreateEmployeeWithGroup() {
+    public function test_create_employee_with_group() {
         $data = [
             "id" => "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
             "employee_id" => "b2c3d4e5-f6a7-8901-bcde-f12345678901",
@@ -27,8 +25,9 @@ class EmployeeWithGroupTest extends EntityTest {
             "employee_group_id" => 1,
             "employee_group_id_guid" => "c3d4e5f6-a7b8-9012-cdef-123456789012",
             "employee_group_short_name" => "Team A",
-            "employee_group_long_name" => "Team A - Steuerberatung"
-        ];        $employeeGroup = new EmployeeWithGroup($data);
+            "employee_group_long_name" => "Team A - Steuerberatung",
+        ];
+        $employeeGroup = new EmployeeWithGroup($data);
 
         $this->assertInstanceOf(EmployeeWithGroup::class, $employeeGroup);
         $this->assertEquals(100, $employeeGroup->getEmployeeNumber());
@@ -37,23 +36,24 @@ class EmployeeWithGroupTest extends EntityTest {
         $this->assertEquals("Team A", $employeeGroup->getEmployeeGroupShortName());
     }
 
-    public function testCreateEmployeesWithGroup() {
+    public function test_create_employees_with_group() {
         $data = [
             "content" => [
                 [
                     "id" => "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
                     "employee_number" => 100,
                     "employee_name" => "Max Mustermann",
-                    "employee_group_short_name" => "Team A"
+                    "employee_group_short_name" => "Team A",
                 ],
                 [
                     "id" => "b2c3d4e5-f6a7-8901-bcde-f12345678901",
                     "employee_number" => 101,
                     "employee_name" => "Erika Musterfrau",
-                    "employee_group_short_name" => "Team B"
-                ]
-            ]
-        ];        $employees = new EmployeesWithGroup($data);
+                    "employee_group_short_name" => "Team B",
+                ],
+            ],
+        ];
+        $employees = new EmployeesWithGroup($data);
 
         $this->assertInstanceOf(EmployeesWithGroup::class, $employees);
         $this->assertCount(2, $employees->getValues());

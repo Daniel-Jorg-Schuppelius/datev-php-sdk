@@ -11,8 +11,7 @@
 namespace Tests\Endpoints\Diagnostics;
 
 use Datev\API\Desktop\Endpoints\Diagnostics\DomainsEndpoint;
-use Datev\Entities\Diagnostics\Domains\Domain;
-use Datev\Entities\Diagnostics\Domains\Domains;
+use Datev\Entities\Diagnostics\Domains\{Domain, Domains};
 use Tests\Contracts\EndpointTest;
 
 class DomainsTest extends EndpointTest {
@@ -24,10 +23,10 @@ class DomainsTest extends EndpointTest {
         $this->apiDisabled = true; // API is disabled
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
             "Key" => "accounting",
-            "Value" => "v1"
+            "Value" => "v1",
         ];
 
         $domain = new Domain($data);
@@ -35,7 +34,7 @@ class DomainsTest extends EndpointTest {
         $this->assertEquals(json_encode($data), $domain->toJson());  // the order of the $data array is important for this test.
     }
 
-    public function testCreateAndDeleteArticleAPI() {
+    public function test_create_and_delete_article_api() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

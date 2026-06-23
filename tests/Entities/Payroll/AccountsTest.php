@@ -12,28 +12,26 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\Accounts\{Account, Accounts};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\Accounts\Accounts;
-use Datev\Entities\Payroll\Accounts\Account;
-
 class AccountsTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "id" => "00001",
                     "iban" => "DE89370400440532013000",
                     "bic" => "COBADEFFXXX",
-                    "differing_account_holder" => "Max Mustermann"
+                    "differing_account_holder" => "Max Mustermann",
                 ],
                 [
                     "id" => "00002",
                     "iban" => "DE12500105170648489890",
                     "bic" => "INGDDEFFXXX",
-                    "differing_account_holder" => "Erika Musterfrau"
-                ]
-            ]
+                    "differing_account_holder" => "Erika Musterfrau",
+                ],
+            ],
         ];
 
         $accounts = new Accounts($data);

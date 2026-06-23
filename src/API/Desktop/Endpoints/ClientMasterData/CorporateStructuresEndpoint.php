@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\ClientMasterData;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\ClientMasterData\CorporateStructures\CorporateStructure;
-use Datev\Entities\ClientMasterData\CorporateStructures\CorporateStructures;
+use Datev\Entities\ClientMasterData\CorporateStructures\{CorporateStructure, CorporateStructures};
 use Datev\Entities\ClientMasterData\Establishments\Establishment;
 use InvalidArgumentException;
 

@@ -12,18 +12,15 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Datev\Entities\DocumentManagement\AcknowledgementUsers\{AcknowledgementUser, AcknowledgementUserID, AcknowledgementUsers};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\DocumentManagement\AcknowledgementUsers\AcknowledgementUser;
-use Datev\Entities\DocumentManagement\AcknowledgementUsers\AcknowledgementUsers;
-use Datev\Entities\DocumentManagement\AcknowledgementUsers\AcknowledgementUserID;
-
 class AcknowledgementUserTest extends EntityTest {
-    public function testCreateAcknowledgementUser(): void {
+    public function test_create_acknowledgement_user(): void {
         $data = [
             "id" => "550e8400-e29b-41d4-a716-446655440000",
             "name" => "Max Mustermann",
-            "is_deleted" => false
+            "is_deleted" => false,
         ];
 
         $acknowledgementUser = new AcknowledgementUser($data);
@@ -35,20 +32,20 @@ class AcknowledgementUserTest extends EntityTest {
         $this->assertFalse($acknowledgementUser->isDeleted());
     }
 
-    public function testCreateAcknowledgementUsers(): void {
+    public function test_create_acknowledgement_users(): void {
         $data = [
             "content" => [
                 [
                     "id" => "550e8400-e29b-41d4-a716-446655440000",
                     "name" => "Max Mustermann",
-                    "is_deleted" => false
+                    "is_deleted" => false,
                 ],
                 [
                     "id" => "550e8400-e29b-41d4-a716-446655440001",
                     "name" => "Erika Musterfrau",
-                    "is_deleted" => false
-                ]
-            ]
+                    "is_deleted" => false,
+                ],
+            ],
         ];
 
         $acknowledgementUsers = new AcknowledgementUsers($data);

@@ -12,18 +12,15 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\Salaries\SalaryTypes\{SalaryType, SalaryTypeID, SalaryTypes};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\Salaries\SalaryTypes\SalaryType;
-use Datev\Entities\Payroll\Salaries\SalaryTypes\SalaryTypes;
-use Datev\Entities\Payroll\Salaries\SalaryTypes\SalaryTypeID;
-
 class SalaryTypeTest extends EntityTest {
-    public function testCreateSalaryType(): void {
+    public function test_create_salary_type(): void {
         $data = [
             "id" => "st-001",
             "name" => "Grundgehalt",
-            "core" => "base"
+            "core" => "base",
         ];
 
         $salaryType = new SalaryType($data);
@@ -35,18 +32,18 @@ class SalaryTypeTest extends EntityTest {
         $this->assertEquals("base", $salaryType->getCore());
     }
 
-    public function testCreateSalaryTypes(): void {
+    public function test_create_salary_types(): void {
         $data = [
             "content" => [
                 [
                     "id" => "st-001",
-                    "name" => "Grundgehalt"
+                    "name" => "Grundgehalt",
                 ],
                 [
                     "id" => "st-002",
-                    "name" => "Bonus"
-                ]
-            ]
+                    "name" => "Bonus",
+                ],
+            ],
         ];
 
         $salaryTypes = new SalaryTypes($data);

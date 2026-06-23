@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\ClientMasterData;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\ClientMasterData\DeletionLogs\DeletionLog;
-use Datev\Entities\ClientMasterData\DeletionLogs\DeletionLogs;
+use Datev\Entities\ClientMasterData\DeletionLogs\{DeletionLog, DeletionLogs};
 
 class DeletionLogEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointPrefix = 'master-data/v1';

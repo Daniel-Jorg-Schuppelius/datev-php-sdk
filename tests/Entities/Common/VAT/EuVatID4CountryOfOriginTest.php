@@ -12,12 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common\VAT;
 
+use Datev\Entities\Common\VAT\EuVatID4CountryOfOrigin;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Common\VAT\EuVatID4CountryOfOrigin;
-
 class EuVatID4CountryOfOriginTest extends EntityTest {
-    public function testCreateEuVatID4CountryOfOrigin(): void {
+    public function test_create_eu_vat_i_d4_country_of_origin(): void {
         $euVatID4Country = new EuVatID4CountryOfOrigin("DE987654321");
 
         $this->assertInstanceOf(EuVatID4CountryOfOrigin::class, $euVatID4Country);

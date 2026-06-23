@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\DescriptionsOfClassificationOfEconomicActivities2003\{DescriptionOfClassificationOfEconomicActivities2003, DescriptionsOfClassificationOfEconomicActivities2003};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\DescriptionsOfClassificationOfEconomicActivities2003\DescriptionOfClassificationOfEconomicActivities2003;
-use Datev\Entities\ClientMasterData\DescriptionsOfClassificationOfEconomicActivities2003\DescriptionsOfClassificationOfEconomicActivities2003;
-
 class DescriptionOfClassificationOfEconomicActivities2003Test extends EntityTest {
-    public function testCreateDescriptionOfClassificationOfEconomicActivities2003(): void {
+    public function test_create_description_of_classification_of_economic_activities2003(): void {
         $data = [
             "value" => "Anbau von Getreide",
             "valid_from" => "2020-01-01",
@@ -28,7 +26,7 @@ class DescriptionOfClassificationOfEconomicActivities2003Test extends EntityTest
         $this->assertInstanceOf(DescriptionOfClassificationOfEconomicActivities2003::class, $description);
     }
 
-    public function testCreateDescriptionsOfClassificationOfEconomicActivities2003(): void {
+    public function test_create_descriptions_of_classification_of_economic_activities2003(): void {
         $data = [
             [
                 "value" => "Anbau von Getreide",

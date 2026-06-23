@@ -12,20 +12,17 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\Taxations\{Taxation, TaxationID, Taxations};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\Taxations\Taxation;
-use Datev\Entities\Payroll\Taxations\Taxations;
-use Datev\Entities\Payroll\Taxations\TaxationID;
-
 class TaxationTest extends EntityTest {
-    public function testCreateTaxation(): void {
+    public function test_create_taxation(): void {
         $data = [
             "id" => "tax-001",
             "tax_identification_number" => "12345678901",
             "employment_type" => "Hauptbeschäftigung",
             "requested_annual_allowance" => 1000.00,
-            "is_two_percent_flat_rate_taxation" => false
+            "is_two_percent_flat_rate_taxation" => false,
         ];
 
         $taxation = new Taxation($data);
@@ -39,20 +36,20 @@ class TaxationTest extends EntityTest {
         $this->assertFalse($taxation->getIsTwoPercentFlatRateTaxation());
     }
 
-    public function testCreateTaxations(): void {
+    public function test_create_taxations(): void {
         $data = [
             "content" => [
                 [
                     "id" => "tax-001",
                     "tax_identification_number" => "12345678901",
-                    "employment_type" => "Hauptbeschäftigung"
+                    "employment_type" => "Hauptbeschäftigung",
                 ],
                 [
                     "id" => "tax-002",
                     "tax_identification_number" => "98765432109",
-                    "employment_type" => "Nebenbeschäftigung"
-                ]
-            ]
+                    "employment_type" => "Nebenbeschäftigung",
+                ],
+            ],
         ];
 
         $taxations = new Taxations($data);

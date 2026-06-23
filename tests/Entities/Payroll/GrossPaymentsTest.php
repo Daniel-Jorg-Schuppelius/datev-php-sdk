@@ -12,28 +12,26 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\GrossPayments\{GrossPayment, GrossPayments};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\GrossPayments\GrossPayments;
-use Datev\Entities\Payroll\GrossPayments\GrossPayment;
-
 class GrossPaymentsTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "id" => "1",
                     "personnel_number" => "00001",
                     "amount" => 3500.00,
-                    "payment_interval" => "monatlich"
+                    "payment_interval" => "monatlich",
                 ],
                 [
                     "id" => "2",
                     "personnel_number" => "00002",
                     "amount" => 4000.00,
-                    "payment_interval" => "monatlich"
-                ]
-            ]
+                    "payment_interval" => "monatlich",
+                ],
+            ],
         ];
 
         $grossPayments = new GrossPayments($data);

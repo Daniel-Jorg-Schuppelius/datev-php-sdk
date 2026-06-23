@@ -12,14 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\Relationships\{Relationship, Relationships};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\Relationships\Relationship;
-use Datev\Entities\ClientMasterData\Relationships\Relationships;
-use Datev\Enums\PersonType;
-
 class RelationshipTest extends EntityTest {
-    public function testCreateRelationship() {
+    public function test_create_relationship() {
         $data = [
             "id" => "test-relationship-123",
             "abbreviation" => "GF",
@@ -31,11 +28,11 @@ class RelationshipTest extends EntityTest {
             "has_addressee_type" => "natural_person",
             "is_addressee_id" => "addr-002",
             "is_addressee_display_name" => "Musterfirma GmbH",
-            "is_addressee_type" => "legal_person"
+            "is_addressee_type" => "legal_person",
         ];
 
         $relationship = new Relationship($data);
-        $this->assertInstanceOf(Relationship::class, new Relationship());
+        $this->assertInstanceOf(Relationship::class, new Relationship);
         $this->assertInstanceOf(Relationship::class, $relationship);
         $this->assertNotNull($relationship->getID());
         $this->assertEquals("GF", $relationship->getAbbreviation());
@@ -46,20 +43,20 @@ class RelationshipTest extends EntityTest {
         $this->assertEquals("Musterfirma GmbH", $relationship->getIsAddresseeDisplayName());
     }
 
-    public function testCreateRelationships() {
+    public function test_create_relationships() {
         $data = [
             "content" => [
                 [
                     "id" => "rel-001",
                     "abbreviation" => "GF",
-                    "name" => "Geschäftsführer"
+                    "name" => "Geschäftsführer",
                 ],
                 [
                     "id" => "rel-002",
                     "abbreviation" => "PM",
-                    "name" => "Prokurist"
-                ]
-            ]
+                    "name" => "Prokurist",
+                ],
+            ],
         ];
 
         $relationships = new Relationships($data);

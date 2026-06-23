@@ -12,39 +12,39 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\Employees\{Employee, Employees};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\Employees\Employee;
-use Datev\Entities\Payroll\Employees\Employees;
-
 class EmployeeTest extends EntityTest {
-    public function testCreateEmployee() {
+    public function test_create_employee() {
         $data = [
             "id" => "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
             "surname" => "Mustermann",
             "first_name" => "Max",
             "company_personnel_number" => "EMP001",
-            "date_of_commencement_of_employment" => "2020-01-15"
-        ];        $employee = new Employee($data);
+            "date_of_commencement_of_employment" => "2020-01-15",
+        ];
+        $employee = new Employee($data);
 
         $this->assertInstanceOf(Employee::class, $employee);
     }
 
-    public function testCreateEmployees() {
+    public function test_create_employees() {
         $data = [
             "content" => [
                 [
                     "id" => "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
                     "surname" => "Mustermann",
-                    "first_name" => "Max"
+                    "first_name" => "Max",
                 ],
                 [
                     "id" => "b2c3d4e5-f6a7-8901-bcde-f12345678901",
                     "surname" => "Musterfrau",
-                    "first_name" => "Erika"
-                ]
-            ]
-        ];        $employees = new Employees($data);
+                    "first_name" => "Erika",
+                ],
+            ],
+        ];
+        $employees = new Employees($data);
 
         $this->assertInstanceOf(Employees::class, $employees);
         $this->assertCount(2, $employees->getValues());

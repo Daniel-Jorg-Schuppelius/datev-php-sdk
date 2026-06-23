@@ -12,26 +12,24 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Datev\Entities\OrderManagement\Orders\{Order, Orders};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\OrderManagement\Orders\Orders;
-use Datev\Entities\OrderManagement\Orders\Order;
-
 class OrdersTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "order_id" => 1,
                     "order_name" => "Jahresabschluss 2023",
-                    "completion_status" => "active"
+                    "completion_status" => "active",
                 ],
                 [
                     "order_id" => 2,
                     "order_name" => "Lohnbuchhaltung 2024",
-                    "completion_status" => "pending"
-                ]
-            ]
+                    "completion_status" => "pending",
+                ],
+            ],
         ];
 
         $orders = new Orders($data);

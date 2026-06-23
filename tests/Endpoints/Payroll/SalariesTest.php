@@ -13,8 +13,7 @@ declare(strict_types=1);
 namespace Tests\Endpoints\Payroll;
 
 use Datev\API\Desktop\Endpoints\Payroll\SalariesEndpoint;
-use Datev\Entities\Payroll\Salaries\Salary;
-use Datev\Entities\Payroll\Salaries\Salaries;
+use Datev\Entities\Payroll\Salaries\{Salaries, Salary};
 use Tests\Contracts\EndpointTest;
 
 class SalariesTest extends EndpointTest {
@@ -25,21 +24,21 @@ class SalariesTest extends EndpointTest {
         return new SalariesEndpoint($this->client, self::getLogger());
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
             'id' => '12345',
             'amount' => 4500.00,
-            'currency' => 'EUR'
+            'currency' => 'EUR',
         ];
 
         $salary = Salary::fromJson(json_encode($data));
         $this->assertInstanceOf(Salary::class, $salary);
     }
 
-    public function testJsonSerializeCollection() {
+    public function test_json_serialize_collection() {
         $data = [
             ['id' => '12345', 'amount' => 4500.00],
-            ['id' => '12346', 'amount' => 5000.00]
+            ['id' => '12346', 'amount' => 5000.00],
         ];
 
         $salaries = Salaries::fromJson(json_encode($data));
@@ -47,7 +46,7 @@ class SalariesTest extends EndpointTest {
         $this->assertCount(2, $salaries->getValues());
     }
 
-    public function testGetSalaries() {
+    public function test_get_salaries() {
         $this->endpoint = $this->createEndpoint();
         $salaries = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

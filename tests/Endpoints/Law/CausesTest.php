@@ -22,7 +22,7 @@ class CausesTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetCauses() {
+    public function test_get_causes() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

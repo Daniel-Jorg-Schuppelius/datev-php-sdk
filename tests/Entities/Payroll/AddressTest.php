@@ -12,20 +12,18 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\Addresses\{Address, Addresses};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\Addresses\Address;
-use Datev\Entities\Payroll\Addresses\Addresses;
-
 class AddressTest extends EntityTest {
-    public function testCreateAddress(): void {
+    public function test_create_address(): void {
         $data = [
             "id" => "addr-001",
             "street" => "Musterstraße",
             "house_number" => "123",
             "city" => "München",
             "postal_code" => "80331",
-            "country" => "Deutschland"
+            "country" => "Deutschland",
         ];
 
         $address = new Address($data);
@@ -37,20 +35,20 @@ class AddressTest extends EntityTest {
         $this->assertEquals("80331", $address->getPostalCode());
     }
 
-    public function testCreateAddresses(): void {
+    public function test_create_addresses(): void {
         $data = [
             "content" => [
                 [
                     "id" => "addr-001",
                     "street" => "Musterstraße",
-                    "city" => "München"
+                    "city" => "München",
                 ],
                 [
                     "id" => "addr-002",
                     "street" => "Beispielweg",
-                    "city" => "Berlin"
-                ]
-            ]
+                    "city" => "Berlin",
+                ],
+            ],
         ];
 
         $addresses = new Addresses($data);

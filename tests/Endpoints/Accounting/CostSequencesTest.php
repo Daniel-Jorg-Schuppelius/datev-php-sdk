@@ -23,7 +23,7 @@ class CostSequencesTest extends EndpointTest {
         return new CostSequencesEndpoint($this->client, self::getLogger());
     }
 
-    public function testGetCostSequences() {
+    public function test_get_cost_sequences() {
         $this->skipMockIfComplexEntity();
 
         $this->endpoint = $this->createEndpoint();

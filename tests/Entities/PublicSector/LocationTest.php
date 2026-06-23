@@ -12,12 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
+use Datev\Entities\PublicSector\Common\Location;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\PublicSector\Common\Location;
-
 class LocationTest extends EntityTest {
-    public function testCreateLocation(): void {
+    public function test_create_location(): void {
         $data = [
             "id" => 1,
             "description" => "Hauptstandort",

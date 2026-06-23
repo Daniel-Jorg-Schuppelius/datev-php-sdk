@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Datev\Entities\Accounting\Debitors\{Debitor, Debitors};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Accounting\Debitors\Debitor;
-use Datev\Entities\Accounting\Debitors\Debitors;
-
 class DebitorTest extends EntityTest {
-    public function testCreateDebitor() {
+    public function test_create_debitor() {
         $data = [
             "id" => 10001,
             "account_number" => 10001,
@@ -29,11 +27,11 @@ class DebitorTest extends EntityTest {
             "eu_vat_id_country_code" => "DE",
             "eu_vat_id_number" => "123456789",
             "is_business_partner_active" => true,
-            "date_last_modification" => "2024-12-28T10:30:00.000+00:00"
+            "date_last_modification" => "2024-12-28T10:30:00.000+00:00",
         ];
 
         $debitor = new Debitor($data);
-        $this->assertInstanceOf(Debitor::class, new Debitor());
+        $this->assertInstanceOf(Debitor::class, new Debitor);
         $this->assertInstanceOf(Debitor::class, $debitor);
         $this->assertEquals(10001, $debitor->getAccountNumber());
         $this->assertEquals("Muster GmbH", $debitor->getCaption());
@@ -41,20 +39,20 @@ class DebitorTest extends EntityTest {
         $this->assertTrue($debitor->isBusinessPartnerActive());
     }
 
-    public function testCreateDebitors() {
+    public function test_create_debitors() {
         $data = [
             "content" => [
                 [
                     "id" => 10001,
                     "account_number" => 10001,
-                    "caption" => "Debitor 1"
+                    "caption" => "Debitor 1",
                 ],
                 [
                     "id" => 10002,
                     "account_number" => 10002,
-                    "caption" => "Debitor 2"
-                ]
-            ]
+                    "caption" => "Debitor 2",
+                ],
+            ],
         ];
 
         $debitors = new Debitors($data);

@@ -22,7 +22,7 @@ class ChargeRatesTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetChargeRates() {
+    public function test_get_charge_rates() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

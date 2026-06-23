@@ -12,8 +12,7 @@ declare(strict_types=1);
 
 namespace Tests\Mocks;
 
-use APIToolkit\Contracts\Interfaces\API\ApiClientInterface;
-use APIToolkit\Contracts\Interfaces\API\AuthenticationInterface;
+use APIToolkit\Contracts\Interfaces\API\{ApiClientInterface, AuthenticationInterface};
 use ERRORToolkit\Traits\ErrorLog;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
@@ -244,7 +243,7 @@ class MockClient implements ApiClientInterface {
             $this->logDebug("No mock response found for {$method} {$uri}, returning 404");
             return new Response(404, ['Content-Type' => 'application/json'], json_encode([
                 'error' => 'Not Found',
-                'message' => "No mock response registered for {$method} {$uri}"
+                'message' => "No mock response registered for {$method} {$uri}",
             ]));
         }
 

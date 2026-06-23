@@ -12,23 +12,22 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
+use Datev\Entities\Law\Budgets\Budget;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Law\Budgets\Budget;
-
 class BudgetTest extends EntityTest {
-    public function testCreateBudget() {
+    public function test_create_budget() {
         $data = [
             "id" => 1,
             "budget" => 1000.00,
             "sum_time_expenses" => 200.00,
             "sum_taxable_expenses" => 329.00,
             "unused_budget" => 471.00,
-            "currency_unit" => "EUR"
+            "currency_unit" => "EUR",
         ];
 
         $budget = new Budget($data);
-        $this->assertInstanceOf(Budget::class, new Budget());
+        $this->assertInstanceOf(Budget::class, new Budget);
         $this->assertInstanceOf(Budget::class, $budget);
         $this->assertEquals(1, $budget->getID());
         $this->assertEquals(1000.00, $budget->getBudget());
@@ -38,7 +37,7 @@ class BudgetTest extends EntityTest {
         $this->assertEquals("EUR", $budget->getCurrencyUnit());
     }
 
-    public function testCreateEmptyBudget() {
+    public function test_create_empty_budget() {
         $budget = new Budget(null);
         $this->assertInstanceOf(Budget::class, $budget);
         $this->assertNull($budget->getID());

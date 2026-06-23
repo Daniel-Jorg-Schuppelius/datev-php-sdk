@@ -23,7 +23,7 @@ class GeneralLedgerAccountsUtilizedTest extends EndpointTest {
         return new GeneralLedgerAccountsUtilizedEndpoint($this->client, self::getLogger());
     }
 
-    public function testGetGeneralLedgerAccountsUtilized() {
+    public function test_get_general_ledger_accounts_utilized() {
         $this->skipMockIfComplexEntity();
 
         $this->endpoint = $this->createEndpoint();

@@ -22,7 +22,7 @@ class CostCentersTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetCostCenters() {
+    public function test_get_cost_centers() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

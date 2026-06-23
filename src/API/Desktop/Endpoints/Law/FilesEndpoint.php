@@ -17,11 +17,9 @@ use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use Datev\Entities\Law\Budgets\Budget;
 use Datev\Entities\Law\CustomFields\CustomFields;
-use Datev\Entities\Law\Files\LawFile;
-use Datev\Entities\Law\Files\LawFiles;
+use Datev\Entities\Law\Files\{LawFile, LawFiles};
 use Datev\Entities\Law\LevelsOfJurisdiction\LevelsOfJurisdiction;
-use Datev\Entities\Law\Parties\Parties;
-use Datev\Entities\Law\Parties\PartyID;
+use Datev\Entities\Law\Parties\{Parties, PartyID};
 use InvalidArgumentException;
 
 class FilesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
@@ -41,7 +39,7 @@ class FilesEndpoint extends EndpointAbstract implements SearchableEndpointInterf
             }
 
             return LawFile::fromJson($response, self::$logger);
-        }, "Fetching LawFile (ID: {$id})");
+        }, "Fetching LawFile (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?LawFiles {
@@ -65,7 +63,7 @@ class FilesEndpoint extends EndpointAbstract implements SearchableEndpointInterf
             }
 
             return $response;
-        }, "Fetching ReferenceSheet for LawFile (ID: {$id})");
+        }, "Fetching ReferenceSheet for LawFile (ID: {$id->toString()})");
     }
 
     public function getLevelsOfJurisdiction(ID $id): ?LevelsOfJurisdiction {
@@ -77,7 +75,7 @@ class FilesEndpoint extends EndpointAbstract implements SearchableEndpointInterf
             }
 
             return LevelsOfJurisdiction::fromJson($response, self::$logger);
-        }, "Fetching LevelsOfJurisdiction for LawFile (ID: {$id})");
+        }, "Fetching LevelsOfJurisdiction for LawFile (ID: {$id->toString()})");
     }
 
     public function getCustomFields(ID $id): ?CustomFields {
@@ -89,7 +87,7 @@ class FilesEndpoint extends EndpointAbstract implements SearchableEndpointInterf
             }
 
             return CustomFields::fromJson($response, self::$logger);
-        }, "Fetching CustomFields for LawFile (ID: {$id})");
+        }, "Fetching CustomFields for LawFile (ID: {$id->toString()})");
     }
 
     public function getParties(ID $id): ?Parties {
@@ -101,7 +99,7 @@ class FilesEndpoint extends EndpointAbstract implements SearchableEndpointInterf
             }
 
             return Parties::fromJson($response, self::$logger);
-        }, "Fetching Parties for LawFile (ID: {$id})");
+        }, "Fetching Parties for LawFile (ID: {$id->toString()})");
     }
 
     public function getPartyCustomFields(ID $fileId, PartyID $partyId): ?CustomFields {
@@ -113,7 +111,7 @@ class FilesEndpoint extends EndpointAbstract implements SearchableEndpointInterf
             }
 
             return CustomFields::fromJson($response, self::$logger);
-        }, "Fetching CustomFields for Party (FileID: {$fileId}, PartyID: {$partyId})");
+        }, "Fetching CustomFields for Party (FileID: {$fileId->toString()}, PartyID: {$partyId})");
     }
 
     public function getBudget(ID $id): ?Budget {
@@ -125,6 +123,6 @@ class FilesEndpoint extends EndpointAbstract implements SearchableEndpointInterf
             }
 
             return Budget::fromJson($response, self::$logger);
-        }, "Fetching Budget for LawFile (ID: {$id})");
+        }, "Fetching Budget for LawFile (ID: {$id->toString()})");
     }
 }

@@ -12,28 +12,26 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\Surnames\{Surname, Surnames};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\Surnames\Surname;
-use Datev\Entities\ClientMasterData\Surnames\Surnames;
-
 class SurnameTest extends EntityTest {
-    public function testCreateSurname() {
+    public function test_create_surname() {
         $data = [
             "value" => "Mustermann",
-            "valid_from" => "2024-01-01"
+            "valid_from" => "2024-01-01",
         ];
 
         $surname = new Surname($data);
         $this->assertInstanceOf(Surname::class, $surname);
     }
 
-    public function testCreateSurnames() {
+    public function test_create_surnames() {
         $data = [
             [
                 "value" => "Mustermann",
-                "valid_from" => "2024-01-01"
-            ]
+                "valid_from" => "2024-01-01",
+            ],
         ];
 
         $surnames = new Surnames($data);

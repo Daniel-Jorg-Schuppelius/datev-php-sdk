@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\OrderManagement;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\OrderManagement\Orders\Order;
-use Datev\Entities\OrderManagement\Orders\Orders;
+use Datev\Entities\OrderManagement\Orders\{Order, Orders};
 use InvalidArgumentException;
 
 class OrdersEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
@@ -62,7 +61,7 @@ class OrdersEndpoint extends EndpointAbstract implements SearchableEndpointInter
         return $this->logDebugWithTimer(function () use ($orderId, $order) {
             $response = parent::putContents($order->toArray(), [], "{$this->getEndpointUrl()}/{$orderId}");
 
-            return $response !== false;
+            return $response !== '';
         }, "Updating Order (ID: {$orderId})");
     }
 }

@@ -4,18 +4,16 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
+use Datev\Entities\Law\CustomFields\{CustomField, CustomFields};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Law\CustomFields\CustomFields;
-use Datev\Entities\Law\CustomFields\CustomField;
-
 class CustomFieldsTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 ["id" => "cf-1", "name" => "Custom Field 1", "datatype" => "string"],
-                ["id" => "cf-2", "name" => "Custom Field 2", "datatype" => "int"]
-            ]
+                ["id" => "cf-2", "name" => "Custom Field 2", "datatype" => "int"],
+            ],
         ];
         $collection = new CustomFields($data);
         $this->assertCount(2, $collection->getValues());

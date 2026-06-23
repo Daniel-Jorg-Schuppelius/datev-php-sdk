@@ -12,28 +12,26 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\JobTitles\{JobTitle, JobTitles};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\JobTitles\JobTitle;
-use Datev\Entities\ClientMasterData\JobTitles\JobTitles;
-
 class JobTitleTest extends EntityTest {
-    public function testCreateJobTitle() {
+    public function test_create_job_title() {
         $data = [
             "value" => "Geschäftsführer",
-            "valid_from" => "2024-01-01"
+            "valid_from" => "2024-01-01",
         ];
 
         $title = new JobTitle($data);
         $this->assertInstanceOf(JobTitle::class, $title);
     }
 
-    public function testCreateJobTitles() {
+    public function test_create_job_titles() {
         $data = [
             [
                 "value" => "Geschäftsführer",
-                "valid_from" => "2024-01-01"
-            ]
+                "valid_from" => "2024-01-01",
+            ],
         ];
 
         $titles = new JobTitles($data);

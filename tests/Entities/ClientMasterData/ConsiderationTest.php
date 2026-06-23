@@ -12,28 +12,26 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\Considerations\{Consideration, Considerations};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\Considerations\Consideration;
-use Datev\Entities\ClientMasterData\Considerations\Considerations;
-
 class ConsiderationTest extends EntityTest {
-    public function testCreateConsideration() {
+    public function test_create_consideration() {
         $data = [
             "value" => "2024-01-15",
-            "valid_from" => "2024-01-01"
+            "valid_from" => "2024-01-01",
         ];
 
         $consideration = new Consideration($data);
         $this->assertInstanceOf(Consideration::class, $consideration);
     }
 
-    public function testCreateConsiderations() {
+    public function test_create_considerations() {
         $data = [
             [
                 "value" => "2024-01-15",
-                "valid_from" => "2024-01-01"
-            ]
+                "valid_from" => "2024-01-01",
+            ],
         ];
 
         $considerations = new Considerations($data);

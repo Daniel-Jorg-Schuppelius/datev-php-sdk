@@ -12,20 +12,17 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Datev\Entities\Accounting\AdvancePayments\{AdvancePayment, AdvancePayments};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Accounting\AdvancePayments\AdvancePayment;
-use Datev\Entities\Accounting\AdvancePayments\AdvancePayments;
-
 class AdvancePaymentTest extends EntityTest {
-    
-    public function testCreateAdvancePayment(): void {
+    public function test_create_advance_payment(): void {
         $data = [
             "eu_member_state" => "DE",
             "eu_tax_rate" => 19.0,
             "order_number" => "2024-001",
             "revenue_account" => 8400,
-            "tax_key" => 3
+            "tax_key" => 3,
         ];
 
         $advancePayment = new AdvancePayment($data);
@@ -33,18 +30,18 @@ class AdvancePaymentTest extends EntityTest {
         $this->assertInstanceOf(AdvancePayment::class, $advancePayment);
     }
 
-    public function testCreateAdvancePayments(): void {
+    public function test_create_advance_payments(): void {
         $data = [
             "content" => [
                 [
                     "order_number" => "2024-001",
-                    "revenue_account" => 8400
+                    "revenue_account" => 8400,
                 ],
                 [
                     "order_number" => "2024-002",
-                    "revenue_account" => 8500
-                ]
-            ]
+                    "revenue_account" => 8500,
+                ],
+            ],
         ];
 
         $advancePayments = new AdvancePayments($data);

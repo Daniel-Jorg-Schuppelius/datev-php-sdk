@@ -12,13 +12,12 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
-use Tests\Contracts\EntityTest;
-
 use DateTime;
 use Datev\Entities\ClientMasterData\Addresses\Address;
+use Tests\Contracts\EntityTest;
 
 class AddressTest extends EntityTest {
-    public function testCreateAddress() {
+    public function test_create_address() {
         $data = [
             "id" => "17b9d6d3-117b-4555-b0b0-3659eb0279d7",
             "type" => "street",
@@ -42,12 +41,12 @@ class AddressTest extends EntityTest {
             "is_debitor_address" => true,
             "is_main_post_office_box_address" => false,
             "is_main_street_address" => true,
-            "is_management_address" => true
+            "is_management_address" => true,
         ];
 
         $address = new Address($data);
         $this->assertTrue($address->isValid());
-        $this->assertInstanceOf(Address::class, new Address());
+        $this->assertInstanceOf(Address::class, new Address);
         $this->assertInstanceOf(Address::class, $address);
         $this->assertEquals($data, $address->toArray());
         $this->assertEquals("München", $address->getCity());

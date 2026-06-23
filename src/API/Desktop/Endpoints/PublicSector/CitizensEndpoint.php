@@ -13,11 +13,9 @@ declare(strict_types=1);
 namespace Datev\API\Desktop\Endpoints\PublicSector;
 
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
-use APIToolkit\Entities\GUID;
-use APIToolkit\Entities\ID;
+use APIToolkit\Entities\{GUID, ID};
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\PublicSector\Citizens\Citizen;
-use Datev\Entities\PublicSector\Citizens\Citizens;
+use Datev\Entities\PublicSector\Citizens\{Citizen, Citizens};
 use InvalidArgumentException;
 
 class CitizensEndpoint extends EndpointAbstract implements SearchableEndpointInterface {

@@ -12,16 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
+use Datev\Entities\Law\ExpenseCategories\{ExpenseCategories, ExpenseCategory};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Law\ExpenseCategories\ExpenseCategory;
-use Datev\Entities\Law\ExpenseCategories\ExpenseCategories;
-
 class ExpenseCategoryTest extends EntityTest {
-    public function testCreateExpenseCategory(): void {
+    public function test_create_expense_category(): void {
         $data = [
             "number" => 1,
-            "name" => "Reisekosten"
+            "name" => "Reisekosten",
         ];
 
         $expenseCategory = new ExpenseCategory($data);
@@ -31,18 +29,18 @@ class ExpenseCategoryTest extends EntityTest {
         $this->assertEquals("Reisekosten", $expenseCategory->getName());
     }
 
-    public function testCreateExpenseCategories(): void {
+    public function test_create_expense_categories(): void {
         $data = [
             "content" => [
                 [
                     "number" => 1,
-                    "name" => "Reisekosten"
+                    "name" => "Reisekosten",
                 ],
                 [
                     "number" => 2,
-                    "name" => "Büromaterial"
-                ]
-            ]
+                    "name" => "Büromaterial",
+                ],
+            ],
         ];
 
         $expenseCategories = new ExpenseCategories($data);

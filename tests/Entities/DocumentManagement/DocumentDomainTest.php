@@ -12,15 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Datev\Entities\DocumentManagement\Documents\Domains\DocumentDomain;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\DocumentManagement\Documents\Domains\DocumentDomain;
-
 class DocumentDomainTest extends EntityTest {
-    public function testCreateDocumentDomain(): void {
+    public function test_create_document_domain(): void {
         $data = [
             "id" => "550e8400-e29b-41d4-a716-446655440000",
-            "name" => "Rechnungen"
+            "name" => "Rechnungen",
         ];
 
         $domain = new DocumentDomain($data);

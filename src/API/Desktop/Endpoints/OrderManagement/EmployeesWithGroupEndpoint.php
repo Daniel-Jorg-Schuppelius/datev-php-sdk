@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\OrderManagement;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\OrderManagement\EmployeesWithGroup\EmployeesWithGroup;
-use Datev\Entities\OrderManagement\EmployeesWithGroup\EmployeeWithGroup;
+use Datev\Entities\OrderManagement\EmployeesWithGroup\{EmployeeWithGroup, EmployeesWithGroup};
 
 class EmployeesWithGroupEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointPrefix = 'order-management/v1';
@@ -35,7 +34,7 @@ class EmployeesWithGroupEndpoint extends EndpointAbstract implements SearchableE
             }
 
             return EmployeeWithGroup::fromJson($response, self::$logger);
-        }, "Fetching EmployeeWithGroup (ID: {$id})");
+        }, "Fetching EmployeeWithGroup (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?EmployeesWithGroup {

@@ -11,8 +11,7 @@
 namespace Tests\Endpoints\DocumentManagement;
 
 use Datev\API\Desktop\Endpoints\DocumentManagement\DocumentsEndpoint;
-use Datev\Entities\DocumentManagement\Documents\Document;
-use Datev\Entities\DocumentManagement\Documents\Documents;
+use Datev\Entities\DocumentManagement\Documents\{Document, Documents};
 use Datev\Entities\Payroll\Clients\Client;
 use Tests\Contracts\EndpointTest;
 
@@ -25,18 +24,18 @@ class DocumentTest extends EndpointTest {
         $this->apiDisabled = true; // API is disabled
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
             "consultant_number" => "29115",
             "id" => "9351b0e3-e96b-4bb0-b94e-018b13d1db28",
             "name" => "Küchenbeispiel",
-            "number" => 55039
+            "number" => 55039,
         ];
 
         $data1 = [
             "id" => "9351b0e3-e96b-4bb0-b94e-018b13d1db28",
             "name" => "Küchenbeispiel",
-            "number" => 55039
+            "number" => 55039,
         ];
 
         $client = new Client($data);
@@ -46,7 +45,7 @@ class DocumentTest extends EndpointTest {
         $this->assertEquals(json_encode($data), $client->toJson());  // the order of the $data array is important for this test.
     }
 
-    public function testCreateAndDeleteArticleAPI() {
+    public function test_create_and_delete_article_api() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

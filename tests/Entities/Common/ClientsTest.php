@@ -12,26 +12,24 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common;
 
+use Datev\Entities\Common\Clients\{Client, Clients};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Common\Clients\Clients;
-use Datev\Entities\Common\Clients\Client;
-
 class ClientsTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "id" => "client-1",
                     "name" => "Test Client 1",
-                    "number" => 10001
+                    "number" => 10001,
                 ],
                 [
                     "id" => "client-2",
                     "name" => "Test Client 2",
-                    "number" => 10002
-                ]
-            ]
+                    "number" => 10002,
+                ],
+            ],
         ];
 
         $clients = new Clients($data);

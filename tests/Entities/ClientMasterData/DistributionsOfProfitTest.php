@@ -12,18 +12,16 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\DistributionsOfProfit\{DistributionOfProfit, DistributionsOfProfit};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\DistributionsOfProfit\DistributionsOfProfit;
-use Datev\Entities\ClientMasterData\DistributionsOfProfit\DistributionOfProfit;
-
 class DistributionsOfProfitTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 ["current_distribution_of_profit" => "50"],
-                ["current_distribution_of_profit" => "50"]
-            ]
+                ["current_distribution_of_profit" => "50"],
+            ],
         ];
 
         $distributions = new DistributionsOfProfit($data);

@@ -24,7 +24,7 @@ class CorporateStructuresTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetCorporateStructures() {
+    public function test_get_corporate_structures() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

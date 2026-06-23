@@ -12,24 +12,22 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common;
 
+use Datev\Entities\Common\Errors\{Error, Errors};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Common\Errors\Errors;
-use Datev\Entities\Common\Errors\Error;
-
 class ErrorsTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "error" => "validation_failed",
-                    "error_description" => "Validation failed for email field"
+                    "error_description" => "Validation failed for email field",
                 ],
                 [
                     "error" => "required_field",
-                    "error_description" => "Required field name is missing"
-                ]
-            ]
+                    "error_description" => "Required field name is missing",
+                ],
+            ],
         ];
 
         $errors = new Errors($data);

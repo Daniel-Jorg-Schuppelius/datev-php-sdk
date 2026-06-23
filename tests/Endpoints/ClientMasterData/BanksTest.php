@@ -8,11 +8,10 @@
  * License Uri  : https://opensource.org/license/mit
  */
 
-namespace Tests\Endpoints\Diagnostics;
+namespace Tests\Endpoints\ClientMasterData;
 
 use Datev\API\Desktop\Endpoints\ClientMasterData\BanksEndpoint;
-use Datev\Entities\ClientMasterData\Banks\Bank;
-use Datev\Entities\ClientMasterData\Banks\Banks;
+use Datev\Entities\ClientMasterData\Banks\{Bank, Banks};
 use Tests\Contracts\EndpointTest;
 
 class BanksTest extends EndpointTest {
@@ -24,7 +23,7 @@ class BanksTest extends EndpointTest {
         $this->apiDisabled = true; // API is disabled
     }
 
-    public function testGetAddressees() {
+    public function test_get_addressees() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

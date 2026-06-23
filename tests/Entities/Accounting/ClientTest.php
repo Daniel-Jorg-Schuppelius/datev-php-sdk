@@ -12,18 +12,17 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Datev\Entities\Accounting\Clients\{Client, Clients};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Accounting\Clients\Client;
-use Datev\Entities\Accounting\Clients\Clients;
-
 class ClientTest extends EntityTest {
-    public function testCreateClient() {
+    public function test_create_client() {
         $data = [
             "id" => "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
             "name" => "Test Client",
-            "number" => 12345
-        ];        $client = new Client($data);
+            "number" => 12345,
+        ];
+        $client = new Client($data);
 
         $this->assertInstanceOf(Client::class, $client);
         $this->assertEquals("Test Client", $client->getName());
@@ -31,21 +30,22 @@ class ClientTest extends EntityTest {
         $this->assertNotNull($client->getID());
     }
 
-    public function testCreateClients() {
+    public function test_create_clients() {
         $data = [
             "content" => [
                 [
                     "id" => "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
                     "name" => "Client One",
-                    "number" => 10001
+                    "number" => 10001,
                 ],
                 [
                     "id" => "b2c3d4e5-f6a7-8901-bcde-f12345678901",
                     "name" => "Client Two",
-                    "number" => 10002
-                ]
-            ]
-        ];        $clients = new Clients($data);
+                    "number" => 10002,
+                ],
+            ],
+        ];
+        $clients = new Clients($data);
 
         $this->assertInstanceOf(Clients::class, $clients);
         $this->assertCount(2, $clients->getValues());

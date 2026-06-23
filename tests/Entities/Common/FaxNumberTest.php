@@ -12,12 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common;
 
+use Datev\Entities\Common\FaxNumber;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Common\FaxNumber;
-
 class FaxNumberTest extends EntityTest {
-    public function testCreateFaxNumber(): void {
+    public function test_create_fax_number(): void {
         $faxNumber = new FaxNumber("+49 89 12345678");
 
         $this->assertInstanceOf(FaxNumber::class, $faxNumber);

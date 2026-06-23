@@ -12,16 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
+use Datev\Entities\Law\LevelsOfJurisdiction\{LevelOfJurisdiction, LevelsOfJurisdiction};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Law\LevelsOfJurisdiction\LevelOfJurisdiction;
-use Datev\Entities\Law\LevelsOfJurisdiction\LevelsOfJurisdiction;
-
 class LevelOfJurisdictionTest extends EntityTest {
-    public function testCreateLevelOfJurisdiction(): void {
+    public function test_create_level_of_jurisdiction(): void {
         $data = [
             "id" => "test-id",
-            "name" => "Landgericht"
+            "name" => "Landgericht",
         ];
 
         $levelOfJurisdiction = new LevelOfJurisdiction($data);
@@ -30,18 +28,18 @@ class LevelOfJurisdictionTest extends EntityTest {
         $this->assertEquals("Landgericht", $levelOfJurisdiction->getName());
     }
 
-    public function testCreateLevelsOfJurisdiction(): void {
+    public function test_create_levels_of_jurisdiction(): void {
         $data = [
             "content" => [
                 [
                     "id" => "test-id-1",
-                    "name" => "Amtsgericht"
+                    "name" => "Amtsgericht",
                 ],
                 [
                     "id" => "test-id-2",
-                    "name" => "Landgericht"
-                ]
-            ]
+                    "name" => "Landgericht",
+                ],
+            ],
         ];
 
         $levelsOfJurisdiction = new LevelsOfJurisdiction($data);

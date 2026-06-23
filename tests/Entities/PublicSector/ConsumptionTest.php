@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
+use Datev\Entities\PublicSector\Consumptions\{Consumption, Consumptions};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\PublicSector\Consumptions\Consumption;
-use Datev\Entities\PublicSector\Consumptions\Consumptions;
-
 class ConsumptionTest extends EntityTest {
-    public function testCreateConsumption() {
+    public function test_create_consumption() {
         $data = [
             "id" => "c1234567-8901-2345-6789-012345678901",
             "assessment_year" => 2024,
@@ -30,11 +28,11 @@ class ConsumptionTest extends EntityTest {
             "quantity" => 150.5,
             "quantity_to_be_billed" => 150.5,
             "first_date" => "2024-01-01T00:00:00.000+00:00",
-            "last_date" => "2024-03-31T00:00:00.000+00:00"
+            "last_date" => "2024-03-31T00:00:00.000+00:00",
         ];
 
         $consumption = new Consumption($data);
-        $this->assertInstanceOf(Consumption::class, new Consumption());
+        $this->assertInstanceOf(Consumption::class, new Consumption);
         $this->assertInstanceOf(Consumption::class, $consumption);
         $this->assertEquals(2024, $consumption->getAssessmentYear());
         $this->assertEquals("Q1", $consumption->getAssessmentPeriod());
@@ -42,20 +40,20 @@ class ConsumptionTest extends EntityTest {
         $this->assertEquals(150.5, $consumption->getQuantity());
     }
 
-    public function testCreateConsumptions() {
+    public function test_create_consumptions() {
         $data = [
             "content" => [
                 [
                     "id" => "c1234567-8901-2345-6789-012345678901",
                     "assessment_year" => 2024,
-                    "quantity" => 100.0
+                    "quantity" => 100.0,
                 ],
                 [
                     "id" => "c2234567-8901-2345-6789-012345678902",
                     "assessment_year" => 2024,
-                    "quantity" => 200.0
-                ]
-            ]
+                    "quantity" => 200.0,
+                ],
+            ],
         ];
 
         $consumptions = new Consumptions($data);

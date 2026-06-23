@@ -12,12 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\ClientCategories\ClientCategory;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\ClientCategories\ClientCategory;
-
 class ClientCategoryTest extends EntityTest {
-    public function testCreateClientCategory() {
+    public function test_create_client_category() {
         $data = [
             "id" => "76579af6-3272-4116-9ee1-d7e4a385256a",
             "client_category_type_id" => "c43f9c3d-380c-494e-47c8-d12fff738188",
@@ -26,12 +25,12 @@ class ClientCategoryTest extends EntityTest {
             "client_name" => "Mustermeier GmbH",
             "client_number" => 10000,
             "client_status" => "active",
-            "timestamp" => "2020-03-31T00:00:00.000+00:00"
+            "timestamp" => "2020-03-31T00:00:00.000+00:00",
         ];
 
         $clientCategory = new ClientCategory($data);
         $this->assertTrue($clientCategory->isValid());
-        $this->assertInstanceOf(ClientCategory::class, new ClientCategory());
+        $this->assertInstanceOf(ClientCategory::class, new ClientCategory);
         $this->assertInstanceOf(ClientCategory::class, $clientCategory);
         $this->assertEquals($data, $clientCategory->toArray());
     }

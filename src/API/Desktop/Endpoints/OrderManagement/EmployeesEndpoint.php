@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\OrderManagement;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\OrderManagement\Employees\Employee;
-use Datev\Entities\OrderManagement\Employees\Employees;
+use Datev\Entities\OrderManagement\Employees\{Employee, Employees};
 use InvalidArgumentException;
 
 class EmployeesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
@@ -36,7 +35,7 @@ class EmployeesEndpoint extends EndpointAbstract implements SearchableEndpointIn
             }
 
             return Employee::fromJson($response, self::$logger);
-        }, "Fetching Employee (ID: {$id})");
+        }, "Fetching Employee (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?Employees {

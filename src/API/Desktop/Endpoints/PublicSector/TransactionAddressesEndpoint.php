@@ -13,13 +13,10 @@ declare(strict_types=1);
 namespace Datev\API\Desktop\Endpoints\PublicSector;
 
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
-use APIToolkit\Entities\GUID;
-use APIToolkit\Entities\ID;
+use APIToolkit\Entities\{GUID, ID};
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\PublicSector\TransactionAddresses\TransactionAddress;
-use Datev\Entities\PublicSector\TransactionAddresses\TransactionAddresses;
+use Datev\Entities\PublicSector\TransactionAddresses\{TransactionAddress, TransactionAddresses};
 use InvalidArgumentException;
-use Psr\Http\Message\ResponseInterface;
 
 class TransactionAddressesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointPrefix = 'public-sector/v1';
@@ -79,13 +76,15 @@ class TransactionAddressesEndpoint extends EndpointAbstract implements Searchabl
         }, "Searching TransactionAddresses");
     }
 
-    public function create(TransactionAddress $transaction): ?ResponseInterface {
+    public function create(TransactionAddress $transaction): bool {
         if (!isset($this->clientId) || !isset($this->citizenId)) {
             $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID and Citizen ID are required');
         }
 
         return $this->logDebugWithTimer(function () use ($transaction) {
-            return parent::postContent($transaction, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/transaction-addresses");
+            $response = parent::postContents($transaction->toArray(), [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/transaction-addresses");
+
+            return $response !== '';
         }, "Creating TransactionAddress");
     }
 }

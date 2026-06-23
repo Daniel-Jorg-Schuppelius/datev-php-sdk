@@ -12,26 +12,24 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\Addressees\{Addressee, Addressees};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\Addressees\Addressees;
-use Datev\Entities\ClientMasterData\Addressees\Addressee;
-
 class AddresseesTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "id" => "addr-1",
                     "current_short_name" => "Mustermann GmbH",
-                    "surrogate_name" => "Max Mustermann GmbH"
+                    "surrogate_name" => "Max Mustermann GmbH",
                 ],
                 [
                     "id" => "addr-2",
                     "current_short_name" => "Test AG",
-                    "surrogate_name" => "Test AG"
-                ]
-            ]
+                    "surrogate_name" => "Test AG",
+                ],
+            ],
         ];
 
         $addressees = new Addressees($data);

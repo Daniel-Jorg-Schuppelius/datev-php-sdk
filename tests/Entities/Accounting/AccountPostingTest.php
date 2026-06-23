@@ -12,41 +12,39 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Datev\Entities\Accounting\AccountPostings\{AccountPosting, AccountPostings};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Accounting\AccountPostings\AccountPosting;
-use Datev\Entities\Accounting\AccountPostings\AccountPostings;
-
 class AccountPostingTest extends EntityTest {
-    public function testCreateAccountPosting() {
+    public function test_create_account_posting() {
         $data = [
             "id" => 1,
             "account_number" => 1800,
             "accounting_transaction_key" => 0,
             "amount_entered" => 1500.50,
-            "billing_reference" => "RE-2024-001"
+            "billing_reference" => "RE-2024-001",
         ];
 
         $posting = new AccountPosting($data);
-        $this->assertInstanceOf(AccountPosting::class, new AccountPosting());
+        $this->assertInstanceOf(AccountPosting::class, new AccountPosting);
         $this->assertInstanceOf(AccountPosting::class, $posting);
         $this->assertNotNull($posting->getID());
     }
 
-    public function testCreateAccountPostings() {
+    public function test_create_account_postings() {
         $data = [
             "content" => [
                 [
                     "id" => 1,
                     "account_number" => 1800,
-                    "amount_entered" => 1000.00
+                    "amount_entered" => 1000.00,
                 ],
                 [
                     "id" => 2,
                     "account_number" => 4400,
-                    "amount_entered" => 2000.00
-                ]
-            ]
+                    "amount_entered" => 2000.00,
+                ],
+            ],
         ];
 
         $postings = new AccountPostings($data);

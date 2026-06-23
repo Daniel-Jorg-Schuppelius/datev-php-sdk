@@ -8,7 +8,6 @@
  * License Uri  : https://opensource.org/license/mit
  */
 
-
 declare(strict_types=1);
 
 namespace Datev\Entities\Payroll\Salaries\SalaryTypes\ID;

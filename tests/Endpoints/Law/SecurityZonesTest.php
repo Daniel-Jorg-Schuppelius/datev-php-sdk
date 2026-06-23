@@ -22,7 +22,7 @@ class SecurityZonesTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetSecurityZones() {
+    public function test_get_security_zones() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

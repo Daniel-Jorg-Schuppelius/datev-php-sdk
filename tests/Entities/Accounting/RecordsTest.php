@@ -12,28 +12,26 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Datev\Entities\Accounting\Records\{Record, Records};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Accounting\Records\Records;
-use Datev\Entities\Accounting\Records\Record;
-
 class RecordsTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "account_number" => 1200,
                     "contra_account_number" => 4400,
                     "amount" => 1000.00,
-                    "date" => "2024-01-15"
+                    "date" => "2024-01-15",
                 ],
                 [
                     "account_number" => 1200,
                     "contra_account_number" => 4400,
                     "amount" => 2500.00,
-                    "date" => "2024-01-20"
-                ]
-            ]
+                    "date" => "2024-01-20",
+                ],
+            ],
         ];
 
         $records = new Records($data);

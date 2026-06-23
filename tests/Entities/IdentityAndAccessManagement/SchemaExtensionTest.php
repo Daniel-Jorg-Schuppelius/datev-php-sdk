@@ -12,15 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\IdentityAndAccessManagement;
 
+use Datev\Entities\IdentityAndAccessManagement\Schemas\SchemaExtension;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\IdentityAndAccessManagement\Schemas\SchemaExtension;
-
 class SchemaExtensionTest extends EntityTest {
-    public function testCreateSchemaExtension(): void {
+    public function test_create_schema_extension(): void {
         $data = [
             "schema" => "urn:ietf:params:scim:schemas:extension:enterprise:2.0:User",
-            "required" => false
+            "required" => false,
         ];
 
         $extension = new SchemaExtension($data);
@@ -30,10 +29,10 @@ class SchemaExtensionTest extends EntityTest {
         $this->assertFalse($extension->isRequired());
     }
 
-    public function testRequiredSchemaExtension(): void {
+    public function test_required_schema_extension(): void {
         $data = [
             "schema" => "urn:ietf:params:scim:schemas:core:2.0:User",
-            "required" => true
+            "required" => true,
         ];
 
         $extension = new SchemaExtension($data);

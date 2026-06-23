@@ -12,18 +12,16 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\CodesOfClassificationOfEconomicActivities2008\{CodeOfClassificationOfEconomicActivities2008, CodesOfClassificationOfEconomicActivities2008};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\CodesOfClassificationOfEconomicActivities2008\CodeOfClassificationOfEconomicActivities2008;
-use Datev\Entities\ClientMasterData\CodesOfClassificationOfEconomicActivities2008\CodesOfClassificationOfEconomicActivities2008;
-
 class CodesOfClassificationOfEconomicActivities2008Test extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 ["current_code_of_classification_of_economic_activities_2008" => "62.01"],
-                ["current_code_of_classification_of_economic_activities_2008" => "62.02"]
-            ]
+                ["current_code_of_classification_of_economic_activities_2008" => "62.02"],
+            ],
         ];
 
         $codes = new CodesOfClassificationOfEconomicActivities2008($data);

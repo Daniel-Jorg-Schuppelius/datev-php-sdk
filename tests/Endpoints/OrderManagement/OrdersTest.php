@@ -13,8 +13,7 @@ declare(strict_types=1);
 namespace Tests\Endpoints\OrderManagement;
 
 use Datev\API\Desktop\Endpoints\OrderManagement\OrdersEndpoint;
-use Datev\Entities\OrderManagement\Orders\Order;
-use Datev\Entities\OrderManagement\Orders\Orders;
+use Datev\Entities\OrderManagement\Orders\{Order, Orders};
 use Tests\Contracts\EndpointTest;
 
 class OrdersTest extends EndpointTest {
@@ -26,7 +25,7 @@ class OrdersTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
             'order_id' => 4711,
             'creation_year' => 2024,
@@ -36,7 +35,7 @@ class OrdersTest extends EndpointTest {
             'client_id' => 'd7e3c10f-8b5a-42d4-b790-e84c1762b8b9',
             'client_name' => 'Mustermann GmbH',
             'completion_status' => 'started',
-            'billing_status' => 'open'
+            'billing_status' => 'open',
         ];
 
         $order = Order::fromJson(json_encode($data));
@@ -49,20 +48,20 @@ class OrdersTest extends EndpointTest {
         $this->assertEquals('started', $order->getCompletionStatus());
     }
 
-    public function testJsonSerializeCollection() {
+    public function test_json_serialize_collection() {
         $data = [
             [
                 'order_id' => 4711,
                 'creation_year' => 2024,
                 'order_number' => 20,
-                'order_name' => 'Jahresabschluss 2024'
+                'order_name' => 'Jahresabschluss 2024',
             ],
             [
                 'order_id' => 4712,
                 'creation_year' => 2024,
                 'order_number' => 21,
-                'order_name' => 'Finanzbuchhaltung 01/2024'
-            ]
+                'order_name' => 'Finanzbuchhaltung 01/2024',
+            ],
         ];
 
         $orders = Orders::fromJson(json_encode($data));
@@ -71,7 +70,7 @@ class OrdersTest extends EndpointTest {
         $this->assertCount(2, $orders->getValues());
     }
 
-    public function testSearchOrders() {
+    public function test_search_orders() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

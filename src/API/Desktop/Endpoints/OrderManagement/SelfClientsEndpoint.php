@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\OrderManagement;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\OrderManagement\SelfClients\SelfClient;
-use Datev\Entities\OrderManagement\SelfClients\SelfClients;
+use Datev\Entities\OrderManagement\SelfClients\{SelfClient, SelfClients};
 
 class SelfClientsEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointPrefix = 'order-management/v1';
@@ -35,7 +34,7 @@ class SelfClientsEndpoint extends EndpointAbstract implements SearchableEndpoint
             }
 
             return SelfClient::fromJson($response, self::$logger);
-        }, "Fetching SelfClient (ID: {$id})");
+        }, "Fetching SelfClient (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?SelfClients {

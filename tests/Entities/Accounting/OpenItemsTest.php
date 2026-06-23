@@ -12,26 +12,24 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Datev\Entities\Accounting\OpenItems\{OpenItem, OpenItems};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Accounting\OpenItems\OpenItems;
-use Datev\Entities\Accounting\OpenItems\OpenItem;
-
 class OpenItemsTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "due_date" => "2024-02-15",
                     "assessment_year" => 2024,
-                    "has_dunning_block" => false
+                    "has_dunning_block" => false,
                 ],
                 [
                     "due_date" => "2024-03-01",
                     "assessment_year" => 2024,
-                    "has_dunning_block" => true
-                ]
-            ]
+                    "has_dunning_block" => true,
+                ],
+            ],
         ];
 
         $openItems = new OpenItems($data);

@@ -12,12 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common;
 
+use Datev\Entities\Common\Errors\ErrorURI;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Common\Errors\ErrorURI;
-
 class ErrorURITest extends EntityTest {
-    public function testCreateFromString(): void {
+    public function test_create_from_string(): void {
         $url = "https://docs.datev.de/errors/404";
         $errorUri = new ErrorURI($url);
 
@@ -25,7 +24,7 @@ class ErrorURITest extends EntityTest {
         $this->assertEquals('error_uri', $errorUri->getEntityName());
     }
 
-    public function testIsValid(): void {
+    public function test_is_valid(): void {
         $errorUri = new ErrorURI("https://docs.datev.de/errors/400");
         $this->assertTrue($errorUri->isValid());
     }

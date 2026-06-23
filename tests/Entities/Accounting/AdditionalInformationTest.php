@@ -12,17 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Datev\Entities\Accounting\AdditionalInformations\{AdditionalInformation, AdditionalInformations};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Accounting\AdditionalInformations\AdditionalInformation;
-use Datev\Entities\Accounting\AdditionalInformations\AdditionalInformations;
-
 class AdditionalInformationTest extends EntityTest {
-
-    public function testCreateAdditionalInformation(): void {
+    public function test_create_additional_information(): void {
         $data = [
             "additional_information_type" => "COMMENT",
-            "additional_information_content" => "Testkommentar zur Buchung"
+            "additional_information_content" => "Testkommentar zur Buchung",
         ];
 
         $additionalInformation = new AdditionalInformation($data);
@@ -30,18 +27,18 @@ class AdditionalInformationTest extends EntityTest {
         $this->assertInstanceOf(AdditionalInformation::class, $additionalInformation);
     }
 
-    public function testCreateAdditionalInformations(): void {
+    public function test_create_additional_informations(): void {
         $data = [
             "content" => [
                 [
                     "additional_information_type" => "COMMENT",
-                    "additional_information_content" => "Kommentar 1"
+                    "additional_information_content" => "Kommentar 1",
                 ],
                 [
                     "additional_information_type" => "NOTE",
-                    "additional_information_content" => "Notiz 2"
-                ]
-            ]
+                    "additional_information_content" => "Notiz 2",
+                ],
+            ],
         ];
 
         $additionalInformations = new AdditionalInformations($data);

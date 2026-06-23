@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\Law;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\Law\PartyRoles\PartyRole;
-use Datev\Entities\Law\PartyRoles\PartyRoles;
+use Datev\Entities\Law\PartyRoles\{PartyRole, PartyRoles};
 use InvalidArgumentException;
 
 class PartyRolesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
@@ -36,7 +35,7 @@ class PartyRolesEndpoint extends EndpointAbstract implements SearchableEndpointI
             }
 
             return PartyRole::fromJson($response, self::$logger);
-        }, "Fetching PartyRole (ID: {$id})");
+        }, "Fetching PartyRole (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?PartyRoles {

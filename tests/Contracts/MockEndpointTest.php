@@ -15,8 +15,7 @@ namespace Tests\Contracts;
 use ERRORToolkit\Traits\ErrorLog;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
-use Tests\Mocks\MockClient;
-use Tests\Mocks\MockDataLoader;
+use Tests\Mocks\{MockClient, MockDataLoader};
 use Tests\TestAPIClientFactory;
 
 /**

@@ -12,12 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\Communications\Communication;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\Communications\Communication;
-
 class CommunicationTest extends EntityTest {
-    public function testCreateCommunication() {
+    public function test_create_communication() {
         $data = [
             "id" => "20b9d6d9-117b-4555-b0b0-3659eb0279d9",
             "type" => "phone",
@@ -25,12 +24,12 @@ class CommunicationTest extends EntityTest {
             "number_standardized" => "00498721123456",
             "note" => "ab 9 Uhr",
             "is_main_communication" => true,
-            "is_management_phone" => true
+            "is_management_phone" => true,
         ];
 
         $communication = new Communication($data);
         $this->assertTrue($communication->isValid());
-        $this->assertInstanceOf(Communication::class, new Communication());
+        $this->assertInstanceOf(Communication::class, new Communication);
         $this->assertInstanceOf(Communication::class, $communication);
         $this->assertEquals($data, $communication->toArray());
     }

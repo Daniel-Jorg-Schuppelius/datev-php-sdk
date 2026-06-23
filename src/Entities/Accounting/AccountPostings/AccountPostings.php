@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace Datev\Entities\Accounting\AccountPostings;
 
 use APIToolkit\Contracts\Abstracts\NamedValues;
-use Datev\Entities\Accounting\AccountPostings\AccountPosting;
 use Psr\Log\LoggerInterface;
 
 /**

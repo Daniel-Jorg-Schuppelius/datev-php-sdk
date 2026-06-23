@@ -11,8 +11,7 @@
 namespace Tests\Endpoints\DocumentManagement;
 
 use Datev\API\Desktop\Endpoints\DocumentManagement\IndividualPropertiesEndpoint;
-use Datev\Entities\DocumentManagement\IndividualProperties\IndividualProperties;
-use Datev\Entities\DocumentManagement\IndividualProperties\IndividualProperty;
+use Datev\Entities\DocumentManagement\IndividualProperties\{IndividualProperties, IndividualProperty};
 use Tests\Contracts\EndpointTest;
 
 class IndividualPropertyTest extends EndpointTest {
@@ -24,7 +23,7 @@ class IndividualPropertyTest extends EndpointTest {
         $this->apiDisabled = true; // API is disabled
     }
 
-    public function testCreateAndDeleteArticleAPI() {
+    public function test_create_and_delete_article_api() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

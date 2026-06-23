@@ -12,25 +12,23 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\FunctionalAreas\{FunctionalArea, FunctionalAreas};
+use Datev\Entities\ClientMasterData\FunctionalAreas\ID\FunctionalAreaID;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\FunctionalAreas\FunctionalArea;
-use Datev\Entities\ClientMasterData\FunctionalAreas\FunctionalAreas;
-use Datev\Entities\ClientMasterData\FunctionalAreas\ID\FunctionalAreaID;
-
 class FunctionalAreaTest extends EntityTest {
-    public function testCreateFunctionalAreaID() {
+    public function test_create_functional_area_id() {
         $id = new FunctionalAreaID("12345678-1234-1234-1234-123456789012");
         $this->assertInstanceOf(FunctionalAreaID::class, $id);
         $this->assertEquals("12345678-1234-1234-1234-123456789012", $id->toString());
     }
 
-    public function testCreateFunctionalArea() {
+    public function test_create_functional_area() {
         $data = [
             "id" => "12345678-1234-1234-1234-123456789012",
             "name" => "Buchhaltung",
             "short_name" => "BH",
-            "status" => "active"
+            "status" => "active",
         ];
 
         $area = new FunctionalArea($data);
@@ -39,18 +37,18 @@ class FunctionalAreaTest extends EntityTest {
         $this->assertEquals("Buchhaltung", $area->getName());
     }
 
-    public function testCreateFunctionalAreas() {
+    public function test_create_functional_areas() {
         $data = [
             [
                 "id" => "12345678-1234-1234-1234-123456789012",
                 "name" => "Buchhaltung",
-                "short_name" => "BH"
+                "short_name" => "BH",
             ],
             [
                 "id" => "12345678-1234-1234-1234-123456789013",
                 "name" => "Lohnabrechnung",
-                "short_name" => "LA"
-            ]
+                "short_name" => "LA",
+            ],
         ];
 
         $areas = new FunctionalAreas($data);

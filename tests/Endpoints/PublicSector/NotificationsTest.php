@@ -22,7 +22,7 @@ class NotificationsTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetNotifications() {
+    public function test_get_notifications() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

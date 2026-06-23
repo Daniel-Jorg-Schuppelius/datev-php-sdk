@@ -13,8 +13,7 @@ declare(strict_types=1);
 namespace Tests\Endpoints\Payroll;
 
 use Datev\API\Desktop\Endpoints\Payroll\ActivityEndpoint;
-use Datev\Entities\Payroll\Activities\Activity;
-use Datev\Entities\Payroll\Activities\Activities;
+use Datev\Entities\Payroll\Activities\{Activities, Activity};
 use Tests\Contracts\EndpointTest;
 
 class ActivityTest extends EndpointTest {
@@ -25,23 +24,23 @@ class ActivityTest extends EndpointTest {
         return new ActivityEndpoint($this->client, self::getLogger());
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
             'id' => '12345',
             'activity_type' => 'Vollzeit',
             'employee_type' => 'Angestellter',
             'job_title' => 'Softwareentwickler',
-            'weekly_working_hours' => 40.0
+            'weekly_working_hours' => 40.0,
         ];
 
         $activity = Activity::fromJson(json_encode($data));
         $this->assertInstanceOf(Activity::class, $activity);
     }
 
-    public function testJsonSerializeCollection() {
+    public function test_json_serialize_collection() {
         $data = [
             ['id' => '12345', 'activity_type' => 'Vollzeit'],
-            ['id' => '12346', 'activity_type' => 'Teilzeit']
+            ['id' => '12346', 'activity_type' => 'Teilzeit'],
         ];
 
         $activities = Activities::fromJson(json_encode($data));
@@ -49,7 +48,7 @@ class ActivityTest extends EndpointTest {
         $this->assertCount(2, $activities->getValues());
     }
 
-    public function testGetActivities() {
+    public function test_get_activities() {
         $this->endpoint = $this->createEndpoint();
         $activities = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

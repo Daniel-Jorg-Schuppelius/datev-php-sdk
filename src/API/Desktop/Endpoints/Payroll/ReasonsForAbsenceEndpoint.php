@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\Payroll;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\Payroll\PayrollEndpointAbstract;
-use Datev\Entities\Payroll\ReasonsForAbsence\ReasonForAbsence;
-use Datev\Entities\Payroll\ReasonsForAbsence\ReasonsForAbsence;
+use Datev\Entities\Payroll\ReasonsForAbsence\{ReasonForAbsence, ReasonsForAbsence};
 use InvalidArgumentException;
 
 class ReasonsForAbsenceEndpoint extends PayrollEndpointAbstract implements SearchableEndpointInterface {
@@ -35,7 +34,7 @@ class ReasonsForAbsenceEndpoint extends PayrollEndpointAbstract implements Searc
             }
 
             return ReasonForAbsence::fromJson($response, self::$logger);
-        }, "Fetching ReasonForAbsence (ID: {$id})");
+        }, "Fetching ReasonForAbsence (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?ReasonsForAbsence {

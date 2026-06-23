@@ -13,8 +13,7 @@ namespace Datev\API\Desktop\Endpoints\DocumentManagement;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\DocumentManagement\SecureAreas\SecureArea;
-use Datev\Entities\DocumentManagement\SecureAreas\SecureAreas;
+use Datev\Entities\DocumentManagement\SecureAreas\{SecureArea, SecureAreas};
 use InvalidArgumentException;
 
 class SecureAreasEndpoint extends EndpointAbstract implements SearchableEndpointInterface {

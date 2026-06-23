@@ -12,11 +12,10 @@ declare(strict_types=1);
 
 namespace Datev\API\Desktop\Endpoints\Accounting;
 
-use Datev\Contracts\Interfaces\API\PostableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
+use Datev\Contracts\Interfaces\API\PostableEndpointInterface;
 use Datev\Entities\Accounting\InternalCostServices\InternalCostService;
-use Datev\Entities\Accounting\InternalCostServices\InternalCostServices;
 use InvalidArgumentException;
 
 class InternalCostServicesEndpoint extends EndpointAbstract implements PostableEndpointInterface {

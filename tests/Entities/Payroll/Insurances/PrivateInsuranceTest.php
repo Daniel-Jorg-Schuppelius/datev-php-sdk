@@ -12,21 +12,18 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll\Insurances;
 
+use Datev\Entities\Payroll\Insurances\Private\{PrivateInsurance, PrivateInsuranceID, PrivateInsurances};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\Insurances\Private\PrivateInsurance;
-use Datev\Entities\Payroll\Insurances\Private\PrivateInsurances;
-use Datev\Entities\Payroll\Insurances\Private\PrivateInsuranceID;
-
 class PrivateInsuranceTest extends EntityTest {
-    public function testCreatePrivateInsurance(): void {
+    public function test_create_private_insurance(): void {
         $data = [
             "id" => "pi-001",
             "is_private_health_insured" => true,
             "is_private_nursing_insured" => false,
             "monthly_premium_for_private_health_insurance" => 450.00,
             "monthly_premium_for_private_nursing_insurance" => 50.00,
-            "monthly_contribution_to_basic_health_insurance" => 400.00
+            "monthly_contribution_to_basic_health_insurance" => 400.00,
         ];
 
         $privateInsurance = new PrivateInsurance($data);
@@ -39,18 +36,18 @@ class PrivateInsuranceTest extends EntityTest {
         $this->assertEquals(450.00, $privateInsurance->getMonthlyPremiumForPrivateHealthInsurance());
     }
 
-    public function testCreatePrivateInsurances(): void {
+    public function test_create_private_insurances(): void {
         $data = [
             "content" => [
                 [
                     "id" => "pi-001",
-                    "is_private_health_insured" => true
+                    "is_private_health_insured" => true,
                 ],
                 [
                     "id" => "pi-002",
-                    "is_private_health_insured" => false
-                ]
-            ]
+                    "is_private_health_insured" => false,
+                ],
+            ],
         ];
 
         $privateInsurances = new PrivateInsurances($data);

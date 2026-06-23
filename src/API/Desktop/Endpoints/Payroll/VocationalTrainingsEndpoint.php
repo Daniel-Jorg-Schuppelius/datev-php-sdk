@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\Payroll;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\Payroll\PayrollEndpointAbstract;
-use Datev\Entities\Payroll\VocationalTrainings\VocationalTraining;
-use Datev\Entities\Payroll\VocationalTrainings\VocationalTrainings;
+use Datev\Entities\Payroll\VocationalTrainings\{VocationalTraining, VocationalTrainings};
 use InvalidArgumentException;
 
 class VocationalTrainingsEndpoint extends PayrollEndpointAbstract implements SearchableEndpointInterface {
@@ -35,7 +34,7 @@ class VocationalTrainingsEndpoint extends PayrollEndpointAbstract implements Sea
             }
 
             return VocationalTraining::fromJson($response, self::$logger);
-        }, "Fetching VocationalTraining (ID: {$id})");
+        }, "Fetching VocationalTraining (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?VocationalTrainings {

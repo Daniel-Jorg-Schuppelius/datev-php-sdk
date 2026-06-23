@@ -12,18 +12,15 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\VocationalTrainings\{VocationalTraining, VocationalTrainingID, VocationalTrainings};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\VocationalTrainings\VocationalTraining;
-use Datev\Entities\Payroll\VocationalTrainings\VocationalTrainings;
-use Datev\Entities\Payroll\VocationalTrainings\VocationalTrainingID;
-
 class VocationalTrainingTest extends EntityTest {
-    public function testCreateVocationalTraining(): void {
+    public function test_create_vocational_training(): void {
         $data = [
             "id" => "vt-001",
             "personnel_number" => "12345",
-            "amount" => 750.00
+            "amount" => 750.00,
         ];
 
         $vocationalTraining = new VocationalTraining($data);
@@ -35,20 +32,20 @@ class VocationalTrainingTest extends EntityTest {
         $this->assertEquals(750.00, $vocationalTraining->getAmount());
     }
 
-    public function testCreateVocationalTrainings(): void {
+    public function test_create_vocational_trainings(): void {
         $data = [
             "content" => [
                 [
                     "id" => "vt-001",
                     "personnel_number" => "12345",
-                    "amount" => 750.00
+                    "amount" => 750.00,
                 ],
                 [
                     "id" => "vt-002",
                     "personnel_number" => "67890",
-                    "amount" => 800.00
-                ]
-            ]
+                    "amount" => 800.00,
+                ],
+            ],
         ];
 
         $vocationalTrainings = new VocationalTrainings($data);

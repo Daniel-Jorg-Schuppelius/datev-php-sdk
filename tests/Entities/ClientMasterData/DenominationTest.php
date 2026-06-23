@@ -12,28 +12,26 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\Denominations\{Denomination, Denominations};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\Denominations\Denomination;
-use Datev\Entities\ClientMasterData\Denominations\Denominations;
-
 class DenominationTest extends EntityTest {
-    public function testCreateDenomination() {
+    public function test_create_denomination() {
         $data = [
             "value" => "Evangelisch",
-            "valid_from" => "2024-01-01"
+            "valid_from" => "2024-01-01",
         ];
 
         $denomination = new Denomination($data);
         $this->assertInstanceOf(Denomination::class, $denomination);
     }
 
-    public function testCreateDenominations() {
+    public function test_create_denominations() {
         $data = [
             [
                 "value" => "Evangelisch",
-                "valid_from" => "2024-01-01"
-            ]
+                "valid_from" => "2024-01-01",
+            ],
         ];
 
         $denominations = new Denominations($data);

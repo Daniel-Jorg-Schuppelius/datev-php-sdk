@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\WorkingHours\{WorkingHours, WorkingHoursID};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\WorkingHours\WorkingHours;
-use Datev\Entities\Payroll\WorkingHours\WorkingHoursID;
-
 class WorkingHoursTest extends EntityTest {
-    public function testCreateWorkingHours(): void {
+    public function test_create_working_hours(): void {
         $data = [
             "id" => "wh-001",
             "weekly_working_hours" => 40.0,
@@ -28,7 +26,7 @@ class WorkingHoursTest extends EntityTest {
             "allocation_of_working_hours_thursday" => 8.0,
             "allocation_of_working_hours_friday" => 8.0,
             "allocation_of_working_hours_saturday" => 0.0,
-            "allocation_of_working_hours_sunday" => 0.0
+            "allocation_of_working_hours_sunday" => 0.0,
         ];
 
         $workingHours = new WorkingHours($data);

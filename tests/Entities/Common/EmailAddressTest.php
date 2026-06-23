@@ -12,12 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common;
 
+use Datev\Entities\Common\EmailAddress;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Common\EmailAddress;
-
 class EmailAddressTest extends EntityTest {
-    public function testCreateEmailAddress(): void {
+    public function test_create_email_address(): void {
         $emailAddress = new EmailAddress("max.mustermann@example.de");
 
         $this->assertInstanceOf(EmailAddress::class, $emailAddress);

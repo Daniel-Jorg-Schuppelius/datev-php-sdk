@@ -12,28 +12,26 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\EnterprisePurposes\{EnterprisePurpose, EnterprisePurposes};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\EnterprisePurposes\EnterprisePurpose;
-use Datev\Entities\ClientMasterData\EnterprisePurposes\EnterprisePurposes;
-
 class EnterprisePurposeTest extends EntityTest {
-    public function testCreateEnterprisePurpose() {
+    public function test_create_enterprise_purpose() {
         $data = [
             "value" => "Handel und Vertrieb",
-            "valid_from" => "2024-01-01"
+            "valid_from" => "2024-01-01",
         ];
 
         $purpose = new EnterprisePurpose($data);
         $this->assertInstanceOf(EnterprisePurpose::class, $purpose);
     }
 
-    public function testCreateEnterprisePurposes() {
+    public function test_create_enterprise_purposes() {
         $data = [
             [
                 "value" => "Handel und Vertrieb",
-                "valid_from" => "2024-01-01"
-            ]
+                "valid_from" => "2024-01-01",
+            ],
         ];
 
         $purposes = new EnterprisePurposes($data);

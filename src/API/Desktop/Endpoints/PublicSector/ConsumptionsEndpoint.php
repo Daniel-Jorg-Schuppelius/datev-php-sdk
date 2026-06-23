@@ -13,11 +13,9 @@ declare(strict_types=1);
 namespace Datev\API\Desktop\Endpoints\PublicSector;
 
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
-use APIToolkit\Entities\GUID;
-use APIToolkit\Entities\ID;
+use APIToolkit\Entities\{GUID, ID};
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\PublicSector\Consumptions\Consumption;
-use Datev\Entities\PublicSector\Consumptions\Consumptions;
+use Datev\Entities\PublicSector\Consumptions\{Consumption, Consumptions};
 use InvalidArgumentException;
 
 class ConsumptionsEndpoint extends EndpointAbstract implements SearchableEndpointInterface {

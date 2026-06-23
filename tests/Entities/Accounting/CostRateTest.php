@@ -12,18 +12,15 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Datev\Entities\Accounting\CostRates\{CostRate, CostRates};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Accounting\CostRates\CostRate;
-use Datev\Entities\Accounting\CostRates\CostRates;
-
 class CostRateTest extends EntityTest {
-    
-    public function testCreateCostRate(): void {
+    public function test_create_cost_rate(): void {
         $data = [
             "valid_from" => 202401,
             "valid_to" => 202412,
-            "rate" => 125.50
+            "rate" => 125.50,
         ];
 
         $costRate = new CostRate($data);
@@ -31,18 +28,18 @@ class CostRateTest extends EntityTest {
         $this->assertInstanceOf(CostRate::class, $costRate);
     }
 
-    public function testCreateCostRates(): void {
+    public function test_create_cost_rates(): void {
         $data = [
             "content" => [
                 [
                     "valid_from" => 202401,
-                    "rate" => 125.50
+                    "rate" => 125.50,
                 ],
                 [
                     "valid_from" => 202407,
-                    "rate" => 130.00
-                ]
-            ]
+                    "rate" => 130.00,
+                ],
+            ],
         ];
 
         $costRates = new CostRates($data);

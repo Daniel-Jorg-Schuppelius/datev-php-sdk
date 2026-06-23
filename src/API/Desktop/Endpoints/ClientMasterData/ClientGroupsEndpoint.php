@@ -15,9 +15,7 @@ namespace Datev\API\Desktop\Endpoints\ClientMasterData;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\ClientMasterData\ClientGroups\ClientGroup;
-use Datev\Entities\ClientMasterData\ClientGroups\ClientGroups;
-use InvalidArgumentException;
+use Datev\Entities\ClientMasterData\ClientGroups\{ClientGroup, ClientGroups};
 
 class ClientGroupsEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointPrefix = 'master-data/v1';

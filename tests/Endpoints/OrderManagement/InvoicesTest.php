@@ -13,8 +13,7 @@ declare(strict_types=1);
 namespace Tests\Endpoints\OrderManagement;
 
 use Datev\API\Desktop\Endpoints\OrderManagement\InvoicesEndpoint;
-use Datev\Entities\OrderManagement\Invoices\Invoice;
-use Datev\Entities\OrderManagement\Invoices\Invoices;
+use Datev\Entities\OrderManagement\Invoices\{Invoice, Invoices};
 use Tests\Contracts\EndpointTest;
 
 class InvoicesTest extends EndpointTest {
@@ -26,7 +25,7 @@ class InvoicesTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
             'id' => 10000,
             'invoice_id' => 100001,
@@ -38,7 +37,7 @@ class InvoicesTest extends EndpointTest {
             'vat_amount' => 190.00,
             'client_id' => 'd7e3c10f-8b5a-42d4-b790-e84c1762b8b9',
             'invoice_type' => 'REC',
-            'cancellation_flag' => false
+            'cancellation_flag' => false,
         ];
 
         $invoice = Invoice::fromJson(json_encode($data));
@@ -52,20 +51,20 @@ class InvoicesTest extends EndpointTest {
         $this->assertFalse($invoice->isCancellation());
     }
 
-    public function testJsonSerializeCollection() {
+    public function test_json_serialize_collection() {
         $data = [
             [
                 'id' => 10000,
                 'invoice_id' => 100001,
                 'accounting_year' => 2024,
-                'invoice_number' => 10010
+                'invoice_number' => 10010,
             ],
             [
                 'id' => 10001,
                 'invoice_id' => 100002,
                 'accounting_year' => 2024,
-                'invoice_number' => 10011
-            ]
+                'invoice_number' => 10011,
+            ],
         ];
 
         $invoices = Invoices::fromJson(json_encode($data));
@@ -74,7 +73,7 @@ class InvoicesTest extends EndpointTest {
         $this->assertCount(2, $invoices->getValues());
     }
 
-    public function testSearchInvoices() {
+    public function test_search_invoices() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

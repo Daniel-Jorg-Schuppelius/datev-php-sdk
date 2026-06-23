@@ -17,8 +17,7 @@ use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use Datev\Entities\Law\ContingencyFees\ContingencyFees;
 use Datev\Entities\Law\CustomFields\CustomFields;
-use Datev\Entities\Law\Employees\Employee;
-use Datev\Entities\Law\Employees\Employees;
+use Datev\Entities\Law\Employees\{Employee, Employees};
 use InvalidArgumentException;
 
 class EmployeesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
@@ -38,7 +37,7 @@ class EmployeesEndpoint extends EndpointAbstract implements SearchableEndpointIn
             }
 
             return Employee::fromJson($response, self::$logger);
-        }, "Fetching Employee (ID: {$id})");
+        }, "Fetching Employee (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?Employees {
@@ -62,7 +61,7 @@ class EmployeesEndpoint extends EndpointAbstract implements SearchableEndpointIn
             }
 
             return ContingencyFees::fromJson($response, self::$logger);
-        }, "Fetching ContingencyFees for Employee (ID: {$id})");
+        }, "Fetching ContingencyFees for Employee (ID: {$id->toString()})");
     }
 
     public function getCustomFields(ID $id): ?CustomFields {
@@ -74,6 +73,6 @@ class EmployeesEndpoint extends EndpointAbstract implements SearchableEndpointIn
             }
 
             return CustomFields::fromJson($response, self::$logger);
-        }, "Fetching CustomFields for Employee (ID: {$id})");
+        }, "Fetching CustomFields for Employee (ID: {$id->toString()})");
     }
 }

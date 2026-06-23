@@ -12,16 +12,15 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
+use Datev\Entities\PublicSector\TransactionRegistrations\TransactionRegistrationData;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\PublicSector\TransactionRegistrations\TransactionRegistrationData;
-
 class TransactionRegistrationDataTest extends EntityTest {
-    public function testCreateTransactionRegistrationData(): void {
+    public function test_create_transaction_registration_data(): void {
         $data = [
             "id" => "reg-001",
             "is_registered" => true,
-            "registration_email" => "user@example.com"
+            "registration_email" => "user@example.com",
         ];
 
         $registrationData = new TransactionRegistrationData($data);
@@ -32,11 +31,11 @@ class TransactionRegistrationDataTest extends EntityTest {
         $this->assertEquals("user@example.com", $registrationData->getRegistrationEmail());
     }
 
-    public function testUnregisteredData(): void {
+    public function test_unregistered_data(): void {
         $data = [
             "id" => "reg-002",
             "is_registered" => false,
-            "registration_email" => null
+            "registration_email" => null,
         ];
 
         $registrationData = new TransactionRegistrationData($data);

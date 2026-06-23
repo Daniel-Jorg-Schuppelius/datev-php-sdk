@@ -7,8 +7,8 @@
  * Filename     : OpenApiCoverageAnalyzer.php
  * License      : MIT License
  * License Uri  : https://opensource.org/license/mit
- * 
- * This tool analyzes OpenAPI specifications and compares them with 
+ *
+ * This tool analyzes OpenAPI specifications and compares them with
  * implemented endpoints to identify missing implementations.
  */
 

@@ -12,20 +12,17 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\Data\Personal\{PersonalData, PersonalDataID, PersonalDatum};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\Data\Personal\PersonalData;
-use Datev\Entities\Payroll\Data\Personal\PersonalDataID;
-use Datev\Entities\Payroll\Data\Personal\PersonalDatum;
-
 class PersonalDataTest extends EntityTest {
-    public function testCreatePersonalDataID(): void {
+    public function test_create_personal_data_id(): void {
         $id = new PersonalDataID("12345678-1234-1234-1234-123456789012");
         $this->assertInstanceOf(PersonalDataID::class, $id);
         $this->assertEquals("12345678-1234-1234-1234-123456789012", $id->toString());
     }
 
-    public function testCreatePersonalDatum(): void {
+    public function test_create_personal_datum(): void {
         $data = [
             "id" => "12345678-1234-1234-1234-123456789012",
             "first_name" => "Max",
@@ -45,7 +42,7 @@ class PersonalDataTest extends EntityTest {
         $this->assertEquals("Max", $personalDatum->getFirstName());
     }
 
-    public function testCreatePersonalData(): void {
+    public function test_create_personal_data(): void {
         $data = [
             [
                 "id" => "12345678-1234-1234-1234-123456789012",

@@ -42,5 +42,11 @@ jobs:
     - name: Copy phpunit.xml
       run: php -r "file_exists('phpunit.xml') || copy('phpunit.xml.dist', 'phpunit.xml');"
 
+    - name: Check code style (Pint)
+      run: composer run-script format
+
+    - name: Static analysis (PHPStan)
+      run: composer run-script lint
+
     - name: Run test suite
       run: composer run-script test

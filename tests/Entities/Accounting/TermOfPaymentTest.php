@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Datev\Entities\Accounting\TermsOfPayment\{TermOfPayment, TermsOfPayment};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Accounting\TermsOfPayment\TermOfPayment;
-use Datev\Entities\Accounting\TermsOfPayment\TermsOfPayment;
-
 class TermOfPaymentTest extends EntityTest {
-    public function testCreateTermOfPayment() {
+    public function test_create_term_of_payment() {
         $data = [
             "id" => 1,
             "caption" => "14 Tage 2% Skonto, 30 Tage netto",
@@ -28,11 +26,11 @@ class TermOfPaymentTest extends EntityTest {
             "discount_days_2" => 0,
             "net_days" => 30,
             "payment_type" => "standard",
-            "is_locked" => false
+            "is_locked" => false,
         ];
 
         $term = new TermOfPayment($data);
-        $this->assertInstanceOf(TermOfPayment::class, new TermOfPayment());
+        $this->assertInstanceOf(TermOfPayment::class, new TermOfPayment);
         $this->assertInstanceOf(TermOfPayment::class, $term);
         $this->assertEquals("14 Tage 2% Skonto, 30 Tage netto", $term->getCaption());
         $this->assertEquals(2, $term->getDiscountPercentage1());
@@ -41,20 +39,20 @@ class TermOfPaymentTest extends EntityTest {
         $this->assertFalse($term->isLocked());
     }
 
-    public function testCreateTermsOfPayment() {
+    public function test_create_terms_of_payment() {
         $data = [
             "content" => [
                 [
                     "id" => 1,
                     "caption" => "Sofort netto",
-                    "net_days" => 0
+                    "net_days" => 0,
                 ],
                 [
                     "id" => 2,
                     "caption" => "30 Tage netto",
-                    "net_days" => 30
-                ]
-            ]
+                    "net_days" => 30,
+                ],
+            ],
         ];
 
         $terms = new TermsOfPayment($data);

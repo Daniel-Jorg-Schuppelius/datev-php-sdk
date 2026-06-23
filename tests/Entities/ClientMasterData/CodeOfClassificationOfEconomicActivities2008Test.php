@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\CodesOfClassificationOfEconomicActivities2008\{CodeOfClassificationOfEconomicActivities2008, CodesOfClassificationOfEconomicActivities2008};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\CodesOfClassificationOfEconomicActivities2008\CodeOfClassificationOfEconomicActivities2008;
-use Datev\Entities\ClientMasterData\CodesOfClassificationOfEconomicActivities2008\CodesOfClassificationOfEconomicActivities2008;
-
 class CodeOfClassificationOfEconomicActivities2008Test extends EntityTest {
-    public function testCreateCodeOfClassificationOfEconomicActivities2008(): void {
+    public function test_create_code_of_classification_of_economic_activities2008(): void {
         $data = [
             "value" => "01.11",
             "valid_from" => "2020-01-01",
@@ -28,7 +26,7 @@ class CodeOfClassificationOfEconomicActivities2008Test extends EntityTest {
         $this->assertInstanceOf(CodeOfClassificationOfEconomicActivities2008::class, $code);
     }
 
-    public function testCreateCodesOfClassificationOfEconomicActivities2008(): void {
+    public function test_create_codes_of_classification_of_economic_activities2008(): void {
         $data = [
             [
                 "value" => "01.11",

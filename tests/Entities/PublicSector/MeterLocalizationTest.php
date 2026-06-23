@@ -12,12 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
+use Datev\Entities\PublicSector\Meters\MeterLocalization;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\PublicSector\Meters\MeterLocalization;
-
 class MeterLocalizationTest extends EntityTest {
-    public function testCreateMeterLocalization(): void {
+    public function test_create_meter_localization(): void {
         $data = [
             "is_located" => "yes",
             "location_description" => "Keller, linke Seite",
@@ -26,7 +25,7 @@ class MeterLocalizationTest extends EntityTest {
             "last_replacement_reason" => "Eichfrist abgelaufen",
             "comment" => "Schwer zugänglich",
             "meter_purpose" => "Hauptzähler",
-            "reading_district" => "Bezirk Nord"
+            "reading_district" => "Bezirk Nord",
         ];
 
         $localization = new MeterLocalization($data);

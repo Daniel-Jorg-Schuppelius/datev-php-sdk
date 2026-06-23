@@ -12,34 +12,32 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
+use Datev\Entities\PublicSector\Dues\{Due, Dues};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\PublicSector\Dues\Due;
-use Datev\Entities\PublicSector\Dues\Dues;
-
 class DueTest extends EntityTest {
-    public function testCreateDue() {
+    public function test_create_due() {
         $data = [
             "amount" => 250.75,
-            "date" => "2024-02-15T00:00:00.000+00:00"
+            "date" => "2024-02-15T00:00:00.000+00:00",
         ];
 
         $due = new Due($data);
-        $this->assertInstanceOf(Due::class, new Due());
+        $this->assertInstanceOf(Due::class, new Due);
         $this->assertInstanceOf(Due::class, $due);
         $this->assertEquals(250.75, $due->getAmount());
     }
 
-    public function testCreateDues() {
+    public function test_create_dues() {
         $data = [
             "content" => [
                 [
-                    "amount" => 250.75
+                    "amount" => 250.75,
                 ],
                 [
-                    "amount" => 180.00
-                ]
-            ]
+                    "amount" => 180.00,
+                ],
+            ],
         ];
 
         $dues = new Dues($data);

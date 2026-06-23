@@ -12,26 +12,24 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common;
 
+use Datev\Entities\Common\BankAccounts\{BankAccount, BankAccounts};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Common\BankAccounts\BankAccounts;
-use Datev\Entities\Common\BankAccounts\BankAccount;
-
 class BankAccountsTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "iban" => "DE89370400440532013000",
                     "bic" => "COBADEFFXXX",
-                    "bank_name" => "Commerzbank"
+                    "bank_name" => "Commerzbank",
                 ],
                 [
                     "iban" => "DE91100000000123456789",
                     "bic" => "DEUTDEFF",
-                    "bank_name" => "Deutsche Bank"
-                ]
-            ]
+                    "bank_name" => "Deutsche Bank",
+                ],
+            ],
         ];
 
         $bankAccounts = new BankAccounts($data);

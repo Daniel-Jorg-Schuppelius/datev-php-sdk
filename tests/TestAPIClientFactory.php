@@ -10,18 +10,15 @@
 
 namespace Tests;
 
-use APIToolkit\API\Authentication\BasicAuthentication;
-use APIToolkit\API\Authentication\BearerAuthentication;
+use APIToolkit\API\Authentication\{BasicAuthentication, BearerAuthentication};
 use APIToolkit\Contracts\Interfaces\API\ApiClientInterface;
 use ConfigToolkit\ConfigLoader;
 use Datev\API\Desktop\Client;
 use ERRORToolkit\Enums\LogType;
-use ERRORToolkit\Factories\ConsoleLoggerFactory;
-use ERRORToolkit\Factories\FileLoggerFactory;
+use ERRORToolkit\Factories\{ConsoleLoggerFactory, FileLoggerFactory};
 use ERRORToolkit\LoggerRegistry;
 use Psr\Log\LoggerInterface;
-use Tests\Mocks\MockClient;
-use Tests\Mocks\MockDataLoader;
+use Tests\Mocks\{MockClient, MockDataLoader};
 
 class TestAPIClientFactory {
     private static ?ApiClientInterface $client = null;

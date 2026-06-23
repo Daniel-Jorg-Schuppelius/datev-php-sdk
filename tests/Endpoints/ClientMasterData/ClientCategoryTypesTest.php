@@ -24,7 +24,7 @@ class ClientCategoryTypesTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetClientCategoryTypes() {
+    public function test_get_client_category_types() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

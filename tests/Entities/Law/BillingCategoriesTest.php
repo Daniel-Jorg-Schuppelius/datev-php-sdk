@@ -4,18 +4,16 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
+use Datev\Entities\Law\BillingCategories\{BillingCategories, BillingCategory};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Law\BillingCategories\BillingCategories;
-use Datev\Entities\Law\BillingCategories\BillingCategory;
-
 class BillingCategoriesTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 ["number" => 1, "name" => "Hourly"],
-                ["number" => 2, "name" => "Fixed"]
-            ]
+                ["number" => 2, "name" => "Fixed"],
+            ],
         ];
         $collection = new BillingCategories($data);
         $this->assertCount(2, $collection->getValues());

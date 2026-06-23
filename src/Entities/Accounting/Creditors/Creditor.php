@@ -15,9 +15,9 @@ namespace Datev\Entities\Accounting\Creditors;
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use DateTime;
+use Datev\Entities\Accounting\Banks\Banks;
 use Datev\Entities\ClientMasterData\Addresses\Addresses;
 use Datev\Entities\ClientMasterData\Communications\Communications;
-use Datev\Entities\Accounting\Banks\Banks;
 use Psr\Log\LoggerInterface;
 
 class Creditor extends NamedEntity implements IdentifiableNamedEntityInterface {

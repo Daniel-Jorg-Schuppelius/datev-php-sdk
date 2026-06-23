@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\IdentityAndAccessManagement;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\IdentityAndAccessManagement\Groups\Group;
-use Datev\Entities\IdentityAndAccessManagement\Groups\Groups;
+use Datev\Entities\IdentityAndAccessManagement\Groups\{Group, Groups};
 use InvalidArgumentException;
 
 class GroupsEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
@@ -36,7 +35,7 @@ class GroupsEndpoint extends EndpointAbstract implements SearchableEndpointInter
             }
 
             return Group::fromJson($response, self::$logger);
-        }, "Fetching Group (ID: {$id})");
+        }, "Fetching Group (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?Groups {

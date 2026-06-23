@@ -13,8 +13,7 @@ declare(strict_types=1);
 namespace Tests\Endpoints\Payroll;
 
 use Datev\API\Desktop\Endpoints\Payroll\ReasonsForAbsenceEndpoint;
-use Datev\Entities\Payroll\ReasonsForAbsence\ReasonForAbsence;
-use Datev\Entities\Payroll\ReasonsForAbsence\ReasonsForAbsence;
+use Datev\Entities\Payroll\ReasonsForAbsence\{ReasonForAbsence, ReasonsForAbsence};
 use Tests\Contracts\EndpointTest;
 
 class ReasonsForAbsenceTest extends EndpointTest {
@@ -25,21 +24,21 @@ class ReasonsForAbsenceTest extends EndpointTest {
         return new ReasonsForAbsenceEndpoint($this->client, self::getLogger());
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
             'id' => '12345',
             'reason' => 'Krankheit',
-            'paid' => true
+            'paid' => true,
         ];
 
         $reason = ReasonForAbsence::fromJson(json_encode($data));
         $this->assertInstanceOf(ReasonForAbsence::class, $reason);
     }
 
-    public function testJsonSerializeCollection() {
+    public function test_json_serialize_collection() {
         $data = [
             ['id' => '12345', 'reason' => 'Krankheit'],
-            ['id' => '12346', 'reason' => 'Urlaub']
+            ['id' => '12346', 'reason' => 'Urlaub'],
         ];
 
         $reasons = ReasonsForAbsence::fromJson(json_encode($data));
@@ -47,7 +46,7 @@ class ReasonsForAbsenceTest extends EndpointTest {
         $this->assertCount(2, $reasons->getValues());
     }
 
-    public function testGetReasonsForAbsence() {
+    public function test_get_reasons_for_absence() {
         $this->endpoint = $this->createEndpoint();
         $reasons = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

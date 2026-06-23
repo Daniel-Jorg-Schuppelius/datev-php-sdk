@@ -24,7 +24,7 @@ class EchoTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetEcho() {
+    public function test_get_echo() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

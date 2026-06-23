@@ -22,7 +22,7 @@ class LevelsOfJurisdictionTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetLevelsOfJurisdiction() {
+    public function test_get_levels_of_jurisdiction() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

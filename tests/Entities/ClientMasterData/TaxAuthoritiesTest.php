@@ -12,26 +12,24 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\TaxAuthorities\{TaxAuthorities, TaxAuthority};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\TaxAuthorities\TaxAuthorities;
-use Datev\Entities\ClientMasterData\TaxAuthorities\TaxAuthority;
-
 class TaxAuthoritiesTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "id" => "ta-1",
                     "name" => "Finanzamt München",
-                    "number" => 9181
+                    "number" => 9181,
                 ],
                 [
                     "id" => "ta-2",
                     "name" => "Finanzamt Berlin",
-                    "number" => 1175
-                ]
-            ]
+                    "number" => 1175,
+                ],
+            ],
         ];
 
         $taxAuthorities = new TaxAuthorities($data);

@@ -12,18 +12,16 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\FederalStatesMAD\{FederalStateMAD, FederalStatesMAD};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\FederalStatesMAD\FederalStatesMAD;
-use Datev\Entities\ClientMasterData\FederalStatesMAD\FederalStateMAD;
-
 class FederalStatesMADTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 ["current_federal_state_mad" => "BY"],
-                ["current_federal_state_mad" => "NW"]
-            ]
+                ["current_federal_state_mad" => "NW"],
+            ],
         ];
 
         $states = new FederalStatesMAD($data);

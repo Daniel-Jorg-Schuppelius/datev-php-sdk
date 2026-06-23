@@ -12,19 +12,16 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common;
 
+use Datev\Entities\Common\Addresses\{Address, AddressID, Addresses};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Common\Addresses\Address;
-use Datev\Entities\Common\Addresses\Addresses;
-use Datev\Entities\Common\Addresses\AddressID;
-
 class AddressTest extends EntityTest {
-    public function testCreateAddress(): void {
+    public function test_create_address(): void {
         $data = [
             "id" => "addr-001",
             "street" => "Musterstraße 123",
             "city" => "München",
-            "postal_code" => "80331"
+            "postal_code" => "80331",
         ];
 
         $address = new Address($data);
@@ -38,22 +35,22 @@ class AddressTest extends EntityTest {
         $this->assertEquals("Musterstraße 123, 80331 München", $address->getFullAddress());
     }
 
-    public function testCreateAddresses(): void {
+    public function test_create_addresses(): void {
         $data = [
             "content" => [
                 [
                     "id" => "addr-001",
                     "street" => "Musterstraße 123",
                     "city" => "München",
-                    "postal_code" => "80331"
+                    "postal_code" => "80331",
                 ],
                 [
                     "id" => "addr-002",
                     "street" => "Beispielweg 45",
                     "city" => "Berlin",
-                    "postal_code" => "10115"
-                ]
-            ]
+                    "postal_code" => "10115",
+                ],
+            ],
         ];
 
         $addresses = new Addresses($data);

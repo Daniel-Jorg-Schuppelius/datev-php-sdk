@@ -12,23 +12,21 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\RelationshipTypes\{RelationshipType, RelationshipTypes};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\RelationshipTypes\RelationshipType;
-use Datev\Entities\ClientMasterData\RelationshipTypes\RelationshipTypes;
-
 class RelationshipTypeTest extends EntityTest {
-    public function testCreateRelationshipType() {
+    public function test_create_relationship_type() {
         $data = [
             "id" => "type-123",
             "abbreviation" => "GF",
             "name" => "Geschäftsführer",
             "standard" => true,
-            "type" => 1
+            "type" => 1,
         ];
 
         $relType = new RelationshipType($data);
-        $this->assertInstanceOf(RelationshipType::class, new RelationshipType());
+        $this->assertInstanceOf(RelationshipType::class, new RelationshipType);
         $this->assertInstanceOf(RelationshipType::class, $relType);
         $this->assertNotNull($relType->getID());
         $this->assertEquals("GF", $relType->getAbbreviation());
@@ -37,20 +35,20 @@ class RelationshipTypeTest extends EntityTest {
         $this->assertEquals(1, $relType->getType());
     }
 
-    public function testCreateRelationshipTypes() {
+    public function test_create_relationship_types() {
         $data = [
             "content" => [
                 [
                     "id" => "type-001",
                     "abbreviation" => "GF",
-                    "name" => "Geschäftsführer"
+                    "name" => "Geschäftsführer",
                 ],
                 [
                     "id" => "type-002",
                     "abbreviation" => "PM",
-                    "name" => "Prokurist"
-                ]
-            ]
+                    "name" => "Prokurist",
+                ],
+            ],
         ];
 
         $relTypes = new RelationshipTypes($data);

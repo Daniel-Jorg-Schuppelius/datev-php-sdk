@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\OrderManagement;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\OrderManagement\MonthlyValues\MonthlyValue;
-use Datev\Entities\OrderManagement\MonthlyValues\MonthlyValues;
+use Datev\Entities\OrderManagement\MonthlyValues\{MonthlyValue, MonthlyValues};
 
 class MonthlyValuesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointPrefix = 'order-management/v1';
@@ -35,7 +34,7 @@ class MonthlyValuesEndpoint extends EndpointAbstract implements SearchableEndpoi
             }
 
             return MonthlyValue::fromJson($response, self::$logger);
-        }, "Fetching MonthlyValue (ID: {$id})");
+        }, "Fetching MonthlyValue (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?MonthlyValues {

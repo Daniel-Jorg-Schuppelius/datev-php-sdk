@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Datev\Entities\OrderManagement\Invoices\{Invoice, Invoices};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\OrderManagement\Invoices\Invoice;
-use Datev\Entities\OrderManagement\Invoices\Invoices;
-
 class InvoiceTest extends EntityTest {
-    public function testCreateInvoice() {
+    public function test_create_invoice() {
         $data = [
             "id" => 12345,
             "invoice_id" => "inv-2024-001",
@@ -29,29 +27,29 @@ class InvoiceTest extends EntityTest {
             "net_amount" => 1000.00,
             "vat_amount" => 190.00,
             "invoice_type" => "standard",
-            "cancellation_flag" => false
+            "cancellation_flag" => false,
         ];
 
         $invoice = new Invoice($data);
-        $this->assertInstanceOf(Invoice::class, new Invoice());
+        $this->assertInstanceOf(Invoice::class, new Invoice);
         $this->assertInstanceOf(Invoice::class, $invoice);
         $this->assertEquals(12345, $invoice->getID());
         $this->assertEquals(2024, $invoice->getAccountingYear());
         $this->assertEquals(1001, $invoice->getInvoiceNumber());
     }
 
-    public function testCreateInvoices() {
+    public function test_create_invoices() {
         $data = [
             "content" => [
                 [
                     "id" => 12345,
-                    "invoice_number" => 1001
+                    "invoice_number" => 1001,
                 ],
                 [
                     "id" => 12346,
-                    "invoice_number" => 1002
-                ]
-            ]
+                    "invoice_number" => 1002,
+                ],
+            ],
         ];
 
         $invoices = new Invoices($data);

@@ -12,16 +12,15 @@ declare(strict_types=1);
 
 namespace Tests\Entities\IdentityAndAccessManagement;
 
+use Datev\Entities\IdentityAndAccessManagement\Users\ScimName;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\IdentityAndAccessManagement\Users\ScimName;
-
 class ScimNameTest extends EntityTest {
-    public function testCreateScimName(): void {
+    public function test_create_scim_name(): void {
         $data = [
             "given_name" => "Max",
             "family_name" => "Mustermann",
-            "honorific_prefix" => "Dr."
+            "honorific_prefix" => "Dr.",
         ];
 
         $name = new ScimName($data);
@@ -32,10 +31,10 @@ class ScimNameTest extends EntityTest {
         $this->assertEquals("Dr.", $name->getHonorificPrefix());
     }
 
-    public function testCreateScimNameMinimal(): void {
+    public function test_create_scim_name_minimal(): void {
         $data = [
             "given_name" => "Erika",
-            "family_name" => "Musterfrau"
+            "family_name" => "Musterfrau",
         ];
 
         $name = new ScimName($data);

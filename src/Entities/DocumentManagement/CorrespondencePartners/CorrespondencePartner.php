@@ -26,7 +26,7 @@ class CorrespondencePartner extends NamedEntity {
     public function toArray(): array {
         return [
             'domain' => $this->domain,
-            'link' => $this->link->getValue()
+            'link' => $this->link->getValue(),
         ];
     }
 

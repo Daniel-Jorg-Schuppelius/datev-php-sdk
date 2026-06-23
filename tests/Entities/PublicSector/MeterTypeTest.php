@@ -12,12 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
+use Datev\Entities\PublicSector\Meters\MeterType;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\PublicSector\Meters\MeterType;
-
 class MeterTypeTest extends EntityTest {
-    public function testCreateMeterType(): void {
+    public function test_create_meter_type(): void {
         $data = [
             "id" => 1,
             "name" => "Wasserzähler Standard",
@@ -26,7 +25,7 @@ class MeterTypeTest extends EntityTest {
             "nominal_flow_rate" => 2.5,
             "count_of_pre_decimal_digits" => 5,
             "count_of_post_decimal_digits" => 3,
-            "periodicity_of_calibration" => "6 years"
+            "periodicity_of_calibration" => "6 years",
         ];
 
         $meterType = new MeterType($data);

@@ -12,42 +12,40 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Datev\Entities\OrderManagement\Employees\{Employee, Employees};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\OrderManagement\Employees\Employee;
-use Datev\Entities\OrderManagement\Employees\Employees;
-
 class EmployeeTest extends EntityTest {
-    public function testCreateEmployee() {
+    public function test_create_employee() {
         $data = [
             "id" => "e1234567-8901-2345-6789-012345678901",
             "personnel_number" => "1001",
             "first_name" => "Max",
             "last_name" => "Mustermann",
             "display_name" => "Max Mustermann",
-            "isactive" => true
+            "isactive" => true,
         ];
 
         $employee = new Employee($data);
-        $this->assertInstanceOf(Employee::class, new Employee());
+        $this->assertInstanceOf(Employee::class, new Employee);
         $this->assertInstanceOf(Employee::class, $employee);
         $this->assertEquals("1001", $employee->getPersonnelNumber());
         $this->assertEquals("Max", $employee->getFirstName());
         $this->assertEquals("Mustermann", $employee->getLastName());
     }
 
-    public function testCreateEmployees() {
+    public function test_create_employees() {
         $data = [
             "content" => [
                 [
                     "id" => "e1234567-8901-2345-6789-012345678901",
-                    "display_name" => "Mitarbeiter 1"
+                    "display_name" => "Mitarbeiter 1",
                 ],
                 [
                     "id" => "e2234567-8901-2345-6789-012345678902",
-                    "display_name" => "Mitarbeiter 2"
-                ]
-            ]
+                    "display_name" => "Mitarbeiter 2",
+                ],
+            ],
         ];
 
         $employees = new Employees($data);

@@ -12,28 +12,26 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\ShortNames\{ShortName, ShortNames};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\ShortNames\ShortName;
-use Datev\Entities\ClientMasterData\ShortNames\ShortNames;
-
 class ShortNameTest extends EntityTest {
-    public function testCreateShortName() {
+    public function test_create_short_name() {
         $data = [
             "value" => "MUSTER",
-            "valid_from" => "2024-01-01"
+            "valid_from" => "2024-01-01",
         ];
 
         $name = new ShortName($data);
         $this->assertInstanceOf(ShortName::class, $name);
     }
 
-    public function testCreateShortNames() {
+    public function test_create_short_names() {
         $data = [
             [
                 "value" => "MUSTER",
-                "valid_from" => "2024-01-01"
-            ]
+                "valid_from" => "2024-01-01",
+            ],
         ];
 
         $names = new ShortNames($data);

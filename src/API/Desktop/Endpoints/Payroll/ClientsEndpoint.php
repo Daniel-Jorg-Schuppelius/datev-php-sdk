@@ -14,15 +14,14 @@ use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInt
 use APIToolkit\Entities\ID;
 use DateTime;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\Payroll\Clients\Client;
-use Datev\Entities\Payroll\Clients\Clients;
+use Datev\Entities\Payroll\Clients\{Client, Clients};
 use InvalidArgumentException;
 
 class ClientsEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointPrefix = 'hr/v3';
     protected string $endpoint = 'clients';
 
-    public function get(?ID $id = null, ?string $expand = "all", DateTime $referenceDate = new DateTime()): ?Client {
+    public function get(?ID $id = null, ?string $expand = "all", DateTime $referenceDate = new DateTime): ?Client {
         if (is_null($id)) {
             $this->logErrorAndThrow(InvalidArgumentException::class, 'ID is required');
         }
@@ -38,9 +37,8 @@ class ClientsEndpoint extends EndpointAbstract implements SearchableEndpointInte
             }
 
             return Client::fromJson($response, self::$logger);
-        }, "Fetching Payroll Client (ID: {$id})");
+        }, "Fetching Payroll Client (ID: {$id->toString()})");
     }
-
 
     public function search(array $queryParams = [], array $options = []): ?Clients {
         if (!isset($queryParams['reference-date'])) {

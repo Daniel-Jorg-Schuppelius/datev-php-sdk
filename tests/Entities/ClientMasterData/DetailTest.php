@@ -12,12 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\Details\Detail;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\Details\Detail;
-
 class DetailTest extends EntityTest {
-    public function testCreateDetail() {
+    public function test_create_detail() {
         $data = [
             "complimentary_close" => "Mit freundlichen Grüßen",
             "correspondence_title" => "Herrn",
@@ -29,8 +28,8 @@ class DetailTest extends EntityTest {
             "considerations" => [
                 [
                     "valid_from" => "2020-01-02T00:00:00.000+00:00",
-                    "value" => "AUSBILDG"
-                ]
+                    "value" => "AUSBILDG",
+                ],
             ],
             "current_consideration" => "AUSBILDG",
             "country_of_birth" => "DE",
@@ -41,15 +40,15 @@ class DetailTest extends EntityTest {
             "denominations" => [
                 [
                     "valid_from" => "2020-01-02T00:00:00.000+00:00",
-                    "value" => "RK"
-                ]
+                    "value" => "RK",
+                ],
             ],
             "current_denomination" => "RK",
             "federal_states_of_natural_person" => [
                 [
                     "valid_from" => "2020-01-02T00:00:00.000+00:00",
-                    "value" => "BAY"
-                ]
+                    "value" => "BAY",
+                ],
             ],
             "current_federal_state_of_natural_person" => "BAY",
             "identification_number" => "T220001293",
@@ -57,15 +56,15 @@ class DetailTest extends EntityTest {
             "job_titles" => [
                 [
                     "valid_from" => "2020-01-02T00:00:00.000+00:00",
-                    "value" => "Bäcker"
-                ]
+                    "value" => "Bäcker",
+                ],
             ],
             "current_job_title" => "Bäcker",
             "marital_statuses" => [
                 [
                     "valid_from" => "2020-01-02T00:00:00.000+00:00",
-                    "value" => "VH"
-                ]
+                    "value" => "VH",
+                ],
             ],
             "current_marital_status" => "VH",
             "name_prefix" => "von",
@@ -80,166 +79,166 @@ class DetailTest extends EntityTest {
             "codes_of_classification_of_economic_activities_2008" => [
                 [
                     "valid_from" => "2020-01-02T00:00:00.000+00:00",
-                    "value" => "43.32.0"
-                ]
+                    "value" => "43.32.0",
+                ],
             ],
             "current_code_of_classification_of_economic_activities_2008" => "43.32.0",
             "descriptions_of_classification_of_economic_activities_2008" => [
                 [
                     "valid_from" => "2020-01-02T00:00:00.000+00:00",
-                    "value" => "Bautischlerei und -schlosserei"
-                ]
+                    "value" => "Bautischlerei und -schlosserei",
+                ],
             ],
             "current_description_of_classification_of_economic_activities_2008" => "Bautischlerei und -schlosserei",
             "mad_codes_of_classification_of_economic_activities_2008" => [
                 [
                     "valid_from" => "2020-01-02T00:00:00.000+00:00",
-                    "value" => "D01.00FF43.32.0000000000000000"
-                ]
+                    "value" => "D01.00FF43.32.0000000000000000",
+                ],
             ],
             "current_mad_code_of_classification_of_economic_activities_2008" => "D01.00FF43.32.0000000000000000",
             "codes_of_classification_of_economic_activities_2003" => [
                 [
                     "valid_from" => "2020-01-02T00:00:00.000+00:00",
-                    "value" => "45.42.0"
-                ]
+                    "value" => "45.42.0",
+                ],
             ],
             "current_code_of_classification_of_economic_activities_2003" => "45.42.0",
             "descriptions_of_classification_of_economic_activities_2003" => [
                 [
                     "valid_from" => "2020-01-02T00:00:00.000+00:00",
-                    "value" => "Bautischlerei und -schlosserei"
-                ]
+                    "value" => "Bautischlerei und -schlosserei",
+                ],
             ],
             "current_description_of_classification_of_economic_activities_2003" => "Bautischlerei und -schlosserei",
             "mad_codes_of_classification_of_economic_activities_2003" => [
                 [
                     "valid_from" => "2020-01-02T00:00:00.000+00:00",
-                    "value" => "01.00AFA45.42.0000000000000000"
-                ]
+                    "value" => "01.00AFA45.42.0000000000000000",
+                ],
             ],
             "current_mad_code_of_classification_of_economic_activities_2003" => "01.00AFA45.42.0000000000000000",
             "countries_of_head_office" => [
                 [
                     "valid_from" => "2020-01-02T00:00:00.000+00:00",
-                    "value" => "DE"
-                ]
+                    "value" => "DE",
+                ],
             ],
             "current_country_of_head_office" => "DE",
             "date_of_memorandum_of_association" => "1970-04-10T00:00:00.000+00:00",
             "distributions_of_profit" => [
                 [
                     "valid_from" => "2020-01-02T00:00:00.000+00:00",
-                    "value" => "BRUCH"
-                ]
+                    "value" => "BRUCH",
+                ],
             ],
             "current_distribution_of_profit" => "BRUCH",
             "enterprise_purposes" => [
                 [
                     "valid_from" => "2020-01-02T00:00:00.000+00:00",
-                    "value" => "Schreinerei"
-                ]
+                    "value" => "Schreinerei",
+                ],
             ],
             "current_enterprise_purpose" => "Schreinerei",
             "federal_states_mad_of_legal_person" => [
                 [
                     "valid_from" => "2020-01-02T00:00:00.000+00:00",
-                    "value" => 2
-                ]
+                    "value" => 2,
+                ],
             ],
             "current_federal_state_mad_of_legal_person" => 2,
             "federal_states_of_legal_person" => [
                 [
                     "valid_from" => "2020-01-02T00:00:00.000+00:00",
-                    "value" => "BAY"
-                ]
+                    "value" => "BAY",
+                ],
             ],
             "current_federal_state_of_legal_person" => "BAY",
             "fiscal_years" => [
                 [
                     "valid_from" => "2020-01-02T00:00:00.000+00:00",
-                    "value" => "01013112"
-                ]
+                    "value" => "01013112",
+                ],
             ],
             "current_fiscal_year" => "01013112",
             "kind_of_register_courts" => [
                 [
                     "valid_from" => "2020-01-02T00:00:00.000+00:00",
-                    "value" => "HAN"
-                ]
+                    "value" => "HAN",
+                ],
             ],
             "current_kind_of_register_court" => "HAN",
             "locations_of_head_office" => [
                 [
                     "valid_from" => "2020-01-02T00:00:00.000+00:00",
-                    "value" => "München"
-                ]
+                    "value" => "München",
+                ],
             ],
             "current_location_of_head_office" => "München",
             "names_of_register_court" => [
                 [
                     "valid_from" => "2020-01-02T00:00:00.000+00:00",
-                    "value" => "München"
-                ]
+                    "value" => "München",
+                ],
             ],
             "current_name_of_register_court" => "München",
             "registered_company_names" => [
                 [
                     "valid_from" => "2020-01-02T00:00:00.000+00:00",
-                    "value" => "Schreinerei Mustermeier GmbH"
-                ]
+                    "value" => "Schreinerei Mustermeier GmbH",
+                ],
             ],
             "current_registered_company_name" => "Schreinerei Mustermeier GmbH",
             "registration_date" => "2020-01-02T00:00:00.000+00:00",
             "registration_numbers" => [
                 [
                     "valid_from" => "2020-01-02T00:00:00.000+00:00",
-                    "value" => "HRB 123"
-                ]
+                    "value" => "HRB 123",
+                ],
             ],
             "current_registration_number" => "HRB 123",
             "three_lined_company_names_first_line" => [
                 [
                     "valid_from" => "2020-01-02T00:00:00.000+00:00",
-                    "value" => "Mustermeier GmbH"
-                ]
+                    "value" => "Mustermeier GmbH",
+                ],
             ],
             "current_three_lined_company_name_first_line" => "Mustermeier",
             "three_lined_company_names_second_line" => [
                 [
                     "valid_from" => "2020-01-02T00:00:00.000+00:00",
-                    "value" => "Mustermeier GmbH"
-                ]
+                    "value" => "Mustermeier GmbH",
+                ],
             ],
             "current_three_lined_company_name_second_line" => "Gesellschaft mit beschränkter Haftung",
             "three_lined_company_names_third_line" => [
                 [
                     "valid_from" => "2020-01-02T00:00:00.000+00:00",
-                    "value" => "Mustermeier GmbH"
-                ]
+                    "value" => "Mustermeier GmbH",
+                ],
             ],
             "current_three_lined_company_name_third_line" => "Schreinerei",
             "two_lined_company_names_first_line" => [
                 [
                     "valid_from" => "2020-01-02T00:00:00.000+00:00",
-                    "value" => "Mustermeier GmbH"
-                ]
+                    "value" => "Mustermeier GmbH",
+                ],
             ],
             "current_two_lined_company_name_first_line" => "Schreinerei Mustermeier",
             "two_lined_company_names_second_line" => [
                 [
                     "valid_from" => "2020-01-02T00:00:00.000+00:00",
-                    "value" => "Mustermeier GmbH"
-                ]
+                    "value" => "Mustermeier GmbH",
+                ],
             ],
             "current_two_lined_company_name_second_line" => "Gesellschaft mit beschränkter Haftung",
             "winding_up_date" => "2017-08-12T00:00:00.000+00:00",
-            "winding_up_proceedings" => "IA"
+            "winding_up_proceedings" => "IA",
         ];
 
         $detail = new Detail($data);
         $this->assertTrue($detail->isValid());
-        $this->assertInstanceOf(Detail::class, new Detail());
+        $this->assertInstanceOf(Detail::class, new Detail);
         $this->assertInstanceOf(Detail::class, $detail);
         $this->assertEquals($data, $detail->toArray());
     }

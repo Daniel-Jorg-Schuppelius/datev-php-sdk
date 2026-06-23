@@ -12,37 +12,34 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\Establishments\{Establishment, EstablishmentID, Establishments};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\Establishments\Establishment;
-use Datev\Entities\ClientMasterData\Establishments\EstablishmentID;
-use Datev\Entities\ClientMasterData\Establishments\Establishments;
-
 class EstablishmentTest extends EntityTest {
-    public function testCreateEstablishmentID() {
+    public function test_create_establishment_id() {
         $id = new EstablishmentID("12345678-1234-1234-1234-123456789012");
         $this->assertInstanceOf(EstablishmentID::class, $id);
         $this->assertEquals("12345678-1234-1234-1234-123456789012", $id->toString());
     }
 
-    public function testCreateEstablishment() {
+    public function test_create_establishment() {
         $data = [
             "id" => "12345678-1234-1234-1234-123456789012",
             "name" => "Hauptniederlassung",
-            "number" => 1
+            "number" => 1,
         ];
 
         $establishment = new Establishment($data);
         $this->assertInstanceOf(Establishment::class, $establishment);
     }
 
-    public function testCreateEstablishments() {
+    public function test_create_establishments() {
         $data = [
             [
                 "id" => "12345678-1234-1234-1234-123456789012",
                 "name" => "Hauptniederlassung",
-                "number" => 1
-            ]
+                "number" => 1,
+            ],
         ];
 
         $establishments = new Establishments($data);

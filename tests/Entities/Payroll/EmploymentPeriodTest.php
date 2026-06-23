@@ -12,18 +12,15 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\EmploymentPeriods\{EmploymentPeriod, EmploymentPeriodID, EmploymentPeriods};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\EmploymentPeriods\EmploymentPeriod;
-use Datev\Entities\Payroll\EmploymentPeriods\EmploymentPeriods;
-use Datev\Entities\Payroll\EmploymentPeriods\EmploymentPeriodID;
-
 class EmploymentPeriodTest extends EntityTest {
-    public function testCreateEmploymentPeriod(): void {
+    public function test_create_employment_period(): void {
         $data = [
             "id" => "emp-001",
             "personnel_number" => "12345",
-            "date_of_commencement_of_employment" => "2020-01-01T00:00:00.000+00:00"
+            "date_of_commencement_of_employment" => "2020-01-01T00:00:00.000+00:00",
         ];
 
         $employmentPeriod = new EmploymentPeriod($data);
@@ -35,18 +32,18 @@ class EmploymentPeriodTest extends EntityTest {
         $this->assertNotNull($employmentPeriod->getDateOfCommencementOfEmployment());
     }
 
-    public function testCreateEmploymentPeriods(): void {
+    public function test_create_employment_periods(): void {
         $data = [
             "content" => [
                 [
                     "id" => "emp-001",
-                    "personnel_number" => "12345"
+                    "personnel_number" => "12345",
                 ],
                 [
                     "id" => "emp-002",
-                    "personnel_number" => "67890"
-                ]
-            ]
+                    "personnel_number" => "67890",
+                ],
+            ],
         ];
 
         $employmentPeriods = new EmploymentPeriods($data);

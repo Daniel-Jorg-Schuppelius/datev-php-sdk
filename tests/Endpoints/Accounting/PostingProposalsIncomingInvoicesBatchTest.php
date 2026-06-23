@@ -23,7 +23,7 @@ class PostingProposalsIncomingInvoicesBatchTest extends EndpointTest {
         return new PostingProposalsIncomingInvoicesBatchEndpoint($this->client, self::getLogger());
     }
 
-    public function testGetPostingProposalsIncomingInvoicesBatch() {
+    public function test_get_posting_proposals_incoming_invoices_batch() {
         $this->skipMockIfComplexEntity();
 
         $this->endpoint = $this->createEndpoint();

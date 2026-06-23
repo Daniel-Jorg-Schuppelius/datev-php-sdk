@@ -12,14 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Datev\Entities\OrderManagement\ExpensePostings\{ExpensePosting, ExpensePostings};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\OrderManagement\ExpensePostings\ExpensePosting;
-use Datev\Entities\OrderManagement\ExpensePostings\ExpensePostings;
-
 class ExpensePostingTest extends EntityTest {
-    
-    public function testCreateExpensePosting(): void {
+    public function test_create_expense_posting(): void {
         $data = [
             "id" => "EP-001",
             "order_id" => "550e8400-e29b-41d4-a716-446655440000",
@@ -32,7 +29,7 @@ class ExpensePostingTest extends EntityTest {
             "comment" => "Testbuchung",
             "isbillable" => true,
             "time_units" => 4,
-            "cost_amount" => 500.00
+            "cost_amount" => 500.00,
         ];
 
         $expensePosting = new ExpensePosting($data);
@@ -42,18 +39,18 @@ class ExpensePostingTest extends EntityTest {
         $this->assertEquals("Testbuchung", $expensePosting->getComment());
     }
 
-    public function testCreateExpensePostings(): void {
+    public function test_create_expense_postings(): void {
         $data = [
             "content" => [
                 [
                     "id" => "EP-001",
-                    "comment" => "Buchung 1"
+                    "comment" => "Buchung 1",
                 ],
                 [
                     "id" => "EP-002",
-                    "comment" => "Buchung 2"
-                ]
-            ]
+                    "comment" => "Buchung 2",
+                ],
+            ],
         ];
 
         $expensePostings = new ExpensePostings($data);

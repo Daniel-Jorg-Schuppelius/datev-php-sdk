@@ -13,8 +13,7 @@ declare(strict_types=1);
 namespace Tests\Endpoints\Payroll;
 
 use Datev\API\Desktop\Endpoints\Payroll\GrossPaymentsEndpoint;
-use Datev\Entities\Payroll\GrossPayments\GrossPayment;
-use Datev\Entities\Payroll\GrossPayments\GrossPayments;
+use Datev\Entities\Payroll\GrossPayments\{GrossPayment, GrossPayments};
 use Tests\Contracts\EndpointTest;
 
 class GrossPaymentsTest extends EndpointTest {
@@ -25,21 +24,21 @@ class GrossPaymentsTest extends EndpointTest {
         return new GrossPaymentsEndpoint($this->client, self::getLogger());
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
             'id' => '12345',
             'amount' => 5000.00,
-            'currency' => 'EUR'
+            'currency' => 'EUR',
         ];
 
         $payment = GrossPayment::fromJson(json_encode($data));
         $this->assertInstanceOf(GrossPayment::class, $payment);
     }
 
-    public function testJsonSerializeCollection() {
+    public function test_json_serialize_collection() {
         $data = [
             ['id' => '12345', 'amount' => 5000.00],
-            ['id' => '12346', 'amount' => 4500.00]
+            ['id' => '12346', 'amount' => 4500.00],
         ];
 
         $payments = GrossPayments::fromJson(json_encode($data));
@@ -47,7 +46,7 @@ class GrossPaymentsTest extends EndpointTest {
         $this->assertCount(2, $payments->getValues());
     }
 
-    public function testGetGrossPayments() {
+    public function test_get_gross_payments() {
         $this->endpoint = $this->createEndpoint();
         $payments = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

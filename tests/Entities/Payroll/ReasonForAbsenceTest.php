@@ -12,17 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\ReasonsForAbsence\{ReasonForAbsence, ReasonForAbsenceID, ReasonsForAbsence};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\ReasonsForAbsence\ReasonForAbsence;
-use Datev\Entities\Payroll\ReasonsForAbsence\ReasonsForAbsence;
-use Datev\Entities\Payroll\ReasonsForAbsence\ReasonForAbsenceID;
-
 class ReasonForAbsenceTest extends EntityTest {
-    public function testCreateReasonForAbsence(): void {
+    public function test_create_reason_for_absence(): void {
         $data = [
             "id" => "rfa-001",
-            "name" => "Krankheit"
+            "name" => "Krankheit",
         ];
 
         $reasonForAbsence = new ReasonForAbsence($data);
@@ -33,18 +30,18 @@ class ReasonForAbsenceTest extends EntityTest {
         $this->assertEquals("Krankheit", $reasonForAbsence->getName());
     }
 
-    public function testCreateReasonsForAbsence(): void {
+    public function test_create_reasons_for_absence(): void {
         $data = [
             "content" => [
                 [
                     "id" => "rfa-001",
-                    "name" => "Krankheit"
+                    "name" => "Krankheit",
                 ],
                 [
                     "id" => "rfa-002",
-                    "name" => "Urlaub"
-                ]
-            ]
+                    "name" => "Urlaub",
+                ],
+            ],
         ];
 
         $reasonsForAbsence = new ReasonsForAbsence($data);

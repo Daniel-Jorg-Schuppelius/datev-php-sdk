@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\OrderManagement;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\OrderManagement\OrderTypes\OrderType;
-use Datev\Entities\OrderManagement\OrderTypes\OrderTypes;
+use Datev\Entities\OrderManagement\OrderTypes\{OrderType, OrderTypes};
 
 class OrderTypesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointPrefix = 'order-management/v1';
@@ -35,7 +34,7 @@ class OrderTypesEndpoint extends EndpointAbstract implements SearchableEndpointI
             }
 
             return OrderType::fromJson($response, self::$logger);
-        }, "Fetching OrderType (ID: {$id})");
+        }, "Fetching OrderType (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?OrderTypes {

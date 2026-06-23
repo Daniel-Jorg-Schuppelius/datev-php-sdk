@@ -4,18 +4,16 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\Relationships\{Relationship, Relationships};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\Relationships\Relationships;
-use Datev\Entities\ClientMasterData\Relationships\Relationship;
-
 class RelationshipsTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 ["id" => "rel-1", "name" => "Muttergesellschaft", "abbreviation" => "MUT"],
-                ["id" => "rel-2", "name" => "Tochtergesellschaft", "abbreviation" => "TOC"]
-            ]
+                ["id" => "rel-2", "name" => "Tochtergesellschaft", "abbreviation" => "TOC"],
+            ],
         ];
         $collection = new Relationships($data);
         $this->assertCount(2, $collection->getValues());

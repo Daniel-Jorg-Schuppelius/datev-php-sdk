@@ -11,8 +11,7 @@
 namespace Tests\Endpoints\Accounting;
 
 use Datev\API\Desktop\Endpoints\Accounting\ClientsEndpoint;
-use Datev\Entities\Accounting\Clients\Client;
-use Datev\Entities\Accounting\Clients\Clients;
+use Datev\Entities\Accounting\Clients\{Client, Clients};
 use Tests\Contracts\EndpointTest;
 
 class ClientTest extends EndpointTest {
@@ -23,7 +22,7 @@ class ClientTest extends EndpointTest {
         return new ClientsEndpoint($this->client, self::getLogger());
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
             "id" => "9351B0E3-E96B-4BB0-B94E-018B13D1DB28",
             "name" => "Küchenbeispiel",
@@ -32,11 +31,11 @@ class ClientTest extends EndpointTest {
 
         $data1 = [
             "company_data" => [
-                "creditor_identifier" => "DE98ZZZ09999999999"
+                "creditor_identifier" => "DE98ZZZ09999999999",
             ],
             "id" => "9351b0e3-e96b-4bb0-b94e-018b13d1db28",
             "name" => "Küchenbeispiel",
-            "number" => 55039
+            "number" => 55039,
         ];
 
         $client = new Client($data);
@@ -46,7 +45,7 @@ class ClientTest extends EndpointTest {
         $this->assertEquals(json_encode($data1), $client1->toJson());  // the order of the $data array is important for this test.
     }
 
-    public function testGetClients() {
+    public function test_get_clients() {
         $this->endpoint = $this->createEndpoint();
 
         $clients = $this->endpoint->search();

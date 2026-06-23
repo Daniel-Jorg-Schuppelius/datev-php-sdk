@@ -12,14 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\IdentityAndAccessManagement;
 
+use Datev\Entities\IdentityAndAccessManagement\Groups\DatevGroupExtension;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\IdentityAndAccessManagement\Groups\DatevGroupExtension;
-
 class DatevGroupExtensionTest extends EntityTest {
-    public function testCreateDatevGroupExtension(): void {
+    public function test_create_datev_group_extension(): void {
         $data = [
-            "description" => "Administrative Benutzergruppe für IT-Mitarbeiter"
+            "description" => "Administrative Benutzergruppe für IT-Mitarbeiter",
         ];
 
         $extension = new DatevGroupExtension($data);

@@ -59,8 +59,8 @@ class DocumentFilesEndpoint extends EndpointAbstract {
             $response = $this->client->post($this->getEndpointUrl(), [
                 'body' => $fileContent,
                 'headers' => [
-                    'Content-Type' => 'application/octet-stream'
-                ]
+                    'Content-Type' => 'application/octet-stream',
+                ],
             ]);
 
             $body = $response->getBody()->getContents();

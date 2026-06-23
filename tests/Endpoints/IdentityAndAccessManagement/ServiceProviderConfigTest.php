@@ -25,7 +25,7 @@ class ServiceProviderConfigTest extends EndpointTest {
         $this->apiDisabled = true; // API is disabled
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
             "schemas" => ["urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig"],
             "documentation_uri" => "https://www.datev.de/developer/",
@@ -33,15 +33,15 @@ class ServiceProviderConfigTest extends EndpointTest {
             "bulk" => [
                 "supported" => true,
                 "max_operations" => 1000,
-                "max_payload_size" => 1048576
+                "max_payload_size" => 1048576,
             ],
             "filter" => [
                 "supported" => false,
-                "max_results" => 0
+                "max_results" => 0,
             ],
             "change_password" => ["supported" => false],
             "sort" => ["supported" => false],
-            "etag" => ["supported" => true]
+            "etag" => ["supported" => true],
         ];
 
         $config = new ServiceProviderConfig($data);
@@ -52,7 +52,7 @@ class ServiceProviderConfigTest extends EndpointTest {
         $this->assertFalse($config->getFilter()->isSupported());
     }
 
-    public function testGetServiceProviderConfig() {
+    public function test_get_service_provider_config() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

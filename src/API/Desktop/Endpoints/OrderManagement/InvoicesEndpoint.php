@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\OrderManagement;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\OrderManagement\Invoices\Invoice;
-use Datev\Entities\OrderManagement\Invoices\Invoices;
+use Datev\Entities\OrderManagement\Invoices\{Invoice, Invoices};
 use InvalidArgumentException;
 
 class InvoicesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {

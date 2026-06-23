@@ -16,8 +16,7 @@ use APIToolkit\Contracts\Interfaces\API\ApiClientInterface;
 use Datev\API\Desktop\Endpoints\Diagnostics\EchoEndpoint;
 use ERRORToolkit\Traits\ErrorLog;
 use PHPUnit\Framework\TestCase;
-use Tests\Mocks\MockClient;
-use Tests\Mocks\MockDataLoader;
+use Tests\Mocks\{MockClient, MockDataLoader};
 use Tests\TestAPIClientFactory;
 use Throwable;
 

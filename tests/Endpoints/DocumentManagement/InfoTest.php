@@ -24,7 +24,7 @@ class InfoTest extends EndpointTest {
         $this->apiDisabled = true; // API is disabled
     }
 
-    public function testCreateAndDeleteArticleAPI() {
+    public function test_create_and_delete_article_api() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

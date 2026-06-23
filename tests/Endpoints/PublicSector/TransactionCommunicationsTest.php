@@ -22,7 +22,7 @@ class TransactionCommunicationsTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetTransactionCommunications() {
+    public function test_get_transaction_communications() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

@@ -12,37 +12,34 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common;
 
+use Datev\Entities\Common\Clients\{Client, ClientID, Clients};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Common\Clients\Client;
-use Datev\Entities\Common\Clients\ClientID;
-use Datev\Entities\Common\Clients\Clients;
-
 class ClientTest extends EntityTest {
-    public function testCreateClientID() {
+    public function test_create_client_id() {
         $id = new ClientID("12345678-1234-1234-1234-123456789012");
         $this->assertInstanceOf(ClientID::class, $id);
         $this->assertEquals("12345678-1234-1234-1234-123456789012", $id->toString());
     }
 
-    public function testCreateClient() {
+    public function test_create_client() {
         $data = [
             "id" => "12345678-1234-1234-1234-123456789012",
             "name" => "Muster GmbH",
-            "number" => 10001
+            "number" => 10001,
         ];
 
         $client = new Client($data);
         $this->assertInstanceOf(Client::class, $client);
     }
 
-    public function testCreateClients() {
+    public function test_create_clients() {
         $data = [
             [
                 "id" => "12345678-1234-1234-1234-123456789012",
                 "name" => "Muster GmbH",
-                "number" => 10001
-            ]
+                "number" => 10001,
+            ],
         ];
 
         $clients = new Clients($data);

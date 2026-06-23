@@ -4,18 +4,16 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Datev\Entities\OrderManagement\Employees\{Employee, Employees};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\OrderManagement\Employees\Employees;
-use Datev\Entities\OrderManagement\Employees\Employee;
-
 class EmployeesTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 ["personnel_number" => "001", "display_name" => "Employee 1"],
-                ["personnel_number" => "002", "display_name" => "Employee 2"]
-            ]
+                ["personnel_number" => "002", "display_name" => "Employee 2"],
+            ],
         ];
         $collection = new Employees($data);
         $this->assertCount(2, $collection->getValues());

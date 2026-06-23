@@ -22,7 +22,7 @@ class EchoTest extends EndpointTest {
         return new EchoEndpoint($this->client, self::getLogger());
     }
 
-    public function testGetEcho(): void {
+    public function test_get_echo(): void {
         $this->endpoint = $this->createEndpoint();
 
         $echo = $this->endpoint->get();

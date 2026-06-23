@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
+use Datev\Entities\Law\ExpenseTypes\{ExpenseType, ExpenseTypes};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Law\ExpenseTypes\ExpenseType;
-use Datev\Entities\Law\ExpenseTypes\ExpenseTypes;
-
 class ExpenseTypeTest extends EntityTest {
-    public function testCreateExpenseType(): void {
+    public function test_create_expense_type(): void {
         $data = [
             "id" => "test-id",
             "short_name" => "RK",
@@ -26,7 +24,7 @@ class ExpenseTypeTest extends EntityTest {
             "number" => 1,
             "visibility" => "visible",
             "hourly_billing" => false,
-            "default_display" => true
+            "default_display" => true,
         ];
 
         $expenseType = new ExpenseType($data);
@@ -38,20 +36,20 @@ class ExpenseTypeTest extends EntityTest {
         $this->assertEquals("visible", $expenseType->getVisibility());
     }
 
-    public function testCreateExpenseTypes(): void {
+    public function test_create_expense_types(): void {
         $data = [
             "content" => [
                 [
                     "id" => "test-id-1",
                     "short_name" => "RK",
-                    "name" => "Reisekosten"
+                    "name" => "Reisekosten",
                 ],
                 [
                     "id" => "test-id-2",
                     "short_name" => "BM",
-                    "name" => "Büromaterial"
-                ]
-            ]
+                    "name" => "Büromaterial",
+                ],
+            ],
         ];
 
         $expenseTypes = new ExpenseTypes($data);

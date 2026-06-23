@@ -12,39 +12,37 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Datev\Entities\OrderManagement\Suborders\{Suborder, Suborders};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\OrderManagement\Suborders\Suborder;
-use Datev\Entities\OrderManagement\Suborders\Suborders;
-
 class SuborderTest extends EntityTest {
-    public function testCreateSuborder() {
+    public function test_create_suborder() {
         $data = [
             "suborder_id" => "s1234567-8901-2345-6789-012345678901",
             "order_id" => "o1234567-8901-2345-6789-012345678901",
             "suborder_number" => 1,
             "suborder_name" => "Teilauftrag 1",
             "planned_hours_time_units" => 40.0,
-            "accounting_allowed" => true
+            "accounting_allowed" => true,
         ];
 
         $suborder = new Suborder($data);
-        $this->assertInstanceOf(Suborder::class, new Suborder());
+        $this->assertInstanceOf(Suborder::class, new Suborder);
         $this->assertInstanceOf(Suborder::class, $suborder);
     }
 
-    public function testCreateSuborders() {
+    public function test_create_suborders() {
         $data = [
             "content" => [
                 [
                     "suborder_id" => "s1234567-8901-2345-6789-012345678901",
-                    "suborder_name" => "Teilauftrag 1"
+                    "suborder_name" => "Teilauftrag 1",
                 ],
                 [
                     "suborder_id" => "s2234567-8901-2345-6789-012345678902",
-                    "suborder_name" => "Teilauftrag 2"
-                ]
-            ]
+                    "suborder_name" => "Teilauftrag 2",
+                ],
+            ],
         ];
 
         $suborders = new Suborders($data);

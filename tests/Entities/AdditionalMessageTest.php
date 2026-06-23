@@ -12,23 +12,22 @@ declare(strict_types=1);
 
 namespace Tests\Entities;
 
+use Datev\Entities\Common\AdditionalMessages\AdditionalMessage;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Common\AdditionalMessages\AdditionalMessage;
-
 class AdditionalMessageTest extends EntityTest {
-    public function testCreateAdditionalMessage() {
+    public function test_create_additional_message() {
         $data = [
             "id" => "abc",
             "description" => "abc",
             "help_uri" => "abc",
-            "severity" => "error"
+            "severity" => "error",
         ];
 
         $additionalMessage = new AdditionalMessage($data);
         $this->assertTrue($additionalMessage->isValid());
         $additionalMessage = new AdditionalMessage($data);
-        $this->assertInstanceOf(AdditionalMessage::class, new AdditionalMessage());
+        $this->assertInstanceOf(AdditionalMessage::class, new AdditionalMessage);
         $this->assertInstanceOf(AdditionalMessage::class, $additionalMessage);
         $this->assertEquals($data, $additionalMessage->toArray());
     }

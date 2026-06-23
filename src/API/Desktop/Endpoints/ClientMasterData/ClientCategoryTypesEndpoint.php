@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\ClientMasterData;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\ClientMasterData\ClientCategoryTypes\ClientCategoryType;
-use Datev\Entities\ClientMasterData\ClientCategoryTypes\ClientCategoryTypes;
+use Datev\Entities\ClientMasterData\ClientCategoryTypes\{ClientCategoryType, ClientCategoryTypes};
 use InvalidArgumentException;
 
 class ClientCategoryTypesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {

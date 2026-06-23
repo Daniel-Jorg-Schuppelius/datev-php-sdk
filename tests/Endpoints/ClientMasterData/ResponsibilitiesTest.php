@@ -24,7 +24,7 @@ class ResponsibilitiesTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetResponsibilities() {
+    public function test_get_responsibilities() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

@@ -12,26 +12,24 @@ declare(strict_types=1);
 
 namespace Tests\Entities\PublicSector;
 
+use Datev\Entities\PublicSector\Citizens\{Citizen, Citizens};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\PublicSector\Citizens\Citizens;
-use Datev\Entities\PublicSector\Citizens\Citizen;
-
 class CitizensTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "id" => "cit-1",
                     "first_name" => "Max",
-                    "last_name" => "Musterbürger"
+                    "last_name" => "Musterbürger",
                 ],
                 [
                     "id" => "cit-2",
                     "first_name" => "Erika",
-                    "last_name" => "Musterbürgerin"
-                ]
-            ]
+                    "last_name" => "Musterbürgerin",
+                ],
+            ],
         ];
 
         $citizens = new Citizens($data);

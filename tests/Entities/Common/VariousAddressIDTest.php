@@ -12,12 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common;
 
+use Datev\Entities\Common\VariousAddressID;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Common\VariousAddressID;
-
 class VariousAddressIDTest extends EntityTest {
-    public function testCreateVariousAddressID(): void {
+    public function test_create_various_address_id(): void {
         $variousAddressID = new VariousAddressID("addr-12345");
 
         $this->assertInstanceOf(VariousAddressID::class, $variousAddressID);

@@ -12,26 +12,24 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common;
 
+use Datev\Entities\Common\Addresses\{Address, Addresses};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Common\Addresses\Addresses;
-use Datev\Entities\Common\Addresses\Address;
-
 class AddressesTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "street" => "Musterstraße 1",
                     "city" => "München",
-                    "postal_code" => "80331"
+                    "postal_code" => "80331",
                 ],
                 [
                     "street" => "Testweg 42",
                     "city" => "Berlin",
-                    "postal_code" => "10115"
-                ]
-            ]
+                    "postal_code" => "10115",
+                ],
+            ],
         ];
 
         $addresses = new Addresses($data);

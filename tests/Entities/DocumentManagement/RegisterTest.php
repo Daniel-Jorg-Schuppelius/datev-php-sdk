@@ -12,17 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Datev\Entities\DocumentManagement\Registers\{Register, RegisterID, Registers};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\DocumentManagement\Registers\Register;
-use Datev\Entities\DocumentManagement\Registers\Registers;
-use Datev\Entities\DocumentManagement\Registers\RegisterID;
-
 class RegisterTest extends EntityTest {
-    public function testCreateRegister(): void {
+    public function test_create_register(): void {
         $data = [
             "id" => "reg-001",
-            "name" => "Rechnungen 2024"
+            "name" => "Rechnungen 2024",
         ];
 
         $register = new Register($data);
@@ -33,18 +30,18 @@ class RegisterTest extends EntityTest {
         $this->assertEquals("Rechnungen 2024", $register->getName());
     }
 
-    public function testCreateRegisters(): void {
+    public function test_create_registers(): void {
         $data = [
             "content" => [
                 [
                     "id" => "reg-001",
-                    "name" => "Rechnungen 2024"
+                    "name" => "Rechnungen 2024",
                 ],
                 [
                     "id" => "reg-002",
-                    "name" => "Belege 2024"
-                ]
-            ]
+                    "name" => "Belege 2024",
+                ],
+            ],
         ];
 
         $registers = new Registers($data);

@@ -12,15 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Diagnostics;
 
+use Datev\Entities\Diagnostics\EchoResponse\EchoResponse;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Diagnostics\EchoResponse\EchoResponse;
-
 class EchoResponseTest extends EntityTest {
-    public function testCreateEchoResponse() {
+    public function test_create_echo_response() {
         $data = [
             "id" => "echo-12345",
-            "echo_message" => "Hello DATEV API!"
+            "echo_message" => "Hello DATEV API!",
         ];
 
         $echoResponse = new EchoResponse($data);

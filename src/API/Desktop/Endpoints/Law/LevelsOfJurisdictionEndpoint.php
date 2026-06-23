@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\Law;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\Law\LevelsOfJurisdiction\LevelOfJurisdiction;
-use Datev\Entities\Law\LevelsOfJurisdiction\LevelsOfJurisdiction;
+use Datev\Entities\Law\LevelsOfJurisdiction\{LevelOfJurisdiction, LevelsOfJurisdiction};
 use InvalidArgumentException;
 
 class LevelsOfJurisdictionEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
@@ -36,7 +35,7 @@ class LevelsOfJurisdictionEndpoint extends EndpointAbstract implements Searchabl
             }
 
             return LevelOfJurisdiction::fromJson($response, self::$logger);
-        }, "Fetching LevelOfJurisdiction (ID: {$id})");
+        }, "Fetching LevelOfJurisdiction (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?LevelsOfJurisdiction {

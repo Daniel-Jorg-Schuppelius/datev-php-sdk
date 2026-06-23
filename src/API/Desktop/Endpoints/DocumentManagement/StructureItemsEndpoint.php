@@ -15,8 +15,7 @@ use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInt
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use Datev\Entities\DocumentManagement\Documents\DocumentID;
-use Datev\Entities\DocumentManagement\StructureItems\StructureItem;
-use Datev\Entities\DocumentManagement\StructureItems\StructureItems;
+use Datev\Entities\DocumentManagement\StructureItems\{StructureItem, StructureItems};
 use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 
@@ -27,7 +26,7 @@ class StructureItemsEndpoint extends EndpointAbstract implements SearchableEndpo
 
     protected DocumentID $documentID;
 
-    public function __construct(ApiClientInterface $client, ?LoggerInterface $logger = null, DocumentID $documentID = new DocumentID()) {
+    public function __construct(ApiClientInterface $client, ?LoggerInterface $logger = null, DocumentID $documentID = new DocumentID) {
         parent::__construct($client, $logger);
         $this->documentID = $documentID;
     }
@@ -45,7 +44,7 @@ class StructureItemsEndpoint extends EndpointAbstract implements SearchableEndpo
             }
 
             return StructureItem::fromJson($response, self::$logger);
-        }, "Fetching StructureItem (ID: {$id})");
+        }, "Fetching StructureItem (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?StructureItems {

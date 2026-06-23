@@ -12,26 +12,25 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Datev\Entities\Accounting\CompanyData;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Accounting\CompanyData;
-
 class CompanyDataTest extends EntityTest {
-    public function testCreateCompanyData(): void {
+    public function test_create_company_data(): void {
         $data = "DE98ZZZ09999999999";
         $companyData = new CompanyData($data);
         $this->assertInstanceOf(CompanyData::class, $companyData);
         $this->assertEquals("DE98ZZZ09999999999", $companyData->getValue());
     }
 
-    public function testCompanyDataToArray(): void {
+    public function test_company_data_to_array(): void {
         $data = "DE98ZZZ09999999999";
         $companyData = new CompanyData($data);
         $array = $companyData->toArray();
         $this->assertEquals(["creditor_identifier" => "DE98ZZZ09999999999"], $array);
     }
 
-    public function testCompanyDataNullValue(): void {
+    public function test_company_data_null_value(): void {
         $companyData = new CompanyData(null);
         $this->assertInstanceOf(CompanyData::class, $companyData);
         $this->assertEquals([], $companyData->toArray());

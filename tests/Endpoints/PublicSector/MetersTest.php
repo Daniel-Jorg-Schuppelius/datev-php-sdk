@@ -12,12 +12,9 @@ declare(strict_types=1);
 
 namespace Tests\Endpoints\PublicSector;
 
-use Datev\API\Desktop\Endpoints\PublicSector\MetersEndpoint;
-use Datev\API\Desktop\Endpoints\PublicSector\MeterReadingsEndpoint;
-use Datev\Entities\PublicSector\Meters\Meter;
-use Datev\Entities\PublicSector\Meters\Meters;
-use Datev\Entities\PublicSector\MeterReadings\MeterReading;
-use Datev\Entities\PublicSector\MeterReadings\MeterReadings;
+use Datev\API\Desktop\Endpoints\PublicSector\{MeterReadingsEndpoint, MetersEndpoint};
+use Datev\Entities\PublicSector\MeterReadings\{MeterReading, MeterReadings};
+use Datev\Entities\PublicSector\Meters\{Meter, Meters};
 use Tests\Contracts\EndpointTest;
 
 class MetersTest extends EndpointTest {
@@ -31,19 +28,19 @@ class MetersTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testJsonSerializeMeter() {
+    public function test_json_serialize_meter() {
         $data = [
             'id' => 'METER-001',
             'meter_type' => [
                 'id' => 1,
-                'name' => 'Wasserzähler'
+                'name' => 'Wasserzähler',
             ],
             'meter_number' => 'WZ-12345',
             'installation_date' => '2020-06-15',
             'localization' => [
                 'location_description' => 'Keller',
-                'building' => 'Haupthaus'
-            ]
+                'building' => 'Haupthaus',
+            ],
         ];
 
         $meter = Meter::fromJson(json_encode($data));
@@ -54,16 +51,16 @@ class MetersTest extends EndpointTest {
         $this->assertEquals('Wasserzähler', $meter->getMeterType()->getName());
     }
 
-    public function testJsonSerializeMetersCollection() {
+    public function test_json_serialize_meters_collection() {
         $data = [
             [
                 'id' => 'METER-001',
-                'meter_number' => 'WZ-12345'
+                'meter_number' => 'WZ-12345',
             ],
             [
                 'id' => 'METER-002',
-                'meter_number' => 'GZ-67890'
-            ]
+                'meter_number' => 'GZ-67890',
+            ],
         ];
 
         $meters = Meters::fromJson(json_encode($data));
@@ -71,13 +68,13 @@ class MetersTest extends EndpointTest {
         $this->assertCount(2, $meters->getValues());
     }
 
-    public function testJsonSerializeMeterReading() {
+    public function test_json_serialize_meter_reading() {
         $data = [
             'id' => 'READING-001',
             'reading_date' => '2024-06-01',
             'reading_value' => 12345.67,
             'reading_reason' => 'Jahresablesung',
-            'is_estimated' => false
+            'is_estimated' => false,
         ];
 
         $meterReading = MeterReading::fromJson(json_encode($data));
@@ -88,18 +85,18 @@ class MetersTest extends EndpointTest {
         $this->assertFalse($meterReading->getIsEstimated());
     }
 
-    public function testJsonSerializeMeterReadingsCollection() {
+    public function test_json_serialize_meter_readings_collection() {
         $data = [
             [
                 'id' => 'READING-001',
                 'reading_date' => '2024-06-01',
-                'reading_value' => 12345.67
+                'reading_value' => 12345.67,
             ],
             [
                 'id' => 'READING-002',
                 'reading_date' => '2024-12-01',
-                'reading_value' => 15678.90
-            ]
+                'reading_value' => 15678.90,
+            ],
         ];
 
         $meterReadings = MeterReadings::fromJson(json_encode($data));

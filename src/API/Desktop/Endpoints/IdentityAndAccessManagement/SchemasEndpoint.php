@@ -14,8 +14,7 @@ namespace Datev\API\Desktop\Endpoints\IdentityAndAccessManagement;
 
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\IdentityAndAccessManagement\Schemas\ScimSchema;
-use Datev\Entities\IdentityAndAccessManagement\Schemas\ScimSchemas;
+use Datev\Entities\IdentityAndAccessManagement\Schemas\{ScimSchema, ScimSchemas};
 
 class SchemasEndpoint extends EndpointAbstract {
     protected string $endpointPrefix = 'iam/v1';

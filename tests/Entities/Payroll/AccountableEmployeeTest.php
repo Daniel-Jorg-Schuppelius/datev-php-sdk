@@ -12,20 +12,18 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Payroll;
 
+use Datev\Entities\Payroll\Employees\Accountable\{AccountableEmployee, AccountableEmployees};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Payroll\Employees\Accountable\AccountableEmployee;
-use Datev\Entities\Payroll\Employees\Accountable\AccountableEmployees;
-
 class AccountableEmployeeTest extends EntityTest {
-    public function testCreateAccountableEmployee(): void {
+    public function test_create_accountable_employee(): void {
         $data = [
             "id" => "ae-001",
             "surname" => "Mustermann",
             "first_name" => "Max",
             "company_personnel_number" => "EMP001",
             "date_of_commencement_of_employment" => "2020-01-15T00:00:00.000+00:00",
-            "date_of_termination_of_employment" => "2024-12-31T00:00:00.000+00:00"
+            "date_of_termination_of_employment" => "2024-12-31T00:00:00.000+00:00",
         ];
 
         $employee = new AccountableEmployee($data);
@@ -34,20 +32,20 @@ class AccountableEmployeeTest extends EntityTest {
         $this->assertNotNull($employee->getDateOfTerminationOfEmployment());
     }
 
-    public function testCreateAccountableEmployees(): void {
+    public function test_create_accountable_employees(): void {
         $data = [
             "content" => [
                 [
                     "id" => "ae-001",
                     "surname" => "Mustermann",
-                    "first_name" => "Max"
+                    "first_name" => "Max",
                 ],
                 [
                     "id" => "ae-002",
                     "surname" => "Musterfrau",
-                    "first_name" => "Erika"
-                ]
-            ]
+                    "first_name" => "Erika",
+                ],
+            ],
         ];
 
         $employees = new AccountableEmployees($data);

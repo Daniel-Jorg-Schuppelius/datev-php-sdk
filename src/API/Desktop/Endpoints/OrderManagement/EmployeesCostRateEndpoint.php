@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\OrderManagement;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\OrderManagement\EmployeesCostRate\EmployeesCostRate;
-use Datev\Entities\OrderManagement\EmployeesCostRate\EmployeeCostRate;
+use Datev\Entities\OrderManagement\EmployeesCostRate\{EmployeeCostRate, EmployeesCostRate};
 
 class EmployeesCostRateEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointPrefix = 'order-management/v1';
@@ -35,7 +34,7 @@ class EmployeesCostRateEndpoint extends EndpointAbstract implements SearchableEn
             }
 
             return EmployeeCostRate::fromJson($response, self::$logger);
-        }, "Fetching EmployeeCostRate (ID: {$id})");
+        }, "Fetching EmployeeCostRate (ID: {$id->toString()})");
     }
 
     public function search(array $queryParams = [], array $options = []): ?EmployeesCostRate {

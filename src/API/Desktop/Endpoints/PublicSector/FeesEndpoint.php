@@ -13,11 +13,9 @@ declare(strict_types=1);
 namespace Datev\API\Desktop\Endpoints\PublicSector;
 
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
-use APIToolkit\Entities\GUID;
-use APIToolkit\Entities\ID;
+use APIToolkit\Entities\{GUID, ID};
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\PublicSector\Fees\Fee;
-use Datev\Entities\PublicSector\Fees\Fees;
+use Datev\Entities\PublicSector\Fees\{Fee, Fees};
 use InvalidArgumentException;
 
 class FeesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {

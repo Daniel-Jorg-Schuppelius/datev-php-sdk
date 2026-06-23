@@ -13,12 +13,9 @@ declare(strict_types=1);
 namespace Datev\API\Desktop\Endpoints\OrderManagement;
 
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
-use APIToolkit\Entities\GUID;
-use APIToolkit\Entities\ID;
+use APIToolkit\Entities\{GUID, ID};
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\OrderManagement\ChargeRates\ChargeRate;
-use Datev\Entities\OrderManagement\ChargeRates\ChargeRates;
-use InvalidArgumentException;
+use Datev\Entities\OrderManagement\ChargeRates\{ChargeRate, ChargeRates};
 
 class ChargeRatesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointPrefix = 'order-management/v1';
@@ -37,7 +34,7 @@ class ChargeRatesEndpoint extends EndpointAbstract implements SearchableEndpoint
             }
 
             return ChargeRate::fromJson($response, self::$logger);
-        }, "Fetching ChargeRate (ID: {$id})");
+        }, "Fetching ChargeRate (ID: {$id->toString()})");
     }
 
     public function getForEmployee(GUID $employeeId, array $queryParams = []): ?ChargeRates {

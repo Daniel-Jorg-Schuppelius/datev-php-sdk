@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
+use Datev\Entities\Law\Expenses\{Expense, Expenses};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Law\Expenses\Expense;
-use Datev\Entities\Law\Expenses\Expenses;
-
 class ExpenseTest extends EntityTest {
-    public function testCreateExpense() {
+    public function test_create_expense() {
         $data = [
             "id" => "exp-12345",
             "object_type" => "travel",
@@ -26,27 +24,27 @@ class ExpenseTest extends EntityTest {
             "amount" => 150.50,
             "currency" => "EUR",
             "billable" => true,
-            "note" => "Fahrtkosten Gerichtstermin"
+            "note" => "Fahrtkosten Gerichtstermin",
         ];
 
         $expense = new Expense($data);
-        $this->assertInstanceOf(Expense::class, new Expense());
+        $this->assertInstanceOf(Expense::class, new Expense);
         $this->assertInstanceOf(Expense::class, $expense);
         $this->assertNotNull($expense->getID());
     }
 
-    public function testCreateExpenses() {
+    public function test_create_expenses() {
         $data = [
             "content" => [
                 [
                     "id" => "exp-12345",
-                    "amount" => 100.00
+                    "amount" => 100.00,
                 ],
                 [
                     "id" => "exp-12346",
-                    "amount" => 200.00
-                ]
-            ]
+                    "amount" => 200.00,
+                ],
+            ],
         ];
 
         $expenses = new Expenses($data);

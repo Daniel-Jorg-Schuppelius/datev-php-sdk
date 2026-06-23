@@ -12,40 +12,38 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Datev\Entities\OrderManagement\Clients\{Client, Clients};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\OrderManagement\Clients\Client;
-use Datev\Entities\OrderManagement\Clients\Clients;
-
 class ClientTest extends EntityTest {
-    public function testCreateClient() {
+    public function test_create_client() {
         $data = [
             "id" => "c1234567-8901-2345-6789-012345678901",
             "client_number" => "10001",
             "client_name" => "Mustermann GmbH",
-            "isactive" => true
+            "isactive" => true,
         ];
 
         $client = new Client($data);
-        $this->assertInstanceOf(Client::class, new Client());
+        $this->assertInstanceOf(Client::class, new Client);
         $this->assertInstanceOf(Client::class, $client);
         $this->assertEquals("10001", $client->getClientNumber());
         $this->assertEquals("Mustermann GmbH", $client->getClientName());
         $this->assertTrue($client->isActive());
     }
 
-    public function testCreateClients() {
+    public function test_create_clients() {
         $data = [
             "content" => [
                 [
                     "id" => "c1234567-8901-2345-6789-012345678901",
-                    "client_name" => "Kunde 1"
+                    "client_name" => "Kunde 1",
                 ],
                 [
                     "id" => "c2234567-8901-2345-6789-012345678902",
-                    "client_name" => "Kunde 2"
-                ]
-            ]
+                    "client_name" => "Kunde 2",
+                ],
+            ],
         ];
 
         $clients = new Clients($data);

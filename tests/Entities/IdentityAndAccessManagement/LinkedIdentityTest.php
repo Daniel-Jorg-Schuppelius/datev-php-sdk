@@ -12,14 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\IdentityAndAccessManagement;
 
+use Datev\Entities\IdentityAndAccessManagement\Users\LinkedIdentity;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\IdentityAndAccessManagement\Users\LinkedIdentity;
-
 class LinkedIdentityTest extends EntityTest {
-    public function testCreateLinkedIdentity(): void {
+    public function test_create_linked_identity(): void {
         $data = [
-            "value" => "DOMAIN\\username"
+            "value" => "DOMAIN\\username",
         ];
 
         $identity = new LinkedIdentity($data);

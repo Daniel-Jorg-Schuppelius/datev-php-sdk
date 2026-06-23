@@ -12,12 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\BankAccounts\BankAccount;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\BankAccounts\BankAccount;
-
 class BankAccountTest extends EntityTest {
-    public function testCreateBankAccount() {
+    public function test_create_bank_account() {
         $data = [
             "id" => "31b9d6d9-117b-4555-b0b0-3659eb0279d0",
             "bank_account_number" => "3225553",
@@ -31,13 +30,13 @@ class BankAccountTest extends EntityTest {
             "valid_from" => "2015-03-31T00:00:00.000+00:00",
             "valid_to" => "2018-04-30T00:00:00.000+00:00",
             "currently_valid" => true,
-            "is_main_bank_account" => true
+            "is_main_bank_account" => true,
         ];
 
         $bankAccount = new BankAccount($data);
         $this->assertTrue($bankAccount->isValid());
         $bankAccount = new BankAccount($data);
-        $this->assertInstanceOf(BankAccount::class, new BankAccount());
+        $this->assertInstanceOf(BankAccount::class, new BankAccount);
         $this->assertInstanceOf(BankAccount::class, $bankAccount);
         $this->assertEquals($data, $bankAccount->toArray());
     }

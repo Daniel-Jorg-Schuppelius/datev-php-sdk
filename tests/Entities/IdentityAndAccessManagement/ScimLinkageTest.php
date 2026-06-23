@@ -12,16 +12,15 @@ declare(strict_types=1);
 
 namespace Tests\Entities\IdentityAndAccessManagement;
 
+use Datev\Entities\IdentityAndAccessManagement\Users\ScimLinkage;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\IdentityAndAccessManagement\Users\ScimLinkage;
-
 class ScimLinkageTest extends EntityTest {
-    public function testCreateScimLinkage(): void {
+    public function test_create_scim_linkage(): void {
         $data = [
             "value" => "user-123-456",
             "display" => "Max Mustermann",
-            "ref" => "https://example.com/Users/user-123-456"
+            "ref" => "https://example.com/Users/user-123-456",
         ];
 
         $linkage = new ScimLinkage($data);

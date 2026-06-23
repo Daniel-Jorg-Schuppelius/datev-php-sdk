@@ -8,12 +8,10 @@
  * License Uri  : https://opensource.org/license/mit
  */
 
-namespace Tests\Endpoints\Diagnostics;
+namespace Tests\Endpoints\ClientMasterData;
 
-use Datev\API\Desktop\Endpoints\ClientMasterData\ClientCategoriesEndpoint;
-use Datev\API\Desktop\Endpoints\ClientMasterData\ClientsEndpoint;
-use Datev\Entities\ClientMasterData\ClientCategories\ClientCategories;
-use Datev\Entities\ClientMasterData\ClientCategories\ClientCategory;
+use Datev\API\Desktop\Endpoints\ClientMasterData\{ClientCategoriesEndpoint, ClientsEndpoint};
+use Datev\Entities\ClientMasterData\ClientCategories\{ClientCategories, ClientCategory};
 use Tests\Contracts\EndpointTest;
 
 class ClientCategoriesTest extends EndpointTest {
@@ -27,7 +25,7 @@ class ClientCategoriesTest extends EndpointTest {
         $this->apiDisabled = true; // API is disabled
     }
 
-    public function testGetClientCategories() {
+    public function test_get_client_categories() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

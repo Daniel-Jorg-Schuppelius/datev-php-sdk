@@ -12,26 +12,24 @@ declare(strict_types=1);
 
 namespace Tests\Entities\OrderManagement;
 
+use Datev\Entities\OrderManagement\Clients\{Client, Clients};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\OrderManagement\Clients\Clients;
-use Datev\Entities\OrderManagement\Clients\Client;
-
 class ClientsTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "id" => "om-client-1",
                     "name" => "Order Management Client 1",
-                    "number" => 50001
+                    "number" => 50001,
                 ],
                 [
                     "id" => "om-client-2",
                     "name" => "Order Management Client 2",
-                    "number" => 50002
-                ]
-            ]
+                    "number" => 50002,
+                ],
+            ],
         ];
 
         $clients = new Clients($data);

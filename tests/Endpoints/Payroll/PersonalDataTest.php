@@ -13,8 +13,7 @@ declare(strict_types=1);
 namespace Tests\Endpoints\Payroll;
 
 use Datev\API\Desktop\Endpoints\Payroll\PersonalDataEndpoint;
-use Datev\Entities\Payroll\Data\Personal\PersonalDatum;
-use Datev\Entities\Payroll\Data\Personal\PersonalData;
+use Datev\Entities\Payroll\Data\Personal\{PersonalData, PersonalDatum};
 use Tests\Contracts\EndpointTest;
 
 class PersonalDataTest extends EndpointTest {
@@ -25,22 +24,22 @@ class PersonalDataTest extends EndpointTest {
         return new PersonalDataEndpoint($this->client, self::getLogger());
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
             'id' => '12345',
             'first_name' => 'Max',
             'last_name' => 'Mustermann',
-            'date_of_birth' => '1990-05-15'
+            'date_of_birth' => '1990-05-15',
         ];
 
         $personalData = PersonalDatum::fromJson(json_encode($data));
         $this->assertInstanceOf(PersonalDatum::class, $personalData);
     }
 
-    public function testJsonSerializeCollection() {
+    public function test_json_serialize_collection() {
         $data = [
             ['id' => '12345', 'first_name' => 'Max'],
-            ['id' => '12346', 'first_name' => 'Erika']
+            ['id' => '12346', 'first_name' => 'Erika'],
         ];
 
         $collection = PersonalData::fromJson(json_encode($data));
@@ -48,7 +47,7 @@ class PersonalDataTest extends EndpointTest {
         $this->assertCount(2, $collection->getValues());
     }
 
-    public function testGetPersonalData() {
+    public function test_get_personal_data() {
         $this->endpoint = $this->createEndpoint();
         $data = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

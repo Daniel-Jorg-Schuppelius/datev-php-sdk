@@ -17,8 +17,7 @@ use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntit
 use DateTime;
 use Datev\Entities\Accounting\Records\Records;
 use Datev\Entities\Accounting\Sequences\SequenceID;
-use Datev\Enums\AccountingReason;
-use Datev\Enums\AccountingRecordType;
+use Datev\Enums\{AccountingReason, AccountingRecordType};
 use Psr\Log\LoggerInterface;
 
 class SequenceRead extends NamedEntity implements IdentifiableNamedEntityInterface {

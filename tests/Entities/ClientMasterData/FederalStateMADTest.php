@@ -12,13 +12,11 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\FederalStatesMAD\{FederalStateMAD, FederalStatesMAD};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\FederalStatesMAD\FederalStateMAD;
-use Datev\Entities\ClientMasterData\FederalStatesMAD\FederalStatesMAD;
-
 class FederalStateMADTest extends EntityTest {
-    public function testCreateFederalStateMAD(): void {
+    public function test_create_federal_state_mad(): void {
         $data = [
             "value" => "BY",
             "valid_from" => "2020-01-01",
@@ -28,7 +26,7 @@ class FederalStateMADTest extends EntityTest {
         $this->assertInstanceOf(FederalStateMAD::class, $federalStateMAD);
     }
 
-    public function testCreateFederalStatesMAD(): void {
+    public function test_create_federal_states_mad(): void {
         $data = [
             [
                 "value" => "BY",

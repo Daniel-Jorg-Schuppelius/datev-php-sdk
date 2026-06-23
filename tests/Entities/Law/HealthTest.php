@@ -12,15 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Law;
 
+use Datev\Entities\Law\Health\Health;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Law\Health\Health;
-
 class HealthTest extends EntityTest {
-    public function testCreateHealth(): void {
+    public function test_create_health(): void {
         $data = [
             "status" => "ok",
-            "version" => "1.0.0"
+            "version" => "1.0.0",
         ];
 
         $health = new Health($data);
@@ -31,10 +30,10 @@ class HealthTest extends EntityTest {
         $this->assertTrue($health->isHealthy());
     }
 
-    public function testUnhealthyStatus(): void {
+    public function test_unhealthy_status(): void {
         $data = [
             "status" => "error",
-            "version" => "1.0.0"
+            "version" => "1.0.0",
         ];
 
         $health = new Health($data);

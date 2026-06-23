@@ -12,19 +12,17 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Accounting;
 
+use Datev\Entities\Accounting\AccountingSumsAndBalances\{MonthValue, MonthValues};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Accounting\AccountingSumsAndBalances\MonthValue;
-use Datev\Entities\Accounting\AccountingSumsAndBalances\MonthValues;
-
 class MonthValueTest extends EntityTest {
-    public function testCreateMonthValue(): void {
+    public function test_create_month_value(): void {
         $data = [
             "monthly_balance" => 1234.56,
             "debit_credit_identifier" => "D",
             "month_debit" => 5000.00,
             "month_credit" => 3765.44,
-            "month" => 6
+            "month" => 6,
         ];
 
         $monthValue = new MonthValue($data);
@@ -37,16 +35,16 @@ class MonthValueTest extends EntityTest {
         $this->assertEquals(6, $monthValue->getMonth());
     }
 
-    public function testCreateMonthValues(): void {
+    public function test_create_month_values(): void {
         $data = [
             [
                 "monthly_balance" => 1000.00,
-                "month" => 1
+                "month" => 1,
             ],
             [
                 "monthly_balance" => 2000.00,
-                "month" => 2
-            ]
+                "month" => 2,
+            ],
         ];
 
         $monthValues = new MonthValues($data);

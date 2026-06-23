@@ -12,14 +12,13 @@ declare(strict_types=1);
 
 namespace Tests\Entities\IdentityAndAccessManagement;
 
+use Datev\Entities\IdentityAndAccessManagement\Users\LinkedDatacenterIdentity;
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\IdentityAndAccessManagement\Users\LinkedDatacenterIdentity;
-
 class LinkedDatacenterIdentityTest extends EntityTest {
-    public function testCreateLinkedDatacenterIdentity(): void {
+    public function test_create_linked_datacenter_identity(): void {
         $data = [
-            "value" => 12345
+            "value" => 12345,
         ];
 
         $identity = new LinkedDatacenterIdentity($data);
@@ -28,7 +27,7 @@ class LinkedDatacenterIdentityTest extends EntityTest {
         $this->assertEquals(12345, $identity->getValue());
     }
 
-    public function testNullValue(): void {
+    public function test_null_value(): void {
         $data = [];
 
         $identity = new LinkedDatacenterIdentity($data);

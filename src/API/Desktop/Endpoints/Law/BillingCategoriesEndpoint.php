@@ -15,8 +15,7 @@ namespace Datev\API\Desktop\Endpoints\Law;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\Law\BillingCategories\BillingCategory;
-use Datev\Entities\Law\BillingCategories\BillingCategories;
+use Datev\Entities\Law\BillingCategories\{BillingCategories, BillingCategory};
 
 class BillingCategoriesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointPrefix = 'law/v1';

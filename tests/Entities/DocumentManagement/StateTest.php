@@ -12,17 +12,14 @@ declare(strict_types=1);
 
 namespace Tests\Entities\DocumentManagement;
 
+use Datev\Entities\DocumentManagement\States\{State, StateID, States};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\DocumentManagement\States\State;
-use Datev\Entities\DocumentManagement\States\States;
-use Datev\Entities\DocumentManagement\States\StateID;
-
 class StateTest extends EntityTest {
-    public function testCreateState(): void {
+    public function test_create_state(): void {
         $data = [
             "id" => "state-001",
-            "name" => "In Bearbeitung"
+            "name" => "In Bearbeitung",
         ];
 
         $state = new State($data);
@@ -33,18 +30,18 @@ class StateTest extends EntityTest {
         $this->assertEquals("In Bearbeitung", $state->getName());
     }
 
-    public function testCreateStates(): void {
+    public function test_create_states(): void {
         $data = [
             "content" => [
                 [
                     "id" => "state-001",
-                    "name" => "In Bearbeitung"
+                    "name" => "In Bearbeitung",
                 ],
                 [
                     "id" => "state-002",
-                    "name" => "Genehmigt"
-                ]
-            ]
+                    "name" => "Genehmigt",
+                ],
+            ],
         ];
 
         $states = new States($data);

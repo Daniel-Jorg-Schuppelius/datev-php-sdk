@@ -12,21 +12,18 @@ declare(strict_types=1);
 
 namespace Tests\Entities\Common;
 
+use Datev\Entities\Common\BankAccounts\{BankAccount, BankAccountID, BankAccounts};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\Common\BankAccounts\BankAccount;
-use Datev\Entities\Common\BankAccounts\BankAccounts;
-use Datev\Entities\Common\BankAccounts\BankAccountID;
-
 class BankAccountTest extends EntityTest {
-    public function testCreateBankAccount(): void {
+    public function test_create_bank_account(): void {
         $data = [
             "id" => "bank-001",
             "bank_account_number" => "1234567890",
             "bank_code" => "70070024",
             "bank_name" => "Deutsche Bank",
             "iban" => "DE89370400440532013000",
-            "bic" => "DEUTDEDB"
+            "bic" => "DEUTDEDB",
         ];
 
         $bankAccount = new BankAccount($data);
@@ -39,20 +36,20 @@ class BankAccountTest extends EntityTest {
         $this->assertEquals("Deutsche Bank", $bankAccount->getBankName());
     }
 
-    public function testCreateBankAccounts(): void {
+    public function test_create_bank_accounts(): void {
         $data = [
             "content" => [
                 [
                     "id" => "bank-001",
                     "bank_name" => "Deutsche Bank",
-                    "iban" => "DE89370400440532013000"
+                    "iban" => "DE89370400440532013000",
                 ],
                 [
                     "id" => "bank-002",
                     "bank_name" => "Commerzbank",
-                    "iban" => "DE91100000000123456789"
-                ]
-            ]
+                    "iban" => "DE91100000000123456789",
+                ],
+            ],
         ];
 
         $bankAccounts = new BankAccounts($data);

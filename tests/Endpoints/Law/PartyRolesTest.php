@@ -22,7 +22,7 @@ class PartyRolesTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testGetPartyRoles() {
+    public function test_get_party_roles() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

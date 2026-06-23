@@ -22,7 +22,7 @@ class PostingProposalRulesIncomingInvoicesTest extends EndpointTest {
         return new PostingProposalRulesIncomingInvoicesEndpoint($this->client, self::getLogger());
     }
 
-    public function testGetPostingProposalRulesIncomingInvoices() {
+    public function test_get_posting_proposal_rules_incoming_invoices() {
         $this->skipMockIfComplexEntity();
 
         $this->endpoint = $this->createEndpoint();

@@ -12,24 +12,22 @@ declare(strict_types=1);
 
 namespace Tests\Entities\ClientMasterData;
 
+use Datev\Entities\ClientMasterData\Communications\{Communication, Communications};
 use Tests\Contracts\EntityTest;
 
-use Datev\Entities\ClientMasterData\Communications\Communications;
-use Datev\Entities\ClientMasterData\Communications\Communication;
-
 class CommunicationsTest extends EntityTest {
-    public function testCreateFromArray(): void {
+    public function test_create_from_array(): void {
         $data = [
             "content" => [
                 [
                     "type" => "phone",
-                    "data_content" => "+49 89 12345678"
+                    "data_content" => "+49 89 12345678",
                 ],
                 [
                     "type" => "phone",
-                    "data_content" => "+49 30 98765432"
-                ]
-            ]
+                    "data_content" => "+49 30 98765432",
+                ],
+            ],
         ];
 
         $communications = new Communications($data);

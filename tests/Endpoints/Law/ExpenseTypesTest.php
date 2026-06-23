@@ -13,8 +13,7 @@ declare(strict_types=1);
 namespace Tests\Endpoints\Law;
 
 use Datev\API\Desktop\Endpoints\Law\ExpenseTypesEndpoint;
-use Datev\Entities\Law\ExpenseTypes\ExpenseType;
-use Datev\Entities\Law\ExpenseTypes\ExpenseTypes;
+use Datev\Entities\Law\ExpenseTypes\{ExpenseType, ExpenseTypes};
 use Tests\Contracts\EndpointTest;
 
 class ExpenseTypesTest extends EndpointTest {
@@ -26,11 +25,11 @@ class ExpenseTypesTest extends EndpointTest {
         $this->apiDisabled = true;
     }
 
-    public function testJsonSerialize() {
+    public function test_json_serialize() {
         $data = [
             'id' => '550e8400-e29b-41d4-a716-446655440000',
             'name' => 'Kopien',
-            'number' => 7000
+            'number' => 7000,
         ];
 
         $expenseType = ExpenseType::fromJson(json_encode($data));
@@ -41,18 +40,18 @@ class ExpenseTypesTest extends EndpointTest {
         $this->assertEquals(7000, $expenseType->getNumber());
     }
 
-    public function testJsonSerializeCollection() {
+    public function test_json_serialize_collection() {
         $data = [
             [
                 'id' => '550e8400-e29b-41d4-a716-446655440000',
                 'name' => 'Kopien',
-                'number' => 7000
+                'number' => 7000,
             ],
             [
                 'id' => '550e8400-e29b-41d4-a716-446655440001',
                 'name' => 'Porto',
-                'number' => 7001
-            ]
+                'number' => 7001,
+            ],
         ];
 
         $expenseTypes = ExpenseTypes::fromJson(json_encode($data));
@@ -61,7 +60,7 @@ class ExpenseTypesTest extends EndpointTest {
         $this->assertCount(2, $expenseTypes->getValues());
     }
 
-    public function testSearchExpenseTypes() {
+    public function test_search_expense_types() {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }
