@@ -67,26 +67,29 @@
         },
         {
             "name": "daniel-jorg-schuppelius/php-api-toolkit",
-            "version": "v2.2.4.2",
+            "version": "v2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Daniel-Jorg-Schuppelius/php-api-toolkit.git",
-                "reference": "4115d15f38396683cb09d445584c7ba8748b1ffb"
+                "reference": "03b5eef81b704afd7c7a7d83c2dcfbd8b783ec74"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Daniel-Jorg-Schuppelius/php-api-toolkit/zipball/4115d15f38396683cb09d445584c7ba8748b1ffb",
-                "reference": "4115d15f38396683cb09d445584c7ba8748b1ffb",
+                "url": "https://api.github.com/repos/Daniel-Jorg-Schuppelius/php-api-toolkit/zipball/03b5eef81b704afd7c7a7d83c2dcfbd8b783ec74",
+                "reference": "03b5eef81b704afd7c7a7d83c2dcfbd8b783ec74",
                 "shasum": ""
             },
             "require": {
                 "dschuppelius/php-common-toolkit": "^1.0",
+                "dschuppelius/php-error-toolkit": "^2.4",
                 "guzzlehttp/guzzle": "^7.10",
                 "php": ">=8.1 <8.6",
                 "ramsey/uuid": "^4.9"
             },
             "require-dev": {
-                "phpunit/phpunit": "^11.3@dev"
+                "laravel/pint": "^1.27",
+                "phpstan/phpstan": "^2.1",
+                "phpunit/phpunit": "^11.3"
             },
             "type": "library",
             "autoload": {
@@ -107,22 +110,22 @@
             "description": "Reused codes for my api php sdks",
             "support": {
                 "issues": "https://github.com/Daniel-Jorg-Schuppelius/php-api-toolkit/issues",
-                "source": "https://github.com/Daniel-Jorg-Schuppelius/php-api-toolkit/tree/v2.2.4.2"
+                "source": "https://github.com/Daniel-Jorg-Schuppelius/php-api-toolkit/tree/v2.3"
             },
-            "time": "2026-03-20T09:07:17+00:00"
+            "time": "2026-07-03T08:34:19+00:00"
         },
         {
             "name": "dschuppelius/php-common-toolkit",
-            "version": "v1.11.2",
+            "version": "v1.15.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DSchuppelius/php-common-toolkit.git",
-                "reference": "a9e029ce6c5aa492a9df9fedf85f938e3e2b64ec"
+                "reference": "35e05ed85d42c0ff5d5fd7aaa6741f1c7a61f77e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DSchuppelius/php-common-toolkit/zipball/a9e029ce6c5aa492a9df9fedf85f938e3e2b64ec",
-                "reference": "a9e029ce6c5aa492a9df9fedf85f938e3e2b64ec",
+                "url": "https://api.github.com/repos/DSchuppelius/php-common-toolkit/zipball/35e05ed85d42c0ff5d5fd7aaa6741f1c7a61f77e",
+                "reference": "35e05ed85d42c0ff5d5fd7aaa6741f1c7a61f77e",
                 "shasum": ""
             },
             "require": {
@@ -157,9 +160,9 @@
             "description": "Project description.",
             "support": {
                 "issues": "https://github.com/DSchuppelius/php-common-toolkit/issues",
-                "source": "https://github.com/DSchuppelius/php-common-toolkit/tree/v1.11.2"
+                "source": "https://github.com/DSchuppelius/php-common-toolkit/tree/v1.15.3"
             },
-            "time": "2026-06-23T20:20:39+00:00"
+            "time": "2026-07-03T05:39:06+00:00"
         },
         {
             "name": "dschuppelius/php-config-toolkit",
@@ -207,16 +210,16 @@
         },
         {
             "name": "dschuppelius/php-error-toolkit",
-            "version": "v2.4.2",
+            "version": "v2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DSchuppelius/php-error-toolkit.git",
-                "reference": "1363a104c1f4e17994e45990b8f068a5330da18e"
+                "reference": "f912a9fdde9a288d94518eb6bda144f6bd24a65f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DSchuppelius/php-error-toolkit/zipball/1363a104c1f4e17994e45990b8f068a5330da18e",
-                "reference": "1363a104c1f4e17994e45990b8f068a5330da18e",
+                "url": "https://api.github.com/repos/DSchuppelius/php-error-toolkit/zipball/f912a9fdde9a288d94518eb6bda144f6bd24a65f",
+                "reference": "f912a9fdde9a288d94518eb6bda144f6bd24a65f",
                 "shasum": ""
             },
             "require": {
@@ -224,11 +227,23 @@
                 "psr/log": "^3.0"
             },
             "require-dev": {
+                "illuminate/support": "^10.0|^11.0|^12.0",
                 "laravel/pint": "^1.27",
                 "phpstan/phpstan": "^2.1",
-                "phpunit/phpunit": "^11.0"
+                "phpunit/phpunit": "^11.0",
+                "vlucas/phpdotenv": "^5.6"
+            },
+            "suggest": {
+                "illuminate/support": "Aktiviert die Laravel-Bridge: auto-discovertes ServiceProvider bindet die LoggerRegistry an den Laravel-Log-Channel"
             },
             "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "ERRORToolkit\\Laravel\\ErrorToolkitServiceProvider"
+                    ]
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "ERRORToolkit\\": "src/"
@@ -244,25 +259,25 @@
                     "email": "info@schuppelius.org"
                 }
             ],
-            "description": "Reused codes for my api php sdks",
+            "description": "Logging and error handling foundation for the Schuppelius PHP toolkits (PSR-3 loggers, global error handler, LoggerRegistry, Laravel bridge)",
             "support": {
                 "issues": "https://github.com/DSchuppelius/php-error-toolkit/issues",
-                "source": "https://github.com/DSchuppelius/php-error-toolkit/tree/v2.4.2"
+                "source": "https://github.com/DSchuppelius/php-error-toolkit/tree/v2.5"
             },
-            "time": "2026-06-23T20:35:53+00:00"
+            "time": "2026-07-03T08:33:06+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "7.12.3",
+            "version": "7.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "9aa17bcdd777ee31df9fc83c337ca4ca2340def3"
+                "reference": "55901a76dfd2006a0cc012b9e3c5b487f796478d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/9aa17bcdd777ee31df9fc83c337ca4ca2340def3",
-                "reference": "9aa17bcdd777ee31df9fc83c337ca4ca2340def3",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/55901a76dfd2006a0cc012b9e3c5b487f796478d",
+                "reference": "55901a76dfd2006a0cc012b9e3c5b487f796478d",
                 "shasum": ""
             },
             "require": {
@@ -281,7 +296,7 @@
                 "bamarni/composer-bin-plugin": "^1.8.2",
                 "ext-curl": "*",
                 "guzzle/client-integration-tests": "3.0.2",
-                "guzzlehttp/test-server": "^0.5.1",
+                "guzzlehttp/test-server": "^0.6",
                 "php-http/message-factory": "^1.1",
                 "phpunit/phpunit": "^8.5.52 || ^9.6.34",
                 "psr/log": "^1.1 || ^2.0 || ^3.0"
@@ -361,7 +376,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/guzzle/issues",
-                "source": "https://github.com/guzzle/guzzle/tree/7.12.3"
+                "source": "https://github.com/guzzle/guzzle/tree/7.13.1"
             },
             "funding": [
                 {
@@ -377,7 +392,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-06-23T15:29:02+00:00"
+            "time": "2026-06-29T20:14:18+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -992,16 +1007,16 @@
         },
         {
             "name": "symfony/deprecation-contracts",
-            "version": "v3.7.0",
+            "version": "v3.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/deprecation-contracts.git",
-                "reference": "50f59d1f3ca46d41ac911f97a78626b6756af35b"
+                "reference": "f3202fa1b5097b0af062dc978b32ecf63404e31d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/deprecation-contracts/zipball/50f59d1f3ca46d41ac911f97a78626b6756af35b",
-                "reference": "50f59d1f3ca46d41ac911f97a78626b6756af35b",
+                "url": "https://api.github.com/repos/symfony/deprecation-contracts/zipball/f3202fa1b5097b0af062dc978b32ecf63404e31d",
+                "reference": "f3202fa1b5097b0af062dc978b32ecf63404e31d",
                 "shasum": ""
             },
             "require": {
@@ -1039,7 +1054,7 @@
             "description": "A generic function and convention to trigger deprecation notices",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/deprecation-contracts/tree/v3.7.0"
+                "source": "https://github.com/symfony/deprecation-contracts/tree/v3.7.1"
             },
             "funding": [
                 {
@@ -1059,7 +1074,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-04-13T15:52:40+00:00"
+            "time": "2026-06-05T06:23:12+00:00"
         },
         {
             "name": "symfony/polyfill-php80",
@@ -1453,11 +1468,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.2.2",
+            "version": "2.2.4",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/e5cc34d491a90e79c216d824f60fe21fd4d93bd6",
-                "reference": "e5cc34d491a90e79c216d824f60fe21fd4d93bd6",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/f0fe3fb03bb53ce68cc2416785b260e62226ec27",
+                "reference": "f0fe3fb03bb53ce68cc2416785b260e62226ec27",
                 "shasum": ""
             },
             "require": {
@@ -1513,7 +1528,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-06-05T09:00:01+00:00"
+            "time": "2026-07-03T07:00:23+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
