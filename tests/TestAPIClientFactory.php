@@ -14,6 +14,7 @@ use APIToolkit\API\Authentication\{BasicAuthentication, BearerAuthentication};
 use APIToolkit\Contracts\Interfaces\API\ApiClientInterface;
 use ConfigToolkit\ConfigLoader;
 use Datev\API\Desktop\Client;
+use Datev\API\Online\{Client as OnlineClient, OnlineService};
 use ERRORToolkit\Enums\LogType;
 use ERRORToolkit\Factories\{ConsoleLoggerFactory, FileLoggerFactory};
 use ERRORToolkit\LoggerRegistry;
@@ -76,6 +77,39 @@ class TestAPIClientFactory {
             }
         }
         return self::$client;
+    }
+
+    /**
+     * Erstellt einen Live-Client für einen DATEV-Online-Dienst (Sandbox).
+     *
+     * Erwartet in .samples/config.json einen Abschnitt DATEV-ONLINE-API mit
+     * access_token (OAuth2-Bearer-Token) und datev_client_id; optional
+     * datev_client_secret und sandbox (Default: true).
+     * Liefert null, wenn keine Konfiguration vorhanden ist.
+     */
+    public static function getOnlineClient(OnlineService $service): ?ApiClientInterface {
+        $logger = self::getLogger();
+        $config = ConfigLoader::getInstance($logger);
+        $config->loadConfigFile(__DIR__ . "/../.samples/config.json");
+
+        $accessToken = $config->get("DATEV-ONLINE-API", "access_token");
+        $datevClientId = $config->get("DATEV-ONLINE-API", "datev_client_id");
+
+        if (empty($accessToken) || empty($datevClientId)) {
+            return null;
+        }
+
+        $sandbox = (bool) $config->get("DATEV-ONLINE-API", "sandbox", true);
+        $datevClientSecret = $config->get("DATEV-ONLINE-API", "datev_client_secret", "");
+
+        $authentication = new BearerAuthentication($accessToken);
+        $client = new OnlineClient($service, $authentication, $datevClientId, $sandbox, $logger);
+
+        if (!empty($datevClientSecret)) {
+            $client->addDefaultHeader($service->clientSecretHeader(), $datevClientSecret);
+        }
+
+        return $client;
     }
 
     /**

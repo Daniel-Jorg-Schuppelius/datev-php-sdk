@@ -24,7 +24,7 @@ class OpenApiCoverageAnalyzer {
     private array $implementedEndpoints = [];
     private array $results = [];
 
-    // Mapping von OpenAPI-Dateinamen zu Domain-Verzeichnissen
+    // Mapping von OpenAPI-Dateinamen zu Domain-Verzeichnissen (Desktop)
     private array $domainMapping = [
         'Accounting' => 'Accounting',
         'Client Master Data' => 'ClientMasterData',
@@ -35,6 +35,26 @@ class OpenApiCoverageAnalyzer {
         'Order Management' => 'OrderManagement',
         'Payroll' => 'Payroll',
         'Public Sector' => 'PublicSector',
+    ];
+
+    // Mapping von OpenAPI-Dateinamen zu Domain-Verzeichnissen (Online).
+    // Eine Domain pro Datei; spezifischste Muster zuerst, da das erste
+    // passende Muster gewinnt (siehe extractDomainFromFilename).
+    private array $onlineDomainMapping = [
+        'accounting-clients' => 'AccountingClients',
+        'accounting_documents' => 'AccountingDocuments',
+        'accounting_dxso-jobs' => 'AccountingDxsoJobs',
+        'accounting_extf-files' => 'AccountingExtfFiles',
+        'Accounting Data Exchange' => 'AccountingDataExchange',
+        'cashregister_import' => 'CashRegister',
+        'hr_eau' => 'HrEau',
+        'hr_exchange' => 'HrExchange',
+        'hr_exports' => 'HrExports',
+        'hr_files' => 'HrFiles',
+        'hr_payrollreports' => 'HrPayrollReports',
+        'Dokumente Personalwirtschaft' => 'HrDocuments',
+        'master-data_master-clients-health' => 'MasterClientsHealth',
+        'my-tax_mytax-income-tax-documents-health' => 'MyTaxHealth',
     ];
 
     // HTTP-Methoden die wir tracken
@@ -104,7 +124,9 @@ class OpenApiCoverageAnalyzer {
     }
 
     private function extractDomainFromFilename(string $filename): ?string {
-        foreach ($this->domainMapping as $pattern => $domain) {
+        $mapping = $this->apiType === 'Online' ? $this->onlineDomainMapping : $this->domainMapping;
+
+        foreach ($mapping as $pattern => $domain) {
             if (stripos($filename, $pattern) !== false) {
                 return $domain;
             }
@@ -230,6 +252,22 @@ class OpenApiCoverageAnalyzer {
         preg_match_all('/[\'"]\/\{\$[^}]+\}\/([a-z\-]+)[\'"]/', $content, $subMatches2);
         if (!empty($subMatches2[1])) {
             $info['subResources'] = array_merge($info['subResources'], $subMatches2[1]);
+        }
+
+        // Interpolated URL suffixes like: "{$this->getEndpointUrl()}/import"
+        preg_match_all('/\{\$this->getEndpointUrl\(\)\}\/([a-z\-]+)/', $content, $subMatches2b);
+        if (!empty($subMatches2b[1])) {
+            $info['subResources'] = array_merge($info['subResources'], $subMatches2b[1]);
+        }
+
+        // Concatenated static path segments like: . '/files' or . '/documents/upload'
+        preg_match_all('/\.\s*[\'"]\/([a-z\-\/]+)[\'"]/', $content, $subMatches2c);
+        foreach ($subMatches2c[1] as $pathSegments) {
+            foreach (explode('/', $pathSegments) as $segment) {
+                if ($segment !== '') {
+                    $info['subResources'][] = $segment;
+                }
+            }
         }
 
         // Look for getContents with sub-resource paths

@@ -45,5 +45,32 @@
 			"description": "Enable or disable SSL certificate verification",
 			"enabled": true
 		}
+	],
+	"DATEV-ONLINE-API": [
+		{
+			"key": "access_token",
+			"value": "",
+			"description": "OAuth2 bearer token for the DATEV cloud APIs (sandbox); live tests only run with DATEV_ONLINE_LIVE=1",
+			"enabled": true
+		},
+		{
+			"key": "datev_client_id",
+			"value": "",
+			"description": "X-DATEV-Client-Id header value",
+			"enabled": true
+		},
+		{
+			"key": "datev_client_secret",
+			"value": "",
+			"description": "X-DATEV-Client-Secret header value (only required by some services)",
+			"enabled": true
+		},
+		{
+			"key": "sandbox",
+			"value": true,
+			"type": "boolean",
+			"description": "Use the platform-sandbox base path instead of platform",
+			"enabled": true
+		}
 	]
 }

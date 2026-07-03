@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Tests\Mocks;
 
+use Datev\API\Online\OnlineService;
 use Tests\Mocks\Fixtures\{AccountingFixtures, ClientMasterDataFixtures, DiagnosticsFixtures, PayrollFixtures};
 
 /**
@@ -212,5 +213,20 @@ class MockDataLoader {
      */
     public static function createOpenApiMockClient(?string $domain = null): MockClient {
         return OpenApiMockGenerator::createMockClientFromOpenApi($domain);
+    }
+
+    /**
+     * Erstellt einen MockClient für einen DATEV-Online-Dienst.
+     * Die Mock-Responses werden aus der OpenAPI-Spezifikation des Dienstes
+     * generiert (dienst-relative Keys, echte Statuscodes und Header).
+     */
+    public static function createMockClientForOnlineService(OnlineService $service): MockClient {
+        $client = new MockClient;
+
+        if (self::$preferOpenApi) {
+            OpenApiMockGenerator::registerFromOpenApi($client, $service->mockDomain());
+        }
+
+        return $client;
     }
 }
