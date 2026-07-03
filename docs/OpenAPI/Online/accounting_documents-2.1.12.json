@@ -1,0 +1,1305 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "accounting:documents",
+    "description": "The individual API services are described both functionally and technically. Wherever possible, examples are used to illustrate the calls and responses. All services only support the JSON format. The order of the return values (in JSON body) is not set and may deviate from the order specified in this document. Return values with a value of “null” will not be returned.",
+    "version": "2.1.12",
+    "x-datev-shortdescription": "Digital documents are transferred to the in-box of Belege online in DATEV Unternehmen online using the API accounting-documents"
+  },
+  "servers": [
+    {
+      "url": "https://accounting-documents.api.datev.de/platform/v2"
+    },
+    {
+      "url": "https://accounting-documents.api.datev.de/platform-sandbox/v2"
+    }
+  ],
+  "security": [
+    {
+      "client_id": [],
+      "datev_openid": [
+        "accounting:clients:read",
+        "accounting:documents"
+      ]
+    },
+    {
+      "client_id": [],
+      "datev_idp_next": [
+        "openid",
+        "accounting:clients:read",
+        "accounting:documents"
+      ]
+    },
+    {
+      "client_id": [],
+      "datev_openid_sandbox": [
+        "accounting:clients:read",
+        "accounting:documents"
+      ]
+    }
+  ],
+  "tags": [
+    {
+      "name": "Get clients and basic data about a client",
+      "description": "Get a list of clients and basic data about a client"
+    },
+    {
+      "name": "Transfer a document",
+      "description": "Transfer a document with meta information"
+    }
+  ],
+  "paths": {
+    "/clients": {
+      "get": {
+        "tags": [
+          "Get clients and basic data about a client"
+        ],
+        "summary": "Returns a list of clients that are accessible for the user.",
+        "description": "Returns a list of all clients to which the user has access. The user is only familiar with the client name, the client number, and the consultant number. For all subsequent requests concerning data transfer to DATEV, the ID of the client is necessary. The ID is a technical object for the communication between the third-party solution and the DATEV data center. The ID is not to be displayed to the end user. \n\n**Please note:** Data transfer to the DATEV data center is only possible if the user has access to the client. The third-party solution must ensure this by checking that the client number and consultant number exists in the list of clients.\n\n**Example: The user has access to one client**\n\n    [{\n        \"client_number\": 1,\n        \"consultant_number\": 455148, \n        \"id\": \"455148-1\",\n        \"name\": \"Muster GmbH 1\"\n    }]\n\n    \n\n    \n**Example: The user has access to two clients** \n    \n    \n    [{\n        \"client_number\":1,\n        \"consultant_number\":455148, \n        \"id\":\"455148-1\",\n        \"name\":\"Muster GmbH 1\"}, \n      {\n        \"client_number\":2,\n        \"consultant_number\":455148, \n        \"id\":\"455148-2\",\n        \"name\":\"Muster GmbH 2\"\n          \n      }]",
+        "responses": {
+          "200": {
+            "description": "Request OK; list of accessible clients is returned.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Client"
+                  }
+                }
+              },
+              "application/json": {
+                "x-example": [
+                  {
+                    "client_number": "1",
+                    "consultant_number": "455148",
+                    "id": "455148-1",
+                    "name": "Muster GmbH 1"
+                  }
+                ]
+              }
+            }
+          },
+          "401": {
+            "description": "<table> <thead> <tr> <th>Error, Error_description</th> <th>Description</th> <th>Example</th> </tr> </thead> <tbody> <tr> <td></td> <td>The user has no access to clients. It is recommended that the user contact the tax consultant.</td> <td>{\"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\"}</td> </tr> <tr> <td>\"#DCO01005 restapi.ScopeFault\"</td> <td>The third-party solution has transmitted an incorrect request. The required scope is missing. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01005\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\",\"error\":\"#DCO01005\",\"error_description\":\"restapi.ScopeFault\"}</td> <tr> </tbody> </table>"
+          },
+          "403": {
+            "description": "<table> <thead> <tr> <th>Error, Error_description</th> <th>Description</th> <th>Example</th> </tr> </thead> <tbody> <tr> <td></td> <td>The user has no access to clients. It is recommended that the user contact the tax consultant.</td> <td>{\"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\"}</td> </tr> <tr> <td>\"#DCO01005 restapi.ScopeFault\"</td> <td>The third-party solution has transmitted an incorrect request. The required scope is missing. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01005\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\",\"error\":\"#DCO01005\",\"error_description\":\"restapi.ScopeFault\"}</td> <tr> </tbody> </table>"
+          },
+          "404": {
+            "description": "The user does not have any clients. It is recommended that the user contact the tax consultant. It is up to the software provider to ensure that the request is correct.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "x-example": [
+                  {
+                    "request_id": "0a13eff2-44a9-4de6-90f0-1198241e7c22"
+                  }
+                ]
+              },
+              "application/json": {
+                "x-example": [
+                  {
+                    "request_id": "0a13eff2-44a9-4de6-90f0-1198241e7c22"
+                  }
+                ]
+              }
+            }
+          },
+          "503": {
+            "description": "The services of DATEVconnect online are not available at the current time due to maintenance reasons. Please try again later."
+          }
+        },
+        "security": [
+          {
+            "client_id": [],
+            "datev_openid": [
+              "accounting:clients:read"
+            ]
+          },
+          {
+            "client_id": [],
+            "datev_idp_next": [
+              "openid",
+              "accounting:clients:read"
+            ]
+          },
+          {
+            "client_id": [],
+            "datev_openid_sandbox": [
+              "accounting:clients:read"
+            ]
+          }
+        ],
+        "parameters": []
+      }
+    },
+    "/clients/{client-id}": {
+      "get": {
+        "tags": [
+          "Get clients and basic data about a client"
+        ],
+        "summary": "Returns a list of basic data about a given client.",
+        "description": "Returns a list of basic data about a given client. With this information, the third-party solution can check whether the configuration of the client is suitable and prepared for data transfer: a client for the application Belege online and a matching fiscal year for the editing form \\\"extended\\\" , for the application Rechnungseingangsbuch online for transferring accounts payable data, for the application Rechnungsausgangsbuch online for transferring accounts receivable data, and/or for the application Kassenbuch online for transferring cash entries are necessary.   \n\n**Please note:** If a matching fiscal year is not present, but there is a previous fiscal year that meets certain requirements, DATEV will automatically generate the subsequent matching fiscal year. This will be done within the operation \\\"create a data transfer (dxso-job)\\\" . This function is not available for the application Kassenbuch online.  \n\n**Example: No data import possible**\n\nThe requirements for processing data are not fulfilled.\n\n```json\nHTTP/1.1 200 OK\nContent-Type:application/json\n\n{\"client_number\":102,\"consultant_number\":455148,\n\"id\":\"455148-102\",\"name\":\"Muster GmbH 3\", \n\"is_document_management_available\":\"false\",\n\"basic_accounting_information\":[]}\n```\n\n**Example: Automatic generation of new fiscal year in a complex scenario**\n\nThe requirements for processing data are fulfilled for  \n- Cash ledger data for 2015, 2016, and 2017\n- Incoming invoice data for 2015, 2016, and 2017 (automatic generation of the fiscal year 2017 is possible)\n- Outgoing invoice data for 2015, 2016, and 2017 (automatic generation of the fiscal year 2017 is possible)\n\n```json\nHTTP/1.1 200 OK\nContent-Type:application/json\n\n{\"client_number\":4,\"consultant_number\":455148,\n\"id\":\"455148-4\",\"name\":\"Muster GmbH 4\", \n\"is_document_management_available\":\"true\",\n\"basic_accounting_information\":[\n{\"fiscal_year_start\":\"2015-01-01\",\n\"fiscal_year_end\":\"2015-12-31\", \n\"account_length\":4,\n\"ledgers\":\n{\"is_accounts_payable_ledger_available\":\"true\",\n\"is_accounts_receivable_ledger_available\":\"true\",\n\"is_cash_ledger_available\":\"true\"}\n},\n{\"fiscal_year_start\":\"2016-01-01\",\n\"fiscal_year_end\":\"2016-12-31\",\n\"account_length\":4,\n\"ledgers\":{\n\"is_accounts_payable_ledger_available\":\"true\",\n\"is_accounts_receivable_ledger_available\":\"true\",\n\"is_cash_ledger_available\":\"true\"}\n},\n{\"fiscal_year_start\":\"2017-01-01\",\n\"fiscal_year_end\":\"2017-12-31\",\n\"account_length\":4,\n\"ledgers\":{\n\"is_accounts_payable_ledger_available\":\"false\",\n\"is_accounts_receivable_ledger_available\":\"false\",\n\"is_cash_ledger_available\":\"true\"}\n}]}\n```\n",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "ID that identifies the client.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-example": "455148-1"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request OK; a list of the basic data to a given client has been returned",
+            "content": {
+              "application/json": {
+                "x-example": {
+                  "client_number": "1",
+                  "consultant_number": "455148",
+                  "id": "455148-1",
+                  "name": "Muster GmbH",
+                  "is_document_management_available": "true",
+                  "basic_accounting_information": [
+                    {
+                      "fiscal_year_start": "2015-01-01T00:00:00.000Z",
+                      "fiscal_year_end": "2015-12-31T00:00:00.000Z",
+                      "account_length": "4",
+                      "ledgers": {
+                        "is_accounts_payable_ledger_available": "true",
+                        "is_accounts_receivable_ledger_available": "true",
+                        "is_cash_ledger_available": "true"
+                      }
+                    },
+                    {
+                      "fiscal_year_start": "2016-01-01T00:00:00.000Z",
+                      "fiscal_year_end": "2016-12-31T00:00:00.000Z",
+                      "account_length": "4",
+                      "ledgers": {
+                        "is_accounts_payable_ledger_available": "true",
+                        "is_accounts_receivable_ledger_available": "true",
+                        "is_cash_ledger_available": "true"
+                      }
+                    },
+                    {
+                      "fiscal_year_start": "2017-01-01T00:00:00.000Z",
+                      "fiscal_year_end": "2017-12-31T00:00:00.000Z",
+                      "account_length": "4",
+                      "ledgers": {
+                        "is_accounts_payable_ledger_available": "true",
+                        "is_accounts_receivable_ledger_available": "true",
+                        "is_cash_ledger_available": "true"
+                      }
+                    }
+                  ]
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ClientBasics"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": " #DCO01009 restapi.InvalidAccountingBasicData - The basic data of the account books is inconsistent. It is recommended that the user contact the tax consultant.",
+            "content": {
+              "application/json": {
+                "x-example": [
+                  {
+                    "error_uri": "https://apps.datev.de/knowledge/help/search?q=DCO01009",
+                    "request_id": "0a13eff2-44a9-4de6-90f0-1198241e7c22",
+                    "error": "#DCO01009",
+                    "error_description": "restapi.InvalidAccountingBasicData"
+                  }
+                ]
+              }
+            }
+          },
+          "403": {
+            "description": "<table> <thead> <tr> <th>Error, Error_description</th> <th>Description</th> <th>Example</th> </tr> </thead> <tbody> <tr> <td></td> <td>The user has no access to clients. It is recommended that the user contact the tax consultant.</td> <td>{\"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\"}</td> </tr> <tr> <td>#DCO01005 restapi.ScopeFault</td> <td>The third-party solution has transmitted an incorrect request. The required scope is missing. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01005\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\",\"error\":\"#DCO01005\",\"error_description\":\"restapi.ScopeFault\"}</td> <tr> </tbody> </table>",
+            "content": {
+              "application/json": {
+                "x-example": [
+                  {
+                    "error_uri": "https://apps.datev.de/knowledge/help/search?q=DCO01005",
+                    "request_id": "0a13eff2-44a9-4de6-90f0-1198241e7c22",
+                    "error": "#DCO01005",
+                    "error_description": "restapi.ScopeFault"
+                  }
+                ]
+              }
+            }
+          },
+          "404": {
+            "description": "The requested client does not exist. It is recommended that the user contact the tax consultant. The software provider has to ensure that the client ID used exists in the list of accessible clients.It is up to the software provider to ensure that the request is correct.",
+            "content": {
+              "application/json": {
+                "x-example": [
+                  {
+                    "request_id": "0a13eff2-44a9-4de6-90f0-1198241e7c22"
+                  }
+                ]
+              }
+            }
+          },
+          "503": {
+            "description": "The services of DATEVconnect online are not available at the current time due to maintenance reasons. Please try again later."
+          }
+        },
+        "security": [
+          {
+            "client_id": [],
+            "datev_openid": [
+              "accounting:clients:read"
+            ]
+          },
+          {
+            "client_id": [],
+            "datev_idp_next": [
+              "openid",
+              "accounting:clients:read"
+            ]
+          },
+          {
+            "client_id": [],
+            "datev_openid_sandbox": [
+              "accounting:clients:read"
+            ]
+          }
+        ]
+      }
+    },
+    "/clients/{client-id}/document-types": {
+      "get": {
+        "tags": [
+          "Get clients and basic data about a client"
+        ],
+        "summary": "Returns a list of document types for a given client.",
+        "description": "Returns a list of document types for a given client. The user is normally only familiar with the name of the document type. The document type is determined by the properties category and debit_credit_identifier. Further processing in DATEV Unternehmen online depends on these properties. For example, a document type with the category “invoice_received” is processed as an incoming invoice. \n\nThe document type in DATEV applications is called “Belegtyp”. A client can have a lot of different document types. There are document types with special restrictions – document types with the category “personnel_documents” and “travel_expense_documents”. This means that the user’s DATEV authentication method needs to be configured with special rights.\n\n**Please note:** If the returned list is empty then the client has no document types. Normally, a client has at least four document types.\n \n\n **Get list of document types**\n\n \n\n```json\nHTTP/1.1 200 OK\nContent-Encoding: gzip\nTransfer-Encoding: chunked\n\n[\n{\n\"name\":\"Rechnungseingang\",\n\"category\":\"invoices_received\",\n\"debit_credit_identifier\":\"debit\"\n},\n{\n\"name\":\"Rechnungsausgang\",\n\"category\":\"outgoing_invoices\",\n\"debit_credit_identifier\":\"credit\"\n},\n{\n\"name\":\"Kasse\",\n\"category\":\"other_documents\"\n},\n{\n\"name\":\"Sonstige\",\n\"category\":\"other_documents\"\n}\n]\n\n```\n",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "ID that identifies the client.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-example": "455148-1"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request OK; a list of document types for a given client is returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DocumentType"
+                  }
+                },
+                "x-example": [
+                  {
+                    "name": "Rechnungseingang",
+                    "category": "invoices_received",
+                    "debit_credit_identifier": "debit"
+                  },
+                  {
+                    "name": "Rechnungsausgang",
+                    "category": "outgoing_invoices",
+                    "debit_credit_identifier": "credit"
+                  },
+                  {
+                    "name": "Kasse",
+                    "category": "other_documents"
+                  },
+                  {
+                    "name": "Sonstige",
+                    "category": "other_documents"
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "<table> <thead> <tr> <th>Error, Error_description</th> <th>Description</th> <th>Example</th> </tr> </thead> <tbody> <tr> <td>\"#DCO01018 restapi.MissingMandatoryHeaderFault\"</td> <td>The third-party solution has transmitted an incorrect request. Mandatory header value is missing. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01018\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01018\", \"error_description\":\"restapi.MissingMandatoryHeaderFault\"}</td> </tr> </tbody> </table>"
+          },
+          "403": {
+            "description": "<table> <thead> <tr> <th>Error, Error_description</th> <th>Description</th> <th>Example</th> </tr> </thead> <tbody> <tr> <td></td> <td>The user has no access to clients. It is recommended that the user contact the tax consultant.</td> <td>{\"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\"}</td> </tr> <tr> <td>\"#DCO01005 restapi.ScopeFault\"</td> <td>The third-party solution has transmitted an incorrect request. The required scope is missing. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01005\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\",\"error\":\"#DCO01005\",\"error_description\":\"restapi.ScopeFault\"}</td> <tr> </tbody> </table>",
+            "content": {
+              "application/json": {
+                "x-example": [
+                  {
+                    "error_uri": "https://apps.datev.de/knowledge/help/search?q=DCO01005",
+                    "request_id": "0a13eff2-44a9-4de6-90f0-1198241e7c22",
+                    "error": "#DCO01005",
+                    "error_description": "restapi.ScopeFault"
+                  }
+                ]
+              }
+            }
+          },
+          "404": {
+            "description": "The requested client does not exist. It is recommended that the user contact the tax consultant. The software provider has to ensure that the client ID used exists in the list of accessible clients.It is up to the software provider to ensure that the request is correct.",
+            "content": {
+              "application/json": {
+                "x-example": [
+                  {
+                    "request_id": "0a13eff2-44a9-4de6-90f0-1198241e7c22"
+                  }
+                ]
+              }
+            }
+          },
+          "503": {
+            "description": "The services of DATEVconnect online are not available at the current time due to maintenance reasons. Please try again later."
+          }
+        },
+        "security": [
+          {
+            "client_id": [],
+            "datev_openid": [
+              "accounting:documents"
+            ]
+          },
+          {
+            "client_id": [],
+            "datev_idp_next": [
+              "openid",
+              "accounting:documents"
+            ]
+          },
+          {
+            "client_id": [],
+            "datev_openid_sandbox": [
+              "accounting:documents"
+            ]
+          }
+        ]
+      }
+    },
+    "/clients/{client-id}/duo-version": {
+      "get": {
+        "tags": [
+          "You will receive a list of permitted file extensions for file upload."
+        ],
+        "summary": "Returns a list of permitted file extensions for file upload",
+        "description": "Returns a list of permitted file extensions for file upload for a given client. The content of the list depends on the Datev-status of the client. There is a difference between DuoNext and DuoNow. For details please look at the example.",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "ID that identifies the client.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-example": "455148-1"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request OK; a list of permitted file extensions for a given client is returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DuoVersion"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The user has no access to this clients. It is recommended that the user contact the tax consultant.",
+            "content": {
+              "application/json": {
+                "x-example": [
+                  {
+                    "request_id": "0a13eff2-44a9-4de6-90f0-1198241e7c44"
+                  }
+                ]
+              }
+            }
+          },
+          "404": {
+            "description": "The requested client does not exist. It is recommended that the user contact the tax consultant. The software provider has to ensure that the client ID used exists in the list of accessible clients.It is up to the software provider to ensure that the request is correct.",
+            "content": {
+              "application/json": {
+                "x-example": [
+                  {
+                    "request_id": "0a13eff2-44a9-4de6-90f0-1198241e7c22"
+                  }
+                ]
+              }
+            }
+          },
+          "503": {
+            "description": "The services of DATEVconnect online are not available at the current time due to maintenance reasons. Please try again later."
+          }
+        },
+        "security": [
+          {
+            "client_id": [],
+            "datev_openid": [
+              "accounting:clients:read"
+            ]
+          },
+          {
+            "client_id": [],
+            "datev_idp_next": [
+              "openid",
+              "accounting:clients:read"
+            ]
+          },
+          {
+            "client_id": [],
+            "datev_openid_sandbox": [
+              "accounting:clients:read"
+            ]
+          }
+        ]
+      }
+    },
+    "/clients/{client-id}/documents": {
+      "post": {
+        "tags": [
+          "Transfer a document"
+        ],
+        "summary": "Transfers a document",
+        "description": "A new accounting document will be transferred to Belege online in DATEV Unternehmen online. Each accounting document is transferred in a multipart object as a single file with optional metadata (document type and note). The content-type indicated in the multipart object has to correspond to the file. The accepted content-types and the accepted file size are determined by Belege online. Exception: ZIP files are not supported.\n\nIt is recommended that the user chooses the document type for each accounting document, as the document type affects further processing by DATEV. The chosen document type has to be existent at the given client. Please check the list of document types for a given client. The user should also have the possibility to choose “no document type”. \n\nIf the value of the document_type is empty, then the parameter will be ignored and will not be returned in the response. In this case, and if the parameter document_type is not used, the term “ohne Belegtyp” (without document type) is displayed in the DATEV applications.\n\n**Please note:** \nIt is recommended that file names are encoded in UTF8. Unicode characters have to be precomposed characters; in other words, each special character, such as an umlaut (ä, ü, ö), has to be a single code point. Decomposed characters are not supported. This applies to both the file name and the metadata. There exists a white list for signs that may be used in file names. Unallowed signs will be replaced by underscore.\nThese signs may be used: Space &()+-._ 0-9A-Za-zÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ\n\nLarge files require more storage space and can slow down load times within DATEV Unternehmen online and the DATEV Rechnungswesen-Programm. We recommend that the user is informed whenever the file size exceeds 500 kB.\n \n**Example:Document has been imported successfully:**\n \n\n```json\nHTTP/1.1 201 Processed\nContent-Encoding: gzip\nTransfer-Encoding: chunked\n\n{\n\"files\":[{\n\"name\":\"Test-File.pdf\",\n\"size\":\"123456\"\n}],\n\"document_type\":\"Rechnungseingang\",\n\"note\":\"Beleg von Beispiel GmbH\"\n}\n\n```\n",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "ID that identifies the client.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-example": "455148-1"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "one single file",
+                    "x-example": "Test-File.pdf"
+                  },
+                  "metadata": {
+                    "example": {
+                      "document_type": "Rechnungseingang",
+                      "note": "This is an example note.",
+                      "category": "MySoftwareCompany",
+                      "folder": "Invoices",
+                      "register": "2023/03"
+                    }
+                  },
+                  "custom_metadata": {
+                    "example": {
+                      "sequence_first_guid": "07b94406-666b-4b3a-acdc-c8e783dcd7cd",
+                      "sequence_position": 3
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Request OK; the document has been imported successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Document"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "<table> <thead> <tr> <th>Error, Error_description</th> <th>Description</th> <th>Example</th> </tr> </thead> <tbody> <tr> <td>\"#DCO01001 restapi.InvalidResourceModificationFault\"</td> <td>The third-party solution has transmitted an incorrect request. There is an error with this upload. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01001\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01001\", \"error_description\":\"restapi.InvalidResourceModificationFault\"} </tr> <tr> <td>\"#DCO01004 restapi.MultipartUploadFault\"</td> <td>The third-party solution has transmitted an incorrect request. There is an error with the multipart object (e.g. the file is missing). It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01004\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01004\", \"error_description\":\"restapi.MultipartUploadFault\"}</td> </tr> <tr> <td>\"#DCO01008 restapi.InvalidMessageBodyFault\"</td> <td>The third-party solution has transmitted an incorrect request. Can not interpret the http message body. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01008\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01008\", \"error_description\":\"restapi.InvalidMessageBodyFault\"}</td> </tr> <tr> <td>\"#DCO01009 restapi.InvalidAccountingBasicDataFault\"</td> <td>The third-party solution has transmitted an incorrect request. Ledger data is inconsistent. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01009\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01009\", \"error_description\":\"restapi.InvalidAccountingBasicDataFault\"}</td> </tr> <tr> <td>\"#DCO01010 restapi.InvalidDocumentTypeFault\"</td> <td>The document type does not exist. It is up to the software provider to ensure that the document type used exists in the list of document types.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01010\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01010\", \"error_description\":\"restapi.InvalidDocumentTypeFault\"}</td> </tr> <tr> <td>\"#DCO01015 restapi.UnsupportedFileTypeFault\"</td> <td>The transferred file has not been processed because the file type is not accepted by DATEV. It is up to the software provider to ensure that the user is informed that the file type is not supported by DATEV.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01015\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01015\", \"error_description\":\"restapi.UnsupportedFileTypeFault\"}</td> </tr> <tr> <td>\"#DCO01016 restapi.FileSizeFault\"</td> <td>The transferred file has not been processed because the file is too large (max. 20MB) to be stored by DATEV. It is up to the software provider to ensure that the user is informed that the file is too large to be stored by DATEV.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01016\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01016\", \"error_description\":\"restapi.FileSizeFault\"}</td> </tr> <tr> <td>\"#DCO01017 restapi.MissingMandatoryParameterFault\"</td> <td>The third-party solution has transmitted an incorrect request. Mandatory parameter is missing. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01017\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01017\", \"error_description\":\"restapi.MissingMandatoryParameterFault\"}</td> </tr> <tr> <td>\"#DCO01018 restapi.MissingMandatoryHeaderFault\"</td> <td>The third-party solution has transmitted an incorrect request. Mandatory header value is missing. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01018\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01018\", \"error_description\":\"restapi.MissingMandatoryHeaderFault\"}</td> </tr> <tr> <td>\"#DCO01019 restapi.NoValidBelegeBestandFault\"</td> <td>The third-party solution has transmitted an incorrect request. There is no valid inventory for Belege. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01019\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01019\", \"error_description\":\"restapi.NoValidBelegeBestandFault\"}</td> </tr> <tr> <td>\"#DCO01020 restapi.ServiceNotAvailableFault\"</td> <td>The third-party solution has transmitted an incorrect request. A required service is currently not available, so an upload is currently not possible. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01020\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01020\", \"error_description\":\"restapi.ServiceNotAvailableFault\"}</td> </tr> <tr> <td>\"#DCO01215 restapi.UnsupportedFileTypeDuoNextFault\"</td> <td>The third-party solution has transmitted an incorrect request. This file format is not supported. Allowed file formats are GIF, JPEG, JPG, PNG, TIF, TIFF, XML, PDF. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01215\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01215\", \"error_description\":\"restapi.UnsupportedFileTypeDuoNextFault\"}</td> </tr> <tr> <td>\"#DCO01216 restapi.FileSizeDuoNextFault\"</td> <td>The third-party solution has transmitted an incorrect request. The uploaded file exceeds the maximum of 20 MB. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01215\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01216\", \"error_description\":\"restapi.FileSizeDuoNextFault\"}</td> </tr> <tr> <td>\"#DCO01217 restapi.MetadataParsingFault\"</td> <td>The third-party solution has transmitted an incorrect request. The structure of the metadata doen not correspond to the specifications. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01217\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01217\", \"error_description\":\"restapi.MetadataParsingFault\"}</td> </tr> <tr> <td>\"#DCO01218 restapi.UploadClientParsingFault\"</td> <td>The third-party solution has transmitted an incorrect request. The structure of the metadata doen not correspond to the specifications. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01218\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01218\", \"error_description\":\"restapi.UploadClientParsingFault\"}</td> </tr> <tr> <td>\"#DCO01219 restapi.ContentTypeDoesNotMatchFileExtensionFault\"</td> <td>The third-party solution has transmitted an incorrect request. The specified file extension does not match the expected file content. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01219\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01219\", \"error_description\":\"restapi.ContentTypeDoesNotMatchFileExtensionFault\"}</td> </tr> <tr> <td>\"#DCO01220 restapi.FilesParameterIsMissingFault\"</td> <td>The third-party solution has transmitted an incorrect request. There is no file. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01220\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01220\", \"error_description\":\"restapi.FilesParameterIsMissingFault\"}</td> </tr> <tr> <td>\"#DCO01222 restapi.FileNameTooLongFault\"</td> <td>The third-party solution has transmitted an incorrect request. File names may have a maximum of 255 characters. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01222\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01222\", \"error_description\":\"restapi.FileNameTooLongFault\"}</td> </tr> <tr> <td>\"#DCO01223 restapi.PropertyNoteTooLongFault\"</td> <td>The third-party solution has transmitted an incorrect request. The note in UploadMetadata may have a maximum of 255 characters. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01223\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01223\", \"error_description\":\"restapi.PropertyNoteTooLongFault\"}</td> </tr> <tr> <td>\"#DCO01224 restapi.PropertyCategoryNameTooLongFault\"</td> <td>he third-party solution has transmitted an incorrect request. The category in UploadMetadata may have a maximum of 30 characters. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01224\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01224\", \"error_description\":\"restapi.PropertyCategoryNameTooLongFault\"}</td> </tr> <tr> <td>\"#DCO01225 restapi.PropertyFolderNameTooLongFault\"</td> <td>The third-party solution has transmitted an incorrect request. The folder name in UploadMetadata may have a maximum of 30 characters. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01225\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01225\", \"error_description\":\"restapi.PropertyFolderNameTooLongFault\"}</td> </tr> <tr> <td>\"#DCO01226 restapi.PropertyRegisterNameTooLongFault\"</td> <td>The third-party solution has transmitted an incorrect request. The name of the register in UploadMetadata may have a maximum of 30 characters. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01226\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01226\", \"error_description\":\"restapi.PropertyRegisterNameTooLongFault\"}</td> </tr> <tr> <td>\"#DCO01227 restapi.PropertyDocumentTypeTooLongFault\"</td> <td>The third-party solution has transmitted an incorrect request. The description of the document type in UploadMetadata may have a maximum of 30 characters. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01227\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01227\", \"error_description\":\"restapi.PropertyDocumentTypeTooLongFault\"}</td> </tr> <tr> <td>\"#DCO01228 restapi.PropertyClientNameTooLongFault\"</td> <td>The third-party solution has transmitted an incorrect request. The description of the client name in UploadMetadata may have a maximum of 100 characters. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01228\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01228\", \"error_description\":\"restapi.PropertyClientNameTooLongFault\"}</td> </tr> <tr> <td>\"#DCO01229 restapi.PropertyClientVersionTooLongFault\"</td> <td>The third-party solution has transmitted an incorrect request. The description of the client version in UploadMetadata may have a maximum of 5 characters. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01229\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01229\", \"error_description\":\"restapi.PropertyClientVersionTooLongFault\"}</td> </tr> <tr> <td>\"#DCO01230 restapi.PropertyClientIdTooLongFault\"</td> <td>The third-party solution has transmitted an incorrect request. The description of the client version in UploadMetadata may have a maximum of 100 characters. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01230\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01230\", \"error_description\":\"restapi.PropertyClientIdTooLongFault\"}</td> </tr> <tr> <td>\"#DCO01231 restapi.UploadIsNotSupportedFault\"</td> <td>The third-party solution has transmitted an incorrect request. The upload is not possible because this interface cannot be used online in connection with Belegfreigabe. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01231\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01231\", \"error_description\":\"restapi.UploadIsNotSupportedFault\"}</td> </tr> <tr> <td>\"#DCO01232 restapi.MultipleFilesUploadIsNotSupportedFault\"</td> <td>The third-party solution has transmitted an incorrect request. Uploading of stapled files is currently not possible of you have more than 10 stapled files. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01232\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01232\", \"error_description\":\"restapi.MultipleFilesUploadIsNotSupportedFault\"}</td> </tr> <tr> <td>\"#DCO01233 restapi.DataNameIsMissingFault\"</td> <td>The third-party solution has transmitted an incorrect request. The uploaded file has no file name. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01233\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01233\", \"error_description\":\"restapi.DataNameIsMissingFault\"}</td> </tr> <tr> <td>\"#DCO01234 restapi.WrongUuidFormatFault\"</td> <td>The third-party solution has transmitted an incorrect request. The documentId was not transferred in the permitted format (format version 2 and variant 2 is expected). Therefore no data could be transferred. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01234\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01234\", \"error_description\":\"restapi.WrongUuidFormatFault\"}</td> </tr> <tr> <td>\"#DCO01240 restapi.PropertyUploadMediumTooLongFault\"</td> <td>The third-party solution has transmitted an incorrect request. The description of the upload medium in UploadClientdata may have a maximum of 4 characters. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01240\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01240\", \"error_description\":\"restapi.PropertyUploadMediumTooLongFault\"}</td> </tr> <tr> <td>\"#DCO01241 restapi.PropertyIssuerNameTooLongFault\"</td> <td>The third-party solution has transmitted an incorrect request. The description of the issuer in UploadMetadata may have a maximum of 255 characters. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01241\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01241\", \"error_description\":\"restapi.PropertyIssuerNameTooLongFault\"}</td> </tr> <tr> <td>\"#DCO01242 restapi.PropertyRequestIdTooLongFault\"</td> <td>The third-party solution has transmitted an incorrect request. The description of the request id in UploadMetadata may have a maximum of 36 characters. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01242\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01242\", \"error_description\":\"restapi.PropertyRequestIdTooLongFault\"}</td> </tr> <tr> <td>\"#DCO01243 restapi.VirusInFileFoundFault\"</td> <td>The third-party solution has transmitted an incorrect request. A virus was found during the upload. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01243\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01243\", \"error_description\":\"restapi.VirusInFileFoundFault\"}</td> </tr> <tr> <td>\"#DCO01245 restapi.PdfNotParseableFault\"</td> <td>The third-party solution has transmitted an incorrect request. The PDF document cannot be parsed. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01245\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01245\", \"error_description\":\"restapi.PdfNotParseableFault\"}</td> </tr> <tr> <td>\"#DCO01252 restapi.FilenameIsRequiredFault\"</td> <td>The third-party solution has transmitted an incorrect request. Bad request - the original filename is null. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01252\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01252\", \"error_description\":\"restapi.FilenameIsRequiredFault\"}</td> </tr> <tr> <td>\"#DCO01253 restapi.DuplicateFileFault\"</td> <td>The third-party solution has transmitted an incorrect request. The file could not be uploaded, it already exists in Belege Online. Change the file name or document type to upload the file as a duplicate in Belege Online. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01253\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01253\", \"error_description\":\"restapi.DuplicateFileFault\"}</td> </tr> <tr> <td>\"#DCO01300 restapi.IsNeuePersonalakteFault\"</td> <td>The third-party solution has transmitted an incorrect request. The file could not be uploaded because you use DATEV Personal Arbeitgeber and try to upload receipts with the 'Document types DATEV Lohn-Unterlagen' bzw. 'DATEV Reisekosten-Belege', this is no longer possible.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01300\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01300\", \"error_description\":\"restapi.IsNeuePersonalakteFault\"}</td> </tr> </tbody> </table>"
+          },
+          "403": {
+            "description": "<table>\n  <thead>\n    <tr>\n      <th>Error, Error_description</th>\n      <th width:>Description</th>\n      <th>Example</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr>\n      <td></td>\n      <td>The user has no access to clients. It is recommended that the user contact the tax consultant.</td>\n      <td>{\"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\"}</td>   \n    </tr>\n    <tr>\n      <td>\"#DCO01005 restapi.ScopeFault\"</td>\n      <td>The third-party solution has transmitted an incorrect request. The required scope is missing. It is up to the software provider to ensure that the request is correct.</td>\n      <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01005\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\",\"error\":\"#DCO01005\",\"error_description\":\"restapi.ScopeFault\"}</td>\n    </tr>\n    <tr> \n      <td>\"#DCO01013 restapi.AuthentificationTypeFault\"</td>\n      <td>The third-party solution does not have permission to use this request. The software provider should contact DATEV. It is up to the software provider to ensure that the request is correct.</td>\n      <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01013\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\",\"error\":\"#DCO01013\",\"error_description\":\"restapi.AuthentificationTypeFault\"}</td>\n    </tr>\n  </tbody>\n</table>     \n"
+          },
+          "404": {
+            "description": "The requested client does not exist. It is recommended that the user contact the tax consultant. The software provider has to ensure that the client ID used exists in the list of accessible clients.It is up to the software provider to ensure that the request is correct.",
+            "content": {
+              "application/json": {
+                "x-example": [
+                  {
+                    "request_id": "0a13eff2-44a9-4de6-90f0-1198241e7c22"
+                  }
+                ]
+              }
+            }
+          },
+          "503": {
+            "description": "The services of DATEVconnect online are not available at the current time due to maintenance reasons. Please try again later. <table> <thead> <tr> <th>Error, Error_description</th> <th width:>Description</th> <th>Example</th> </tr> </thead> <tbody> <tr> <td>\"#DCO01020 restapi.ServiceNotAvailableFault\"</td> <td>A required service is currently unavailable, so an upload is currently not possible. Please try again later.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01020\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\",\"error\":\"#DCO01020\",\"error_description\":\"restapi.ServiceNotAvailableFault\"}</td> </tr> </tbody> </table>"
+          }
+        },
+        "security": [
+          {
+            "client_id": [],
+            "datev_openid": [
+              "accounting:documents"
+            ]
+          },
+          {
+            "client_id": [],
+            "datev_idp_next": [
+              "openid",
+              "accounting:documents"
+            ]
+          },
+          {
+            "client_id": [],
+            "datev_openid_sandbox": [
+              "accounting:documents"
+            ]
+          }
+        ]
+      }
+    },
+    "/clients/{client-id}/documents/{document-id}": {
+      "put": {
+        "tags": [
+          "Transfer a document"
+        ],
+        "summary": "Transfers a document with an ID",
+        "description": "A new accounting document with the ID of the document in the format of a GUID will be transferred to Belege online in DATEV Unternehmen online.\n\n**Please note:** If the ID of the document already exists in Belege online, then the import will be aborted with an error.\n\nEach accounting document is transferred in a multipart object as a single file with optional metadata (document type and note). The content-type indicated in the multipart object has to correspond to the file. The accepted content-types and the accepted file size are determined by Belege online. Exception: ZIP files are not supported.\n\nIt is recommended that the user chooses the document type for each accounting document, as the document type affects further processing by DATEV. The chosen document type has to be existent at the given client. Please check the list of document types for a given client. The user should also have the possibility to choose “no document type”.\n\nIf the value of document_type is empty, then the parameter will be ignored and will not be returned in the response. In this case, and if the parameter document_type is not used, the term “ohne Belegtyp” (without document type) is displayed in the DATEV applications.\n\n**Please note:** \nIt is recommended that file names are encoded in UTF8. Unicode characters have to be precomposed characters; in other words, each special character, such as an umlaut (ä, ü, ö), has to be a single code point. Decomposed characters are not supported. This applies to both the file name and the metadata. There exists a white list for signs that may be used in file names. Unallowed signs will be replaced by underscore.\nThese signs may be used: Space &()+-._ 0-9A-Za-zÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ  \n\nLarge files require more storage space and can slow down load times within DATEV Unternehmen online and the DATEV Rechnungswesen-Programm. We recommend that the user is informed whenever the file size exceeds 500 kB.\n\n\n**Example: Document has been imported succesfully:**\n\n\n```json\nHTTP/1.1 201 Processed\nContent-Encoding: gzip\nTransfer-Encoding: chunked\n\n{\n\"files\":[{\n\"name\":\"Test-File.pdf\",\n\"size\":\"125742\"\n}],\n\"document_type\":\"Rechnungseingang\",\n\"note\":\"Beleg von Beispiel GmbH\"\n}\n\n```\n",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "ID that identifies the client.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-example": "455148-1"
+          },
+          {
+            "name": "document-id",
+            "in": "path",
+            "description": "ID that identifies the document.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-example": "ac4d376f-d081-4cb3-98de-190fa93b500e"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "one single file",
+                    "x-example": "Test-File.pdf"
+                  },
+                  "metadata": {
+                    "example": {
+                      "document_type": "Rechnungseingang",
+                      "note": "This is an example note.",
+                      "category": "MySoftwareCompany",
+                      "folder": "Invoices",
+                      "register": "2023/03"
+                    }
+                  },
+                  "custom_metadata": {
+                    "example": {
+                      "sequence_first_guid": "07b94406-666b-4b3a-acdc-c8e783dcd7cd",
+                      "sequence_position": 3
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Request OK; the document has been imported successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Document"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "<table> <thead> <tr> <th>Error, Error_description</th> <th>Description</th> <th>Example</th> </tr> </thead> <tbody> <tr> <td>\"#DCO01001 restapi.InvalidResourceModificationFault\"</td> <td>The third-party solution has transmitted an incorrect request. There is an error with this upload. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01001\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01001\", \"error_description\":\"restapi.InvalidResourceModificationFault\"} </tr> <tr> <td>\"#DCO01004 restapi.MultipartUploadFault\"</td> <td>The third-party solution has transmitted an incorrect request. There is an error with the multipart object (e.g. the file is missing). It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01004\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01004\", \"error_description\":\"restapi.MultipartUploadFault\"}</td> </tr> <tr> <td>\"#DCO01008 restapi.InvalidMessageBodyFault\"</td> <td>The third-party solution has transmitted an incorrect request. Can not interpret the http message body. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01008\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01008\", \"error_description\":\"restapi.InvalidMessageBodyFault\"}</td> </tr> <tr> <td>\"#DCO01009 restapi.InvalidAccountingBasicDataFault\"</td> <td>The third-party solution has transmitted an incorrect request. Ledger data is inconsistent. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01009\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01009\", \"error_description\":\"restapi.InvalidAccountingBasicDataFault\"}</td> </tr> <tr> <td>\"#DCO01010 restapi.InvalidDocumentTypeFault\"</td> <td>The document type does not exist. It is up to the software provider to ensure that the document type used exists in the list of document types.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01010\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01010\", \"error_description\":\"restapi.InvalidDocumentTypeFault\"}</td> </tr> <tr> <td>\"#DCO01015 restapi.UnsupportedFileTypeFault\"</td> <td>The transferred file has not been processed because the file type is not accepted by DATEV. It is up to the software provider to ensure that the user is informed that the file type is not supported by DATEV.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01015\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01015\", \"error_description\":\"restapi.UnsupportedFileTypeFault\"}</td> </tr> <tr> <td>\"#DCO01016 restapi.FileSizeFault\"</td> <td>The transferred file has not been processed because the file is too large (max. 20MB) to be stored by DATEV. It is up to the software provider to ensure that the user is informed that the file is too large to be stored by DATEV.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01016\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01016\", \"error_description\":\"restapi.FileSizeFault\"}</td> </tr> <tr> <td>\"#DCO01017 restapi.MissingMandatoryParameterFault\"</td> <td>The third-party solution has transmitted an incorrect request. Mandatory parameter is missing. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01017\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01017\", \"error_description\":\"restapi.MissingMandatoryParameterFault\"}</td> </tr> <tr> <td>\"#DCO01018 restapi.MissingMandatoryHeaderFault\"</td> <td>The third-party solution has transmitted an incorrect request. Mandatory header value is missing. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01018\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01018\", \"error_description\":\"restapi.MissingMandatoryHeaderFault\"}</td> </tr> <tr> <td>\"#DCO01019 restapi.NoValidBelegeBestandFault\"</td> <td>The third-party solution has transmitted an incorrect request. There is no valid inventory for Belege. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01019\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01019\", \"error_description\":\"restapi.NoValidBelegeBestandFault\"}</td> </tr> <tr> <td>\"#DCO01020 restapi.ServiceNotAvailableFault\"</td> <td>The third-party solution has transmitted an incorrect request. A required service is currently not available, so an upload is currently not possible. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01020\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01020\", \"error_description\":\"restapi.ServiceNotAvailableFault\"}</td> </tr> <tr> <td>\"#DCO01215 restapi.UnsupportedFileTypeDuoNextFault\"</td> <td>The third-party solution has transmitted an incorrect request. This file format is not supported. Allowed file formats are GIF, JPEG, JPG, PNG, TIF, TIFF, XML, PDF. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01215\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01215\", \"error_description\":\"restapi.UnsupportedFileTypeDuoNextFault\"}</td> </tr> <tr> <td>\"#DCO01217 restapi.MetadataParsingFault\"</td> <td>The third-party solution has transmitted an incorrect request. The structure of the metadata doen not correspond to the specifications. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01217\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01217\", \"error_description\":\"restapi.MetadataParsingFault\"}</td> </tr> <tr> <td>\"#DCO01218 restapi.UploadClientParsingFault\"</td> <td>The third-party solution has transmitted an incorrect request. The structure of the metadata doen not correspond to the specifications. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01218\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01218\", \"error_description\":\"restapi.UploadClientParsingFault\"}</td> </tr> <tr> <td>\"#DCO01219 restapi.ContentTypeDoesNotMatchFileExtensionFault\"</td> <td>The third-party solution has transmitted an incorrect request. The specified file extension does not match the expected file content. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01219\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01219\", \"error_description\":\"restapi.ContentTypeDoesNotMatchFileExtensionFault\"}</td> </tr> <tr> <td>\"#DCO01220 restapi.FilesParameterIsMissingFault\"</td> <td>The third-party solution has transmitted an incorrect request. There is no file. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01220\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01220\", \"error_description\":\"restapi.FilesParameterIsMissingFault\"}</td> </tr> <tr> <td>\"#DCO01222 restapi.FileNameTooLongFault\"</td> <td>The third-party solution has transmitted an incorrect request. File names may have a maximum of 255 characters. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01222\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01222\", \"error_description\":\"restapi.FileNameTooLongFault\"}</td> </tr> <tr> <td>\"#DCO01223 restapi.PropertyNoteTooLongFault\"</td> <td>The third-party solution has transmitted an incorrect request. The note in UploadMetadata may have a maximum of 255 characters. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01223\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01223\", \"error_description\":\"restapi.PropertyNoteTooLongFault\"}</td> </tr> <tr> <td>\"#DCO01224 restapi.PropertyCategoryNameTooLongFault\"</td> <td>he third-party solution has transmitted an incorrect request. The category in UploadMetadata may have a maximum of 30 characters. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01224\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01224\", \"error_description\":\"restapi.PropertyCategoryNameTooLongFault\"}</td> </tr> <tr> <td>\"#DCO01225 restapi.PropertyFolderNameTooLongFault\"</td> <td>The third-party solution has transmitted an incorrect request. The folder name in UploadMetadata may have a maximum of 30 characters. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01225\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01225\", \"error_description\":\"restapi.PropertyFolderNameTooLongFault\"}</td> </tr> <tr> <td>\"#DCO01226 restapi.PropertyRegisterNameTooLongFault\"</td> <td>The third-party solution has transmitted an incorrect request. The name of the register in UploadMetadata may have a maximum of 30 characters. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01226\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01226\", \"error_description\":\"restapi.PropertyRegisterNameTooLongFault\"}</td> </tr> <tr> <td>\"#DCO01227 restapi.PropertyDocumentTypeTooLongFault\"</td> <td>The third-party solution has transmitted an incorrect request. The description of the document type in UploadMetadata may have a maximum of 30 characters. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01227\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01227\", \"error_description\":\"restapi.PropertyDocumentTypeTooLongFault\"}</td> </tr> <tr> <td>\"#DCO01228 restapi.PropertyClientNameTooLongFault\"</td> <td>The third-party solution has transmitted an incorrect request. The description of the client name in UploadMetadata may have a maximum of 100 characters. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01228\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01228\", \"error_description\":\"restapi.PropertyClientNameTooLongFault\"}</td> </tr> <tr> <td>\"#DCO01229 restapi.PropertyClientVersionTooLongFault\"</td> <td>The third-party solution has transmitted an incorrect request. The description of the client version in UploadMetadata may have a maximum of 5 characters. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01229\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01229\", \"error_description\":\"restapi.PropertyClientVersionTooLongFault\"}</td> </tr> <tr> <td>\"#DCO01230 restapi.PropertyClientIdTooLongFault\"</td> <td>The third-party solution has transmitted an incorrect request. The description of the client version in UploadMetadata may have a maximum of 100 characters. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01230\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01230\", \"error_description\":\"restapi.PropertyClientIdTooLongFault\"}</td> </tr> <tr> <td>\"#DCO01231 restapi.UploadIsNotSupportedFault\"</td> <td>The third-party solution has transmitted an incorrect request. The upload is not possible because this interface cannot be used online in connection with Belegfreigabe. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01231\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01231\", \"error_description\":\"restapi.UploadIsNotSupportedFault\"}</td> </tr> <tr> <td>\"#DCO01232 restapi.MultipleFilesUploadIsNotSupportedFault\"</td> <td>The third-party solution has transmitted an incorrect request. Uploading of stapled files is currently not possible of you have more than 10 stapled files. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01232\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01232\", \"error_description\":\"restapi.MultipleFilesUploadIsNotSupportedFault\"}</td> </tr> <tr> <td>\"#DCO01233 restapi.DataNameIsMissingFault\"</td> <td>The third-party solution has transmitted an incorrect request. The uploaded file has no file name. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01233\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01233\", \"error_description\":\"restapi.DataNameIsMissingFault\"}</td> </tr> <tr> <td>\"#DCO01234 restapi.WrongUuidFormatFault\"</td> <td>The third-party solution has transmitted an incorrect request. The documentId was not transferred in the permitted format (format version 2 and variant 2 is expected). Therefore no data could be transferred. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01234\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01234\", \"error_description\":\"restapi.WrongUuidFormatFault\"}</td> </tr> <tr> <td>\"#DCO01240 restapi.PropertyUploadMediumTooLongFault\"</td> <td>The third-party solution has transmitted an incorrect request. The description of the upload medium in UploadClientdata may have a maximum of 4 characters. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01240\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01240\", \"error_description\":\"restapi.PropertyUploadMediumTooLongFault\"}</td> </tr> <tr> <td>\"#DCO01241 restapi.PropertyIssuerNameTooLongFault\"</td> <td>The third-party solution has transmitted an incorrect request. The description of the issuer in UploadMetadata may have a maximum of 255 characters. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01241\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01241\", \"error_description\":\"restapi.PropertyIssuerNameTooLongFault\"}</td> </tr> <tr> <td>\"#DCO01242 restapi.PropertyRequestIdTooLongFault\"</td> <td>The third-party solution has transmitted an incorrect request. The description of the request id in UploadMetadata may have a maximum of 36 characters. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01242\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01242\", \"error_description\":\"restapi.PropertyRequestIdTooLongFault\"}</td> </tr> <tr> <td>\"#DCO01243 restapi.VirusInFileFoundFault\"</td> <td>The third-party solution has transmitted an incorrect request. A virus was found during the upload. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01243\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01243\", \"error_description\":\"restapi.VirusInFileFoundFault\"}</td> </tr> <tr> <td>\"#DCO01245 restapi.PdfNotParseableFault\"</td> <td>The third-party solution has transmitted an incorrect request. The PDF document cannot be parsed. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01245\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01245\", \"error_description\":\"restapi.PdfNotParseableFault\"}</td> </tr> <tr> <td>\"#DCO01252 restapi.FilenameIsRequiredFault\"</td> <td>The third-party solution has transmitted an incorrect request. Bad request - the original filename is null. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01252\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01252\", \"error_description\":\"restapi.FilenameIsRequiredFault\"}</td> </tr> <tr> <td>\"#DCO01253 restapi.DuplicateFileFault\"</td> <td>The third-party solution has transmitted an incorrect request. The file could not be uploaded, it already exists in Belege Online. Change the file name or document type to upload the file as a duplicate in Belege Online. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01253\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01253\", \"error_description\":\"restapi.DuplicateFileFault\"}</td> </tr> <tr> <td>\"#DCO01300 restapi.IsNeuePersonalakteFault\"</td> <td>The third-party solution has transmitted an incorrect request. The file could not be uploaded because you use DATEV Personal Arbeitgeber and try to upload receipts with the 'Document types DATEV Lohn-Unterlagen' bzw. 'DATEV Reisekosten-Belege', this is no longer possible.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01300\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01300\", \"error_description\":\"restapi.IsNeuePersonalakteFault\"}</td> </tr> </tbody> </table>"
+          },
+          "403": {
+            "description": "<table> <thead> <tr> <th>Error, Error_description</th> <th>Description</th> <th>Example</th> </tr> </thead> <tbody> <tr> <td></td> <td>The user has no access to clients. It is recommended that the user contact the tax consultant.</td> <td>{\"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\"}</td> </tr> <tr> <td>\"#DCO01005 restapi.ScopeFault\"</td> <td>The third-party solution has transmitted an incorrect request. The required scope is missing. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01005\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\",\"error\":\"#DCO01005\",\"error_description\":\"restapi.ScopeFault\"}</td> </tr> <tr> <td>\"#DCO01013 restapi.AuthentificationTypeFault\"</td> <td>The third-party solution does not have permission to use this request. The software provider should contact DATEV. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01013\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\",\"error\":\"#DCO01013\",\"error_description\":\"restapi.AuthentificationTypeFault\"}</td> </tr> </tbody> </table>"
+          },
+          "404": {
+            "description": "The requested client does not exist. It is recommended that the user contact the tax consultant. The software provider has to ensure that the client ID used exists in the list of accessible clients.It is up to the software provider to ensure that the request is correct.",
+            "content": {
+              "application/json": {
+                "x-example": [
+                  {
+                    "request_id": "0a13eff2-44a9-4de6-90f0-1198241e7c22"
+                  }
+                ]
+              }
+            }
+          },
+          "409": {
+            "description": "| Error, Error_description  | Description  | \n|-----------|---------------------------| \n| #DCO01012 restapi.KeyConflictFault | The ID of the document has already been used. The user has to check whether the document has already been transferred. In certain circumstances the user has to consult the tax consultant. It is up to the software provider to ensure that the request is correct. | ",
+            "content": {
+              "application/json": {
+                "x-example": [
+                  {
+                    "error_uri": "https://apps.datev.de/knowledge/help/search?q=DCO01012",
+                    "request_id": "0a13eff2-44a9-4de6-90f0-1198241e7c22",
+                    "error": "#DCO01012",
+                    "error_description": "restapi.KeyConflictFault"
+                  }
+                ]
+              }
+            }
+          },
+          "503": {
+            "description": "The services of DATEVconnect online are not available at the current time due to maintenance reasons. Please try again later. <table> <thead> <tr> <th>Error, Error_description</th> <th width:>Description</th> <th>Example</th> </tr> </thead> <tbody> <tr> <td>\"#DCO01020 restapi.ServiceNotAvailableFault\"</td> <td>A required service is currently unavailable, so an upload is currently not possible. Please try again later.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01020\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\",\"error\":\"#DCO01020\",\"error_description\":\"restapi.ServiceNotAvailableFault\"}</td> </tr> </tbody> </table>"
+          }
+        },
+        "security": [
+          {
+            "client_id": [],
+            "datev_openid": [
+              "accounting:documents"
+            ]
+          },
+          {
+            "client_id": [],
+            "datev_idp_next": [
+              "openid",
+              "accounting:documents"
+            ]
+          },
+          {
+            "client_id": [],
+            "datev_openid_sandbox": [
+              "accounting:documents"
+            ]
+          }
+        ]
+      }
+    },
+    "/clients/{client-id}/documents/stapled": {
+      "put": {
+        "tags": [
+          "Transfer a document"
+        ],
+        "summary": "Transfers multiple documents",
+        "description": "New accounting documents will be transferred to Belege online in DATEV Unternehmen online. The documents become stapled in the incoming order.\n\nEach accounting document is transferred in a multipart object as a single file. Only one optional metadata (document type and note) is allowed. The content-type indicated in the multipart object has to correspond to the file. The accepted content-types and the accepted file size are determined by Belege online. Exception: ZIP files are not supported.\n\nIt is recommended that the user chooses one document type for all accounting documents, as the document type affects further processing by DATEV. The chosen document type has to be existent at the given client. Please check the list of document types for a given client. The user should also have the possibility to choose “no document type”.\n\nIf the value of document_type is empty, then the parameter will be ignored and will not be returned in the response. In this case, and if the parameter document_type is not used, the term “ohne Belegtyp” (without document type) is displayed in the DATEV applications.\n\n**Please note:** \nIt is recommended that file names are encoded in UTF8. Unicode characters have to be precomposed characters; in other words, each special character, such as an umlaut (ä, ü, ö), has to be a single code point. Decomposed characters are not supported. This applies to both the file name and the metadata. There exists a white list for signs that may be used in file names. Unallowed signs will be replaced by underscore.\nThese signs may be used: Space &()+-._ 0-9A-Za-zÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ\n\nLarge files require more storage space and can slow down load times within DATEV Unternehmen online and the DATEV Rechnungswesen-Programm. We recommend that the user is informed whenever the file size exceeds 500 kB.\n\n**Example: Document has been imported succesfully:**\n\n```json\nHTTP/1.1 201 Processed\nContent-Encoding: gzip\nTransfer-Encoding: chunked\n{\n\"files\":[ {\n\"id\": \"8DE6B7D849C6E6179A023FE9C9B5171D\",\n\"name\":\"Test-File01.pdf\",\n\"size\":\"125742\"\n},\n{\n\"id\": \"933E92BA463320DDAC20315A7E442373\",\n\"name\":\"Test-File02.pdf\",\n\"size\":\"126831\"\n}\n],\n\"id\": \"8DE6B7D849C6E6179A023FE9C9B5171D\",\n\"document_type\":\"Rechnungseingang\",\n\"note\":\"Beleg von Beispiel GmbH\"\n}\n\n```\n",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "ID that identifies the client.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-example": "455148-1"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "properties": {
+                  "files": {
+                    "type": "array",
+                    "description": "array of files",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    },
+                    "x-example": "[Test-File_1.pdf, Test-File_2.pdf, Test-File_3.pdf]"
+                  },
+                  "metadata": {
+                    "example": {
+                      "document_type": "Rechnungseingang",
+                      "note": "This is an example note.",
+                      "category": "MySoftwareCompany",
+                      "folder": "Invoices",
+                      "register": "2023/03"
+                    }
+                  },
+                  "custom_metadata": {
+                    "example": {
+                      "sequence_first_guid": "07b94406-666b-4b3a-acdc-c8e783dcd7cd",
+                      "sequence_position": 3
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Request OK; the document has been imported successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Document"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "<table> <thead> <tr> <th>Error, Error_description</th> <th>Description</th> <th>Example</th> </tr> </thead> <tbody> <tr> <td>\"#DCO01001 restapi.InvalidResourceModificationFault\"</td> <td>The third-party solution has transmitted an incorrect request. There is an error with this upload. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01001\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01001\", \"error_description\":\"restapi.InvalidResourceModificationFault\"} </tr> <tr> <td>\"#DCO01004 restapi.MultipartUploadFault\"</td> <td>The third-party solution has transmitted an incorrect request. There is an error with the multipart object (e.g. the file is missing). It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01004\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01004\", \"error_description\":\"restapi.MultipartUploadFault\"}</td> </tr> <tr> <td>\"#DCO01008 restapi.InvalidMessageBodyFault\"</td> <td>The third-party solution has transmitted an incorrect request. Can not interpret the http message body. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01008\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01008\", \"error_description\":\"restapi.InvalidMessageBodyFault\"}</td> </tr> <tr> <td>\"#DCO01009 restapi.InvalidAccountingBasicDataFault\"</td> <td>The third-party solution has transmitted an incorrect request. Ledger data is inconsistent. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01009\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01009\", \"error_description\":\"restapi.InvalidAccountingBasicDataFault\"}</td> </tr> <tr> <td>\"#DCO01010 restapi.InvalidDocumentTypeFault\"</td> <td>The document type does not exist. It is up to the software provider to ensure that the document type used exists in the list of document types.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01010\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01010\", \"error_description\":\"restapi.InvalidDocumentTypeFault\"}</td> </tr> <tr> <td>\"#DCO01015 restapi.UnsupportedFileTypeFault\"</td> <td>The transferred file has not been processed because the file type is not accepted by DATEV. It is up to the software provider to ensure that the user is informed that the file type is not supported by DATEV.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01015\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01015\", \"error_description\":\"restapi.UnsupportedFileTypeFault\"}</td> </tr> <tr> <td>\"#DCO01016 restapi.FileSizeFault\"</td> <td>The transferred file has not been processed because the file is too large (max. 20MB) to be stored by DATEV. It is up to the software provider to ensure that the user is informed that the file is too large to be stored by DATEV.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01016\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01016\", \"error_description\":\"restapi.FileSizeFault\"}</td> </tr> <tr> <td>\"#DCO01017 restapi.MissingMandatoryParameterFault\"</td> <td>The third-party solution has transmitted an incorrect request. Mandatory parameter is missing. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01017\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01017\", \"error_description\":\"restapi.MissingMandatoryParameterFault\"}</td> </tr> <tr> <td>\"#DCO01018 restapi.MissingMandatoryHeaderFault\"</td> <td>The third-party solution has transmitted an incorrect request. Mandatory header value is missing. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01018\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01018\", \"error_description\":\"restapi.MissingMandatoryHeaderFault\"}</td> </tr> <tr> <td>\"#DCO01019 restapi.NoValidBelegeBestandFault\"</td> <td>The third-party solution has transmitted an incorrect request. There is no valid inventory for Belege. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01019\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01019\", \"error_description\":\"restapi.NoValidBelegeBestandFault\"}</td> </tr> <tr> <td>\"#DCO01020 restapi.ServiceNotAvailableFault\"</td> <td>The third-party solution has transmitted an incorrect request. A required service is currently not available, so an upload is currently not possible. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01020\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01020\", \"error_description\":\"restapi.ServiceNotAvailableFault\"}</td> </tr> <tr> <td>\"#DCO01127 restapi.FileCountFault\"</td> <td>The transferred file(s) has not been processed because the amount of files is more than 50. It is up to the software provider to ensure that the user is informed that the amount of file is more than 50 and thus can not be stored by DATEV.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01127\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01127\", \"error_description\":\"restapi.FileCountFault\"}</td> </tr> <tr> <td>\"#DCO01215 restapi.UnsupportedFileTypeDuoNextFault\"</td> <td>The third-party solution has transmitted an incorrect request. This file format is not supported. Allowed file formats are GIF, JPEG, JPG, PNG, TIF, TIFF, XML, PDF. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01215\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01215\", \"error_description\":\"restapi.UnsupportedFileTypeDuoNextFault\"}</td> </tr> <tr> <td>\"#DCO01216 restapi.FileSizeDuoNextFault\"</td> <td>The third-party solution has transmitted an incorrect request. The uploaded files exceed the maximum of 20 MB. Transfer the files individually. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01215\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01216\", \"error_description\":\"restapi.FileSizeDuoNextFault\"}</td> </tr> <tr> <td>\"#DCO01217 restapi.MetadataParsingFault\"</td> <td>The third-party solution has transmitted an incorrect request. The structure of the metadata doen not correspond to the specifications. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01217\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01217\", \"error_description\":\"restapi.MetadataParsingFault\"}</td> </tr> <tr> <td>\"#DCO01218 restapi.UploadClientParsingFault\"</td> <td>The third-party solution has transmitted an incorrect request. The structure of the metadata doen not correspond to the specifications. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01218\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01218\", \"error_description\":\"restapi.UploadClientParsingFault\"}</td> </tr> <tr> <td>\"#DCO01219 restapi.ContentTypeDoesNotMatchFileExtensionFault\"</td> <td>The third-party solution has transmitted an incorrect request. The specified file extension does not match the expected file content. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01219\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01219\", \"error_description\":\"restapi.ContentTypeDoesNotMatchFileExtensionFault\"}</td> </tr> <tr> <td>\"#DCO01220 restapi.FilesParameterIsMissingFault\"</td> <td>The third-party solution has transmitted an incorrect request. There is no file. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01220\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01220\", \"error_description\":\"restapi.FilesParameterIsMissingFault\"}</td> </tr> <tr> <td>\"#DCO01222 restapi.FileNameTooLongFault\"</td> <td>The third-party solution has transmitted an incorrect request. File names may have a maximum of 255 characters. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01222\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01222\", \"error_description\":\"restapi.FileNameTooLongFault\"}</td> </tr> <tr> <td>\"#DCO01223 restapi.PropertyNoteTooLongFault\"</td> <td>The third-party solution has transmitted an incorrect request. The note in UploadMetadata may have a maximum of 255 characters. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01223\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01223\", \"error_description\":\"restapi.PropertyNoteTooLongFault\"}</td> </tr> <tr> <td>\"#DCO01224 restapi.PropertyCategoryNameTooLongFault\"</td> <td>he third-party solution has transmitted an incorrect request. The category in UploadMetadata may have a maximum of 30 characters. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01224\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01224\", \"error_description\":\"restapi.PropertyCategoryNameTooLongFault\"}</td> </tr> <tr> <td>\"#DCO01225 restapi.PropertyFolderNameTooLongFault\"</td> <td>The third-party solution has transmitted an incorrect request. The folder name in UploadMetadata may have a maximum of 30 characters. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01225\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01225\", \"error_description\":\"restapi.PropertyFolderNameTooLongFault\"}</td> </tr> <tr> <td>\"#DCO01226 restapi.PropertyRegisterNameTooLongFault\"</td> <td>The third-party solution has transmitted an incorrect request. The name of the register in UploadMetadata may have a maximum of 30 characters. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01226\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01226\", \"error_description\":\"restapi.PropertyRegisterNameTooLongFault\"}</td> </tr> <tr> <td>\"#DCO01227 restapi.PropertyDocumentTypeTooLongFault\"</td> <td>The third-party solution has transmitted an incorrect request. The description of the document type in UploadMetadata may have a maximum of 30 characters. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01227\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01227\", \"error_description\":\"restapi.PropertyDocumentTypeTooLongFault\"}</td> </tr> <tr> <td>\"#DCO01228 restapi.PropertyClientNameTooLongFault\"</td> <td>The third-party solution has transmitted an incorrect request. The description of the client name in UploadMetadata may have a maximum of 100 characters. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01228\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01228\", \"error_description\":\"restapi.PropertyClientNameTooLongFault\"}</td> </tr> <tr> <td>\"#DCO01229 restapi.PropertyClientVersionTooLongFault\"</td> <td>The third-party solution has transmitted an incorrect request. The description of the client version in UploadMetadata may have a maximum of 5 characters. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01229\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01229\", \"error_description\":\"restapi.PropertyClientVersionTooLongFault\"}</td> </tr> <tr> <td>\"#DCO01230 restapi.PropertyClientIdTooLongFault\"</td> <td>The third-party solution has transmitted an incorrect request. The description of the client version in UploadMetadata may have a maximum of 100 characters. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01230\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01230\", \"error_description\":\"restapi.PropertyClientIdTooLongFault\"}</td> </tr> <tr> <td>\"#DCO01231 restapi.UploadIsNotSupportedFault\"</td> <td>The third-party solution has transmitted an incorrect request. The upload is not possible because this interface cannot be used online in connection with Belegfreigabe. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01231\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01231\", \"error_description\":\"restapi.UploadIsNotSupportedFault\"}</td> </tr> <tr> <td>\"#DCO01232 restapi.MultipleFilesUploadIsNotSupportedFault\"</td> <td>The third-party solution has transmitted an incorrect request. Uploading of stapled files is currently not possible of you have more than 10 stapled files. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01232\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01232\", \"error_description\":\"restapi.MultipleFilesUploadIsNotSupportedFault\"}</td> </tr> <tr> <td>\"#DCO01233 restapi.DataNameIsMissingFault\"</td> <td>The third-party solution has transmitted an incorrect request. The uploaded file has no file name. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01233\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01233\", \"error_description\":\"restapi.DataNameIsMissingFault\"}</td> </tr> <tr> <td>\"#DCO01234 restapi.WrongUuidFormatFault\"</td> <td>The third-party solution has transmitted an incorrect request. The documentId was not transferred in the permitted format (format version 2 and variant 2 is expected). Therefore no data could be transferred. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01234\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01234\", \"error_description\":\"restapi.WrongUuidFormatFault\"}</td> </tr> <tr> <td>\"#DCO01240 restapi.PropertyUploadMediumTooLongFault\"</td> <td>The third-party solution has transmitted an incorrect request. The description of the upload medium in UploadClientdata may have a maximum of 4 characters. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01240\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01240\", \"error_description\":\"restapi.PropertyUploadMediumTooLongFault\"}</td> </tr> <tr> <td>\"#DCO01241 restapi.PropertyIssuerNameTooLongFault\"</td> <td>The third-party solution has transmitted an incorrect request. The description of the issuer in UploadMetadata may have a maximum of 255 characters. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01241\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01241\", \"error_description\":\"restapi.PropertyIssuerNameTooLongFault\"}</td> </tr> <tr> <td>\"#DCO01242 restapi.PropertyRequestIdTooLongFault\"</td> <td>The third-party solution has transmitted an incorrect request. The description of the request id in UploadMetadata may have a maximum of 36 characters. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01242\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01242\", \"error_description\":\"restapi.PropertyRequestIdTooLongFault\"}</td> </tr> <tr> <td>\"#DCO01243 restapi.VirusInFileFoundFault\"</td> <td>The third-party solution has transmitted an incorrect request. A virus was found during the upload. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01243\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01243\", \"error_description\":\"restapi.VirusInFileFoundFault\"}</td> </tr> <tr> <td>\"#DCO01245 restapi.PdfNotParseableFault\"</td> <td>The third-party solution has transmitted an incorrect request. The PDF document cannot be parsed. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01245\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01245\", \"error_description\":\"restapi.PdfNotParseableFault\"}</td> </tr> <tr> <td>\"#DCO01246 restapi.MergeFailedSignedDocFault\"</td> <td>The third-party solution has transmitted an incorrect request. No signed PDFs may be merged. Transfer the files individually. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01246\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01246\", \"error_description\":\"restapi.MergeFailedSignedDocFault\"}</td> <tr> <tr> <td>\"#DCO01247 restapi.MergeFailedSecuredDocFault\"</td> <td>The third-party solution has transmitted an incorrect request. No read-only PDFs may be merged. Transfer the files individually. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01247\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01247\", \"error_description\":\"restapi.MergeFailedSecuredDocFault\"}</td> <tr> <tr> <td>\"#DCO01248 restapi.MergeFailedXmlDocFault\"</td> <td>The third-party solution has transmitted an incorrect request. XML files must not be merged. Transfer the files individually. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01248\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01248\", \"error_description\":\"restapi.MergeFailedXmlDocFault\"}</td> <tr> <tr> <td>\"#DCO01249 restapi.MergeFailedPdfaDocFault\"</td> <td>The third-party solution has transmitted an incorrect request. No PDF/A files may be combined. Transfer the files individually. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01249\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01249\", \"error_description\":\"restapi.MergeFailedPdfaDocFault\"}</td> <tr> <tr> <td>\"#DCO01250 restapi.MergeFailedZugferdDocFault\"</td> <td>The third-party solution has transmitted an incorrect request. ZUGFeRD files must not be merged. Transfer the files individually. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01250\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01250\", \"error_description\":\"restapi.MergeFailedZugferdDocFault\"}</td> <tr> <tr> <td>\"#DCO01251 restapi.MergeFailedGivenFilerefNotSupportedFault\"</td> <td>The third-party solution has transmitted an incorrect request. A given file reference is not supported for a merge. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01251\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01251\", \"error_description\":\"restapi.MergeFailedGivenFilerefNotSupportedFault\"}</td> <tr> <tr> <td>\"#DCO01252 restapi.FilenameIsRequiredFault\"</td> <td>The third-party solution has transmitted an incorrect request. Bad request - the original filename is null. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01252\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01252\", \"error_description\":\"restapi.FilenameIsRequiredFault\"}</td> </tr> <tr> <td>\"#DCO01253 restapi.DuplicateFileFault\"</td> <td>The third-party solution has transmitted an incorrect request. The file could not be uploaded, it already exists in Belege Online. Change the file name or document type to upload the file as a duplicate in Belege Online. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01253\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01253\", \"error_description\":\"restapi.DuplicateFileFault\"}</td> </tr> <tr> <td>\"#DCO01300 restapi.IsNeuePersonalakteFault\"</td> <td>The third-party solution has transmitted an incorrect request. The file could not be uploaded because you use DATEV Personal Arbeitgeber and try to upload receipts with the 'Document types DATEV Lohn-Unterlagen' bzw. 'DATEV Reisekosten-Belege', this is no longer possible.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01300\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01300\", \"error_description\":\"restapi.IsNeuePersonalakteFault\"}</td> </tr> </tbody> </table>"
+          },
+          "403": {
+            "description": "<table> <thead> <tr> <th>Error, Error_description</th> <th>Description</th> <th>Example</th> </tr> </thead> <tbody> <tr> <td></td> <td>The user has no access to clients. It is recommended that the user contact the tax consultant.</td> <td>{\"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\"}</td> </tr> <tr> <td>\"#DCO01005 restapi.ScopeFault\"</td> <td>The third-party solution has transmitted an incorrect request. The required scope is missing. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01005\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\",\"error\":\"#DCO01005\",\"error_description\":\"restapi.ScopeFault\"}</td> <tr> <td>\"#DCO01013 restapi.AuthentificationTypeFault\"</td> <td>The third-party solution does not have permission to use this request. The software provider should contact DATEV. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01013\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\",\"error\":\"#DCO01013\",\"error_description\":\"restapi.AuthentificationTypeFault\"}</td> </tr> </tbody> </table>"
+          },
+          "404": {
+            "description": "The requested client does not exist. It is recommended that the user contact the tax consultant. The software provider has to ensure that the client ID used exists in the list of accessible clients.It is up to the software provider to ensure that the request is correct.",
+            "content": {
+              "application/json": {
+                "x-example": [
+                  {
+                    "request_id": "0a13eff2-44a9-4de6-90f0-1198241e7c22"
+                  }
+                ]
+              }
+            }
+          },
+          "503": {
+            "description": "The services of DATEVconnect online are not available at the current time due to maintenance reasons. Please try again later. <table> <thead> <tr> <th>Error, Error_description</th> <th width:>Description</th> <th>Example</th> </tr> </thead> <tbody> <tr> <td>\"#DCO01020 restapi.ServiceNotAvailableFault\"</td> <td>A required service is currently unavailable, so an upload is currently not possible. Please try again later.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01020\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\",\"error\":\"#DCO01020\",\"error_description\":\"restapi.ServiceNotAvailableFault\"}</td> </tr> </tbody> </table>"
+          }
+        },
+        "security": [
+          {
+            "client_id": [],
+            "datev_openid": [
+              "accounting:documents"
+            ]
+          },
+          {
+            "client_id": [],
+            "datev_idp_next": [
+              "openid",
+              "accounting:documents"
+            ]
+          },
+          {
+            "client_id": [],
+            "datev_openid_sandbox": [
+              "accounting:documents"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Client": {
+        "type": "object",
+        "properties": {
+          "client_number": {
+            "type": "integer",
+            "description": "client number",
+            "format": "int32",
+            "x-example": "1"
+          },
+          "consultant_number": {
+            "type": "integer",
+            "description": "consultant number",
+            "format": "int32",
+            "x-example": "455148"
+          },
+          "id": {
+            "type": "string",
+            "description": "client id (technical)",
+            "x-example": "455148-1"
+          },
+          "name": {
+            "type": "string",
+            "description": "client name",
+            "x-example": "Muster GmbH 1"
+          }
+        }
+      },
+      "ClientBasics": {
+        "type": "object",
+        "properties": {
+          "client_number": {
+            "type": "integer",
+            "description": "client number",
+            "format": "int32",
+            "x-example": "1"
+          },
+          "consultant_number": {
+            "type": "integer",
+            "description": "consultant number",
+            "format": "int32",
+            "x-example": "455148"
+          },
+          "id": {
+            "type": "string",
+            "description": "client id (technical)",
+            "x-example": "455148-1"
+          },
+          "name": {
+            "type": "string",
+            "description": "client name",
+            "x-example": "Muster GmbH 1"
+          },
+          "is_document_management_available": {
+            "type": "boolean",
+            "description": "Belege online is existent (= true) or is nonexistent (= false)\n",
+            "x-example": "true"
+          },
+          "basic_accounting_information": {
+            "type": "array",
+            "description": "Basic accounting data and array of existent account books. The last three fiscal years are returned.\n",
+            "items": {
+              "$ref": "#/components/schemas/BasicAccountingInformation"
+            }
+          }
+        }
+      },
+      "BasicAccountingInformation": {
+        "type": "object",
+        "properties": {
+          "fiscal_year_start": {
+            "type": "string",
+            "format": "date",
+            "description": "start of the fiscal year",
+            "x-example": "2016-01-01T00:00:00.000+0000"
+          },
+          "fiscal_year_end": {
+            "type": "string",
+            "format": "date",
+            "description": "end of the fiscal year",
+            "x-example": "2016-12-31T00:00:00.000+0000"
+          },
+          "account_length": {
+            "type": "integer",
+            "description": "length of general ledger account of the determined fiscal year (length is between 4 and 8)\n",
+            "x-example": 4
+          },
+          "datev_chart_of_accounts": {
+            "type": "integer",
+            "description": "'DATEV Sachkontorahmen'\n of the determined fiscal year\n",
+            "x-example": 3,
+            "deprecated": true
+          },
+          "ledgers": {
+            "$ref": "#/components/schemas/Ledgers"
+          }
+        }
+      },
+      "Ledgers": {
+        "type": "object",
+        "properties": {
+          "is_accounts_payable_ledger_available": {
+            "type": "boolean",
+            "description": "application for processing accounts payable data is existent (= true) or is nonexistent (= false)\n",
+            "x-example": "true"
+          },
+          "is_accounts_receivable_ledger_available": {
+            "type": "boolean",
+            "description": "application for processing accounts receivable data is existent (= true) or is nonexistent (= false)\n",
+            "x-example": "true"
+          },
+          "is_cash_ledger_available": {
+            "type": "boolean",
+            "description": "application for processing cash entries is existent (= true) or is nonexistent (= false)\n",
+            "x-example": "true"
+          }
+        }
+      },
+      "DocumentType": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "name of the document type",
+            "x-example": "Rechnungseingang"
+          },
+          "category": {
+            "type": "string",
+            "description": "category of the document type",
+            "x-example": "invoices_received",
+            "enum": [
+              "invoices_received",
+              "outgoing_invoices",
+              "personnel_documents",
+              "travel_expense_documents",
+              "other_documents"
+            ]
+          },
+          "debit_credit_identifier": {
+            "type": "string",
+            "description": "debit/credit identifier of the document type",
+            "x-example": "debit",
+            "enum": [
+              "debit",
+              "credit"
+            ]
+          }
+        }
+      },
+      "DuoVersion": {
+        "type": "object",
+        "properties": {
+          "allowed_file_extensions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "list of file extensions for single-file upload",
+            "x-example": [
+              "bmp",
+              "csv",
+              "doc",
+              "gif",
+              "jpeg",
+              "png"
+            ]
+          },
+          "allowed_staple_file_extensions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "list of file extensions for stapled-file upload",
+            "x-example": [
+              "bmp",
+              "csv",
+              "doc",
+              "gif",
+              "jpeg",
+              "png"
+            ]
+          },
+          "staple_logic": {
+            "type": "string",
+            "description": "logic of stapled upload",
+            "x-example": "logically"
+          }
+        }
+      },
+      "Document": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "ID of document",
+            "x-example": "BF00CD5C-0FE9-D106-5EC7-BA4FCF4A3951"
+          },
+          "files": {
+            "type": "array",
+            "description": "file information on the document (read-only)",
+            "readOnly": true,
+            "items": {
+              "$ref": "#/components/schemas/FileInfo"
+            }
+          },
+          "document_type": {
+            "type": "string",
+            "description": "document type of a document",
+            "x-example": "Rechnungseingang"
+          },
+          "note": {
+            "type": "string",
+            "description": "note pertaining to the document for the tax consultant",
+            "x-example": "This is a sample note."
+          }
+        }
+      },
+      "metadata": {
+        "type": "object",
+        "properties": {
+          "document_type": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "Name of the document type",
+            "x-example": "Rechnungseingang"
+          },
+          "note": {
+            "maxLength": 255,
+            "type": "string",
+            "description": "Note pertaining to the document for the tax consultant.",
+            "x-example": "This is an example note."
+          },
+          "category": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "First level of the document repository of Belege online. As soon as one of the repository levels is used, all three levels has to be entered.",
+            "x-example": "MySoftwareCompany"
+          },
+          "folder": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "Second level of the document repository of Belege online. As soon as one of the repository levels is used, all three levels has to be entered.",
+            "x-example": "Invoices"
+          },
+          "register": {
+            "maxLength": 30,
+            "type": "string",
+            "description": "Third level of the document repository of Belege online. As soon as one of the repository levels is used, all three levels has to be entered.",
+            "x-example": "2019/05"
+          }
+        }
+      },
+      "custom_metadata": {
+        "type": "object",
+        "properties": {
+          "sequence_first_guid": {
+            "maxLength": 36,
+            "type": "string",
+            "description": "syntactically correct guid",
+            "x-example": "07b94406-666b-4b3a-acdc-c8e783dcd7cd"
+          },
+          "sequence_position": {
+            "maxLength": 10,
+            "type": "integer",
+            "description": "position relative to first guid (positive or negative)",
+            "x-example": 3
+          }
+        }
+      },
+      "FileInfo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "ID of the file of the document",
+            "x-example": "BF00CD5C-0FE9-D106-5EC7-BA4FCF4A3951"
+          },
+          "name": {
+            "type": "string",
+            "description": "name of the file of the document",
+            "x-example": "Testrechnung-Eingang.pdf"
+          },
+          "size": {
+            "type": "integer",
+            "description": "file size in bytes",
+            "x-example": "300"
+          },
+          "upload_date": {
+            "type": "string",
+            "description": "import time  in accordance with ISO8601 „YYYY-MM-DDThh:mm:ss±hh:mm“",
+            "format": "date-time",
+            "x-example": "2023-03-14T09:24:12+01:00"
+          },
+          "media_type": {
+            "type": "string",
+            "description": "Internet media type of the file",
+            "x-example": "application/pdf"
+          }
+        }
+      },
+      "File": {
+        "type": "object",
+        "format": "binary",
+        "description": "one single file",
+        "x-example": "Test-File.pdf"
+      },
+      "ErrorMessage": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "contains a DATEV-specific error code – optional",
+            "x-example": "#DCO01004"
+          },
+          "request_id": {
+            "type": "string",
+            "description": "contains a unique request ID; this might be used to find a protocol entry by DATEV – optional",
+            "x-example": "06de9621-2029-4b74-a5d7-ac4c04688846"
+          },
+          "error_description": {
+            "type": "string",
+            "description": "the technical name of the error (please note that the meaning may vary depending on the request!) – optional",
+            "x-example": "restapi.MultipartUploadFault"
+          },
+          "error_uri": {
+            "type": "string",
+            "description": "URI for further information about the error – optional",
+            "x-example": "https://apps.datev.de/knowledge/help/search?q=DCO01004"
+          }
+        }
+      }
+    },
+    "responses": {
+      "Response400_DCO01004_DCO01010_DCO01015_DCO01016": {
+        "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n| #DCO01004 | restapi.MultipartUploadFault | The third-party solution has transmitted an incorrect request. There is an error with the multipart object (e.g. the file is missing). It is up to the software provider to ensure that the request is correct. | \n| #DCO01010 | restapi.InvalidDocumentTypeFault | The document type does not exist. It is up to the software provider to ensure that the document type used exists in the list of document types. |\\n| #DCO01015 | restapi.UnsupportedFileTypeFault | The transferred file has not been processed because the file type is not accepted by DATEV. It is up to the software provider to ensure that the user is informed that the file type is not supported by DATEV. |             \n| #DCO01016 | restapi.FileSizeFault | The transferred file has not been processed because the file is too large (max. 20MB) to be stored by DATEV. It is up to the software provider to ensure that the user is informed that the file is too large to be stored by DATEV. |      ",
+        "content": {
+          "*/*": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage"
+            }
+          }
+        }
+      },
+      "Response403_1": {
+        "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|  |   | The user has no access to clients. It is recommended that the user contact the tax consultant. | \n| #DCO01005 | restapi.ScopeFault | The third-party solution has transmitted an incorrect request. The required scope is missing. It is up to the software provider to ensure that the request is correct.  | \n",
+        "content": {
+          "*/*": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage"
+            }
+          }
+        }
+      },
+      "Response403_2": {
+        "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|  |   | The user has no access to the requested client. It is recommended that the user contact the tax consultant. The third-party solution has to ensure that the client ID used exists in the list of accessible clients. | \n| #DCO01005 | restapi.ScopeFault | The third party solution has transmitted an incorrect request. The required scope is missing. It is up to the software provider to ensure that the request is correct. | \n",
+        "content": {
+          "*/*": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage"
+            }
+          }
+        }
+      },
+      "Response404_1": {
+        "description": "The user does not have any clients. It is recommended that the user contact the tax consultant.\nIt is up to the software provider to ensure that the request is correct.\n",
+        "content": {
+          "*/*": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage"
+            }
+          }
+        }
+      },
+      "Response404_2": {
+        "description": "The requested client does not exist. It is recommended that the user contact the tax consultant. \nThe software provider has to ensure that the used client ID exists in the list of accessible clients.\nIt is up to the software provider to ensure that the request is correct.          \n",
+        "content": {
+          "*/*": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage"
+            }
+          }
+        }
+      },
+      "Response409": {
+        "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n| #DCO01012 | restapi.KeyConflictFault | The ID of the document has already been used. The user has to check whether the document has already been transferred. In certain circumstances the user has to consult the tax consultant. It is up to the software provider to ensure that the request is correct.| \n",
+        "content": {
+          "*/*": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage"
+            }
+          }
+        }
+      },
+      "Response503": {
+        "description": "The services of DATEVconnect online are not available at the current time due to maintenance reasons. Please try again later.\n",
+        "content": {
+          "*/*": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage"
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "client-id": {
+        "name": "client-id",
+        "in": "path",
+        "description": "ID that identifies the client.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "x-example": "455148-1"
+      },
+      "document-id": {
+        "name": "document-id",
+        "in": "path",
+        "description": "ID that identifies the document.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "guid"
+        },
+        "x-example": "BF00CD5C-0FE9-D106-5EC7-BA4FCF4A3951"
+      },
+      "file-id": {
+        "name": "file-id",
+        "in": "path",
+        "description": "ID that identifies a file of a document.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "guid"
+        },
+        "x-example": "BF00CD5C-0FE9-D106-5EC7-BA4FCF4A3951"
+      }
+    },
+    "securitySchemes": {
+      "client_id": {
+        "type": "apiKey",
+        "description": "",
+        "in": "header",
+        "x-key-type": "client_id",
+        "name": "X-DATEV-Client-Id"
+      },
+      "datev_openid": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://login.datev.de/openid/authorize",
+            "tokenUrl": "https://api.datev.de/token",
+            "scopes": {
+              "accounting:clients:read": "Scope to get client data (based on permissions of the user)",
+              "accounting:documents": "Scope to transfer documents for financial accounting"
+            }
+          }
+        }
+      },
+      "datev_idp_next": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://signin.datev.de/datevam/oauth2/realms/root/realms/user/authorize",
+            "tokenUrl": "https://signin.datev.de/datevam/oauth2/realms/root/realms/user/access_token",
+            "scopes": {
+              "openid": "Standard Scope",
+              "accounting:clients:read": "Scope to get client data (based on permissions of the user)",
+              "accounting:documents": "Scope to transfer documents for financial accounting"
+            }
+          }
+        }
+      },
+      "datev_openid_sandbox": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://login.datev.de/openidsandbox/authorize",
+            "tokenUrl": "https://sandbox-api.datev.de/token",
+            "scopes": {
+              "accounting:clients:read": "Scope to get client data (based on permissions of the user)",
+              "accounting:documents": "Scope to transfer documents for financial accounting"
+            }
+          }
+        }
+      }
+    }
+  }
+}

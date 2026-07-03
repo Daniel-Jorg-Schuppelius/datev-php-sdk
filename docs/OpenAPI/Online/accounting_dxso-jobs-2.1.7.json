@@ -1,0 +1,1537 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "accounting:dxso-jobs",
+    "description": "The individual API services are described both functionally and technically. Wherever possible, examples are used to illustrate the calls and responses. All services only support the JSON format. The order of the return values is not set and may deviate from the order specified in this document. Return values with a value of \\\"null\\\" will not be returned.",
+    "version": "2.1.7",
+    "x-datev-shortdescription": "Document images and structured invoice and cash data can be transferred from web applications to the relevant applications within DATEV Unternehmen online <br> <strong>Warning:</strong> This API can only be used by web applications that are running on a data center"
+  },
+  "servers": [
+    {
+      "url": "https://accounting-dxso-jobs.api.datev.de/platform/v2"
+    },
+    {
+      "url": "https://accounting-dxso-jobs.api.datev.de/platform-sandbox/v2"
+    }
+  ],
+  "security": [
+    {
+      "client_id": [],
+      "datev_openid": [
+        "accounting:clients:read",
+        "accounting:dxso-jobs"
+      ]
+    },
+    {
+      "client_id": [],
+      "datev_idp_next": [
+        "openid",
+        "accounting:clients:read",
+        "accounting:dxso-jobs"
+      ]
+    },
+    {
+      "client_id": [],
+      "datev_openid_sandbox": [
+        "accounting:clients:read",
+        "accounting:dxso-jobs"
+      ]
+    }
+  ],
+  "tags": [
+    {
+      "name": "Get clients and basic data about a client",
+      "description": "Get a list of clients and basic data about a client"
+    },
+    {
+      "name": "Transfer accounting documents",
+      "description": "Create a data transfer (dxso-job), adding data files, and finalizing the data transfer (dxso-job)"
+    },
+    {
+      "name": "Get status and protocol entries of a data transfer (dxso-job)",
+      "description": "Get the status and the protocol entries of a data transfer (dxso-job)"
+    },
+    {
+      "name": "Cancel a data transfer (dxso-job)",
+      "description": "Cancel a data transfer (dxso-job)"
+    }
+  ],
+  "paths": {
+    "/clients": {
+      "get": {
+        "tags": [
+          "Get clients and basic data about a client"
+        ],
+        "summary": "Returns a list of clients that are accessible for the user.",
+        "description": "Returns a list of all clients to which the user has access. The user is only familiar with the client name, the client number, and the consultant number. For all subsequent requests concerning data transfer to DATEV, the ID of the client is necessary. The ID is a technical object for the communication between the third-party solution and the DATEV data center. The ID is not to be displayed to the end user. \n\n**Please note:** Data transfer to the DATEV data center is only possible if the user has access to the client. The third-party solution must ensure this by checking that the client number and consultant number exists in the list of clients.\n\n**Please note:**This Ressource can not be used for offline access.\n\n**Example: The user has access to one client**\n\n```json\n{\"client_number\":1,\n\"consultant_number\":455148,\n\"id\":\"455148-1\",\n\"name\":\"Muster GmbH 1\"}\n```\n \n\n**Example: The user has access to two clients**\n \n\n```json\n[{\"client_number\":1,\n\"consultant_number\":455148,\n\"id\":\"455148-1\",\n\"name\":\"Muster GmbH 1\"},\n{\"client_number\":2,\n\"consultant_number\":455148,\n\"id\":\"455148-2\",\n\"name\":\"Muster GmbH 2\"}]\n```\n \t    \n",
+        "responses": {
+          "200": {
+            "description": "Request OK; list of accessible clients is returned.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Client"
+                  }
+                }
+              },
+              "application/json": {
+                "x-example": [
+                  {
+                    "client_number": "1",
+                    "consultant_number": "455148",
+                    "id": "455148-1",
+                    "name": "Muster GmbH 1"
+                  }
+                ]
+              }
+            }
+          },
+          "403": {
+            "description": "<table> <thead> <tr> <th>Error, Error_description</th> <th>Description</th> <th>Example</th> </tr> </thead> <tbody> <tr> <td></td> <td>The user has no access to clients. It is recommended that the user contact the tax consultant.</td> <td>{\"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\"}</td> </tr> <tr> <td>\"#DCO01005 restapi.ScopeFault\"</td> <td>The third-party solution has transmitted an incorrect request. The required scope is missing. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01005\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\",\"error\":\"#DCO01005\",\"error_description\":\"restapi.ScopeFault\"}</td> <tr> </tbody> </table>",
+            "content": {
+              "application/json;charset=utf-8": {
+                "x-example": [
+                  {
+                    "error_uri": "https://apps.datev.de/knowledge/help/search?q=DCO01005",
+                    "request_id": "0a13eff2-44a9-4de6-90f0-1198241e7c22",
+                    "error": "#DCO01005",
+                    "error_description": "restapi.ScopeFault"
+                  }
+                ]
+              },
+              "application/json": {
+                "x-example": [
+                  {
+                    "error_uri": "https://apps.datev.de/knowledge/help/search?q=DCO01005",
+                    "request_id": "0a13eff2-44a9-4de6-90f0-1198241e7c22",
+                    "error": "#DCO01005",
+                    "error_description": "restapi.ScopeFault"
+                  }
+                ]
+              }
+            }
+          },
+          "404": {
+            "description": "The user does not have any clients. It is recommended that the user contact the tax consultant. It is up to the software provider to ensure that the request is correct.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "x-example": [
+                  {
+                    "request_id": "0a13eff2-44a9-4de6-90f0-1198241e7c22"
+                  }
+                ]
+              },
+              "application/json": {
+                "x-example": [
+                  {
+                    "request_id": "0a13eff2-44a9-4de6-90f0-1198241e7c22"
+                  }
+                ]
+              }
+            }
+          },
+          "503": {
+            "description": "The services of DATEVconnect online are not available at the current time due to maintenance reasons. Please try again later."
+          }
+        },
+        "security": [
+          {
+            "client_id": [],
+            "datev_openid": [
+              "accounting:clients:read"
+            ]
+          },
+          {
+            "client_id": [],
+            "datev_idp_next": [
+              "openid",
+              "accounting:clients:read"
+            ]
+          },
+          {
+            "client_id": [],
+            "datev_openid_sandbox": [
+              "accounting:clients:read"
+            ]
+          }
+        ],
+        "parameters": []
+      }
+    },
+    "/clients/{client-id}": {
+      "get": {
+        "tags": [
+          "Get clients and basic data about a client"
+        ],
+        "summary": "Returns a list of basic data about a given client.",
+        "description": "Returns a list of basic data about a given client. With this information, the third-party solution can check whether the configuration of the client is suitable and prepared for data transfer: a client for the application Belege online and a matching fiscal year for the editing form \\\"extended\\\" , for the application Rechnungseingangsbuch online for transferring accounts payable data, for the application Rechnungsausgangsbuch online for transferring accounts receivable data, and/or for the application Kassenbuch online for transferring cash entries are necessary.   \n\n**Please note:** If a matching fiscal year is not present, but there is a previous fiscal year that meets certain requirements, DATEV will automatically generate the subsequent matching fiscal year. This will be done within the operation \\\"create a data transfer (dxso-job)\\\" . This function is not available for the application Kassenbuch online.  \n\n**Example: No data import possible**\n\nThe requirements for processing data are not fulfilled.\n\n```json\nHTTP/1.1 200 OK\nContent-Type:application/json\n\n{\"client_number\":2,\"consultant_number\":455148,\n\"id\":\"455148-2\",\"name\":\"Muster GmbH 2\", \n\"is_document_management_available\":\"false\",\n\"basic_accounting_information\":[]}\n```\n               \n**Example: Automatic generation of new fiscal year in a complex scenario**\n\nThe requirements for processing data are fulfilled for  \n- Cash ledger data for 2015, 2016, and 2017\n- Incoming invoice data for 2015, 2016, and 2017 (automatic generation of the fiscal year 2017 is possible)\n- Outgoing invoice data for 2015, 2016, and 2017 (automatic generation of the fiscal year 2017 is possible)\n\n```json\nHTTP/1.1 200 OK\nContent-Type:application/json\n\n{\"client_number\":4,\"consultant_number\":455148,\n\"id\":\"455148-4\",\"name\":\" Muster GmbH 4\", \n\"is_document_management_available\":\"true\",\n\"basic_accounting_information\":[\n{\"fiscal_year_start\":\"2015-01-01\",\n\"fiscal_year_end\":\"2015-12-31\", \n\"account_length\":4,\n\"ledgers\":\n{\"is_accounts_payable_ledger_available\":\"true\",\n\"is_accounts_receivable_ledger_available\":\"true\",\n\"is_cash_ledger_available\":\"true\"}\n},\n{\"fiscal_year_start\":\"2016-01-01\",\n\"fiscal_year_end\":\"2016-12-31\",\n\"account_length\":4,\n\"ledgers\":{\n\"is_accounts_payable_ledger_available\":\"true\",\n\"is_accounts_receivable_ledger_available\":\"true\",\n\"is_cash_ledger_available\":\"true\"}\n},\n{\"fiscal_year_start\":\"2017-01-01\",\n\"fiscal_year_end\":\"2017-12-31\",\n\"account_length\":4,\n\"ledgers\":{\n\"is_accounts_payable_ledger_available\":\"false\",\n\"is_accounts_receivable_ledger_available\":\"false\",\n\"is_cash_ledger_available\":\"true\"}\n}]}\n```\n",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "ID that identifies the client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-example": "1234567-12345"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request OK; a list of the basic data to a given client has been returned",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientBasics"
+                }
+              },
+              "application/json": {
+                "x-example": {
+                  "client_number": "1",
+                  "consultant_number": "455148",
+                  "id": "455148-1",
+                  "name": "Muster GmbH 1",
+                  "is_document_management_available": "true",
+                  "basic_accounting_information": [
+                    {
+                      "fiscal_year_start": "2015-01-01T00:00:00.000Z",
+                      "fiscal_year_end": "2015-12-31T00:00:00.000Z",
+                      "account_length": 4,
+                      "ledgers": {
+                        "is_accounts_payable_ledger_available": "true",
+                        "is_accounts_receivable_ledger_available": "true",
+                        "is_cash_ledger_available": "true"
+                      }
+                    },
+                    {
+                      "fiscal_year_start": "2016-01-01T00:00:00.000Z",
+                      "fiscal_year_end": "2016-12-31T00:00:00.000Z",
+                      "account_length": 4,
+                      "ledgers": {
+                        "is_accounts_payable_ledger_available": "true",
+                        "is_accounts_receivable_ledger_available": "true",
+                        "is_cash_ledger_available": "true"
+                      }
+                    },
+                    {
+                      "fiscal_year_start": "2017-01-01T00:00:00.000Z",
+                      "fiscal_year_end": "2017-12-31T00:00:00.000Z",
+                      "account_length": 4,
+                      "ledgers": {
+                        "is_accounts_payable_ledger_available": "true",
+                        "is_accounts_receivable_ledger_available": "true",
+                        "is_cash_ledger_available": "true"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": " #DCO01009 restapi.InvalidAccountingBasicData - The basic data of the account books is inconsistent. It is recommended that the user contact the tax consultant.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "x-example": [
+                  {
+                    "error_uri": "https://apps.datev.de/knowledge/help/search?q=DCO01009",
+                    "request_id": "0a13eff2-44a9-4de6-90f0-1198241e7c22",
+                    "error": "#DCO01009",
+                    "error_description": "restapi.InvalidAccountingBasicData"
+                  }
+                ]
+              },
+              "application/json": {
+                "x-example": [
+                  {
+                    "error_uri": "https://apps.datev.de/knowledge/help/search?q=DCO01009",
+                    "request_id": "0a13eff2-44a9-4de6-90f0-1198241e7c22",
+                    "error": "#DCO01009",
+                    "error_description": "restapi.InvalidAccountingBasicData"
+                  }
+                ]
+              }
+            }
+          },
+          "403": {
+            "description": "<table> <thead> <tr> <th>Error, Error_description</th> <th>Description</th> <th>Example</th> </tr> </thead> <tbody> <tr> <td></td> <td>The user has no access to clients. It is recommended that the user contact the tax consultant.</td> <td>{\"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\"}</td> </tr> <tr> <td>\"#DCO01005 restapi.ScopeFault\"</td> <td>The third-party solution has transmitted an incorrect request. The required scope is missing. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01005\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\",\"error\":\"#DCO01005\",\"error_description\":\"restapi.ScopeFault\"}</td> <tr> </tbody> </table>",
+            "content": {
+              "application/json;charset=utf-8": {
+                "x-example": [
+                  {
+                    "error_uri": "https://apps.datev.de/knowledge/help/search?q=DCO01005",
+                    "request_id": "0a13eff2-44a9-4de6-90f0-1198241e7c22",
+                    "error": "#DCO01005",
+                    "error_description": "restapi.ScopeFault"
+                  }
+                ]
+              },
+              "application/json": {
+                "x-example": [
+                  {
+                    "error_uri": "https://apps.datev.de/knowledge/help/search?q=DCO01005",
+                    "request_id": "0a13eff2-44a9-4de6-90f0-1198241e7c22",
+                    "error": "#DCO01005",
+                    "error_description": "restapi.ScopeFault"
+                  }
+                ]
+              }
+            }
+          },
+          "404": {
+            "description": "The requested client does not exist. It is recommended that the user contact the tax consultant. The software provider has to ensure that the client ID used exists in the list of accessible clients.It is up to the software provider to ensure that the request is correct.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "x-example": [
+                  {
+                    "request_id": "0a13eff2-44a9-4de6-90f0-1198241e7c22"
+                  }
+                ]
+              },
+              "application/json": {
+                "x-example": [
+                  {
+                    "request_id": "0a13eff2-44a9-4de6-90f0-1198241e7c22"
+                  }
+                ]
+              }
+            }
+          },
+          "503": {
+            "description": "The services of DATEVconnect online are not available at the current time due to maintenance reasons. Please try again later."
+          }
+        },
+        "security": [
+          {
+            "client_id": [],
+            "datev_openid": [
+              "accounting:clients:read"
+            ]
+          },
+          {
+            "client_id": [],
+            "datev_idp_next": [
+              "openid",
+              "accounting:clients:read"
+            ]
+          },
+          {
+            "client_id": [],
+            "datev_openid_sandbox": [
+              "accounting:clients:read"
+            ]
+          }
+        ]
+      }
+    },
+    "/clients/{client-id}/dxso-jobs": {
+      "post": {
+        "tags": [
+          "Transfer accounting documents"
+        ],
+        "summary": "A data transfer (dxso-job) is created and the ID of the data transfer (dxso-job) is returned.",
+        "description": "A data transfer (dxso-job) is created and the ID for this data transfer (dxso-job) is returned if the requirements are fulfilled. \n\nThe transferred data has to be in the format DATEV XML-Schnittstelle online version 4.0 or higher. The transferred data can only be processed if the configuration of the client is suitable for data processing: a client for the application Belege online in DATEV Unternehmen online and a matching fiscal year for the editing form \"extended\" , for the application Rechnungseingangsbuch online for transferring accounts payable data, for the application Rechnungsausgangsbuch online for transferring accounts receivable data, and/or for the application Kassenbuch online for transferring cash entries are necessary. \n\nTherefore, it is recommended to determine the data by creating the data transfer and set the parameters import_type (type of data) and accounting_month. If the parameters are set and a matching fiscal year is not present, but there is a previous fiscal year that meets certain requirements, DATEV will automatically generate the subsequent matching fiscal year. This function is not available for the application Kassenbuch online.\n\nIt is recommended that the transferred data is in the format **DATEV LedgerImport-Package**: <table> <thead> <tr> <th>Data type</th> <th>Extension in document.xml of DATEV LedgerImport-Packages</th> <th>Element in the data file of the DATEV LedgerImport-Packages</th> <th>Value for API parameter 'import_type'</th> <th>Automatic generation of the next fiscal year</th> </tr> </thead> <tbody> <tr> <td>Incoming invoices</td> <td>xsi:type='accountsPayableLedger'</td> <td>accountsPayableLedger</td> <td>'import_type': 'accountsPayableLedgerImport'</td> <td>possible </td> </tr> <tr> <td>Outgoing invoices</td> <td>xsi:type='accountsReceivableLedger'</td> <td>accountsReceivableLedger</td> <td>'import_type': 'accountsReceivableLedgerImport'</td> <td>possible</td> </tr> <tr> <td>Cash entries</td> <td>xsi:type='cashLedger'</td> <td>cashLedger</td> <td>'import_type': 'cashLedgerImport' </td> <td>not supported</td> </tr> </tbody> </table> \n\n\nAlternatively, invoices can be in the format **DATEV Invoice-Package**:\n\n <table> <thead> <tr> <th>Data type</th> <th>Extension in document.xml of DATEV Invoice-Packages</th> <th>Element in the data file of the DATEV Invoice-Packages</th> <th>Value for API parameter 'import_type'</th> <th>Automatic generation of the next fiscal year</th> </tr> </thead> <tbody> <tr> <td>Incoming invoices</td> <td>xsi:type'invoice' with property 'Incoming' as 'InvoiceType'</td> <td>invoice</td> <td>'import_type': 'accountsPayableLedgerImport'</td> <td>possible </td> </tr> <tr> <td>Outgoing invoices</td> <td>xsi:type='invoice' with property 'Outgoing' as 'InvoiceType' </td> <td>invoice</td> <td>'import_type': 'accountsReceivableLedgerImport'</td> <td>possible</td> </tr> </tbody> </table> \n\n\n**Notes:**\nThe third-party solution ensures that for each variant of data (accounts payable data, accounts receivable data, and cash entries) and for each accounting period/month an own data transfer (dxso-job) is created. \n\nThe \"content type\" header must be \"application/json\". \n\n**Remember:** When working with Kassenbuch online, the cash data must be supplied in the correct order so as to avoid a negative cash balance. Data transfers (dxso-job) cannot be processed in parallel. Kassenbuch online cannot be edited during import and vice versa. A new data transfer (dxso-job) can only be started when the previous data transfer (dxso-job) for cash data has been completed.\n\n**Example: DATEV accountsReceivableLedgerImport-Package**\n \n\n```json\nPOST /accounting/v1/clients/{client-id}/dxso-jobs/ HTTP/1.1\nContent-Type: application/json;charset=UTF-8\nAuthorization: bearer <access_token>\nContent-Length: <length>\nHost: <resourceServer>\n\n{\n\"import_type\":\"accountsReceivableLedgerImport\",\n\"accounting_month\":\"2017-01\"\n}\n```\n \n\nThe third-party solution has to analyze the returned information. The name of the correct ledger folder is part of the information in document.xml of the DATEV accountsReceivableLedgerImport-Package.\n\n\n**Example: DATEV accountsPayableLedgerImport-Package**\n\n```json\nPOST /accounting/v1/clients/{client-id}/dxso-jobs/ HTTP/1.1\nContent-Type: application/json;charset=UTF-8\nAuthorization: bearer <access_token>\nContent-Length: <length>\nHost: <resourceServer>\n\n{\n\"import_type\":\"accountsPayableLedgerImport\",\n\"accounting_month\":\"2017-01\"\n}\n```\n \n\nThe third-party solution has to analyze the returned information. The name of the correct ledger folder is part of the information in document.xml of the DATEV accountsPayableLedgerImport-Package.\n\n**Example: DATEV cashLedgerImport-Package**\n\n```json\nPOST /accounting/v1/clients/{client-id}/dxso-jobs/\nContent-Type: application/json;charset=UTF-8\nAuthorization: bearer <access_token>\nContent-Length: <length>\nHost: <resourceServer>\n\n{\n\"import_type\":\"cashLedgerImport\",\n\"accounting_month\":\"2017-01\"\n}\n```\n\nThe third-party solution has to analyze the returned information. The name of the correct cash ledger is part of the information in document.xml of the DATEV cashLedgerImport-Package.\n\n**Example: DATEV invoice-Package with incoming invoices to one period**\n\n```json\nPOST /accounting/v1/clients/{client-id}/dxso-jobs/\nContent-Type: application/json;charset=UTF-8\nAuthorization: bearer <access_token>\nContent-Length: <length>\nHost: <resourceServer>\n\n{\n\"import_type\":\"accountsPayableLedgerImport\",\n\"accounting_month\":\"2017-01\"\n}\n```\n \nThe third-party solution has to analyze the returned information. Please note that in this case the name of the ledger folder is not a part of the information in document.xml.\n\n**Example: Creation of a data transfer (dxso-jobs) without parameters**\n\n```json\nPOST /accounting/v1/clients/{client-id}/dxso-jobs/\nContent-Type: application/json;charset=UTF-8\nAuthorization: bearer <access_token>\nContent-Length: <length>\nHost: <resourceServer>\n\n{\n\n}\n```\n \nThe third-party solution has to check and receive further information on its own (fiscal year, account_length, ledger_folder_names, etc.). During the processing of invoice data, the automatic generation of the subsequent fiscal year will also be performed by the DATEV solution.\n",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "ID that identifies the client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-example": "1234567-12345"
+          }
+        ],
+        "requestBody": {
+          "description": "Details for the creation of a data transfer (dxso-job).",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DXSoJobCreationInfo"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "201": {
+            "description": "Request OK; the data transfer (dxso-job) has been created.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "x-example": {
+                  "id": "CDD8BCFAD7034008AD143D330084FC22",
+                  "account_length": 4,
+                  "ledger_folder_names": [
+                    "Ausgangsrechnungen"
+                  ]
+                }
+              },
+              "application/json": {
+                "x-example": {
+                  "id": "CDD8BCFAD7034008AD143D330084FC22",
+                  "account_length": 4,
+                  "ledger_folder_names": [
+                    "Ausgangsrechnungen"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "<table> <thead> <tr> <th>Error, Error_description</th> <th>Description</th> <th>Example</th> </tr> </thead> <tbody> <tr> <td>\"#DCO01002 restapi.InvalidDxsoImportTargetFault\"</td> <td>The client is not configured for the requested data transfer (dxso-job). It is recommended that the user contacts the tax consultant. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01002\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01002\", \"error_description\":\"restapi.InvalidDxsoImportTargetFault\"}</td> </tr> <tr> <td>\"#DCO01008 restapi.InvalidMessageBodyFault\"</td> <td>The third-party solution has transmitted an incorrect request. Can not interpret the http message body. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01008\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01008\", \"error_description\":\"restapi.InvalidMessageBodyFault\"}</td> </tr> <tr> <td>\"#DCO01017 restapi.MissingMandatoryParameterFault\"</td> <td>The third-party solution has transmitted an incorrect request. At least one mandatory parameter is missing. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01017\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01017\", \"error_description\":\"restapi.MissingMandatoryParameterFault\"}</td> </tr> <tr> <td>\"#DCO01018 restapi.MissingMandatoryHeaderFault\"</td> <td>The third-party solution has transmitted an incorrect request. Mandatory header value is missing. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01018\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01018\", \"error_description\":\"restapi.MissingMandatoryHeaderFault\"}</td> </tr> <tr> <td>\"#DCO01301 restapi.RDS1UploadNotSupportedFault\"</td> <td>The third-party solution has transmitted an incorrect request. The company is a user of the new version of Belege online.. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01301\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01301\", \"error_description\":\"restapi.RDS1UploadNotSupportedFault\"}</td> </tr> </tbody> </table>"
+          },
+          "403": {
+            "description": "<table> <thead> <tr> <th>Error, Error_description</th> <th>Description</th> <th>Example</th> </tr> </thead> <tbody> <tr> <td></td> <td>The user has no access to clients. It is recommended that the user contact the tax consultant.</td> <td>{\"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\"}</td> </tr> <tr> <td>\"#DCO01005 restapi.ScopeFault\"</td> <td>The third-party solution has transmitted an incorrect request. The required scope is missing. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01005\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\",\"error\":\"#DCO01005\",\"error_description\":\"restapi.ScopeFault\"}</td> <tr> <tr> <td>\"#DCO01013 restapi.AuthentificationTypeFault\"</td> <td>The third-party solution does not have permission to use this request. The software provider should contact DATEV. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01013\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\",\"error\":\"#DCO01013\",\"error_description\":\"restapi.AuthentificationTypeFault\"}</td> </tr> </tbody> </table>"
+          },
+          "404": {
+            "description": "The third-party solution has transmitted an incorrect request. The resource could not be found. It is up to the software provider to ensure that the request is correct.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "x-example": {
+                  "request_id": "0a13eff2-44a9-4de6-90f0-1198241e7c22"
+                }
+              },
+              "application/json": {
+                "x-example": {
+                  "request_id": "0a13eff2-44a9-4de6-90f0-1198241e7c22"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "The services of DATEVconnect online are not available at the current time due to maintenance reasons. Please try again later."
+          }
+        },
+        "security": [
+          {
+            "client_id": [],
+            "datev_openid": [
+              "accounting:dxso-jobs"
+            ]
+          },
+          {
+            "client_id": [],
+            "datev_idp_next": [
+              "openid",
+              "accounting:dxso-jobs"
+            ]
+          },
+          {
+            "client_id": [],
+            "datev_openid_sandbox": [
+              "accounting:dxso-jobs"
+            ]
+          }
+        ]
+      }
+    },
+    "/clients/{client-id}/dxso-jobs/{job-id}/files": {
+      "post": {
+        "tags": [
+          "Transfer accounting documents"
+        ],
+        "summary": "Attaches files to a data transfer (dxso-job)",
+        "description": "Attaches files to a data transfer (dxso-job). Each file is transferred as a single file and not as a ZIP file as it is described in the documentation of DATEV XML-Schnittstelle online. The third-party solution ensures that only correctly validated data are transferred to the DATEV data center. The data format and the file size of the files have to be supported by DATEV. \n\nThe files (including the file information) need to be transferred as data type \\\"multipart/form-data\\\" to ensure all details are transferred. \n\n**Please note:** It is recommended that file names be encoded in UTF8. Unicode characters have to be precomposed characters; that is, each special character, such as an umlaut ( &auml;, &uuml;, &ouml;), has to be one single code point. Decomposed characters are not supported. There exists a white list for signs that may be used in file names. Unallowed signs will be replaced by underscore. These signs may be used: Space &()+-._ 0-9A-Za-zÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ\n\n**Example: Multipart upload**\n```json\nPOST /accounting/v1/clients/{client-id}/dxso-jobs/{job-id}/files HTTP/1.1\nContent-Type: multipart/form-data; boundary=\"----=_Part_2_7463675.1448450513503\"\nMIME-Version: 1.0\nAuthorization: Bearer <access_token>\nContent-Length: 1776\nHost: <resourceServer>\n\n------=_Part_2_7463675.1448450513503\nContent-Type: text/xml; charset=Cp1252; name=AR-2015-0001.xml\nContent-Transfer-Encoding: binary\nContent-Disposition: form-data; name=\"files\"; filename=\"AR-2015-0001.xml\"\n<?xml version=\"1.0\" encoding=\"utf-8\"?>\n...\n```\n",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "ID that identifies the client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-example": "1234567-12345"
+          },
+          {
+            "name": "job-id",
+            "in": "path",
+            "description": "ID that identifies the data transfer (dxso-job)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-example": "74C73D12-A0E8-65DB-68FE-D7481FF44D72"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "properties": {
+                  "files": {
+                    "type": "string",
+                    "description": "Single file",
+                    "format": "binary",
+                    "x-example": "Test-File.xml"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Request OK; the file has been received by DATEV.",
+            "content": {
+              "application/json": {
+                "x-example": "{}"
+              }
+            }
+          },
+          "400": {
+            "description": "<table> <thead> <tr> <th>Error, Error_description</th> <th>Description</th> <th>Example</th> </tr> </thead> <tbody> <tr> <td>\"#DCO01001 restapi.InvalidResourceModificationFault\"</td> <td>The third-party solution has transmitted an incorrect request. There is an error with this upload. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01001\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01001\", \"error_description\":\"restapi.InvalidResourceModificationFault\"}</td> </tr> <tr> <td>\"#DCO01002 restapi.InvalidDxsoImportTargetFault\"</td> <td>The client is not configured for the requested data transfer (dxso-job). It is recommended that the user contacts the tax consultant. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01002\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01002\", \"error_description\":\"restapi.InvalidDxsoImportTargetFault\"}</td> </tr> <tr> <td>\"#DCO01003 restapi.InvalidDxsoJobIdFault\"</td> <td>The third-party solution has transmitted an incorrect request. The job guid is invalid or not found. It is recommended that the user contact the tax consultant. It is up to the software partner to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01003\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01003\", \"error_description\":\"restapi.InvalidDxsoJobIdFault\"}</td> </tr> <tr> <td>\"#DCO01004 restapi.MultipartUploadFault\"</td> <td>The third-party solution has transmitted an incorrect request. There is an error with the multipart object (e.g. the file is missing). It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01004\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01004\", \"error_description\":\"restapi.MultipartUploadFault\"}</td> </tr> <tr> <td>\"#DCO01006 restapi.InvalidDcoClientIdFault\"</td> <td>The third-party solution has transmitted an incorrect request. Invalid oAuth client id. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01006\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01006\", \"error_description\":\"restapi.InvalidDcoClientIdFault\"}</td> </tr> <tr> <td>\"#DCO01007 restapi.InvalidDxsoJobStateFault\"</td> <td>The third-party solution has transmitted an incorrect request. The job-id is invalid because the corresponding data transfer (dxso-job) is already finalized. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01007\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01007\", \"error_description\":\"restapi.InvalidDxsoJobStateFault\"}</td> </tr> <tr> <td>\"#DCO01015 restapi.UnsupportedFileTypeFault\"</td> <td>The transferred file has not been processed because the file type is not accepted by DATEV. It is up to the software provider to ensure that the user is informed that the file type is not supported by DATEV.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01015\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01015\", \"error_description\":\"restapi.UnsupportedFileTypeFault\"}</td> </tr> <tr> <td>\"#DCO01016 restapi.FileSizeFault\"</td> <td>The transferred file has not been processed because the file is too large (max. 20MB) to be stored by DATEV. It is up to the software provider to ensure that the user is informed that the file is too large to be stored by DATEV.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01016\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01016\", \"error_description\":\"restapi.FileSizeFault\"}</td> </tr> <tr> <td>\"#DCO01219 restapi.ContentTypeDoesNotMatchFileExtensionFault\"</td> <td>The third-party solution has transmitted an incorrect request. The specified file extension does not match the expected file content. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01219\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01219\", \"error_description\":\"restapi.ContentTypeDoesNotMatchFileExtensionFault\"}</td> </tr> <tr> <td>\"#DCO01300 restapi.IsNeuePersonalakteFault\"</td> <td>The third-party solution has transmitted an incorrect request. The file could not be uploaded because you use DATEV Personal Arbeitgeber and try to upload receipts with the 'Document types DATEV Lohn-Unterlagen' bzw. 'DATEV Reisekosten-Belege', this is no longer possible.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01300\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01300\", \"error_description\":\"restapi.IsNeuePersonalakteFault\"}</td> </tr> <tr> <td>\"#DCO01301 restapi.RDS1UploadNotSupportedFault\"</td> <td>The third-party solution has transmitted an incorrect request. The company is a user of the new version of Belege online.. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01301\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01301\", \"error_description\":\"restapi.RDS1UploadNotSupportedFault\"}</td> </tr> </tbody> </table>"
+          },
+          "403": {
+            "description": "<table> <thead> <tr> <th>Error, Error_description</th> <th>Description</th> <th>Example</th> </tr> </thead> <tbody> <tr> <td></td> <td>The user has no access to clients. It is recommended that the user contact the tax consultant.</td> <td>{\"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\"}</td> </tr> <tr> <td>\"#DCO01005 restapi.ScopeFault\"</td> <td>The third-party solution has transmitted an incorrect request. The required scope is missing. It is up to the software provider to ensure that the request is correct.</td> <td>{\\n \"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01005\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\",\"error\":\"#DCO01005\",\"error_description\":\"restapi.ScopeFault\"}</td> <tr> <td>\"#DCO01013 restapi.AuthentificationTypeFault\"</td> <td>The third-party solution does not have permission to use this request. The software provider should contact DATEV. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01013\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\",\"error\":\"#DCO01013\",\"error_description\":\"restapi.AuthentificationTypeFault\"}</td> </tr> </tbody> </table>"
+          },
+          "404": {
+            "description": "The third-party solution has transmitted an incorrect request. The resource could not be found. It is up to the software provider to ensure that the request is correct.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "x-example": [
+                  {
+                    "request_id": "0a13eff2-44a9-4de6-90f0-1198241e7c22"
+                  }
+                ]
+              },
+              "application/json": {
+                "x-example": [
+                  {
+                    "request_id": "0a13eff2-44a9-4de6-90f0-1198241e7c22"
+                  }
+                ]
+              }
+            }
+          },
+          "503": {
+            "description": "The services of DATEVconnect online are not available at the current time due to maintenance reasons. Please try again later."
+          }
+        },
+        "security": [
+          {
+            "client_id": [],
+            "datev_openid": [
+              "accounting:dxso-jobs"
+            ]
+          },
+          {
+            "client_id": [],
+            "datev_idp_next": [
+              "openid",
+              "accounting:dxso-jobs"
+            ]
+          },
+          {
+            "client_id": [],
+            "datev_openid_sandbox": [
+              "accounting:dxso-jobs"
+            ]
+          }
+        ]
+      }
+    },
+    "/clients/{client-id}/dxso-jobs/{job-id}": {
+      "get": {
+        "tags": [
+          "Get status and protocol entries of a data transfer (dxso-job)"
+        ],
+        "summary": "Returns the status of a data transfer (dxso-job).",
+        "description": "The processing of a data transfer (dxso-job) has different stages. The third-party solution has to check the status of a data transfer (dxso-job) and has to provide the information to the user, as this information is not available permanently in DATEV Unternehmen online. The status is a part of the protocol entries in DATEV Unternehmen online that are kept only a limited time (about two months).\n\n**Note:** Data transfers (dxso-jobs) are processed asynchronously.\n \n**Example: The data transfer has been processed partially:** \n```json\nHTTP/1.1 200 OK\nContent-Encoding: gzip\nTransfer-Encoding:chunked\n \n{\n\"id\":<id>,\n\"status\":4\n}\n\n```\n",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "ID that identifies the client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-example": "1234567-12345"
+          },
+          {
+            "name": "job-id",
+            "in": "path",
+            "description": "ID that identifies the data transfer (dxso-job)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-example": "74C73D12-A0E8-65DB-68FE-D7481FF44D72"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request OK; the status of the data transfer (dxso-job) has been returned.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/DXSoJobStatus"
+                }
+              },
+              "application/json": {
+                "x-example": {
+                  "id": "BC4C0C18-C98B-9C3F-5C2B-639D38B15F96",
+                  "status": 2
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "<table> <thead> <tr> <th>Error, Error_description</th> <th>Description</th> <th>Example</th> </tr> </thead> <tbody> <tr> <td></td> <td>The user has no access to clients. It is recommended that the user contact the tax consultant.</td> <td>{\"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\"}</td> </tr> <tr> <td>\"#DCO01005 restapi.ScopeFault\"</td> <td>The third-party solution has transmitted an incorrect request. The required scope is missing. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01005\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\",\"error\":\"#DCO01005\",\"error_description\":\"restapi.ScopeFault\"}</td> <tr> <tr> <td>\"#DCO01013 restapi.AuthentificationTypeFault\"</td> <td>The third-party solution does not have permission to use this request. The software provider should contact DATEV. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01013\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\",\"error\":\"#DCO01013\",\"error_description\":\"restapi.AuthentificationTypeFault\"}</td> </tbody> </table>"
+          },
+          "404": {
+            "description": "The third-party solution has transmitted an incorrect request or the protocol entry was not found. It is up to the software provider to ensure that the request is correct. The reason why the status was not found might be because the protocol entry was deleted by the tax consultant or by the user or because protocol entry is too old.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "x-example": [
+                  {
+                    "request_id": "0a13eff2-44a9-4de6-90f0-1198241e7c22"
+                  }
+                ]
+              },
+              "application/json": {
+                "x-example": [
+                  {
+                    "request_id": "0a13eff2-44a9-4de6-90f0-1198241e7c22"
+                  }
+                ]
+              }
+            }
+          },
+          "503": {
+            "description": "The services of DATEVconnect online are not available at the current time due to maintenance reasons. Please try again later"
+          }
+        },
+        "security": [
+          {
+            "client_id": [],
+            "datev_openid": [
+              "accounting:dxso-jobs"
+            ]
+          },
+          {
+            "client_id": [],
+            "datev_idp_next": [
+              "openid",
+              "accounting:dxso-jobs"
+            ]
+          },
+          {
+            "client_id": [],
+            "datev_openid_sandbox": [
+              "accounting:dxso-jobs"
+            ]
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Transfer accounting documents"
+        ],
+        "summary": "Finalizes the data transfer (dxso-job). After this step, the data execution starts in the DATEV applications.",
+        "description": "\"The next step after the attachment of all files to a data transfer (dxso-job) is the finalization of the data transfer (dxso-job). Then, the execution of the data starts in DATEV Unternehmen online.\n\n**Note:** The \\\"content type\\\" header must be \\\"application/merge-patch+json\\\".\"\n",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "ID that identifies the client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-example": "455148-1"
+          },
+          {
+            "name": "job-id",
+            "in": "path",
+            "description": "ID that identifies the data transfer (dxso-job)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-example": "74C73D12-A0E8-65DB-68FE-D7481FF44D72"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/merge-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ready"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Request OK; the finalization of the data transfer (dxso-job) has been received by DATEV. The execution of the data transfer (dxso-job) is started."
+          },
+          "400": {
+            "description": "<table> <thead> <tr> <th>Error, Error_description</th> <th>Description</th> <th>Example</th> </tr> </thead> <tbody> <tr> <td>\"#DCO01001 restapi.InvalidResourceModificationFault\"</td> <td>The third-party solution has transmitted an incorrect request. There is an error with this upload. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01001\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01001\", \"error_description\":\"restapi.InvalidResourceModificationFault\"}</td> </tr> <tr> <td>\"#DCO01002 restapi.InvalidDxsoImportTargetFault\"</td> <td>The client is not configured for the requested data transfer (dxso-job). It is recommended that the user contacts the tax consultant. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01002\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01002\", \"error_description\":\"restapi.InvalidDxsoImportTargetFault\"}</td> </tr> <tr> <td>\"#DCO01007 restapi.InvalidDxsoJobStateFault\"</td> <td>The third-party solution has transmitted an incorrect request. The job-id is invalid because the corresponding data transfer (dxso-job) is already finalized. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01007\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01007\", \"error_description\":\"restapi.InvalidDxsoJobStateFault\"}</td> </tr> <tr> <td>\"#DCO01008 restapi.InvalidMessageBodyFault\"</td> <td>The third-party solution has transmitted an incorrect request. Can not interpret the http message body. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01008\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01008\", \"error_description\":\"restapi.InvalidMessageBodyFault\"}</td> </tr> </tbody> </table>"
+          },
+          "403": {
+            "description": "<table> <thead> <tr> <th>Error, Error_description</th> <th>Description</th> <th>Example</th> </tr> </thead> <tbody> <tr> <td></td> <td>The user has no access to clients. It is recommended that the user contact the tax consultant.</td> <td>{\"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\"}</td> </tr> <tr> <td>\"#DCO01005 restapi.ScopeFault\"</td> <td>The third-party solution has transmitted an incorrect request. The required scope is missing. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01005\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\",\"error\":\"#DCO01005\",\"error_description\":\"restapi.ScopeFault\"}</td> <tr> <tr> <td>\"#DCO01013 restapi.AuthentificationTypeFault\"</td> <td>The third-party solution does not have permission to use this request. The software provider should contact DATEV. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01013\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\",\"error\":\"#DCO01013\",\"error_description\":\"restapi.AuthentificationTypeFault\"}</td> </tr> </tbody> </table>"
+          },
+          "404": {
+            "description": "The third-party solution has transmitted an incorrect request. The resource could not be found. It is up to the software provider to ensure that the request is correct.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "x-example": [
+                  {
+                    "request_id": "0a13eff2-44a9-4de6-90f0-1198241e7c22"
+                  }
+                ]
+              },
+              "application/json": {
+                "x-example": [
+                  {
+                    "request_id": "0a13eff2-44a9-4de6-90f0-1198241e7c22"
+                  }
+                ]
+              }
+            }
+          },
+          "503": {
+            "description": "The services of DATEVconnect online are not available at the current time due to maintenance reasons. Please try again later."
+          }
+        },
+        "security": [
+          {
+            "client_id": [],
+            "datev_openid": [
+              "accounting:dxso-jobs"
+            ]
+          },
+          {
+            "client_id": [],
+            "datev_idp_next": [
+              "openid",
+              "accounting:dxso-jobs"
+            ]
+          },
+          {
+            "client_id": [],
+            "datev_openid_sandbox": [
+              "accounting:dxso-jobs"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Cancel a data transfer (dxso-job)"
+        ],
+        "summary": "Cancels a data transfer (dxso-job) that has not been finalized yet.",
+        "description": "A data transfer (dxso-job) can be cancelled. This is only possible as long as the data transfer (dxso-job) has not been finalized. A data transfer (dxso-job) that has not yet been finalized has the status 0. All data concerning the cancelled data transfer (dxso-job) is deleted after cancellation.  \n\nAfter deleting a data transfer (dxso-job), no file uploads and no protocol entry requests are possible because all data and protocol entries have been removed for this data transfer (dxso-job).\n\nPossible reasons for the cancellation of a data transfer (dxso-job):\n\n- The information returned after creating a data transfer (dxso-job) is not suitable for the configuration of the third-party solution.\n- The validation of the data in accordance to the DATEV XML-Schnittstelle online has returned an error.\n- The user has cancelled the data transfer (dxso-job).\n",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "ID that identifies the client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-example": "1234567-12345"
+          },
+          {
+            "name": "job-id",
+            "in": "path",
+            "description": "ID that identifies the data transfer (dxso-job)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-example": "74C73D12-A0E8-65DB-68FE-D7481FF44D72"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Request OK; the data transfer (dxso-job) has been cancelled. No data has been processed by or stored with DATEV."
+          },
+          "400": {
+            "description": "<table> <thead> <tr> <th>Error, Error_description</th> <th>Description</th> <th>Example</th> </tr> </thead> <tbody> <tr> <td>\"#DCO01002 restapi.InvalidDxsoImportTargetFault\"</td> <td>The client is not configured for the requested data transfer (dxso-job). It is recommended that the user contacts the tax consultant. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01002\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01002\", \"error_description\":\"restapi.InvalidDxsoImportTargetFault\"}</td> </tr> <tr> <td>\"#DCO01007 restapi.InvalidDxsoJobStateFault\"</td> <td>The third-party solution has transmitted an incorrect request. The job-id is invalid because the corresponding data transfer (dxso-job) is already finalized. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01007\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\", \"error\":\"#DCO01007\", \"error_description\":\"restapi.InvalidDxsoJobStateFault\"}</td> </tr> </tbody> </table>"
+          },
+          "403": {
+            "description": "<table> <thead> <tr> <th>Error, Error_description</th> <th>Description</th> <th>Example</th> </tr> </thead> <tbody> <tr> <td></td> <td>The user has no access to clients. It is recommended that the user contact the tax consultant.</td> <td>{\"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\"}</td> </tr> <tr> <td>\"#DCO01005 restapi.ScopeFault\"</td> <td>The third-party solution has transmitted an incorrect request. The required scope is missing. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01005\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\",\"error\":\"#DCO01005\",\"error_description\":\"restapi.ScopeFault\"}</td> <tr> <tr> <td>\"#DCO01013 restapi.AuthentificationTypeFault\"</td> <td>The third-party solution does not have permission to use this request. The software provider should contact DATEV. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01013\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\",\"error\":\"#DCO01013\",\"error_description\":\"restapi.AuthentificationTypeFault\"}</td> </tr> </tbody> </table>"
+          },
+          "404": {
+            "description": "The third-party solution has transmitted an incorrect request. The resource could not be found. It is up to the software provider to ensure that the request is correct.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "x-example": [
+                  {
+                    "request_id": "0a13eff2-44a9-4de6-90f0-1198241e7c22"
+                  }
+                ]
+              },
+              "application/json": {
+                "x-example": [
+                  {
+                    "request_id": "0a13eff2-44a9-4de6-90f0-1198241e7c22"
+                  }
+                ]
+              }
+            }
+          },
+          "503": {
+            "description": "The services of DATEVconnect online are not available at the current time due to maintenance reasons. Please try again later."
+          }
+        },
+        "security": [
+          {
+            "client_id": [],
+            "datev_openid": [
+              "accounting:dxso-jobs"
+            ]
+          },
+          {
+            "client_id": [],
+            "datev_idp_next": [
+              "openid",
+              "accounting:dxso-jobs"
+            ]
+          },
+          {
+            "client_id": [],
+            "datev_openid_sandbox": [
+              "accounting:dxso-jobs"
+            ]
+          }
+        ]
+      }
+    },
+    "/clients/{client-id}/dxso-jobs/{job-id}/protocol-entries": {
+      "get": {
+        "tags": [
+          "Get status and protocol entries of a data transfer (dxso-job)"
+        ],
+        "summary": "Returns protocol entries of a data transfer (dxso-job).",
+        "description": "The processing of a data transfer (dxso-job) has to be checked as it is executed asynchronously. To do this, the third-party solution should provide the protocol entries (from Belege online in DATEV Unternehmen online) to the user. The protocol entries contain detailed information about the processing in DATEV Unternehmen online. The entries are kept only a limited time (about two months) in DATEV Unternehmen online, so the third-party solution has to store this information. The protocol entries are prepared for the display for the user. DATEV will change the messages from time to time.\n\n**Note:** Data transfers (dxso-jobs) are processed asynchronously.\n\n**Example: One protocol entry of a data transfer:** \n```json\n    HTTP/1.1 200 OK\n    Content-Encoding: gzip\n    Transfer-Encoding: chunked\n\n    [\n      {\n        \"text\":\"wurde empfangen!\",\n        \"type\":\"information\",\n        \"filename\":\"document.xml\",\n        \"time\":\"2017-02-07T14:12:57+01:00\"\n      }\n    ]\n",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "ID that identifies the client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-example": "1234567-12345"
+          },
+          {
+            "name": "job-id",
+            "in": "path",
+            "description": "ID that identifies the data transfer (dxso-job)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-example": "74C73D12-A0E8-65DB-68FE-D7481FF44D72"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request OK; protocol entries of the data transfer (dxso-job) are returned.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProtocolEntry"
+                  }
+                }
+              },
+              "application/json": {
+                "x-example": [
+                  {
+                    "text": "wurde empfangen!",
+                    "type": "information",
+                    "filename": "AR-2015-0001.xml",
+                    "time": "2015-07-10T11:47:04.000Z"
+                  },
+                  {
+                    "text": "wurde empfangen!",
+                    "type": "information",
+                    "filename": "AR-2015-0002.xml",
+                    "time": "2015-07-10T11:47:05.000Z"
+                  },
+                  {
+                    "text": "wurde empfangen!",
+                    "type": "information",
+                    "filename": "AR-2015-0003.xml",
+                    "time": "2015-07-10T11:47:06.000Z"
+                  },
+                  {
+                    "text": "wurde empfangen!",
+                    "type": "information",
+                    "filename": "AR-Musterbild_EinrichtungshausFinkmuster.pdf",
+                    "time": "2015-07-10T11:47:06.000Z"
+                  },
+                  {
+                    "text": "wurde empfangen!",
+                    "type": "information",
+                    "filename": "AR-Musterbild_FischertestMoebel.pdf",
+                    "time": "2015-07-10T11:47:07.000Z"
+                  },
+                  {
+                    "text": "wurde empfangen!",
+                    "type": "information",
+                    "filename": "AR-Musterbild_moebelTestgruber.pdf",
+                    "time": "2015-07-10T11:47:08.000Z"
+                  },
+                  {
+                    "text": "wurde empfangen!",
+                    "type": "information",
+                    "filename": "document.xml",
+                    "time": "2015-07-10T11:47:09.000Z"
+                  },
+                  {
+                    "text": "nachfolgende Belege werden nach Buchführung/IMPORT 2015 RA/07 Juli übernommen!",
+                    "type": "information",
+                    "filename": "",
+                    "time": "2015-07-10T11:47:09.000Z"
+                  },
+                  {
+                    "text": " ",
+                    "type": "information",
+                    "context": "Rechnung Anfang",
+                    "filename": "",
+                    "time": "2015-07-10T11:47:09.000Z"
+                  },
+                  {
+                    "text": "Belegbild AR-2015-0001_07_Juli.xml wurde generiert",
+                    "type": "information",
+                    "filename": "AR-2015-0001.xml",
+                    "time": "2015-07-10T11:47:10.000Z"
+                  },
+                  {
+                    "text": "wurde in die Belegverwaltung übernommen!",
+                    "type": "information",
+                    "context": "Beleg-ID Nr. D288FAD6EECAF3F8F6DF5B7E59358C0D",
+                    "filename": "AR-Musterbild_moebelTestgruber.pdf",
+                    "time": "2015-07-10T11:47:10.000Z"
+                  },
+                  {
+                    "text": "wurde in die Belegverwaltung übernommen!",
+                    "type": "information",
+                    "context": "Beleg-ID Nr. 5B8743301129111DCA96ECC7FCDDECF1",
+                    "filename": "AR-2015-0001_07_Juli.xml",
+                    "time": "2015-07-10T11:47:10.000Z"
+                  },
+                  {
+                    "text": "Rechnungsinformation wurden an Rechnungsausgangsbuch(AR-2015-0001/01.2015) übergeben",
+                    "type": "information",
+                    "filename": "AR-2015-0001.xml",
+                    "time": "2015-07-10T11:47:10.000Z"
+                  },
+                  {
+                    "text": " ",
+                    "type": "information",
+                    "context": "Rechnung Anfang",
+                    "filename": "",
+                    "time": "2015-07-10T11:47:10.000Z"
+                  },
+                  {
+                    "text": "Belegbild AR-2015-0002_07_Juli.xml wurde generiert",
+                    "type": "information",
+                    "filename": "AR-2015-0002.xml",
+                    "time": "2015-07-10T11:47:10.000Z"
+                  },
+                  {
+                    "text": "wurde in die Belegverwaltung übernommen!",
+                    "type": "information",
+                    "context": "Beleg-ID Nr. BEF58898012EDB4E059DD025D6E73F03",
+                    "filename": "AR-Musterbild_EinrichtungshausFinkmuster.pdf",
+                    "time": "2015-07-10T11:47:10.000Z"
+                  },
+                  {
+                    "text": "wurde in die Belegverwaltung übernommen!",
+                    "type": "information",
+                    "context": "Beleg-ID Nr. 392C201FC58F10CDA81CADFFD36FC209",
+                    "filename": "AR-2015-0002_07_Juli.xml",
+                    "time": "2015-07-10T11:47:10.000Z"
+                  },
+                  {
+                    "text": "Rechnungsinformation wurden an Rechnungsausgangsbuch(AR-2015-0002/01.2015) übergeben",
+                    "type": "information",
+                    "filename": "AR-2015-0002.xml",
+                    "time": "2015-07-10T11:47:10.000Z"
+                  },
+                  {
+                    "text": " ",
+                    "type": "information",
+                    "context": "Rechnung Anfang",
+                    "filename": "",
+                    "time": "2015-07-10T11:47:10.000Z"
+                  },
+                  {
+                    "text": "Belegbild AR-2015-0003_07_Juli.xml wurde generiert",
+                    "type": "information",
+                    "filename": "AR-2015-0003.xml",
+                    "time": "2015-07-10T11:47:10.000Z"
+                  },
+                  {
+                    "text": "wurde in die Belegverwaltung übernommen!",
+                    "type": "information",
+                    "context": "Beleg-ID Nr. 65F5EBC75E644FF9344EF2C4950DDD78",
+                    "filename": "AR-Musterbild_FischertestMoebel.pdf",
+                    "time": "2015-07-10T11:47:11.000Z"
+                  },
+                  {
+                    "text": "wurde in die Belegverwaltung übernommen!",
+                    "type": "information",
+                    "context": "Beleg-ID Nr. 489081A7E5D0EDA35E3558D0A7FCF530",
+                    "filename": "AR-2015-0003_07_Juli.xml",
+                    "time": "2015-07-10T11:47:11.000Z"
+                  },
+                  {
+                    "text": "Rechnungsinformation wurden an Rechnungsausgangsbuch(AR-2015-0002/01.2015) übergeben",
+                    "type": "information",
+                    "filename": "AR-2015-0003.xml",
+                    "time": "2015-07-10T11:47:11.000Z"
+                  }
+                ]
+              }
+            }
+          },
+          "403": {
+            "description": "<table> <thead> <tr> <th>Error, Error_description</th> <th>Description</th> <th>Example</th> </tr> </thead> <tbody> <tr> <td></td> <td>The user has no access to clients. It is recommended that the user contact the tax consultant.</td> <td>{\"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\"}</td> </tr> <tr> <td>\"#DCO01005 restapi.ScopeFault\"</td> <td>The third-party solution has transmitted an incorrect request. The required scope is missing. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01005\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\",\"error\":\"#DCO01005\",\"error_description\":\"restapi.ScopeFault\"}</td> <tr> <tr> <td>\"#DCO01013 restapi.AuthentificationTypeFault\"</td> <td>The third-party solution does not have permission to use this request. The software provider should contact DATEV. It is up to the software provider to ensure that the request is correct.</td> <td>{\"error_uri\":\"https://apps.datev.de/knowledge/help/search?q=DCO01013\", \"request_id\":\"0a13eff2-44a9-4de6-90f0-1198241e7c22\",\"error\":\"#DCO01013\",\"error_description\":\"restapi.AuthentificationTypeFault\"}</td> </tr> </tbody> </table>"
+          },
+          "404": {
+            "description": "The third-party solution has transmitted an incorrect request or the protocol entry was not found. It is up to the software provider to ensure that the request is correct. The reason why the status was not found might be because the protocol entry was deleted by the tax consultant or by the user or because protocol entry is too old.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "x-example": [
+                  {
+                    "request_id": "0a13eff2-44a9-4de6-90f0-1198241e7c22"
+                  }
+                ]
+              },
+              "application/json": {
+                "x-example": [
+                  {
+                    "request_id": "0a13eff2-44a9-4de6-90f0-1198241e7c22"
+                  }
+                ]
+              }
+            }
+          },
+          "503": {
+            "description": "The services of DATEVconnect online are not available at the current time due to maintenance reasons. Please try again later"
+          }
+        },
+        "security": [
+          {
+            "client_id": [],
+            "datev_openid": [
+              "accounting:dxso-jobs"
+            ]
+          },
+          {
+            "client_id": [],
+            "datev_idp_next": [
+              "openid",
+              "accounting:dxso-jobs"
+            ]
+          },
+          {
+            "client_id": [],
+            "datev_openid_sandbox": [
+              "accounting:dxso-jobs"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ready": {
+        "type": "object",
+        "properties": {
+          "ready": {
+            "type": "string",
+            "description": "Marks a data transfer (dxso-job) with the value \"true\" as finished.",
+            "x-example": "true"
+          }
+        }
+      },
+      "Client": {
+        "type": "object",
+        "properties": {
+          "client_number": {
+            "type": "integer",
+            "description": "client number",
+            "format": "int32",
+            "x-example": "1"
+          },
+          "consultant_number": {
+            "type": "integer",
+            "description": "consultant number",
+            "format": "int32",
+            "x-example": "455148"
+          },
+          "id": {
+            "type": "string",
+            "description": "client ID (technical)",
+            "x-example": "455148-1"
+          },
+          "name": {
+            "type": "string",
+            "description": "client name",
+            "x-example": "Muster GmbH 1"
+          }
+        }
+      },
+      "ClientBasics": {
+        "type": "object",
+        "properties": {
+          "client_number": {
+            "type": "integer",
+            "description": "client number",
+            "format": "int32",
+            "x-example": "1"
+          },
+          "consultant_number": {
+            "type": "integer",
+            "description": "consultant number",
+            "format": "int32",
+            "x-example": "455148"
+          },
+          "id": {
+            "type": "string",
+            "description": "client id (technical)",
+            "x-example": "455148-1"
+          },
+          "name": {
+            "type": "string",
+            "description": "client name",
+            "x-example": "Muster GmbH 1"
+          },
+          "is_document_management_available": {
+            "type": "boolean",
+            "description": "Belege online is existent (= true) or is nonexistent (= false)\n",
+            "x-example": "true"
+          },
+          "basic_accounting_information": {
+            "type": "array",
+            "description": "Basic accounting data and array of existent account books. The last three fiscal years are returned.\n",
+            "items": {
+              "$ref": "#/components/schemas/BasicAccountingInformation"
+            }
+          }
+        }
+      },
+      "BasicAccountingInformation": {
+        "type": "object",
+        "properties": {
+          "fiscal_year_start": {
+            "type": "string",
+            "description": "start of the fiscal year",
+            "format": "date",
+            "x-example": "2023-01-01"
+          },
+          "fiscal_year_end": {
+            "type": "string",
+            "description": "end of the fiscal year",
+            "format": "date",
+            "x-example": "2023-12-31"
+          },
+          "account_length": {
+            "type": "integer",
+            "description": "length of general ledger account of the determined fiscal year (length is between 4 and 8)\n",
+            "x-example": 4
+          },
+          "datev_chart_of_accounts": {
+            "type": "integer",
+            "description": "'DATEV Sachkontorahmen'\n of the determined fiscal year\n",
+            "x-example": 3,
+            "deprecated": true
+          },
+          "ledgers": {
+            "$ref": "#/components/schemas/Ledgers"
+          }
+        }
+      },
+      "Ledgers": {
+        "type": "object",
+        "properties": {
+          "is_accounts_payable_ledger_available": {
+            "type": "boolean",
+            "description": "application for processing accounts payable data is existent (= true) or is nonexistent (= false)\n",
+            "x-example": "true"
+          },
+          "is_accounts_receivable_ledger_available": {
+            "type": "boolean",
+            "description": "application for processing accounts receivable data is existent (= true) or is nonexistent (= false)\n",
+            "x-example": "true"
+          },
+          "is_cash_ledger_available": {
+            "type": "boolean",
+            "description": "application for processing cash entries is existent (= true) or is nonexistent (= false)\n",
+            "x-example": "true"
+          }
+        }
+      },
+      "DXSoJobCreationInfo": {
+        "type": "object",
+        "properties": {
+          "import_type": {
+            "type": "string",
+            "description": "Type of transferred data: accountsPayableLedgerImport for incoming invoices, accountsReceivableLedgerImport for outgoing invoices, cashLedgerImport for cash entries. This parameter shall be used. It is mandatory when the parameter 'accounting_month' is used. \n",
+            "x-example": "accountsReceivableLedgerImport",
+            "enum": [
+              "accountsPayableLedgerImport",
+              "accountsReceivableLedgerImport",
+              "cashLedgerImport"
+            ]
+          },
+          "accounting_month": {
+            "type": "string",
+            "description": "Accounting month (data format: YYYY-MM) of the transferred data. This parameter shall be used. It is mandatory when the parameter 'import_type' is used.",
+            "format": "date",
+            "x-example": "2025-05"
+          }
+        }
+      },
+      "DXSoJob": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "ID of the data transfer (dxso-job)",
+            "x-example": "27347365-EE83-71F8-66BD-C7176F769BB8"
+          },
+          "account_length": {
+            "type": "integer",
+            "description": "length of general ledger account of the requested account book and fiscal year\n",
+            "format": "int32",
+            "x-example": 4
+          },
+          "cash_ledger_names": {
+            "type": "array",
+            "description": "list of names of the existing cash books of the requested fiscal year of the application Kassenbuch online (import_type = cashLedgerImport)",
+            "items": {
+              "type": "string"
+            }
+          },
+          "ledger_folder_names": {
+            "type": "array",
+            "description": "list of names of existing invoice folders of the requested fiscal year of Belege online (editing form \\\"extended\\\" ) or of Rechnungseingangsbuch online (for import_type = accountsPayableLedgerImport) or of Rechnungsausgangsbuch online (import_type = accountsReceivableLedgerImport)",
+            "x-example": "Ausgangsrechnungen (outgoing invoices)",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "DXSoJobStatus": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "ID of the data transfer (dxso-job)",
+            "x-example": "27347365-EE83-71F8-66BD-C7176F769BB8"
+          },
+          "status": {
+            "type": "integer",
+            "description": "status values:   0: data transfer (dxso-job) is still open and has yet not been finalized    1: processing of the data transfer (dxso-job) has been started and is still in progress    2: data transfer (dxso-job) has been processed successfully    3: data transfer (dxso-job) has not been processed - critical errors occurred that have to be checked    4: data transfer (dxso-job) has been processed partially - errors occurred that have to be checked    5: data transfer (dxso-job) has been successfully cancelled in Belege online    6: data transfer (dxso-job) has not been cancelled in Belege online because the requirements were not fulfilled",
+            "format": "int32",
+            "x-example": 2
+          }
+        }
+      },
+      "ProtocolEntry": {
+        "type": "object",
+        "properties": {
+          "time": {
+            "type": "string",
+            "description": "import time  in accordance with ISO8601 'YYYY-MM-DDThh:mm:ss±hh:mm'",
+            "format": "date-time",
+            "x-example": "2023-02-01T13:03:46+01:00"
+          },
+          "text": {
+            "type": "string",
+            "description": "further information about the protocol entry",
+            "x-example": "wurde empfangen!"
+          },
+          "context": {
+            "type": "string",
+            "description": "context of the protocol entry",
+            "x-example": "Beleg-ID Nr. A7C39D3C0D44BDBF54B6F4E2A41B550C"
+          },
+          "type": {
+            "type": "string",
+            "description": "type of the protocol entry: information, warning, error\n",
+            "x-example": "information"
+          },
+          "filename": {
+            "type": "string",
+            "description": "name of the file that is imported",
+            "x-example": "musterholz.MSG"
+          }
+        }
+      },
+      "ErrorMessage": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "contains a DATEV-specific error code - optional",
+            "x-example": "#DCO01004"
+          },
+          "request_id": {
+            "type": "string",
+            "description": "contains a unique request ID; this may be used to find a log entry by DATEV - optional",
+            "x-example": "06de9621-2029-4b74-a5d7-ac4c04688846"
+          },
+          "error_description": {
+            "type": "string",
+            "description": "the technical name of the error (please note that the meaning may vary depending on the request!) - optional",
+            "x-example": "restapi.MultipartUploadFault"
+          },
+          "error_uri": {
+            "type": "string",
+            "description": "URI for further information about the error - optional",
+            "x-example": "https://apps.datev.de/knowledge/help/search?q=DCO01004"
+          }
+        }
+      }
+    },
+    "responses": {
+      "Response400_DCO01001_DCO01002wrong_DCO01007_DCO01008": {
+        "description": "| Error\t| Description\t| Reason and solution\t| \n|-----------|---------------------------|-----------------------------------|\n| #DCO01001 | restapi.InvalidResourceModificationFault | The third-party solution has transmitted an incorrect request. The value of the parameter ready has to be 'true' . It is up to the software provider to ensure that the request is correct. |            \n| #DCO01002 | restapi.InvalidDxsoImportTargetFault | The client is not configured for the requested data transfer (dxso-job). It is recommended that the user contact the tax consultant. It is up to the software provider to ensure that the request is correct. |             \n| #DCO01007 | restapi.InvalidDxsoJobStateFault | The third-party solution has transmitted an incorrect request. The job-id is invalid because the corresponding data transfer (dxso-job) is already finalized. It is up to the software provider to ensure that the request is correct. |            \n| #DCO01008 | restapi.InvalidMessageBodyFault | The third-party solution has transmitted an incorrect request. There is an error in the body of the message. It is up to the software provider to ensure that the request is correct. |             \n",
+        "content": {
+          "*/*": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage"
+            }
+          }
+        }
+      },
+      "Response400_DCO01002_DCO01008_DCO01017": {
+        "description": "| Error\t| Description\t| Reason and solution\t| \n|-----------|---------------------------|-----------------------------------|\n| #DCO01002 | restapi.InvalidDxsoImportTargetFault | The client is not configured for the requested data transfer (dxso-job). It is recommended that the user contact the tax consultant. It is up to the software provider to ensure that the request is correct. |             \n| #DCO01008 | restapi.InvalidMessageBodyFault | The third-party solution has transmitted an incorrect request. There is an error in the body of the message. It is up to the software provider to ensure that the request is correct. |             \n| #DCO01017 | restapi.MissingMandatoryParameterFault | The third-party solution has transmitted an incorrect request. At least one mandatory parameter is missing. It is up to the software provider to ensure that the request is correct. |             \n",
+        "content": {
+          "*/*": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage"
+            }
+          }
+        }
+      },
+      "Response400_DCO01002wrong_DCO01004_DCO01007_DCO01015_DCO01016": {
+        "description": "| Error\t| Description\t| Reason and solution\t| \n|-----------|---------------------------|-----------------------------------|\n| #DCO01002 | restapi.InvalidDxsoImportTargetFault | The client is not configured for the requested data transfer (dxso-job). It is recommended that the user contact the tax consultant. It is up to the software partner to ensure that the request is correct.  |             \n| #DCO01004 | restapi.MultipartUploadFault | The third-party solution has transmitted an incorrect request. There is an error in the multipart object (e.g. the file is missing). It is up to the software provider to ensure that the request is correct. |             \n| #DCO01007 | restapi.InvalidDxsoJobStateFault | The third-party solution has transmitted an incorrect request. The job-id is invalid because the corresponding data transfer (dxso-job) is already finalized. It is up to the software provider to ensure that the request is correct. |\n| #DCO01015 | restapi.UnsupportedFileTypeFault | The transferred file has not been processed because the file type is not accepted by DATEV. It is up to the software provider to ensure that the user is informed that the file type is not supported by DATEV. |             \n| #DCO01016 | restapi.FileSizeFault | The transferred file is not processed because the file is too large to be stored by DATEV. It is up to the software provider to ensure that the user is informed that this size of file is too large to be stored by DATEV. |\n",
+        "content": {
+          "*/*": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage"
+            }
+          }
+        }
+      },
+      "Response400_DCO01002wrong_DCO01007": {
+        "description": "| Error\t| Description\t| Reason and solution\t| \n|-----------|---------------------------|-----------------------------------|\n| #DCO01002 | restapi.InvalidDxsoImportTargetFault | The client is not configured for the requested data transfer. It is recommended that the user contact the tax consultant. It is up to the software provider to ensure that the request is correct.  |\n| #DCO01007 | restapi.InvalidDxsoJobStateFault | The third-party solution has transmitted an incorrect request. The job-id is invalid because the corresponding data transfer (dxso-job) is already finalized. It is up to the software provider to ensure that the request is correct. |            \n",
+        "content": {
+          "*/*": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage"
+            }
+          }
+        }
+      },
+      "Response400_DCO01009": {
+        "description": "| Error\t| Description\t| Reason and solution\t| \n|-----------|---------------------------|-----------------------------------|\n| #DCO01009 | restapi.InvalidAccountingBasicData | The basic data of the account books is inconsistent. It is recommended that the user contact the tax consultant. |             \n",
+        "content": {
+          "*/*": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage"
+            }
+          }
+        }
+      },
+      "Response403_1": {
+        "description": "| Error\t| Description\t| Reason and solution\t| \n|-----------|---------------------------|-----------------------------------|\n|  |   | The user has no access to clients. It is recommended that the user contact the tax consultant. | \n| #DCO01005 | restapi.ScopeFault | The third-party solution has transmitted an incorrect request. The required scope is missing. It is up to the software provider to ensure that the request is correct. | \n",
+        "content": {
+          "*/*": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage"
+            }
+          }
+        }
+      },
+      "Response403_2": {
+        "description": "| Error\t| Description\t| Reason and solution\t| \n|-----------|---------------------------|-----------------------------------|\n|  |   |  The user has no access to clients. It is recommended that the user contact the tax consultant. The software provider has to ensure that the client ID used exists in the list of accessible clients. | \n| #DCO01005 | restapi.ScopeFault | The third-party solution has transmitted an incorrect request. The required scope is missing. It is up to the software provider to ensure that the request is correct. | \n",
+        "content": {
+          "*/*": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage"
+            }
+          }
+        }
+      },
+      "Response403_3": {
+        "description": "| Error\t| Description\t| Reason and solution\t| \n|-----------|---------------------------|-----------------------------------|\n|  |   | The user has no access to clients. It is recommended that the user contact the tax consultant. The software provider has to ensure that the client ID used exists in the list of accessible clients. | \n| #DCO01005 | restapi.ScopeFault | The third-party solution has transmitted an incorrect request. The required scope is missing. It is up to the software provider to ensure that the request is correct.  | \n| #DCO01013 | restapi.AuthentificationTypeFault | The third-party solution does not have permission to use this request. The software provider should contact DATEV. It is up to the software provider to ensure that the request is correct. | \n",
+        "content": {
+          "*/*": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage"
+            }
+          }
+        }
+      },
+      "Response404_1": {
+        "description": "The user does not have any clients. It is recommended that the user contact the tax consultant. It is up to the software provider to ensure that the request is correct.\n",
+        "content": {
+          "*/*": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage"
+            }
+          }
+        }
+      },
+      "Response404_2": {
+        "description": "The requested client does not exist. It is recommended that the user contact the tax consultant. \nThe software provider has to ensure that the client ID used exists in the list of accessible clients. \nIt is up to the software provider to ensure that the request is correct.\n",
+        "content": {
+          "*/*": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage"
+            }
+          }
+        }
+      },
+      "Response404_3": {
+        "description": "The third-party solution has transmitted an incorrect request. The resource could not be found. It is up to the software provider to ensure that the request is correct.\n",
+        "content": {
+          "*/*": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage"
+            }
+          }
+        }
+      },
+      "Response404_4": {
+        "description": "The third-party solution has transmitted an incorrect request or the protocol entry was not found. It is up to the software provider to ensure that the request is correct. The reason why the status was not found might be because the protocol entry was deleted by the tax consultant or by the user or because it is too old.\n",
+        "content": {
+          "*/*": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage"
+            }
+          }
+        }
+      },
+      "Response404_5": {
+        "description": "The third-party solution has transmitted an incorrect request or the protocol entry could not be found. It is up to the software provider to ensure that the request is correct. The reason why the protocol entry was not found might be because it was deleted by the tax consultant or by the user or because it is too old.\n",
+        "content": {
+          "*/*": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage"
+            }
+          }
+        }
+      },
+      "Response503": {
+        "description": "The services of DATEVconnect online are not available at the current time due to maintenance reasons. Please try again later.",
+        "content": {
+          "*/*": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage"
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "client-id": {
+        "name": "client-id",
+        "in": "path",
+        "description": "ID that identifies the client",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "x-example": "1234567-12345"
+      },
+      "job-id": {
+        "name": "job-id",
+        "in": "path",
+        "description": "ID that identifies the data transfer (dxso-job)",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "x-example": "74C73D12-A0E8-65DB-68FE-D7481FF44D72"
+      }
+    },
+    "requestBodies": {
+      "ready": {
+        "description": "Marks a data transfer (dxso-job) as finished.",
+        "content": {
+          "application/merge-patch+json": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "required": true
+      }
+    },
+    "securitySchemes": {
+      "client_id": {
+        "type": "apiKey",
+        "description": "",
+        "name": "X-DATEV-Client-Id",
+        "in": "header",
+        "x-key-type": "client_id"
+      },
+      "datev_openid": {
+        "type": "oauth2",
+        "description": "",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://login.datev.de/openid/authorize",
+            "tokenUrl": "https://api.datev.de/token",
+            "scopes": {
+              "accounting:clients:read": "get client data",
+              "accounting:dxso-jobs": "transfer data for financial accounting"
+            }
+          }
+        }
+      },
+      "datev_idp_next": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://signin.datev.de/datevam/oauth2/realms/root/realms/user/authorize",
+            "tokenUrl": "https://signin.datev.de/datevam/oauth2/realms/root/realms/user/access_token",
+            "scopes": {
+              "openid": "Standard Scope",
+              "accounting:clients:read": "get client data",
+              "accounting:dxso-jobs": "transfer data for financial accounting"
+            }
+          }
+        }
+      },
+      "datev_openid_sandbox": {
+        "type": "oauth2",
+        "description": "",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://login.datev.de/openidsandbox/authorize",
+            "tokenUrl": "https://sandbox-api.datev.de/token",
+            "scopes": {
+              "accounting:clients:read": "get client data",
+              "accounting:dxso-jobs": "transfer data for financial accounting"
+            }
+          }
+        }
+      }
+    }
+  }
+}

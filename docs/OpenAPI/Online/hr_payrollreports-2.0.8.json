@@ -1,0 +1,854 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "hr:payrollreports",
+    "description": "Users authenticate themselves to the DATEV data center via OAuth. After a successful authentication and authorization, the user can access payroll reports from either one of the two payroll systems, LODAS or Lohn und Gehalt. In addition, it is possible to receive an overview of the granted consultant's clients, the granted or denied document types, as well as a list of available employees for a payroll period.",
+    "termsOfService": "https://www.datev.de/agb",
+    "contact": {
+      "name": "DATEV Schnittstellenberatung",
+      "url": "https://www.datev.de/schnittstellen",
+      "email": "schnittstellenberatung@datev.de"
+    },
+    "license": {
+      "name": "DATEV eG",
+      "url": "http://www.datev.de"
+    },
+    "version": "2.0.8",
+    "x-pathalias": "hr-payrollreports",
+    "x-datev-shortdescription": "With the REST API DATEVconnect online hr-payrollreports, payroll reports can be accessed. The data is retrieved from the payroll systems LODAS or Lohn und Gehalt."
+  },
+  "paths": {
+    "/clients": {
+      "get": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "List of consultant's clients.",
+        "description": "Returns a list of granted consultant's clients.",
+        "operationId": "getClients",
+        "responses": {
+          "200": {
+            "description": "List of consultant's clients.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Client"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02301 | restapi.ScopeWrongOrMissing | The third-party solution has sent an incorrect request. The required scope is empty or missing. The software provider must ensure that the scope is set. | \n |#DCO02300 | restapi.AccessDenied | It is recommended that the user contacts the tax consultant. The third-party solustion has to ensure that the used client-id exists in the list of accessible clients. |  ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error. In case of repeated occurrences, please contact the support hotline. ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage5xx"
+                }
+              }
+            }
+          }
+        },
+        "parameters": []
+      }
+    },
+    "/clients/{client-id}": {
+      "get": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "Client with granted or denied document types.",
+        "description": "Returns the requested client with a list of document types, which either can be accessed (access_granted) or cannot be accessed (access_denied). If there is no access to the client-id in general, status code 403 will be returned.",
+        "operationId": "getClientByClientId",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "Client-id consists of a consultant number (max. 7 digits) and a client number (max. 5 digits) connected by a hyphen.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 13,
+              "minLength": 6,
+              "pattern": "^\\d{4,7}-\\d{1,5}"
+            },
+            "example": "12345-123"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns a client with a list of document type, to which the client has access or no access.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientWithAccessList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02302 | restapi.FormatClientIdFault| Format of client-id is wrong. A client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen, e. g. 12345-123. | \n |",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02301 | restapi.ScopeWrongOrMissing | The third-party solution has sent an incorrect request. The required scope is empty or missing. The software provider must ensure that the scope is set. | \n |#DCO02300 | restapi.AccessDenied | It is recommended that the user contacts the tax consultant. The third-party solustion has to ensure that the used client-id exists in the list of accessible clients. |  ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error. In case of repeated occurrences, please contact the support hotline. ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage5xx"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/documents/{period}": {
+      "get": {
+        "tags": [
+          "Documents"
+        ],
+        "summary": "HR reports of one payroll period.",
+        "description": "Downloading HR reports of one payroll period for either all or one client's employee.",
+        "operationId": "getPdfDocuments",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "Client-id consists of a consultant number (max. 7 digits) and a client number (max. 5 digits) connected by a hyphen.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 13,
+              "minLength": 6,
+              "pattern": "^\\d{4,7}-\\d{1,5}"
+            },
+            "example": "12345-123"
+          },
+          {
+            "name": "document_types",
+            "in": "query",
+            "description": "Document types, which can be requested.",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "AANB, ABEG, BUBE, DAWE, KBNW, KOST, KOTR, LKTO, LOBN, LJOE, LOJE, LOJO, LOPE, LOPN, LOPS, LORE, LOWE, LSTA, LSTB, LSTE, PDAT, PFAN, PRZA, SBNW, SVNW, WEAN, ZABR, ZAKF, ZAUW"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "name": "period",
+            "in": "path",
+            "description": "Payroll period in ISO-8859 format.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "'2001-12-01'"
+          },
+          {
+            "name": "employee_number",
+            "in": "query",
+            "description": "Personnel number",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "maximum": 99999,
+              "minimum": 1
+            },
+            "example": 101
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "description": "Accept",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "application/pdf"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Requested documents combined in a pdf or in a zip file.",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "byte"
+                  }
+                }
+              },
+              "application/zip": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "byte"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02302 | restapi.FormatClientIdFault| Format of client-id is wrong. A client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen, e. g. 12345-123. | \n |#DCO02303 | restapi.NotValidTimePeriod| Parameter period in wrong format. Format YYYY-MM-DD required, e. g. 2020-12-01. | \n | #DCO02304 | restapi.DocumentTypesListNotFound| Parameter document_types must have at least one value. | \n | #DCO02306 | restapi.DocumentTypeWrongFormat| Parameter document_types has invalid format, e. g. LOBN, PDAT. | \n | #DCO02305 | restapi.EmployeeNumberNotValid| Parameter employee_number must be an Integer. ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02352 | restapi.Unauthorized| The given authorization data was invalid. ",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              },
+              "application/zip": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02301 | restapi.ScopeWrongOrMissing | The third-party solution has sent an incorrect request. The required scope is empty or missing. The software provider must ensure that the scope is set. | \n |#DCO02300 | restapi.AccessDenied | It is recommended that the user contacts the tax consultant. The third-party solustion has to ensure that the used client-id exists in the list of accessible clients. |  ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02350 | restapi.DocumentNotFound| Document does not exist for the payroll period. | \n | ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error. In case of repeated occurrences, please contact the support hotline. ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage5xx"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/documents/{period}/status": {
+      "get": {
+        "tags": [
+          "Status"
+        ],
+        "summary": "Check for documents' existence.",
+        "description": "Check if client's HR reports exist for given period.",
+        "operationId": "getStatus",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "Client-id consists of a consultant number (max. 7 digits) and a client number (max. 5 digits) connected by a hyphen.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 13,
+              "minLength": 6,
+              "pattern": "^\\d{4,7}-\\d{1,5}"
+            },
+            "example": "12345-123"
+          },
+          {
+            "name": "period",
+            "in": "path",
+            "description": "Payroll period in ISO-8859 format.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "'2001-12-01'"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "'true' is returned if client's HR reports exist for given period, otherwise false is returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02302 | restapi.FormatClientIdFault| Format of client-id is wrong. A client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen, e. g. 12345-123. | \n |#DCO02303 | restapi.NotValidTimePeriod| Parameter period in wrong format. Format YYYY-MM-DD required, e. g. 2020-12-01. | \n | ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02352 | restapi.Unauthorized| The given authorization data was invalid. ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02301 | restapi.ScopeWrongOrMissing | The third-party solution has sent an incorrect request. The required scope is empty or missing. The software provider must ensure that the scope is set. | \n |#DCO02300 | restapi.AccessDenied | It is recommended that the user contacts the tax consultant. The third-party solustion has to ensure that the used client-id exists in the list of accessible clients. |  ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error. In case of repeated occurrences, please contact the support hotline. ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage5xx"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/documents/{period}/employee_numbers": {
+      "get": {
+        "tags": [
+          "Employees"
+        ],
+        "summary": "List of employees for a payroll period.",
+        "description": "Returns a list of personnel numbers for which HR reports of a payroll period are available.",
+        "operationId": "getEmployeeNumbersByPeriod",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "Client-id consists of a consultant number (max. 7 digits) and a client number (max. 5 digits) connected by a hyphen.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 13,
+              "minLength": 6,
+              "pattern": "^\\d{4,7}-\\d{1,5}"
+            },
+            "example": "12345-123"
+          },
+          {
+            "name": "document_types",
+            "in": "query",
+            "description": "Document types, which can be requested.",
+            "required": true,
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "AANB, ABEG, BUBE, DAWE, KBNW, KOST, KOTR, LKTO, LOBN, LJOE, LOJE, LOJO, LOPE, LOPN, LOPS, LORE, LOWE, LSTA, LSTB, LSTE, PDAT, PFAN, PRZA, SBNW, SVNW, WEAN, ZABR, ZAKF, ZAUW"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "name": "period",
+            "in": "path",
+            "description": "Payroll period in ISO-8859 format.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "'2020-12-01'"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns a list of personnel numbers for which HR reports of a payroll period are available.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02302 | restapi.FormatClientIdFault| Format of client-id is wrong. A client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen, e. g. 12345-123. | \n |#DCO02303 | restapi.NotValidTimePeriod| Parameter period in wrong format. Format YYYY-MM-DD required, e. g. 2020-12-01. | \n | #DCO02304 | restapi.DocumentTypesListNotFound| Parameter document_types must have at least one value. | \n | #DCO02306 | restapi.DocumentTypeWrongFormat| Parameter document_types has invalid format, e. g. LOBN, PDAT. | \n | ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02352 | restapi.Unauthorized| The given authorization data was invalid. ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02301 | restapi.ScopeWrongOrMissing | The third-party solution has sent an incorrect request. The required scope is empty or missing. The software provider must ensure that the scope is set. | \n |#DCO02300 | restapi.AccessDenied | It is recommended that the user contacts the tax consultant. The third-party solustion has to ensure that the used client-id exists in the list of accessible clients. |  ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error. In case of repeated occurrences, please contact the support hotline. ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage5xx"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/documents-metadata": {
+      "get": {
+        "tags": [
+          "Metadata"
+        ],
+        "summary": "List of metadata for all available documents.",
+        "description": "Returns the  metadata (document types, period, timestamp) for all available documents. At least one of the query parameters 'period' or 'timestamp' have to be set, both are also possible.",
+        "operationId": "getDocumentMetadata",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "Client-id consists of a consultant number (max. 7 digits) and a client number (max. 5 digits) connected by a hyphen.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 13,
+              "minLength": 6,
+              "pattern": "^\\d{4,7}-\\d{1,5}"
+            },
+            "example": "12345-123"
+          },
+          {
+            "name": "document_types",
+            "in": "query",
+            "description": "Document types for which metadata shall be retrieved.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "AANB, ABEG, BUBE, DAWE, KBNW, KOST, KOTR, LKTO, LOBN, LJOE, LOJE, LOJO, LOPE, LOPN, LOPS, LORE, LOWE, LSTA, LSTB, LSTE, PDAT, PFAN, PRZA, SBNW, SVNW, WEAN, ZABR, ZAKF, ZAUW"
+              ]
+            }
+          },
+          {
+            "name": "period",
+            "in": "query",
+            "description": "Payroll period in ISO-8859 format. Only metadata for documents concerning this month will be retrieved.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "'2001-12-01'"
+          },
+          {
+            "name": "timestamp",
+            "in": "query",
+            "description": "Timestamp in ISO-8859 format. Only metadata for documents created from this day onward will be retrieved.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "'2001-12-01'"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns document metadata queried by document type, timestamp and period",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentMetadataDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02302 | restapi.FormatClientIdFault| Format of client-id is wrong. A client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen, e. g. 12345-123. | \n |#DCO02303 | restapi.NotValidTimePeriod| Parameter period in wrong format. Format YYYY-MM-DD required, e. g. 2020-12-01. | \n | #DCO02304 | restapi.DocumentTypesListNotFound| Parameter document_types must have at least one value. | \n | #DCO02351 | restapi.PeriodAndTimestampNotGiven| Parameter period or timestamp (or both) must have a value. | \n | ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02352 | restapi.Unauthorized| The given authorization data was invalid. ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02301 | restapi.ScopeWrongOrMissing | The third-party solution has sent an incorrect request. The required scope is empty or missing. The software provider must ensure that the scope is set. | \n |#DCO02300 | restapi.AccessDenied | It is recommended that the user contacts the tax consultant. The third-party solustion has to ensure that the used client-id exists in the list of accessible clients. |  ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error. In case of repeated occurrences, please contact the support hotline. ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage5xx"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Client": {
+        "type": "object",
+        "properties": {
+          "client_id": {
+            "type": "string",
+            "example": "123456-123"
+          },
+          "consultant_number": {
+            "type": "integer",
+            "format": "int32",
+            "example": 123456
+          },
+          "client_number": {
+            "type": "integer",
+            "format": "int32",
+            "example": 123
+          }
+        }
+      },
+      "ClientWithAccessList": {
+        "type": "object",
+        "properties": {
+          "client_id": {
+            "type": "string",
+            "example": "123456-123"
+          },
+          "consultant_number": {
+            "type": "integer",
+            "format": "int32",
+            "example": 123456
+          },
+          "client_number": {
+            "type": "integer",
+            "format": "int32",
+            "example": 123
+          },
+          "document_types": {
+            "$ref": "#/components/schemas/DocumentTypes"
+          }
+        }
+      },
+      "DocumentTypes": {
+        "type": "object",
+        "properties": {
+          "access_granted": {
+            "type": "array",
+            "example": [
+              "LOBN",
+              "LSTB"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
+          "access_denied": {
+            "type": "array",
+            "example": [
+              "BUBE",
+              "KOST"
+            ],
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ErrorMessage": {
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "#DCO02301"
+          },
+          "error_description": {
+            "type": "string",
+            "example": "restapi.FormatClientIdFault"
+          },
+          "error_uri": {
+            "type": "string",
+            "example": "https://apps.datev.de/help-center/search?q=DCO02306"
+          },
+          "request_id": {
+            "type": "string",
+            "example": "0a13eff2-44a9-4de6-90f0-1198241e7c22"
+          }
+        }
+      },
+      "ClientDocumentTypeDto": {
+        "type": "object",
+        "properties": {
+          "document_type": {
+            "type": "string",
+            "example": "LOBN"
+          },
+          "document": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MetadataDto"
+            }
+          }
+        }
+      },
+      "DocumentMetadataDto": {
+        "type": "object",
+        "properties": {
+          "employee_documents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EmployeeDocumentTypeDto"
+            }
+          },
+          "client_documents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ClientDocumentTypeDto"
+            }
+          }
+        }
+      },
+      "EmployeeDocumentTypeDto": {
+        "type": "object",
+        "properties": {
+          "document_type": {
+            "type": "string",
+            "example": "LOBN"
+          },
+          "employees": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EmployeesDocumentDto"
+            }
+          }
+        }
+      },
+      "EmployeesDocumentDto": {
+        "type": "object",
+        "properties": {
+          "employee_number": {
+            "type": "integer",
+            "format": "int32",
+            "example": 100
+          },
+          "document": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MetadataDto"
+            }
+          }
+        }
+      },
+      "MetadataDto": {
+        "type": "object",
+        "properties": {
+          "period": {
+            "type": "string",
+            "example": "2021-07-01"
+          },
+          "timestamp": {
+            "type": "string",
+            "example": "2021-07-01 15:04:11"
+          }
+        }
+      },
+      "ErrorMessage5xx": {
+        "properties": {
+          "error_description": {
+            "type": "string",
+            "example": "Temporary Error while processing Request. Please try again!"
+          },
+          "request_id": {
+            "type": "string",
+            "example": "0a13eff2-44a9-4de6-90f0-1198241e7c22"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "datev_openid": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://login.datev.de/openid/authorize",
+            "tokenUrl": "https://api.datev.de/token",
+            "scopes": {
+              "datev:hr:payrolldatareport": "Get payroll reports from payroll system"
+            }
+          }
+        }
+      },
+      "datev_idp_next": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://signin.datev.de/datevam/oauth2/realms/root/realms/user/authorize",
+            "tokenUrl": "https://signin.datev.de/datevam/oauth2/realms/root/realms/user/access_token",
+            "scopes": {
+              "datev:hr:payrolldatareport": "Get payroll reports from payroll system"
+            }
+          }
+        }
+      },
+      "datev_openid_sandbox": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://login.datev.de/openidsandbox/authorize",
+            "tokenUrl": "https://sandbox-api.datev.de/token",
+            "scopes": {
+              "datev:hr:payrolldatareport": "Get payroll reports from payroll system"
+            }
+          }
+        }
+      },
+      "client_id": {
+        "type": "apiKey",
+        "name": "X-Datev-Client-Id",
+        "in": "header",
+        "x-key-type": "client_id"
+      },
+      "client_secret": {
+        "type": "apiKey",
+        "name": "X-Datev-Client-Secret",
+        "in": "header",
+        "x-key-type": "client_secret"
+      }
+    }
+  },
+  "security": [
+    {
+      "client_id": [],
+      "datev_openid": [
+        "datev:hr:payrolldatareport"
+      ]
+    },
+    {
+      "client_id": [],
+      "datev_idp_next": [
+        "datev:hr:payrolldatareport"
+      ]
+    },
+    {
+      "client_id": [],
+      "datev_openid_sandbox": [
+        "datev:hr:payrolldatareport"
+      ]
+    }
+  ],
+  "servers": [
+    {
+      "url": "https://hr-payrollreports.api.datev.de/platform/v1"
+    },
+    {
+      "url": "https://hr-payrollreports.api.datev.de/platform-sandbox/v1"
+    }
+  ]
+}

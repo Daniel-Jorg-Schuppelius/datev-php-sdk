@@ -1,0 +1,531 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "accounting-clients",
+    "description": "API for retrieving information about accounting clients.\n",
+    "termsOfService": "https://www.datev.de/web/de/m/ueber-datev/das-unternehmen/agb/?stat_Mparam=int_url_datev_agb",
+    "license": {
+      "name": "DATEV eG",
+      "url": "http://www.datev.de"
+    },
+    "version": "2.0"
+  },
+  "servers": [
+    {
+      "url": "https://accounting-clients.api.datev.de/platform/v2"
+    },
+    {
+      "url": "https://accounting-clients.api.datev.de/platform-sandbox/v2"
+    }
+  ],
+  "security": [
+    {
+      "datev_openid": [
+        "datev:accounting:clients"
+      ],
+      "client_id": []
+    },
+    {
+      "datev_openid_sandbox": [
+        "datev:accounting:clients"
+      ],
+      "client_id": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "clients",
+      "description": "Get a list of clients and basic data about a client"
+    }
+  ],
+  "paths": {
+    "/clients": {
+      "get": {
+        "tags": [
+          "clients"
+        ],
+        "summary": "Returns a list of clients.",
+        "description": "Returns a list of all clients which can be accessed by the user. In addition, this list also provides the available services for the data transfer to the DATEV data center. For all subsequent requests concerning a data transfer to DATEV, the ID of the client is necessary. The ID is a technical object for the communication between the third-party solution and the DATEV data center. The ID is not to be displayed to the end user. Please note: Data transfer to the DATEV data center is only possible if the user has access to the client. The third-party solution must ensure this by checking if the client number and consultant number exists in the list of clients.",
+        "operationId": "getClients",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Entering a filter expression influences the number of results.\nFilters can only be set for consultant_number (operator: eq) and client_number (operator: eq).\n",
+            "schema": {
+              "type": "string"
+            },
+            "example": "filter=consultant_number eq 29098 and client_number eq 55003"
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "Number of items to skip when retrieving the list.\n",
+            "schema": {
+              "minimum": 0,
+              "type": "integer"
+            },
+            "example": "skip=10"
+          },
+          {
+            "name": "top",
+            "in": "query",
+            "description": "Maximum number of items to return when querying the list. If no value or a value greater than 100 is entered, only 100 entries will be returned.\n",
+            "schema": {
+              "maximum": 100,
+              "minimum": 1,
+              "type": "integer"
+            },
+            "example": "top=10"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of accessible clients has been returned.",
+            "headers": {
+              "Total-Items": {
+                "description": "Total count of clients available",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Total-Items: 248"
+              },
+              "Link": {
+                "description": "Contains link to the previous/next page.\n",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "<?skip=0&top=100>;rel=\"prev\", <?skip=200&top=100>;rel=\"next\""
+              }
+            },
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Client"
+                  }
+                },
+                "example": [
+                  {
+                    "client_number": 55003,
+                    "consultant_number": 29098,
+                    "id": "29098-55003",
+                    "name": "Musterholz",
+                    "services": [
+                      {
+                        "name": "Belegbilderservice",
+                        "scopes": [
+                          "accounting:documents"
+                        ]
+                      },
+                      {
+                        "name": "Buchungsdatenservice",
+                        "scopes": [
+                          "datev:accounting:extf-files-import"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "client_number": 55004,
+                    "consultant_number": 29098,
+                    "id": "29098-55004",
+                    "name": "Testholz",
+                    "services": [
+                      {
+                        "name": "Buchungsdatenservice",
+                        "scopes": [
+                          "datev:accounting:extf-files-import"
+                        ]
+                      },
+                      {
+                        "name": "Rechnungsdatenservice 2.0",
+                        "scopes": [
+                          "datev:accounting:invoices"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "<table>\n  <thead>\n    <tr>\n      <th>Error</th>\n      <th>Description</th>\n      <th>Reason and solution</th>\n    </tr>\n  </thead>\n  <tbody>\n     <tr>\n      <td>1008828</td>\n      <td>Invalid query parameters</td>\n      <td>Paging parameters are invalid - skip - must be a positive integer</td>\n    </tr>\n    <tr>\n      <td>1008828</td>\n      <td>Invalid query parameters</td>\n      <td>Paging parameters are invalid - top - must be a positive integer</td>\n    </tr>\n    <tr>\n      <td>1008828</td>\n      <td>Invalid query parameters</td>\n      <td>Filter syntax is invalid</td>\n    </tr>\n    <tr>\n      <td>1008828</td>\n      <td>Invalid query parameters</td>\n      <td>Filter operators are invalid - client_number - only supports the operator \"eq\"</td>\n    </tr>\n    <tr>\n      <td>1008828</td>\n      <td>Invalid query parameters</td>\n      <td>Filter operators are invalid - consultant_number - only supports the operator \"eq\"</td>\n    </tr>\n    <tr>\n      <td>1008828</td>\n      <td>Invalid query parameters</td>\n      <td>Filter parameters are invalid - client_number - must be a positive integer from 1 to 9999999999</td>\n    </tr>\n    <tr>\n      <td>1008828</td>\n      <td>Invalid query parameters</td>\n      <td>Filter parameters are invalid - consultant_number - must be a positive integer from 1 to 9999999999</td>\n    </tr>\n    <tr>\n      <td>1008828</td>\n      <td>Invalid query parameters</td>\n      <td>Filter parameters are invalid - xyz - is not supported</td>\n    </tr>\n    <tr>\n      <td>1008828</td>\n      <td>Invalid query parameters</td>\n      <td>The combination of filters is invalid. Supported logical operator \"and\"</td>\n    </tr>\n  </tbody>\n</table>\n"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Retrieval of the specified resource is not allowed. This can be caused by missing security scopes or missing user permissions.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "type": "http://www.datev.de/hilfe/1008829",
+                  "title": "Missing required scope",
+                  "detail": "Missing scope(s) are: datev:accounting:clients",
+                  "request_id": "f11381c7-ba0e-4a3a-b2eb-fe4a6cc092c9",
+                  "status": 403
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Method Not Allowed",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "title": "Method Not Allowed",
+                  "request_id": "f11381c7-ba0e-4a3a-b2eb-fe4a6cc092c9",
+                  "status": 405
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "title": "Not Acceptable",
+                  "request_id": "f11381c7-ba0e-4a3a-b2eb-fe4a6cc092c9",
+                  "status": 406
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error occurred. Further retries may not yield different results and should be avoided. Should the problem persist, please contact support.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "title": "Internal Server Error",
+                  "request_id": "f11381c7-ba0e-4a3a-b2eb-fe4a6cc092c9",
+                  "status": 500
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service currently not available. Please try again later.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "title": "Service Unavailable",
+                  "request_id": "f11381c7-ba0e-4a3a-b2eb-fe4a6cc092c9",
+                  "status": 503
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clients/{client-id}": {
+      "get": {
+        "tags": [
+          "clients"
+        ],
+        "summary": "Retrieve a specific client.",
+        "description": "Returns a specific client which the user has access to. In addition, this item also provides the available services for data transfer to the DATEV data center. The client ID is a technical object for the communication between the third-party solution and the DATEV data center. The ID is not to be displayed to the end user. Please note: A data transfer to the DATEV data center is only possible if the user has access to the client. The third-party solution must ensure this by checking if the client number and consultant number exists in the list of clients.",
+        "operationId": "getClient",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "ID that identifies the client",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A specific client has been returned.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Client"
+                },
+                "example": {
+                  "client_number": 55003,
+                  "consultant_number": 29098,
+                  "id": "29098-55003",
+                  "name": "Musterholz",
+                  "services": [
+                    {
+                      "name": "Belegbilderservice",
+                      "scopes": [
+                        "accounting:documents"
+                      ]
+                    },
+                    {
+                      "name": "Buchungsdatenservice",
+                      "scopes": [
+                        "datev:accounting:extf-files-import"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Retrieval of the specified resource is not allowed. This can be caused by missing security scopes or missing user permissions.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "type": "http://www.datev.de/hilfe/1008829",
+                  "title": "Missing required scope",
+                  "detail": "Missing scope(s) are: datev:accounting:clients",
+                  "request_id": "f11381c7-ba0e-4a3a-b2eb-fe4a6cc092c9",
+                  "status": 403
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found."
+          },
+          "405": {
+            "description": "Method Not Allowed",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "title": "Method Not Allowed",
+                  "request_id": "f11381c7-ba0e-4a3a-b2eb-fe4a6cc092c9",
+                  "status": 405
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "title": "Not Acceptable",
+                  "request_id": "f11381c7-ba0e-4a3a-b2eb-fe4a6cc092c9",
+                  "status": 406
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error occurred. Further retries may not yield different results and should be avoided. Should the problem persist, please contact support.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "title": "Internal Server Error",
+                  "request_id": "f11381c7-ba0e-4a3a-b2eb-fe4a6cc092c9",
+                  "status": 500
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service currently not available. Please try again later.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "title": "Service Unavailable",
+                  "request_id": "f11381c7-ba0e-4a3a-b2eb-fe4a6cc092c9",
+                  "status": 503
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Client": {
+        "type": "object",
+        "properties": {
+          "client_number": {
+            "type": "integer",
+            "description": "Client number",
+            "format": "int64",
+            "example": 55003
+          },
+          "consultant_number": {
+            "type": "integer",
+            "description": "Consultant number",
+            "format": "int64",
+            "example": 29098
+          },
+          "id": {
+            "type": "string",
+            "description": "Client ID (technical)",
+            "example": "29098-55003"
+          },
+          "name": {
+            "type": "string",
+            "description": "Client name",
+            "example": "Muster GmbH"
+          },
+          "services": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Service"
+            }
+          }
+        }
+      },
+      "Service": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the service (Buchungsdatenservice, Belegbilderservice, Rechnungsdatenservice 1.0, Rechnungsdatenservice 2.0).",
+            "example": "Belegbilderservice"
+          },
+          "scopes": {
+            "type": "array",
+            "description": "Required scopes for the service.",
+            "example": [
+              "datev:file:import"
+            ],
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "A URI reference [RFC3986](https://tools.ietf.org/html/rfc3986) that identifies the\nproblem type. This specification encourages that, when\ndereferenced, a human-readable documentation for the\nproblem type (e.g., using HTML [W3C.REC-html5-20141028]) is provided.  When\nthis member is not present, its value is assumed to be \"about:blank\".\n"
+          },
+          "title": {
+            "type": "string",
+            "description": "A short, human-readable summary of the problem\ntype. It SHOULD NOT change from occurrence to occurrence of the\nproblem, except for purposes of localization (e.g., using\nproactive content negotiation; see [RFC7231](https://tools.ietf.org/html/rfc7231#section-3.4), Section 3.4).\n"
+          },
+          "detail": {
+            "type": "string",
+            "description": "A human-readable explanation specific to this occurrence of the problem.\n"
+          },
+          "affected_elements": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AffectedElement"
+            }
+          },
+          "request_id": {
+            "type": "string",
+            "description": "ID of the request"
+          },
+          "status": {
+            "type": "integer",
+            "description": "The HTTP status code ([RFC7231](https://tools.ietf.org/html/rfc7231#section-6), Section 6)\ngenerated by the origin server for this occurrence of the problem.\n",
+            "format": "int32"
+          }
+        }
+      },
+      "AffectedElement": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the affected element.",
+            "example": "skip"
+          },
+          "reason": {
+            "type": "string",
+            "description": "Reason for the error.",
+            "example": "Must be a positive integer"
+          }
+        }
+      }
+    },
+    "parameters": {
+      "client-id": {
+        "name": "client-id",
+        "in": "path",
+        "description": "ID that identifies the client",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "example": "29098-55003"
+      }
+    },
+    "securitySchemes": {
+      "client_secret": {
+        "type": "apiKey",
+        "name": "X-DATEV-Client-Secret",
+        "in": "header",
+        "x-key-type": "client_secret"
+      },
+      "client_id": {
+        "type": "apiKey",
+        "name": "X-DATEV-Client-Id",
+        "in": "header",
+        "x-key-type": "client_id"
+      },
+      "datev_openid": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://login.datev.de/openid/authorize",
+            "tokenUrl": "https://api.datev.de/token",
+            "scopes": {
+              "datev:accounting:clients": "Get a list of clients and basic data about a client"
+            }
+          }
+        }
+      },
+      "datev_openid_sandbox": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://login.datev.de/openidsandbox/authorize",
+            "tokenUrl": "https://sandbox-api.datev.de/token",
+            "scopes": {
+              "datev:accounting:clients": "Get a list of clients and basic data about a client"
+            }
+          }
+        }
+      }
+    }
+  }
+}

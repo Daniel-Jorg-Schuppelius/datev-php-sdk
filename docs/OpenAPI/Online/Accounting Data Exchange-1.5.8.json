@@ -1,0 +1,1942 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Accounting Data Exchange",
+    "version": "1.5.8",
+    "description": "The Accounting Data Exchange API provides accounting data from \"DATEV Rechnungswesen\" in structured form.\n\nIntended for server-to-server (B2B) integrations. Browser-based clients are not supported; CORS is not required.\n",
+    "contact": {
+      "name": "DATEV Datenservice Export Rechnungswesen",
+      "email": "Datenservice_Export_RW@datev.de"
+    },
+    "x-datevInfo": {
+      "levelOfAssurance": 3,
+      "copyright": {
+        "description": "DATEV License",
+        "url": "https://www.datev.de/web/de/m/ueber-datev/das-unternehmen/agb/?stat_Mparam=int_url_datev_agb"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://accounting-data-exchange.api.datev.de/platform/v1",
+      "description": "Stage-specific environment base URL (e.g. QS / PROD)"
+    },
+    {
+      "url": "https://accounting-data-exchange.api.datev.de/platform-sandbox/v1"
+    }
+  ],
+  "paths": {
+    "/clients/{clientId}/jobs/{jobId}/state": {
+      "get": {
+        "tags": [
+          "jobs"
+        ],
+        "summary": "Get the state of a job",
+        "description": "Retrieve the state of a previously posted job.\n",
+        "operationId": "getJobState",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ClientId"
+          },
+          {
+            "$ref": "#/components/parameters/JobId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceparentHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The Job state information.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobStateResponse"
+                },
+                "examples": {
+                  "pending": {
+                    "summary": "Job is waiting to be processed",
+                    "value": {
+                      "jobState": "PENDING"
+                    }
+                  },
+                  "completed": {
+                    "summary": "Job has been successfully completed",
+                    "value": {
+                      "jobState": "COMPLETED"
+                    }
+                  },
+                  "failed": {
+                    "summary": "Job processing failed",
+                    "value": {
+                      "jobState": "FAILED"
+                    }
+                  },
+                  "deleted": {
+                    "summary": "Job has been deleted",
+                    "value": {
+                      "jobState": "DELETED"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/4XX"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/5XX"
+          }
+        }
+      }
+    },
+    "/clients/{clientId}/fiscal-years": {
+      "get": {
+        "tags": [
+          "fiscal years"
+        ],
+        "summary": "Retrieve a list of fiscal years",
+        "description": "Access the accounting fiscal years including the accounting master data of a client/company.\n",
+        "operationId": "getFiscalYears",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ClientId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceparentHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All available fiscal years retrieved successfully.",
+            "content": {
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "maxItems": 2147483647,
+                  "items": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                },
+                "examples": {
+                  "noneFiscalYears": {
+                    "summary": "no fiscal years available",
+                    "value": []
+                  },
+                  "singleFiscalYear": {
+                    "summary": "one fiscal year",
+                    "value": [
+                      20240101
+                    ]
+                  },
+                  "manyFiscalYears": {
+                    "summary": "multiple fiscal years",
+                    "value": [
+                      20200101,
+                      20210101,
+                      20220101,
+                      20230101
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/4XX"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/5XX"
+          }
+        }
+      }
+    },
+    "/clients/{clientId}/fiscal-years/{fiscalYearId}": {
+      "get": {
+        "tags": [
+          "fiscal years"
+        ],
+        "summary": "Retrieve a specific fiscal year",
+        "description": "Retrieve an accounting fiscal year including the accounting master data of a client/company.",
+        "operationId": "getFiscalYear",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ClientId"
+          },
+          {
+            "$ref": "#/components/parameters/FiscalYearId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceparentHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Available fiscal years retrieved successfully.",
+            "content": {
+              "application/x-ndjson": {
+                "schema": {
+                  "$ref": "#/components/schemas/FiscalYear"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/4XX"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/5XX"
+          }
+        }
+      }
+    },
+    "/clients/{clientId}/fiscal-years/{fiscalYearId}/account-postings": {
+      "post": {
+        "tags": [
+          "account-postings-jobs-receiver"
+        ],
+        "summary": "Create a new job for retrieving Account Postings in asynchronous way",
+        "description": "Create a new job for retrieving an account postings list for general ledger/subledger accounts for a fiscal year.\nPostings with error flags or postings that are flagged as posting proposals will not be processed.\nResult is a job id which will be used, to retrieve the data afterwards.\n\nUse the given job id and call the GET method to retrieve the account-postings.   \n\n**Note:** The data related to the submitted job will be retained for a maximum of 12 hours. \nIf the data is not retrieved within this time frame, it will be automatically deleted.\n",
+        "operationId": "postAccountPostingsJob",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ClientId"
+          },
+          {
+            "$ref": "#/components/parameters/FiscalYearId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceparentHeader"
+          },
+          {
+            "in": "query",
+            "name": "documentLinks",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            },
+            "description": "Specifies whether to include document links related to each account posting in the response.\n\n**Document Links Inclusion:**\n\nIf **documentLinks=true** is provided, the response will include links to associated documents for each account posting, if available. \nIf this parameter is not set or set to false, document links will be omitted from the response.\n"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "The Job has been successfully submitted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Job"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/4XX"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/5XX"
+          }
+        }
+      }
+    },
+    "/clients/{clientId}/fiscal-years/{fiscalYearId}/accounting-sequences": {
+      "get": {
+        "tags": [
+          "accounting-sequences"
+        ],
+        "summary": "Retrieve a list of accounting sequences",
+        "description": "Retrieve a list of accounting sequences in the fiscal year.",
+        "operationId": "getAccountingSequences",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ClientId"
+          },
+          {
+            "$ref": "#/components/parameters/FiscalYearId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceparentHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of accounting sequences for a fiscal year has been retrieved.",
+            "content": {
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "maxItems": 2147483647,
+                  "items": {
+                    "$ref": "#/components/schemas/AccountingSequence"
+                  }
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/4XX"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/5XX"
+          }
+        }
+      }
+    },
+    "/clients/{clientId}/fiscal-years/{fiscalYearId}/general-ledger-accounts": {
+      "get": {
+        "tags": [
+          "general-ledger-accounts"
+        ],
+        "summary": "Retrieve a list of general ledger accounts",
+        "description": "Retrieve an entire list of general ledger accounts for a fiscal year. The list of general ledger accounts includes **all captioned general ledger accounts.**\n\nNote the “onlyBooked” query parameter.\n\nThe general ledger account captions and functions are delivered, but no account values.\n\nNote: If a client uses the SKR14 chart of accounts for agriculture and forestry, the corresponding\ntext keys are loaded automatically **when the query parameter ‘onlyBooked’ is set to true.**\nIn this case, the account name displayed is derived either from the account name itself or from the text key name.\n",
+        "operationId": "getGeneralLedgerAccounts",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ClientId"
+          },
+          {
+            "$ref": "#/components/parameters/FiscalYearId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceparentHeader"
+          },
+          {
+            "in": "query",
+            "name": "onlyBooked",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            },
+            "description": "Default setting: \"onlyBooked=false\" retrieves a list of all captioned general ledger accounts, regardless of whether an account is booked or not.\n\nBy adding the optional parameter \"onlyBooked=true\", you can retrieve a list of only those general ledger accounts that are booked, regardless of whether the account has a caption or not.\n"
+          },
+          {
+            "in": "query",
+            "name": "includesPersonalAccounts",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            },
+            "description": "Include booked and captioned business partner accounts in the response.\nWhen true, both general ledger accounts and business partner accounts that are booked and captioned are returned.\nWhen false (default), only general ledger accounts are returned.\n"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of general ledger accounts for a fiscal year has been retrieved.",
+            "content": {
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "maxItems": 2147483647,
+                  "items": {
+                    "$ref": "#/components/schemas/GeneralLedgerAccount"
+                  }
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/4XX"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/5XX"
+          }
+        }
+      }
+    },
+    "/clients/{clientId}/fiscal-years/{fiscalYearId}/terms-of-payment": {
+      "get": {
+        "tags": [
+          "terms-of-payment"
+        ],
+        "summary": "Retrieve a list of terms of payment",
+        "description": "Retrieve an entire list of terms of payment for a fiscal year.\n",
+        "operationId": "getTermsOfPayments",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ClientId"
+          },
+          {
+            "$ref": "#/components/parameters/FiscalYearId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceparentHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of terms of payment for a fiscal year has been retrieved.",
+            "content": {
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "maxItems": 2147483647,
+                  "items": {
+                    "$ref": "#/components/schemas/TermOfPayment"
+                  }
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/4XX"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/5XX"
+          }
+        }
+      }
+    },
+    "/clients/{clientId}/fiscal-years/{fiscalYearId}/agricultural-financial-statement": {
+      "get": {
+        "tags": [
+          "agricultural-financial-statement"
+        ],
+        "summary": "Retrieve an agricultural-financial-statement",
+        "description": "The agricultural financial statement can only be made available in the DATEV RZ from the financial year 20220701/20230630 and can therefore only be accessed from this year onwards.\n\nPrecondition: Accounting is based on the DATEV standard chart of accounts SKR14 for agricultural and forestry businesses.\n",
+        "operationId": "getAgriculturalFinancialStatement",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ClientId"
+          },
+          {
+            "$ref": "#/components/parameters/FiscalYearAfsId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceparentHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The agricultural financial statement for a fiscal year has been retrieved.",
+            "headers": {
+              "plausibility": {
+                "$ref": "#/components/headers/Plausibility"
+              },
+              "timestamp": {
+                "$ref": "#/components/headers/Timestamp"
+              }
+            },
+            "content": {
+              "text/csv": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary",
+                  "maxLength": 1048576
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/4XX"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/5XX"
+          }
+        }
+      }
+    },
+    "/clients/{clientId}/account-postings-jobs/{jobId}": {
+      "get": {
+        "tags": [
+          "account-postings-jobs-exporter"
+        ],
+        "summary": "Retrieve account postings for a completed job",
+        "description": "Retrieve an account postings list for general ledger/subledger accounts for a fiscal year after completing asynchronous data retrieval.\nPostings with error flags or postings that are flagged as posting proposals are not transferred.\n\n**Pagination:**\npage` parameter: Returns specified page and headers describing pagination details\n",
+        "operationId": "getAccountPostingsJob",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ClientId"
+          },
+          {
+            "$ref": "#/components/parameters/JobId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceparentHeader"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "minimum": 1,
+              "maximum": 25000,
+              "example": 5
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Account postings retrieved successfully.",
+            "headers": {
+              "x-total-count": {
+                "description": "Total number of items",
+                "schema": {
+                  "type": "integer",
+                  "format": "int64",
+                  "minimum": 1,
+                  "maximum": 1250000000
+                },
+                "example": 10123
+              },
+              "x-total-pages": {
+                "description": "Total number of pages",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32",
+                  "minimum": 1,
+                  "maximum": 25000
+                },
+                "example": 5
+              },
+              "x-current-page": {
+                "description": "Current page number",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32",
+                  "minimum": 1,
+                  "maximum": 25000
+                },
+                "example": 1
+              },
+              "x-page-size": {
+                "description": "Number of items per page",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32",
+                  "minimum": 50000,
+                  "maximum": 50000
+                },
+                "example": 50000
+              }
+            },
+            "content": {
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "maxItems": 2147483647,
+                  "items": {
+                    "$ref": "#/components/schemas/AccountPosting"
+                  }
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/4XX"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/5XX"
+          }
+        }
+      }
+    },
+    "/clients/{clientId}/fiscal-years/{fiscalYearId}/sums-and-balances": {
+      "get": {
+        "tags": [
+          "sums-and-balances"
+        ],
+        "summary": "Retrieve a list of accounting sums and balances",
+        "description": "The list of accounting sums and balances is one of the basic evaluations of accounting and contains the list of the posted accounts.<br>\nThe overview shows the development of values per account for the current fiscal year. The opening balance values, the monthly values (without opening balance), the cumulated monthly values and the total balance are displayed.\nThis evaluation contains current postings and closing entries.\n",
+        "operationId": "getSumsAndBalances",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ClientId"
+          },
+          {
+            "$ref": "#/components/parameters/FiscalYearId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceparentHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sums and balances retrieved successfully.",
+            "content": {
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "maxItems": 2147483647,
+                  "items": {
+                    "$ref": "#/components/schemas/SumsAndBalances"
+                  }
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/4XX"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/5XX"
+          }
+        }
+      }
+    },
+    "/clients/{clientId}/fiscal-years/{fiscalYearId}/sums-and-balances-quantity-and-weight": {
+      "post": {
+        "tags": [
+          "sums-and-balances-quantity-and-weight-jobs-receiver"
+        ],
+        "summary": "Create a new job for retrieving Sums and Balances Quantity and Weight in asynchronous way",
+        "description": "Create a new job for retrieving a list of accounting sums and balances with quantity and weight values for agricultural/forestry accounting systems.\nThis is only and specifically for SKR 14 agriculture and forestry users and contains the list of the posted accounts.\nResult is a job id which will be used, to retrieve the data afterwards.\n\nUse the given job id and call the GET method to retrieve the sums-and-balances-quantity-and-weight.\n\n**Note:** The data related to the submitted job will be retained for a maximum of 12 hours. If the data is not retrieved within this time frame, it will be automatically deleted.\n",
+        "operationId": "postSumsAndBalancesQuantityAndWeightJob",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ClientId"
+          },
+          {
+            "$ref": "#/components/parameters/FiscalYearId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceparentHeader"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "The Job has been successfully submitted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Job"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/4XX"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/5XX"
+          }
+        }
+      }
+    },
+    "/clients/{clientId}/sums-and-balances-quantity-and-weight-jobs/{jobId}": {
+      "get": {
+        "tags": [
+          "sums-and-balances-quantity-and-weight-jobs-exporter"
+        ],
+        "summary": "Retrieve sums and balances quantity and weight for a completed job",
+        "description": "Retrieve a list of accounting sums and balances with quantity and weight values for a completed asynchronous job.\nThis is only and specifically for SKR 14 agriculture and forestry users.\n\n**Note:** After a successful retrieval, the data associated with the job is permanently deleted.\n",
+        "operationId": "getSumsAndBalancesQuantityAndWeightJob",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ClientId"
+          },
+          {
+            "$ref": "#/components/parameters/JobId"
+          },
+          {
+            "$ref": "#/components/parameters/TraceparentHeader"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sums and balances quantity and weight retrieved successfully.",
+            "content": {
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "maxItems": 2147483647,
+                  "items": {
+                    "$ref": "#/components/schemas/SumsAndBalancesQuantityAndWeight"
+                  }
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/4XX"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/5XX"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "headers": {
+      "Plausibility": {
+        "description": "Describes the plausibility of the CSV file",
+        "example": "correct",
+        "schema": {
+          "type": "string",
+          "maxLength": 7,
+          "enum": [
+            "CORRECT",
+            "FAULTY"
+          ]
+        }
+      },
+      "Timestamp": {
+        "description": "timestamp on which the agricultural financial statement was generated",
+        "example": "2023-07-20T00:00:00.000+02:00",
+        "schema": {
+          "type": "string",
+          "format": "date-time",
+          "maxLength": 35
+        }
+      }
+    },
+    "parameters": {
+      "TraceparentHeader": {
+        "name": "traceparent",
+        "in": "header",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{2}-[0-9a-f]{32}-[0-9a-f]{16}-[0-9a-f]{2}$",
+          "minLength": 55,
+          "maxLength": 55
+        },
+        "description": "W3C Trace Context Header for tracing. example: 00-4bf92f3577b34da6a3ce929d0e0e4733-00f067aa0ba902b7-01\n"
+      },
+      "ClientId": {
+        "in": "path",
+        "name": "clientId",
+        "description": "ID that identifies the client",
+        "required": true,
+        "example": "29098-55003",
+        "schema": {
+          "pattern": "^(?<consultant>[1-9]\\d{3,6})-(?<client>[1-9]\\d{0,4})$",
+          "type": "string",
+          "maxLength": 13
+        }
+      },
+      "FiscalYearId": {
+        "in": "path",
+        "name": "fiscalYearId",
+        "required": true,
+        "description": "(WirtschaftsjahresId) Id of fiscal year",
+        "example": 20240411,
+        "schema": {
+          "type": "integer",
+          "format": "int32",
+          "minimum": 19920101,
+          "maximum": 20991231
+        }
+      },
+      "FiscalYearAfsId": {
+        "in": "path",
+        "name": "fiscalYearId",
+        "required": true,
+        "description": "(WirtschaftsjahresId) Id of fiscal year",
+        "example": 20240701,
+        "schema": {
+          "type": "integer",
+          "format": "int32",
+          "minimum": 20220101,
+          "maximum": 20991231
+        }
+      },
+      "JobId": {
+        "in": "path",
+        "name": "jobId",
+        "description": "ID that identifies the job",
+        "required": true,
+        "example": "550e8400-e29b-41d4-a716-446655440000",
+        "schema": {
+          "type": "string",
+          "format": "uuid",
+          "pattern": "^[0-9a-fA-F]{8}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{12}$",
+          "maxLength": 36
+        }
+      }
+    },
+    "responses": {
+      "4XX": {
+        "description": "A client error has occurred.",
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/ProblemDetail"
+            }
+          }
+        }
+      },
+      "5XX": {
+        "description": "Unexpected server error occurred. Further retries may not yield\ndifferent results and should be avoided. Should the problem persist, please\ncontact support.\n",
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/ProblemDetail"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "ProblemDetail": {
+        "title": "Problem Object",
+        "description": "An RFC 9457 problem object",
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "type": {
+            "type": "string",
+            "format": "uri-reference",
+            "description": "A URI reference that identifies the problem type.",
+            "pattern": "^(([^:\\/?#]+):)?(\\/\\/(([^@\\\\[\\/?#]*)@)?(\\\\[[A-Fa-f0-9:.]*[%A-Za-z0-9]*]|[^\\\\[\\/?#:]*)(:(\\\\{[^}]+\\\\}?|[^\\/?#]*))?)?([^?#]*)(\\\\?([^#]*))?(#(.*))?",
+            "maxLength": 2048,
+            "example": "https://api.datev.de/accounting/problems/invalid-request"
+          },
+          "title": {
+            "type": "string",
+            "pattern": "^[\\s\\S]{0,256}$",
+            "description": "A short, human-readable summary of the problem type.",
+            "maxLength": 256,
+            "example": "Bad Request"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "description": "The HTTP status code generated by the origin server for this occurrence of the problem.",
+            "minimum": 100,
+            "maximum": 599,
+            "example": 200
+          },
+          "detail": {
+            "type": "string",
+            "pattern": "^[\\s\\S]{0,300000}$",
+            "maxLength": 300000,
+            "description": "A human-readable explanation specific to this occurrence of the problem.",
+            "example": "The request body contains invalid fields. Please check the documentation."
+          },
+          "instance": {
+            "type": "string",
+            "format": "uri-reference",
+            "pattern": "^(([^:\\/?#]+):)?(\\/\\/(([^@\\\\[\\/?#]*)@)?(\\\\[[A-Fa-f0-9:.]*[%A-Za-z0-9]*]|[^\\\\[\\/?#:]*)(:(\\\\{[^}]+\\\\}?|[^\\/?#]*))?)?([^?#]*)(\\\\?([^#]*))?(#(.*))?",
+            "maxLength": 2048,
+            "description": "A URI reference that identifies the specific occurrence of the problem. It may or may not yield further information if dereferenced.",
+            "example": "/clients/12345-123/jobs/abc-def-ghi"
+          },
+          "requestId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^[0-9a-fA-F]{8}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{12}$",
+            "description": "UUID of the Request",
+            "example": "a3b8d425-2b80-4e9f-871a-3c9b1e5d7f42"
+          }
+        },
+        "required": [
+          "status",
+          "title"
+        ],
+        "readOnly": true
+      },
+      "JobState": {
+        "example": "COMPLETED",
+        "type": "string",
+        "maxLength": 9,
+        "enum": [
+          "PENDING",
+          "COMPLETED",
+          "FAILED",
+          "DELETED"
+        ],
+        "description": "The current state of the job"
+      },
+      "JobStateResponse": {
+        "additionalProperties": false,
+        "type": "object",
+        "example": "COMPLETED",
+        "properties": {
+          "jobState": {
+            "$ref": "#/components/schemas/JobState"
+          }
+        },
+        "required": [
+          "jobState"
+        ]
+      },
+      "Job": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "jobId": {
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{8}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{12}$",
+            "format": "uuid",
+            "maxLength": 36,
+            "description": "ID of the job",
+            "example": "a140ae4c-bc25-4a40-8b56-785b054a3c1c"
+          }
+        }
+      },
+      "AccountNumber": {
+        "type": "integer",
+        "format": "int32",
+        "description": "(Sach-Kontonummer) General Ledger account number shown in maximum length of 8 digits (technical length)",
+        "minimum": 1,
+        "maximum": 99999999,
+        "example": 10000000
+      },
+      "AccountingSequenceId": {
+        "description": "(Stapelidentifikator) Accounting sequence ID",
+        "type": "integer",
+        "format": "int32",
+        "minimum": 0,
+        "maximum": 999999999,
+        "example": 345
+      },
+      "CurrencyCode": {
+        "type": "string",
+        "description": "(Wähungskennzeichen) 3-character ISO currency code – indicates the currency used for the amount, see Info Database, document [1080170](https://apps.datev.de/knowledge/help/search?q=1080170)",
+        "minLength": 3,
+        "maxLength": 3,
+        "pattern": "^[A-Z]{3}$",
+        "example": "EUR"
+      },
+      "MarkOfOrigin": {
+        "type": "string",
+        "pattern": "^[A-Z][A-Z0-9]?$",
+        "minLength": 1,
+        "maxLength": 2,
+        "example": "DC",
+        "description": "(Herkunftskennzeichen) Origin indicator"
+      },
+      "RecordType": {
+        "type": "string",
+        "description": "(Buchungstyp) Record type (financial accounting, annual financial statements)",
+        "maxLength": 27,
+        "default": "financial_accounting",
+        "example": "financial_accounting",
+        "enum": [
+          "financial_accounting",
+          "annual_financial_statements"
+        ]
+      },
+      "FiscalYear": {
+        "additionalProperties": false,
+        "type": "object",
+        "properties": {
+          "accountLength": {
+            "type": "integer",
+            "description": "(Sachkontenlänge) General ledger account length, permissible general ledger account length of 4–8 digits, subledger accounts have general ledger account length + 1 (v1)",
+            "example": 4
+          },
+          "accountSystem": {
+            "type": "integer",
+            "description": "(DATEV-Standardkontenrahmen) DATEV standard chart of accounts (SKR) (v1)",
+            "example": 3
+          },
+          "advanceTurnoverTaxReturn": {
+            "type": "string",
+            "description": "(Voranmeldezeitraum) Advance turnover tax return (not specified, month, quarter, no advance turnover tax return).",
+            "maxLength": 30,
+            "enum": [
+              "month",
+              "quarter",
+              "no_advance_turnover_tax_return"
+            ],
+            "example": "month"
+          },
+          "costLength": {
+            "type": "integer",
+            "format": "int16",
+            "description": "(Kostenstellenlänge) Cost length",
+            "minimum": 8,
+            "maximum": 36,
+            "default": 8,
+            "example": 8,
+            "nullable": true
+          },
+          "currencyCode": {
+            "$ref": "#/components/schemas/CurrencyCode"
+          },
+          "isInvoiceDateCheckOn": {
+            "type": "boolean",
+            "description": "(Belegdatumsprüfung) Document date check **False** = entry of outgoing invoices with document date after a set date is permissible. **True** = entry of outgoing invoices with a document date after a set date is not permissible (invoice date check is active as a default setting within Rechnungswesen) This property supports you when writing accounting sequences/sets for outgoing invoices",
+            "example": true
+          },
+          "isUsingDeliveryDate": {
+            "type": "boolean",
+            "description": "(Leistungsdatum nutzen) Use delivery date **False** = the setting \"use delivery date\"is not activated **True** = the setting \"use delivery date\" is activated This property supports you when writing accounting sequences/sets for outgoing and incoming invoices. For more information, see Info Database, document [9211426](https://apps.datev.de/knowledge/help/search?q=9211426).",
+            "example": true
+          },
+          "legalForm": {
+            "type": "string",
+            "maxLength": 71,
+            "enum": [
+              "sole_propriertorship",
+              "corporation",
+              "cooperative",
+              "partnership_under_the_german_civil_code",
+              "limited_partnership_with_a_limited_liability_company_as_general_partner",
+              "limited_partnership",
+              "general_partnership",
+              "association",
+              "foundation",
+              "public_corporation",
+              "corporation_under_communal_budget_ordinance",
+              "non_profit_corporation",
+              "rentals_and_royalties_income_tax",
+              "rentals_and_royalties_separate_and_uniform_determination"
+            ],
+            "description": "(Rechtsform) Legal Form of the company",
+            "example": "corporation"
+          },
+          "methodOfDeterminingNetIncome": {
+            "type": "string",
+            "maxLength": 25,
+            "enum": [
+              "not_specified",
+              "balance_sheet",
+              "cash_method_of_accounting",
+              "net_income_determination"
+            ],
+            "description": "(Gewinnermittlungsart) Method of determining net income",
+            "example": "balance_sheet"
+          },
+          "nationalRight": {
+            "type": "string",
+            "pattern": "^[A-Z]{2}$",
+            "maxLength": 2,
+            "description": "(Nationales Recht) National law (DE = Germany, AT = Austria)",
+            "example": "DE"
+          },
+          "taxationMethod": {
+            "type": "string",
+            "maxLength": 73,
+            "nullable": true,
+            "enum": [
+              "taxation_based_on_value_of_services_rendered",
+              "taxation_based_on_value_of_actual_receipts",
+              "taxation_based_on_value_of_actual_receipts_input_tax_deduction_at_payment",
+              "no_vat_calculation",
+              "lump_sum"
+            ],
+            "description": "Taxation Method",
+            "example": "taxation_based_on_value_of_services_rendered"
+          },
+          "yearBegin": {
+            "type": "string",
+            "description": "(Wirtschaftsjahresbeginn) First day of fiscal year",
+            "format": "date",
+            "maxLength": 10,
+            "example": "2024-04-11"
+          },
+          "yearEnd": {
+            "type": "string",
+            "description": "(Wirtschaftsjahresende) Last day of fiscal year",
+            "format": "date",
+            "maxLength": 10,
+            "example": "2025-04-10"
+          }
+        }
+      },
+      "AccountPosting": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "accountNumber": {
+            "$ref": "#/components/schemas/AccountNumber"
+          },
+          "accountingSequenceId": {
+            "$ref": "#/components/schemas/AccountingSequenceId"
+          },
+          "accountingTransactionKey": {
+            "type": "integer",
+            "format": "int32",
+            "description": "(Steuerschlüssel) Tax key and/or adjustment key",
+            "minimum": 1,
+            "maximum": 9999,
+            "example": 7
+          },
+          "accountingTransactionKey49AdditionalFunction": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0,
+            "maximum": 9999,
+            "description": "(Steuerschlüssel und/oder Berichtigungsschlüssel) Tax key and/or adjustment key 49/89, additional function, used in agricultural circumstances",
+            "example": 49
+          },
+          "accountingTransactionKey49MainFunctionNumber": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0,
+            "maximum": 999,
+            "description": "(Steuerschlüssel und/oder Berichtigungsschlüssel) Tax key and/or adjustment key 49/89, main function number, used in agricultural circumstances",
+            "example": 49
+          },
+          "accountingTransactionKey49MainFunctionType": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0,
+            "maximum": 8,
+            "description": "(Steuerschlüssel und/oder Berichtigungsschlüssel) Tax key and/or adjustment key 49/89, main function type, used in agricultural circumstances",
+            "example": 2
+          },
+          "additionalFunctionsForGoodsAndServices": {
+            "type": "integer",
+            "format": "int32",
+            "description": "(Steuersatz/Funktion) Tax rate/function for the goods/services circumstance",
+            "minimum": 1,
+            "maximum": 999,
+            "example": 190
+          },
+          "amountCredit": {
+            "type": "number",
+            "description": "(Umsatz Haben) Credit amount",
+            "example": 19.99
+          },
+          "amountDebit": {
+            "type": "number",
+            "description": "(Umsatz Soll) Debit amount",
+            "example": 19.99
+          },
+          "advancePayment": {
+            "$ref": "#/components/schemas/AdvancePayment"
+          },
+          "billingReference": {
+            "type": "string",
+            "pattern": "^[\\s\\S]{0,50}$",
+            "maxLength": 50,
+            "description": "(Abrechnungsreferenz) Billing reference",
+            "example": "AbrRef2-statement-start28082019-end31082019"
+          },
+          "cashDiscount": {
+            "type": "number",
+            "description": "(Skonto-Betrag/-Abzug) Cash discount amount/deduction, only permissible with payments",
+            "minimum": 0.01,
+            "maximum": 99999999.99,
+            "example": 5
+          },
+          "cashDiscountType": {
+            "type": "string",
+            "maxLength": 38,
+            "enum": [
+              "not_specified",
+              "purchase_of_goods",
+              "purchase_of_raw_materials_and_supplies"
+            ],
+            "description": "(Skontotyp) Cash discount type (not specified, purchase of goods, purchase of raw materials and supplies)",
+            "default": "not_specified",
+            "example": "purchase_of_goods"
+          },
+          "casesRelatedToGoodsAndServices": {
+            "type": "integer",
+            "format": "int32",
+            "description": "(Sachverhaltsnummer) Number indicating the cases related to goods and services, see Info Database, document [1034915](https://apps.datev.de/knowledge/help/search?q=1034915)",
+            "minimum": 100,
+            "maximum": 999,
+            "example": 101
+          },
+          "contraAccountNumber": {
+            "type": "integer",
+            "format": "int32",
+            "description": "(Gegenkontonummer) Contra account number, general ledger or subledger account number shown in maximum length, 8 digits for general ledger accounts, 9 digits for subledger accounts (technical length)",
+            "minimum": 1,
+            "maximum": 999999999,
+            "example": 84010000
+          },
+          "currencyCode": {
+            "$ref": "#/components/schemas/CurrencyCode"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "maxLength": 10,
+            "description": "(Belegdatum) Document date",
+            "example": "2016-07-20"
+          },
+          "deliveryDate": {
+            "type": "string",
+            "format": "date",
+            "maxLength": 10,
+            "description": "(Liefer-/Leistungsdatum) Date of delivery/service provision",
+            "example": "2016-07-01"
+          },
+          "differingTaxationMethod": {
+            "type": "string",
+            "maxLength": 73,
+            "enum": [
+              "not_specified",
+              "taxation_based_on_value_of_services_rendered",
+              "taxation_based_on_value_of_actual_receipts",
+              "taxation_based_on_value_of_actual_receipts_input_tax_deduction_at_payment",
+              "no_vat_calculation",
+              "lump_sum"
+            ],
+            "description": "(Abweichende Besteuerungsart) Differing taxation method; for entries that are to be processed using a VAT method other than the classification contained in the client master data (not specified, taxation based on value of services rendered, taxation based on value of actual receipts, taxation based on value of actual receipts input tax deduction at payment (AT only), no vat calculation, lump sum)",
+            "example": "taxation_based_on_value_of_services_rendered"
+          },
+          "documentField1": {
+            "type": "string",
+            "pattern": "^.{0,36}$",
+            "description": "(Rechnungs-/Belegnummer) Invoice/document number, document field 1 is the key for managing Open Items",
+            "maxLength": 36,
+            "example": "AR-4711/16"
+          },
+          "documentField2": {
+            "type": "string",
+            "pattern": "^.{0,12}$",
+            "description": "(Belegfeld 2) Document field 2, document number or Open Items processing information; allowed characters: numbers 0 ... 9, uppercase letters A ... Z, lowercase letters a ... z, special characters $ & % * + -.",
+            "maxLength": 12,
+            "example": "300816"
+          },
+          "documentLink": {
+            "$ref": "#/components/schemas/DocumentLink"
+          },
+          "euTaxRate": {
+            "type": "number",
+            "description": "(EU-Steuersatz Bestimmungsland) EU tax rate for country of destination, only for relevant EU accounting records. Additional for one Stop Shop, see Info Database [1020263](https://apps.datev.de/help-center/documents/1020263)",
+            "minimum": 0,
+            "maximum": 99.99,
+            "example": 10
+          },
+          "euTaxRateForCountryOfOrigin": {
+            "type": "number",
+            "description": "(EU-Steuersatz Ursprungsland) EU tax rate for country of origin, only for relevant EU accounting records. Additional for one Stop Shop, see Info Database [1020263](https://apps.datev.de/help-center/documents/1020263)",
+            "minimum": 0,
+            "maximum": 99.99,
+            "example": 10
+          },
+          "euVatId": {
+            "pattern": "^.{0,15}$",
+            "type": "string",
+            "description": "(USt-IdNr Bestimmungsland) VAT ID number for country of destination, composed of a 2-character country code and the 13-digit VAT number (e.g. FR12345678901), see Info Database, document [1080169](https://apps.datev.de/help-center/documents/1080169) and additional for one Stop Shop [1020263](https://apps.datev.de/help-center/documents/1020263)",
+            "maxLength": 15,
+            "example": "FR12345678901"
+          },
+          "euVatIdForCountryOfOrigin": {
+            "pattern": "^.{0,15}$",
+            "type": "string",
+            "description": "(USt-IdNr Ursprungsland) VAT ID number for country of origin, composed of a 2-character country code and the 13-digit VAT number (e.g. FR12345678901), see Info Database, document [1080169](https://apps.datev.de/help-center/documents/1080169) additional for one Stop Shop [1020263](https://apps.datev.de/help-center/documents/1020263)",
+            "maxLength": 15,
+            "example": "FR12345678901"
+          },
+          "exchangeRate": {
+            "type": "number",
+            "description": "(Fremdwährungskurs) Exchange rate, used with accounting records in a foreign currency, stipulates how the amount stated and transferred in a foreign currency is to be translated into the base currency when a non-EU country is involved. The value 0 is not allowed.",
+            "minimum": 0.000001,
+            "maximum": 99999.999999,
+            "example": 1.2345
+          },
+          "followOnPostingType": {
+            "type": "string",
+            "maxLength": 43,
+            "enum": [
+              "journal_entry",
+              "cash_discount_posting",
+              "factor_2_posting_account",
+              "factor_2_posting_contra_account",
+              "factor_2_posting_accounting_transaction_key",
+              "cash_flow_statement_posting"
+            ],
+            "description": "(Folgebuchungstyp) type derived from the account posting (1=journal_entry, 2=cash_discount_posting, 3=factor_2_posting_account, 4=factor_2_posting_contra_account, 5=factor_2_posting_accounting_transaction_key, 6=cash_flow_statement_posting)",
+            "example": "journal_entry"
+          },
+          "generalReversal": {
+            "type": "boolean",
+            "default": false,
+            "description": "(Generalumkehrkennzeichen) General reversal identifier",
+            "example": true
+          },
+          "isOpeningBalancePosting": {
+            "type": "boolean",
+            "description": "(Kennzeichen Eröffnungsbilanzbuchung) Flag open balance posting",
+            "example": false
+          },
+          "kostDate": {
+            "format": "date",
+            "type": "string",
+            "maxLength": 10,
+            "description": "(KOST-Datum) Cost date",
+            "example": "2016-07-15"
+          },
+          "kostQuantity": {
+            "type": "number",
+            "description": "(Kost-Menge) Cost quantity - not available for SKR 14 (agriculture and forestry general ledger account), instead 'quantity' and 'weight'-properties are used",
+            "minimum": 0,
+            "maximum": 999999999999.9999,
+            "example": 123456789012.1234
+          },
+          "kost1CostCenterId": {
+            "type": "string",
+            "pattern": "^.{0,36}$",
+            "description": "(Kostenstelle) Cost center/unit from cost 1",
+            "maxLength": 36,
+            "example": "200"
+          },
+          "kost2CostCenterId": {
+            "type": "string",
+            "pattern": "^.{0,36}$",
+            "description": "(Kostenstelle) Cost center/unit from cost 2",
+            "maxLength": 36,
+            "example": "100"
+          },
+          "markOfOrigin": {
+            "$ref": "#/components/schemas/MarkOfOrigin"
+          },
+          "postingDescription": {
+            "type": "string",
+            "pattern": "^.{0,60}$",
+            "description": "(Buchungstext) Posting text",
+            "maxLength": 60,
+            "example": "Bewirtungskosten"
+          },
+          "quantity": {
+            "type": "number",
+            "description": "(Stück) Quantity, only when using SKR 14 agriculture and forestry",
+            "minimum": -99999999,
+            "maximum": 99999999,
+            "example": 1000
+          },
+          "recordType": {
+            "$ref": "#/components/schemas/RecordType"
+          },
+          "taxRate": {
+            "type": "number",
+            "description": "(Steuersatz) Tax rate",
+            "minimum": 0,
+            "maximum": 99.99,
+            "example": 19
+          },
+          "weight": {
+            "type": "number",
+            "description": "(Gewicht) Weight, only when using SKR 14 agriculture and forestry",
+            "minimum": 0,
+            "maximum": 99999999.99,
+            "example": 1000
+          }
+        }
+      },
+      "AdvancePayment": {
+        "additionalProperties": false,
+        "description": "(Anzahlung) Advance payment",
+        "type": "object",
+        "properties": {
+          "euMemberState": {
+            "type": "string",
+            "pattern": "^.{2,2}$",
+            "description": "(EU-Mitgliedstaat) EU member state of the subsequent final invoice, see Info Database, document [1080169](https://apps.datev.de/knowledge/help/search?q=1080169). Except Greece: The country code is EL.",
+            "minLength": 2,
+            "maxLength": 2,
+            "example": "DE"
+          },
+          "euTaxRate": {
+            "type": "number",
+            "description": "(EU-Steuersatz) EU tax rate of the subsequent final invoice",
+            "minimum": 0,
+            "maximum": 99.99,
+            "example": 7
+          },
+          "orderNumber": {
+            "type": "string",
+            "pattern": "^.{0,30}$",
+            "description": "(Auftragsnummer) Order number",
+            "maxLength": 30,
+            "example": "2016/PR-18"
+          },
+          "recordType": {
+            "type": "string",
+            "description": "(Buchungstyp) Record type (AA = requested advance payment/interim invoice, AG = received advance payment (cash receipt), SR = final invoice, SG = final invoice (cash receipt), SO = other)",
+            "minLength": 2,
+            "maxLength": 2,
+            "example": "other",
+            "enum": [
+              "requested_advance_payment_or_interim_invoice",
+              "received_advance_payment_liability",
+              "received_advance_payment_cash_receipt",
+              "other",
+              "final_invoice_reposting",
+              "final_invoice_cash_receipt",
+              "final_invoice"
+            ]
+          },
+          "revenueAccount": {
+            "type": "integer",
+            "format": "int32",
+            "description": "(Erlöskonto) Revenue account of the subsequent final invoice, 8 digits (technical length)",
+            "minimum": 1,
+            "maximum": 99999999,
+            "example": 10000000
+          },
+          "taxKey": {
+            "type": "integer",
+            "format": "int32",
+            "description": "(USt-Schlüssel) VAT key of the subsequent final invoice",
+            "minimum": 1,
+            "maximum": 9999,
+            "example": 3
+          }
+        }
+      },
+      "DocumentLink": {
+        "additionalProperties": false,
+        "type": "object",
+        "description": "(Beleglink) Document link",
+        "properties": {
+          "sourceSystem": {
+            "type": "string",
+            "pattern": "^.{0,4}$",
+            "description": "(Quellsystem) Source system",
+            "maxLength": 4,
+            "example": "DDMS"
+          },
+          "documentGuid": {
+            "type": "string",
+            "pattern": "^.{0,210}$",
+            "description": "(Dokumenten-GUID) Document GUID",
+            "maxLength": 210,
+            "example": "355F7C8A-3AD9-479B-B849-16EB9F8AF741"
+          }
+        }
+      },
+      "AccountingSequence": {
+        "additionalProperties": false,
+        "type": "object",
+        "properties": {
+          "accountingSequenceId": {
+            "$ref": "#/components/schemas/AccountingSequenceId"
+          },
+          "accountingSequenceNumber": {
+            "description": "(Buchungsstapel-Nummer) Accounting sequence number",
+            "type": "string",
+            "pattern": "^.{0,15}$",
+            "maxLength": 15,
+            "example": "03-2024/0003"
+          },
+          "dateFrom": {
+            "type": "string",
+            "format": "date",
+            "maxLength": 10,
+            "description": "(Datum von) Date from",
+            "example": "2016-07-01"
+          },
+          "dateTo": {
+            "type": "string",
+            "format": "date",
+            "maxLength": 10,
+            "description": "(Datum bis) Date to",
+            "example": "2016-07-31"
+          },
+          "description": {
+            "type": "string",
+            "pattern": "^.{0,30}$",
+            "description": "(Bezeichnung des Buchungsstapels) Name of the accounting sequence",
+            "example": "Invoice 07/2016",
+            "maxLength": 30
+          },
+          "initials": {
+            "type": "string",
+            "pattern": "^.{0,2}$",
+            "description": "(Diktatkürzel) Command initials",
+            "example": "MM",
+            "maxLength": 2
+          },
+          "inspectionStatus": {
+            "description": "(Prüfstatus) Inspection status (not specified = OK, record with error, record with warning)",
+            "type": "string",
+            "maxLength": 19,
+            "example": "not_specified",
+            "enum": [
+              "not_specified",
+              "record_with_warning",
+              "record_with_error"
+            ]
+          },
+          "markOfOrigin": {
+            "$ref": "#/components/schemas/MarkOfOrigin"
+          },
+          "isCommitted": {
+            "type": "boolean",
+            "description": "(Bearbeitungsstatus - Festschreibungsstatus) Status to indicate a possible finalization of the accounting sequence",
+            "example": true
+          },
+          "recordType": {
+            "$ref": "#/components/schemas/RecordType"
+          },
+          "accountingReason": {
+            "type": "string",
+            "maxLength": 34,
+            "example": "commercial_law",
+            "enum": [
+              "commercial_law",
+              "tax_law",
+              "ifrs",
+              "reserved1",
+              "reserved2",
+              "for_calculation",
+              "independent_from_accounting_reason"
+            ]
+          }
+        }
+      },
+      "GeneralLedgerAccount": {
+        "additionalProperties": false,
+        "type": "object",
+        "properties": {
+          "accountNumber": {
+            "$ref": "#/components/schemas/AccountNumber"
+          },
+          "additionalFunction": {
+            "type": "string",
+            "maxLength": 24,
+            "enum": [
+              "sales_tax_permissible",
+              "no_sales_tax_permissible",
+              "only_input_tax",
+              "only_VAT_permissible"
+            ],
+            "description": "(Steuerrechnungstyp/Zusatzfunktion) Tax calculation type/additional function, states which calculation is permissible in connection with the general ledger account\n0 = sales tax permissible (field empty),\n1 = no sales tax permissible,\n3 = only input tax,\n8 = only VAT permissible\n",
+            "example": "only_input_tax"
+          },
+          "caption": {
+            "type": "string",
+            "pattern": "^.{0,40}$",
+            "nullable": true,
+            "description": "(Kontobezeichnung) Account description",
+            "maxLength": 40,
+            "example": "Umsatzsteuer"
+          },
+          "functionExtension": {
+            "type": "integer",
+            "description": "(Funktionsergänzung) Function extension; \nthe meaning of the function extension is dependent on the main function number, e.g. main function number = 70 (tax rate of 7.0 percent) \n1 = normal rate, \n2 = reduced rate, \n70 = tax rate of 7.0 percent, \n190 = tax rate of 19.0 percent.\n",
+            "example": 80
+          },
+          "mainFunction": {
+            "type": "integer",
+            "description": "(Hauptfunktionstyp) Main function type\n0 = no type, \n1 = automatic input tax invoice, \n2 = automatic VAT invoice, \n3 = general function, \n4 = collective function, \n6 = collective function, automatic input tax, \n7 = collective function, automatic VAT, \n8 = standard function deactivated\n",
+            "example": 3
+          },
+          "mainFunctionNumber": {
+            "type": "integer",
+            "description": "Hauptfunktionsnummer",
+            "example": 90
+          }
+        },
+        "description": "Kontobeschriftungen"
+      },
+      "TermOfPayment": {
+        "additionalProperties": false,
+        "required": [
+          "cash_discount1_percentage",
+          "cash_discount2_percentage",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "maximum": 999,
+            "minimum": 10,
+            "type": "integer",
+            "description": "ID, corresponds to the number of the term of payment, 3-character functional ID.",
+            "format": "int32",
+            "example": 123
+          },
+          "caption": {
+            "pattern": "^.{0,40}$",
+            "maxLength": 40,
+            "type": "string",
+            "description": "(Bezeichnung) Description of the term of payment, maximum of 40 characters",
+            "example": "44 days net"
+          },
+          "dueType": {
+            "type": "string",
+            "maxLength": 13,
+            "enum": [
+              "due_in_days",
+              "due_as_period"
+            ],
+            "description": "(Typ) Type of term of payment (due in days, due as period)",
+            "example": "due_as_period"
+          },
+          "cashDiscount1Percentage": {
+            "maximum": 99.99,
+            "minimum": 0,
+            "type": "number",
+            "description": "(Skonto-Prozent-Satz) Percentage rate of cash discount 1 if a cash discount is applied",
+            "example": 10
+          },
+          "cashDiscount2Percentage": {
+            "maximum": 99.99,
+            "minimum": 0,
+            "type": "number",
+            "description": "(Skonto-Prozent-Satz) Percentage rate of cash discount 2 if a cash discount is applied, have to be lower than \"cash_discount1_percentage\"",
+            "example": 10
+          },
+          "paymentDueInDays": {
+            "$ref": "#/components/schemas/PaymentDueInDays"
+          },
+          "paymentDueAsPeriod": {
+            "$ref": "#/components/schemas/PaymentDueAsPeriod"
+          }
+        }
+      },
+      "PaymentDueInDays": {
+        "additionalProperties": false,
+        "required": [
+          "cash_discount1_days",
+          "cash_discount2_days",
+          "due_date_net"
+        ],
+        "type": "object",
+        "properties": {
+          "cashDiscount1Days": {
+            "maximum": 999,
+            "minimum": 0,
+            "type": "integer",
+            "description": "(Fälligkeitstage für Skonto 1) Due period in days for cash discount 1",
+            "format": "int32",
+            "example": 10
+          },
+          "cashDiscount2Days": {
+            "maximum": 999,
+            "minimum": 0,
+            "type": "integer",
+            "description": "(Fälligkeitstage für Skonto 2) Due period in days for cash discount 2, have to be greater than \"cashDiscount1_days\" (if cash discount percentage is specified when cash discount 2 is used)",
+            "format": "int32",
+            "example": 11
+          },
+          "dueDateNet": {
+            "maximum": 999,
+            "minimum": 0,
+            "type": "integer",
+            "description": "(Fälligkeitstage ohne Abzug) Due period in days without discount, have to be greater than \"cashDiscount1_days\" or \"cashDiscount2_days\"",
+            "format": "int32",
+            "example": 12
+          }
+        },
+        "description": "(Fälligkeit nach Tagen) Subordinate object due period in days. May only be used if dueType = due_in_days"
+      },
+      "PaymentDueAsPeriod": {
+        "additionalProperties": false,
+        "type": "object",
+        "properties": {
+          "period1": {
+            "$ref": "#/components/schemas/Period"
+          },
+          "period2": {
+            "$ref": "#/components/schemas/Period"
+          },
+          "period3": {
+            "$ref": "#/components/schemas/Period"
+          }
+        },
+        "description": "(Fälligkeit nach Datum) Subordinate object due period by date. May only be used if dueType = due_as_period"
+      },
+      "Period": {
+        "additionalProperties": false,
+        "type": "object",
+        "properties": {
+          "invoiceDayOfMonth": {
+            "type": "integer",
+            "format": "int32",
+            "description": "(Höchst mögliches Rechnungsdatum) Latest possible day of the invoice date for this period",
+            "minimum": 1,
+            "maximum": 31,
+            "example": 15
+          },
+          "dueDateCashDiscount1": {
+            "required": [
+              "relatedMonth"
+            ],
+            "type": "object",
+            "properties": {
+              "relatedMonth": {
+                "$ref": "#/components/schemas/RelatedMonth"
+              },
+              "dayOfMonth": {
+                "$ref": "#/components/schemas/DayOfMonth"
+              }
+            },
+            "description": "(Fälligkeitsdatum für Skonto 1) Subordinate object due date for cash discount 1"
+          },
+          "dueDateCashDiscount2": {
+            "required": [
+              "relatedMonth"
+            ],
+            "type": "object",
+            "properties": {
+              "relatedMonth": {
+                "$ref": "#/components/schemas/RelatedMonth"
+              },
+              "dayOfMonth": {
+                "$ref": "#/components/schemas/DayOfMonth"
+              }
+            },
+            "description": "(Fälligkeitsdatum für Skonto 2) Subordinate object due date for cash discount 2"
+          },
+          "dueDateNet": {
+            "required": [
+              "relatedMonth"
+            ],
+            "type": "object",
+            "properties": {
+              "relatedMonth": {
+                "$ref": "#/components/schemas/RelatedMonth"
+              },
+              "dayOfMonth": {
+                "$ref": "#/components/schemas/DayOfMonth"
+              }
+            },
+            "description": "(Fälligkeitsdatum ohne Abzug) Subordinate object due date without discount"
+          }
+        }
+      },
+      "RelatedMonth": {
+        "type": "string",
+        "maxLength": 16,
+        "enum": [
+          "current_month",
+          "next_month",
+          "month_after_next"
+        ],
+        "description": "(Relativer Monat der Fälligkeit) Relative month of the due date depending on the invoice date (current month, next month, month after next)",
+        "example": "month_after_next"
+      },
+      "DayOfMonth": {
+        "maximum": 31,
+        "minimum": 1,
+        "type": "integer",
+        "description": "(Tagesangabe der Fälligkeit) Day of month within the related month \"related_month\"",
+        "format": "int32",
+        "example": 15
+      },
+      "SumsAndBalances": {
+        "additionalProperties": false,
+        "type": "object",
+        "properties": {
+          "accountNumber": {
+            "$ref": "#/components/schemas/AccountNumber"
+          },
+          "sumsAndBalancesMonthValues": {
+            "type": "array",
+            "maxItems": 12,
+            "items": {
+              "$ref": "#/components/schemas/SumsAndBalancesMonthValue"
+            },
+            "description": "(Monatsverkehrzahlen) List of monthly debits and credits of the single fiscal year months",
+            "example": [
+              {
+                "monthlyBalance": 1500,
+                "monthlyBalanceDebitCreditIdentifier": "S",
+                "fiscalYearMonth": 1
+              },
+              {
+                "monthlyBalance": 2300.5,
+                "monthlyBalanceDebitCreditIdentifier": "H",
+                "fiscalYearMonth": 2
+              }
+            ]
+          },
+          "annualValueDebit": {
+            "type": "number",
+            "description": "(Gesamtsaldo Soll) Annual value debit for the fiscal year",
+            "example": 1000
+          },
+          "annualValueCredit": {
+            "type": "number",
+            "description": "(Gesamtsaldo Haben) Annual value credit for the fiscal year",
+            "example": 1000
+          },
+          "balance": {
+            "type": "number",
+            "description": "(Jahressaldo) Annual balance",
+            "example": 1000
+          },
+          "balanceDebitCreditIdentifier": {
+            "pattern": "^.{1,1}$",
+            "type": "string",
+            "description": "(Soll-/Haben Kennzeichen Jahressaldo) Debit/credit identifier annual balance",
+            "example": "S",
+            "minLength": 1,
+            "maxLength": 1
+          },
+          "caption": {
+            "pattern": "^.{0,40}$",
+            "type": "string",
+            "description": "(Kontobezeichnung) Account description",
+            "example": "Fuhrpark",
+            "maxLength": 40,
+            "nullable": true
+          },
+          "openingBalanceDebit": {
+            "type": "number",
+            "description": "(EB-Wert Soll) Opening balance sheet debit value - either openingBalanceDebit or openingBalanceCredit is filled",
+            "example": 1100000.3
+          },
+          "openingBalanceCredit": {
+            "type": "number",
+            "description": "(EB-Wert Haben) Opening balance sheet credit value - either openingBalanceDebit or openingBalanceCredit is filled",
+            "example": 1100000.3
+          }
+        }
+      },
+      "SumsAndBalancesMonthValue": {
+        "additionalProperties": false,
+        "type": "object",
+        "properties": {
+          "monthlyBalance": {
+            "type": "number",
+            "description": "(Monatssaldo) Monthly balance",
+            "example": 1000
+          },
+          "monthlyBalanceDebitCreditIdentifier": {
+            "pattern": "^.{1,1}$",
+            "type": "string",
+            "description": "(Monatssaldo Soll-/Haben Kennzeichen) Debit/credit identifier fot the monthly balance",
+            "example": "S",
+            "minLength": 1,
+            "maxLength": 1
+          },
+          "fiscalYearMonth": {
+            "type": "integer",
+            "description": "(Wirtschaftsjahres-Monat) fiscal year month (1 = beginning of the fiscal year - important, if fiscal year is deviating)",
+            "format": "int32",
+            "minimum": 0,
+            "maximum": 12,
+            "example": 12
+          }
+        }
+      },
+      "SumsAndBalancesQuantityAndWeight": {
+        "additionalProperties": false,
+        "type": "object",
+        "properties": {
+          "accountNumber": {
+            "$ref": "#/components/schemas/AccountNumber"
+          },
+          "caption": {
+            "pattern": "^.{0,40}$",
+            "type": "string",
+            "description": "(Kontobezeichnung) Account description",
+            "example": "Milchkühe",
+            "maxLength": 40
+          },
+          "openingBalance": {
+            "type": "number",
+            "description": "(EB-Wert) Opening balance sheet value",
+            "example": 1100000.3
+          },
+          "openingBalanceDebitCreditIdentifier": {
+            "pattern": "^.{1,1}$",
+            "type": "string",
+            "description": "(Soll-/Haben Kennzeichen EB-Wert) Debit/credit identifier opening balance",
+            "example": "S",
+            "minLength": 1,
+            "maxLength": 1
+          },
+          "sumsAndBalancesQuantityAndWeightMonthValues": {
+            "type": "array",
+            "maxItems": 12,
+            "items": {
+              "$ref": "#/components/schemas/SumsAndBalancesQuantityAndWeightMonthValue"
+            },
+            "description": "(Kumulierte Jahresverkehrszahlen mit Mengen) List of accumulated monthly balances with quantity and weight of the fiscal year months, only applicable when using SKR 14 agriculture and forestry"
+          }
+        }
+      },
+      "SumsAndBalancesQuantityAndWeightMonthValue": {
+        "additionalProperties": false,
+        "type": "object",
+        "properties": {
+          "accumulatedBalance": {
+            "type": "number",
+            "description": "(Kumulierter Monatssaldo inkl. EB-Wert) accumulated balance of the actual and previous months including the opening balance",
+            "example": 1000
+          },
+          "accumulatedBalanceDebitCreditIdentifier": {
+            "pattern": "^.{1,1}$",
+            "type": "string",
+            "description": "(Soll-/Haben Kennzeichen kumulierter Monatssaldo inkl. EB-Wert) Debit/credit identifier accumulated balance",
+            "example": "S",
+            "minLength": 1,
+            "maxLength": 1
+          },
+          "accumulatedQuantity": {
+            "type": "integer",
+            "format": "int32",
+            "description": "(Kumulierte Stückzahl) accumulated quantity of the actual and previous months including the opening balance quantity",
+            "minimum": -99999999,
+            "maximum": 99999999,
+            "example": 1000
+          },
+          "accumulatedWeight": {
+            "type": "number",
+            "description": "(Kumuliertes Gewicht) accumulated weight of the actual and previous months including the opening balance weight",
+            "minimum": -99999999,
+            "maximum": 99999999,
+            "example": 1000
+          },
+          "averagePriceQuantity": {
+            "type": "number",
+            "description": "(Durchschnittspreis pro Stück) Average price per piece (quantity) - accumulated balance divided by accumulated quantity",
+            "example": 1000
+          },
+          "averagePriceWeight": {
+            "type": "number",
+            "description": "(Durchschnittspreis pro dt (Dezitonne)) Average price per dt (deciton - weight) - accumulated balance divided by accumulated weight",
+            "example": 1000
+          },
+          "fiscalYearMonth": {
+            "type": "integer",
+            "description": "(Wirtschaftsjahres-Monat) fiscal year month (1 = beginning of the fiscal year - important, if fiscal year is deviating; 0 = opening balance values)",
+            "format": "int32",
+            "example": 12
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "client_id": {
+        "type": "apiKey",
+        "name": "x-datev-client-id",
+        "in": "header",
+        "x-key-type": "client_id"
+      },
+      "datev_openid": {
+        "type": "oauth2",
+        "description": "Access authorization to productive API using JWTs. JWT handling follows RFC 8725 (JWT Best Current Practices). Short-lived access tokens are used. Refresh tokens are supported via the token endpoint (grant_type=refresh_token).",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://login.datev.de/openid/authorize",
+            "tokenUrl": "https://api.datev.de/token",
+            "scopes": {
+              "openid": "Open ID Standard Scope",
+              "datev:accounting:exchange": "Exchange of accounting data"
+            }
+          }
+        }
+      },
+      "datev_openid_sandbox": {
+        "type": "oauth2",
+        "description": "Access authorization to sandbox API using JWTs. JWT handling follows RFC 8725 (JWT Best Current Practices). Short-lived access tokens are used. Refresh tokens are supported via the token endpoint (grant_type=refresh_token).",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://login.datev.de/openidsandbox/authorize",
+            "tokenUrl": "https://sandbox-api.datev.de/token",
+            "scopes": {
+              "openid": "Open ID Standard Scope",
+              "datev:accounting:exchange": "Exchange of accounting data"
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "client_id": [],
+      "datev_openid": [
+        "openid",
+        "datev:accounting:exchange"
+      ]
+    },
+    {
+      "client_id": [],
+      "datev_openid_sandbox": [
+        "openid",
+        "datev:accounting:exchange"
+      ]
+    }
+  ]
+}

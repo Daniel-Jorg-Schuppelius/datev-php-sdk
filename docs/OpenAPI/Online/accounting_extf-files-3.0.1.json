@@ -1,0 +1,781 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "accounting:extf-files",
+    "description": "This API uploads files of DATEV-Format (\"EXTF\" only) to the DATEV data center. For more information regarding this csv files, see the documentation of DATEV-Format in our Developer Portal (File Interfaces > DATEV-Format).\n\nThe individual API services are described both functionally and technically. Wherever possible, examples are used to illustrate the calls and responses. All services only support the JSON format. The order of the return values is not set and may deviate from the order specified in this document. Return values with a value of “null” will not be returned.\n",
+    "termsOfService": "https://www.datev.de/web/de/m/ueber-datev/das-unternehmen/agb/?stat_Mparam=int_url_datev_agb",
+    "contact": {
+      "name": "DATEV Schnittstellenberatung",
+      "email": "schnittstellenberatung@datev.de"
+    },
+    "license": {
+      "name": "DATEV eG",
+      "url": "http://www.datev.de"
+    },
+    "version": "3.0.1"
+  },
+  "servers": [
+    {
+      "url": "https://accounting-extf-files.api.datev.de/platform/v3"
+    },
+    {
+      "url": "https://accounting-extf-files.api.datev.de/platform-sandbox/v3"
+    }
+  ],
+  "security": [
+    {
+      "datev_openid": [
+        "datev:accounting:extf-files-import"
+      ],
+      "client_id": []
+    },
+    {
+      "datev_openid_sandbox": [
+        "datev:accounting:extf-files-import"
+      ],
+      "client_id": []
+    },
+    {
+      "datev_idp_next": [
+        "datev:accounting:extf-files-import"
+      ],
+      "client_id": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "extf-files",
+      "description": "Transfer a file"
+    },
+    {
+      "name": "jobs",
+      "description": "Check status"
+    }
+  ],
+  "paths": {
+    "/clients/{client-id}/extf-files/import": {
+      "post": {
+        "tags": [
+          "extf-files"
+        ],
+        "summary": "Transfer a file to DATEV data center",
+        "description": "This endpoint accepts one file based on DATEV-Format type \"EXTF\".\n",
+        "operationId": "importExtfFile",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "ID that identifies the client.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "29098-100"
+          },
+          {
+            "name": "Filename",
+            "in": "header",
+            "description": "Name of the file. Unallowed chars will be replaced by an underscore (for more details http://www.datev.de/hilfe/1023095).",
+            "required": true,
+            "schema": {
+              "pattern": "EXTF_.{0,51}\\.csv",
+              "type": "string"
+            },
+            "example": "EXTF_BS_20200101_1.csv"
+          },
+          {
+            "name": "Reference-Id",
+            "in": "header",
+            "description": "Unique reference from 3rd-party app for a transfered file (support reasons)\n",
+            "schema": {
+              "pattern": "[-0-9A-Za-z_äöüÄÖÜß_. +?;]{0,254}",
+              "type": "string"
+            },
+            "example": "Buchungsstapel_Verkäufe_2020_01_Nr_001"
+          },
+          {
+            "name": "Client-Application-Version",
+            "in": "header",
+            "description": "Optional: Version of the 3rd-party app (support reasons)\n",
+            "schema": {
+              "pattern": "[-0-9A-Za-z_äöüÄÖÜß_. +?;]{0,254}",
+              "type": "string"
+            },
+            "example": "2.0c"
+          }
+        ],
+        "requestBody": {
+          "description": "Content of the extf-file.\nMax allowed file size: 50 MB\nSupported File encodings are windows-1252, UTF-8, UTF-16LE, UTF-16BE. Encoding is determined based on the Byte Order Mark of the file. If no Byte Order Mark is present code page 1252 is assumed.\n",
+          "content": {
+            "application/octet-stream": {
+              "schema": {
+                "type": "string",
+                "format": "binary",
+                "example": "file as binary stream"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "The file has been succesfully received and is now being processed.\nIf the file is infected by viruses or if the file contains malicious bytecode it will be deleted. You will be able to query the status of the job with the returned URL.\n",
+            "headers": {
+              "Retry-After": {
+                "description": "Minimum period of time in seconds to wait before jobs should be checked.\n",
+                "schema": {
+                  "type": "integer"
+                },
+                "example": "5"
+              },
+              "Location": {
+                "description": "Redirect URL to check jobs, relative to the server URL.\n",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "/clients/717488-20206/extf-files/jobs/8a772151-6c21-40fe-96ae-4d42cbeeda5a"
+              }
+            }
+          },
+          "400": {
+            "description": "A client error has occurred. Further information is contained in the response message.<br /> <table> <thead> <tr> <th>Error</th> <th>Description</th> <th>Reason and solution</th> </tr> </thead> <tbody> <tr> <td>1008831</td> <td>Invalid message-body</td> <td>Message body for request is missing</td> </tr> <tr> <td>1008832</td> <td>Invalid header fields</td> <td>Filename is empty</td> </tr> <tr> <td>1008832</td> <td>Invalid header fields</td> <td>Filename must conform to following pattern'EXTF_.{0,51}.csv</td> </tr> <td>1008832</td> <td>Invalid header fields</td> <td>Reference-Id must conform to following pattern'[-0-9A-Za-z_äöüÄÖÜß_. +\\\\?;]{0,254}</td> </tr> </tr> <td>1008835</td> <td> Invalid request URI path</td> <td>Request-URI contains one or more invalid path segments. Path segment client-id is invalid</td> </tr> </tbody> </table>"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "This action is not allowed. This can be caused by missing security scopes or missing user permissions.<br /> <table> <thead> <tr> <th>Error</th> <th>Description</th> <th>Reason and solution</th> </tr> </thead> <tbody> <tr> <td>1008829</td> <td>Missing required scope</td> <td> Missing scope(s): datev:accounting:extf-files-import</td> </tr> </tbody> </table>",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found."
+          },
+          "405": {
+            "description": "Method Not Allowed",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "title": "Method Not Allowed",
+                  "request_id": "f11381c7-ba0e-4a3a-b2eb-fe4a6cc092c9",
+                  "status": 405
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "title": "Not Acceptable",
+                  "request_id": "f11381c7-ba0e-4a3a-b2eb-fe4a6cc092c9",
+                  "status": 406
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "File import failed due to file size exceeds the maximum file size. Additional information about the affected part and the maximum size is provided as error message.<br /> <table> <thead> <tr> <th>Error</th> <th>Description</th> <th>Reason and solution</th> </tr> </thead> <tbody> <tr> <td>1008833</td> <td>Invalid file</td> <td> File size exceeds 50 MB</td> </tr> </tbody> </table>"
+          },
+          "415": {
+            "description": "Unsupported Media Type",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "title": "Unsupported Media Type",
+                  "request_id": "f11381c7-ba0e-4a3a-b2eb-fe4a6cc092c9",
+                  "status": 415
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error occured. Further retries may not yield different results and should be avoided. Should the problem persist, please contact support.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "title": "Internal Server Error",
+                  "request_id": "f11381c7-ba0e-4a3a-b2eb-fe4a6cc092c9",
+                  "status": 500
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service currently not available. Please try again later.<br /> <table> <thead> <tr> <th>Error</th> <th>Description</th> <th>Reason and solution</th> </tr> </thead> <tbody> <tr> <td>1008837</td> <td>Try again </td> <td> An internal error occurred. Job failed. Try again</td> </tr> </tbody> </table>"
+          }
+        },
+        "x-codegen-request-body-name": "extf-file"
+      }
+    },
+    "/clients/{client-id}/extf-files/jobs": {
+      "get": {
+        "tags": [
+          "jobs"
+        ],
+        "summary": "Retrieves states of all known jobs.",
+        "operationId": "getJobs",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "ID that identifies the client.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "Number of items to skip when retrieving the list.\n",
+            "schema": {
+              "type": "integer"
+            },
+            "example": 20
+          },
+          {
+            "name": "top",
+            "in": "query",
+            "description": "Maximum number of items to return when querying the list. If no value or a value greater than 100 is entered, then only 100 entries will be returned.\n",
+            "schema": {
+              "type": "integer"
+            },
+            "example": 10
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of jobs has been returned.\nThe following error-codes can appear in the validation_details:<br /> <table> <thead> <tr> <th>Error</th> <th>Description</th> <th>Reason and solution</th> </tr> </thead> <tbody> <tr> <td>1008833</td> <td>Invalid file</td> <td>No payload</td> </tr> <tr> <td>1008833</td> <td>Invalid file</td> <td>More than 99999 postings</td> </tr> <tr> <td>1008833</td> <td>Invalid file</td> <td>Only Windows-1252,UTF-8, UTF16LE, and UTF16BE are supported</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Missing columns in EXTF-header</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>EXTF-header exceeds maximum length of 1000 characters</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Invalid combination of data category, format name and format version</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>DateFrom must not be greater than DateTo</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>The consultant-number in the EXTF-header does not match with the upload request</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>The client-number in the EXTF-header does not match with the upload reques</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td> Error in header field - DATEV Format Label - must be EXTF (1)</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Error in header field - Version Number - is invalid (2)</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Error in header field - Data Category - is invalid (3)</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Error in header field - Format Name - is invalid (4)</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td> Error in header field - Format Version - is invalid (5)</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Error in header field - Created On - is invalid (6)</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Error in header field - Imported - is invalid (7)</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Error in header field - Consultant - is invalid (11)</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Error in header field - Client - is invalid (12)</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Error in header field - FY Begin - is invalid (13)</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Error in header field - Length of Ledger Account - is invalid (14)</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Error in header field - Date From - is invalid (15)</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Error in header field - Date To - is invalid (16)</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Error in header field - Reserved - must be empty (23)</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Error in header field - Reserved - must be empty (24)</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Error in header field - Reserved - must be empty (25)</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Error in header field - Reserved - must be empty (26)</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Error in header field - Reserved - must be empty (29)</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Error in header field - Reserved - must be empty (30)</td> </tr> <tr> <td>1008836</td> <td>Virus found</td> <td>The transferred EXTF-file contains a virus</td> </tr> <tr> <td>1008837</td> <td>Try again</td> <td>An internal error occurred. Job failed. Try again.</td> </tr> <tr> <td>1008838</td> <td>Missing permission</td> <td>Permission to transfer data for this client-id is missing or has expired. Please contact your tax consultant.</td> </tr> </tbody> </table>",
+            "headers": {
+              "Total-Items": {
+                "description": "Total count of jobs available",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Total-Items: 248"
+              },
+              "Link": {
+                "description": "Contains link to the previous/next page.\n",
+                "schema": {
+                  "type": "string"
+                },
+                "example": "<?skip=0&top=100>;rel=\"prev\", <?skip=200&top=100>;rel=\"next\""
+              }
+            },
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Job"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A client error has occurred. Further information is contained in the response message.<br /> <table> <thead> <tr> <th>Error</th> <th>Description</th> <th>Reason and solution</th> </tr> </thead> <tbody> <tr> <td>1008828</td> <td>Invalid query parameters</td> <td>Paging parameters are invalid - skip - must be a positive integer</td> </tr> <tr> <td>1008828</td> <td>Invalid query parameters</td> <td>Paging parameters are invalid - top - must be a positive integer</td> </tr> <tr> <td>1008828</td> <td>Invalid query parameters</td> <td>Filter syntax is invalid</td> </tr> <tr> <td>1008828</td> <td>Invalid query parameters</td> <td>Filter operators are invalid</td> </tr> <tr> <td>1008835</td> <td>Invalid query parameters</td> <td>Request-URI contains one or more invalid path segments</td> </tr> </tbody> </table>",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "type": "http://www.datev.de/hilfe/1008828",
+                  "title": "Invalid query parameters",
+                  "detail": "Paging parameters are invalid",
+                  "affected_elements": [
+                    {
+                      "name": "skip",
+                      "reason": "Must be a positive integer"
+                    },
+                    {
+                      "name": "top",
+                      "reason": "Must be a positive integer"
+                    }
+                  ],
+                  "request_id": "f11381c7-ba0e-4a3a-b2eb-fe4a6cc092c9",
+                  "status": 400
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "This action is not allowed. This can be caused by missing security scopes or missing user permissions.<br /> <table> <thead> <tr> <th>Error</th> <th>Description</th> <th>Reason and solution</th> </tr> </thead> <tbody> <tr> <td>1008829</td> <td>Missing required scope</td> <td>Missing scope(s): datev:accounting:extf-files-import</td> </tr> </tbody> </table>",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "type": "http://www.datev.de/hilfe/1008829",
+                  "title": "Missing required scope",
+                  "detail": "Missing scope(s) are: {scope}",
+                  "request_id": "f11381c7-ba0e-4a3a-b2eb-fe4a6cc092c9",
+                  "status": 403
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found."
+          },
+          "405": {
+            "description": "Method Not Allowed",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "title": "Method Not Allowed",
+                  "request_id": "f11381c7-ba0e-4a3a-b2eb-fe4a6cc092c9",
+                  "status": 405
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "title": "Not Acceptable",
+                  "request_id": "f11381c7-ba0e-4a3a-b2eb-fe4a6cc092c9",
+                  "status": 406
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error occured. Further retries may not yield different results and should be avoided. Should the problem persist, please contact support.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "title": "Internal Server Error",
+                  "request_id": "f11381c7-ba0e-4a3a-b2eb-fe4a6cc092c9",
+                  "status": 500
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service currently not available. Please try again later.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "title": "Service Unavailable",
+                  "request_id": "f11381c7-ba0e-4a3a-b2eb-fe4a6cc092c9",
+                  "status": 503
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/extf-files/jobs/{job-id}": {
+      "get": {
+        "tags": [
+          "jobs"
+        ],
+        "summary": "Retrieves state of a designated job.",
+        "operationId": "getJob",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "ID that identifies the client.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "job-id",
+            "in": "path",
+            "description": "ID of the job",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "c9755451-57af-4811-8865-b0243ca5660d"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The job object including the current status.The following error-codes can appear in the validation_details:<br /> <table> <thead> <tr> <th>Error</th> <th>Description</th> <th>Reason and solution</th> </tr> </thead> <tbody> <tr> <td>1008833</td> <td>Invalid file</td> <td>No payload</td> </tr> <tr> <td>1008833</td> <td>Invalid file</td> <td>More than 99999 postings</td> </tr> <tr> <td>1008833</td> <td>Invalid file</td> <td>Only Windows-1252, UTF-8, UTF16LE, and UTF16BE are supported</td> </tr> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Missing columns in EXTF-header</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td> EXTF-header exceeds maximum length of 1000 characters</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Invalid combination of data category, format name and format version</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>DateFrom must not be greater than DateTo</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>The consultant-number in the EXTF-header does not match with the upload request</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>The client-number in the EXTF-header does not match with the upload request</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Error in header field - DATEV Format Label - must be EXTF (1)</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Error in header field - Version Number - is invalid (2) </td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Error in header field - Data Category - is invalid (3) </td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Error in header field - Format Name - is invalid (4) </td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Error in header field - Format Version - is invalid (5)</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Error in header field - Created On - is invalid (6)</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Error in header field - Imported - is invalid (7)</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Error in header field - Consultant - is invalid (11)</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Error in header field - Client - is invalid (12)</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Error in header field - FY Begin - is invalid (13)</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Error in header field - Length of Ledger Account - is invalid (14)</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Error in header field - Date From - is invalid (15)</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Error in header field - Date To - is invalid (16)</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Error in header field - Reserved - must be empty (23)</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Error in header field - Reserved - must be empty (24)</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Error in header field - Reserved - must be empty (25)</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Error in header field - Reserved - must be empty (26)</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Error in header field - Reserved - must be empty (29)</td> </tr> <tr> <td>1008834</td> <td>EXTF-header</td> <td>Error in header field - Reserved - must be empty (30)</td> </tr> <tr> <td>1008836</td> <td>Virus found</td> <td>The transferred EXTF-file contains a virus</td> </tr> <tr> <td>1008837</td> <td>Try again</td> <td>An internal error occurred. Job failed. Try again.</td> </tr> <tr> <td>1008838</td> <td>Missing permission</td> <td>Permission to transfer data for this client-id is missing or has expired. Please contact your tax consultant.</td> </tr> </tbody> </table>",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/Job"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A client error has occurred. Further information is contained in the response message.<br /> <table> <thead> <tr> <th>Error</th> <th>Description</th> <th>Reason and solution</th> </tr> </thead> <tbody> <tr> <td>1008835</td> <td>Invalid request URI path</td> <td>Request-URI contains one or more invalid path segments</td> </tr> </tbody> </table>",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "type": "http://www.datev.de/hilfe/1008835",
+                  "title": "Invalid request URI path",
+                  "detail": "Request-URI contains one or more invalid path segments",
+                  "affected_elements": [
+                    {
+                      "name": "client-id",
+                      "reason": "Path segment client-id is invalid"
+                    }
+                  ],
+                  "request_id": "f11381c7-ba0e-4a3a-b2eb-fe4a6cc092c9",
+                  "status": 400
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "This action is not allowed. This can be caused by missing  security scopes or missing user permissions.<br /> <table> <thead> <tr> <th>Error</th> <th>Description</th> <th>Reason and solution</th> </tr> </thead> <tbody> <tr> <td>1008829</td> <td>Missing required scope</td> <td>Missing scope(s): datev:accounting:extf-files-import</td> </tr> </tbody> </table>",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "type": "http://www.datev.de/hilfe/1008829",
+                  "title": "Missing required scope",
+                  "detail": "Missing scope(s) are: {scope}",
+                  "request_id": "f11381c7-ba0e-4a3a-b2eb-fe4a6cc092c9",
+                  "status": 403
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found."
+          },
+          "405": {
+            "description": "Method Not Allowed",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "title": "Method Not Allowed",
+                  "request_id": "f11381c7-ba0e-4a3a-b2eb-fe4a6cc092c9",
+                  "status": 405
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "title": "Not Acceptable",
+                  "request_id": "f11381c7-ba0e-4a3a-b2eb-fe4a6cc092c9",
+                  "status": 406
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error occured. Further retries may not yield different results and should be avoided. Should the problem persist, please contact support.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "title": "Internal Server Error",
+                  "request_id": "f11381c7-ba0e-4a3a-b2eb-fe4a6cc092c9",
+                  "status": 500
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service currently not available. Please try again later.",
+            "content": {
+              "application/json;charset=utf-8": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                },
+                "example": {
+                  "title": "Service Unavailable",
+                  "request_id": "f11381c7-ba0e-4a3a-b2eb-fe4a6cc092c9",
+                  "status": 503
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "A URI reference [RFC3986](https://tools.ietf.org/html/rfc3986) that identifies the\nproblem type. This specification encourages that, when\ndereferenced, a human-readable documentation for the\nproblem type (e.g., using HTML [W3C.REC-html5-20141028]) is provided.  When\nthis member is not present, its value is assumed to be \"about:blank\".\n"
+          },
+          "title": {
+            "type": "string",
+            "description": "A short, human-readable summary of the problem\ntype. It SHOULD NOT change from occurrence to occurrence of the\nproblem, except for purposes of localization (e.g., using\nproactive content negotiation; see [RFC7231](https://tools.ietf.org/html/rfc7231#section-3.4), Section 3.4).\n"
+          },
+          "detail": {
+            "type": "string",
+            "description": "A human-readable explanation specific to this occurrence of the problem.\n"
+          },
+          "affected_elements": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AffectedElement"
+            }
+          },
+          "request_id": {
+            "type": "string",
+            "description": "ID of the request"
+          },
+          "status": {
+            "type": "integer",
+            "description": "The HTTP status code ([RFC7231](https://tools.ietf.org/html/rfc7231#section-6), Section 6)\ngenerated by the origin server for this occurrence of the problem.\n",
+            "format": "int32",
+            "example": 400
+          }
+        }
+      },
+      "ValidationDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "A URI reference [RFC3986](https://tools.ietf.org/html/rfc3986) that identifies the\nproblem type. This specification encourages that, when\ndereferenced, a human-readable documentation for the\nproblem type (e.g., using HTML [W3C.REC-html5-20141028]) is provided.  When\nthis member is not present, its value is assumed to be \"about:blank\".\n",
+            "example": "http://www.datev.de/hilfe/1008834"
+          },
+          "title": {
+            "type": "string",
+            "description": "A short, human-readable summary of the problem\ntype. It SHOULD NOT change from occurrence to occurrence of the\nproblem, except for purposes of localization (e.g., using\nproactive content negotiation; see [RFC7231](https://tools.ietf.org/html/rfc7231#section-3.4), Section 3.4).\n",
+            "example": "Invalid EXTF-header"
+          },
+          "detail": {
+            "type": "string",
+            "description": "A human-readable explanation specific to this occurrence of the problem.\n",
+            "example": "Fields with error"
+          },
+          "affected_elements": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AffectedElement"
+            }
+          }
+        }
+      },
+      "AffectedElement": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the affected element.",
+            "example": "DATEV Format Identifier"
+          },
+          "reason": {
+            "type": "string",
+            "description": "Reason for the error.",
+            "example": "must be 'EXTF'"
+          }
+        }
+      },
+      "Job": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Identifies the job",
+            "example": "5656-zyxv-trew-ijkl"
+          },
+          "filename": {
+            "type": "string",
+            "description": "Name of the file",
+            "example": "EXTF_AusgangsrechnungenMaerz.CSV"
+          },
+          "fiscal_year_begin": {
+            "type": "string",
+            "description": "First day of fiscal year",
+            "format": "date"
+          },
+          "client_application_display_name": {
+            "type": "string",
+            "description": "Name of the system uploading the file",
+            "example": "Test_Office"
+          },
+          "client_application_vendor": {
+            "type": "string",
+            "description": "Vendor of the system uploading the file",
+            "example": "Test_StartUp"
+          },
+          "client_application_version": {
+            "type": "string",
+            "description": "Version of the system uploading the file",
+            "example": "T_1.23"
+          },
+          "data_category_id": {
+            "type": "integer",
+            "description": "Data category ID. As an example, data_category_id 21 means \"accounting records\"",
+            "example": 21
+          },
+          "date_from": {
+            "type": "string",
+            "description": "Accounting sequence date from",
+            "format": "date"
+          },
+          "date_to": {
+            "type": "string",
+            "description": "Accounting sequence date to",
+            "format": "date"
+          },
+          "label": {
+            "type": "string",
+            "description": "Description of accounting sequence. Labels that exceed a lenght of 250 characters are truncated to 250 characters followed by three dots.",
+            "example": "AR 2020/03"
+          },
+          "number_of_accounting_records": {
+            "type": "integer",
+            "description": "Number of accounting records",
+            "example": 127
+          },
+          "reference_id": {
+            "type": "string",
+            "description": "User defined ID",
+            "example": "TO_2020_4713"
+          },
+          "result": {
+            "type": "string",
+            "description": "Status of the job",
+            "example": "failed",
+            "enum": [
+              "pending",
+              "succeeded",
+              "failed"
+            ]
+          },
+          "timestamp": {
+            "type": "string",
+            "description": "Timestamp when the service received the file (automatically created)",
+            "format": "date-time",
+            "example": "2020-04-13T17:55:42Z"
+          },
+          "validation_details": {
+            "$ref": "#/components/schemas/ValidationDetails"
+          }
+        }
+      }
+    },
+    "parameters": {
+      "client-id": {
+        "name": "client-id",
+        "in": "path",
+        "description": "ID that identifies the client.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "example": "29098-100"
+      }
+    },
+    "securitySchemes": {
+      "client_secret": {
+        "type": "apiKey",
+        "name": "X-DATEV-Client-Secret",
+        "in": "header",
+        "x-key-type": "client_secret"
+      },
+      "client_id": {
+        "type": "apiKey",
+        "name": "X-DATEV-Client-Id",
+        "in": "header",
+        "x-key-type": "client_id"
+      },
+      "datev_openid": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://login.datev.de/openid/authorize",
+            "tokenUrl": "https://api.datev.de/token",
+            "scopes": {
+              "datev:accounting:extf-files-import": "allows upload for DATEV-Format files and to check status"
+            }
+          }
+        }
+      },
+      "datev_openid_sandbox": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://login.datev.de/openidsandbox/authorize",
+            "tokenUrl": "https://sandbox-api.datev.de/token",
+            "scopes": {
+              "datev:accounting:extf-files-import": "allows upload for DATEV-Format files and to check status"
+            }
+          }
+        }
+      },
+      "datev_idp_next": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://signin.datev.de/datevam/oauth2/realms/root/realms/user/authorize",
+            "tokenUrl": "https://signin.datev.de/datevam/oauth2/realms/root/realms/user/access_token",
+            "scopes": {
+              "datev:accounting:extf-files-import": "allows upload for DATEV-Format files and to check status"
+            }
+          }
+        }
+      }
+    }
+  }
+}

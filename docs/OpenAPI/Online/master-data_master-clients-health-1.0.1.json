@@ -1,0 +1,115 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "master-data:master-clients-health",
+    "version": "1.0.1",
+    "description": ""
+  },
+  "servers": [
+    {
+      "url": "https://master-data-master-clients.api.datev.de/platform/v3"
+    },
+    {
+      "url": "https://master-data-master-clients.api.datev.de/platform-sandbox/v3"
+    }
+  ],
+  "security": [
+    {
+      "client_id": [],
+      "client_secret": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Actuator",
+      "description": "Monitor and interact",
+      "externalDocs": {
+        "description": "Spring Boot Actuator Web API Documentation",
+        "url": "https://docs.spring.io/spring-boot/docs/current/actuator-api/html/"
+      }
+    }
+  ],
+  "paths": {
+    "/info": {
+      "get": {
+        "tags": [
+          "Actuator"
+        ],
+        "summary": "Actuator web endpoint 'info'",
+        "operationId": "info",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/vnd.spring-boot.actuator.v3+json": {
+                "schema": {
+                  "type": "object"
+                }
+              },
+              "application/vnd.spring-boot.actuator.v2+json": {
+                "schema": {
+                  "type": "object"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "parameters": []
+      }
+    },
+    "/health": {
+      "get": {
+        "tags": [
+          "Actuator"
+        ],
+        "summary": "Actuator web endpoint 'health'",
+        "operationId": "health",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/vnd.spring-boot.actuator.v3+json": {
+                "schema": {
+                  "type": "object"
+                }
+              },
+              "application/vnd.spring-boot.actuator.v2+json": {
+                "schema": {
+                  "type": "object"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "parameters": []
+      }
+    }
+  },
+  "components": {
+    "schemas": {},
+    "securitySchemes": {
+      "client_secret": {
+        "type": "apiKey",
+        "name": "X-DATEV-Client-Secret",
+        "in": "header",
+        "x-key-type": "client_secret"
+      },
+      "client_id": {
+        "type": "apiKey",
+        "name": "X-DATEV-Client-Id",
+        "in": "header",
+        "x-key-type": "client_id"
+      }
+    }
+  }
+}

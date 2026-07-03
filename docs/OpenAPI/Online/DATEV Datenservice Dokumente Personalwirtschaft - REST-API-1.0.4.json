@@ -1,0 +1,735 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.0.4",
+    "title": "DATEV Datenservice Dokumente Personalwirtschaft - REST-API",
+    "description": "REST-API",
+    "contact": {
+      "url": "https://developer.datev.de/en/help"
+    },
+    "x-datevInfo": {
+      "levelOfAssurance": 3,
+      "copyright": {
+        "description": "DATEV Licence",
+        "url": "https://go.datev.de/agb/"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://hr-documents.api.datev.de/platform/v1/",
+      "description": "Production URL"
+    },
+    {
+      "url": "https://hr-documents.api.datev.de/platform-sandbox/v1/"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "client_id": {
+        "type": "apiKey",
+        "name": "X-Datev-Client-ID",
+        "in": "header",
+        "x-key-type": "client_id"
+      },
+      "datev_openid": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://login.datev.de/openid/authorize",
+            "tokenUrl": "https://api.datev.de/token",
+            "scopes": {
+              "datev:hr:documents:upload": "Grants upload access"
+            }
+          }
+        }
+      },
+      "datev_openid_sandbox": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://login.datev.de/openidsandbox/authorize",
+            "tokenUrl": "https://sandbox-api.datev.de/token",
+            "scopes": {
+              "datev:hr:documents:upload": "Grants upload access"
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "Status401": {
+        "description": "Authentication information missing or invalid. This error is only provided by upstream components \n(e.g. Data Power) so that no response body is described here.\n"
+      },
+      "Status403": {
+        "description": "Forbidden. Access to requested resource is forbidden. This may be due to an insufficient scope or missing \nauthorities in DATEV Rechteverwaltung.\n",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage"
+            },
+            "examples": {
+              "Forbidden": {
+                "value": {
+                  "error": "DPA02906",
+                  "error_description": "Access forbidden."
+                }
+              }
+            }
+          }
+        }
+      },
+      "Status404": {
+        "description": "Not found. Not that this error is often provided by upstream components if the request cannot be routed correctly.\nThe paylod might not contain the below JSON format.\n",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage"
+            },
+            "examples": {
+              "ClientDoesNotExist": {
+                "value": {
+                  "error": "DPA02010",
+                  "error_description": "Access to specified client is granted but client does not exist."
+                }
+              },
+              "UsageTerminated": {
+                "value": {
+                  "error": "DPA02013",
+                  "error_description": "Usage of DATEV Personal has been terminated."
+                }
+              }
+            }
+          }
+        }
+      },
+      "Status429": {
+        "description": "Too many requests.\n"
+      }
+    },
+    "examples": {
+      "UnexpectedError": {
+        "value": {
+          "error": "DPA02000",
+          "error_description": "An error occured. Try again later."
+        }
+      },
+      "ClientCurrentlyNotAvailable": {
+        "value": {
+          "error": "DPA02905",
+          "error_description": "The requested client is currently not available for requests."
+        }
+      }
+    },
+    "parameters": {
+      "ClientGuid": {
+        "name": "client_guid",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/ClientGuid"
+        }
+      },
+      "ConsultantNumberClientNumber": {
+        "name": "consultantnumber-clientnumber",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/ConsultantNumberClientNumber"
+        }
+      },
+      "ClientApplicationId": {
+        "name": "Client-Application",
+        "description": "The client application id as provided by DATEV RZ-Komm. Identifies the external component using the API.\nThis header is for internal DATEV purposes only and is not required by external clients.\n",
+        "in": "header",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "example": [
+          "Datev-Internal. Not required by external clients."
+        ]
+      }
+    },
+    "schemas": {
+      "ClientGuid": {
+        "title": "client_guid",
+        "description": "Unique client id",
+        "type": "string",
+        "format": "uuid",
+        "x-example": "a6edf093-cca7-44f6-9979-bc68ee642a21"
+      },
+      "ConsultantNumber": {
+        "maximum": 9999999,
+        "minimum": 1000,
+        "type": "integer",
+        "description": "The consultant id (Beraternummer)",
+        "format": "int32",
+        "example": 402248
+      },
+      "ClientNumber": {
+        "maximum": 99999,
+        "minimum": 0,
+        "type": "integer",
+        "description": "The client id (Mandantennummer)",
+        "format": "int32",
+        "example": 17100
+      },
+      "ConsultantNumberClientNumber": {
+        "type": "string",
+        "pattern": "^[1-9][0-9]{3,6}-[1-9][0-9]{0,4}$",
+        "description": "Consultant and client number separated by a hyphen.",
+        "example": "402248-17100"
+      },
+      "Client": {
+        "required": [
+          "client_guid",
+          "consultant_number",
+          "client_number"
+        ],
+        "type": "object",
+        "properties": {
+          "client_guid": {
+            "$ref": "#/components/schemas/ClientGuid"
+          },
+          "consultant_number": {
+            "$ref": "#/components/schemas/ConsultantNumber"
+          },
+          "client_number": {
+            "$ref": "#/components/schemas/ClientNumber"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the client",
+            "example": "Sample Enterprise"
+          }
+        },
+        "example": [
+          {
+            "client_guid": "54ceb6cf-baff-49b8-bdc3-2a0b56fd5cf3",
+            "consultant_number": 402248,
+            "client_number": 12345,
+            "name": "Sample Enterprise 1"
+          }
+        ]
+      },
+      "ClientsResponse": {
+        "description": "All available clients",
+        "type": "object",
+        "required": [
+          "clients"
+        ],
+        "properties": {
+          "clients": {
+            "type": "array",
+            "minItems": 0,
+            "items": {
+              "$ref": "#/components/schemas/Client"
+            }
+          }
+        }
+      },
+      "ErrorMessage": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string"
+          },
+          "error_description": {
+            "type": "string"
+          },
+          "error_uri": {
+            "type": "string"
+          },
+          "request_id": {
+            "type": "string"
+          },
+          "additional_messages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdditionalMessage"
+            }
+          }
+        }
+      },
+      "AdditionalMessage": {
+        "type": "object",
+        "required": [
+          "id",
+          "severity"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique ID"
+          },
+          "description": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "error",
+              "warning",
+              "information"
+            ]
+          },
+          "help_uri": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string",
+            "description": "Path to affected resource"
+          },
+          "affected_fields": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Paths of affected properties"
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/clients": {
+      "get": {
+        "security": [
+          {
+            "client_id": [],
+            "datev_openid": [
+              "datev:hr:documents:upload"
+            ]
+          },
+          {
+            "client_id": [],
+            "datev_openid_sandbox": [
+              "datev:hr:documents:upload"
+            ]
+          }
+        ],
+        "summary": "Delivers all DPAnext clients which are accessible by the current user.",
+        "description": "An empty response indicates no permissions for existing clients.",
+        "operationId": "getClients",
+        "tags": [
+          "ExternalApi"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientsResponse"
+                },
+                "example": [
+                  {
+                    "client_guid": "943a4e00-93aa-43c9-9618-129f6c5ff64c",
+                    "consultant_number": 6789,
+                    "client_number": 12345,
+                    "name": "Sample Client"
+                  },
+                  {
+                    "client_guid": "4f83f7c9-8ef5-4a7b-a351-6e2e66f6809f",
+                    "consultant_number": 7890,
+                    "client_number": 23456
+                  }
+                ]
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Status401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Status403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Status404"
+          },
+          "429": {
+            "$ref": "#/components/responses/Status429"
+          },
+          "500": {
+            "description": "Internal Server Error.\n",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "examples": {
+                  "UnexpectedError": {
+                    "$ref": "#/components/examples/UnexpectedError"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": []
+      }
+    },
+    "/clients/{client_guid}/documents": {
+      "post": {
+        "summary": "Upload of a single document to DATEV Personalakte.",
+        "description": "Upload of a single document to DATEV Personalakte. Please specify the filename by using a Content-Disposition in the likes of: form-data; name=\"file\"; filename=\"file.txt\"",
+        "operationId": "uploadDocument",
+        "security": [
+          {
+            "client_id": [],
+            "datev_openid": [
+              "datev:hr:documents:upload"
+            ]
+          },
+          {
+            "client_id": [],
+            "datev_openid_sandbox": [
+              "datev:hr:documents:upload"
+            ]
+          }
+        ],
+        "tags": [
+          "ExternalApi"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ClientGuid"
+          },
+          {
+            "$ref": "#/components/parameters/ClientApplicationId"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "maxLength": 20971520,
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK. Document stored successfully."
+          },
+          "400": {
+            "description": "Bad Request. The api is not used as intended,  e. g. violation of a constraint defined by this api. \nSee error and additional messages for details. Possible errors are listed as examples.\n",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "examples": {
+                  "ContentDoesNotMatchFileType": {
+                    "value": {
+                      "error": "DPA02101",
+                      "error_description": "Content does not match file type."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Status401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Status403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Status404"
+          },
+          "422": {
+            "description": "Unprocessable entity. See error and additional messages for details. Possible errors are listed as examples.\n",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "examples": {
+                  "EmptyFile": {
+                    "value": {
+                      "error": "DPA02091",
+                      "error_description": "Empty file"
+                    }
+                  },
+                  "FileTypeMissing": {
+                    "value": {
+                      "error": "DPA02092",
+                      "error_description": "File name does not end with a file type."
+                    }
+                  },
+                  "FileNameMissing": {
+                    "value": {
+                      "error": "DPA02093",
+                      "error_description": "File name is required."
+                    }
+                  },
+                  "FileNameTooLong": {
+                    "value": {
+                      "error": "DPA02094",
+                      "error_description": "File name too long (max. 255 characters allowed)."
+                    }
+                  },
+                  "VirusFound": {
+                    "value": {
+                      "error": "DPA02095",
+                      "error_description": "Virus detected in file."
+                    }
+                  },
+                  "FileTooLarge": {
+                    "value": {
+                      "error": "DPA02096",
+                      "error_description": "File exceeds size limit of 20 MB."
+                    }
+                  },
+                  "FileTypeNotSupported": {
+                    "value": {
+                      "error": "DPA02100",
+                      "error_description": "File type not supported (must be BMP, CSV, DOCX, GIF, JPG, JPEG, MSG, ODS, ODT, PDF, PNG, RTF, TIF, TIFF, TXT, XLSX or XML)."
+                    }
+                  },
+                  "FileCorrupted": {
+                    "value": {
+                      "error": "DPA02102",
+                      "error_description": "File corrupted / not processable."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clients/{consultantnumber-clientnumber}": {
+      "get": {
+        "security": [
+          {
+            "client_id": [],
+            "datev_openid": [
+              "datev:hr:documents:upload"
+            ]
+          },
+          {
+            "client_id": [],
+            "datev_openid_sandbox": [
+              "datev:hr:documents:upload"
+            ]
+          }
+        ],
+        "summary": "Gets the client specified by consultant number and client number. This operation supports the usage of long time authentication tokens.",
+        "operationId": "getClientByConsultantClientNumber",
+        "tags": [
+          "ExternalApi"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ConsultantNumberClientNumber"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Client"
+                },
+                "example": [
+                  {
+                    "id": "943a4e00-93aa-43c9-9618-129f6c5ff64c",
+                    "consultant_number": 6789,
+                    "client_number": 12345,
+                    "name": "Sample Client"
+                  },
+                  {
+                    "id": "4f83f7c9-8ef5-4a7b-a351-6e2e66f6809f",
+                    "consultant_number": 7890,
+                    "client_number": 23456
+                  }
+                ]
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Status401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Status403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Status404"
+          },
+          "429": {
+            "$ref": "#/components/responses/Status429"
+          },
+          "500": {
+            "description": "Internal Server Error.\n",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "examples": {
+                  "UnexpectedError": {
+                    "$ref": "#/components/examples/UnexpectedError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clients/{consultantnumber-clientnumber}/documents/upload": {
+      "post": {
+        "summary": "Upload of a single document to DATEV Personalakte. This operation supports a resource in the form of clients/{consultantnumber-clientnumber} and the usage of long time authentication tokens.",
+        "operationId": "uploadDocumentByConsultantClientNumber",
+        "security": [
+          {
+            "client_id": [],
+            "datev_openid": [
+              "datev:hr:documents:upload"
+            ]
+          },
+          {
+            "client_id": [],
+            "datev_openid_sandbox": [
+              "datev:hr:documents:upload"
+            ]
+          }
+        ],
+        "tags": [
+          "ExternalApi"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ConsultantNumberClientNumber"
+          },
+          {
+            "$ref": "#/components/parameters/ClientApplicationId"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "maxLength": 20971520,
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK. Document stored successfully."
+          },
+          "400": {
+            "description": "Bad Request. The api is not used as intended,  e. g. violation of a constraint defined by this api. \nSee error and additional messages for details. Possible errors are listed as examples.\n",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "examples": {
+                  "ContentDoesNotMatchFileType": {
+                    "value": {
+                      "error": "DPA02101",
+                      "error_description": "Content does not match file type."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Status401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Status403"
+          },
+          "404": {
+            "$ref": "#/components/responses/Status404"
+          },
+          "422": {
+            "description": "Unprocessable entity. See error and additional messages for details. Possible errors are listed as examples.\n",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "examples": {
+                  "EmptyFile": {
+                    "value": {
+                      "error": "DPA02091",
+                      "error_description": "Empty file"
+                    }
+                  },
+                  "FileTypeMissing": {
+                    "value": {
+                      "error": "DPA02092",
+                      "error_description": "File name does not end with a file type."
+                    }
+                  },
+                  "FileNameMissing": {
+                    "value": {
+                      "error": "DPA02093",
+                      "error_description": "File name is required."
+                    }
+                  },
+                  "FileNameTooLong": {
+                    "value": {
+                      "error": "DPA02094",
+                      "error_description": "File name too long (max. 255 characters allowed)."
+                    }
+                  },
+                  "VirusFound": {
+                    "value": {
+                      "error": "DPA02095",
+                      "error_description": "Virus detected in file."
+                    }
+                  },
+                  "FileTooLarge": {
+                    "value": {
+                      "error": "DPA02096",
+                      "error_description": "File exceeds size limit of 20 MB."
+                    }
+                  },
+                  "FileTypeNotSupported": {
+                    "value": {
+                      "error": "DPA02100",
+                      "error_description": "File type not supported (must be BMP, CSV, DOCX, GIF, JPG, JPEG, MSG, ODS, ODT, PDF, PNG, RTF, TIF, TIFF, TXT, XLSX or XML)."
+                    }
+                  },
+                  "FileCorrupted": {
+                    "value": {
+                      "error": "DPA02102",
+                      "error_description": "File corrupted / not processable."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

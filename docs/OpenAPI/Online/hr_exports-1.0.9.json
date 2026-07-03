@@ -1,0 +1,2963 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "hr:exports",
+    "description": "Users authenticate themselves to the DATEV\ndata center via OAuth. After a successful authentication and authorization, the user can access the\npayroll relevant data from either one of the two payroll systems, LODAS or Lohn und Gehalt",
+    "termsOfService": "https://www.datev.de/agb",
+    "contact": {
+      "name": "DATEV Schnittstellenberatung",
+      "url": "https://www.datev.de/schnittstellen",
+      "email": "schnittstellenberatung@datev.de"
+    },
+    "license": {
+      "name": "DATEV eG",
+      "url": "http://www.datev.de"
+    },
+    "version": "1.0.9",
+    "x-pathalias": "hr-exports",
+    "x-datev-shortdescription": "With the REST API DATEVconnect online hr-exports, payroll relevant\ndata can be accessed. The data is retrieved from the payroll systems LODAS or Lohn und Gehalt."
+  },
+  "servers": [
+    {
+      "url": "https://hr-exports.api.datev.de/platform/v1"
+    },
+    {
+      "url": "https://hr-exports.api.datev.de/platform-sandbox/v1"
+    }
+  ],
+  "paths": {
+    "/clients": {
+      "get": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "Get list with all permitted clients",
+        "description": "A list with all permitted clients is returned.",
+        "operationId": "getClients",
+        "responses": {
+          "200": {
+            "description": "returns all permitted clients",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Client"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02250 | restapi.ScopeWrongOrMissing | The third-party solution has sent an incorrect request. The required scope is empty or missing. The software provider must ensure that the scope is set. | \n |#DCO02251 | restapi.AccessDenied | It is recommended that the user contacts the tax consultant. The third-party solution has to ensure that the used client-id exists in the list of accessible clients. |  ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error. In case of repeated occurrences, please contact the support hotline. ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage5xx"
+                }
+              }
+            }
+          }
+        },
+        "parameters": []
+      }
+    },
+    "/clients/{client-id}": {
+      "get": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "Get status code by client-id",
+        "description": "A status code is returned, if access to requested Client is permitted (status code 200) or denied (status code 403).",
+        "operationId": "getClientByClientId",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "12345-123"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "returns status code 200 without body",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "400": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02203 | restapi.FormatClientIdFault | Format of client-id is wrong. Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen, e. g. 12345-123 |",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02250 | restapi.ScopeWrongOrMissing | The third-party solution has sent an incorrect request. The required scope is empty or missing. The software provider must ensure that the scope is set. | \n |#DCO02251 | restapi.AccessDenied | It is recommended that the user contacts the tax consultant. The third-party solution has to ensure that the used client-id exists in the list of accessible clients. |  ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error. In case of repeated occurrences, please contact the support hotline. ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage5xx"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/employees/{employee-id}/taxpayments": {
+      "get": {
+        "tags": [
+          "Tax Payments"
+        ],
+        "summary": "Get the employee's tax payments",
+        "description": "Tax (e.g. church tax or solidarity tax) of an employee can be accessed by its employee-id. \r \n \r \nIf a non-mandatory field is not filled in the payroll system, the field will not be exported through the API. Therefore the example model might differ from the actual response.",
+        "operationId": "getTaxPaymentsByEmployeeId",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "12345-123"
+          },
+          {
+            "name": "employee-id",
+            "in": "path",
+            "description": "Employee-Id, which identifies the employee in the payroll system.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 10
+          },
+          {
+            "name": "payroll_accounting_month",
+            "in": "query",
+            "description": "Payroll accounting month.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-01"
+          },
+          {
+            "name": "payroll_accounting_month_end",
+            "in": "query",
+            "description": "Payroll accounting month, which is used to get a list of objects for more than one month.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-02"
+          },
+          {
+            "name": "payroll_recalculation_month",
+            "in": "query",
+            "description": "Payroll recalculation month",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-01"
+          },
+          {
+            "name": "payroll_recalculation_month_end",
+            "in": "query",
+            "description": "Payroll recalculation month, which is used to get a list of objects for more than one month",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-02"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "returns an employee's tax payments either as an object for one month or as an array for multiple months",
+            "headers": {
+              "X-Payroll-System": {
+                "description": "Returns the payroll system (lodas or lug) from which the data originates.",
+                "style": "simple",
+                "schema": {
+                  "type": "string",
+                  "example": "lodas"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TaxPayments"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02200 | restapi.EmployeeIdWrongFormat | Parameter employee-id must be an Integer. | \n | #DCO02201 | restapi.PayrollMonthWrongFormat | Parameter payroll_accounting_month in wrong format. Format YYYY-MM required, e. g. 2020-01 | \n | #DCO02202 | restapi.PayrollMonthEndWrongFormat | Parameter payroll_accounting_month_end in wrong format. Format YYYY-MM required, e. g. 2020-12 | \n | #DCO02203 | restapi.FormatClientIdFault | Format of client-id is wrong. Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen, e. g. 12345-123 |\n | #DCO02204 | restapi.NotValidTimePeriod | The parameters payroll_accounting_month and payroll_accounting_month_end. are not a valid time period. Payroll_accounting_month_end (e. g. 2020_05) must be greater than payroll_accounting_month (e. g. 2020_01). | \n |#DCO02205 | restapi.PayrollMonthWrong | Parameter payroll_accounting_month must be within the last five years. | \n |#DCO02206 | restapi.PayrollMonthEndWrong | Parameter payroll_accounting_month_end must be within the last five years. | \n |#DCO02207 | restapi.MonthNotProvided | Parameter payroll_accounting_month or payroll_recalculation_month must be provided. |",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02250 | restapi.ScopeWrongOrMissing | The third-party solution has sent an incorrect request. The required scope is empty or missing. The software provider must ensure that the scope is set. | \n |#DCO02251 | restapi.AccessDenied | It is recommended that the user contacts the tax consultant. The third-party solution has to ensure that the used client-id exists in the list of accessible clients. |  ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02280 | restapi.EmployeeNotFound | The Employee was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error. In case of repeated occurrences, please contact the support hotline. ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage5xx"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/employees/{employee-id}/socialsecuritypayments": {
+      "get": {
+        "tags": [
+          "Social Security Payments"
+        ],
+        "summary": "Get the employee's social security payments",
+        "description": "Social security payments (e. g. current gross social security, allocation1) of a an employee can be accessed by its employee-id. \r \n \r \nIf a non-mandatory field is not filled in the payroll system, the field will not be exported through the API. Therefore the example model might differ from the actual response.",
+        "operationId": "getSocialSecurityPaymentsByEmployeeId",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "12345-123"
+          },
+          {
+            "name": "employee-id",
+            "in": "path",
+            "description": "Employee-Id, which identifies the employee in the payroll system.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 10
+          },
+          {
+            "name": "payroll_accounting_month",
+            "in": "query",
+            "description": "Payroll accounting month.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-01"
+          },
+          {
+            "name": "payroll_accounting_month_end",
+            "in": "query",
+            "description": "Payroll accounting month, which is used to get a list of objects for more than one month.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-02"
+          },
+          {
+            "name": "payroll_recalculation_month",
+            "in": "query",
+            "description": "Payroll recalculation month",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-01"
+          },
+          {
+            "name": "payroll_recalculation_month_end",
+            "in": "query",
+            "description": "Payroll recalculation month, which is used to get a list of objects for more than one month",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-02"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "returns an employee's social security payments either as an object for one month or as an array for multiple months",
+            "headers": {
+              "X-Payroll-System": {
+                "description": "Returns the payroll system (lodas or lug) from which the data originates.",
+                "style": "simple",
+                "schema": {
+                  "type": "string",
+                  "example": "lodas"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SocialSecurityPayments"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02200 | restapi.EmployeeIdWrongFormat | Parameter employee-id must be an Integer. | \n | #DCO02201 | restapi.PayrollMonthWrongFormat | Parameter payroll_accounting_month in wrong format. Format YYYY-MM required, e. g. 2020-01 | \n | #DCO02202 | restapi.PayrollMonthEndWrongFormat | Parameter payroll_accounting_month_end in wrong format. Format YYYY-MM required, e. g. 2020-12 | \n | #DCO02203 | restapi.FormatClientIdFault | Format of client-id is wrong. Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen, e. g. 12345-123 |\n | #DCO02204 | restapi.NotValidTimePeriod | The parameters payroll_accounting_month and payroll_accounting_month_end. are not a valid time period. Payroll_accounting_month_end (e. g. 2020_05) must be greater than payroll_accounting_month (e. g. 2020_01). | \n |#DCO02205 | restapi.PayrollMonthWrong | Parameter payroll_accounting_month must be within the last five years. | \n |#DCO02206 | restapi.PayrollMonthEndWrong | Parameter payroll_accounting_month_end must be within the last five years. | \n |#DCO02207 | restapi.MonthNotProvided | Parameter payroll_accounting_month or payroll_recalculation_month must be provided. |",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02250 | restapi.ScopeWrongOrMissing | The third-party solution has sent an incorrect request. The required scope is empty or missing. The software provider must ensure that the scope is set. | \n |#DCO02251 | restapi.AccessDenied | It is recommended that the user contacts the tax consultant. The third-party solution has to ensure that the used client-id exists in the list of accessible clients. |  ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02280 | restapi.EmployeeNotFound | The Employee was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error. In case of repeated occurrences, please contact the support hotline. ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage5xx"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/employees/{employee-id}/salarytotalvalues": {
+      "get": {
+        "tags": [
+          "Salary Total Values"
+        ],
+        "summary": "Get the employee's salary total values",
+        "description": "Salary (Gesamtbrutto, Auszahlungsbetrag, Nettoverdienst) of an employee can be accessed by its employee-id. \r \n \r \nIf a non-mandatory field is not filled in the payroll system, the field will not be exported through the API. Therefore the example model might differ from the actual response.",
+        "operationId": "getSalaryTotalValuesByEmployeeId",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "12345-123"
+          },
+          {
+            "name": "employee-id",
+            "in": "path",
+            "description": "Employee-Id, which identifies the employee in the payroll system.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 10
+          },
+          {
+            "name": "payroll_accounting_month",
+            "in": "query",
+            "description": "Payroll accounting month.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-01"
+          },
+          {
+            "name": "payroll_accounting_month_end",
+            "in": "query",
+            "description": "Payroll accounting month, which is used to get a list of objects for more than one month.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-02"
+          },
+          {
+            "name": "payroll_recalculation_month",
+            "in": "query",
+            "description": "Payroll recalculation month",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-01"
+          },
+          {
+            "name": "payroll_recalculation_month_end",
+            "in": "query",
+            "description": "Payroll recalculation month, which is used to get a list of objects for more than one month",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-02"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "returns an employee's salary either as an object for one month or as an array for multiple months",
+            "headers": {
+              "X-Payroll-System": {
+                "description": "Returns the payroll system (lodas or lug) from which the data originates.",
+                "style": "simple",
+                "schema": {
+                  "type": "string",
+                  "example": "lodas"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SalaryTotalValues"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02200 | restapi.EmployeeIdWrongFormat | Parameter employee-id must be an Integer. | \n | #DCO02201 | restapi.PayrollMonthWrongFormat | Parameter payroll_accounting_month in wrong format. Format YYYY-MM required, e. g. 2020-01 | \n | #DCO02202 | restapi.PayrollMonthEndWrongFormat | Parameter payroll_accounting_month_end in wrong format. Format YYYY-MM required, e. g. 2020-12 | \n | #DCO02203 | restapi.FormatClientIdFault | Format of client-id is wrong. Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen, e. g. 12345-123 |\n | #DCO02204 | restapi.NotValidTimePeriod | The parameters payroll_accounting_month and payroll_accounting_month_end. are not a valid time period. Payroll_accounting_month_end (e. g. 2020_05) must be greater than payroll_accounting_month (e. g. 2020_01). | \n |#DCO02205 | restapi.PayrollMonthWrong | Parameter payroll_accounting_month must be within the last five years. | \n |#DCO02206 | restapi.PayrollMonthEndWrong | Parameter payroll_accounting_month_end must be within the last five years. | \n |#DCO02207 | restapi.MonthNotProvided | Parameter payroll_accounting_month or payroll_recalculation_month must be provided. |",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02250 | restapi.ScopeWrongOrMissing | The third-party solution has sent an incorrect request. The required scope is empty or missing. The software provider must ensure that the scope is set. | \n |#DCO02251 | restapi.AccessDenied | It is recommended that the user contacts the tax consultant. The third-party solution has to ensure that the used client-id exists in the list of accessible clients. |  ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02280 | restapi.EmployeeNotFound | The Employee was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error. In case of repeated occurrences, please contact the support hotline. ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage5xx"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/employees/{employee-id}/salarypayments": {
+      "get": {
+        "tags": [
+          "Salary Payments"
+        ],
+        "summary": "Get the employee's salary payments",
+        "description": "Salary components (Lohnarten, Nettobezüge, Nettoabzüge) of a an employee can be accessed by its employee-id. \r \n \r \nIf a non-mandatory field is not filled in the payroll system, the field will not be exported through the API. Therefore the example model might differ from the actual response.\r \n \r \n| Property | Values |\n| ----| -----|\n|  |   |\n| **tax_and_social_security_treatment_of_wage_type** | 0 = keine SV-Verteilung, kein Gesamt-Brutto, 1 = Bezüge steuer- u. sv-pflichtig, 2 = Bezüge nur steuerpflichtig, 3 = Bezüge nur sv-pflichtig, 4 = Bezüge steuer- u. sv-frei, 5 = Bez. steuer- u. sv-pfl., kein Gesamt-Brutto, 6 = Bez. steuer- u. sv-pfl., Verst.ü.Jahrestab., 7 = Bezüge nur steuerpfl., Verst.ü.Jahrestab., 9 = steuer- u.sv-pfl.,k.Ges.bto, Jahrestabelle, 10 = nur steuerpfl., k.Ges.bto, Jahrestabelle, 11 = Abwälzung pausch. Steuer, nur Gesamtbrutto, 12 = Steuer: Fünftelregelung, sv-pfl. sonstiger Bezug, 13 = AG-Ant. ZVK Umlage (öff. Dienst), 14 = Sachzuwend p .St/SV-frei, 17 = AG-Ant. ZVK Umlage (öff. Dienst) Verst. Jahrestab., 18 = Bez. steuer- u. sv-pfl., Verst.ü.Monatstab., 19 = Bezüge steuerfrei, sv-pflichtig, 21 = Weihnachtsgratifikation, einmaliges Entgelt, 22 = Fahrtkost. Ausw.Lohnkto u. LStB, steuer- u. sv-frei, 23 = steuer- u. sv-freie Verpflegungszusch. bei Auswärtstätigkeit, 24 = Bezüge n. Doppelbesteuerungsabk., lfd.Bezug, 25 = Bezüge n. Doppelbest.abk., einmal. Entgelt, 26 = Bezüge n. Auslandstätigkeiterlass, lfd.Bezug, 27 = Bez. n.Auslandstätigk.erlass, einmal.Entgelt, 28 = Bezüge steuer- u. sv-pfl., Jahrestabelle, 29 = Bezüge nur sv-pflichtig, kein Gesamt-Brutto, 30 = Versorgungsbezüge, Verst. ü. Monatstabelle, 31 = Versorgungsbezüge, Verst. ü. Jahrestabelle, 32 = AG-Anteil Vermögensbildung, laufender Bezug, 33 = AG-Anteil Vermögensbildung, einmal. Entgelt, 34 = AVV ST pausch SV mtl, 35 = AVV ST pausch SV frei, 36 = AVV ST pausch SV jhrl, 38 = Zusatzrente Unterstützungskasse, steuer- und sv.frei, 41 = Erholungsbeihilfe p .St/SV-frei, 42 = Firmenrabatt, monatlich, 43 = Firmenrabatt, jährlich, 44 = AG-Leist. doppelte Haushaltsführung, 45 = Zuschüsse Mutterschaftsgeld, 46 = Verdienstausf.entschäd. n.Bundesseuchenges., 47 = pauschal versteuerte Fahrtkosten, 48 = pauschal versteuerte Bezüge, 25%, sv-frei, 49 = Sachzuwendung pausch. Versteuerung, sv-jhrl.., 50 = Abfindung, steuerpflichtig, sv-frei, 51 = Nachtzuschlag, 25% steuerfrei, 52 = Sonntagszuschlag, 50% steuerfrei, 53 = Feiertagszuschlag, 125% steuerfrei, 54 = Feiertagszuschlag, 150% steuerfrei, 55 = Nachtzuschlag/Kern, 40% steuerfrei, 56 = Sonntags- u.Nachtzu./Kern, 90% steuerfrei, 57 = Feiertags- u.Nachtzu./Kern, 165% steuerfrei, 58 = Feiertags- u. Nachtzu./Kern, 190% steuerfr., 59 = Sonntags- u. Nachtzuschlag, 75% steuerfrei, 60 = Feiertags- u. Nachtzuschlag, 150% steuerfr., 61 = Feiertags- u. Nachtzuschlag, 175% steuerfr., 71 = ausgez. Wertguthaben, st.-pfl. mehrj. Bezug, 72 = ausgez. Wertguthaben, st.-pfl. jhrl. Bezug, 73 = ausgez. Wertguthaben, steuerfreier Bezug, 74 = ST/SV/Umlage jhrl., 75 = st.pfl. Monatstabelle; sv-pfl. monatsbez. BBG bzw. VB-Max, 76 = st.pfl. Jahrestabelle; sv-pfl. monatsbez. BBG bzw. VB-Max, 77 = st.pfl. mehrjährig; sv-frei, 78 = st-pfl. über Jahrestabelle/sv-frei, 79 = st-pfl. monatlich/sv-frei, k. Ges. Brutto, 80 = Besondere Pauschalierung/SV lfd., 81 = Besondere Pauschalierung/SV jhrl., 82 = Besondere Pauschalierung/SV frei, 83 = Bezüge nur steuerpfl., k. Ges. Brutto, 84 = Bezüge steuer- u. sv-frei, k. Ges. Brutto, 85 = Bezüge EBZ st-frei, sv-pfl., k. Ges.Brutto, 86 = AVV ST pausch SV mtl., k. Ges. Brutto, 87 = AVV ST pausch SV frei, k. Ges. Brutto, 88 = AVV ST pausch SV jhrl., k. Ges. Brutto, 89 = Bezüge lfd st-frei, sv-pfl., k. Ges.Brutto, 90 = st-pfl. jährlich/sv-frei, k. Ges. Brutto, 91 = st-pfl. mehrjährig/sv-frei, k. Ges. Brutto, 92 = Versorgbez. st-pfl. monatlich / sv-frei   |\n| **social_security_treatment_of_wage_type** | F = Frei, L = Laufender Bezug, P = Pauschal, E = Einmalbezug, A = Abfindung, M = Mehrjähriger Bezug |\n| **tax_treatment_of_wage_type** | L = Laufender Bezug, F = Frei, P = Pauschal, S = Sonstiger Bezug, M = mehrjähriger Bezug, W = Störfall West, O = Störfall Ost |\n| **component_gross_payment** | Ist Bestandteil des Gesamtbruttos Ja/Nein |\n| **wage_type_amount_difference** | Differenz der Bruttobezüge zur Erstabrechnung (entstanden durch Nachberechnung) |\n| **net_payment_amount_difference** | Differenz der Nettobe/-abzüge zur Erstabrechnung (enstanden durch Nachberechnung) |\n",
+        "operationId": "getSalaryPaymentsByEmployeeId",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "12345-123"
+          },
+          {
+            "name": "employee-id",
+            "in": "path",
+            "description": "Employee-Id, which identifies the employee in the payroll system.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 10
+          },
+          {
+            "name": "payroll_accounting_month",
+            "in": "query",
+            "description": "Payroll accounting month.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-01"
+          },
+          {
+            "name": "payroll_accounting_month_end",
+            "in": "query",
+            "description": "Payroll accounting month, which is used to get a list of objects for more than one month.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-02"
+          },
+          {
+            "name": "payroll_recalculation_month",
+            "in": "query",
+            "description": "Payroll recalculation month",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-01"
+          },
+          {
+            "name": "payroll_recalculation_month_end",
+            "in": "query",
+            "description": "Payroll recalculation month, which is used to get a list of objects for more than one month",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-02"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "returns an employee's salary components either as an object for one month or as an array for multiple months depending on the payroll system in use (either 'gross_payments_lodas' or 'gross_payments_lug')",
+            "headers": {
+              "X-Payroll-System": {
+                "description": "Returns the payroll system (lodas or lug) from which the data originates.",
+                "style": "simple",
+                "schema": {
+                  "type": "string",
+                  "example": "lodas"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SalaryPayments"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02200 | restapi.EmployeeIdWrongFormat | Parameter employee-id must be an Integer. | \n | #DCO02201 | restapi.PayrollMonthWrongFormat | Parameter payroll_accounting_month in wrong format. Format YYYY-MM required, e. g. 2020-01 | \n | #DCO02202 | restapi.PayrollMonthEndWrongFormat | Parameter payroll_accounting_month_end in wrong format. Format YYYY-MM required, e. g. 2020-12 | \n | #DCO02203 | restapi.FormatClientIdFault | Format of client-id is wrong. Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen, e. g. 12345-123 |\n | #DCO02204 | restapi.NotValidTimePeriod | The parameters payroll_accounting_month and payroll_accounting_month_end. are not a valid time period. Payroll_accounting_month_end (e. g. 2020_05) must be greater than payroll_accounting_month (e. g. 2020_01). | \n |#DCO02205 | restapi.PayrollMonthWrong | Parameter payroll_accounting_month must be within the last five years. | \n |#DCO02206 | restapi.PayrollMonthEndWrong | Parameter payroll_accounting_month_end must be within the last five years. | \n |#DCO02207 | restapi.MonthNotProvided | Parameter payroll_accounting_month or payroll_recalculation_month must be provided. |",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02250 | restapi.ScopeWrongOrMissing | The third-party solution has sent an incorrect request. The required scope is empty or missing. The software provider must ensure that the scope is set. | \n |#DCO02251 | restapi.AccessDenied | It is recommended that the user contacts the tax consultant. The third-party solution has to ensure that the used client-id exists in the list of accessible clients. |  ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02280 | restapi.EmployeeNotFound | The Employee was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error. In case of repeated occurrences, please contact the support hotline. ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage5xx"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/employees/{employee-id}/masterdata": {
+      "get": {
+        "tags": [
+          "Masterdata"
+        ],
+        "summary": "Get the employee's masterdata",
+        "description": "Masterdata of a an employee can be accessed by its employee-id. \r \n \r \n If a non-mandatory field is not filled in the payroll system, the field will not be exported through the API. Therefore the example model might differ from the actual response.\r \n \r \n| Property | Values |\n| ----| -----|\n|  |   |\n| **sex**   |  Lodas: 0 = männlich, 1 = weiblich, 2 = divers, 3 = unbestimmt  |\n|           |  Lohn und Gehalt: 0 = weiblich, 1 = männlich, 2 = divers, 3 = unbestimmt |\n| **denomination/spouses_denomination**  |  Lodas:  0 = Konfessionslos / Keine Kirchensteuerberechnung, 1 = ev - Evangelische Kirchensteuer, 2 = rk - Römisch-Katholische Kirchensteuer, 3 = ak - Altkatholische Kirchensteuer, 4 = fa - Freie Religionsgemeinschaft Alzey, 5 = fb - Freireligiöse Landesgemeinde Baden, 6 = fg - Freireligiöse Landesgemeinde Pfalz, 7 = fm - Freireligiöse Gemeinde Mainz, 8 = fr - Französisch reformiert (bis 12/2015), 9 = fs - Freireligiöse Gemeinde Offenbach/Main, 10 = ib - Israelitische Religionsgemeinschaft Baden, 11 = ih - Jüdische Kultussteuer, 12 = il - Israelitische Kultussteuer der kultusberechtigten Gemeinden, 13 = is - Israelitische / Jüdische Kultussteuer, 14 = iw - Israelitische Religionsgemeinschaft Württembergs, 15 = jd - Jüdische Kultussteuer, 16 = jh - Jüdische Kultussteuer, 17 = lt - Evangelisch lutherisch (bis 12/2015), 18 = rf - Evangelisch reformiert (bis 12/2015) |\n|                    |  Lohn und Gehalt:  00 = Konfessionslos / Keine Kirchensteuerberechnung , 01 = rk - Römisch-Katholische Kirchensteuer, 02 = ev - Evangelische Kirchensteuer, 03 = lt - Evangelisch lutherisch (bis 12/2015), 04 = rf - Evangelisch reformiert (bis 12/2015), 05 = ak - Altkatholische Kirchensteuer, 06 = is - Israelitische / Jüdische Kultussteuer, 07 = fb - Freireligiöse Landesgemeinde Baden, 08 = ib - Israelitische Religionsgemeinschaft Baden, 09 = fo - Freireligiöse Gemeinde Offenbach/Main, 10 = fp - Freireligiöse Landesgemeinde Pfalz, 11 = fm - Freireligiöse Gemeinde Mainz, 12 = jü - Jüdisch, 13 = iw - Israelitische Religionsgemeinschaft Württembergs, 14 = if - Israelitische Kultussteuer Frankfurt, 15 = il - Israelitische Kultussteuer der kultusberechtigten Gemeinden, 16 = un - Unitarische Religionsgem. Freie Protestanten, 17 = fr - Französisch reformiert (bis 12/2015), 18 = fa - Freie Religionsgemeinschaft Alzey, 20 = fg - Freireligiöse Landesgemeinde Pfalz, 24 = jh - Jüdische Kultussteuer, 23 = jd - Jüdische Kultussteuer, 22 = ih - Jüdische Kultussteuer, 21 = fs - Freireligiöse Gemeinde Offenbach/Main\n |\n| **country**   |  0 = keine Angabe, A = Österreich, AFG = Afghanistan, AGO = Angola, AJ = Amerikanische Jungferninseln, AL = Albanien, AND = Andorra, ANG = Anguilla, ANT = Antigua und Barbuda, AQ = Antarktische Territorien, AQU = Äquatorialguinea, ARM = Armenien, AS = Amerikanisch Samoa, ASE = Aserbaidschan, AU = Korallenmeer-, Ashmore- und Cartierinseln, AUS = Australien, AW = Aruba, AX = Åland, B = Belgien, BD = Bangladesch, BDS = Barbados, BER = Bermuda, BG = Bulgarien, BH = Belize, BHT = Bhutan, BIH = Bosnien und Herzegowina, BIO = Malediven, BJ = Britische Jungferninseln, BL = St.Barthélemy, BOL = Bolivien, BQ = Bonaire, Saba, St.Eustatius, BR = Brasilien, BRN = Bahrain, BRU = Brunei Darussalam, BS = Bahamas, BV = Bouvetinsel, BY = Weissrussland, C = Kuba, CAM = Kamerun, CC = Kokosinseln, CDN = Kanada, CH = Schweiz, CHD = Tschad, CI = Côte d‘Ivoire, CL = Sri Lanka, CO = Kolumbien, COI = Cookinseln, CP = Clipperton, CR = Costa Rica, CV = Cabo Verde, CW = Curaçao, CY = Zypern, CX = Weihnachtsinsel, CZ = Tschechien, DK = Dänemark, DOM = Dominikanische Republik, DSC = Dschibuti, DY = Benin, DZ = Algerien, E = Spanien, EAK = Kenia, EAT = Tansania, EAU = Uganda, EC = Ecuador, EH = Westsahara, ERI = Eritrea, ES = El Salvador, EST = Estland, ET = Ägypten, ETH = Äthiopien, F = Frankreich, FAL = Falklandinseln, FG = Französisch Guayana, FIN = Finnland, FJI = Fidschi, FL = Liechtenstein, FP = Franz.-Polynesien, FR = Färöer, GAB = Gabun, GB = Vereinigtes Königreich, GCA = Guatemala, GEO = Georgien, GG = Guernsey, GH = Ghana, GIB = Gibraltar, GR = Griechenland, GRO = Grönland, GS = Südgeorgien und die südlichen Sandwichinseln, GUA = Guadeloupe, GUB = Guinea-Bissau, GUM = Guam, GUY = Guyana, H = Ungarn, HCA = Honduras, HEL = St. Helena /Ascension / Tristan da Cunha, HKG = Hongkong, HR = Kroatien, HM = Heard und McDonaldinseln, HV = Burkina Faso, I = Italien, IL = Israel, IND = Indien, IR = Iran, IRL = Irland, IRQ = Irak, IS = Island, IO = Britisches Territorium im Indischen Ozean, J = Japan, JA = Jamaika, JE = Jersey, JOR = Jordanien, K = Kambodscha, KAI = Kaimaninseln, KAN = Kanalinseln, KAS = Kasachstan, KIB = Kiribati, KIS = Kirgisistan, KOM = Komoren, KOR = Korea, Demokratische Volksrepublik (Nordkorea), KOS = Kosovo, KWT = Kuwait, L = Luxemburg, LAO = Laos, LAR = Libyen, LB = Liberia, LS = Lesotho, LT = Litauen, LV = Lettland, M = Malta, MA = Marokko, MAC = Macau, MAL = Malaysia, MAN = Insel Man, MAO = Oman, MAR = Marshallinseln, MAT = Martinique, MAY = Mayotte, MC = Monaco, MD = Moldau, MEX = Mexiko, MF = St.Martin (französischer Teil), MIK = Mikronesien, MK = Nordmazedonien, MNE = Montenegro, MON = Mongolei, MOT = Montserrat, MOZ = Mosambik, MS = Mauritius, MW = Malawi, MYA = Myanmar, N = Norwegen, NAU = Nauru, NEP = Nepal, NF = Norfolkinseln, NIC = Nicaragua, NIU = Niue, NKA = Neukaledonien, NL = Niederlande, NLA = Niederländische Antillen, NMA = Nördliche Marianen, NZ = Neuseeland, P = Portugal, PA = Panama, PAL = Palau, PE = Peru, PIE = St.Pierre und Miquelon, PIT = Pitcairninseln, PK = Pakistan, PL = Polen, PNG = Papua-Neuguinea, PRI = Puerto Rico, PSE = Palästinensische Gebiete, PY = Paraguay, QAT = Katar, RA = Argentinien, RB = Botsuana, RCA = Zentralafrikanische Republik, RCB = Kongo, RCH = Chile, REU = Réunion, RG = Guinea, RH = Haiti, RI = Indonesien, RIM = Mauretanien, RL = Libanon, RM = Madagaskar, RMM = Mali, RN = Niger, RO = Rumänien, ROK = Korea, Republik (Südkorea), ROU = Uruguay, RP = Philippinen, RSM = San Marino, RU = Burundi, RUS = Russische Föderation, RWA = Ruanda, S = Schweden, SAU = Saudi-Arabien, SCG = Serbien und Montenegro, SCN = St.Kitts und Nevis, SDN = Sudan, SGP = Singapur, SJ = Svalbard und Jan Mayen, SK = Slowakei, SLO = Slowenien, SME = Suriname, SN = Senegal, SOL = Salomonen, SP = Somalia, SRB = Serbien, SSD = Südsudan, STP = São Tomé und Príncipe, SWA =, SWZ = Namibia Eswatini, SY = Seychellen, SYR = Syrien, SX = St.Martin (niederländischer Teil), T = Thailand, TAD = Tadschikistan, TF = Französische Süd- und Antarktisgebiete, TG = Togo, TJ = China, TN = Tunesien, TOK = Tokelau, TON = Tonga, TR = Türkei, TT = Trinidad und Tobago, TUC = Turks- und Caicosinseln, TUR = Turkmenistan, TUV = Tuvalu, TWN = Taiwan, UA = Ukraine, UAE = Vereinigte Arabische Emirate, UM = Navassa / kleinere amerikanische Überseeinseln, USA = Vereinigte Staaten, USB = Usbekistan, V = Vatikanstadt, VAN = Vanuatu, VN = Vietnam, WAG = Gambia, WAL = Sierra Leone, WAN = Nigeria, WD = Dominica, WF = Wallis und Futuna, WG = Grenada, WL = St.Lucia, WS = Samoa, WV = St.Vincent und die Grenadinen, YEM = Jemen, YU = Jugoslawien, YV = Venezuela, Z = Sambia, ZA = Südafrika, ZRE = Kongo, Demokratische Republik, ZW = Simbabwe     |\n|  |   |\n| **nationality**   |   000 = Deutschland, 121 = Albanien, 122 = Bosnien und Herzegowina, 123 = Andorra, 124 = Belgien, 125 = Bulgarien, 126 = Dänemark, 127 = Estland, 128 = Finnland, 129 = Frankreich, 130 = Kroatien, 131 = Slowenien, 132 = Serbien und Montenegro, 133 = Serbien (einschl. Kosovo), 134 = Griechenland, 135 = Irland, 136 = Island, 137 = Italien, 138 = Jugoslawien, 139 = Lettland, 140 = Montenegro, 141 = Liechtenstein, 142 = Litauen, 143 = Luxemburg, 144 = Nordmazedonien, 145 = Malta, 146 = Moldau, 147 = Monaco, 148 = Niederlande, 149 = Norwegen, 150 = Kosovo, 151 = Österreich, 152 = Polen, 153 = Portugal, 154 = Rumänien, 155 = Slowakei, 156 = San Marino, 157 = Schweden, 158 = Schweiz, 160 = Russische Föderation, 161 = Spanien, 163 = Türkei, 164 = Tschechien, 165 = Ungarn, 166 = Ukraine, 167 = Vatikanstadt, 168 = Vereinigtes Königreich , 169 = Weissrussland, 170 = Serbien, 181 = Zypern, 195 = Gibraltar, 199 = Übriges Europa, 221 = Algerien, 223 = Angola, 224 = Eritrea, 225 = Äthiopien, 226 = Lesotho, 227 = Botsuana, 229 = Benin, 230 = Dschibuti, 231 = Côte d‘Ivoire, 232 = Nigeria, 233 = Simbabwe, 236 = Gabun, 237 = Gambia, 238 = Ghana, 239 = Mauretanien, 242 = Cabo Verde, 243 = Kenia, 244 = Komoren, 245 = Kongo, 246 = Kongo, Demokratische Republik, 247 = Liberia, 248 = Libyen, 249 = Madagaskar, 251 = Mali, 252 = Marokko, 253 = Mauritius, 254 = Mosambik, 255 = Niger, 256 = Malawi, 257 = Sambia, 258 = Burkina Faso, 259 = Guinea-Bissau, 261 = Guinea, 262 = Kamerun, 263 = Südafrika, 265 = Ruanda, 267 = Namibia, 268 = São Tomé und Príncipe, 269 = Senegal, 271 = Seychellen, 272 = Sierra Leone, 273 = Somalia, 274 = Äquatorialguinea, 276 = Sudan (vor der Teilung des Landes), 277 = Sudan, 278 = Südsudan, 281 = Eswatini, 282 = Tansania, 283 = Togo, 284 = Tschad, 285 = Tunesien, 286 = Uganda, 287 = Ägypten, 289 = Zentralafrikanische Republik, 291 = Burundi, 295 = Britisch abhängige Gebiete in Afrika, 299 = Übriges Afrika, 320 = Antigua und Barbuda, 322 = Barbados, 323 = Argentinien, 324 = Bahamas, 326 = Bolivien, 327 = Brasilien, 328 = Guyana, 330 = Belize, 332 = Chile, 333 = Dominica, 334 = Costa Rica, 335 = Dominikanische Republik, 336 = Ecuador, 337 = El Salvador, 340 = Grenada, 345 = Guatemala, 346 = Haiti, 347 = Honduras, 348 = Kanada, 349 = Kolumbien, 351 = Kuba, 353 = Mexiko, 354 = Nicaragua, 355 = Jamaika, 357 = Panama, 359 = Paraguay, 361 = Peru, 364 = Suriname, 365 = Uruguay, 366 = St. Lucia, 367 = Venezuela, 368 = Vereinigte Staaten, 369 = St. Vincent und die Grenadinen, 370 = St. Kitts und Nevis, 371 = Trinidad und Tobago, 395 = Britisch abhängige Gebiete in Amerika, 399 = Übriges Amerika, 411 = Hongkong, 412 =  Macau, 421 = Jemen, 422 = Armenien, 423 = Afghanistan, 424 = Bahrain, 425 = Aserbaidschan, 426 = Bhutan, 427 = Myanmar, 429 = Brunei Darussalam, 430 = Georgien, 431 = Sri Lanka, 432 = Vietnam, 434 = Korea, Demokratische Volksrepublik (Nordkorea), 436 = Indien, 437 = Indonesien, 438 = Irak, 439 = Iran, 441 = Israel, 442 = Japan, 444 = Kasachstan, 445 = Jordanien, 446 = Kambodscha, 447 = Katar, 448 = Kuwait, 449 = Laos, 450 = Kirgisistan, 451 = Libanon, 454 = Malediven, 456 = Oman, 457 = Mongolei, 458 = Nepal, 459 = Palästinensische Gebiete, 460 = Bangladesch, 461 = Pakistan, 462 = Philippinen, 465 = Taiwan, 467 = Korea, Republik (Südkorea), 469 = Vereinigte Arabische Emirate, 470 = Tadschikistan, 471 = Turkmenistan, 472 = Saudi-Arabien, 474 = Singapur, 475 = Syrien, 476 = Thailand, 477 = Usbekistan, 479 = China, 482 = Malaysia, 499 = Übriges Asien, 523 = Australien, 524 = Salomonen, 525 = Nördliche Marianen, 526 = Fidschi, 530 = Kiribati, 531 = Nauru, 532 = Vanuatu, 536 = Neuseeland, 537 = Palau, 538 = Papua-Neuguinea, 540 = Tuvalu, 541 = Tonga, 543 = Samoa, 544 = Marshallinseln, 545 = Mikronesien, 595 = Britisch abh. Gebiete in Australien/Ozeanien, 599 = Übriges Ozeanien, 996 = Unbekanntes Ausland, 997 = staatenlos, 998 = ungeklärt, 999 = ohne Angabe    |\n|  |   |\n| **contribution_class_health_insurance**   |    0 = kein Beitrag (private KV oder frw. KV als Selbstzahler), 1 = allgemeiner Beitrag, 3 = ermäßigter Beitrag, 4 = Beitrag zur landwirtschaftlichen KV, 5 = Arbeitgeberbeitrag zur landwirtschaftlichen KV, 6 = Pauschalbeitrag für geringfügig Beschäftigte, 9 = Firmenzahler    |\n| **contribution_class_pension_insurance**   |   0 = kein Beitrag, 1 = voller Beitrag, 3 = halber Beitrag, 5 = Pauschalbeitrag für geringfügig Beschäftigte     |\n| **contribution_class_unemployment_insurance**   |    0 = kein Beitrag zur BA, 1 = voller Beitrag zur BA, 2 = halber Beitrag zur BA    |\n| **contribution_class_long_term_care_insurance**   |   0 = kein Beitrag zur gesetzl. PV, 1 = voller Beitrag zur gesetzl. PV, 2 = halber Beitrag zur gesetzl. PV    |\n| **person_group_key**   |  Lodas:  0 = keine Angabe, 101 = Sozialversicherungspflichtig Beschäftigte ohne besondere Merkmale, 102 = Auszubildende ohne besondere Merkmale, 103 = Beschäftigte in Altersteilzeit, 104 = Hausgewerbetreibende ( nicht Heimarbeiter ), 105 = Praktikanten, 106 = Werkstudenten, 107 = Behinderte Menschen in anerkannten Werkstätten oder gleichartigen Einrichtungen, 108 = Bezieher von Vorruhestandsgeld, 109 = Geringfügig entlohnte Beschäftigte nach §8Abs.1 Nr.1 SGB IV, 110 = Kurzfristig Beschäftigte nach §8Abs.1 Nr.2 SGB IV, 111 = Personen in Berufsfördernden Maßnahmen zur Rehabilitation, 112 = Mitarbeitende Familienangehörige in der Landwirtschaft, 113 = Nebenerwerbslandwirte, 114 = Nebenerwerbslandwirte - saisonal beschäftigt, 116 = Ausgleichsgeldempfänger nach dem FELEG, 118 = Unständig Beschäftigte, 119 = Versicherungsfr. Altersvollrentner/Versorgungsbezieher wg. Alters, 120 = Versicherungspfl. Altersvollrentner/Versorgungsbezieher wg. Alters, 121 = Auszubildende, deren Arbeitsentgelt die Geringverdienergrenze nicht übersteigt, 122 = Auszubildende in einer außerbetrieblichen Einrichtung, 123 = Personen, die ein freiwilliges soziales oder ökologisches Jahr oder BFD leisten, 124 = Heimarbeiter ohne Entgeltfortzahlungsanspruch, 127 = Behinderte Menschen, die in einem Integrationsprojekt beschäftigt sind, 140 = Seeleute, 141 = Auszubildende in der Seefahrt (mit Arbeitsentgelt), 142 = Seeleute in Altersteilzeit, 143 = Seelotsen, 144 = Auszubildende in der Seefahrt, Arbeitsentgelt bis zur Geringverdienergrenze, 149 = In Seefahrt besch. versicherungsfr. Altersvollrentner/Versorgungsbezieher wg. Alters, 150 = In Seefahrt besch. versicherungspfl. Altersvollrentner/Versorgungsbezieher wg. Alters, 190 = Beschäftigte, die nur in der gesetzlichen Unfallversicherung versichert sind  |\n|                        |  Lohn und Gehalt:  101 = Sozialversicherungspflichtig Beschäftigte, 102 = Auszubildende ohne besondere Merkmale, 103 = Beschäftigte in Altersteilzeit, 104 = Hausgewerbetreibende, 105 = Praktikanten, 106 = Werkstudenten, 107 = Behinderte Menschen in anerkannten Werkstätten oder gleichartigen Einrichtungen, 108 = Bezieher von Vorruhestandsgeld, 109 = Geringfügig entlohnte Beschäftigte, 110 = Kurzfristig Beschäftigte, 111 = Personen in berufsfördernden Maßnahmen zur Rehabilitation, 112 = Mitarbeitende Familienangehörige in der Landwirtschaft, 113 = Nebenerwerbslandwirte, 114 = Nebenerwerbslandwirte - saisonal beschäftigt, 116 = Ausgleichsgeldempfänger nach dem FELEG, 118 = Berufsmäßig unständig Beschäftigte, 119 = Versicherungsfreie Altersvollrentner und Versorgungsbezieher wegen Alters, 120 = Versicherungspflichtige Altersvollrentner, 140 = Seeleute, 141 = Auszubildende in der Seefahrt, 142 = Seeleute in Altersteilzeit, 143 = Seelotsen, 900 = Nicht meldepflichtig Beschäftigte, 127 = Behinderte Menschen, die in einem Integrationsprojekt beschäftigt sind, 190 = Beschäftigte, die nur in der gesetzlichen Unfallversicherung versichert sind, 144 = Auszubildende in der Seefahrt, Arbeitsentgelt bis zur Geringverdienergrenze, 123 = Personen, die ein freiwilliges soziales oder ökologisches Jahr oder BFD leisten, 122 = Auszubildende in einer außerbetrieblichen Einrichtung, 121 = Auszubildende, deren Arbeitsentgelt die Geringverdienergrenze nicht übersteigt, 149 = Versicherungsfreie Altersvollrentner in der Seefahrt und Versorgungsbezieher, 124 = Heimarbeiter ohne Entgeltfortzahlungsanspruch, 117 = Nicht berufsmäßig unständig Beschäftigte, |\n|  |   |\n| **occupational_classification_code** | Ausgeübte Tätigkeit siehe: https://www.arbeitsagentur.de/datei/dok_ba015567.pdf   |\n| **occupational_classification_code_employee_leasing** | 0 = Keine_Angabe, 1 = nein, 2 = ja  |\n| **type_of_contract** |  0 = Keine_Angabe, 1 = Unbefristet in Vollzeit, 2 = Unbefristet in Teilzeit, 3 = Befristet in Vollzeit, 4 = Befristet in Teilzeit |\n|  |   |\n| **highest_level_of_professional_training** | 0 = Keine_Angabe, 1 = Ohne Ausbildungsabschluss, 2 = Ausbildungsabschluss, 3 = Meister, 4 = Bachelor, 5 = Diplom, 6 = Promotion, 9 = Abschluss unbekannt  |\n| **highest_level_of_education** | 0 = Keine_Angabe, 1 = Ohne Schulabschluss, 2 = Hauptschulabschluss, 3 = Mittlere Reife, 4 = Abitur, 9 = Abschluss unbekannt  |\n| **is_ignore_additional_contribution_to_long_term_care_insurance_for_childless** | 0 = Nein, 1 = Ja   |\n",
+        "operationId": "getMasterdataByEmployeeId",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "12345-123"
+          },
+          {
+            "name": "employee-id",
+            "in": "path",
+            "description": "Employee-Id, which identifies the employee in the payroll system.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 10
+          },
+          {
+            "name": "payroll_accounting_month",
+            "in": "query",
+            "description": "Payroll accounting month.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-01"
+          },
+          {
+            "name": "payroll_accounting_month_end",
+            "in": "query",
+            "description": "Payroll accounting month, which is used to get a list of objects for more than one month.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-02"
+          },
+          {
+            "name": "payroll_recalculation_month",
+            "in": "query",
+            "description": "Payroll recalculation month",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-01"
+          },
+          {
+            "name": "payroll_recalculation_month_end",
+            "in": "query",
+            "description": "Payroll recalculation month, which is used to get a list of objects for more than one month",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-02"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "returns an employee's masterdata either as an object for one month or as an array for multiple months",
+            "headers": {
+              "X-Payroll-System": {
+                "description": "Returns the payroll system (lodas or lug) from which the data originates.",
+                "style": "simple",
+                "schema": {
+                  "type": "string",
+                  "example": "lodas"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MasterData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02200 | restapi.EmployeeIdWrongFormat | Parameter employee-id must be an Integer. | \n | #DCO02201 | restapi.PayrollMonthWrongFormat | Parameter payroll_accounting_month in wrong format. Format YYYY-MM required, e. g. 2020-01 | \n | #DCO02202 | restapi.PayrollMonthEndWrongFormat | Parameter payroll_accounting_month_end in wrong format. Format YYYY-MM required, e. g. 2020-12 | \n | #DCO02203 | restapi.FormatClientIdFault | Format of client-id is wrong. Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen, e. g. 12345-123 |\n | #DCO02204 | restapi.NotValidTimePeriod | The parameters payroll_accounting_month and payroll_accounting_month_end. are not a valid time period. Payroll_accounting_month_end (e. g. 2020_05) must be greater than payroll_accounting_month (e. g. 2020_01). | \n |#DCO02205 | restapi.PayrollMonthWrong | Parameter payroll_accounting_month must be within the last five years. | \n |#DCO02206 | restapi.PayrollMonthEndWrong | Parameter payroll_accounting_month_end must be within the last five years. | \n |#DCO02207 | restapi.MonthNotProvided | Parameter payroll_accounting_month or payroll_recalculation_month must be provided. |",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02250 | restapi.ScopeWrongOrMissing | The third-party solution has sent an incorrect request. The required scope is empty or missing. The software provider must ensure that the scope is set. | \n |#DCO02251 | restapi.AccessDenied | It is recommended that the user contacts the tax consultant. The third-party solution has to ensure that the used client-id exists in the list of accessible clients. |  ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02280 | restapi.EmployeeNotFound | The Employee was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error. In case of repeated occurrences, please contact the support hotline. ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage5xx"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/employees/{employee-id}/absences": {
+      "get": {
+        "tags": [
+          "Absences"
+        ],
+        "summary": "Get the employee's absences",
+        "description": "Absences of an employee can be accessed by its employee-id. \r \n \r \nIf a non-mandatory field is not filled in the payroll system, the field will not be exported through the API. Therefore the example model might differ from the actual response.",
+        "operationId": "getAbsencesByEmployeeId",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "12345-123"
+          },
+          {
+            "name": "employee-id",
+            "in": "path",
+            "description": "Employee-Id, which identifies the employee in the payroll system.",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 10
+          },
+          {
+            "name": "payroll_accounting_month",
+            "in": "query",
+            "description": "Payroll accounting month.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-01"
+          },
+          {
+            "name": "payroll_accounting_month_end",
+            "in": "query",
+            "description": "Payroll accounting month, which is used to get a list of objects for more than one month.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-02"
+          },
+          {
+            "name": "payroll_recalculation_month",
+            "in": "query",
+            "description": "Payroll recalculation month",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-01"
+          },
+          {
+            "name": "payroll_recalculation_month_end",
+            "in": "query",
+            "description": "Payroll recalculation month, which is used to get a list of objects for more than one month",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-02"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "returns an employee's absences either as an object for one month or as an array for multiple months",
+            "headers": {
+              "X-Payroll-System": {
+                "description": "Returns the payroll system (lodas or lug) from which the data originates.",
+                "style": "simple",
+                "schema": {
+                  "type": "string",
+                  "example": "lodas"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Absences"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02200 | restapi.EmployeeIdWrongFormat | Parameter employee-id must be an Integer. | \n | #DCO02201 | restapi.PayrollMonthWrongFormat | Parameter payroll_accounting_month in wrong format. Format YYYY-MM required, e. g. 2020-01 | \n | #DCO02202 | restapi.PayrollMonthEndWrongFormat | Parameter payroll_accounting_month_end in wrong format. Format YYYY-MM required, e. g. 2020-12 | \n | #DCO02203 | restapi.FormatClientIdFault | Format of client-id is wrong. Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen, e. g. 12345-123 |\n | #DCO02204 | restapi.NotValidTimePeriod | The parameters payroll_accounting_month and payroll_accounting_month_end. are not a valid time period. Payroll_accounting_month_end (e. g. 2020_05) must be greater than payroll_accounting_month (e. g. 2020_01). | \n |#DCO02205 | restapi.PayrollMonthWrong | Parameter payroll_accounting_month must be within the last five years. | \n |#DCO02206 | restapi.PayrollMonthEndWrong | Parameter payroll_accounting_month_end must be within the last five years. | \n |#DCO02207 | restapi.MonthNotProvided | Parameter payroll_accounting_month or payroll_recalculation_month must be provided. |",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02250 | restapi.ScopeWrongOrMissing | The third-party solution has sent an incorrect request. The required scope is empty or missing. The software provider must ensure that the scope is set. | \n |#DCO02251 | restapi.AccessDenied | It is recommended that the user contacts the tax consultant. The third-party solution has to ensure that the used client-id exists in the list of accessible clients. |  ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02280 | restapi.EmployeeNotFound | The Employee was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error. In case of repeated occurrences, please contact the support hotline. ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage5xx"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/employees/taxpayments": {
+      "get": {
+        "tags": [
+          "Tax Payments"
+        ],
+        "summary": "Get the employees' tax payments",
+        "description": "Tax (e.g. church tax or solidarity tax) of all employees of an client can be accessed by the client's client-id. \r \n \r \nIf a non-mandatory field is not filled in the payroll system, the field will not be exported through the API. Therefore the example model might differ from the actual response.",
+        "operationId": "getTaxPaymentsListByClientId",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "12345-123"
+          },
+          {
+            "name": "payroll_accounting_month",
+            "in": "query",
+            "description": "Payroll accounting month.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-01"
+          },
+          {
+            "name": "payroll_accounting_month_end",
+            "in": "query",
+            "description": "Payroll accounting month, which is used to get a list of objects for more than one month.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-02"
+          },
+          {
+            "name": "payroll_recalculation_month",
+            "in": "query",
+            "description": "Payroll recalculation month",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-01"
+          },
+          {
+            "name": "payroll_recalculation_month_end",
+            "in": "query",
+            "description": "Payroll recalculation month, which is used to get a list of objects for more than one month",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-02"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "returns the employees' tax payments",
+            "headers": {
+              "X-Payroll-System": {
+                "description": "Returns the payroll system (lodas or lug) from which the data originates.",
+                "style": "simple",
+                "schema": {
+                  "type": "string",
+                  "example": "lodas"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TaxPayments"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02201 | restapi.PayrollMonthWrongFormat | Parameter payroll_accounting_month in wrong format. Format YYYY-MM required, e. g. 2020-01 | \n | #DCO02202 | restapi.PayrollMonthEndWrongFormat | Parameter payroll_accounting_month_end in wrong format. Format YYYY-MM required, e. g. 2020-12 | \n | #DCO02203 | restapi.FormatClientIdFault | Format of client-id is wrong. Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen, e. g. 12345-123 |\n | #DCO02204 | restapi.NotValidTimePeriod | The parameters payroll_accounting_month and payroll_accounting_month_end. are not a valid time period. Payroll_accounting_month_end (e. g. 2020_05) must be greater than payroll_accounting_month (e. g. 2020_01). | \n |#DCO02205 | restapi.PayrollMonthWrong | Parameter payroll_accounting_month must be within the last five years. | \n |#DCO02206 | restapi.PayrollMonthEndWrong | Parameter payroll_accounting_month_end must be within the last five years. | \n |#DCO02207 | restapi.MonthNotProvided | Parameter payroll_accounting_month or payroll_recalculation_month must be provided. |",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02250 | restapi.ScopeWrongOrMissing | The third-party solution has sent an incorrect request. The required scope is empty or missing. The software provider must ensure that the scope is set. | \n |#DCO02251 | restapi.AccessDenied | It is recommended that the user contacts the tax consultant. The third-party solution has to ensure that the used client-id exists in the list of accessible clients. |  ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02280 | restapi.EmployeeNotFound | The Employee was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error. In case of repeated occurrences, please contact the support hotline. ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage5xx"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/employees/socialsecuritypayments": {
+      "get": {
+        "tags": [
+          "Social Security Payments"
+        ],
+        "summary": "Get the employees' socialsecuritypayments",
+        "description": "Social security payments (e. g. current gross social security, allocation1) of all employees can be accessed by the client's client-id. \r \n \r \nIf a non-mandatory field is not filled in the payroll system, the field will not be exported through the API. Therefore the example model might differ from the actual response.",
+        "operationId": "getSocialSecurityPaymentsListByClientId",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "12345-123"
+          },
+          {
+            "name": "payroll_accounting_month",
+            "in": "query",
+            "description": "Payroll accounting month.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-01"
+          },
+          {
+            "name": "payroll_accounting_month_end",
+            "in": "query",
+            "description": "Payroll accounting month, which is used to get a list of objects for more than one month.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-02"
+          },
+          {
+            "name": "payroll_recalculation_month",
+            "in": "query",
+            "description": "Payroll recalculation month",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-01"
+          },
+          {
+            "name": "payroll_recalculation_month_end",
+            "in": "query",
+            "description": "Payroll recalculation month, which is used to get a list of objects for more than one month",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-02"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "returns the employees' social security payments",
+            "headers": {
+              "X-Payroll-System": {
+                "description": "Returns the payroll system (lodas or lug) from which the data originates.",
+                "style": "simple",
+                "schema": {
+                  "type": "string",
+                  "example": "lodas"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SocialSecurityPayments"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02201 | restapi.PayrollMonthWrongFormat | Parameter payroll_accounting_month in wrong format. Format YYYY-MM required, e. g. 2020-01 | \n | #DCO02202 | restapi.PayrollMonthEndWrongFormat | Parameter payroll_accounting_month_end in wrong format. Format YYYY-MM required, e. g. 2020-12 | \n | #DCO02203 | restapi.FormatClientIdFault | Format of client-id is wrong. Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen, e. g. 12345-123 |\n | #DCO02204 | restapi.NotValidTimePeriod | The parameters payroll_accounting_month and payroll_accounting_month_end. are not a valid time period. Payroll_accounting_month_end (e. g. 2020_05) must be greater than payroll_accounting_month (e. g. 2020_01). | \n |#DCO02205 | restapi.PayrollMonthWrong | Parameter payroll_accounting_month must be within the last five years. | \n |#DCO02206 | restapi.PayrollMonthEndWrong | Parameter payroll_accounting_month_end must be within the last five years. | \n |#DCO02207 | restapi.MonthNotProvided | Parameter payroll_accounting_month or payroll_recalculation_month must be provided. |",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02250 | restapi.ScopeWrongOrMissing | The third-party solution has sent an incorrect request. The required scope is empty or missing. The software provider must ensure that the scope is set. | \n |#DCO02251 | restapi.AccessDenied | It is recommended that the user contacts the tax consultant. The third-party solution has to ensure that the used client-id exists in the list of accessible clients. |  ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02280 | restapi.EmployeeNotFound | The Employee was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error. In case of repeated occurrences, please contact the support hotline. ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage5xx"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/employees/salarytotalvalues": {
+      "get": {
+        "tags": [
+          "Salary Total Values"
+        ],
+        "summary": "Get the list of employee's salary total values",
+        "description": "Salary (Gesamtbrutto, Auszahlungsbetrag, Nettoverdienst) of all employees of an client can be accessed by the client's client-id. \r \n \r \nIf a non-mandatory field is not filled in the payroll system, the field will not be exported through the API. Therefore the example model might differ from the actual response.",
+        "operationId": "getSalaryTotalValuesListByClientId",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "12345-123"
+          },
+          {
+            "name": "payroll_accounting_month",
+            "in": "query",
+            "description": "Payroll accounting month.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-01"
+          },
+          {
+            "name": "payroll_accounting_month_end",
+            "in": "query",
+            "description": "Payroll accounting month, which is used to get a list of objects for more than one month.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-02"
+          },
+          {
+            "name": "payroll_recalculation_month",
+            "in": "query",
+            "description": "Payroll recalculation month",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-01"
+          },
+          {
+            "name": "payroll_recalculation_month_end",
+            "in": "query",
+            "description": "Payroll recalculation month, which is used to get a list of objects for more than one month",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-02"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "returns the employees' salary",
+            "headers": {
+              "X-Payroll-System": {
+                "description": "Returns the payroll system (lodas or lug) from which the data originates.",
+                "style": "simple",
+                "schema": {
+                  "type": "string",
+                  "example": "lodas"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SalaryTotalValues"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02201 | restapi.PayrollMonthWrongFormat | Parameter payroll_accounting_month in wrong format. Format YYYY-MM required, e. g. 2020-01 | \n | #DCO02202 | restapi.PayrollMonthEndWrongFormat | Parameter payroll_accounting_month_end in wrong format. Format YYYY-MM required, e. g. 2020-12 | \n | #DCO02203 | restapi.FormatClientIdFault | Format of client-id is wrong. Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen, e. g. 12345-123 |\n | #DCO02204 | restapi.NotValidTimePeriod | The parameters payroll_accounting_month and payroll_accounting_month_end. are not a valid time period. Payroll_accounting_month_end (e. g. 2020_05) must be greater than payroll_accounting_month (e. g. 2020_01). | \n |#DCO02205 | restapi.PayrollMonthWrong | Parameter payroll_accounting_month must be within the last five years. | \n |#DCO02206 | restapi.PayrollMonthEndWrong | Parameter payroll_accounting_month_end must be within the last five years. | \n |#DCO02207 | restapi.MonthNotProvided | Parameter payroll_accounting_month or payroll_recalculation_month must be provided. |",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02250 | restapi.ScopeWrongOrMissing | The third-party solution has sent an incorrect request. The required scope is empty or missing. The software provider must ensure that the scope is set. | \n |#DCO02251 | restapi.AccessDenied | It is recommended that the user contacts the tax consultant. The third-party solution has to ensure that the used client-id exists in the list of accessible clients. |  ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02280 | restapi.EmployeeNotFound | The Employee was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error. In case of repeated occurrences, please contact the support hotline. ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage5xx"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/employees/salarypayments": {
+      "get": {
+        "tags": [
+          "Salary Payments"
+        ],
+        "summary": "Get the employee's salary payments",
+        "description": "Salary components (Lohnarten, Nettobezüge, Nettoabzüge) of all employees of an client can be accessed by the client's client-id. \r \n \r \nIf a non-mandatory field is not filled in the payroll system, the field will not be exported through the API. Therefore the example model might differ from the actual response.\r \n \r \n| Property | Values |\n| ----| -----|\n|  |   |\n| **tax_and_social_security_treatment_of_wage_type** | 0 = keine SV-Verteilung, kein Gesamt-Brutto, 1 = Bezüge steuer- u. sv-pflichtig, 2 = Bezüge nur steuerpflichtig, 3 = Bezüge nur sv-pflichtig, 4 = Bezüge steuer- u. sv-frei, 5 = Bez. steuer- u. sv-pfl., kein Gesamt-Brutto, 6 = Bez. steuer- u. sv-pfl., Verst.ü.Jahrestab., 7 = Bezüge nur steuerpfl., Verst.ü.Jahrestab., 9 = steuer- u.sv-pfl.,k.Ges.bto, Jahrestabelle, 10 = nur steuerpfl., k.Ges.bto, Jahrestabelle, 11 = Abwälzung pausch. Steuer, nur Gesamtbrutto, 12 = Steuer: Fünftelregelung, sv-pfl. sonstiger Bezug, 13 = AG-Ant. ZVK Umlage (öff. Dienst), 14 = Sachzuwend p .St/SV-frei, 17 = AG-Ant. ZVK Umlage (öff. Dienst) Verst. Jahrestab., 18 = Bez. steuer- u. sv-pfl., Verst.ü.Monatstab., 19 = Bezüge steuerfrei, sv-pflichtig, 21 = Weihnachtsgratifikation, einmaliges Entgelt, 22 = Fahrtkost. Ausw.Lohnkto u. LStB, steuer- u. sv-frei, 23 = steuer- u. sv-freie Verpflegungszusch. bei Auswärtstätigkeit, 24 = Bezüge n. Doppelbesteuerungsabk., lfd.Bezug, 25 = Bezüge n. Doppelbest.abk., einmal. Entgelt, 26 = Bezüge n. Auslandstätigkeiterlass, lfd.Bezug, 27 = Bez. n.Auslandstätigk.erlass, einmal.Entgelt, 28 = Bezüge steuer- u. sv-pfl., Jahrestabelle, 29 = Bezüge nur sv-pflichtig, kein Gesamt-Brutto, 30 = Versorgungsbezüge, Verst. ü. Monatstabelle, 31 = Versorgungsbezüge, Verst. ü. Jahrestabelle, 32 = AG-Anteil Vermögensbildung, laufender Bezug, 33 = AG-Anteil Vermögensbildung, einmal. Entgelt, 34 = AVV ST pausch SV mtl, 35 = AVV ST pausch SV frei, 36 = AVV ST pausch SV jhrl, 38 = Zusatzrente Unterstützungskasse, steuer- und sv.frei, 41 = Erholungsbeihilfe p .St/SV-frei, 42 = Firmenrabatt, monatlich, 43 = Firmenrabatt, jährlich, 44 = AG-Leist. doppelte Haushaltsführung, 45 = Zuschüsse Mutterschaftsgeld, 46 = Verdienstausf.entschäd. n.Bundesseuchenges., 47 = pauschal versteuerte Fahrtkosten, 48 = pauschal versteuerte Bezüge, 25%, sv-frei, 49 = Sachzuwendung pausch. Versteuerung, sv-jhrl.., 50 = Abfindung, steuerpflichtig, sv-frei, 51 = Nachtzuschlag, 25% steuerfrei, 52 = Sonntagszuschlag, 50% steuerfrei, 53 = Feiertagszuschlag, 125% steuerfrei, 54 = Feiertagszuschlag, 150% steuerfrei, 55 = Nachtzuschlag/Kern, 40% steuerfrei, 56 = Sonntags- u.Nachtzu./Kern, 90% steuerfrei, 57 = Feiertags- u.Nachtzu./Kern, 165% steuerfrei, 58 = Feiertags- u. Nachtzu./Kern, 190% steuerfr., 59 = Sonntags- u. Nachtzuschlag, 75% steuerfrei, 60 = Feiertags- u. Nachtzuschlag, 150% steuerfr., 61 = Feiertags- u. Nachtzuschlag, 175% steuerfr., 71 = ausgez. Wertguthaben, st.-pfl. mehrj. Bezug, 72 = ausgez. Wertguthaben, st.-pfl. jhrl. Bezug, 73 = ausgez. Wertguthaben, steuerfreier Bezug, 74 = ST/SV/Umlage jhrl., 75 = st.pfl. Monatstabelle; sv-pfl. monatsbez. BBG bzw. VB-Max, 76 = st.pfl. Jahrestabelle; sv-pfl. monatsbez. BBG bzw. VB-Max, 77 = st.pfl. mehrjährig; sv-frei, 78 = st-pfl. über Jahrestabelle/sv-frei, 79 = st-pfl. monatlich/sv-frei, k. Ges. Brutto, 80 = Besondere Pauschalierung/SV lfd., 81 = Besondere Pauschalierung/SV jhrl., 82 = Besondere Pauschalierung/SV frei, 83 = Bezüge nur steuerpfl., k. Ges. Brutto, 84 = Bezüge steuer- u. sv-frei, k. Ges. Brutto, 85 = Bezüge EBZ st-frei, sv-pfl., k. Ges.Brutto, 86 = AVV ST pausch SV mtl., k. Ges. Brutto, 87 = AVV ST pausch SV frei, k. Ges. Brutto, 88 = AVV ST pausch SV jhrl., k. Ges. Brutto, 89 = Bezüge lfd st-frei, sv-pfl., k. Ges.Brutto, 90 = st-pfl. jährlich/sv-frei, k. Ges. Brutto, 91 = st-pfl. mehrjährig/sv-frei, k. Ges. Brutto, 92 = Versorgbez. st-pfl. monatlich / sv-frei   |\n| **social_security_treatment_of_wage_type** | F = Frei, L = Laufender Bezug, P = Pauschal, E = Einmalbezug, A = Abfindung, M = Mehrjähriger Bezug |\n| **tax_treatment_of_wage_type** | L = Laufender Bezug, F = Frei, P = Pauschal, S = Sonstiger Bezug, M = mehrjähriger Bezug, W = Störfall West, O = Störfall Ost |\n| **component_gross_payment** | Ist Bestandteil des Gesamtbruttos Ja/Nein |\n| **wage_type_amount_difference** | Differenz der Bruttobezüge zur Erstabrechnung (entstanden durch Nachberechnung) |\n| **net_payment_amount_difference** | Differenz der Nettobe/-abzüge zur Erstabrechnung (enstanden durch Nachberechnung) |\n",
+        "operationId": "getSalaryPaymentsListByClientId",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "12345-123"
+          },
+          {
+            "name": "payroll_accounting_month",
+            "in": "query",
+            "description": "Payroll accounting month.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-01"
+          },
+          {
+            "name": "payroll_accounting_month_end",
+            "in": "query",
+            "description": "Payroll accounting month, which is used to get a list of objects for more than one month.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-02"
+          },
+          {
+            "name": "payroll_recalculation_month",
+            "in": "query",
+            "description": "Payroll recalculation month",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-01"
+          },
+          {
+            "name": "payroll_recalculation_month_end",
+            "in": "query",
+            "description": "Payroll recalculation month, which is used to get a list of objects for more than one month",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-02"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "returns the employees' salary components depending on the payroll system in use (either 'gross_payments_lodas' or 'gross_payments_lug')",
+            "headers": {
+              "X-Payroll-System": {
+                "description": "Returns the payroll system (lodas or lug) from which the data originates.",
+                "style": "simple",
+                "schema": {
+                  "type": "string",
+                  "example": "lodas"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SalaryPayments"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02201 | restapi.PayrollMonthWrongFormat | Parameter payroll_accounting_month in wrong format. Format YYYY-MM required, e. g. 2020-01 | \n | #DCO02202 | restapi.PayrollMonthEndWrongFormat | Parameter payroll_accounting_month_end in wrong format. Format YYYY-MM required, e. g. 2020-12 | \n | #DCO02203 | restapi.FormatClientIdFault | Format of client-id is wrong. Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen, e. g. 12345-123 |\n | #DCO02204 | restapi.NotValidTimePeriod | The parameters payroll_accounting_month and payroll_accounting_month_end. are not a valid time period. Payroll_accounting_month_end (e. g. 2020_05) must be greater than payroll_accounting_month (e. g. 2020_01). | \n |#DCO02205 | restapi.PayrollMonthWrong | Parameter payroll_accounting_month must be within the last five years. | \n |#DCO02206 | restapi.PayrollMonthEndWrong | Parameter payroll_accounting_month_end must be within the last five years. | \n |#DCO02207 | restapi.MonthNotProvided | Parameter payroll_accounting_month or payroll_recalculation_month must be provided. |",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02250 | restapi.ScopeWrongOrMissing | The third-party solution has sent an incorrect request. The required scope is empty or missing. The software provider must ensure that the scope is set. | \n |#DCO02251 | restapi.AccessDenied | It is recommended that the user contacts the tax consultant. The third-party solution has to ensure that the used client-id exists in the list of accessible clients. |  ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02280 | restapi.EmployeeNotFound | The Employee was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error. In case of repeated occurrences, please contact the support hotline. ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage5xx"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/employees/masterdata": {
+      "get": {
+        "tags": [
+          "Masterdata"
+        ],
+        "summary": "Get the list of employees' masterdata",
+        "description": "Masterdata of all employees can be accessed by the client's client-id. \r \n \r \n If a non-mandatory field is not filled in the payroll system, the field will not be exported through the API. Therefore the example model might differ from the actual response.\r \n \r \n| Property | Values |\n| ----| -----|\n|  |   |\n| **sex**   |  Lodas: 0 = männlich, 1 = weiblich, 2 = divers, 3 = unbestimmt  |\n|           |  Lohn und Gehalt: 0 = weiblich, 1 = männlich, 2 = divers, 3 = unbestimmt |\n| **denomination/spouses_denomination**  |  Lodas:  0 = Konfessionslos / Keine Kirchensteuerberechnung, 1 = ev - Evangelische Kirchensteuer, 2 = rk - Römisch-Katholische Kirchensteuer, 3 = ak - Altkatholische Kirchensteuer, 4 = fa - Freie Religionsgemeinschaft Alzey, 5 = fb - Freireligiöse Landesgemeinde Baden, 6 = fg - Freireligiöse Landesgemeinde Pfalz, 7 = fm - Freireligiöse Gemeinde Mainz, 8 = fr - Französisch reformiert (bis 12/2015), 9 = fs - Freireligiöse Gemeinde Offenbach/Main, 10 = ib - Israelitische Religionsgemeinschaft Baden, 11 = ih - Jüdische Kultussteuer, 12 = il - Israelitische Kultussteuer der kultusberechtigten Gemeinden, 13 = is - Israelitische / Jüdische Kultussteuer, 14 = iw - Israelitische Religionsgemeinschaft Württembergs, 15 = jd - Jüdische Kultussteuer, 16 = jh - Jüdische Kultussteuer, 17 = lt - Evangelisch lutherisch (bis 12/2015), 18 = rf - Evangelisch reformiert (bis 12/2015) |\n|                    |  Lohn und Gehalt:  00 = Konfessionslos / Keine Kirchensteuerberechnung , 01 = rk - Römisch-Katholische Kirchensteuer, 02 = ev - Evangelische Kirchensteuer, 03 = lt - Evangelisch lutherisch (bis 12/2015), 04 = rf - Evangelisch reformiert (bis 12/2015), 05 = ak - Altkatholische Kirchensteuer, 06 = is - Israelitische / Jüdische Kultussteuer, 07 = fb - Freireligiöse Landesgemeinde Baden, 08 = ib - Israelitische Religionsgemeinschaft Baden, 09 = fo - Freireligiöse Gemeinde Offenbach/Main, 10 = fp - Freireligiöse Landesgemeinde Pfalz, 11 = fm - Freireligiöse Gemeinde Mainz, 12 = jü - Jüdisch, 13 = iw - Israelitische Religionsgemeinschaft Württembergs, 14 = if - Israelitische Kultussteuer Frankfurt, 15 = il - Israelitische Kultussteuer der kultusberechtigten Gemeinden, 16 = un - Unitarische Religionsgem. Freie Protestanten, 17 = fr - Französisch reformiert (bis 12/2015), 18 = fa - Freie Religionsgemeinschaft Alzey, 20 = fg - Freireligiöse Landesgemeinde Pfalz, 24 = jh - Jüdische Kultussteuer, 23 = jd - Jüdische Kultussteuer, 22 = ih - Jüdische Kultussteuer, 21 = fs - Freireligiöse Gemeinde Offenbach/Main\n |\n| **country**   |  0 = keine Angabe, A = Österreich, AFG = Afghanistan, AGO = Angola, AJ = Amerikanische Jungferninseln, AL = Albanien, AND = Andorra, ANG = Anguilla, ANT = Antigua und Barbuda, AQ = Antarktische Territorien, AQU = Äquatorialguinea, ARM = Armenien, AS = Amerikanisch Samoa, ASE = Aserbaidschan, AU = Korallenmeer-, Ashmore- und Cartierinseln, AUS = Australien, AW = Aruba, AX = Åland, B = Belgien, BD = Bangladesch, BDS = Barbados, BER = Bermuda, BG = Bulgarien, BH = Belize, BHT = Bhutan, BIH = Bosnien und Herzegowina, BIO = Malediven, BJ = Britische Jungferninseln, BL = St.Barthélemy, BOL = Bolivien, BQ = Bonaire, Saba, St.Eustatius, BR = Brasilien, BRN = Bahrain, BRU = Brunei Darussalam, BS = Bahamas, BV = Bouvetinsel, BY = Weissrussland, C = Kuba, CAM = Kamerun, CC = Kokosinseln, CDN = Kanada, CH = Schweiz, CHD = Tschad, CI = Côte d‘Ivoire, CL = Sri Lanka, CO = Kolumbien, COI = Cookinseln, CP = Clipperton, CR = Costa Rica, CV = Cabo Verde, CW = Curaçao, CY = Zypern, CX = Weihnachtsinsel, CZ = Tschechien, DK = Dänemark, DOM = Dominikanische Republik, DSC = Dschibuti, DY = Benin, DZ = Algerien, E = Spanien, EAK = Kenia, EAT = Tansania, EAU = Uganda, EC = Ecuador, EH = Westsahara, ERI = Eritrea, ES = El Salvador, EST = Estland, ET = Ägypten, ETH = Äthiopien, F = Frankreich, FAL = Falklandinseln, FG = Französisch Guayana, FIN = Finnland, FJI = Fidschi, FL = Liechtenstein, FP = Franz.-Polynesien, FR = Färöer, GAB = Gabun, GB = Vereinigtes Königreich, GCA = Guatemala, GEO = Georgien, GG = Guernsey, GH = Ghana, GIB = Gibraltar, GR = Griechenland, GRO = Grönland, GS = Südgeorgien und die südlichen Sandwichinseln, GUA = Guadeloupe, GUB = Guinea-Bissau, GUM = Guam, GUY = Guyana, H = Ungarn, HCA = Honduras, HEL = St. Helena /Ascension / Tristan da Cunha, HKG = Hongkong, HR = Kroatien, HM = Heard und McDonaldinseln, HV = Burkina Faso, I = Italien, IL = Israel, IND = Indien, IR = Iran, IRL = Irland, IRQ = Irak, IS = Island, IO = Britisches Territorium im Indischen Ozean, J = Japan, JA = Jamaika, JE = Jersey, JOR = Jordanien, K = Kambodscha, KAI = Kaimaninseln, KAN = Kanalinseln, KAS = Kasachstan, KIB = Kiribati, KIS = Kirgisistan, KOM = Komoren, KOR = Korea, Demokratische Volksrepublik (Nordkorea), KOS = Kosovo, KWT = Kuwait, L = Luxemburg, LAO = Laos, LAR = Libyen, LB = Liberia, LS = Lesotho, LT = Litauen, LV = Lettland, M = Malta, MA = Marokko, MAC = Macau, MAL = Malaysia, MAN = Insel Man, MAO = Oman, MAR = Marshallinseln, MAT = Martinique, MAY = Mayotte, MC = Monaco, MD = Moldau, MEX = Mexiko, MF = St.Martin (französischer Teil), MIK = Mikronesien, MK = Nordmazedonien, MNE = Montenegro, MON = Mongolei, MOT = Montserrat, MOZ = Mosambik, MS = Mauritius, MW = Malawi, MYA = Myanmar, N = Norwegen, NAU = Nauru, NEP = Nepal, NF = Norfolkinseln, NIC = Nicaragua, NIU = Niue, NKA = Neukaledonien, NL = Niederlande, NLA = Niederländische Antillen, NMA = Nördliche Marianen, NZ = Neuseeland, P = Portugal, PA = Panama, PAL = Palau, PE = Peru, PIE = St.Pierre und Miquelon, PIT = Pitcairninseln, PK = Pakistan, PL = Polen, PNG = Papua-Neuguinea, PRI = Puerto Rico, PSE = Palästinensische Gebiete, PY = Paraguay, QAT = Katar, RA = Argentinien, RB = Botsuana, RCA = Zentralafrikanische Republik, RCB = Kongo, RCH = Chile, REU = Réunion, RG = Guinea, RH = Haiti, RI = Indonesien, RIM = Mauretanien, RL = Libanon, RM = Madagaskar, RMM = Mali, RN = Niger, RO = Rumänien, ROK = Korea, Republik (Südkorea), ROU = Uruguay, RP = Philippinen, RSM = San Marino, RU = Burundi, RUS = Russische Föderation, RWA = Ruanda, S = Schweden, SAU = Saudi-Arabien, SCG = Serbien und Montenegro, SCN = St.Kitts und Nevis, SDN = Sudan, SGP = Singapur, SJ = Svalbard und Jan Mayen, SK = Slowakei, SLO = Slowenien, SME = Suriname, SN = Senegal, SOL = Salomonen, SP = Somalia, SRB = Serbien, SSD = Südsudan, STP = São Tomé und Príncipe, SWA =, SWZ = Namibia Eswatini, SY = Seychellen, SYR = Syrien, SX = St.Martin (niederländischer Teil), T = Thailand, TAD = Tadschikistan, TF = Französische Süd- und Antarktisgebiete, TG = Togo, TJ = China, TN = Tunesien, TOK = Tokelau, TON = Tonga, TR = Türkei, TT = Trinidad und Tobago, TUC = Turks- und Caicosinseln, TUR = Turkmenistan, TUV = Tuvalu, TWN = Taiwan, UA = Ukraine, UAE = Vereinigte Arabische Emirate, UM = Navassa / kleinere amerikanische Überseeinseln, USA = Vereinigte Staaten, USB = Usbekistan, V = Vatikanstadt, VAN = Vanuatu, VN = Vietnam, WAG = Gambia, WAL = Sierra Leone, WAN = Nigeria, WD = Dominica, WF = Wallis und Futuna, WG = Grenada, WL = St.Lucia, WS = Samoa, WV = St.Vincent und die Grenadinen, YEM = Jemen, YU = Jugoslawien, YV = Venezuela, Z = Sambia, ZA = Südafrika, ZRE = Kongo, Demokratische Republik, ZW = Simbabwe     |\n|  |   |\n| **nationality**   |   000 = Deutschland, 121 = Albanien, 122 = Bosnien und Herzegowina, 123 = Andorra, 124 = Belgien, 125 = Bulgarien, 126 = Dänemark, 127 = Estland, 128 = Finnland, 129 = Frankreich, 130 = Kroatien, 131 = Slowenien, 132 = Serbien und Montenegro, 133 = Serbien (einschl. Kosovo), 134 = Griechenland, 135 = Irland, 136 = Island, 137 = Italien, 138 = Jugoslawien, 139 = Lettland, 140 = Montenegro, 141 = Liechtenstein, 142 = Litauen, 143 = Luxemburg, 144 = Nordmazedonien, 145 = Malta, 146 = Moldau, 147 = Monaco, 148 = Niederlande, 149 = Norwegen, 150 = Kosovo, 151 = Österreich, 152 = Polen, 153 = Portugal, 154 = Rumänien, 155 = Slowakei, 156 = San Marino, 157 = Schweden, 158 = Schweiz, 160 = Russische Föderation, 161 = Spanien, 163 = Türkei, 164 = Tschechien, 165 = Ungarn, 166 = Ukraine, 167 = Vatikanstadt, 168 = Vereinigtes Königreich , 169 = Weissrussland, 170 = Serbien, 181 = Zypern, 195 = Gibraltar, 199 = Übriges Europa, 221 = Algerien, 223 = Angola, 224 = Eritrea, 225 = Äthiopien, 226 = Lesotho, 227 = Botsuana, 229 = Benin, 230 = Dschibuti, 231 = Côte d‘Ivoire, 232 = Nigeria, 233 = Simbabwe, 236 = Gabun, 237 = Gambia, 238 = Ghana, 239 = Mauretanien, 242 = Cabo Verde, 243 = Kenia, 244 = Komoren, 245 = Kongo, 246 = Kongo, Demokratische Republik, 247 = Liberia, 248 = Libyen, 249 = Madagaskar, 251 = Mali, 252 = Marokko, 253 = Mauritius, 254 = Mosambik, 255 = Niger, 256 = Malawi, 257 = Sambia, 258 = Burkina Faso, 259 = Guinea-Bissau, 261 = Guinea, 262 = Kamerun, 263 = Südafrika, 265 = Ruanda, 267 = Namibia, 268 = São Tomé und Príncipe, 269 = Senegal, 271 = Seychellen, 272 = Sierra Leone, 273 = Somalia, 274 = Äquatorialguinea, 276 = Sudan (vor der Teilung des Landes), 277 = Sudan, 278 = Südsudan, 281 = Eswatini, 282 = Tansania, 283 = Togo, 284 = Tschad, 285 = Tunesien, 286 = Uganda, 287 = Ägypten, 289 = Zentralafrikanische Republik, 291 = Burundi, 295 = Britisch abhängige Gebiete in Afrika, 299 = Übriges Afrika, 320 = Antigua und Barbuda, 322 = Barbados, 323 = Argentinien, 324 = Bahamas, 326 = Bolivien, 327 = Brasilien, 328 = Guyana, 330 = Belize, 332 = Chile, 333 = Dominica, 334 = Costa Rica, 335 = Dominikanische Republik, 336 = Ecuador, 337 = El Salvador, 340 = Grenada, 345 = Guatemala, 346 = Haiti, 347 = Honduras, 348 = Kanada, 349 = Kolumbien, 351 = Kuba, 353 = Mexiko, 354 = Nicaragua, 355 = Jamaika, 357 = Panama, 359 = Paraguay, 361 = Peru, 364 = Suriname, 365 = Uruguay, 366 = St. Lucia, 367 = Venezuela, 368 = Vereinigte Staaten, 369 = St. Vincent und die Grenadinen, 370 = St. Kitts und Nevis, 371 = Trinidad und Tobago, 395 = Britisch abhängige Gebiete in Amerika, 399 = Übriges Amerika, 411 = Hongkong, 412 =  Macau, 421 = Jemen, 422 = Armenien, 423 = Afghanistan, 424 = Bahrain, 425 = Aserbaidschan, 426 = Bhutan, 427 = Myanmar, 429 = Brunei Darussalam, 430 = Georgien, 431 = Sri Lanka, 432 = Vietnam, 434 = Korea, Demokratische Volksrepublik (Nordkorea), 436 = Indien, 437 = Indonesien, 438 = Irak, 439 = Iran, 441 = Israel, 442 = Japan, 444 = Kasachstan, 445 = Jordanien, 446 = Kambodscha, 447 = Katar, 448 = Kuwait, 449 = Laos, 450 = Kirgisistan, 451 = Libanon, 454 = Malediven, 456 = Oman, 457 = Mongolei, 458 = Nepal, 459 = Palästinensische Gebiete, 460 = Bangladesch, 461 = Pakistan, 462 = Philippinen, 465 = Taiwan, 467 = Korea, Republik (Südkorea), 469 = Vereinigte Arabische Emirate, 470 = Tadschikistan, 471 = Turkmenistan, 472 = Saudi-Arabien, 474 = Singapur, 475 = Syrien, 476 = Thailand, 477 = Usbekistan, 479 = China, 482 = Malaysia, 499 = Übriges Asien, 523 = Australien, 524 = Salomonen, 525 = Nördliche Marianen, 526 = Fidschi, 530 = Kiribati, 531 = Nauru, 532 = Vanuatu, 536 = Neuseeland, 537 = Palau, 538 = Papua-Neuguinea, 540 = Tuvalu, 541 = Tonga, 543 = Samoa, 544 = Marshallinseln, 545 = Mikronesien, 595 = Britisch abh. Gebiete in Australien/Ozeanien, 599 = Übriges Ozeanien, 996 = Unbekanntes Ausland, 997 = staatenlos, 998 = ungeklärt, 999 = ohne Angabe    |\n|  |   |\n| **contribution_class_health_insurance**   |    0 = kein Beitrag (private KV oder frw. KV als Selbstzahler), 1 = allgemeiner Beitrag, 3 = ermäßigter Beitrag, 4 = Beitrag zur landwirtschaftlichen KV, 5 = Arbeitgeberbeitrag zur landwirtschaftlichen KV, 6 = Pauschalbeitrag für geringfügig Beschäftigte, 9 = Firmenzahler    |\n| **contribution_class_pension_insurance**   |   0 = kein Beitrag, 1 = voller Beitrag, 3 = halber Beitrag, 5 = Pauschalbeitrag für geringfügig Beschäftigte     |\n| **contribution_class_unemployment_insurance**   |    0 = kein Beitrag zur BA, 1 = voller Beitrag zur BA, 2 = halber Beitrag zur BA    |\n| **contribution_class_long_term_care_insurance**   |   0 = kein Beitrag zur gesetzl. PV, 1 = voller Beitrag zur gesetzl. PV, 2 = halber Beitrag zur gesetzl. PV    |\n| **person_group_key**   |  Lodas:  0 = keine Angabe, 101 = Sozialversicherungspflichtig Beschäftigte ohne besondere Merkmale, 102 = Auszubildende ohne besondere Merkmale, 103 = Beschäftigte in Altersteilzeit, 104 = Hausgewerbetreibende ( nicht Heimarbeiter ), 105 = Praktikanten, 106 = Werkstudenten, 107 = Behinderte Menschen in anerkannten Werkstätten oder gleichartigen Einrichtungen, 108 = Bezieher von Vorruhestandsgeld, 109 = Geringfügig entlohnte Beschäftigte nach §8Abs.1 Nr.1 SGB IV, 110 = Kurzfristig Beschäftigte nach §8Abs.1 Nr.2 SGB IV, 111 = Personen in Berufsfördernden Maßnahmen zur Rehabilitation, 112 = Mitarbeitende Familienangehörige in der Landwirtschaft, 113 = Nebenerwerbslandwirte, 114 = Nebenerwerbslandwirte - saisonal beschäftigt, 116 = Ausgleichsgeldempfänger nach dem FELEG, 118 = Unständig Beschäftigte, 119 = Versicherungsfr. Altersvollrentner/Versorgungsbezieher wg. Alters, 120 = Versicherungspfl. Altersvollrentner/Versorgungsbezieher wg. Alters, 121 = Auszubildende, deren Arbeitsentgelt die Geringverdienergrenze nicht übersteigt, 122 = Auszubildende in einer außerbetrieblichen Einrichtung, 123 = Personen, die ein freiwilliges soziales oder ökologisches Jahr oder BFD leisten, 124 = Heimarbeiter ohne Entgeltfortzahlungsanspruch, 127 = Behinderte Menschen, die in einem Integrationsprojekt beschäftigt sind, 140 = Seeleute, 141 = Auszubildende in der Seefahrt (mit Arbeitsentgelt), 142 = Seeleute in Altersteilzeit, 143 = Seelotsen, 144 = Auszubildende in der Seefahrt, Arbeitsentgelt bis zur Geringverdienergrenze, 149 = In Seefahrt besch. versicherungsfr. Altersvollrentner/Versorgungsbezieher wg. Alters, 150 = In Seefahrt besch. versicherungspfl. Altersvollrentner/Versorgungsbezieher wg. Alters, 190 = Beschäftigte, die nur in der gesetzlichen Unfallversicherung versichert sind  |\n|                        |  Lohn und Gehalt:  101 = Sozialversicherungspflichtig Beschäftigte, 102 = Auszubildende ohne besondere Merkmale, 103 = Beschäftigte in Altersteilzeit, 104 = Hausgewerbetreibende, 105 = Praktikanten, 106 = Werkstudenten, 107 = Behinderte Menschen in anerkannten Werkstätten oder gleichartigen Einrichtungen, 108 = Bezieher von Vorruhestandsgeld, 109 = Geringfügig entlohnte Beschäftigte, 110 = Kurzfristig Beschäftigte, 111 = Personen in berufsfördernden Maßnahmen zur Rehabilitation, 112 = Mitarbeitende Familienangehörige in der Landwirtschaft, 113 = Nebenerwerbslandwirte, 114 = Nebenerwerbslandwirte - saisonal beschäftigt, 116 = Ausgleichsgeldempfänger nach dem FELEG, 118 = Berufsmäßig unständig Beschäftigte, 119 = Versicherungsfreie Altersvollrentner und Versorgungsbezieher wegen Alters, 120 = Versicherungspflichtige Altersvollrentner, 140 = Seeleute, 141 = Auszubildende in der Seefahrt, 142 = Seeleute in Altersteilzeit, 143 = Seelotsen, 900 = Nicht meldepflichtig Beschäftigte, 127 = Behinderte Menschen, die in einem Integrationsprojekt beschäftigt sind, 190 = Beschäftigte, die nur in der gesetzlichen Unfallversicherung versichert sind, 144 = Auszubildende in der Seefahrt, Arbeitsentgelt bis zur Geringverdienergrenze, 123 = Personen, die ein freiwilliges soziales oder ökologisches Jahr oder BFD leisten, 122 = Auszubildende in einer außerbetrieblichen Einrichtung, 121 = Auszubildende, deren Arbeitsentgelt die Geringverdienergrenze nicht übersteigt, 149 = Versicherungsfreie Altersvollrentner in der Seefahrt und Versorgungsbezieher, 124 = Heimarbeiter ohne Entgeltfortzahlungsanspruch, 117 = Nicht berufsmäßig unständig Beschäftigte, |\n|  |   |\n| **occupational_classification_code** | Ausgeübte Tätigkeit siehe: https://www.arbeitsagentur.de/datei/dok_ba015567.pdf   |\n| **occupational_classification_code_employee_leasing** | 0 = Keine_Angabe, 1 = nein, 2 = ja  |\n| **type_of_contract** |  0 = Keine_Angabe, 1 = Unbefristet in Vollzeit, 2 = Unbefristet in Teilzeit, 3 = Befristet in Vollzeit, 4 = Befristet in Teilzeit |\n|  |   |\n| **highest_level_of_professional_training** | 0 = Keine_Angabe, 1 = Ohne Ausbildungsabschluss, 2 = Ausbildungsabschluss, 3 = Meister, 4 = Bachelor, 5 = Diplom, 6 = Promotion, 9 = Abschluss unbekannt  |\n| **highest_level_of_education** | 0 = Keine_Angabe, 1 = Ohne Schulabschluss, 2 = Hauptschulabschluss, 3 = Mittlere Reife, 4 = Abitur, 9 = Abschluss unbekannt  |\n| **is_ignore_additional_contribution_to_long_term_care_insurance_for_childless** | 0 = Nein, 1 = Ja   |\n",
+        "operationId": "getMasterdataListByClientId",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "12345-123"
+          },
+          {
+            "name": "payroll_accounting_month",
+            "in": "query",
+            "description": "Payroll accounting month.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-01"
+          },
+          {
+            "name": "payroll_accounting_month_end",
+            "in": "query",
+            "description": "Payroll accounting month, which is used to get a list of objects for more than one month.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-02"
+          },
+          {
+            "name": "payroll_recalculation_month",
+            "in": "query",
+            "description": "Payroll recalculation month",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-01"
+          },
+          {
+            "name": "payroll_recalculation_month_end",
+            "in": "query",
+            "description": "Payroll recalculation month, which is used to get a list of objects for more than one month",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-02"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "returns the employees' masterdata",
+            "headers": {
+              "X-Payroll-System": {
+                "description": "Returns the payroll system (lodas or lug) from which the data originates.",
+                "style": "simple",
+                "schema": {
+                  "type": "string",
+                  "example": "lodas"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MasterData"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02201 | restapi.PayrollMonthWrongFormat | Parameter payroll_accounting_month in wrong format. Format YYYY-MM required, e. g. 2020-01 | \n | #DCO02202 | restapi.PayrollMonthEndWrongFormat | Parameter payroll_accounting_month_end in wrong format. Format YYYY-MM required, e. g. 2020-12 | \n | #DCO02203 | restapi.FormatClientIdFault | Format of client-id is wrong. Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen, e. g. 12345-123 |\n | #DCO02204 | restapi.NotValidTimePeriod | The parameters payroll_accounting_month and payroll_accounting_month_end. are not a valid time period. Payroll_accounting_month_end (e. g. 2020_05) must be greater than payroll_accounting_month (e. g. 2020_01). | \n |#DCO02205 | restapi.PayrollMonthWrong | Parameter payroll_accounting_month must be within the last five years. | \n |#DCO02206 | restapi.PayrollMonthEndWrong | Parameter payroll_accounting_month_end must be within the last five years. | \n |#DCO02207 | restapi.MonthNotProvided | Parameter payroll_accounting_month or payroll_recalculation_month must be provided. |",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02250 | restapi.ScopeWrongOrMissing | The third-party solution has sent an incorrect request. The required scope is empty or missing. The software provider must ensure that the scope is set. | \n |#DCO02251 | restapi.AccessDenied | It is recommended that the user contacts the tax consultant. The third-party solution has to ensure that the used client-id exists in the list of accessible clients. |  ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02280 | restapi.EmployeeNotFound | The Employee was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error. In case of repeated occurrences, please contact the support hotline. ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage5xx"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/employees/absences": {
+      "get": {
+        "tags": [
+          "Absences"
+        ],
+        "summary": "Get the employees' absences",
+        "description": "Absences of all employees of an client can be accessed by the client's client-id. \r \n \r \nIf a non-mandatory field is not filled in the payroll system, the field will not be exported through the API. Therefore the example model might differ from the actual response.",
+        "operationId": "getAbsencesListByClientId",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "12345-123"
+          },
+          {
+            "name": "payroll_accounting_month",
+            "in": "query",
+            "description": "Payroll accounting month.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-01"
+          },
+          {
+            "name": "payroll_accounting_month_end",
+            "in": "query",
+            "description": "Payroll accounting month, which is used to get a list of objects for more than one month.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-02"
+          },
+          {
+            "name": "payroll_recalculation_month",
+            "in": "query",
+            "description": "Payroll recalculation month",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-01"
+          },
+          {
+            "name": "payroll_recalculation_month_end",
+            "in": "query",
+            "description": "Payroll recalculation month, which is used to get a list of objects for more than one month",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-02"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "returns the employees' absences",
+            "headers": {
+              "X-Payroll-System": {
+                "description": "Returns the payroll system (lodas or lug) from which the data originates.",
+                "style": "simple",
+                "schema": {
+                  "type": "string",
+                  "example": "lodas"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Absences"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02201 | restapi.PayrollMonthWrongFormat | Parameter payroll_accounting_month in wrong format. Format YYYY-MM required, e. g. 2020-01 | \n | #DCO02202 | restapi.PayrollMonthEndWrongFormat | Parameter payroll_accounting_month_end in wrong format. Format YYYY-MM required, e. g. 2020-12 | \n | #DCO02203 | restapi.FormatClientIdFault | Format of client-id is wrong. Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen, e. g. 12345-123 |\n | #DCO02204 | restapi.NotValidTimePeriod | The parameters payroll_accounting_month and payroll_accounting_month_end. are not a valid time period. Payroll_accounting_month_end (e. g. 2020_05) must be greater than payroll_accounting_month (e. g. 2020_01). | \n |#DCO02205 | restapi.PayrollMonthWrong | Parameter payroll_accounting_month must be within the last five years. | \n |#DCO02206 | restapi.PayrollMonthEndWrong | Parameter payroll_accounting_month_end must be within the last five years. | \n |#DCO02207 | restapi.MonthNotProvided | Parameter payroll_accounting_month or payroll_recalculation_month must be provided. |",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02250 | restapi.ScopeWrongOrMissing | The third-party solution has sent an incorrect request. The required scope is empty or missing. The software provider must ensure that the scope is set. | \n |#DCO02251 | restapi.AccessDenied | It is recommended that the user contacts the tax consultant. The third-party solution has to ensure that the used client-id exists in the list of accessible clients. |  ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02280 | restapi.EmployeeNotFound | The Employee was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error. In case of repeated occurrences, please contact the support hotline. ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage5xx"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clients/{client-id}/employeeids/{company-personnel-number}": {
+      "get": {
+        "tags": [
+          "Employee Ids"
+        ],
+        "summary": "Get the employee's personnel number",
+        "description": "Employee ids of an employee can be accessed by its company personnel number",
+        "operationId": "getPersonnelNumberByCompanyPersonnelNumber",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "12345-123"
+          },
+          {
+            "name": "company-personnel-number",
+            "in": "path",
+            "description": "Company-personnel-number, which can also identify the employee in the payroll system.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": 12345
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "returns an employee's employee ids consisting of personnel_number and company_personnel_number",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmployeeIds"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02203 | restapi.FormatClientIdFault | Format of client-id is wrong. Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen, e. g. 12345-123 |",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02250 | restapi.ScopeWrongOrMissing | The third-party solution has sent an incorrect request. The required scope is empty or missing. The software provider must ensure that the scope is set. | \n |#DCO02251 | restapi.AccessDenied | It is recommended that the user contacts the tax consultant. The third-party solution has to ensure that the used client-id exists in the list of accessible clients. |  ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n|#DCO02280 | restapi.EmployeeNotFound | The Employee was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error. In case of repeated occurrences, please contact the support hotline. ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage5xx"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Client": {
+        "type": "object",
+        "properties": {
+          "client_id": {
+            "type": "string",
+            "description": "Client Id (Ordnungsbegriff)",
+            "example": "1234567-1245"
+          },
+          "consultant_number": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Consultant number (Beraternummer)",
+            "example": 1234567
+          },
+          "client_number": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Client number (Mandantennummer)",
+            "example": 12345
+          }
+        }
+      },
+      "ErrorMessage": {
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "error",
+            "example": "#DCO02299"
+          },
+          "errorDescription": {
+            "type": "string",
+            "description": "error_description",
+            "example": "restapi.ExampleErrorDescription"
+          },
+          "errorUri": {
+            "type": "string",
+            "description": "error_uri",
+            "example": "http://www.datev.de/dnlexos/mobile/webApp.aspx?sq=DCO02299"
+          },
+          "requestId": {
+            "type": "string",
+            "description": "request_id",
+            "example": "0a13eff2-44a9-4de6-90f0-1198241e7c22"
+          }
+        }
+      },
+      "TaxPayments": {
+        "type": "object",
+        "properties": {
+          "personnel_number": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Employee's personnel number in the payroll system",
+            "example": 10
+          },
+          "company_personnel_number": {
+            "type": "string",
+            "description": "Company personnel number (Betriebliche Personalnummer)",
+            "example": 10
+          },
+          "accounting_month": {
+            "type": "string",
+            "description": "Accounting month (Abrechnungsmonat)",
+            "example": "2020-01"
+          },
+          "month_of_recalculation": {
+            "type": "string",
+            "description": "Month of recalculation (Nachberechnungsmonat)",
+            "example": "2020-01"
+          },
+          "current_gross_tax": {
+            "type": "number",
+            "format": "double",
+            "description": "Current gross tax (Steuer-Brutto)",
+            "example": 2000
+          },
+          "flat_rate_church_tax": {
+            "type": "number",
+            "format": "double",
+            "description": "Flat rate church tax (Pauschale Kirchensteuer)",
+            "example": 50.1
+          },
+          "flat_rate_solidarity_tax": {
+            "type": "number",
+            "format": "double",
+            "description": "Flat rate solidarity tax (Pauschale Solidaritätszuschlag)",
+            "example": 80
+          },
+          "flat_rate_wage_tax": {
+            "type": "number",
+            "format": "double",
+            "description": "Flat rate wage tax (Pauschale Lohnsteuer)",
+            "example": 120.12
+          },
+          "flat_rate_taxed_payments": {
+            "type": "number",
+            "format": "double",
+            "description": "Sum of other_payments_taxed_at_flat_rate, payment_taxed_at_a_flat_rate_when_low_paid_employed and payment_taxed_at_a_flat_rate_when_short_term_employed (Pauschal versteuerte Bezüge)",
+            "example": 125.16
+          },
+          "solidarity_tax": {
+            "type": "number",
+            "format": "double",
+            "description": "Solidarity Tax (Solidaritätszuschlag)",
+            "example": 20
+          },
+          "wage_tax": {
+            "type": "number",
+            "format": "double",
+            "description": "Wage tax (Lohnsteuer)",
+            "example": 130
+          },
+          "other_payments_taxed_at_flat_rate": {
+            "type": "number",
+            "format": "double",
+            "description": "Other payments taxed at flat rate (Sonstige pauschal besteuerte Bezüge)",
+            "example": 123.45
+          },
+          "payment_taxed_at_a_flat_rate_when_low_paid_employed": {
+            "type": "number",
+            "format": "double",
+            "description": "Payment taxed at a flat rate when low paid employed (Pauschal versteuerte Bezüge geringfügig beschäftigt)",
+            "example": 123.45
+          },
+          "payment_taxed_at_a_flat_rate_when_short_term_employed": {
+            "type": "number",
+            "format": "double",
+            "description": "Payment taxed at a flat rate when short term employed (Pauschal versteuerte Bezüge kurzfristig beschäftigt)",
+            "example": 123.45
+          },
+          "wage_tax_non_recurring_payment": {
+            "type": "number",
+            "format": "double",
+            "description": "Wage tax non recurring payment (Lohnsteuer Einmalbezug)",
+            "example": 180
+          },
+          "wage_tax_monthly": {
+            "type": "number",
+            "format": "double",
+            "description": "Wage tax monthly (Lohnsteuer laufend)",
+            "example": 200
+          },
+          "church_tax_non_recurring_payment": {
+            "type": "number",
+            "format": "double",
+            "description": "Church tax non recurring payment (Kirchensteuer Einmalbezug)",
+            "example": 80
+          },
+          "church_tax": {
+            "type": "number",
+            "format": "double",
+            "description": "Church tax (Kirchensteuer)",
+            "example": 45
+          },
+          "church_tax_monthly": {
+            "type": "number",
+            "format": "double",
+            "description": "Church tax monthly (Kirchensteuer laufend)",
+            "example": 50
+          },
+          "tax_relevant_days": {
+            "type": "number",
+            "format": "double",
+            "description": "Number of days relevant for tax",
+            "example": 28
+          },
+          "gross_tax_non_recurring_payment": {
+            "type": "number",
+            "format": "double",
+            "description": "Gross tax non recurring payments (Steuerbrutto Einmalbezug)",
+            "example": 1000.5
+          },
+          "tax_deductions": {
+            "type": "number",
+            "format": "double",
+            "description": "Tax deductions",
+            "example": 750.88
+          },
+          "solidarity_tax_monthly": {
+            "type": "number",
+            "format": "double",
+            "description": "Solidarity tax monthly (Solidatitätszuschlag laufend)",
+            "example": 125.83
+          },
+          "solidarity_tax_non_recurring_payment": {
+            "type": "number",
+            "format": "double",
+            "description": "Solidarity tax non recurring payments (Solidatitätszuschlag Einmalbezug)",
+            "example": 65.83
+          }
+        }
+      },
+      "HealthInsurance": {
+        "type": "object",
+        "properties": {
+          "health_insurance_monthly_contribution_employer": {
+            "type": "number",
+            "format": "double",
+            "description": "Employer's monthly contribution to health insurance (KV-Beitrag AG - laufend)",
+            "example": 346.43
+          },
+          "health_insurance_employers_contribution_non_recurring_payment": {
+            "type": "number",
+            "format": "double",
+            "description": "Employer's non recurring contribution to health insurance (KV-Beitrag AG - Einmalbezug)",
+            "example": 500.43
+          },
+          "health_insurance_employees_contribution_non_recurring_payment": {
+            "type": "number",
+            "format": "double",
+            "description": "Employee's non recurring contribution to health insurance (KV-Beitrag AN - Einmalbezug)",
+            "example": 500.43
+          },
+          "health_insurance_monthly_contribution_employee": {
+            "type": "number",
+            "format": "double",
+            "description": "Employee's monthly contribution to health insurance (KV-Beitrag AN - laufend)",
+            "example": 346.43
+          },
+          "health_insurance_gross": {
+            "type": "number",
+            "format": "double",
+            "description": "Gross payment to health insurance (KV-Brutto)",
+            "example": 4470
+          },
+          "health_insurance_gross_non_recurring_payment": {
+            "type": "number",
+            "format": "double",
+            "description": "Gross non recurring payment to health insurance (KV-Brutto - Einmalbezug)",
+            "example": 500.43
+          },
+          "health_insurance_gross_monthly_contribution": {
+            "type": "number",
+            "format": "double",
+            "description": "Gross monthly contribution to health insurance (KV-Brutto - laufend)",
+            "example": 346.43
+          },
+          "health_insurance_employees_contribution_total": {
+            "type": "number",
+            "format": "double",
+            "description": "Employee's total contribution to health insurance)",
+            "example": 500.43
+          },
+          "health_insurance_employer_contribution_total": {
+            "type": "number",
+            "format": "double",
+            "description": "Employer's total contribution to health insurance",
+            "example": 500.43
+          }
+        }
+      },
+      "LongTermCareInsurance": {
+        "type": "object",
+        "properties": {
+          "long_term_care_insurance_monthly_contribution_employer": {
+            "type": "number",
+            "format": "double",
+            "description": "Employer's monthly contribution to long term care insurance (PV-Beitrag AG - laufend)",
+            "example": 68.17
+          },
+          "long_term_care_insurance_employers_contribution_non_recurring_payment": {
+            "type": "number",
+            "format": "double",
+            "description": "Employer's non recurring contribution to long term care insurance (PV-Beitrag AG - Einmalbezug)",
+            "example": 100.43
+          },
+          "long_term_care_insurance_employees_contribution_non_recurring_payment": {
+            "type": "number",
+            "format": "double",
+            "description": "Employee's non recurring contribution to long term care insurance (PV-Beitrag AN - Einmalbezug)",
+            "example": 100.43
+          },
+          "long_term_care_insurance_monthly_contribution_employee": {
+            "type": "number",
+            "format": "double",
+            "description": "Employee's monthly contribution to long term care insurance (PV-Beitrag AN - laufend)",
+            "example": 68.17
+          },
+          "long_term_care_insurance_gross": {
+            "type": "number",
+            "format": "double",
+            "description": "Gross payment to long term care insurance (PV-Brutto)",
+            "example": 45.99
+          },
+          "long_term_care_insurance_gross_non_recurring_payment": {
+            "type": "number",
+            "format": "double",
+            "description": "Gross non recurring payment to long term care insurance (PV-Brutto - Einmalbezug)",
+            "example": 100.43
+          },
+          "long_term_care_insurance_gross_monthly_contribution": {
+            "type": "number",
+            "format": "double",
+            "description": "Gross monthly contribution to long term care insurance (PV-Brutto - laufend)",
+            "example": 68.17
+          },
+          "long_term_care_insurance_employees_contribution_total": {
+            "type": "number",
+            "format": "double",
+            "description": "Employee's total contribution to long term care insurance)",
+            "example": 500.43
+          },
+          "long_term_care_insurance_employer_contribution_total": {
+            "type": "number",
+            "format": "double",
+            "description": "Employer's total contribution to long term care insurance",
+            "example": 500.43
+          }
+        }
+      },
+      "PensionInsurance": {
+        "type": "object",
+        "properties": {
+          "pension_insurance_monthly_contribution_employer": {
+            "type": "number",
+            "format": "double",
+            "description": "Employer's monthly contribution to pension insurance (RV-Beitrag AG - laufend)",
+            "example": 415.71
+          },
+          "pension_insurance_employers_contribution_non_recurring_payment": {
+            "type": "number",
+            "format": "double",
+            "description": "Employer's non recurring payment to pension insurance (RV-Beitrag AG - Einmalbezug)",
+            "example": 500.43
+          },
+          "pension_insurance_employees_contribution_non_recurring_payment": {
+            "type": "number",
+            "format": "double",
+            "description": "Employee's non recurring payment to pension insurance (RV-Beitrag AN - Einmalbezug)",
+            "example": 500.43
+          },
+          "pension_insurance_monthly_contribution_employee": {
+            "type": "number",
+            "format": "double",
+            "description": "Employee's monthly contribution to pension insurance (RV-Beitrag AN - laufend)",
+            "example": 415.71
+          },
+          "pension_insurance_gross": {
+            "type": "number",
+            "format": "double",
+            "description": "Gross payment to pension insurance (RV-Brutto)",
+            "example": 77.98
+          },
+          "pension_insurance_gross_non_recurring_payment": {
+            "type": "number",
+            "format": "double",
+            "description": "Gross non recurring payment to pension insurance (RV-Brutto - Einmalbezug)",
+            "example": 500.43
+          },
+          "pension_insurance_gross_monthly_contribution": {
+            "type": "number",
+            "format": "double",
+            "description": "Gross monthly contribution to pension insurance (RV-Brutto - laufend)",
+            "example": 415.71
+          },
+          "pension_insurance_employees_contribution_total": {
+            "type": "number",
+            "format": "double",
+            "description": "Employee's total contribution to pension insurance)",
+            "example": 500.43
+          },
+          "pension_insurance_employer_contribution_total": {
+            "type": "number",
+            "format": "double",
+            "description": "Employer's total contribution to pension insurance",
+            "example": 500.43
+          }
+        }
+      },
+      "SocialSecurityPayments": {
+        "type": "object",
+        "properties": {
+          "personnel_number": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Employee's personnel number in the payroll system",
+            "example": 10
+          },
+          "company_personnel_number": {
+            "type": "string",
+            "description": "Company personnel number (Betriebliche Personalnummer)",
+            "example": 10
+          },
+          "accounting_month": {
+            "type": "string",
+            "description": "Accounting month (Abrechnungsmonat)",
+            "example": "2020-01"
+          },
+          "month_of_recalculation": {
+            "type": "string",
+            "description": "Month of recalculation (Nachberechnungsmonat)",
+            "example": "2020-01"
+          },
+          "health_insurance": {
+            "$ref": "#/components/schemas/HealthInsurance"
+          },
+          "unemployment_insurance": {
+            "$ref": "#/components/schemas/UnemploymentInsurance"
+          },
+          "long_term_care_insurance": {
+            "$ref": "#/components/schemas/LongTermCareInsurance"
+          },
+          "pension_insurance": {
+            "$ref": "#/components/schemas/PensionInsurance"
+          },
+          "current_payments_to_social_security_employers_contribution": {
+            "type": "number",
+            "format": "double",
+            "description": "Current payments as employer's contribution to social security (Arbeitgeberaufwand zur Sozialversicherung aus laufenden Bezügen (KV, PV, AV, RV))",
+            "example": 886.19
+          },
+          "other_payments_to_social_security_employers_contribution": {
+            "type": "number",
+            "format": "double",
+            "description": "Other payments as employer's contribution to social security (Arbeitgeberaufwand zur Sozialversicherung aus Einmalbezügen (KV, PV, AV, RV))",
+            "example": 0
+          },
+          "allocation1": {
+            "type": "number",
+            "format": "double",
+            "description": "Sickness allocation U1 (Umlage U1 - Krankheitsumlage)",
+            "example": 125.16
+          },
+          "allocation2": {
+            "type": "number",
+            "format": "double",
+            "description": "Maternity allocation U2 (Umlage U2 - Mutterschaftsumlage)",
+            "example": 19.67
+          },
+          "monthly_allocation_to_insolvency_benefit": {
+            "type": "number",
+            "format": "double",
+            "description": "Monthly allocation to insolvency benefit (Monatliche Insolvenzgeldumlage)",
+            "example": 0
+          },
+          "allocation_insolvency": {
+            "type": "number",
+            "format": "double",
+            "description": "Sum of monthly and annual allocation to insolvency benefit",
+            "example": 0
+          },
+          "social_security_days": {
+            "type": "number",
+            "format": "double",
+            "description": "Number of days relevant for social security",
+            "example": 25
+          },
+          "annual_allocation_to_insolvency_benefit": {
+            "type": "number",
+            "format": "double",
+            "description": "Annual allocation to insolvency benefit (Jährliche Insolvenzgeldumlage)",
+            "example": 0
+          },
+          "social_security_deductions": {
+            "type": "number",
+            "format": "double",
+            "description": "Social security deductions",
+            "example": 500
+          }
+        }
+      },
+      "UnemploymentInsurance": {
+        "type": "object",
+        "properties": {
+          "unemployment_insurance_monthly_contribution_employer": {
+            "type": "number",
+            "format": "double",
+            "description": "Employer's monthly contribution to unemployment insurance (AV-Beitrag AG - laufend)",
+            "example": 55.88
+          },
+          "unemployment_insurance_employees_contribution_non_recurring_payment": {
+            "type": "number",
+            "format": "double",
+            "description": "Employer's non recurring payment to unemployment insurance (AV-Beitrag AG - Einmalbezug)",
+            "example": 100.43
+          },
+          "unemployment_insurance_employers_contribution_non_recurring_payment": {
+            "type": "number",
+            "format": "double",
+            "description": "Employee's non recurring contribution to unemployment insurance (AV-Beitrag AN - Einmalbezug)",
+            "example": 100.43
+          },
+          "unemployment_insurance_monthly_contribution_employee": {
+            "type": "number",
+            "format": "double",
+            "description": "Employee's monthly contribution to unemployment insurance (AV-Beitrag AN - laufend)",
+            "example": 55.88
+          },
+          "unemployment_insurance_gross": {
+            "type": "number",
+            "format": "double",
+            "description": "Gross payment to unemployment insurance (AV-Brutto)",
+            "example": 64.88
+          },
+          "unemployment_insurance_gross_non_recurring_payment": {
+            "type": "number",
+            "format": "double",
+            "description": "Gross non recurring payment to unemployment insurance (AV-Brutto - Einmalbezug)",
+            "example": 100.43
+          },
+          "unemployment_insurance_gross_monthly_contribution": {
+            "type": "number",
+            "format": "double",
+            "description": "Gross monthly contribution to unemployment insurance (AV-Brutto - laufend)",
+            "example": 55.88
+          },
+          "unemployment_insurance_employees_contribution_total": {
+            "type": "number",
+            "format": "double",
+            "description": "Employee's total contribution to unemployment insurance)",
+            "example": 500.43
+          },
+          "unemployment_insurance_employer_contribution_total": {
+            "type": "number",
+            "format": "double",
+            "description": "Employer's total contribution to unemployment insurance",
+            "example": 500.43
+          }
+        }
+      },
+      "SalaryTotalValues": {
+        "type": "object",
+        "properties": {
+          "personnel_number": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Employee's personnel number in the payroll system",
+            "example": 10
+          },
+          "company_personnel_number": {
+            "type": "string",
+            "description": "Company personnel number (Betriebliche Personalnummer)",
+            "example": "A10"
+          },
+          "accounting_month": {
+            "type": "string",
+            "description": "Accounting month (Abrechnungsmonat)",
+            "example": "2020-01"
+          },
+          "month_of_recalculation": {
+            "type": "string",
+            "description": "Month of recalculation (Nachberechnungsmonat)",
+            "example": "2020-01"
+          },
+          "current_gross_payment": {
+            "type": "number",
+            "format": "double",
+            "description": "Total gross amount of the employee",
+            "example": 2990
+          },
+          "amount_paid": {
+            "type": "number",
+            "format": "double",
+            "description": "Amount paid out by the employee",
+            "example": 1606.92
+          },
+          "net_income": {
+            "type": "number",
+            "format": "double",
+            "description": "Employee's net income",
+            "example": 3326.92
+          },
+          "net_payments_and_net_deductions": {
+            "type": "number",
+            "format": "double",
+            "description": "Sum of net renumeration and net deductions of an employee",
+            "example": -70
+          },
+          "total_statutory_deductions": {
+            "type": "number",
+            "format": "double",
+            "description": "Sum of statutory deductions",
+            "example": -70
+          }
+        }
+      },
+      "GrossPaymentsLodas": {
+        "type": "object",
+        "properties": {
+          "wage_type_name": {
+            "type": "string",
+            "description": "wage type name (Lohnartbezeichnung)",
+            "example": "Privatfahrten"
+          },
+          "wage_type_number": {
+            "type": "string",
+            "description": "wage type number (Lohnartnummer)",
+            "example": "0873, 9001"
+          },
+          "wage_type_amount": {
+            "type": "number",
+            "format": "double",
+            "description": "wage type amount (Lohnartbetrag)",
+            "example": 400
+          },
+          "wage_type_amount_difference": {
+            "type": "number",
+            "format": "double",
+            "description": "wage type amount difference",
+            "example": 40
+          },
+          "tax_and_social_security_treatment_of_wage_type": {
+            "type": "string",
+            "description": "Treatment of wage type in context of tax and social security",
+            "example": 1
+          },
+          "component_gross_payment": {
+            "type": "boolean",
+            "description": "Is component of gross payment",
+            "example": true
+          }
+        }
+      },
+      "GrossPaymentsLug": {
+        "type": "object",
+        "properties": {
+          "wage_type_name": {
+            "type": "string",
+            "description": "wage type name (Lohnartbezeichnung)",
+            "example": "Privatfahrten"
+          },
+          "wage_type_number": {
+            "type": "string",
+            "description": "wage type number (Lohnartnummer)",
+            "example": "0873, 9001"
+          },
+          "wage_type_amount": {
+            "type": "number",
+            "format": "double",
+            "description": "wage type amount (Lohnartbetrag)",
+            "example": 400
+          },
+          "tax_treatment_of_wage_type": {
+            "type": "string",
+            "description": "Treatment of wage type in context of tax",
+            "example": "L"
+          },
+          "social_security_treatment_of_wage_type": {
+            "type": "string",
+            "description": "Treatment of wage type in context of social security",
+            "example": "L"
+          },
+          "component_gross_payment": {
+            "type": "boolean",
+            "description": "Is component of gross payment",
+            "example": true
+          }
+        }
+      },
+      "NetPayments": {
+        "type": "object",
+        "properties": {
+          "net_payment_number": {
+            "type": "string",
+            "description": "net type number (Nettobezugsnummer)",
+            "example": 9800
+          },
+          "net_payment_name": {
+            "type": "string",
+            "description": "net type name (Nettobezugsbezeichnung)",
+            "example": "Essensgeld"
+          },
+          "net_payment_amount": {
+            "type": "number",
+            "format": "double",
+            "description": "net type amount (Nettobezugsbetrag)",
+            "example": 23.5
+          },
+          "net_payment_amount_difference": {
+            "type": "number",
+            "format": "double",
+            "description": "net type amount difference",
+            "example": 3.5
+          }
+        }
+      },
+      "SalaryPayments": {
+        "type": "object",
+        "properties": {
+          "personnel_number": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Employee's personnel number in the payroll system",
+            "example": 10
+          },
+          "company_personnel_number": {
+            "type": "string",
+            "description": "Company personnel number (Betriebliche Personalnummer)",
+            "example": 10
+          },
+          "accounting_month": {
+            "type": "string",
+            "description": "Accounting month (Abrechnungsmonat)",
+            "example": "2020-01"
+          },
+          "month_of_recalculation": {
+            "type": "string",
+            "description": "Month of recalculation (Nachberechnungsmonat)",
+            "example": "2020-01"
+          },
+          "gross_payments_lodas": {
+            "type": "array",
+            "description": "Gross Payments represent 'Lohnarten' with wage_type_number up until 8999 for LODAS",
+            "items": {
+              "$ref": "#/components/schemas/GrossPaymentsLodas"
+            }
+          },
+          "gross_payments_lug": {
+            "type": "array",
+            "description": "Gross Payments represent 'Lohnarten' with wage_type_number up until 8999 for LuG",
+            "items": {
+              "$ref": "#/components/schemas/GrossPaymentsLug"
+            }
+          },
+          "net_payments": {
+            "type": "array",
+            "description": "Net Payments represent 'Nettobezüge' and 'Nettoabzüge' with wage_type_number equal to or greater than 9000",
+            "items": {
+              "$ref": "#/components/schemas/NetPayments"
+            }
+          }
+        }
+      },
+      "CostCenter": {
+        "type": "object",
+        "properties": {
+          "cost_center_id": {
+            "type": "string",
+            "description": "Cost center number (Kostenstellennummer)",
+            "example": 3550
+          },
+          "cost_center_name": {
+            "type": "string",
+            "description": "Cost center name (Kostenstellenbezeichnung)",
+            "example": "Verkauf"
+          }
+        }
+      },
+      "EmployeeAddress": {
+        "type": "object",
+        "properties": {
+          "street": {
+            "type": "string",
+            "description": "Street name",
+            "example": "West Street"
+          },
+          "house_number": {
+            "type": "string",
+            "description": "House number",
+            "example": 20
+          },
+          "country": {
+            "type": "string",
+            "description": "Country code",
+            "example": "DE"
+          },
+          "zip_code": {
+            "type": "string",
+            "description": "ZIP/Postal code",
+            "example": 90900
+          },
+          "city": {
+            "type": "string",
+            "description": "City name",
+            "example": "München"
+          }
+        }
+      },
+      "Employment": {
+        "type": "object",
+        "properties": {
+          "date_of_joining": {
+            "type": "string",
+            "description": "Date of commencement of employment",
+            "example": "1999-01-07"
+          },
+          "date_of_leaving": {
+            "type": "string",
+            "description": "Date of termination of employment",
+            "example": "2022-01-07"
+          },
+          "initial_date_of_joining": {
+            "type": "string",
+            "description": "Date of commencement of the Employee's initial employment",
+            "example": "1999-01-07"
+          },
+          "job_title": {
+            "type": "string",
+            "description": "Job title",
+            "example": "Angestellter"
+          },
+          "job_title_of_occupational_classification_code": {
+            "type": "string",
+            "description": "Job title of occupational classification code (Tätigkeitsschlüssel - Tätigkeitsbezeichnung)",
+            "example": "Geschäftsführer/in"
+          },
+          "occupational_classification_code": {
+            "type": "string",
+            "description": "Occupational classification code (Tätigkeitsschlüssel)",
+            "example": 71104
+          },
+          "occupational_classification_code_employee_leasing": {
+            "type": "string",
+            "description": "Occupational classification code for employee leasing (Tätigkeitsschlüssel - Arbeitnehmerüberlassung)",
+            "example": 0
+          },
+          "sequential_number_of_occupational_classification_code": {
+            "type": "string",
+            "description": "Sequential number of occupational classification code (Tätigkeitsschlüssel - fortlaufende Nummer)",
+            "example": 17098
+          },
+          "type_of_contract": {
+            "type": "string",
+            "description": "Type of employment contract",
+            "example": 1
+          },
+          "weekly_working_hours": {
+            "type": "number",
+            "format": "double",
+            "description": "Contractual weekly working hours",
+            "example": 40
+          },
+          "cost_center": {
+            "$ref": "#/components/schemas/CostCenter"
+          },
+          "highest_level_of_education": {
+            "type": "string",
+            "description": "6th position of the occupational_classification_code",
+            "example": 1
+          },
+          "highest_level_of_professional_training": {
+            "type": "string",
+            "description": "7th position of the occupational_classification_code",
+            "example": 1
+          }
+        }
+      },
+      "MasterData": {
+        "type": "object",
+        "properties": {
+          "employment": {
+            "$ref": "#/components/schemas/Employment"
+          },
+          "taxes": {
+            "$ref": "#/components/schemas/Taxes"
+          },
+          "personnel_number": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Employee's personnel number in the payroll system",
+            "example": 10
+          },
+          "company_personnel_number": {
+            "type": "string",
+            "description": "Company personnel number (Betriebliche Personalnummer)",
+            "example": 10
+          },
+          "accounting_month": {
+            "type": "string",
+            "description": "Accounting month (Abrechnungsmonat)",
+            "example": "2020-01"
+          },
+          "month_of_recalculation": {
+            "type": "string",
+            "description": "Month of recalculation (Nachberechnungsmonat)",
+            "example": "2020-01"
+          },
+          "social_security": {
+            "$ref": "#/components/schemas/SocialSecurity"
+          },
+          "personal_data": {
+            "$ref": "#/components/schemas/PersonalData"
+          }
+        }
+      },
+      "PersonalData": {
+        "type": "object",
+        "properties": {
+          "social_security_number": {
+            "type": "string",
+            "description": "Employee's social security number",
+            "example": "12190367M006"
+          },
+          "personnel_number": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Employee's personnel number in the payroll system",
+            "example": 10
+          },
+          "first_name": {
+            "type": "string",
+            "description": "Employee's first name",
+            "example": "Maximilian"
+          },
+          "surname": {
+            "type": "string",
+            "description": "Employee's surname",
+            "example": "Muster"
+          },
+          "sex": {
+            "type": "string",
+            "description": "Employee's gender",
+            "example": 0
+          },
+          "nationality": {
+            "type": "string",
+            "description": "Employee's nationality",
+            "example": "A"
+          },
+          "date_of_birth": {
+            "type": "string",
+            "description": "Employee's date of birth",
+            "example": "15.02.1980"
+          },
+          "academic_title": {
+            "type": "string",
+            "description": "Employee's academic title",
+            "example": "Prof., Dr. med., Dipl.-Ing. (FH)"
+          },
+          "name_prefix": {
+            "type": "string",
+            "description": "Employee's name prefix",
+            "example": "auf dem, am"
+          },
+          "title_of_nobility": {
+            "type": "string",
+            "description": "Employee's title of nobility",
+            "example": "Fürst, Baron"
+          },
+          "company_personnel_number": {
+            "type": "string",
+            "description": "Company personnel number (Betriebliche Personalnummer)",
+            "example": 10
+          },
+          "address": {
+            "$ref": "#/components/schemas/EmployeeAddress"
+          }
+        }
+      },
+      "SocialSecurity": {
+        "type": "object",
+        "properties": {
+          "contribution_class_health_insurance": {
+            "type": "string",
+            "description": "Contribution class to health insurance",
+            "example": 0
+          },
+          "contribution_class_pension_insurance": {
+            "type": "string",
+            "description": "Contribution class to pension insurance",
+            "example": 0
+          },
+          "contribution_class_unemployment_insurance": {
+            "type": "string",
+            "description": "Contribution class to unemployment insurance",
+            "example": 0
+          },
+          "contribution_class_long_term_care_insurance": {
+            "type": "string",
+            "description": "Contribution class to long term care insurance",
+            "example": 0
+          },
+          "person_group_key": {
+            "type": "string",
+            "description": "Person group key (Personengruppenschlüssel)",
+            "example": 101
+          },
+          "is_ignore_additional_contribution_to_long_term_care_insurance_for_childless": {
+            "type": "string",
+            "description": "Contribution to long term care insurance if childless",
+            "example": 1
+          },
+          "health_insurance_company_number": {
+            "type": "string",
+            "description": "Company number of health insurer",
+            "example": 12345678
+          }
+        }
+      },
+      "Taxes": {
+        "type": "object",
+        "properties": {
+          "denomination": {
+            "type": "string",
+            "description": "Employee's denomination (Konfession des Mitarbeiters)",
+            "example": "01"
+          },
+          "spouses_denomination": {
+            "type": "string",
+            "description": "Spouse's denomination (Konfession des Ehegatten)",
+            "example": "01"
+          },
+          "tax_class": {
+            "type": "string",
+            "description": "Tax Class (Steuerklasse)",
+            "example": 1
+          }
+        }
+      },
+      "Absences": {
+        "type": "object",
+        "properties": {
+          "personnel_number": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Employee's personnel number in the payroll system",
+            "example": 10
+          },
+          "company_personnel_number": {
+            "type": "string",
+            "description": "Company personnel number (Betriebliche Personalnummer)",
+            "example": 10
+          },
+          "accounting_month": {
+            "type": "string",
+            "description": "Accounting month (Abrechnungsmonat)",
+            "example": "2020-01"
+          },
+          "month_of_recalculation": {
+            "type": "string",
+            "description": "Month of recalculation (Nachberechnungsmonat)",
+            "example": "2020-01"
+          },
+          "total_vacation_entitlement": {
+            "type": "number",
+            "format": "double",
+            "description": "total vacation entitlement without remaining vacation days from the previous year",
+            "example": 30
+          },
+          "vacation_days_taken": {
+            "type": "number",
+            "format": "double",
+            "description": "number of vacation days taken in the current year",
+            "example": 12.5
+          },
+          "remaining_vacation_days_previous_year": {
+            "type": "number",
+            "format": "double",
+            "description": "number of remaining vacation days from the previous year",
+            "example": 3
+          },
+          "remaining_vacation_days_current_year": {
+            "type": "number",
+            "format": "double",
+            "description": "number of remaining vacation days in the current year",
+            "example": 27.5
+          },
+          "sick_leave_month": {
+            "type": "number",
+            "format": "double",
+            "description": "Number of sick days for current month",
+            "example": 1
+          },
+          "sick_leave_hours": {
+            "type": "number",
+            "format": "double",
+            "description": "Number of sick days as hours",
+            "example": 8
+          },
+          "overtime": {
+            "type": "number",
+            "format": "double",
+            "description": "number of overtime hours",
+            "example": 4.5
+          }
+        }
+      },
+      "EmployeeIds": {
+        "type": "object",
+        "properties": {
+          "personnel_number": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Employee's personnel number in the payroll system",
+            "example": 10
+          },
+          "company_personnel_number": {
+            "type": "string",
+            "description": "Company personnel number (Betriebliche Personalnummer)",
+            "example": "123a"
+          }
+        }
+      },
+      "ErrorMessage5xx": {
+        "properties": {
+          "error_description": {
+            "type": "string",
+            "description": "Descriptive text of an error behavior",
+            "example": "Temporary Error while processing Request. Please try again!"
+          },
+          "request_id": {
+            "type": "string",
+            "description": "UUID identifying the user request",
+            "example": "0a13eff2-44a9-4de6-90f0-1198241e7c22"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "datev_openid": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://login.datev.de/openid/authorize",
+            "tokenUrl": "https://api.datev.de/token",
+            "scopes": {
+              "datev:hr:payrolldataexport": "Get exports data from the salary system"
+            }
+          }
+        }
+      },
+      "datev_idp_next": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://signin.datev.de/datevam/oauth2/realms/root/realms/user/authorize",
+            "tokenUrl": "https://signin.datev.de/datevam/oauth2/realms/root/realms/user/access_token",
+            "scopes": {
+              "datev:hr:payrolldataexport": "Get exports data from the salary system"
+            }
+          }
+        }
+      },
+      "datev_openid_sandbox": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://login.datev.de/openidsandbox/authorize",
+            "tokenUrl": "https://sandbox-api.datev.de/token",
+            "scopes": {
+              "datev:hr:payrolldataexport": "Get exports data from the salary system"
+            }
+          }
+        }
+      },
+      "client_id": {
+        "type": "apiKey",
+        "name": "X-Datev-Client-Id",
+        "in": "header",
+        "x-key-type": "client_id"
+      },
+      "client_secret": {
+        "type": "apiKey",
+        "name": "X-Datev-Client-Secret",
+        "in": "header",
+        "x-key-type": "client_secret"
+      }
+    }
+  },
+  "security": [
+    {
+      "client_id": [],
+      "datev_openid": [
+        "datev:hr:payrolldataexport"
+      ]
+    },
+    {
+      "client_id": [],
+      "datev_idp_next": [
+        "datev:hr:payrolldataexport"
+      ]
+    },
+    {
+      "client_id": [],
+      "datev_openid_sandbox": [
+        "datev:hr:payrolldataexport"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,752 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "hr:files",
+    "description": "Users (employees of client) working with the upstream system authenticate themselves to the DATEV data center via OAuth. The upstream system creates an export file (max. size 3 MB) depending on the used DATEV payroll system LODAS or Lohn und Gehalt. After successful authentication and authorization the file with its meta information is sent to the DATEV data center. Then a status message is sent to the upstream system.\n\nThe tax consultant’s employees (payroll clerks) working with the DATEV payroll system LODAS or Lohn und Gehalt authenticate themselves to the DATEV data center via OAuth. A list of all files, which can be imported, is displayed in the payroll system. The import files can then be selectively retrieved and automatically imported into the payroll system. As soon as the import was successful or failed, a corresponding status message is sent to the upstream system.\n",
+    "termsOfService": "https://www.datev.de/agb",
+    "contact": {
+      "name": "DATEV Schnittstellenberatung",
+      "url": "https://www.datev.de/schnittstellen",
+      "email": "schnittstellenberatung@datev.de"
+    },
+    "license": {
+      "name": "DATEV eG",
+      "url": "https://www.datev.de"
+    },
+    "version": "2.0.13",
+    "x-pathalias": "hr-files",
+    "x-datev-shortdescription": "With the REST API DATEVconnect online hr-imports, ASCII import files containing master data or current data can be securely transferred from an upstream system (e. g. ERP system or time tracking software) to the DATEV data center. The ASCII file can then be retrieved from the DATEV data center and automatically imported into the DATEV payroll systems LODAS or Lohn und Gehalt."
+  },
+  "tags": [
+    {
+      "name": "Files"
+    }
+  ],
+  "paths": {
+    "/v1/clients/{client-id}/files": {
+      "post": {
+        "tags": [
+          "Files"
+        ],
+        "summary": "Adds a file with its file information",
+        "description": "A file can be sent with its file information (required parameters). It can then be processed in the payroll system.\n",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen.\n",
+            "example": "12345-123",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "creation_time",
+                  "file",
+                  "file_provider",
+                  "import_file_type",
+                  "payroll_accounting_month",
+                  "target_system"
+                ],
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "description": "File (max. size 3 MB) which will be imported into the\npayroll system. Filename of the file can only have a maximum size\nof 50 characters. File has to be UTF-8 encoded.\nCAUTION: the file name may not contain the following characters:\n< (less than), > (greater than),: (colon), “ (double quote), / (forward slash), \\ (backslash), | (vertical bar or pipe), ? (question mark), * (asterisk)\n",
+                    "format": "binary"
+                  },
+                  "file_provider": {
+                    "type": "string",
+                    "description": "Name of system uploading the file (max. size 50).\n",
+                    "example": "Company XY"
+                  },
+                  "import_file_type": {
+                    "type": "string",
+                    "description": "Identifies type of import file. Import file can be of type current (Bewegungsdaten as bwd) or master data (Stammdaten as psd).\n",
+                    "enum": [
+                      "bwd",
+                      "psd"
+                    ]
+                  },
+                  "creation_time": {
+                    "type": "string",
+                    "description": "States the time when file was created in the file provider's system.\nExample according to ISO8601.\n",
+                    "example": "2019-09-14T10:40:52.000+02:00"
+                  },
+                  "target_system": {
+                    "type": "string",
+                    "description": "Target payroll system (lodas or lug) into which the file will be imported.\nExample: \"lodas\"\n",
+                    "enum": [
+                      "lug",
+                      "lodas"
+                    ]
+                  },
+                  "payroll_accounting_month": {
+                    "type": "string",
+                    "description": "Payroll accounting month.\nExample according to ISO8601\n",
+                    "example": "2019-09-30"
+                  },
+                  "mail_address": {
+                    "type": "string",
+                    "description": "With this e-mail-address (max. length 100) the user of the payroll system will be informed whenever a new file has been sent and is available to be imported.\n",
+                    "example": "example@datev.de"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "File was uploaded successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobInfo"
+                },
+                "example": {
+                  "job_id": "abc12345-abcd-abcd-tt33-12345aedgf55",
+                  "timestamp": "2019-09-14T10:40:52+2:00",
+                  "state": "uploaded"
+                }
+              },
+              "multipart/form-data": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobInfo"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n| #DCO02000 | restapi.AsciiEncodingFault | The file must be ASCII encoded. | \n | #DCO02001 | restapi.FileEmpty | The file must not be empty. | \n | #DCO02002 | restapi.FileFormatFault | The file must not be empty. | \n | #DCO02003 | restapi.FileNameFault | The file name is either too long or starts with a blank. | \n | #DCO02004 | restapi.VirusFound | The file has suspiscious data and was declined by the virus scanner. | \n | #DCO02005 | restapi.FileProviderTooLong | The parameter file_provider is too long. It should not be larger than 50 bytes. | \n | #DCO02006 | restapi.MailAddressTooLong | The parameter mail_address is too long. It should not be larger than 100 bytes. | \n | #DCO02007 | restapi.FormatMailAddressFault | The format of the parameter mail_address is invalid. | \n | #DCO02008 | restapi.FileProviderUnsupportedCharacters | The parameter file_provider has invalid characters. | \n | #DCO02009 | restapi.CreationTimeInFuture | The parameter creation_time must not be in the future. | \n | #DCO02010 | restapi.CreationTimeWrongFormat | The parameter creation_time must be in the format ISO_OFFSET_TIME. | \n | #DCO02011 | restapi.PayrollAccountingMonthWrongFormat | The parameter payroll_accounting_month must be in the format ISO_LOCAL_DATE. | \n | #DCO02012 | restapi.ImportFileTypeNotSupported | The parameter import_file_type must either be 'bwd' or 'psd'. | \n | #DCO02013 | restapi.TargetSystemNotSupported | The parameter target_system must either be 'lug' or 'lodas'. | \n | #DCO02018 | restapi.JsonSyntaxFault | The request could not be processed. The json syntax of the request must be checked. | \n | #DCO02020 | restapi.FormatClientIdFault | Format of client-id is wrong. Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits)| \n | ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              },
+              "multipart/form-data": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n| #DCO02050 | restapi.AccessDenied | It is recommended that the user contacts the tax consultant. The third-party solustion has to ensure that the used client-id exists in the list of accessible clients. | \n | #DCO02051 | restapi.ScopeWrongOrMissing | The third-party solution has sent an incorrect request. The required scope is empty or missing. The software provider must ensure that the scope is set.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              },
+              "multipart/form-data": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error. In case of repeated occurrences, please contact the support hotline.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage5xx"
+                }
+              },
+              "multipart/form-data": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage5xx"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/clients/{client-id}/jobs/{job-id}": {
+      "get": {
+        "tags": [
+          "Jobs"
+        ],
+        "summary": "get the file's state",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen.\n",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "12345-123"
+          },
+          {
+            "name": "job-id",
+            "in": "path",
+            "description": "Id which identifies requested job and therefore a file's state. The Id is represented as an UUID in the format 8-4-4-4-12.\n",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "abc12345-abcd-abcd-tt33-12345aedgf55"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "returns a file's state.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobInfo"
+                },
+                "example": {
+                  "job_id": "abc12345-abcd-abcd-tt33-12345aedgf55",
+                  "timestamp": "2019-09-14T10:40:52+2:00",
+                  "state": "uploaded"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n| #DCO02020 | restapi.FormatClientIdFault | Format of client-id is wrong. Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen, e. g. 12345-123 | \n | #DCO02014 | restapi.JobIdWrongFormat | Job-Id is represented as an UUID in the format 8-4-4-4-12, e. g. abc12345-abcd-abcd-tt33-12345aedgf55 | ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n| #DCO02050 | restapi.AccessDenied | It is recommended that the user contacts the tax consultant. The third-party solustion has to ensure that the used client-id exists in the list of accessible clients. | \n | #DCO02051 | restapi.ScopeWrongOrMissing | The third-party solution has sent an incorrect request. The required scope is empty or missing. The software provider must ensure that the scope is set.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n| #DCO02101 | restapi.JobIdNotFound | The requested job-id was not found. | ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error. In case of repeated occurrences, please contact the support hotline.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage5xx"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/clients": {
+      "get": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "Get all the clients",
+        "responses": {
+          "200": {
+            "description": "returns all permitted clients.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Client"
+                  }
+                },
+                "example": [
+                  {
+                    "cliend_id": "1234-1",
+                    "consultant_nr": 1234,
+                    "client_nr": 1
+                  },
+                  {
+                    "cliend_id": "2345-2",
+                    "consultant_nr": 2345,
+                    "client_nr": 2
+                  }
+                ]
+              },
+              "multipart/form-data": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Client"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n| #DCO02050 | restapi.AccessDenied | It is recommended that the user contacts the tax consultant. The third-party solustion has to ensure that the used client-id exists in the list of accessible clients. | \n | #DCO02051 | restapi.ScopeWrongOrMissing | The third-party solution has sent an incorrect request. The required scope is empty or missing. The software provider must ensure that the scope is set.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              },
+              "multipart/form-data": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error. In case of repeated occurrences, please contact the support hotline.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage5xx"
+                }
+              },
+              "multipart/form-data": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage5xx"
+                }
+              }
+            }
+          }
+        },
+        "parameters": []
+      }
+    },
+    "/v1/clients/{client-id}": {
+      "get": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "Determines if the principal has permission to the client given by client-id",
+        "parameters": [
+          {
+            "name": "client-id",
+            "in": "path",
+            "description": "Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen.\n",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "12345-123"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "returns status code 200 without body",
+            "content": {}
+          },
+          "400": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n| #DCO02020 | restapi.FormatClientIdFault | Format of client-id is wrong. Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen, e. g. 12345-123 | ",
+            "content": {}
+          },
+          "403": {
+            "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n| #DCO02050 | restapi.AccessDenied | It is recommended that the user contacts the tax consultant. The third-party solustion has to ensure that the used client-id exists in the list of accessible clients. | \n | #DCO02051 | restapi.ScopeWrongOrMissing | The third-party solution has sent an incorrect request. The required scope is empty or missing. The software provider must ensure that the scope is set.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              },
+              "multipart/form-data": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error. In case of repeated occurrences, please contact the support hotline.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage5xx"
+                }
+              },
+              "multipart/form-data": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage5xx"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "JobInfo": {
+        "required": [
+          "job_id",
+          "state"
+        ],
+        "type": "object",
+        "properties": {
+          "job_id": {
+            "type": "string",
+            "description": "Id which identifies requested job and therefore a file's current state. The Id is represented as an UUID in the format 8-4-4-4-12.\n",
+            "example": "abc12345-abcd-abcd-tt33-12345aedgf55"
+          },
+          "timestamp": {
+            "type": "string",
+            "description": "States the time (according to ISO8601) when the state has been set in the service.\n",
+            "example": "2019-09-14T10:40:52+2:00"
+          },
+          "state": {
+            "type": "string",
+            "description": "State of the file. A file has the initial state uploaded. After it has been imported successfully into the payroll system, the state changes to 'imported'.\nVia the context menu in the payroll system, the state can be changed to either corrupted (if a file is not valid for an import) or to 'deleted' (if it should be deleted completely).\nIf a file contains the state 'uploaded' for longer than 60 days or the file contains the state 'corrupted' or 'imported' for longer than 365 days, the file will be deleted automatically and the state 'auto-deleted' will be set.\n",
+            "enum": [
+              "uploaded",
+              "imported",
+              "corrupted",
+              "deleted",
+              "auto-deleted"
+            ]
+          }
+        },
+        "description": "Each JobInfo-Object is returned with its most current state. An JobInfo-Object is mapped to a single file.\n"
+      },
+      "Client": {
+        "type": "object",
+        "properties": {
+          "client_id": {
+            "type": "string",
+            "description": "Id with identifies the consultant and client number.\n",
+            "example": "1234567-12345"
+          },
+          "consultant_number": {
+            "type": "integer"
+          },
+          "client_number": {
+            "type": "integer"
+          }
+        },
+        "description": "Properties of a Client element consisting of client id, consultant number and client number.\n"
+      },
+      "ErrorMessage": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "Error code.",
+            "example": "#DCO02000"
+          },
+          "error_description": {
+            "type": "string",
+            "description": "Error description.",
+            "example": "restapi.FileEmpty"
+          },
+          "error_uri": {
+            "type": "string",
+            "description": "URI to further information.",
+            "example": "https://apps.datev.de/knowledge/help/search?q=DCO02000"
+          },
+          "request_id": {
+            "type": "string",
+            "description": "Protocol entry at DATEV.",
+            "example": "0a13eff2-44a9-4de6-90f0-1198241e7c22"
+          }
+        }
+      },
+      "ErrorMessage5xx": {
+        "title": "ErrorMessage5xx",
+        "type": "object",
+        "properties": {
+          "error_description": {
+            "type": "string",
+            "description": "Error 5xx description.",
+            "example": "restapi.InternalServerError"
+          },
+          "request_id": {
+            "type": "string",
+            "description": "Protocol entry at DATEV.",
+            "example": "0a13eff2-44a9-4de6-90f0-1198241e7c22"
+          }
+        }
+      }
+    },
+    "responses": {
+      "Response200_1": {
+        "description": "returns a file's state.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/JobInfo"
+            },
+            "example": {
+              "job_id": "abc12345-abcd-abcd-tt33-12345aedgf55",
+              "timestamp": "2019-09-14T10:40:52+2:00",
+              "state": "uploaded"
+            }
+          },
+          "multipart/form-data": {
+            "schema": {
+              "$ref": "#/components/schemas/JobInfo"
+            }
+          }
+        }
+      },
+      "Response200_2": {
+        "description": "returns status code 200 without body",
+        "content": {}
+      },
+      "Response200_3": {
+        "description": "returns all permitted clients for Lohnimportdatenservice.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Client"
+              }
+            },
+            "example": [
+              {
+                "cliend_id": "1234-1",
+                "consultant_nr": 1234,
+                "client_nr": 1
+              },
+              {
+                "cliend_id": "2345-2",
+                "consultant_nr": 2345,
+                "client_nr": 2
+              }
+            ]
+          },
+          "multipart/form-data": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Client"
+              }
+            }
+          }
+        }
+      },
+      "Response201": {
+        "description": "File was uploaded successfully.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/JobInfo"
+            },
+            "example": {
+              "job_id": "abc12345-abcd-abcd-tt33-12345aedgf55",
+              "timestamp": "2019-09-14T10:40:52+2:00",
+              "state": "uploaded"
+            }
+          },
+          "multipart/form-data": {
+            "schema": {
+              "$ref": "#/components/schemas/JobInfo"
+            }
+          }
+        }
+      },
+      "Response400_1": {
+        "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n| #DCO02000 | restapi.AsciiEncodingFault | The file must be ASCII encoded. | \n | #DCO02001 | restapi.FileEmpty | The file must not be empty. | \n | #DCO02002 | restapi.FileFormatFault | The file must not be empty. | \n | #DCO02003 | restapi.FileNameFault | The file name is either too long or starts with a blank. | \n | #DCO02004 | restapi.VirusFound | The file has suspiscious data and was declined by the virus scanner. | \n | #DCO02005 | restapi.FileProviderTooLong | The parameter file_provider is too long. It should not be larger than 50 bytes. | \n | #DCO02006 | restapi.MailAddressTooLong | The parameter mail_address is too long. It should not be larger than 100 bytes. | \n | #DCO02007 | restapi.FormatMailAddressFault | The format of the parameter mail_address is invalid. | \n | #DCO02008 | restapi.FileProviderUnsupportedCharacters | The parameter file_provider has invalid characters. | \n | #DCO02009 | restapi.CreationTimeInFuture | The parameter creation_time must not be in the future. | \n | #DCO02010 | restapi.CreationTimeWrongFormat | The parameter creation_time must be in the format ISO_OFFSET_TIME. | \n | #DCO02011 | restapi.PayrollAccountingMonthWrongFormat | The parameter payroll_accounting_month must be in the format ISO_LOCAL_DATE. | \n | #DCO02012 | restapi.ImportFileTypeNotSupported | The parameter import_file_type must either be 'bwd' or 'psd'. | \n | #DCO02013 | restapi.TargetSystemNotSupported | The parameter target_system must either be 'lug' or 'lodas'. | \n | #DCO02018 | restapi.JsonSyntaxFault | The request could not be processed. The json syntax of the request must be checked. | \n | #DCO02020 | restapi.FormatClientIdFault | Format of client-id is wrong. Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits)| \n | ",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage"
+            }
+          },
+          "multipart/form-data": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage"
+            }
+          }
+        }
+      },
+      "Response400_2": {
+        "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n| #DCO02020 | restapi.FormatClientIdFault | Format of client-id is wrong. Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen, e. g. 12345-123 | \n | #DCO02014 | restapi.JobIdWrongFormat | Job-Id is represented as an UUID in the format 8-4-4-4-12, e. g. abc12345-abcd-abcd-tt33-12345aedgf55 | ",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage"
+            }
+          },
+          "multipart/form-data": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage"
+            }
+          }
+        }
+      },
+      "Response400_3": {
+        "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n| #DCO02020 | restapi.FormatClientIdFault | Format of client-id is wrong. Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen, e. g. 12345-123 | ",
+        "content": {}
+      },
+      "Response403": {
+        "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n| #DCO02050 | restapi.AccessDenied | It is recommended that the user contacts the tax consultant. The third-party solustion has to ensure that the used client-id exists in the list of accessible clients. | \n | #DCO02051 | restapi.ScopeWrongOrMissing | The third-party solution has sent an incorrect request. The required scope is empty or missing. The software provider must ensure that the scope is set.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage"
+            }
+          },
+          "multipart/form-data": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage"
+            }
+          }
+        }
+      },
+      "Response404": {
+        "description": "| Error  | Description  | Reason and solution  | \n|-----------|---------------------------|-----------------------------------|\n| #DCO02101 | restapi.JobIdNotFound | The requested job-id was not found. | ",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage"
+            }
+          },
+          "multipart/form-data": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage"
+            }
+          }
+        }
+      },
+      "Response500": {
+        "description": "Internal server error. In case of repeated occurrences, please contact the support hotline.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage5xx"
+            }
+          },
+          "multipart/form-data": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorMessage5xx"
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "clientIdPath": {
+        "name": "client-id",
+        "in": "path",
+        "description": "Client-id consists of consultant number (max. 7 digits) and client number (max. 5 digits) which are connected by hyphen.\n",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "example": "12345-123"
+      },
+      "jobId": {
+        "name": "job-id",
+        "in": "path",
+        "description": "Id which identifies requested job and therefore a file's state. The Id is represented as an UUID in the format 8-4-4-4-12.\n",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "example": "abc12345-abcd-abcd-tt33-12345aedgf55"
+      }
+    },
+    "securitySchemes": {
+      "datev_openid": {
+        "type": "oauth2",
+        "description": "",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://login.datev.de/openid/authorize",
+            "tokenUrl": "https://api.datev.de/token",
+            "scopes": {
+              "datev:hr:payrolldataupload": "Send file with its file information",
+              "datev:all": "General scope"
+            }
+          }
+        }
+      },
+      "datev_idp_next": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://signin.datev.de/datevam/oauth2/realms/root/realms/user/authorize",
+            "tokenUrl": "https://signin.datev.de/datevam/oauth2/realms/root/realms/user/access_token",
+            "scopes": {
+              "datev:hr:payrolldataupload": "Send file with its file information",
+              "openid": "Open ID Standard Scope"
+            }
+          }
+        }
+      },
+      "datev_openid_sandbox": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://login.datev.de/openidsandbox/authorize",
+            "tokenUrl": "https://sandbox-api.datev.de/token",
+            "scopes": {
+              "datev:hr:payrolldataupload": "Send file with its file information",
+              "datev:all": "General scope"
+            }
+          }
+        }
+      },
+      "client_id": {
+        "type": "apiKey",
+        "name": "X-Datev-Client-Id",
+        "in": "header",
+        "x-key-type": "client_id"
+      },
+      "client_secret": {
+        "type": "apiKey",
+        "name": "X-Datev-Client-Secret",
+        "in": "header",
+        "x-key-type": "client_secret"
+      }
+    }
+  },
+  "security": [
+    {
+      "client_id": [],
+      "datev_openid": [
+        "datev:hr:payrolldataupload"
+      ]
+    },
+    {
+      "client_id": [],
+      "datev_openid_sandbox": [
+        "datev:hr:payrolldataupload"
+      ]
+    },
+    {
+      "client_id": [],
+      "datev_idp_next": [
+        "openid",
+        "datev:hr:payrolldataupload"
+      ]
+    }
+  ],
+  "servers": [
+    {
+      "url": "https://hr-files.api.datev.de/platform"
+    },
+    {
+      "url": "https://hr-files.api.datev.de/platform-sandbox"
+    }
+  ]
+}

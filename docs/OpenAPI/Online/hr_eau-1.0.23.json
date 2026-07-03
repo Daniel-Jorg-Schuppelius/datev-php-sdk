@@ -1,0 +1,1058 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "hr:eau",
+    "description": "Enables the retrieval of electronic incapacity certificates (eAU) from an employee's responsible health insurance company. The basis for this is the master data of the payroll systems LODAS and Lohn und Gehalt. The API takes over the technical and functional validation of the existing master data. As part of the feedback procedure for the electronic certificate of incapacity for work, the API provides the response from the health insurance.",
+    "version": "1.0.23",
+    "x-pathalias": "eau-api"
+  },
+  "servers": [
+    {
+      "url": "https://eau.api.datev.de/platform/v1"
+    },
+    {
+      "url": "https://eau.api.datev.de/platform-sandbox/v1"
+    }
+  ],
+  "security": [
+    {
+      "client_id": [],
+      "datev_openid": [
+        "datev:hr:eau"
+      ]
+    },
+    {
+      "client_id": [],
+      "datev_idp_next": [
+        "datev:hr:eau"
+      ]
+    },
+    {
+      "client_id": [],
+      "datev_openid_sandbox": [
+        "datev:hr:eau"
+      ]
+    }
+  ],
+  "paths": {
+    "/clients/{consultantNumber}-{clientNumber}/employees/{personnelNumber}/eau-requests": {
+      "post": {
+        "tags": [
+          "eAU-API"
+        ],
+        "description": "Endpoint for creation of a new eAU-Request. ",
+        "operationId": "createEauRequest",
+        "parameters": [
+          {
+            "name": "consultantNumber",
+            "in": "path",
+            "description": "The consultant number of the requested eAU without leading zeros.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The consultant number of the requested eAU without leading zeros."
+            },
+            "example": 455148
+          },
+          {
+            "name": "clientNumber",
+            "in": "path",
+            "description": "The client number of the requested eAU without leading zeros.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The client number of the requested eAU without leading zeros."
+            },
+            "example": 1
+          },
+          {
+            "name": "personnelNumber",
+            "in": "path",
+            "description": "The personnel number of the requested eAU without leading zeros.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The personnel number of the requested eAU without leading zeros."
+            },
+            "example": 100
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EauRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "The eAU-Request was successfully generated and transmitted. Location header is set and contains resource location with generated UUID. In case of an invalid notification email address, a warning is issued.",
+            "headers": {
+              "location": {
+                "description": "Includes the URI of the generated resource.\nThe URI also contains the resource UUID, which is required as 'eauRequest' in case of cancellation via DELETE endpoint or to fetch the request via GET endpoint.",
+                "style": "simple",
+                "schema": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "example": "https://eau.api.datev.de/v1/clients/1234567-12345/employees/54321/eau-requests/1399377a-9120-4be6-b501-83ee862d2493"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "error": "eAU-Request warning",
+                    "error_description": "The eAU-Request was submitted with warnings.",
+                    "additional_messages": [
+                      {
+                        "id": "EAU V-RE-WARN001",
+                        "description": "The field is not a valid email address.",
+                        "severity": "warning",
+                        "affected_fields": [
+                          "/notification/email"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request! Possibly caused by an invalid value within the sent eAU-Request. Details of validation are provided within the response message.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "error": "Bad Request",
+                    "error_description": "The eAU-Request could not be submitted due to an error.",
+                    "request_id": "1399377a-9120-4be6-b501-83ee862d2493",
+                    "additional_messages": [
+                      {
+                        "id": "EAU V-EM-NAME005",
+                        "description": "The surname must not be empty. An eAU can not be requested, please contact your tax consultant",
+                        "severity": "error",
+                        "affected_fields": [
+                          "/consultant_number/739526/client_number/12345/personnel_number/54321/start_work_incapacity"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized! - Authorization is missing or rejected."
+          },
+          "403": {
+            "description": "Forbidden! - Authenticated User is not allowed to use this function."
+          },
+          "404": {
+            "description": "Not Found! - Possibly caused by malformed URI."
+          },
+          "500": {
+            "description": "Internal Server Error."
+          },
+          "default": {
+            "description": "ErrorMessages",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessages"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clients/{consultantNumber}-{clientNumber}/employees/{personnelNumber}/eau-requests/{eauRequest}/feedbacks": {
+      "get": {
+        "tags": [
+          "eAU-API"
+        ],
+        "description": "Returns the eAU-Request with a list of feedbacks from the health insurance. ",
+        "operationId": "getFeedbacks",
+        "parameters": [
+          {
+            "name": "consultantNumber",
+            "in": "path",
+            "description": "The consultant number of the requested eAU without leading zeros.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The consultant number of the requested eAU without leading zeros."
+            },
+            "example": 455148
+          },
+          {
+            "name": "clientNumber",
+            "in": "path",
+            "description": "The client number of the requested eAU without leading zeros.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The client number of the requested eAU without leading zeros."
+            },
+            "example": 1
+          },
+          {
+            "name": "personnelNumber",
+            "in": "path",
+            "description": "The personnel number of the requested eAU without leading zeros.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The personnel number of the requested eAU without leading zeros."
+            },
+            "example": 100
+          },
+          {
+            "name": "eauRequest",
+            "in": "path",
+            "description": "The unique identifier of an eAU-Request. The length of the id is 36 and it's built according to the UUID-pattern.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "87056ab8-902b-4346-9555-34bc812aea05"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the eAU-Request with a list of feedbacks, if one exists.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Feedback"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request! Possibly caused by an invalid value.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "error": "Bad Request",
+                    "error_description": "An error has occurred. The eAU could not be initiated.",
+                    "additional_messages": [
+                      {
+                        "id": "EAU V-RE-CONS000",
+                        "description": "The request parameter 'consultantNumber' is invalid. DATEV consultant numbers are assigned in the number range from 1.000 to 9.999.999.",
+                        "severity": "error",
+                        "affected_fields": [
+                          "consultant_number"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized! - Authorization is missing or rejected."
+          },
+          "403": {
+            "description": "Forbidden! - Authenticated User is not allowed to use this function."
+          },
+          "404": {
+            "description": "Not Found! - Possibly caused by malformed URI."
+          },
+          "500": {
+            "description": "Internal Server Error."
+          }
+        }
+      }
+    },
+    "/clients/{consultantNumber}-{clientNumber}/employees/{personnelNumber}/eau-requests/{eauRequest}": {
+      "delete": {
+        "tags": [
+          "eAU-API"
+        ],
+        "description": "Endpoint for cancellation of an executed eAU-Request.",
+        "operationId": "cancelEauRequest",
+        "parameters": [
+          {
+            "name": "consultantNumber",
+            "in": "path",
+            "description": "The consultant number of the requested eAU without leading zeros.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The consultant number of the requested eAU without leading zeros."
+            },
+            "example": 455148
+          },
+          {
+            "name": "clientNumber",
+            "in": "path",
+            "description": "The client number of the requested eAU without leading zeros.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The client number of the requested eAU without leading zeros."
+            },
+            "example": 1
+          },
+          {
+            "name": "personnelNumber",
+            "in": "path",
+            "description": "The personnel number of the requested eAU without leading zeros.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The personnel number of the requested eAU without leading zeros."
+            },
+            "example": 100
+          },
+          {
+            "name": "eauRequest",
+            "in": "path",
+            "description": "The unique identifier of an eAU-Request. The length of the id is 36 and it's built according to the UUID-pattern.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "87056ab8-902b-4346-9555-34bc812aea05"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content! The eAU-Request has been successfully cancelled."
+          },
+          "400": {
+            "description": "Bad Request! Possibly caused by an invalid value within the sent eAU-Request. Details of validation are provided within the response message.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "error": "Bad Request",
+                    "error_description": "An error has occurred. The eAU could not be initiated.",
+                    "additional_messages": [
+                      {
+                        "id": "EAU V-RE-CONS000",
+                        "description": "The request parameter 'consultantNumber' is invalid. DATEV consultant numbers are assigned in the number range from 1.000 to 9.999.999.",
+                        "severity": "error",
+                        "affected_fields": [
+                          "consultant_number"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized! - Authorization is missing or rejected."
+          },
+          "403": {
+            "description": "Forbidden! - Authenticated User is not allowed to use this function."
+          },
+          "404": {
+            "description": "Not Found! - Possibly caused by malformed URI."
+          },
+          "500": {
+            "description": "Internal Server Error."
+          }
+        }
+      }
+    },
+    "/clients/{consultantNumber}-{clientNumber}": {
+      "get": {
+        "tags": [
+          "eAU-API"
+        ],
+        "description": "Returns if the client has the permission to use the eAU-API",
+        "operationId": "getClients",
+        "parameters": [
+          {
+            "name": "consultantNumber",
+            "in": "path",
+            "description": "The consultant number of the requested eAU without leading zeros.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The consultant number of the requested eAU without leading zeros."
+            },
+            "example": 455148
+          },
+          {
+            "name": "clientNumber",
+            "in": "path",
+            "description": "The client number of the requested eAU without leading zeros.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The client number of the requested eAU without leading zeros."
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns that the client has the permission, if the right to use 'Lohnaustauschdatenservice' has been granted for at least one employee."
+          },
+          "400": {
+            "description": "Bad Request! Possibly caused by an invalid value.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "error": "Bad Request",
+                    "error_description": "An error has occurred. The eAU could not be initiated.",
+                    "additional_messages": [
+                      {
+                        "id": "EAU V-RE-CONS000",
+                        "description": "The request parameter 'consultantNumber' is invalid. DATEV consultant numbers are assigned in the number range from 1.000 to 9.999.999.",
+                        "severity": "error",
+                        "affected_fields": [
+                          "consultant_number"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized! - Authorization is missing or rejected."
+          },
+          "403": {
+            "description": "Forbidden! - Authenticated User is not allowed to use this function."
+          },
+          "404": {
+            "description": "Not Found! - Possibly caused by malformed URI."
+          },
+          "500": {
+            "description": "Internal Server Error."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ApiErrors": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "short description of the request status.",
+            "example": "Bad Request"
+          },
+          "error_description": {
+            "type": "string",
+            "description": "a longer description of the occurred error.",
+            "example": "The eAU-Request could not be submitted due to an error."
+          },
+          "request_id": {
+            "type": "string",
+            "description": "uuid of the request",
+            "example": "7195d5ca-f3e8-4f0d-b061-589b3137d32f"
+          },
+          "additional_messages": {
+            "$ref": "#/components/schemas/AdditionalMessages"
+          }
+        },
+        "description": "Error-message for the request."
+      },
+      "AdditionalMessages": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "id of the errormessage",
+            "example": "EAU V-EM-NAME005"
+          },
+          "description": {
+            "type": "string",
+            "description": "text of the errormessage",
+            "example": "The surname must not be empty. An eAU can not be requested, please contact your tax consultant."
+          },
+          "severity": {
+            "type": "string",
+            "description": "severity of the occuring error",
+            "example": "error",
+            "enum": [
+              "error",
+              "warning",
+              "information"
+            ]
+          },
+          "affected_fields": {
+            "type": "string",
+            "description": "the path to the field that caused the error",
+            "example": "/consultant_number/739526/client_number/12345/personnel_number/54321/start_work_incapacity"
+          }
+        },
+        "description": "detailed information about all errors that have occurred"
+      },
+      "ErrorMessages": {
+        "type": "object",
+        "description": "<b> Possible validation errors </b>\n\n<b> Validation errors for family name and first name </b>\n\nEAU V-EM-NAME000 - The field may consist of a maximum of {max} characters. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-NAME005 - The surname must not be empty. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-NAME010 - In the field 'surname', the same special characters and #spaces must not follow each other more than once. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-NAME011 - The field 'surname' may only begin with letters other than ß or an apostrophe and not with 3 or more consecutive letters. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-NAME012 - No spaces are allowed before and after hyphens in the field 'surname'. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-NAME014 - Only letters, spaces, hyphens, quotation marks, numbers, parentheses, or periods are allowed in the field 'surname'. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-NAME015 - The field 'surname' may contain only a maximum of two consecutive digits. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-NAME018 - There must be a space before a digit in the field 'surname'. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-NAME022 - The surname may only end with a letter, digit, ) , . or '. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-NAME028 - The first name must not be empty. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-NAME030 - In the field 'first name', the same special characters and spaces must not follow each other more than once. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-NAME031 - The field 'first name' may only begin with letters other than ß or an apostrophe and not with 3 or more consecutive letters and only one letter or apostrophe is allowed in the last position. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-NAME032 - No spaces are allowed before and after hyphens in the field 'first name'. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-NAME033 - The field 'first name' may only end with a letter, digit, ) , . or '. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-NAME034 - Only letters, hyphens, spaces, quotation marks and periods are allowed in the field 'first name', or a plus sign in the first position if no more characters follow. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-NAME039 - A standalone plus sign is only allowed in one of the both fields 'firstname' or 'surname' at the same time. An eAU can not be requested, please contact your tax consultant.\n\n\n\n<b> Validation errors for birth name </b>\n\nEAU V-EM-GEBN000 - The field 'birth name' may consist of a maximum of {max} characters. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-GEBN010 - The field 'birth name', the same special characters and spaces must not follow each other more than once. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-GEBN012 - No spaces are allowed before and after hyphens in the field 'birth name'. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-GEBN014 - Only letters, spaces, hyphens, quotation marks, numbers, brackets or a period are allowed in the field 'birth name'. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-GEBN015 - The field 'birth name' contains more than 2 digits or 2 digits that are not immediately consecutive. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-GEBN018 - In the field 'birth name', there must be a space before a digit. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-GEBN020 - The field 'birth name' may only begin with letters other than ß or an apostrophe and not with 3 or more of the same consecutive letters. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-GEBN022 - The field 'birth name' may only end with a letter, digit, ) , . or '. An eAU can not be requested, please contact your tax consultant.\n\n\n\n<b> Validation errors for date of birth </b>\n\nEAU V-EM-GEBD001 - Permissible entries are only 00 in field 'date of birth' or 00-00 for birthday and birth month. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-GEBD002 - The date of birth must not be empty. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-GEBD003 - The date of birth must not be more than 150 years before the processing date or after the processing date. An eAU can not be requested, please contact your tax consultant.\n\n\n\n<b> Validation errors for place of birth </b>\n\nEAU V-EM-GEBO001 - The field may consist of a maximum of 34 characters. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-GEBO130 - In the field 'birthplace', the same special characters and spaces may not follow each other more than once. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-GEBO131 - The field 'birthplace' may only begin with letters other than ß or an apostrophe and not with 3 or more of the same consecutive letters. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-GEBO134 - The field 'birthplace' may only consist of letters, numbers, spaces, periods, commas, hyphens, slashes, apostrophes, or parentheses and must contain at least 2 letters. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-GEBO142 - Only a letter, period, closing parenthesis or digit is allowed on the last digit of the field 'birthplace'. An eAU can not be requested, please contact your tax consultant.\n\n\n<b> Validation errors for sex </b>\n\nEAU V-EM-GESC120 - In the field 'gender' only 'M', 'W', 'X' or 'D' are allowed. An eAU can not be requested, please contact your tax consultant.\n\n\n\n<b> Validation errors for contact person </b>\n\nEAU V-RE-CONT000 - The field may consist of a maximum of {max} characters. An eAU can not be requested.\n\n\n\nEAU V-RE-CONT001 - The field must not be empty. An eAU can not be requested.\n\n\n\nEAU V-RE-CONT002 - The field contains illegal characters. An eAU can not be requested. Only numbers and the letters and the following special characters are allowed: \\-'().\n\n\n\nEAU V-RE-CONT003 - The field contains illegal characters. An eAU can not be requested. Only numbers and a leading + are allowed.\n\n\n\nEAU V-RE-CONT004 - The field contains illegal characters. An eAU can not be requested. Only numbers and the letters are allowed.\n\n\n\nEAU V-RE-CONT005 - The field is not a valid e-mail structure. An eAU can not be requested.\n\n\n\n<b> Validation errors for social security number </b>\n\nEAU V-EM-SVNR002 - The insurance number may only be blank if the birth name and place of birth are filled. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-SVNR004 - The value of the field must be {size} digits. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-SVNR082 - The field may contain only numeric values in positions 1 to 8, and 10 to 12. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-SVNR083 - The field may contain only one capital letter of the alphabet at position 9. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-SVNR084 - The field contains an invalid numeric value at positions 1 to 2. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-SVNR086 - The date of birth in positions 3 to 8 must be logically correct. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-SVNR088 - The check digit at position 12 is invalid. An eAU can not be requested, please contact your tax consultant.\n\n\n\n<b> Validation errors in request </b>\n\nEAU V-RE-PROD000 - The field 'source' should not be null.\n\n\n\nEAU V-RE-PROD001 - The value of the field 'source' is invalid.\n\n\n\nEAU V-RE-UUID000 - The request parameter 'uuid' is invalid.\n\n\n\nEAU V-RE-CONS000 - The request parameter 'consultantNumber' is invalid. DATEV consultant numbers are assigned in the number range from 1.000 to 9.999.999.\n\n\n\nEAU V-RE-CLIE000 - The request parameter 'clientNumber' is invalid. DATEV client numbers are assigned in the number range from 1 to 99.999.\n\n\n\nEAU V-RE-EMPL000 - The request parameter 'personnelNumber' is invalid. DATEV employee numbers are assigned in the number range from 1 to 99.999.\n\n\n\nEAU C-RE-0000000 - It is not allowed to send duplicated requests for same start of incapacity for work within five days.\n\n\n\nEAU C-RE-0000000 - It is not allowed to send duplicated requests for same start of incapacity for work within {0} days. Please wait until {1}.\n\n\n\nEAU C-RE-0000001 - It is not allowed to cancel a request which is not marked as pending.\n\n\n\nEAU C-CL-0000000 - The client was not found by the given identifier. Before an eAU can be requested, the client needs to be initialized.\n\n\n\nEAU C-PL-0000000 - The employee was not found by the given identifier. Before an eAU can be requested, the employee needs to be initialized.\n\n\n\nEAU C-PL-0000001 - The employee is private insured at the start of incapacity for work. An eAU-Request for private insured employees is not allowed. Please check the start of incapacity for work and the insurance status of the employee.\n\n\n\nEAU C-PL-0000002 - The start of incapacity for work is not within an employment period. An eAU can not be requested, please check the start of incapacity for work and the employment periods of the employee.\n\n\n\nEAU C-PL-0000003 - The employee has no matching insurance data for start work incapacity. An eAU can not be requested, please check the start of incapacity for work and the insurance data of the employee.\n\n\n\nEAU C-PL-0000004 - The employee has no matching activity data for work incapacity. An eAU can not be requested, please check the start of incapacity for work and the activity data of the employee.\n\n\n\nEAU C-PL-0000005 - The start of incapacity for work mustn't be before October 1st 2021. An eAU can not be requested, please check the start of incapacity for work.\n\n\n\nEAU C-PL-0000006 - The start of incapacity for work should not be in the future. An eAU can not be requested, please check the start of incapacity for work.\n\n\n\nEAU V-PL-0000007 - The start of incapacity for work is not valid. An eAU can not be requested, please use the following format 2YYY-MM-DD.\n\n\n\nEAU V-EM-NULL001 - The field 'proof of incapacity' should not be null. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-NULL002 - The field 'business unit id' should not be null. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-NULL003 - The field 'business unit number' should not be null. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-SIZE001 - The field 'business unit number' must be 8 digits long. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-SIZE002 - The field 'company number invoice office' must be 8 digits long. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-EM-PDAT000 - The object 'PersonalData' should not be null. An eAU can not be requested, please contact your tax consultant.\n\n\n\nEAU V-RE-COID001 - The value of the field 'collaborationIdentifier' is invalid.\n\n\n\n<b> Validation errors for notification </b>\n\nEAU V-RE-WARN001 - The field is not a valid email address.\n"
+      },
+      "Notification": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "pattern": "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+ (?:\\.[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+)*@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$",
+            "type": "string",
+            "description": "This is the email address that should be notified as soon as a feedback is received.",
+            "format": "email",
+            "example": "paulmuster@email.com"
+          }
+        },
+        "description": "The data to receive email notifications."
+      },
+      "ContactPerson": {
+        "required": [
+          "city",
+          "company_name",
+          "name",
+          "postal_code",
+          "street",
+          "telephone"
+        ],
+        "type": "object",
+        "properties": {
+          "gender": {
+            "type": "string",
+            "description": "This is the gender of the contact person represented by the letters M (male), W (female), X (unknown), D (divers).",
+            "example": "M",
+            "deprecated": true,
+            "enum": [
+              "M",
+              "W",
+              "X",
+              "D"
+            ]
+          },
+          "name": {
+            "maxLength": 256,
+            "minLength": 0,
+            "pattern": "[A-Za-zßäöüÄÖÜàáèéúùòó \\-'0-9().]*",
+            "type": "string",
+            "description": "This is the name of the contact person.",
+            "example": "Paul Mustermann"
+          },
+          "telephone": {
+            "maxLength": 20,
+            "minLength": 0,
+            "pattern": "([+]{1}|[0-9]{1})[0-9-( )/]+",
+            "type": "string",
+            "description": "This is the telephone number of the contact person.",
+            "example": "091131999999"
+          },
+          "fax": {
+            "maxLength": 20,
+            "minLength": 0,
+            "pattern": "([+]{1}|[0-9]{1})[0-9-( )/]+",
+            "type": "string",
+            "description": "This is the fax number of the contact person.",
+            "example": "091131999999"
+          },
+          "email": {
+            "maxLength": 320,
+            "minLength": 0,
+            "pattern": "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$",
+            "type": "string",
+            "description": "This is the email of the contact person.",
+            "example": "paulmuster@email.com"
+          },
+          "company_name": {
+            "maxLength": 256,
+            "minLength": 0,
+            "pattern": "[A-Za-zßäöüÄÖÜàáèéúùòó \\-'0-9().]*",
+            "type": "string",
+            "description": "This is the company name of the contact person.",
+            "example": "Pauls AG"
+          },
+          "postal_code": {
+            "maxLength": 32,
+            "minLength": 0,
+            "pattern": "[A-Za-z0-9]*",
+            "type": "string",
+            "description": "This is the postal code of the contact person.",
+            "example": "90429"
+          },
+          "city": {
+            "maxLength": 256,
+            "minLength": 0,
+            "pattern": "[A-Za-zßäöüÄÖÜàáèéúùòó \\-'0-9().]*",
+            "type": "string",
+            "description": "This is the city of the contact person.",
+            "example": "Nürnberg"
+          },
+          "street": {
+            "maxLength": 256,
+            "minLength": 0,
+            "pattern": "[A-Za-zßäöüÄÖÜàáèéúùòó \\-'0-9().]*",
+            "type": "string",
+            "description": "This is the street of the contact person.",
+            "example": "Fürther Straße"
+          },
+          "house_number": {
+            "maxLength": 9,
+            "minLength": 0,
+            "pattern": "[A-Za-zßäöüÄÖÜàáèéúùòó \\-'0-9().]*",
+            "type": "string",
+            "description": "This is the house number of the contact person.",
+            "example": "111"
+          }
+        },
+        "description": "The data-section for the contact person which is responsible for feedback from the health insurance."
+      },
+      "EauRequest": {
+        "required": [
+          "source",
+          "start_work_incapacity"
+        ],
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string",
+            "description": "Identifies which payroll system the employee came from.",
+            "example": "LODAS",
+            "enum": [
+              "LUG",
+              "lug",
+              "LODAS",
+              "lodas"
+            ]
+          },
+          "start_work_incapacity": {
+            "type": "string",
+            "description": "Date \"start_work_incapacity\" from the original eAU-Request.",
+            "format": "date",
+            "example": "2022-01-13"
+          },
+          "collaboration_identifier": {
+            "type": "string",
+            "description": "This is the internal collaboration identifier that only needs to be filled for DATEV applications.",
+            "example": "Extern"
+          },
+          "notification": {
+            "$ref": "#/components/schemas/Notification"
+          },
+          "contact_person": {
+            "$ref": "#/components/schemas/ContactPerson"
+          },
+          "follow_up_certification": {
+            "type": "boolean",
+            "description": "This is a flag to indicate whether it is a follow-up certification.",
+            "example": false
+          }
+        },
+        "description": "The data to request an electronic certificate of incapacity for work (eAU)."
+      },
+      "ContactPersonHealthInsurance": {
+        "required": [
+          "city",
+          "name",
+          "name1_health_insurance",
+          "postal_code",
+          "telephone"
+        ],
+        "type": "object",
+        "properties": {
+          "gender_contact_person": {
+            "type": "string",
+            "description": "This is the gender of the contact person represented by the letters M (male), W (female), X (unknown), D (divers).",
+            "example": "M",
+            "deprecated": true,
+            "enum": [
+              "M",
+              "W",
+              "X",
+              "D"
+            ]
+          },
+          "name": {
+            "maxLength": 256,
+            "minLength": 1,
+            "type": "string",
+            "description": "This is the name of the contact person.",
+            "example": "Paul Mustermann"
+          },
+          "telephone": {
+            "maxLength": 20,
+            "minLength": 1,
+            "type": "string",
+            "description": "This is the telephone number of the contact person.",
+            "example": "091131999999"
+          },
+          "fax": {
+            "maxLength": 20,
+            "minLength": 0,
+            "type": "string",
+            "description": "This is the fax number of the contact person.",
+            "example": "091131999999"
+          },
+          "email": {
+            "maxLength": 320,
+            "minLength": 0,
+            "type": "string",
+            "description": "This is the email of the contact person.",
+            "format": "email",
+            "example": "paulmuster@email.com"
+          },
+          "name1_health_insurance": {
+            "maxLength": 256,
+            "minLength": 1,
+            "type": "string",
+            "description": "First part of the name of the social insurance agency.",
+            "example": "Techniker Krankenkasse"
+          },
+          "name2_health_insurance": {
+            "maxLength": 30,
+            "minLength": 0,
+            "type": "string",
+            "description": "Second part of the name of the social insurance agency.",
+            "deprecated": true
+          },
+          "name3_health_insurance": {
+            "maxLength": 30,
+            "minLength": 0,
+            "type": "string",
+            "description": "Third part of the name of the social insurance agency.",
+            "deprecated": true
+          },
+          "postal_code": {
+            "maxLength": 32,
+            "minLength": 1,
+            "type": "string",
+            "description": "This is the postal code of the contact person.",
+            "example": "90429"
+          },
+          "city": {
+            "maxLength": 256,
+            "minLength": 1,
+            "type": "string",
+            "description": "This is the location of the contact person.",
+            "example": "Nürnberg"
+          },
+          "street": {
+            "maxLength": 256,
+            "minLength": 0,
+            "type": "string",
+            "description": "This is the street of the contact person.",
+            "example": "Fürther Straße"
+          },
+          "house_number": {
+            "maxLength": 9,
+            "minLength": 0,
+            "type": "string",
+            "description": "This is the house number of the contact person.",
+            "example": "111"
+          }
+        },
+        "description": "The data-section for the contact person of the health insurance."
+      },
+      "ErrorBlock": {
+        "type": "object",
+        "properties": {
+          "origin": {
+            "type": "string",
+            "description": "Specification of whether the error comes from health insurance or is assigned internally.",
+            "example": "EXTERN",
+            "enum": [
+              "INTERN",
+              "EXTERN"
+            ]
+          },
+          "error_number": {
+            "type": "string",
+            "description": "Number of the error.",
+            "example": "DXAUv20"
+          },
+          "error_text": {
+            "type": "string",
+            "description": "Description of the error.",
+            "example": "AU_ab_AG darf nicht größer als das Tagesdatum sein"
+          },
+          "error_value": {
+            "type": "string",
+            "description": "Variable component for the error text to be output to the user."
+          }
+        },
+        "description": "Error-message from health insurance or from DATEV."
+      },
+      "Feedback": {
+        "required": [
+          "source",
+          "start_work_incapacity"
+        ],
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string",
+            "description": "Identifies which payroll system the employee came from.",
+            "example": "LODAS",
+            "enum": [
+              "LUG",
+              "lug",
+              "LODAS",
+              "lodas"
+            ]
+          },
+          "start_work_incapacity": {
+            "type": "string",
+            "description": "Date \"start_work_incapacity\" from the original eAU-Request.",
+            "format": "date",
+            "example": "2022-01-13"
+          },
+          "collaboration_identifier": {
+            "type": "string",
+            "description": "This is the internal collaboration identifier that only needs to be filled for DATEV applications.",
+            "example": "Extern"
+          },
+          "feedbacks_from_health_insurance": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FeedbackFromHealthInsurance"
+            }
+          }
+        },
+        "description": "The data of the eAU-Request and as soon as available the feedback (eAU or error-message) from the health insurance."
+      },
+      "FeedbackFromHealthInsurance": {
+        "required": [
+          "guid"
+        ],
+        "type": "object",
+        "properties": {
+          "guid": {
+            "type": "string",
+            "description": "The id for the response. It's built according to the UUID-pattern.",
+            "example": "1a23bc45-6def-78eb-9012-01425f4cfb22"
+          },
+          "contact_person": {
+            "$ref": "#/components/schemas/ContactPersonHealthInsurance"
+          },
+          "incapacity_for_work": {
+            "$ref": "#/components/schemas/IncapacityForWork"
+          },
+          "error_block_list": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ErrorBlock"
+            }
+          }
+        },
+        "description": "Feedback response (eAU or error-message) from the health insurance."
+      },
+      "IncapacityForWork": {
+        "required": [
+          "start_work_incapacity_employer"
+        ],
+        "type": "object",
+        "properties": {
+          "start_work_incapacity_employer": {
+            "type": "string",
+            "description": "Date \"start_work_incapacity\" from the original eAU-Request.",
+            "format": "date",
+            "example": "2022-01-13"
+          },
+          "start_work_incapacity_au": {
+            "type": "string",
+            "description": "Start of incapacity for work according to the certificate of incapacity for work (AU).",
+            "format": "date",
+            "example": "2022-01-13"
+          },
+          "end_work_incapacity_au": {
+            "type": "string",
+            "description": "Expected last day of incapacity for work according to certificate of incapacity for work (AU).",
+            "example": "2022-02-20"
+          },
+          "actual_end_work_incapacity_au": {
+            "type": "string",
+            "description": "Actual last day of incapacity for work according to the certificate of incapacity for work (AU).",
+            "example": "2022-02-20"
+          },
+          "date_of_diagnosis": {
+            "type": "string",
+            "description": "Date of diagnosis of incapacity for work as stated by the doctor in accordance with § 295 Para. 1 SGB V.",
+            "example": "2022-01-14"
+          },
+          "flag_current_work_incapacity": {
+            "type": "integer",
+            "description": "Flag of current incapacity for work. \n\nFlag: 1 = Health insurance not responsible \n\nFlag: 2 = incapacity for work \n\nFlag: 3 = hospitalisation   \n\nFlag: 4 = eAU or hospitalisation-report is not existing \n\nFlag: 5 = rehabilitation prevention \n\nFlag: 6 = inpatient hospital treatment \n\nFlag: 7 = in verification \n\nFlag: 8 = other evidence available \n\nFlag: 9 = forwarding procedure.",
+            "format": "int32",
+            "example": 4,
+            "enum": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9
+            ]
+          },
+          "accident_at_work": {
+            "type": "boolean",
+            "description": "Specification of whether it is an occupational accident, the consequence of an occupational accident or an occupational disease (according to § 295 Para. 1 SGB V).",
+            "example": true
+          },
+          "assignment_accident_insurance_doctor": {
+            "type": "boolean",
+            "description": "In the case of an occupational accident or consequences of an occupational accident or occupational disease, indication of whether the insured person has been assigned to the accident insurance doctor.",
+            "example": true
+          },
+          "other_accident": {
+            "type": "boolean",
+            "description": "Indication of whether it is another accident or the result of another accident according to § 295 Para. 1 SGB V.",
+            "example": true
+          },
+          "start_hospitalisation": {
+            "type": "string",
+            "description": "Beginning of the hospitalisation according to § 301 Para. 1 SGB V.",
+            "example": "2022-01-25",
+            "deprecated": true
+          },
+          "end_hospitalisation": {
+            "type": "string",
+            "description": "Probable last day of hospitalisation according to § 301 Para. 1 SGB V.",
+            "example": "2022-01-30",
+            "deprecated": true
+          },
+          "initial_certificate": {
+            "type": "boolean",
+            "description": "The type of certificate as specified by the doctor in accordance with § 295 Para. 1 SGB V. \n\nTrue = initial certificate \n\nFalse = following certificate",
+            "example": true
+          },
+          "automatic_feedback_until": {
+            "type": "string",
+            "description": "This is the last day on which an automatic reply can be expected after an \"intermediate message\" (no AU available or cancellation by the health insurance).",
+            "example": "2022-02-01"
+          }
+        },
+        "description": "The data-section for an eAU-feedback"
+      },
+      "ClientID": {
+        "type": "object",
+        "properties": {
+          "clientID": {
+            "pattern": "^[1-9][0-9]{3,6}-[1-9][0-9]{0,4}$",
+            "type": "string",
+            "description": "The clientID of the requested eAU. Combination of consultantNumber and clientNumber seperated by hyphen. (parameters consultant_number and client_number in URI)",
+            "example": "1234567-12345"
+          }
+        },
+        "description": "Combination of consultant_number and client_number for the request."
+      }
+    },
+    "parameters": {
+      "consultantParam": {
+        "name": "consultantNumber",
+        "in": "path",
+        "description": "The consultant number of the requested eAU without leading zeros.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "description": "The consultant number of the requested eAU without leading zeros."
+        },
+        "example": 455148
+      },
+      "clientParam": {
+        "name": "clientNumber",
+        "in": "path",
+        "description": "The client number of the requested eAU without leading zeros.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "description": "The client number of the requested eAU without leading zeros."
+        },
+        "example": 1
+      },
+      "personnelParam": {
+        "name": "personnelNumber",
+        "in": "path",
+        "description": "The personnel number of the requested eAU without leading zeros.",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "description": "The personnel number of the requested eAU without leading zeros."
+        },
+        "example": 100
+      },
+      "eauRequestParam": {
+        "name": "eauRequest",
+        "in": "path",
+        "description": "The unique identifier of an eAU-Request. The length of the id is 36 and it's built according to the UUID-pattern.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "example": "87056ab8-902b-4346-9555-34bc812aea05"
+      }
+    },
+    "securitySchemes": {
+      "client_id": {
+        "type": "apiKey",
+        "name": "X-Datev-Client-ID",
+        "in": "header",
+        "x-key-type": "client_id"
+      },
+      "client_secret": {
+        "type": "apiKey",
+        "name": "X-Datev-Client-Secret",
+        "in": "header",
+        "x-key-type": "client_secret"
+      },
+      "datev_openid": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://login.datev.de/openid/authorize",
+            "tokenUrl": "https://api.datev.de/token",
+            "scopes": {
+              "datev:hr:eau": "access to endpoints of eau-api"
+            }
+          }
+        }
+      },
+      "datev_idp_next": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://signin.datev.de/datevam/oauth2/realms/root/realms/user/authorize",
+            "tokenUrl": "https://signin.datev.de/datevam/oauth2/realms/root/realms/user/access_token",
+            "scopes": {
+              "datev:hr:eau": "access to endpoints of eau-api"
+            }
+          }
+        }
+      },
+      "datev_openid_sandbox": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://login.datev.de/openidsandbox/authorize",
+            "tokenUrl": "https://sandbox-api.datev.de/token",
+            "scopes": {
+              "datev:hr:eau": "access to endpoints of eau-api"
+            }
+          }
+        }
+      }
+    }
+  }
+}
