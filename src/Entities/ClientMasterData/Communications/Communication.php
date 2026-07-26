@@ -28,11 +28,14 @@ class Communication extends NamedEntity implements IdentifiableNamedEntityInterf
     protected ?bool $is_main_communication;
     protected ?bool $is_management_phone;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
 
-    public function getID(): CommunicationID {
+    public function getID(): ?CommunicationID {
         return $this->id;
     }
 

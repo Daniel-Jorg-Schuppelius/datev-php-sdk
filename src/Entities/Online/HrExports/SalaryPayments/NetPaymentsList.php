@@ -15,7 +15,13 @@ namespace Datev\Entities\Online\HrExports\SalaryPayments;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<NetPayments>
+ */
 class NetPaymentsList extends NamedValues {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->valueClassName = NetPayments::class;
         parent::__construct($data, $logger);

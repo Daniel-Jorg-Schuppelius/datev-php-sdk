@@ -16,7 +16,7 @@ use Datev\Entities\Accounting\Sequences\{Sequence, Sequences};
 use Tests\Contracts\EntityTest;
 
 class SequenceTest extends EntityTest {
-    public function test_create_sequence() {
+    public function test_create_sequence(): void {
         $data = [
             "application_information" => "DATEV SDK",
             "date_from" => "2024-01-01T00:00:00.000+00:00",
@@ -31,7 +31,7 @@ class SequenceTest extends EntityTest {
         $this->assertInstanceOf(Sequence::class, $sequence);
     }
 
-    public function test_create_sequences() {
+    public function test_create_sequences(): void {
         $data = [
             "content" => [
                 [

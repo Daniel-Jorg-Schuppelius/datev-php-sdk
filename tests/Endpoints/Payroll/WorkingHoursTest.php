@@ -24,7 +24,7 @@ class WorkingHoursTest extends EndpointTest {
         return new WorkingHoursEndpoint($this->client, self::getLogger());
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             'id' => '12345',
             'weekly_working_hours' => 40.0,
@@ -35,11 +35,14 @@ class WorkingHoursTest extends EndpointTest {
             'allocation_of_working_hours_friday' => 8.0,
         ];
 
-        $workingHours = WorkingHours::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+
+        $workingHours = WorkingHours::fromJson($json);
         $this->assertInstanceOf(WorkingHours::class, $workingHours);
     }
 
-    public function test_get_working_hours() {
+    public function test_get_working_hours(): void {
         $this->endpoint = $this->createEndpoint();
         $workingHours = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

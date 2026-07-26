@@ -17,26 +17,28 @@ use Datev\Entities\Law\Health\Health;
 use Tests\Contracts\EndpointTest;
 
 class HealthTest extends EndpointTest {
-    protected ?HealthEndpoint $endpoint;
+    protected HealthEndpoint $endpoint;
 
-    public function __construct($name = null) {
-        parent::__construct($name);
-        $this->endpoint = new HealthEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new HealthEndpoint($this->client, self::getLogger());
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             'status' => 'healthy',
         ];
 
-        $health = Health::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+        $health = Health::fromJson($json);
 
         $this->assertInstanceOf(Health::class, $health);
         $this->assertEquals('healthy', $health->getStatus());
     }
 
-    public function test_get_health() {
+    public function test_get_health(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

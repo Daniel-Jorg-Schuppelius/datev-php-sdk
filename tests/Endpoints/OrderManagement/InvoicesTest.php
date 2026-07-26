@@ -17,15 +17,15 @@ use Datev\Entities\OrderManagement\Invoices\{Invoice, Invoices};
 use Tests\Contracts\EndpointTest;
 
 class InvoicesTest extends EndpointTest {
-    protected ?InvoicesEndpoint $endpoint;
+    protected InvoicesEndpoint $endpoint;
 
-    public function __construct($name = null) {
-        parent::__construct($name);
-        $this->endpoint = new InvoicesEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new InvoicesEndpoint($this->client, self::getLogger());
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             'id' => 10000,
             'invoice_id' => 100001,
@@ -40,7 +40,10 @@ class InvoicesTest extends EndpointTest {
             'cancellation_flag' => false,
         ];
 
-        $invoice = Invoice::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+
+        $invoice = Invoice::fromJson($json);
 
         $this->assertInstanceOf(Invoice::class, $invoice);
         $this->assertEquals(10000, $invoice->getID());
@@ -51,7 +54,7 @@ class InvoicesTest extends EndpointTest {
         $this->assertFalse($invoice->isCancellation());
     }
 
-    public function test_json_serialize_collection() {
+    public function test_json_serialize_collection(): void {
         $data = [
             [
                 'id' => 10000,
@@ -67,13 +70,16 @@ class InvoicesTest extends EndpointTest {
             ],
         ];
 
-        $invoices = Invoices::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+
+        $invoices = Invoices::fromJson($json);
 
         $this->assertInstanceOf(Invoices::class, $invoices);
         $this->assertCount(2, $invoices->getValues());
     }
 
-    public function test_search_invoices() {
+    public function test_search_invoices(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

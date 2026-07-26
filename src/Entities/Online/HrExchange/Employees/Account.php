@@ -25,6 +25,9 @@ class Account extends NamedEntity {
 
     protected string $differing_account_holder;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

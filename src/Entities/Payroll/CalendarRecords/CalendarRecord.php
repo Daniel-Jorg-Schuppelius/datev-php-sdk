@@ -32,11 +32,14 @@ class CalendarRecord extends NamedEntity implements IdentifiableNamedEntityInter
     protected ?string $cost_center_id;
     protected ?string $cost_unit_id;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
 
-    public function getID(): CalendarRecordID {
+    public function getID(): ?CalendarRecordID {
         return $this->id;
     }
 

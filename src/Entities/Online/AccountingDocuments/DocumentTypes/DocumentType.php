@@ -26,6 +26,9 @@ class DocumentType extends NamedEntity {
 
     protected DebitCreditIdentifier $debit_credit_identifier;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

@@ -35,6 +35,9 @@ class Fee extends NamedEntity {
     protected ?Location $location;
     protected ?PaymentMethod $payment_method;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

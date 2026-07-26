@@ -25,6 +25,9 @@ class DatevUserExtension extends NamedEntity {
     protected ?LinkedIdentity $linked_employeeadministration_identity;
     protected ?LinkedDatacenterIdentity $linked_datacenter_identity;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

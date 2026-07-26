@@ -21,11 +21,14 @@ class DispatcherInformation extends NamedEntity implements IdentifiableNamedEnti
     protected string $application;
     protected string $comment;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
 
-    public function getID(): ExternalDocumentID {
+    public function getID(): ?ExternalDocumentID {
         return $this->external_id;
     }
 

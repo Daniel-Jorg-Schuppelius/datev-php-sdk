@@ -79,8 +79,13 @@ class HrFilesEndpointsTest extends OnlineEndpointTest {
         $this->assertSame(HrFileJobState::Uploaded, $jobInfo->getState());
         $this->assertSame('abc12345-abcd-abcd-1233-12345aedgf55', $jobInfo->getJobId());
 
-        $requests = $this->mockClient->getRecordedRequests();
+        $mockClient = $this->mockClient;
+        $this->assertNotNull($mockClient);
+        $requests = $mockClient->getRecordedRequests();
         $lastRequest = end($requests);
+        $this->assertNotFalse($lastRequest);
+        $this->assertIsArray($lastRequest['options']);
+        $this->assertIsArray($lastRequest['options']['multipart']);
         $multipartNames = array_column($lastRequest['options']['multipart'], 'name');
         $this->assertContains('file', $multipartNames);
         $this->assertContains('import_file_type', $multipartNames);

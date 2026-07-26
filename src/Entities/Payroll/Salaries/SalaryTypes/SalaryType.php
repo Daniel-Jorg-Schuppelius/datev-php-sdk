@@ -21,6 +21,9 @@ class SalaryType extends NamedEntity implements IdentifiableNamedEntityInterface
     protected ?string $name;
     protected ?string $core;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

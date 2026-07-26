@@ -14,15 +14,15 @@ use Datev\API\Desktop\Endpoints\PublicSector\TransactionAddressesEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class TransactionAddressesTest extends EndpointTest {
-    protected ?TransactionAddressesEndpoint $endpoint;
+    protected TransactionAddressesEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new TransactionAddressesEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new TransactionAddressesEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_transaction_addresses() {
+    public function test_get_transaction_addresses(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

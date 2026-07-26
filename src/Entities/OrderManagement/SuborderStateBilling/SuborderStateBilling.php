@@ -40,6 +40,9 @@ class SuborderStateBilling extends NamedEntity {
     protected ?DateTime $creditnote_release_date;
     protected ?DateTime $creditnote_billing_date;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

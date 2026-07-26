@@ -19,11 +19,14 @@ use Psr\Log\LoggerInterface;
 class DocumentFile extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?DocumentFileID $id;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
 
-    public function getID(): DocumentFileID {
+    public function getID(): ?DocumentFileID {
         return $this->id;
     }
 }

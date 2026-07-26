@@ -28,7 +28,7 @@ class MockClient implements ApiClientInterface {
     /** @var array<string, array<string, mixed>> Registrierte Mock-Antworten */
     private array $mockResponses = [];
 
-    /** @var array<string, mixed> Aufgezeichnete Requests */
+    /** @var array<int, array<string, mixed>> Aufgezeichnete Requests */
     private array $recordedRequests = [];
 
     private ?AuthenticationInterface $authentication = null;
@@ -114,12 +114,13 @@ class MockClient implements ApiClientInterface {
 
     /**
      * Findet eine passende Mock-Antwort für den Request.
+     * @return array<array-key, mixed>
      */
     private function findMockResponse(string $method, string $uri): ?array {
         $method = strtoupper($method);
 
         // Extrahiere URI ohne Query-Parameter für das Matching
-        $uriWithoutQuery = parse_url($uri, PHP_URL_PATH) ?? $uri;
+        $uriWithoutQuery = parse_url($uri, PHP_URL_PATH) ?: $uri;
 
         // Exakter Match mit vollständiger URI
         $exactKey = "{$method}:{$uri}";
@@ -154,6 +155,7 @@ class MockClient implements ApiClientInterface {
 
     /**
      * Erstellt eine PSR-7 Response aus Mock-Daten.
+     * @param array<array-key, mixed> $mockData
      */
     private function createResponse(array $mockData): ResponseInterface {
         $body = $mockData['body'];
@@ -170,6 +172,7 @@ class MockClient implements ApiClientInterface {
 
     /**
      * Zeichnet einen Request auf.
+     * @param array<string, mixed> $options
      */
     private function recordRequest(string $method, string $uri, array $options): void {
         $this->recordedRequests[] = [
@@ -213,26 +216,44 @@ class MockClient implements ApiClientInterface {
 
     // ApiClientInterface Implementation
 
+    /**
+     * @param array<string, mixed> $options
+     */
     public function get(string $uri, array $options = []): ResponseInterface {
         return $this->request('GET', $uri, $options);
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     public function post(string $uri, array $options = []): ResponseInterface {
         return $this->request('POST', $uri, $options);
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     public function put(string $uri, array $options = []): ResponseInterface {
         return $this->request('PUT', $uri, $options);
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     public function patch(string $uri, array $options = []): ResponseInterface {
         return $this->request('PATCH', $uri, $options);
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     public function delete(string $uri, array $options = []): ResponseInterface {
         return $this->request('DELETE', $uri, $options);
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     private function request(string $method, string $uri, array $options = []): ResponseInterface {
         $this->recordRequest($method, $uri, $options);
         $this->logDebug("Mock {$method} request to {$uri}", $options);
@@ -244,7 +265,7 @@ class MockClient implements ApiClientInterface {
             return new Response(404, ['Content-Type' => 'application/json'], json_encode([
                 'error' => 'Not Found',
                 'message' => "No mock response registered for {$method} {$uri}",
-            ]));
+            ]) ?: '{}');
         }
 
         return $this->createResponse($mockData);
@@ -266,10 +287,16 @@ class MockClient implements ApiClientInterface {
         return $this->authentication;
     }
 
+    /**
+     * @param array<string, mixed> $headers
+     */
     public function setDefaultHeaders(array $headers): void {
         $this->defaultHeaders = $headers;
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public function getDefaultHeaders(): array {
         return $this->defaultHeaders;
     }
@@ -322,10 +349,16 @@ class MockClient implements ApiClientInterface {
         return null;
     }
 
+    /**
+     * @param array<array-key, mixed> $params
+     */
     public function setDefaultQueryParams(array $params): void {
         // Mock speichert keine Query-Params
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public function getDefaultQueryParams(): array {
         return [];
     }

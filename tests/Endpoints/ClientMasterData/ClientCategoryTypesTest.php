@@ -16,15 +16,15 @@ use Datev\API\Desktop\Endpoints\ClientMasterData\ClientCategoryTypesEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class ClientCategoryTypesTest extends EndpointTest {
-    protected ?ClientCategoryTypesEndpoint $endpoint;
+    protected ClientCategoryTypesEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new ClientCategoryTypesEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new ClientCategoryTypesEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_client_category_types() {
+    public function test_get_client_category_types(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

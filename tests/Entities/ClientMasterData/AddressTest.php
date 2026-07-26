@@ -17,7 +17,7 @@ use Datev\Entities\ClientMasterData\Addresses\Address;
 use Tests\Contracts\EntityTest;
 
 class AddressTest extends EntityTest {
-    public function test_create_address() {
+    public function test_create_address(): void {
         $data = [
             "id" => "17b9d6d3-117b-4555-b0b0-3659eb0279d7",
             "type" => "street",

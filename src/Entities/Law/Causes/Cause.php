@@ -19,8 +19,14 @@ use Psr\Log\LoggerInterface;
 class Cause extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?CauseID $id;
     protected ?string $name;
+    /**
+     * @var array<array-key, mixed>
+     */
     protected ?array $departments;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
@@ -33,6 +39,9 @@ class Cause extends NamedEntity implements IdentifiableNamedEntityInterface {
         return $this->name ?? null;
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public function getDepartments(): ?array {
         return $this->departments ?? null;
     }

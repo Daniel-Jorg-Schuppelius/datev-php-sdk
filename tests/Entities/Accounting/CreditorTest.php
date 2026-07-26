@@ -16,7 +16,7 @@ use Datev\Entities\Accounting\Creditors\{Creditor, Creditors};
 use Tests\Contracts\EntityTest;
 
 class CreditorTest extends EntityTest {
-    public function test_create_creditor() {
+    public function test_create_creditor(): void {
         $data = [
             "id" => 70001,
             "account_number" => 70001,
@@ -39,7 +39,7 @@ class CreditorTest extends EntityTest {
         $this->assertTrue($creditor->isBusinessPartnerActive());
     }
 
-    public function test_create_creditors() {
+    public function test_create_creditors(): void {
         $data = [
             "content" => [
                 [

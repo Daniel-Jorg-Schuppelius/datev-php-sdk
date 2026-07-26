@@ -19,6 +19,9 @@ class FailedResponse extends NamedEntity {
     protected ?int $index;
     protected ?Reason $reason;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

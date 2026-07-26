@@ -17,6 +17,9 @@ use Datev\Entities\IdentityAndAccessManagement\Users\ScimMeta;
 use Psr\Log\LoggerInterface;
 
 class ServiceProviderConfig extends NamedEntity {
+    /**
+     * @var array<array-key, mixed>
+     */
     protected ?array $schemas;
     protected ?string $documentation_uri;
     protected ?ScimSupported $patch;
@@ -28,10 +31,16 @@ class ServiceProviderConfig extends NamedEntity {
     protected ?AuthenticationSchemes $authentication_schemes;
     protected ?ScimMeta $meta;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public function getSchemas(): ?array {
         return $this->schemas ?? null;
     }

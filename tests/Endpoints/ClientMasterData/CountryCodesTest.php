@@ -16,15 +16,15 @@ use Datev\API\Desktop\Endpoints\ClientMasterData\CountryCodesEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class CountryCodesTest extends EndpointTest {
-    protected ?CountryCodesEndpoint $endpoint;
+    protected CountryCodesEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new CountryCodesEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new CountryCodesEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_country_codes() {
+    public function test_get_country_codes(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

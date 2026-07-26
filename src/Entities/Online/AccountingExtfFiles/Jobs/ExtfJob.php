@@ -50,6 +50,9 @@ class ExtfJob extends NamedEntity {
 
     protected ValidationDetails $validation_details;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

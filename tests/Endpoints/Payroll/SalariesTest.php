@@ -24,29 +24,33 @@ class SalariesTest extends EndpointTest {
         return new SalariesEndpoint($this->client, self::getLogger());
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             'id' => '12345',
             'amount' => 4500.00,
             'currency' => 'EUR',
         ];
 
-        $salary = Salary::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+        $salary = Salary::fromJson($json);
         $this->assertInstanceOf(Salary::class, $salary);
     }
 
-    public function test_json_serialize_collection() {
+    public function test_json_serialize_collection(): void {
         $data = [
             ['id' => '12345', 'amount' => 4500.00],
             ['id' => '12346', 'amount' => 5000.00],
         ];
 
-        $salaries = Salaries::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+        $salaries = Salaries::fromJson($json);
         $this->assertInstanceOf(Salaries::class, $salaries);
         $this->assertCount(2, $salaries->getValues());
     }
 
-    public function test_get_salaries() {
+    public function test_get_salaries(): void {
         $this->endpoint = $this->createEndpoint();
         $salaries = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

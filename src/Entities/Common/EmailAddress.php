@@ -16,6 +16,9 @@ use APIToolkit\Entities\Contact\EmailAddress as BaseEmailAddress;
 use Psr\Log\LoggerInterface;
 
 class EmailAddress extends BaseEmailAddress {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
         $this->entityName = 'email';

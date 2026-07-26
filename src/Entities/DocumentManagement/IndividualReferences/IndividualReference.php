@@ -23,6 +23,9 @@ class IndividualReference extends NamedEntity implements IdentifiableNamedEntity
     protected ?CorrespondencePartnerGUID $correspondence_partner_guid;
     protected ?CorrespondencePartnerLink $correspondence_partner_link;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

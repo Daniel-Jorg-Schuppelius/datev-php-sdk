@@ -25,11 +25,14 @@ class Error extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?ErrorURI $error_uri;
     protected ?RequestID $request_id;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
 
-    public function getID(): RequestID {
+    public function getID(): ?RequestID {
         return $this->request_id;
     }
 

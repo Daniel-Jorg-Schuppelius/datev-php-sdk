@@ -23,7 +23,7 @@ class AccountsPayableCondenseTest extends EndpointTest {
         return new AccountsPayableCondenseEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_accounts_payable_condense() {
+    public function test_get_accounts_payable_condense(): void {
         $this->skipMockIfComplexEntity();
 
         $this->endpoint = $this->createEndpoint();

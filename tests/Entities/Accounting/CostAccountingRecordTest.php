@@ -16,7 +16,7 @@ use Datev\Entities\Accounting\CostAccountingRecords\{CostAccountingRecord, CostA
 use Tests\Contracts\EntityTest;
 
 class CostAccountingRecordTest extends EntityTest {
-    public function test_create_cost_accounting_record() {
+    public function test_create_cost_accounting_record(): void {
         $data = [
             "id" => 1,
             "amount" => 1500.50,
@@ -37,7 +37,7 @@ class CostAccountingRecordTest extends EntityTest {
         $this->assertEquals(1, $record->getRecordNumber());
     }
 
-    public function test_create_cost_accounting_records() {
+    public function test_create_cost_accounting_records(): void {
         $data = [
             "content" => [
                 [

@@ -25,6 +25,10 @@ class CountryCodesEndpoint extends EndpointAbstract implements SearchableEndpoin
         return null;
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?CountryCodes {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options);

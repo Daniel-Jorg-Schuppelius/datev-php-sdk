@@ -38,7 +38,9 @@ class ClientBasicsTest extends EntityTest {
     ];
 
     public function test_from_json_with_nested_structures(): void {
-        $client = ClientBasics::fromJson(json_encode(self::SPEC_EXAMPLE));
+        $json = json_encode(self::SPEC_EXAMPLE);
+        $this->assertIsString($json);
+        $client = ClientBasics::fromJson($json);
 
         $this->assertSame('29098-55003', $client->getId());
         $this->assertSame('Muster GmbH', $client->getName());
@@ -60,11 +62,15 @@ class ClientBasicsTest extends EntityTest {
     }
 
     public function test_clients_collection(): void {
-        $clients = Clients::fromJson(json_encode([
+        $json = json_encode([
             ['client_number' => 1, 'consultant_number' => 2, 'id' => '2-1', 'name' => 'A'],
-        ]));
+        ]);
+        $this->assertIsString($json);
+        $clients = Clients::fromJson($json);
 
         $this->assertSame(1, $clients->count());
-        $this->assertSame('2-1', $clients->getFirstValue()->getConsultantClientNumber()?->toString());
+        $first = $clients->getFirstValue();
+        $this->assertNotNull($first);
+        $this->assertSame('2-1', $first->getConsultantClientNumber()?->toString());
     }
 }

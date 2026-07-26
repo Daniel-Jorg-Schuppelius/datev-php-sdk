@@ -31,6 +31,9 @@ class NetPayments extends NamedEntity {
 
     protected float $net_payment_amount_difference;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

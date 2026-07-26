@@ -42,6 +42,10 @@ class FilesEndpoint extends EndpointAbstract implements SearchableEndpointInterf
         }, "Fetching LawFile (ID: {$id->toString()})");
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?LawFiles {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options);
@@ -54,6 +58,9 @@ class FilesEndpoint extends EndpointAbstract implements SearchableEndpointInterf
         }, 'Searching LawFiles');
     }
 
+    /**
+     * @param array<string, mixed> $queryParams
+     */
     public function getReferenceSheet(ID $id, array $queryParams = []): ?string {
         return $this->logDebugWithTimer(function () use ($id, $queryParams) {
             $response = parent::getContents($queryParams, [], "{$this->getEndpointUrl()}/{$id->toString()}/reference-sheet");

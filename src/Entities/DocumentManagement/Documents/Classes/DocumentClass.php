@@ -20,6 +20,9 @@ class DocumentClass extends NamedEntity implements IdentifiableNamedEntityInterf
     protected DocumentClassID $id;
     protected ?string $name;
 
+    /**
+     * @param int|array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         if (is_int($data)) {
             $data = ["id" => $data];

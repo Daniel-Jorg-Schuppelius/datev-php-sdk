@@ -17,7 +17,7 @@ use Datev\Entities\ClientMasterData\LegalForms\{LegalFormID, LegalFormIDs};
 use Tests\Contracts\EntityTest;
 
 class LegalFormIDTest extends EntityTest {
-    public function test_create_legal_form_id() {
+    public function test_create_legal_form_id(): void {
         $data = [
             "valid_from" => "2024-09-30",
             "value" => "S00009",
@@ -32,7 +32,7 @@ class LegalFormIDTest extends EntityTest {
         $this->assertEquals(new DateTime("2024-09-30"), $legalFormID->getValidFrom());
     }
 
-    public function test_create_legal_form_i_ds() {
+    public function test_create_legal_form_i_ds(): void {
         $data = [
             [
                 "valid_from" => "2024-09-30",

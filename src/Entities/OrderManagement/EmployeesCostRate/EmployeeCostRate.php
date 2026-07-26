@@ -41,6 +41,9 @@ class EmployeeCostRate extends NamedEntity {
     protected ?float $internal_charge_rate_clientorders;
     protected ?bool $cost_rate_active;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

@@ -15,7 +15,13 @@ namespace Datev\Entities\Online\AccountingDxsoJobs\ProtocolEntries;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<ProtocolEntry>
+ */
 class ProtocolEntries extends NamedValues {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->valueClassName = ProtocolEntry::class;
         parent::__construct($data, $logger);

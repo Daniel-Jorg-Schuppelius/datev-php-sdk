@@ -16,7 +16,7 @@ use Datev\Entities\Accounting\CostSystems\{CostSystem, CostSystems};
 use Tests\Contracts\EntityTest;
 
 class CostSystemTest extends EntityTest {
-    public function test_create_cost_system() {
+    public function test_create_cost_system(): void {
         $data = [
             "id" => 1,
             "caption" => "Standard-Kostenrechnung",
@@ -34,7 +34,7 @@ class CostSystemTest extends EntityTest {
         $this->assertTrue($costSystem->isActive());
     }
 
-    public function test_create_cost_systems() {
+    public function test_create_cost_systems(): void {
         $data = [
             "content" => [
                 [

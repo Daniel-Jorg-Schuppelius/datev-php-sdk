@@ -15,15 +15,15 @@ use Datev\Entities\ClientMasterData\AreaOfResponsibilities\{AreaOfResponsibiliti
 use Tests\Contracts\EndpointTest;
 
 class AreaOfResponsibilitiesTest extends EndpointTest {
-    protected ?AreaOfResponsibilitiesEndpoint $endpoint;
+    protected AreaOfResponsibilitiesEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
+    protected function setUp(): void {
+        $this->apiDisabled = true;
+        parent::setUp();
         $this->endpoint = new AreaOfResponsibilitiesEndpoint($this->client, self::getLogger());
-        $this->apiDisabled = true; // API is disabled
     }
 
-    public function test_get_addressees() {
+    public function test_get_addressees(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

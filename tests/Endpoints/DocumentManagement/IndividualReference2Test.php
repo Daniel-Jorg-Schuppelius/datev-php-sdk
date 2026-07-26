@@ -15,15 +15,15 @@ use Datev\Entities\DocumentManagement\IndividualReferences\{IndividualReference,
 use Tests\Contracts\EndpointTest;
 
 class IndividualReference2Test extends EndpointTest {
-    protected ?IndividualReferences2Endpoint $endpoint;
+    protected IndividualReferences2Endpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
+    protected function setUp(): void {
+        $this->apiDisabled = true;
+        parent::setUp();
         $this->endpoint = new IndividualReferences2Endpoint($this->client, self::getLogger());
-        $this->apiDisabled = true; // API is disabled
     }
 
-    public function test_get_individual_references_api() {
+    public function test_get_individual_references_api(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

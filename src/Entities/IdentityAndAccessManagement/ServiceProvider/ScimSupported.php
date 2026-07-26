@@ -18,6 +18,9 @@ use Psr\Log\LoggerInterface;
 class ScimSupported extends NamedEntity {
     protected bool $supported;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

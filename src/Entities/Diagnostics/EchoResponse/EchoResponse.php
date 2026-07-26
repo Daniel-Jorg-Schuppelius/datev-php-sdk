@@ -20,6 +20,9 @@ class EchoResponse extends NamedEntity implements IdentifiableNamedEntityInterfa
     protected EchoResponseID $id;
     protected string $echo_message;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

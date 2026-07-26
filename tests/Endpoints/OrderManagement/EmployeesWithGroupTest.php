@@ -14,15 +14,15 @@ use Datev\API\Desktop\Endpoints\OrderManagement\EmployeesWithGroupEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class EmployeesWithGroupTest extends EndpointTest {
-    protected ?EmployeesWithGroupEndpoint $endpoint;
+    protected EmployeesWithGroupEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new EmployeesWithGroupEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new EmployeesWithGroupEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_employees_with_group() {
+    public function test_get_employees_with_group(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

@@ -20,6 +20,9 @@ class Address extends CommonAddress {
     protected ?string $country;
     protected ?string $address_affix;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

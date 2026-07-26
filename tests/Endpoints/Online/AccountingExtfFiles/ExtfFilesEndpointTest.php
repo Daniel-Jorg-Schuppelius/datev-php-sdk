@@ -48,6 +48,7 @@ class ExtfFilesEndpointTest extends OnlineEndpointTest {
         $this->assertSame(self::JOB_ID, $jobLocation->getJobId());
         $this->assertSame(0, $jobLocation->retryAfter);
 
+        $this->assertNotNull($this->mockClient);
         $requests = $this->mockClient->getRecordedRequests();
         $lastRequest = end($requests);
         $this->assertSame('EXTF_Buchungsstapel.csv', $lastRequest['options']['headers']['Filename'] ?? null);

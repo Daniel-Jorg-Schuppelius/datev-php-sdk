@@ -18,6 +18,9 @@ use Psr\Log\LoggerInterface;
 class LinkedIdentity extends NamedEntity {
     protected string $value;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

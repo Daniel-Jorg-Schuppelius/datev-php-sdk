@@ -19,6 +19,9 @@ class AdditionalInformation extends NamedEntity {
     protected ?string $additional_information_type;
     protected ?string $additional_information_content;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

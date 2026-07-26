@@ -77,6 +77,10 @@ class CostSequencesEndpoint extends EndpointAbstract implements SearchableEndpoi
         }, "Fetching CostSequence (ID: {$costSequenceId})");
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?CostSequences {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options, $this->getBaseUrl());

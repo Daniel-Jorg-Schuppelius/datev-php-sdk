@@ -16,6 +16,9 @@ use APIToolkit\Entities\GUID;
 use Psr\Log\LoggerInterface;
 
 class LegalPersonID extends GUID {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
         $this->entityName = 'legal_person_id';

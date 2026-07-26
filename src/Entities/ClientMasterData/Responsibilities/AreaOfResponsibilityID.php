@@ -16,6 +16,9 @@ use Datev\Entities\ClientMasterData\AreaOfResponsibilities\AreaOfResponsibilityI
 use Psr\Log\LoggerInterface;
 
 class AreaOfResponsibilityID extends BaseAreaOfResponsibilityID {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
         $this->entityName = 'area_of_responsibility_id';

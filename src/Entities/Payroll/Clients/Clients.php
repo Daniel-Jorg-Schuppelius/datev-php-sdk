@@ -19,6 +19,9 @@ use Psr\Log\LoggerInterface;
  * @extends CommonClients<Client>
  */
 class Clients extends CommonClients {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->valueClassName = Client::class;
 

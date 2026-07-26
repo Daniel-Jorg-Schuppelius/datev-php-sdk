@@ -23,12 +23,12 @@ class PostingProposalsCashRegisterBatchTest extends EndpointTest {
         return new PostingProposalsCashRegisterBatchEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_posting_proposals_cash_register_batch() {
+    public function test_get_posting_proposals_cash_register_batch(): void {
         $this->skipMockIfComplexEntity();
 
         $this->endpoint = $this->createEndpoint();
 
-        $proposals = $this->endpoint->search();
+        $proposals = $this->endpoint->create([]);
 
         $this->assertNotNull($proposals);
     }

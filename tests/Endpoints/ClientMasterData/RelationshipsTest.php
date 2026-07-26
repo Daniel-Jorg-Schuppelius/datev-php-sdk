@@ -16,15 +16,15 @@ use Datev\API\Desktop\Endpoints\ClientMasterData\RelationshipsEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class RelationshipsTest extends EndpointTest {
-    protected ?RelationshipsEndpoint $endpoint;
+    protected RelationshipsEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new RelationshipsEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new RelationshipsEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_relationships() {
+    public function test_get_relationships(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

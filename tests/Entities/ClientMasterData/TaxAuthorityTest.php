@@ -16,13 +16,13 @@ use Datev\Entities\ClientMasterData\TaxAuthorities\{TaxAuthorities, TaxAuthority
 use Tests\Contracts\EntityTest;
 
 class TaxAuthorityTest extends EntityTest {
-    public function test_create_tax_authority_id() {
+    public function test_create_tax_authority_id(): void {
         $id = new TaxAuthorityID("12345678-1234-1234-1234-123456789012");
         $this->assertInstanceOf(TaxAuthorityID::class, $id);
         $this->assertEquals("12345678-1234-1234-1234-123456789012", $id->toString());
     }
 
-    public function test_create_tax_authority() {
+    public function test_create_tax_authority(): void {
         $data = [
             "id" => "000645",
             "name" => "Finanzamt München",
@@ -38,7 +38,7 @@ class TaxAuthorityTest extends EntityTest {
         $this->assertEquals(9181, $authority->getNumber());
     }
 
-    public function test_create_tax_authorities() {
+    public function test_create_tax_authorities(): void {
         $data = [
             [
                 "id" => "000645",

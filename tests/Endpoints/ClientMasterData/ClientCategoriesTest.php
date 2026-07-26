@@ -15,24 +15,27 @@ use Datev\Entities\ClientMasterData\ClientCategories\{ClientCategories, ClientCa
 use Tests\Contracts\EndpointTest;
 
 class ClientCategoriesTest extends EndpointTest {
-    protected ?ClientsEndpoint $preEndpoint;
-    protected ?ClientCategoriesEndpoint $endpoint;
+    protected ClientsEndpoint $preEndpoint;
+    protected ClientCategoriesEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
+    protected function setUp(): void {
+        $this->apiDisabled = true; // API is disabled
+        parent::setUp();
         $this->preEndpoint = new ClientsEndpoint($this->client, self::getLogger());
         $this->endpoint = new ClientCategoriesEndpoint($this->client, self::getLogger());
-        $this->apiDisabled = true; // API is disabled
     }
 
-    public function test_get_client_categories() {
+    public function test_get_client_categories(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }
 
         $clients = $this->preEndpoint->search();
+        $this->assertNotNull($clients);
         $randomClient = $clients->getValues()[array_rand($clients->getValues())];
-        $this->endpoint->setClientID($randomClient->getID());
+        $clientID = $randomClient->getID();
+        $this->assertNotNull($clientID);
+        $this->endpoint->setClientID($clientID);
 
         $clientCategories = $this->endpoint->searchByClient();
         $allClientCategories = $this->endpoint->search();
@@ -44,6 +47,6 @@ class ClientCategoriesTest extends EndpointTest {
         $this->assertInstanceOf(ClientCategory::class, $randomClientCategory);
         $clientCategory = $this->endpoint->get($randomClientCategory->getID());
         $this->assertInstanceOf(ClientCategory::class, $randomClientCategory);
-        $this->assertEquals($randomClientCategory->getID(), $clientCategory->getID());
+        $this->assertEquals($randomClientCategory->getID(), $clientCategory?->getID());
     }
 }

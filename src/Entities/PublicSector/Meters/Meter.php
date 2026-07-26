@@ -35,6 +35,9 @@ class Meter extends NamedEntity {
     protected ?string $orientation;
     protected ?MeterLocalization $localization;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

@@ -78,7 +78,7 @@ class DxsoJobsEndpoint extends ClientScopedEndpointAbstract {
         $this->logDebugWithTimer(function () use ($jobId, $file, $filename) {
             $urlPath = "{$this->getEndpointUrl()}/" . rawurlencode($jobId) . '/files';
 
-            $this->postMultipart([
+            $this->postMultipartRequest([
                 ['name' => 'files', 'contents' => $file, 'filename' => $filename],
             ], $urlPath, 201);
         }, "Adding file '{$filename}' to DxsoJob (ID: {$jobId})");

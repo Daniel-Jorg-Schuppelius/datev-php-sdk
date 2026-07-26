@@ -16,7 +16,7 @@ use Datev\Entities\Accounting\Records\{Record, Records};
 use Tests\Contracts\EntityTest;
 
 class RecordTest extends EntityTest {
-    public function test_create_record() {
+    public function test_create_record(): void {
         $data = [
             "account_number" => 1200,
             "contra_account_number" => 8400,
@@ -29,7 +29,7 @@ class RecordTest extends EntityTest {
         $this->assertInstanceOf(Record::class, $record);
     }
 
-    public function test_create_records() {
+    public function test_create_records(): void {
         $data = [
             "content" => [
                 [

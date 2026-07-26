@@ -20,6 +20,9 @@ class CostCenterPropertyCharacteristic extends NamedEntity implements Identifiab
     protected CostCenterPropertyCharacteristicID $id;
     protected ?string $description;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

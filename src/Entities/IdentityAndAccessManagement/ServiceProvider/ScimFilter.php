@@ -19,6 +19,9 @@ class ScimFilter extends NamedEntity {
     protected bool $supported;
     protected ?int $max_results;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

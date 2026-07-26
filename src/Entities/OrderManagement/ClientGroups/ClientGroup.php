@@ -25,6 +25,9 @@ class ClientGroup extends NamedEntity {
     protected ?string $group_number;
     protected ?string $group_name;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

@@ -25,29 +25,33 @@ class InitialActivitiesTest extends EndpointTest {
         return new InitialActivitiesEndpoint($this->client, self::getLogger());
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             'id' => '12345',
             'activity_type' => 'Erstanstellung',
             'start_date' => '2024-01-01',
         ];
 
-        $activity = InitialActivity::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+        $activity = InitialActivity::fromJson($json);
         $this->assertInstanceOf(InitialActivity::class, $activity);
     }
 
-    public function test_json_serialize_collection() {
+    public function test_json_serialize_collection(): void {
         $data = [
             ['id' => '12345', 'activity_type' => 'Erstanstellung'],
             ['id' => '12346', 'activity_type' => 'Wiedereinstellung'],
         ];
 
-        $activities = InitialActivities::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+        $activities = InitialActivities::fromJson($json);
         $this->assertInstanceOf(InitialActivities::class, $activities);
         $this->assertCount(2, $activities->getValues());
     }
 
-    public function test_get_initial_activities() {
+    public function test_get_initial_activities(): void {
         // Dieser Endpoint benötigt eine gültige Employee-ID, die nur mit echter API funktioniert
         if ($this->isUsingMock()) {
             $this->markTestSkipped('InitialActivities endpoint requires valid Employee ID from real API');

@@ -24,7 +24,7 @@ class ClientTest extends EndpointTest {
         return new ClientsEndpoint($this->client, self::getLogger());
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             "consultant_number" => "29115",
             "id" => "9351b0e3-e96b-4bb0-b94e-018b13d1db28",
@@ -45,10 +45,11 @@ class ClientTest extends EndpointTest {
         $this->assertEquals(json_encode($data), $client->toJson());  // the order of the $data array is important for this test.
     }
 
-    public function test_get_clients_api() {
-        $this->endpoint = $this->createEndpoint();
+    public function test_get_clients_api(): void {
+        $endpoint = $this->createEndpoint();
+        $this->endpoint = $endpoint;
 
-        $clients = $this->endpoint->search(["reference-date" => "2021-01-01"]);
+        $clients = $endpoint->search(["reference-date" => "2021-01-01"]);
         $this->assertInstanceOf(Clients::class, $clients);
         $this->assertNotEmpty($clients->getValues(), "No clients found");
         $randomClient = $clients->getValues()[array_rand($clients->getValues())];
@@ -56,7 +57,7 @@ class ClientTest extends EndpointTest {
 
         if (!$this->isUsingMock()) {
             // Nur im Live-Modus: Einzelnen Client abrufen
-            $client = $this->endpoint->get($randomClient->getID(), "all", new DateTime("2021-01-01"));
+            $client = $endpoint->get($randomClient->getID(), "all", new DateTime("2021-01-01"));
             $this->assertInstanceOf(Client::class, $client);
             $this->assertEquals($randomClient->getID(), $client->getID());
         }

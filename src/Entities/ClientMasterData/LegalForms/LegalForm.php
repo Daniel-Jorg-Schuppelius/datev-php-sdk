@@ -25,11 +25,14 @@ class LegalForm extends NamedEntity implements IdentifiableNamedEntityInterface 
     protected ?string $nation;
     protected ?LegalFormType $type;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
 
-    public function getID(): LegalFormID {
+    public function getID(): ?LegalFormID {
         return $this->id;
     }
 

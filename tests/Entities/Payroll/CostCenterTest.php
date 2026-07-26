@@ -16,7 +16,7 @@ use Datev\Entities\Payroll\CostCenters\{CostCenter, CostCenters};
 use Tests\Contracts\EntityTest;
 
 class CostCenterTest extends EntityTest {
-    public function test_create_cost_center() {
+    public function test_create_cost_center(): void {
         $data = [
             "id" => "100",
             "name" => "Verwaltung",
@@ -27,7 +27,7 @@ class CostCenterTest extends EntityTest {
         $this->assertEquals("Verwaltung", $costCenter->getName());
     }
 
-    public function test_create_cost_centers() {
+    public function test_create_cost_centers(): void {
         $data = [
             "content" => [
                 [

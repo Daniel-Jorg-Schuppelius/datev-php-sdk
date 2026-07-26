@@ -16,15 +16,15 @@ use Datev\API\Desktop\Endpoints\ClientMasterData\ClientGroupsEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class ClientGroupsTest extends EndpointTest {
-    protected ?ClientGroupsEndpoint $endpoint;
+    protected ClientGroupsEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new ClientGroupsEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new ClientGroupsEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_client_groups() {
+    public function test_get_client_groups(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

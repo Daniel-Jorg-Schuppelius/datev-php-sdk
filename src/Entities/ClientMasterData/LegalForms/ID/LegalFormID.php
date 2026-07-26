@@ -19,6 +19,9 @@ use Psr\Log\LoggerInterface;
 class LegalFormID extends BaseLegalFormID {
     protected ?DateTime $valid_from;
 
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
         $this->entityName = 'current_legal_form_id';

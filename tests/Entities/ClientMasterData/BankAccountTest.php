@@ -16,7 +16,7 @@ use Datev\Entities\ClientMasterData\BankAccounts\BankAccount;
 use Tests\Contracts\EntityTest;
 
 class BankAccountTest extends EntityTest {
-    public function test_create_bank_account() {
+    public function test_create_bank_account(): void {
         $data = [
             "id" => "31b9d6d9-117b-4555-b0b0-3659eb0279d0",
             "bank_account_number" => "3225553",

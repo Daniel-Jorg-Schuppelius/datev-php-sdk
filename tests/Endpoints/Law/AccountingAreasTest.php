@@ -14,15 +14,15 @@ use Datev\API\Desktop\Endpoints\Law\AccountingAreasEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class AccountingAreasTest extends EndpointTest {
-    protected ?AccountingAreasEndpoint $endpoint;
+    protected AccountingAreasEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new AccountingAreasEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new AccountingAreasEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_accounting_areas() {
+    public function test_get_accounting_areas(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

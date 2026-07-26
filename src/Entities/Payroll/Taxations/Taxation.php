@@ -23,6 +23,9 @@ class Taxation extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?float $requested_annual_allowance;
     protected ?bool $is_two_percent_flat_rate_taxation;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

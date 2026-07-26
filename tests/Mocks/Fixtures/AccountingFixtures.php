@@ -16,6 +16,9 @@ namespace Tests\Mocks\Fixtures;
  * Mock-Fixtures für Accounting Endpoints.
  */
 class AccountingFixtures {
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getClients(): array {
         return [
             [
@@ -35,6 +38,9 @@ class AccountingFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getClient(): array {
         return [
             'id' => '12345',
@@ -45,6 +51,9 @@ class AccountingFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getAccountingRecords(): array {
         return [
             [
@@ -72,6 +81,9 @@ class AccountingFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getAccountingRecord(): array {
         return [
             'id' => 'rec-001',
@@ -86,6 +98,9 @@ class AccountingFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getCostCenters(): array {
         return [
             [
@@ -103,6 +118,9 @@ class AccountingFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getDebtors(): array {
         return [
             [
@@ -120,6 +138,9 @@ class AccountingFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getCreditors(): array {
         return [
             [
@@ -137,6 +158,9 @@ class AccountingFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getSequences(): array {
         return [
             [
@@ -154,6 +178,9 @@ class AccountingFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getEchoResponse(): array {
         return [
             'message' => 'Echo service is available',
@@ -161,6 +188,9 @@ class AccountingFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getGenericData(): array {
         return [
             'id' => 'generic-001',
@@ -168,6 +198,9 @@ class AccountingFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getGenericList(): array {
         return [
             [
@@ -177,6 +210,9 @@ class AccountingFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getAllResponses(): array {
         return [
             // Clients

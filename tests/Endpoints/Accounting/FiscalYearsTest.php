@@ -23,7 +23,7 @@ class FiscalYearsTest extends EndpointTest {
         return new FiscalYearsEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_fiscal_years() {
+    public function test_get_fiscal_years(): void {
         $this->skipMockIfComplexEntity();
 
         $this->endpoint = $this->createEndpoint();

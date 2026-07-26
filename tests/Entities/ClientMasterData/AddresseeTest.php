@@ -16,7 +16,7 @@ use Datev\Entities\ClientMasterData\Addressees\Addressee;
 use Tests\Contracts\EntityTest;
 
 class AddresseeTest extends EntityTest {
-    public function test_create_addressee() {
+    public function test_create_addressee(): void {
         $data = [
             "id" => "16b9d6d3-117b-4553-b0b0-3659eb0279d7",
             "eu_vat_id_country_code" => "DE",

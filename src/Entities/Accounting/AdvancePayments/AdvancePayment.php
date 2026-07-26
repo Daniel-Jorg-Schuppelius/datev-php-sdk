@@ -24,6 +24,9 @@ class AdvancePayment extends NamedEntity {
     protected ?int $revenue_account;
     protected ?int $tax_key;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

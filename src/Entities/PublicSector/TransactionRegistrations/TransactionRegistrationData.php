@@ -20,6 +20,9 @@ class TransactionRegistrationData extends NamedEntity {
     protected ?bool $is_registered;
     protected ?string $registration_email;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

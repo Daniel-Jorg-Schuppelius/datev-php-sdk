@@ -25,11 +25,14 @@ class ContactPerson extends NamedEntity implements IdentifiableNamedEntityInterf
     protected ?string $function;
     protected string $note;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
 
-    public function getID(): ContactPersonID {
+    public function getID(): ?ContactPersonID {
         return $this->id;
     }
 }

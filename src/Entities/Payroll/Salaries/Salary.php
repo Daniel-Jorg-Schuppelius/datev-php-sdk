@@ -98,6 +98,9 @@ class Salary extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?float $flat_rate_church_tax_agriculture_and_forestry_temporary_employed;
     protected ?float $flat_rate_church_tax_part_time_employed;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

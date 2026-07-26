@@ -16,7 +16,7 @@ use Datev\Entities\PublicSector\Consumptions\{Consumption, Consumptions};
 use Tests\Contracts\EntityTest;
 
 class ConsumptionTest extends EntityTest {
-    public function test_create_consumption() {
+    public function test_create_consumption(): void {
         $data = [
             "id" => "c1234567-8901-2345-6789-012345678901",
             "assessment_year" => 2024,
@@ -40,7 +40,7 @@ class ConsumptionTest extends EntityTest {
         $this->assertEquals(150.5, $consumption->getQuantity());
     }
 
-    public function test_create_consumptions() {
+    public function test_create_consumptions(): void {
         $data = [
             "content" => [
                 [

@@ -77,6 +77,10 @@ class AccountingRecordsEndpoint extends EndpointAbstract implements SearchableEn
         }, "Fetching RecordRead (ID: {$recordId})");
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?RecordReads {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options, $this->getBaseUrl());

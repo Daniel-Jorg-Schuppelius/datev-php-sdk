@@ -15,7 +15,13 @@ namespace Datev\Entities\Online\HrExchange\Employees;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<Employee>
+ */
 class Employees extends NamedValues {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->valueClassName = Employee::class;
         parent::__construct($data, $logger);

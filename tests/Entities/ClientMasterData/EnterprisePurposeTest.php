@@ -16,7 +16,7 @@ use Datev\Entities\ClientMasterData\EnterprisePurposes\{EnterprisePurpose, Enter
 use Tests\Contracts\EntityTest;
 
 class EnterprisePurposeTest extends EntityTest {
-    public function test_create_enterprise_purpose() {
+    public function test_create_enterprise_purpose(): void {
         $data = [
             "value" => "Handel und Vertrieb",
             "valid_from" => "2024-01-01",
@@ -26,7 +26,7 @@ class EnterprisePurposeTest extends EntityTest {
         $this->assertInstanceOf(EnterprisePurpose::class, $purpose);
     }
 
-    public function test_create_enterprise_purposes() {
+    public function test_create_enterprise_purposes(): void {
         $data = [
             [
                 "value" => "Handel und Vertrieb",

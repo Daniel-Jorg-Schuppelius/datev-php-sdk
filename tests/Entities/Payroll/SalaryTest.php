@@ -16,7 +16,7 @@ use Datev\Entities\Payroll\Salaries\{Salaries, Salary};
 use Tests\Contracts\EntityTest;
 
 class SalaryTest extends EntityTest {
-    public function test_create_salary() {
+    public function test_create_salary(): void {
         $data = [
             "id" => "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
             "personnel_number" => "EMP001",
@@ -30,7 +30,7 @@ class SalaryTest extends EntityTest {
         $this->assertInstanceOf(Salary::class, $salary);
     }
 
-    public function test_create_salaries() {
+    public function test_create_salaries(): void {
         $data = [
             "content" => [
                 [

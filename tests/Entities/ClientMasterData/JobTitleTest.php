@@ -16,7 +16,7 @@ use Datev\Entities\ClientMasterData\JobTitles\{JobTitle, JobTitles};
 use Tests\Contracts\EntityTest;
 
 class JobTitleTest extends EntityTest {
-    public function test_create_job_title() {
+    public function test_create_job_title(): void {
         $data = [
             "value" => "Geschäftsführer",
             "valid_from" => "2024-01-01",
@@ -26,7 +26,7 @@ class JobTitleTest extends EntityTest {
         $this->assertInstanceOf(JobTitle::class, $title);
     }
 
-    public function test_create_job_titles() {
+    public function test_create_job_titles(): void {
         $data = [
             [
                 "value" => "Geschäftsführer",

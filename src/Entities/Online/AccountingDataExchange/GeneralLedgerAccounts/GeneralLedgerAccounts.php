@@ -15,7 +15,13 @@ namespace Datev\Entities\Online\AccountingDataExchange\GeneralLedgerAccounts;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<GeneralLedgerAccount>
+ */
 class GeneralLedgerAccounts extends NamedValues {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->valueClassName = GeneralLedgerAccount::class;
         parent::__construct($data, $logger);

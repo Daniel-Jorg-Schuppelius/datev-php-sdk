@@ -68,6 +68,10 @@ class GeneralLedgerAccountsEndpoint extends EndpointAbstract implements Searchab
         }, "Fetching GeneralLedgerAccount (ID: {$accountId})");
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?GeneralLedgerAccounts {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
@@ -80,6 +84,10 @@ class GeneralLedgerAccountsEndpoint extends EndpointAbstract implements Searchab
         }, 'Searching GeneralLedgerAccounts');
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function searchUtilized(array $queryParams = [], array $options = []): ?GeneralLedgerAccounts {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options, "{$this->getBaseUrl()}/utilized");

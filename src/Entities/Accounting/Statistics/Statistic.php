@@ -22,6 +22,9 @@ class Statistic extends NamedEntity implements IdentifiableNamedEntityInterface 
     protected ?int $count_of_accounting_prima_nota;
     protected int $month;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

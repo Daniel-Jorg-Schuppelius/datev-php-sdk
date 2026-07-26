@@ -23,7 +23,7 @@ class TermsOfPaymentTest extends EndpointTest {
         return new TermsOfPaymentEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_terms_of_payment() {
+    public function test_get_terms_of_payment(): void {
         $this->skipMockIfComplexEntity();
 
         $this->endpoint = $this->createEndpoint();

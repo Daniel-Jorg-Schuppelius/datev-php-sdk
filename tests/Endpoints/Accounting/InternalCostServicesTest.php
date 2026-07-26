@@ -23,12 +23,12 @@ class InternalCostServicesTest extends EndpointTest {
         return new InternalCostServicesEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_internal_cost_services() {
+    public function test_get_internal_cost_services(): void {
         $this->skipMockIfComplexEntity();
 
         $this->endpoint = $this->createEndpoint();
 
-        $services = $this->endpoint->search();
+        $services = $this->endpoint->get();
 
         $this->assertNotNull($services);
     }

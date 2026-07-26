@@ -24,29 +24,33 @@ class TaxationTest extends EndpointTest {
         return new TaxationEndpoint($this->client, self::getLogger());
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             'id' => '12345',
             'tax_class' => 1,
             'church_tax' => true,
         ];
 
-        $taxation = Taxation::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertIsString($json);
+        $taxation = Taxation::fromJson($json);
         $this->assertInstanceOf(Taxation::class, $taxation);
     }
 
-    public function test_json_serialize_collection() {
+    public function test_json_serialize_collection(): void {
         $data = [
             ['id' => '12345', 'tax_class' => 1],
             ['id' => '12346', 'tax_class' => 3],
         ];
 
-        $taxations = Taxations::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertIsString($json);
+        $taxations = Taxations::fromJson($json);
         $this->assertInstanceOf(Taxations::class, $taxations);
         $this->assertCount(2, $taxations->getValues());
     }
 
-    public function test_get_taxations() {
+    public function test_get_taxations(): void {
         $this->endpoint = $this->createEndpoint();
         $taxations = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

@@ -31,6 +31,9 @@ class Version extends NamedEntity {
     protected ?ProgramVersion $version;
     protected ?string $version_name;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
@@ -79,6 +82,9 @@ class Version extends NamedEntity {
         return $this->client_categories_groups_supported ?? false;
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     protected function getArray(bool $asStringValues = false, bool $dateAsStringValues = true, string $dateFormat = "d.m.Y"): array {
         return parent::getArray($asStringValues, $dateAsStringValues, $dateFormat);
     }

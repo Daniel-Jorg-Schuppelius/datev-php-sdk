@@ -16,7 +16,7 @@ use Datev\Entities\ClientMasterData\CountriesOfHeadOffice\{CountriesOfHeadOffice
 use Tests\Contracts\EntityTest;
 
 class CountryOfHeadOfficeTest extends EntityTest {
-    public function test_create_country_of_head_office() {
+    public function test_create_country_of_head_office(): void {
         $data = [
             "value" => "DE",
             "valid_from" => "2024-01-01",
@@ -26,7 +26,7 @@ class CountryOfHeadOfficeTest extends EntityTest {
         $this->assertInstanceOf(CountryOfHeadOffice::class, $country);
     }
 
-    public function test_create_countries_of_head_office() {
+    public function test_create_countries_of_head_office(): void {
         $data = [
             [
                 "value" => "DE",

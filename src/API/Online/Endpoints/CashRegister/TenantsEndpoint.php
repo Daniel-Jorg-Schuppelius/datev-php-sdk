@@ -22,6 +22,10 @@ use Datev\Entities\Online\CashRegister\Tenants\Tenants;
 class TenantsEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
     protected string $endpoint = 'tenants';
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?Tenants {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options);

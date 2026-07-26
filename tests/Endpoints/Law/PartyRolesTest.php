@@ -14,15 +14,15 @@ use Datev\API\Desktop\Endpoints\Law\PartyRolesEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class PartyRolesTest extends EndpointTest {
-    protected ?PartyRolesEndpoint $endpoint;
+    protected PartyRolesEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new PartyRolesEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new PartyRolesEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_party_roles() {
+    public function test_get_party_roles(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

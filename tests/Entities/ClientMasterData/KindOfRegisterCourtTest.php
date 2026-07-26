@@ -16,7 +16,7 @@ use Datev\Entities\ClientMasterData\KindOfRegisterCourts\{KindOfRegisterCourt, K
 use Tests\Contracts\EntityTest;
 
 class KindOfRegisterCourtTest extends EntityTest {
-    public function test_create_kind_of_register_court() {
+    public function test_create_kind_of_register_court(): void {
         $data = [
             "value" => "HRB",
             "valid_from" => "2024-01-01",
@@ -26,7 +26,7 @@ class KindOfRegisterCourtTest extends EntityTest {
         $this->assertInstanceOf(KindOfRegisterCourt::class, $kind);
     }
 
-    public function test_create_kind_of_register_courts() {
+    public function test_create_kind_of_register_courts(): void {
         $data = [
             [
                 "value" => "HRB",

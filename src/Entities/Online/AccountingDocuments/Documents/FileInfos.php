@@ -15,7 +15,13 @@ namespace Datev\Entities\Online\AccountingDocuments\Documents;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<FileInfo>
+ */
 class FileInfos extends NamedValues {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->valueClassName = FileInfo::class;
         parent::__construct($data, $logger);

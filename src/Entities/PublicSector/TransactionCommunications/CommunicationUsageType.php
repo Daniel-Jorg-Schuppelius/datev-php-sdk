@@ -19,6 +19,9 @@ class CommunicationUsageType extends NamedEntity {
     protected ?bool $is_main_communication_usage_type;
     protected ?bool $is_main_management_phone;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

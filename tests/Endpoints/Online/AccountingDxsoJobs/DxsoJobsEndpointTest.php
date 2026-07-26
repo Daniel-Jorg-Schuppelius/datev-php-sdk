@@ -51,8 +51,11 @@ class DxsoJobsEndpointTest extends OnlineEndpointTest {
         $this->assertSame(self::JOB_ID, $job->getId());
         $this->assertSame(['Kasse 1'], $job->getCashLedgerNames());
 
-        $requests = $this->mockClient->getRecordedRequests();
+        $mockClient = $this->mockClient;
+        $this->assertNotNull($mockClient);
+        $requests = $mockClient->getRecordedRequests();
         $lastRequest = end($requests);
+        $this->assertNotFalse($lastRequest);
         $this->assertSame(['import_type' => 'cashLedgerImport', 'accounting_month' => '2026-06'], $lastRequest['options']['json']);
     }
 
@@ -84,13 +87,16 @@ class DxsoJobsEndpointTest extends OnlineEndpointTest {
         $endpoint->addFile(self::JOB_ID, 'xml-content', 'transfer.xml');
         $endpoint->finalize(self::JOB_ID);
 
-        $requests = $this->mockClient->getRecordedRequests();
+        $mockClient = $this->mockClient;
+        $this->assertNotNull($mockClient);
+        $requests = $mockClient->getRecordedRequests();
 
         $fileRequest = $requests[count($requests) - 2];
         $this->assertSame('POST', $fileRequest['method']);
         $this->assertSame('files', $fileRequest['options']['multipart'][0]['name']);
 
         $finalizeRequest = end($requests);
+        $this->assertNotFalse($finalizeRequest);
         $this->assertSame('PUT', $finalizeRequest['method']);
         $this->assertSame('application/merge-patch+json', $finalizeRequest['options']['headers']['Content-Type'] ?? null);
         $this->assertSame('{"ready":"true"}', $finalizeRequest['options']['body']);
@@ -105,8 +111,12 @@ class DxsoJobsEndpointTest extends OnlineEndpointTest {
 
         $this->createEndpoint()->cancel(self::JOB_ID);
 
-        $requests = $this->mockClient->getRecordedRequests();
-        $this->assertSame('DELETE', end($requests)['method']);
+        $mockClient = $this->mockClient;
+        $this->assertNotNull($mockClient);
+        $requests = $mockClient->getRecordedRequests();
+        $lastRequest = end($requests);
+        $this->assertNotFalse($lastRequest);
+        $this->assertSame('DELETE', $lastRequest['method']);
     }
 
     public function test_get_protocol_entries(): void {
@@ -119,7 +129,9 @@ class DxsoJobsEndpointTest extends OnlineEndpointTest {
         $this->assertInstanceOf(ProtocolEntries::class, $entries);
 
         if ($this->isUsingMock()) {
-            $this->assertSame('OK', $entries->getFirstValue()->getText());
+            $firstEntry = $entries->getFirstValue();
+            $this->assertNotNull($firstEntry);
+            $this->assertSame('OK', $firstEntry->getText());
         }
     }
 

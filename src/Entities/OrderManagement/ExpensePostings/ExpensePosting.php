@@ -41,6 +41,9 @@ class ExpensePosting extends NamedEntity {
     protected ?float $cost_amount;
     protected ?float $number_of_units;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

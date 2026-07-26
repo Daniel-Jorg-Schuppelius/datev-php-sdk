@@ -15,16 +15,18 @@ namespace Tests\API\Online;
 use Datev\API\Online\{Client, OnlineService};
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Testbarer Client, der prefixUri() öffentlich macht (keine HTTP-Aufrufe).
+ */
+final class TestableOnlineClient extends Client {
+    public function exposePrefixUri(string $uri): string {
+        return $this->prefixUri($uri);
+    }
+}
+
 class OnlineClientTest extends TestCase {
-    /**
-     * Testbarer Client, der prefixUri() öffentlich macht (keine HTTP-Aufrufe).
-     */
-    private function createClient(OnlineService $service, bool $sandbox = false): Client {
-        return new class($service, null, null, $sandbox) extends Client {
-            public function exposePrefixUri(string $uri): string {
-                return $this->prefixUri($uri);
-            }
-        };
+    private function createClient(OnlineService $service, bool $sandbox = false): TestableOnlineClient {
+        return new TestableOnlineClient($service, null, null, $sandbox);
     }
 
     public function test_prefixes_service_relative_uri(): void {

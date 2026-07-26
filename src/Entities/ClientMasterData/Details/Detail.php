@@ -126,6 +126,9 @@ class Detail extends NamedEntity {
     protected ?DateTime $winding_up_date;
     protected ?WindingUpStatus $winding_up_proceedings;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
@@ -230,7 +233,7 @@ class Detail extends NamedEntity {
         return $this->name_prefix ?? null;
     }
 
-    public function getNationality(): Nationality {
+    public function getNationality(): ?Nationality {
         return $this->nationality ?? null;
     }
 

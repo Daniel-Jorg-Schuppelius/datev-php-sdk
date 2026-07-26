@@ -41,6 +41,9 @@ class Client extends CommonClient {
     protected ?string $functional_area_name;
     protected ?string $functional_area_short_name;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

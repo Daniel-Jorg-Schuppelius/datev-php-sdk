@@ -37,6 +37,9 @@ class SocialInsurance extends NamedEntity {
 
     protected string $health_insurer_for_marginal_employee;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

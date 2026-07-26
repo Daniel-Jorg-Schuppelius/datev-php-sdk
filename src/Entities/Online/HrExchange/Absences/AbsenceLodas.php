@@ -27,6 +27,9 @@ class AbsenceLodas extends NamedEntity {
 
     protected int $reason_for_absence;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

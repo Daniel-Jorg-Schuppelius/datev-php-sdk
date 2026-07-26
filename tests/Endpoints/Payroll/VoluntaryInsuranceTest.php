@@ -24,29 +24,35 @@ class VoluntaryInsuranceTest extends EndpointTest {
         return new VoluntaryInsuranceEndpoint($this->client, self::getLogger());
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             'id' => '12345',
             'insurance_type' => 'Zusatzversicherung',
             'monthly_contribution' => 100.00,
         ];
 
-        $insurance = VoluntaryInsurance::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+
+        $insurance = VoluntaryInsurance::fromJson($json);
         $this->assertInstanceOf(VoluntaryInsurance::class, $insurance);
     }
 
-    public function test_json_serialize_collection() {
+    public function test_json_serialize_collection(): void {
         $data = [
             ['id' => '12345', 'insurance_type' => 'Zusatzversicherung'],
             ['id' => '12346', 'insurance_type' => 'Betriebsrente'],
         ];
 
-        $insurances = VoluntaryInsurances::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+
+        $insurances = VoluntaryInsurances::fromJson($json);
         $this->assertInstanceOf(VoluntaryInsurances::class, $insurances);
         $this->assertCount(2, $insurances->getValues());
     }
 
-    public function test_get_voluntary_insurances() {
+    public function test_get_voluntary_insurances(): void {
         $this->endpoint = $this->createEndpoint();
         $insurances = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

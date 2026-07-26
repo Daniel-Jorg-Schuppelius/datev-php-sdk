@@ -55,6 +55,10 @@ class FiscalYearsEndpoint extends EndpointAbstract implements SearchableEndpoint
         }, "Fetching FiscalYear (ID: {$fiscalYearId})");
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?FiscalYears {
         if (!isset($this->clientId)) {
             $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID is required');

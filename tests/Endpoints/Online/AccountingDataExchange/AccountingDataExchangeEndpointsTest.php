@@ -62,8 +62,10 @@ class AccountingDataExchangeEndpointsTest extends OnlineEndpointTest {
 
         $this->assertInstanceOf(FiscalYears::class, $years);
         $this->assertSame(2, $years->count());
-        $this->assertSame(4, $years->getFirstValue()->getAccountLength());
-        $this->assertTrue($years->getFirstValue()->isInvoiceDateCheckOn());
+        $first = $years->getFirstValue();
+        $this->assertNotNull($first);
+        $this->assertSame(4, $first->getAccountLength());
+        $this->assertTrue($first->isInvoiceDateCheckOn());
     }
 
     public function test_get_fiscal_year(): void {
@@ -123,6 +125,7 @@ class AccountingDataExchangeEndpointsTest extends OnlineEndpointTest {
         $this->assertFalse($page->hasNext());
 
         $posting = $page->getItems()->getFirstValue();
+        $this->assertNotNull($posting);
         $this->assertSame(10000, $posting->getAccountNumber());
         $this->assertSame(DataExchangeRecordType::FinancialAccounting, $posting->getRecordType());
         $this->assertSame('abc-123', $posting->getDocumentLink()?->getDocumentGuid());
@@ -149,7 +152,7 @@ class AccountingDataExchangeEndpointsTest extends OnlineEndpointTest {
 
         $sums = (new SumsAndBalancesEndpoint($this->client, self::CLIENT_ID, self::FISCAL_YEAR_ID))->search();
         $this->assertSame(100.5, $sums?->getFirstValue()?->getBalance());
-        $this->assertSame(1, $sums?->getFirstValue()?->getSumsAndBalancesMonthValues()?->count());
+        $this->assertSame(1, $sums->getFirstValue()->getSumsAndBalancesMonthValues()?->count());
     }
 
     public function test_agricultural_financial_statement_csv(): void {

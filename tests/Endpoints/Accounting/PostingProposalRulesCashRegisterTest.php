@@ -22,7 +22,7 @@ class PostingProposalRulesCashRegisterTest extends EndpointTest {
         return new PostingProposalRulesCashRegisterEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_posting_proposal_rules_cash_register() {
+    public function test_get_posting_proposal_rules_cash_register(): void {
         $this->skipMockIfComplexEntity();
 
         $this->endpoint = $this->createEndpoint();

@@ -45,6 +45,9 @@ class FiscalYear extends NamedEntity {
 
     protected string $yearEnd;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

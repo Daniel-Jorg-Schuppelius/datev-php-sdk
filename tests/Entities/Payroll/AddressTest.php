@@ -29,7 +29,7 @@ class AddressTest extends EntityTest {
         $address = new Address($data);
 
         $this->assertInstanceOf(Address::class, $address);
-        $this->assertEquals("addr-001", $address->getID()->getValue());
+        $this->assertEquals("addr-001", $address->getID()?->getValue());
         $this->assertEquals("Musterstraße", $address->getStreet());
         $this->assertEquals("München", $address->getCity());
         $this->assertEquals("80331", $address->getPostalCode());

@@ -15,7 +15,13 @@ namespace Datev\Entities\Online\AccountingDataExchange\AccountPostings;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<AccountPosting>
+ */
 class AccountPostings extends NamedValues {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->valueClassName = AccountPosting::class;
         parent::__construct($data, $logger);

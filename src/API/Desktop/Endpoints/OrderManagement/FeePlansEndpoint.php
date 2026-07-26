@@ -37,6 +37,10 @@ class FeePlansEndpoint extends EndpointAbstract implements SearchableEndpointInt
         }, "Fetching FeePlan (ID: {$id->toString()})");
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?FeePlans {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options);

@@ -19,6 +19,9 @@ use Psr\Log\LoggerInterface;
 class AccountableEmployee extends Employee {
     protected ?DateTime $date_of_termination_of_employment;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

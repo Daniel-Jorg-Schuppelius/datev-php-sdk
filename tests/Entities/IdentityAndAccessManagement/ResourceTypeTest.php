@@ -16,7 +16,7 @@ use Datev\Entities\IdentityAndAccessManagement\Schemas\{ResourceType, ResourceTy
 use Tests\Contracts\EntityTest;
 
 class ResourceTypeTest extends EntityTest {
-    public function test_create_resource_type() {
+    public function test_create_resource_type(): void {
         $data = [
             "id" => "User",
             "name" => "User",
@@ -36,7 +36,7 @@ class ResourceTypeTest extends EntityTest {
         $this->assertEquals("urn:ietf:params:scim:schemas:core:2.0:User", $resourceType->getSchema());
     }
 
-    public function test_create_resource_types() {
+    public function test_create_resource_types(): void {
         $data = [
             "Resources" => [
                 [

@@ -16,7 +16,7 @@ use Datev\Entities\Accounting\InternalCostServices\{InternalCostService, Interna
 use Tests\Contracts\EntityTest;
 
 class InternalCostServiceTest extends EntityTest {
-    public function test_create_internal_cost_service() {
+    public function test_create_internal_cost_service(): void {
         $data = [
             "amount" => 1500.00,
             "cost_center_from" => "10000",
@@ -39,7 +39,7 @@ class InternalCostServiceTest extends EntityTest {
         $this->assertEquals("Rechnung 2024-001", $costService->getDocumentField1());
     }
 
-    public function test_create_internal_cost_services() {
+    public function test_create_internal_cost_services(): void {
         $data = [
             "content" => [
                 [

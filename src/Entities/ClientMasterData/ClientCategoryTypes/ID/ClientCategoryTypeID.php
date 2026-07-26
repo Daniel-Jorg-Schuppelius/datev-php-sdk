@@ -16,6 +16,9 @@ use Datev\Entities\ClientMasterData\ClientCategoryTypes\ClientCategoryTypeID as 
 use Psr\Log\LoggerInterface;
 
 class ClientCategoryTypeID extends BaseClientCategoryTypeID {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
         $this->entityName = 'client_category_type_id';

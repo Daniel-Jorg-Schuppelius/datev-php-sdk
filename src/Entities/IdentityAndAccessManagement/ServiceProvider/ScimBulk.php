@@ -20,6 +20,9 @@ class ScimBulk extends NamedEntity {
     protected ?int $max_operations;
     protected ?int $max_payload_size;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

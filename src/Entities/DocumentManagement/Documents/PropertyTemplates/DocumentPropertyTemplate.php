@@ -21,6 +21,9 @@ class DocumentPropertyTemplate extends NamedEntity implements IdentifiableNamedE
     protected ?string $name;
     protected ?string $supplement;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

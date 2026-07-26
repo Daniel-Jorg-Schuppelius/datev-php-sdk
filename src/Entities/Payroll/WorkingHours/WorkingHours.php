@@ -27,6 +27,9 @@ class WorkingHours extends NamedEntity implements IdentifiableNamedEntityInterfa
     protected ?float $allocation_of_working_hours_saturday;
     protected ?float $allocation_of_working_hours_sunday;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

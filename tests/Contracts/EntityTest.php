@@ -19,8 +19,8 @@ use Tests\TestAPIClientFactory;
 abstract class EntityTest extends TestCase {
     use ErrorLog;
 
-    public function __construct($name) {
-        parent::__construct($name);
+    protected function setUp(): void {
+        parent::setUp();
         self::setLogger(TestAPIClientFactory::getLogger());
     }
 }

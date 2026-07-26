@@ -17,7 +17,7 @@ use Datev\Entities\ClientMasterData\CompanyNames\{CompanyName, CompanyNames};
 use Tests\Contracts\EntityTest;
 
 class CompanyNameTest extends EntityTest {
-    public function test_create_company_name() {
+    public function test_create_company_name(): void {
         $data = [
             "valid_from" => "2024-09-30",
             "value" => "Mustermeier GmbH",
@@ -32,7 +32,7 @@ class CompanyNameTest extends EntityTest {
         $this->assertEquals(new DateTime("2024-09-30"), $companyName->getValidFrom());
     }
 
-    public function test_create_company_names() {
+    public function test_create_company_names(): void {
         $data = [
             [
                 "valid_from" => "2024-09-30",

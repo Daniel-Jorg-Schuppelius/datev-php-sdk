@@ -24,29 +24,35 @@ class AccountableEmployeesTest extends EndpointTest {
         return new AccountableEmployeesEndpoint($this->client, self::getLogger());
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             'id' => '12345',
             'first_name' => 'Max',
             'last_name' => 'Mustermann',
         ];
 
-        $employee = AccountableEmployee::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+
+        $employee = AccountableEmployee::fromJson($json);
         $this->assertInstanceOf(AccountableEmployee::class, $employee);
     }
 
-    public function test_json_serialize_collection() {
+    public function test_json_serialize_collection(): void {
         $data = [
             ['id' => '12345', 'first_name' => 'Max', 'last_name' => 'Mustermann'],
             ['id' => '12346', 'first_name' => 'Erika', 'last_name' => 'Musterfrau'],
         ];
 
-        $employees = AccountableEmployees::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+
+        $employees = AccountableEmployees::fromJson($json);
         $this->assertInstanceOf(AccountableEmployees::class, $employees);
         $this->assertCount(2, $employees->getValues());
     }
 
-    public function test_get_accountable_employees() {
+    public function test_get_accountable_employees(): void {
         $this->endpoint = $this->createEndpoint();
         $employees = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

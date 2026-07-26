@@ -26,11 +26,14 @@ class FunctionalArea extends NamedEntity implements IdentifiableNamedEntityInter
     protected ?Status $status;
     protected ?DateTime $timestamp;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
 
-    public function getID(): FunctionalAreaID {
+    public function getID(): ?FunctionalAreaID {
         return $this->id;
     }
 

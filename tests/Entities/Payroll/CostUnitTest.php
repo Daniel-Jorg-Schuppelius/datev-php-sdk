@@ -16,7 +16,7 @@ use Datev\Entities\Payroll\CostUnits\{CostUnit, CostUnits};
 use Tests\Contracts\EntityTest;
 
 class CostUnitTest extends EntityTest {
-    public function test_create_cost_unit() {
+    public function test_create_cost_unit(): void {
         $data = [
             "id" => "A001",
             "name" => "Projekt Alpha",
@@ -27,7 +27,7 @@ class CostUnitTest extends EntityTest {
         $this->assertEquals("Projekt Alpha", $costUnit->getName());
     }
 
-    public function test_create_cost_units() {
+    public function test_create_cost_units(): void {
         $data = [
             "content" => [
                 [

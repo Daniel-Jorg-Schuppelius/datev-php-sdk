@@ -17,15 +17,15 @@ use Datev\Entities\IdentityAndAccessManagement\Users\{User, UserID, Users};
 use Tests\Contracts\EndpointTest;
 
 class UsersTest extends EndpointTest {
-    protected ?UsersEndpoint $endpoint;
+    protected UsersEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
+    protected function setUp(): void {
+        $this->apiDisabled = true;
+        parent::setUp();
         $this->endpoint = new UsersEndpoint($this->client, self::getLogger());
-        $this->apiDisabled = true; // API is disabled
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             "id" => "f66a81fb-2681-45ec-81b0-ce8346baac07",
             "meta" => [
@@ -51,13 +51,17 @@ class UsersTest extends EndpointTest {
         $user = new User($data);
         $this->assertInstanceOf(User::class, $user);
         $this->assertEquals("Mustermann, Max", $user->getDisplayName());
-        $this->assertEquals("Max", $user->getName()->getGivenName());
-        $this->assertEquals("Mustermann", $user->getName()->getFamilyName());
+        $name = $user->getName();
+        $this->assertNotNull($name);
+        $this->assertEquals("Max", $name->getGivenName());
+        $this->assertEquals("Mustermann", $name->getFamilyName());
         $this->assertTrue($user->isActive());
-        $this->assertEquals("mm", $user->getDatevExtension()->getInitials());
+        $datevExtension = $user->getDatevExtension();
+        $this->assertNotNull($datevExtension);
+        $this->assertEquals("mm", $datevExtension->getInitials());
     }
 
-    public function test_get_users() {
+    public function test_get_users(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }
@@ -66,7 +70,7 @@ class UsersTest extends EndpointTest {
         $this->assertInstanceOf(Users::class, $users);
     }
 
-    public function test_get_user() {
+    public function test_get_user(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }
@@ -76,7 +80,7 @@ class UsersTest extends EndpointTest {
         $this->assertInstanceOf(User::class, $user);
     }
 
-    public function test_get_me() {
+    public function test_get_me(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

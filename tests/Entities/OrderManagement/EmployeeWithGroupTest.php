@@ -16,7 +16,7 @@ use Datev\Entities\OrderManagement\EmployeesWithGroup\{EmployeeWithGroup, Employ
 use Tests\Contracts\EntityTest;
 
 class EmployeeWithGroupTest extends EntityTest {
-    public function test_create_employee_with_group() {
+    public function test_create_employee_with_group(): void {
         $data = [
             "id" => "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
             "employee_id" => "b2c3d4e5-f6a7-8901-bcde-f12345678901",
@@ -36,7 +36,7 @@ class EmployeeWithGroupTest extends EntityTest {
         $this->assertEquals("Team A", $employeeGroup->getEmployeeGroupShortName());
     }
 
-    public function test_create_employees_with_group() {
+    public function test_create_employees_with_group(): void {
         $data = [
             "content" => [
                 [

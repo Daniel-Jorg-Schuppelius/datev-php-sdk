@@ -24,6 +24,9 @@ class AcknowledgementUser extends NamedEntity implements IdentifiableNamedEntity
     protected ?DateTime $acknowledged;
     protected ?bool $is_deleted;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

@@ -17,6 +17,9 @@ namespace Tests\Mocks\Fixtures;
  * Struktur entspricht der echten DATEV API Antwort.
  */
 class ClientMasterDataFixtures {
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getClients(): array {
         return [
             self::getClient(),
@@ -32,6 +35,9 @@ class ClientMasterDataFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getClient(): array {
         return [
             'id' => '550e8400-e29b-41d4-a716-446655440000',
@@ -48,6 +54,9 @@ class ClientMasterDataFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getAddressees(): array {
         return [
             [
@@ -72,6 +81,9 @@ class ClientMasterDataFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getAddressee(): array {
         return [
             'id' => 'addr-001',
@@ -84,6 +96,9 @@ class ClientMasterDataFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getTaxAuthorities(): array {
         return [
             [
@@ -105,6 +120,9 @@ class ClientMasterDataFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getLegalForms(): array {
         return [
             ['id' => 'lf-001', 'code' => 'GmbH', 'name' => 'Gesellschaft mit beschränkter Haftung'],
@@ -115,6 +133,9 @@ class ClientMasterDataFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getCountryCodes(): array {
         return [
             ['id' => 'cc-DE', 'code' => 'DE', 'name' => 'Deutschland'],
@@ -125,6 +146,9 @@ class ClientMasterDataFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getClientGroups(): array {
         return [
             ['id' => 'cg-001', 'name' => 'Gruppe A', 'description' => 'Hauptkunden'],
@@ -132,6 +156,9 @@ class ClientMasterDataFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getRelationships(): array {
         return [
             [
@@ -143,6 +170,9 @@ class ClientMasterDataFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getResponsibilities(): array {
         return [
             [
@@ -154,6 +184,9 @@ class ClientMasterDataFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getVersion(): array {
         return [
             'version' => '1.0.0',
@@ -162,6 +195,9 @@ class ClientMasterDataFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getEmployees(): array {
         return [
             [
@@ -179,6 +215,9 @@ class ClientMasterDataFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getAllResponses(): array {
         return [
             'GET:/datev/api/master-data/v1/clients' => [

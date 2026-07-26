@@ -25,11 +25,15 @@ class SecureAreasEndpoint extends EndpointAbstract implements SearchableEndpoint
             $this->logErrorAndThrow(InvalidArgumentException::class, 'ID is required');
         }
 
-        $result = $this->search()->getFirstValue("id", $id->toString());
+        $result = $this->search()?->getFirstValue("id", $id->toString());
 
         return $result;
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?SecureAreas {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options);

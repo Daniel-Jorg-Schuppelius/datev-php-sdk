@@ -30,7 +30,9 @@ class ClientTest extends EntityTest {
     ];
 
     public function test_from_json(): void {
-        $client = Client::fromJson(json_encode(self::SPEC_EXAMPLE));
+        $json = json_encode(self::SPEC_EXAMPLE);
+        $this->assertNotFalse($json);
+        $client = Client::fromJson($json);
 
         $this->assertSame('29098-55003', $client->getId());
         $this->assertSame(55003, $client->getClientNumber());
@@ -48,7 +50,9 @@ class ClientTest extends EntityTest {
     }
 
     public function test_consultant_client_number(): void {
-        $client = Client::fromJson(json_encode(self::SPEC_EXAMPLE));
+        $json = json_encode(self::SPEC_EXAMPLE);
+        $this->assertNotFalse($json);
+        $client = Client::fromJson($json);
 
         $ccn = $client->getConsultantClientNumber();
         $this->assertNotNull($ccn);
@@ -58,7 +62,9 @@ class ClientTest extends EntityTest {
     }
 
     public function test_collection_from_json(): void {
-        $clients = Clients::fromJson(json_encode([self::SPEC_EXAMPLE, self::SPEC_EXAMPLE]));
+        $json = json_encode([self::SPEC_EXAMPLE, self::SPEC_EXAMPLE]);
+        $this->assertNotFalse($json);
+        $clients = Clients::fromJson($json);
 
         $this->assertSame(2, $clients->count());
         $this->assertInstanceOf(Client::class, $clients->getFirstValue());

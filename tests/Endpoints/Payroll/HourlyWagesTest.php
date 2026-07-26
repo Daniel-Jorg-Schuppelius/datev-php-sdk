@@ -24,28 +24,34 @@ class HourlyWagesTest extends EndpointTest {
         return new HourlyWagesEndpoint($this->client, self::getLogger());
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             'id' => '12345',
             'hourly_rate' => 25.50,
         ];
 
-        $wage = HourlyWage::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+
+        $wage = HourlyWage::fromJson($json);
         $this->assertInstanceOf(HourlyWage::class, $wage);
     }
 
-    public function test_json_serialize_collection() {
+    public function test_json_serialize_collection(): void {
         $data = [
             ['id' => '12345', 'hourly_rate' => 25.50],
             ['id' => '12346', 'hourly_rate' => 30.00],
         ];
 
-        $wages = HourlyWages::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+
+        $wages = HourlyWages::fromJson($json);
         $this->assertInstanceOf(HourlyWages::class, $wages);
         $this->assertCount(2, $wages->getValues());
     }
 
-    public function test_get_hourly_wages() {
+    public function test_get_hourly_wages(): void {
         $this->endpoint = $this->createEndpoint();
         $wages = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

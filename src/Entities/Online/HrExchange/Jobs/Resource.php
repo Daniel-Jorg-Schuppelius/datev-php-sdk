@@ -37,6 +37,9 @@ class Resource extends NamedEntity {
 
     protected Resource $sub_resource;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

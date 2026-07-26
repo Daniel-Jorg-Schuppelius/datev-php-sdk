@@ -21,6 +21,10 @@ use Datev\Entities\Online\AccountingDataExchange\GeneralLedgerAccounts\GeneralLe
 class GeneralLedgerAccountsEndpoint extends FiscalYearScopedEndpointAbstract {
     protected string $endpointSuffix = 'general-ledger-accounts';
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?GeneralLedgerAccounts {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $urlPath = $this->getEndpointUrl();

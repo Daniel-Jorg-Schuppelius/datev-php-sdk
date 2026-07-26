@@ -23,6 +23,9 @@ class CostSystem extends NamedEntity implements IdentifiableNamedEntityInterface
     protected ?int $cost_length;
     protected ?bool $is_active;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

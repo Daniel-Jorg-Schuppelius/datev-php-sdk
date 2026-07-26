@@ -38,6 +38,10 @@ class CausesEndpoint extends EndpointAbstract implements SearchableEndpointInter
         }, "Fetching Cause (ID: {$id->toString()})");
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?Causes {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options);

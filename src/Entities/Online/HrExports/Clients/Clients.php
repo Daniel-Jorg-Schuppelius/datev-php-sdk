@@ -15,7 +15,13 @@ namespace Datev\Entities\Online\HrExports\Clients;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<Client>
+ */
 class Clients extends NamedValues {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->valueClassName = Client::class;
         parent::__construct($data, $logger);

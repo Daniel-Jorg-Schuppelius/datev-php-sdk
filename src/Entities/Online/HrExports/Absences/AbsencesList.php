@@ -15,7 +15,13 @@ namespace Datev\Entities\Online\HrExports\Absences;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<Absences>
+ */
 class AbsencesList extends NamedValues {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->valueClassName = Absences::class;
         parent::__construct($data, $logger);

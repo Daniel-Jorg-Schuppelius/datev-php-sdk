@@ -14,15 +14,15 @@ use Datev\API\Desktop\Endpoints\Law\ExpenseCategoriesEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class ExpenseCategoriesTest extends EndpointTest {
-    protected ?ExpenseCategoriesEndpoint $endpoint;
+    protected ExpenseCategoriesEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new ExpenseCategoriesEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new ExpenseCategoriesEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_expense_categories() {
+    public function test_get_expense_categories(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

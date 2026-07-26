@@ -16,13 +16,13 @@ use Datev\Entities\Common\Clients\{Client, ClientID, Clients};
 use Tests\Contracts\EntityTest;
 
 class ClientTest extends EntityTest {
-    public function test_create_client_id() {
+    public function test_create_client_id(): void {
         $id = new ClientID("12345678-1234-1234-1234-123456789012");
         $this->assertInstanceOf(ClientID::class, $id);
         $this->assertEquals("12345678-1234-1234-1234-123456789012", $id->toString());
     }
 
-    public function test_create_client() {
+    public function test_create_client(): void {
         $data = [
             "id" => "12345678-1234-1234-1234-123456789012",
             "name" => "Muster GmbH",
@@ -33,7 +33,7 @@ class ClientTest extends EntityTest {
         $this->assertInstanceOf(Client::class, $client);
     }
 
-    public function test_create_clients() {
+    public function test_create_clients(): void {
         $data = [
             [
                 "id" => "12345678-1234-1234-1234-123456789012",

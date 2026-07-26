@@ -16,6 +16,9 @@ use Datev\Entities\Accounting\CostCenterPropertyCharacteristics\CostCenterProper
 use Psr\Log\LoggerInterface;
 
 class CostCenterPropertyCharacteristicID extends BaseCostCenterPropertyCharacteristicID {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
         $this->entityName = 'characteristic_id';

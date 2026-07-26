@@ -16,7 +16,7 @@ use Datev\Entities\PublicSector\TransactionAddresses\{TransactionAddress, Transa
 use Tests\Contracts\EntityTest;
 
 class TransactionAddressTest extends EntityTest {
-    public function test_create_transaction_address() {
+    public function test_create_transaction_address(): void {
         $data = [
             "id" => 12345,
             "status" => "active",
@@ -31,7 +31,7 @@ class TransactionAddressTest extends EntityTest {
         $this->assertEquals("test@example.com", $address->getNotificationEmail());
     }
 
-    public function test_create_transaction_addresses() {
+    public function test_create_transaction_addresses(): void {
         $data = [
             "content" => [
                 [

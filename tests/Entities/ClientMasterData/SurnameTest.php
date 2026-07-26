@@ -16,7 +16,7 @@ use Datev\Entities\ClientMasterData\Surnames\{Surname, Surnames};
 use Tests\Contracts\EntityTest;
 
 class SurnameTest extends EntityTest {
-    public function test_create_surname() {
+    public function test_create_surname(): void {
         $data = [
             "value" => "Mustermann",
             "valid_from" => "2024-01-01",
@@ -26,7 +26,7 @@ class SurnameTest extends EntityTest {
         $this->assertInstanceOf(Surname::class, $surname);
     }
 
-    public function test_create_surnames() {
+    public function test_create_surnames(): void {
         $data = [
             [
                 "value" => "Mustermann",

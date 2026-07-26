@@ -28,6 +28,9 @@ class CostItemsEndpoint extends EndpointAbstract {
         return $this->getByOrderId((int) $id->toString());
     }
 
+    /**
+     * @param array<string, mixed> $queryParams
+     */
     public function getByOrderId(?int $orderId = null, array $queryParams = []): ?CostItems {
         if (is_null($orderId)) {
             $this->logErrorAndThrow(InvalidArgumentException::class, 'Order ID is required');

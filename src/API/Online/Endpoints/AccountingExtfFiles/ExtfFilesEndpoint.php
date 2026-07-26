@@ -54,6 +54,9 @@ class ExtfFilesEndpoint extends ClientScopedEndpointAbstract {
 
     /**
      * Liefert die Import-Jobs des Mandanten (skip/top; Link + Total-Items).
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     * @return PageResult<\Datev\Entities\Online\AccountingExtfFiles\Jobs\ExtfJob>
      */
     public function searchJobs(array $queryParams = [], array $options = []): PageResult {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {

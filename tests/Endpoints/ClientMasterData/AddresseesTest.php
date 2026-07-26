@@ -15,15 +15,15 @@ use Datev\Entities\ClientMasterData\Addressees\{Addressee, Addressees};
 use Tests\Contracts\EndpointTest;
 
 class AddresseesTest extends EndpointTest {
-    protected ?AddresseesEndpoint $endpoint;
+    protected AddresseesEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
+    protected function setUp(): void {
+        $this->apiDisabled = true;
+        parent::setUp();
         $this->endpoint = new AddresseesEndpoint($this->client, self::getLogger());
-        $this->apiDisabled = true; // API is disabled
     }
 
-    public function test_get_addressees() {
+    public function test_get_addressees(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

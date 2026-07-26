@@ -55,6 +55,10 @@ class CitizensEndpoint extends EndpointAbstract implements SearchableEndpointInt
         }, "Fetching Citizen (ID: {$citizenId})");
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?Citizens {
         if (!isset($this->clientId)) {
             $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID is required');

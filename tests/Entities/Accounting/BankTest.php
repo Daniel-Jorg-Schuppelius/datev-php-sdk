@@ -16,7 +16,7 @@ use Datev\Entities\Accounting\Banks\{Bank, Banks};
 use Tests\Contracts\EntityTest;
 
 class BankTest extends EntityTest {
-    public function test_create_bank() {
+    public function test_create_bank(): void {
         $data = [
             "bank_name" => "Deutsche Bank",
             "bic" => "DEUTDEDB",
@@ -30,7 +30,7 @@ class BankTest extends EntityTest {
         $this->assertInstanceOf(Bank::class, $bank);
     }
 
-    public function test_create_banks() {
+    public function test_create_banks(): void {
         $data = [
             "content" => [
                 [

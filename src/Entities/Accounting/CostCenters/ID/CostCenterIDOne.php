@@ -16,6 +16,9 @@ use Datev\Entities\Accounting\CostCenters\CostCenterID as BaseCostCenterID;
 use Psr\Log\LoggerInterface;
 
 class CostCenterIDOne extends BaseCostCenterID {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
         $this->entityName = 'kost1_cost_center_id';

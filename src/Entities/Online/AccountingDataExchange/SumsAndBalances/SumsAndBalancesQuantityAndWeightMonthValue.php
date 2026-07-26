@@ -37,6 +37,9 @@ class SumsAndBalancesQuantityAndWeightMonthValue extends NamedEntity {
 
     protected int $fiscalYearMonth;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

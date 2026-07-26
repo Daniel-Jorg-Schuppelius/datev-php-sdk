@@ -45,6 +45,9 @@ class IncapacityForWork extends NamedEntity {
 
     protected string $automatic_feedback_until;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

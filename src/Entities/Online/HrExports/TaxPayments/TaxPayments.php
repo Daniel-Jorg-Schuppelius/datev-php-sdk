@@ -67,6 +67,9 @@ class TaxPayments extends NamedEntity {
 
     protected float $solidarity_tax_non_recurring_payment;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

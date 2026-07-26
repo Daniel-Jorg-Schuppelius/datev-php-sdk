@@ -37,6 +37,10 @@ class MonthlyValuesEndpoint extends EndpointAbstract implements SearchableEndpoi
         }, "Fetching MonthlyValue (ID: {$id->toString()})");
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?MonthlyValues {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options);

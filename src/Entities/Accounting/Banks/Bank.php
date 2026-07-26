@@ -20,6 +20,9 @@ class Bank extends BankAccount {
     protected ?bool $is_business_partner_bank;
     protected ?string $sepa_mandate_reference;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

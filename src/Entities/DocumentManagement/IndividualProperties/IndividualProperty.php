@@ -25,6 +25,9 @@ class IndividualProperty extends NamedEntity implements IdentifiableNamedEntityI
     protected ?bool $active;
     protected ?bool $reference_item;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

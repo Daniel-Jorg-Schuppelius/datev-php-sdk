@@ -31,6 +31,9 @@ class EauRequest extends NamedEntity {
 
     protected bool $follow_up_certification;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

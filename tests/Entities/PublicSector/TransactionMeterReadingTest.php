@@ -16,7 +16,7 @@ use Datev\Entities\PublicSector\TransactionMeterReadings\{TransactionMeterReadin
 use Tests\Contracts\EntityTest;
 
 class TransactionMeterReadingTest extends EntityTest {
-    public function test_create_transaction_meter_reading() {
+    public function test_create_transaction_meter_reading(): void {
         $data = [
             "id" => 12345,
             "status" => "confirmed",
@@ -29,7 +29,7 @@ class TransactionMeterReadingTest extends EntityTest {
         $this->assertEquals("confirmed", $reading->getStatus());
     }
 
-    public function test_create_transaction_meter_readings() {
+    public function test_create_transaction_meter_readings(): void {
         $data = [
             "content" => [
                 [

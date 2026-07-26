@@ -25,10 +25,14 @@ use Datev\API\Online\OnlineService;
 class OpenApiMockGenerator {
     private const OPENAPI_PATH = __DIR__ . '/../../docs/OpenAPI';
 
+    /**
+     * @var array<array-key, mixed>
+     */
     private static array $loadedSpecs = [];
 
     /**
      * Mapping von Domain-Namen zu OpenAPI-Dateinamen (Desktop).
+     * @var array<array-key, mixed>
      */
     private static array $domainToFile = [
         'diagnostics' => 'Desktop/Diagnostics and Functional Tests-1.1.2.json',
@@ -65,6 +69,7 @@ class OpenApiMockGenerator {
 
     /**
      * Lädt eine OpenAPI-Spezifikation.
+     * @return array<array-key, mixed>
      */
     public static function loadSpec(string $domain): ?array {
         $domain = strtolower($domain);
@@ -144,6 +149,7 @@ class OpenApiMockGenerator {
      * Online: echte Statuscodes (200/201/202/204), Response-Header
      * (Location, Retry-After, Link, Total-Items, x-*-page*) und
      * Nicht-JSON-Content-Types (pdf/zip/ndjson).
+     * @return array<array-key, mixed>
      */
     public static function extractExamples(string $domain): array {
         $spec = self::loadSpec($domain);
@@ -193,6 +199,8 @@ class OpenApiMockGenerator {
      * Extrahiert die vollständige Mock-Registrierung (Status, Body, Header)
      * für eine Online-Operation: erste 2xx-Response der Operation.
      *
+     * @param array<array-key, mixed> $operation
+     * @param array<array-key, mixed> $spec
      * @return array{statusCode: int, body: mixed, headers: array<string, string>}|null
      */
     private static function extractOnlineResponse(array $operation, array $spec): ?array {
@@ -226,6 +234,8 @@ class OpenApiMockGenerator {
      * Erzeugt den Mock-Body samt Content-Type für eine Response-Definition
      * (OpenAPI 3.0 content-Map oder Swagger 2.0 schema/examples).
      *
+     * @param array<array-key, mixed> $response
+     * @param array<array-key, mixed> $spec
      * @return array{0: mixed, 1: string}
      */
     private static function mockBodyFromResponse(array $response, array $spec): array {
@@ -281,6 +291,7 @@ class OpenApiMockGenerator {
     /**
      * Erzeugt Mock-Werte für die in der Spezifikation deklarierten Response-Header.
      *
+     * @param array<array-key, mixed> $response
      * @return array<string, string>
      */
     private static function mockHeadersFromResponse(array $response): array {
@@ -315,7 +326,10 @@ class OpenApiMockGenerator {
     /**
      * Extrahiert das Beispiel aus einer Response-Definition.
      *
+     * @param array<array-key, mixed> $operation
+     * @param array<array-key, mixed> $spec
      * @return string|array|null Das Beispiel als String oder Array
+     * @return array<array-key, mixed>
      */
     private static function extractResponseExample(array $operation, array $spec): string|array|null {
         $responses = $operation['responses'] ?? [];
@@ -363,6 +377,8 @@ class OpenApiMockGenerator {
 
     /**
      * Generiert Mock-Daten aus einem Schema.
+     * @param array<array-key, mixed> $schema
+     * @param array<array-key, mixed> $spec
      */
     private static function generateFromSchema(array $schema, array $spec, int $depth = 0): mixed {
         if ($depth > 5) {
@@ -423,6 +439,8 @@ class OpenApiMockGenerator {
 
     /**
      * Löst eine $ref-Referenz auf.
+     * @param array<array-key, mixed> $spec
+     * @return array<array-key, mixed>
      */
     private static function resolveRef(string $ref, array $spec): ?array {
         // Format: #/definitions/TypeName oder #/components/schemas/TypeName
@@ -477,6 +495,7 @@ class OpenApiMockGenerator {
 
     /**
      * Gibt alle verfügbaren Domains zurück (Desktop + Online).
+     * @return array<array-key, mixed>
      */
     public static function getAvailableDomains(): array {
         $onlineDomains = array_map(fn (OnlineService $service) => $service->mockDomain(), OnlineService::cases());

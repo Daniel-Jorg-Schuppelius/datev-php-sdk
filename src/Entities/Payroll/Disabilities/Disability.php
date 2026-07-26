@@ -25,6 +25,9 @@ class Disability extends NamedEntity implements IdentifiableNamedEntityInterface
     protected ?string $issuing_authority;
     protected ?string $disability_group;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

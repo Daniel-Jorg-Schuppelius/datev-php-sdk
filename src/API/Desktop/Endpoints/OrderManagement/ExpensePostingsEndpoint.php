@@ -37,6 +37,9 @@ class ExpensePostingsEndpoint extends EndpointAbstract implements SearchableEndp
         }, "Fetching ExpensePosting (ID: {$id->toString()})");
     }
 
+    /**
+     * @param array<string, mixed> $queryParams
+     */
     public function getForOrder(int $orderId, array $queryParams = []): ?ExpensePostings {
         return $this->logDebugWithTimer(function () use ($orderId, $queryParams) {
             $response = parent::getContents($queryParams, [], "{$this->getEndpointUrl()}/{$orderId}/expensepostings");
@@ -49,6 +52,10 @@ class ExpensePostingsEndpoint extends EndpointAbstract implements SearchableEndp
         }, "Fetching ExpensePostings for Order (ID: {$orderId})");
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?ExpensePostings {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/expensepostings");
@@ -61,6 +68,9 @@ class ExpensePostingsEndpoint extends EndpointAbstract implements SearchableEndp
         }, 'Searching ExpensePostings');
     }
 
+    /**
+     * @param array<string, mixed> $queryParams
+     */
     public function create(int $orderId, ExpensePosting $expensePosting, array $queryParams = []): bool {
         return $this->logDebugWithTimer(function () use ($orderId, $expensePosting, $queryParams) {
             $response = parent::postContents($expensePosting->toArray(), $queryParams, "{$this->getEndpointUrl()}/{$orderId}/expensepostings");

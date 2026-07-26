@@ -23,6 +23,9 @@ class CostCenter extends NamedEntity {
 
     protected string $cost_center_name;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

@@ -24,7 +24,7 @@ class AddressTest extends EndpointTest {
         return new AddressEndpoint($this->client, self::getLogger());
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             'street' => 'Musterstraße',
             'house_number' => '123',
@@ -33,22 +33,28 @@ class AddressTest extends EndpointTest {
             'country' => 'DE',
         ];
 
-        $address = Address::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+
+        $address = Address::fromJson($json);
         $this->assertInstanceOf(Address::class, $address);
     }
 
-    public function test_json_serialize_collection() {
+    public function test_json_serialize_collection(): void {
         $data = [
             ['street' => 'Musterstraße', 'city' => 'Musterstadt'],
             ['street' => 'Beispielweg', 'city' => 'Beispielstadt'],
         ];
 
-        $addresses = Addresses::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+
+        $addresses = Addresses::fromJson($json);
         $this->assertInstanceOf(Addresses::class, $addresses);
         $this->assertCount(2, $addresses->getValues());
     }
 
-    public function test_get_addresses() {
+    public function test_get_addresses(): void {
         $this->endpoint = $this->createEndpoint();
         $addresses = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

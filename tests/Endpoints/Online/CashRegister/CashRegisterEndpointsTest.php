@@ -52,8 +52,11 @@ class CashRegisterEndpointsTest extends OnlineEndpointTest {
         $endpoint = new ReportsEndpoint($this->client, 'tenant-1');
         $endpoint->create(['record_keeping_systems_notification' => ['locations' => []]], 'req-123');
 
-        $requests = $this->mockClient->getRecordedRequests();
+        $mockClient = $this->mockClient;
+        $this->assertNotNull($mockClient);
+        $requests = $mockClient->getRecordedRequests();
         $lastRequest = end($requests);
+        $this->assertNotFalse($lastRequest);
         $this->assertSame('POST', $lastRequest['method']);
         $this->assertSame('tenants/tenant-1/reports', $lastRequest['uri']);
         $this->assertSame('req-123', $lastRequest['options']['headers']['Request-Id'] ?? null);
@@ -69,8 +72,11 @@ class CashRegisterEndpointsTest extends OnlineEndpointTest {
         $endpoint = new FilesEndpoint($this->client, 'tenant-1');
         $endpoint->import('tar-file-content', 'archive.tar', ['cash_register' => []]);
 
-        $requests = $this->mockClient->getRecordedRequests();
+        $mockClient = $this->mockClient;
+        $this->assertNotNull($mockClient);
+        $requests = $mockClient->getRecordedRequests();
         $lastRequest = end($requests);
+        $this->assertNotFalse($lastRequest);
         $this->assertSame('POST', $lastRequest['method']);
         $this->assertSame('tenants/tenant-1/files/import', $lastRequest['uri']);
         $this->assertArrayHasKey('multipart', $lastRequest['options']);

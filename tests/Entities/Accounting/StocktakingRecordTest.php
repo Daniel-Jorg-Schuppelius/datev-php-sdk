@@ -16,7 +16,7 @@ use Datev\Entities\Accounting\Stocktakings\{StocktakingRecord, StocktakingRecord
 use Tests\Contracts\EntityTest;
 
 class StocktakingRecordTest extends EntityTest {
-    public function test_create_stocktaking_record() {
+    public function test_create_stocktaking_record(): void {
         $data = [
             "id" => "INV-2024-001",
             "asset_number" => 1001,
@@ -38,14 +38,14 @@ class StocktakingRecordTest extends EntityTest {
         $stocktakingRecord = new StocktakingRecord($data);
         $this->assertInstanceOf(StocktakingRecord::class, new StocktakingRecord);
         $this->assertInstanceOf(StocktakingRecord::class, $stocktakingRecord);
-        $this->assertNotNull($stocktakingRecord->getID());
+        $this->assertEquals("INV-2024-001", $stocktakingRecord->getID()->getValue());
         $this->assertEquals(1001, $stocktakingRecord->getAssetNumber());
         $this->assertEquals("PC-2024-001", $stocktakingRecord->getInventoryNumber());
         $this->assertEquals("Laptop Dell XPS 15", $stocktakingRecord->getInventoryName());
         $this->assertSame('1599.00', $stocktakingRecord->getPrice()?->getAmount());
     }
 
-    public function test_create_stocktaking_records() {
+    public function test_create_stocktaking_records(): void {
         $data = [
             "content" => [
                 [

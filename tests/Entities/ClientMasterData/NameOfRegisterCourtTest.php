@@ -16,7 +16,7 @@ use Datev\Entities\ClientMasterData\NamesOfRegisterCourt\{NameOfRegisterCourt, N
 use Tests\Contracts\EntityTest;
 
 class NameOfRegisterCourtTest extends EntityTest {
-    public function test_create_name_of_register_court() {
+    public function test_create_name_of_register_court(): void {
         $data = [
             "value" => "Amtsgericht München",
             "valid_from" => "2024-01-01",
@@ -26,7 +26,7 @@ class NameOfRegisterCourtTest extends EntityTest {
         $this->assertInstanceOf(NameOfRegisterCourt::class, $name);
     }
 
-    public function test_create_names_of_register_court() {
+    public function test_create_names_of_register_court(): void {
         $data = [
             [
                 "value" => "Amtsgericht München",

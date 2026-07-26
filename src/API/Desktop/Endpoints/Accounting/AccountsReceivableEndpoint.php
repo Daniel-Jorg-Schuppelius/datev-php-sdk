@@ -68,6 +68,10 @@ class AccountsReceivableEndpoint extends EndpointAbstract implements SearchableE
         }, "Fetching OpenItem (ID: {$openItemId})");
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?OpenItems {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
@@ -80,6 +84,10 @@ class AccountsReceivableEndpoint extends EndpointAbstract implements SearchableE
         }, 'Searching OpenItems (Accounts Receivable)');
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function searchCondensed(array $queryParams = [], array $options = []): ?OpenItems {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options, "{$this->getBaseUrl()}/condense");

@@ -16,6 +16,9 @@ use APIToolkit\Entities\Tax\VAT;
 use Psr\Log\LoggerInterface;
 
 class EuVatID4CountryOfOrigin extends VAT {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
         $this->entityName = 'eu_vat_id_for_country_of_origin';

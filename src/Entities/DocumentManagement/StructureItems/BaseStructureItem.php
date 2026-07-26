@@ -25,6 +25,9 @@ class BaseStructureItem extends NamedEntity implements IdentifiableNamedEntityIn
     protected ?DocumentFileID $document_file_id;
     protected ?string $revision_comment;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

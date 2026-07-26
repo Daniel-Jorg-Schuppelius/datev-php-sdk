@@ -43,6 +43,9 @@ class Debitor extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?Communications $communications;
     protected ?Banks $banks;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

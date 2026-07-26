@@ -29,6 +29,9 @@ class OrdersEndpoint extends EndpointAbstract implements SearchableEndpointInter
         return $this->getById((int) $id->toString());
     }
 
+    /**
+     * @param array<string, mixed> $queryParams
+     */
     public function getById(?int $orderId = null, array $queryParams = []): ?Order {
         if (is_null($orderId)) {
             $this->logErrorAndThrow(InvalidArgumentException::class, 'Order ID is required');
@@ -45,6 +48,10 @@ class OrdersEndpoint extends EndpointAbstract implements SearchableEndpointInter
         }, "Fetching Order (ID: {$orderId})");
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?Orders {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options);

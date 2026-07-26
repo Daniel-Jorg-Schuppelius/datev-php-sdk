@@ -16,7 +16,7 @@ use Datev\Entities\ClientMasterData\TaxOffices\{TaxOffice, TaxOffices};
 use Tests\Contracts\EntityTest;
 
 class TaxOfficeTest extends EntityTest {
-    public function test_create_tax_office() {
+    public function test_create_tax_office(): void {
         $data = [
             "id" => "43b9d6d9-117b-4555-b0b0-3659eb0279d4",
             "tax_office_number" => 9181,
@@ -31,7 +31,7 @@ class TaxOfficeTest extends EntityTest {
         $this->assertEquals(9181, $office->getTaxOfficeNumber());
     }
 
-    public function test_create_tax_offices() {
+    public function test_create_tax_offices(): void {
         $data = [
             [
                 "id" => "43b9d6d9-117b-4555-b0b0-3659eb0279d4",

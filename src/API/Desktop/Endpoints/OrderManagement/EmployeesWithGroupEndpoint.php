@@ -37,6 +37,10 @@ class EmployeesWithGroupEndpoint extends EndpointAbstract implements SearchableE
         }, "Fetching EmployeeWithGroup (ID: {$id->toString()})");
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?EmployeesWithGroup {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options);

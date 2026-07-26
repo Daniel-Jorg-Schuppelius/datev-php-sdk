@@ -68,6 +68,10 @@ class AccountingSequencesProcessedEndpoint extends EndpointAbstract implements S
         }, "Fetching SequenceRead (ID: {$sequenceId})");
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?SequenceReads {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
