@@ -37,6 +37,10 @@ class SalariesEndpoint extends PayrollEndpointAbstract implements SearchableEndp
         }, "Fetching Salary (ID: {$id->toString()})");
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?Salaries {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->endpointSuffix}");

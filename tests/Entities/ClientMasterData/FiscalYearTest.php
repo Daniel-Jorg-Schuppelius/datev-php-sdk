@@ -16,7 +16,7 @@ use Datev\Entities\ClientMasterData\FiscalYears\{FiscalYear, FiscalYears};
 use Tests\Contracts\EntityTest;
 
 class FiscalYearTest extends EntityTest {
-    public function test_create_fiscal_year() {
+    public function test_create_fiscal_year(): void {
         $data = [
             "start_date" => "2024-01-01",
             "end_date" => "2024-12-31",
@@ -26,7 +26,7 @@ class FiscalYearTest extends EntityTest {
         $this->assertInstanceOf(FiscalYear::class, $year);
     }
 
-    public function test_create_fiscal_years() {
+    public function test_create_fiscal_years(): void {
         $data = [
             [
                 "start_date" => "2024-01-01",

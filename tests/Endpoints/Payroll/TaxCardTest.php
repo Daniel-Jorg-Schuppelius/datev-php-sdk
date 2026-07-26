@@ -24,29 +24,35 @@ class TaxCardTest extends EndpointTest {
         return new TaxCardEndpoint($this->client, self::getLogger());
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             'id' => '12345',
             'tax_id' => '12345678901',
             'tax_class' => 1,
         ];
 
-        $taxCard = TaxCard::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertIsString($json);
+
+        $taxCard = TaxCard::fromJson($json);
         $this->assertInstanceOf(TaxCard::class, $taxCard);
     }
 
-    public function test_json_serialize_collection() {
+    public function test_json_serialize_collection(): void {
         $data = [
             ['id' => '12345', 'tax_id' => '12345678901'],
             ['id' => '12346', 'tax_id' => '12345678902'],
         ];
 
-        $taxCards = TaxCards::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertIsString($json);
+
+        $taxCards = TaxCards::fromJson($json);
         $this->assertInstanceOf(TaxCards::class, $taxCards);
         $this->assertCount(2, $taxCards->getValues());
     }
 
-    public function test_get_tax_cards() {
+    public function test_get_tax_cards(): void {
         $this->endpoint = $this->createEndpoint();
         $taxCards = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

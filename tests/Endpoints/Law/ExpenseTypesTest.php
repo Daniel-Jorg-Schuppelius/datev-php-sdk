@@ -17,30 +17,35 @@ use Datev\Entities\Law\ExpenseTypes\{ExpenseType, ExpenseTypes};
 use Tests\Contracts\EndpointTest;
 
 class ExpenseTypesTest extends EndpointTest {
-    protected ?ExpenseTypesEndpoint $endpoint;
+    protected ExpenseTypesEndpoint $endpoint;
 
-    public function __construct($name = null) {
-        parent::__construct($name);
-        $this->endpoint = new ExpenseTypesEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new ExpenseTypesEndpoint($this->client, self::getLogger());
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             'id' => '550e8400-e29b-41d4-a716-446655440000',
             'name' => 'Kopien',
             'number' => 7000,
         ];
 
-        $expenseType = ExpenseType::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+
+        $expenseType = ExpenseType::fromJson($json);
 
         $this->assertInstanceOf(ExpenseType::class, $expenseType);
-        $this->assertEquals('550e8400-e29b-41d4-a716-446655440000', $expenseType->getID()->toString());
+        $id = $expenseType->getID();
+        $this->assertNotNull($id);
+        $this->assertEquals('550e8400-e29b-41d4-a716-446655440000', $id->toString());
         $this->assertEquals('Kopien', $expenseType->getName());
         $this->assertEquals(7000, $expenseType->getNumber());
     }
 
-    public function test_json_serialize_collection() {
+    public function test_json_serialize_collection(): void {
         $data = [
             [
                 'id' => '550e8400-e29b-41d4-a716-446655440000',
@@ -54,13 +59,16 @@ class ExpenseTypesTest extends EndpointTest {
             ],
         ];
 
-        $expenseTypes = ExpenseTypes::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+
+        $expenseTypes = ExpenseTypes::fromJson($json);
 
         $this->assertInstanceOf(ExpenseTypes::class, $expenseTypes);
         $this->assertCount(2, $expenseTypes->getValues());
     }
 
-    public function test_search_expense_types() {
+    public function test_search_expense_types(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

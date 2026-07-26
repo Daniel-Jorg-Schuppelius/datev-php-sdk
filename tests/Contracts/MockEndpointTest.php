@@ -52,6 +52,7 @@ abstract class MockEndpointTest extends TestCase {
 
     /**
      * Registriert eine zusätzliche Mock-Response für diesen Test.
+     * @param array<string, mixed> $headers
      */
     protected function registerMockResponse(
         string $method,
@@ -65,6 +66,7 @@ abstract class MockEndpointTest extends TestCase {
 
     /**
      * Gibt alle aufgezeichneten Requests zurück für Assertions.
+     * @return array<array-key, mixed>
      */
     protected function getRecordedRequests(): array {
         return $this->mockClient->getRecordedRequests();

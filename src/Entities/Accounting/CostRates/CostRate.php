@@ -20,6 +20,9 @@ class CostRate extends NamedEntity {
     protected ?int $valid_to;
     protected ?float $rate;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

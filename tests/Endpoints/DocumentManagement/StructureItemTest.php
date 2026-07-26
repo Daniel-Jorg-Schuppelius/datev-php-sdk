@@ -15,24 +15,27 @@ use Datev\Entities\DocumentManagement\StructureItems\{StructureItem, StructureIt
 use Tests\Contracts\EndpointTest;
 
 class StructureItemTest extends EndpointTest {
-    protected ?DocumentsEndpoint $preEndpoint;
-    protected ?StructureItemsEndpoint $endpoint;
+    protected DocumentsEndpoint $preEndpoint;
+    protected StructureItemsEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
+    protected function setUp(): void {
+        $this->apiDisabled = true; // API is disabled
+        parent::setUp();
         $this->preEndpoint = new DocumentsEndpoint($this->client, self::getLogger());
         $this->endpoint = new StructureItemsEndpoint($this->client, self::getLogger());
-        $this->apiDisabled = true; // API is disabled
     }
 
-    public function test_get_secure_areas_api() {
+    public function test_get_secure_areas_api(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }
 
         $documents = $this->preEndpoint->search();
+        $this->assertNotNull($documents);
         $randomDocument = $documents->getValues()[array_rand($documents->getValues())];
-        $this->endpoint->setDocumentID($randomDocument->getID());
+        $documentID = $randomDocument->getID();
+        $this->assertNotNull($documentID);
+        $this->endpoint->setDocumentID($documentID);
 
         $structureItems = $this->endpoint->search();
         $this->assertInstanceOf(StructureItems::class, $structureItems);

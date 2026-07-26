@@ -33,6 +33,9 @@ class TermOfPayment extends NamedEntity {
 
     protected PaymentDueAsPeriod $paymentDueAsPeriod;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

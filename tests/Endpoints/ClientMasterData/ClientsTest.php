@@ -15,17 +15,20 @@ use Datev\Entities\ClientMasterData\Clients\{Client, Clients};
 use Tests\Contracts\EndpointTest;
 
 class ClientsTest extends EndpointTest {
-    protected ?ClientsEndpoint $endpoint = null;
+    protected ClientsEndpoint $endpoint;
 
     protected string $mockDomain = 'clientmasterdata';
+
+    protected function setUp(): void {
+        parent::setUp();
+        $this->endpoint = $this->createEndpoint();
+    }
 
     protected function createEndpoint(): ClientsEndpoint {
         return new ClientsEndpoint($this->client, self::getLogger());
     }
 
     public function test_get_clients(): void {
-        $this->endpoint = $this->createEndpoint();
-
         $clients = $this->endpoint->search();
 
         $this->assertInstanceOf(Clients::class, $clients);

@@ -39,6 +39,9 @@ class Address extends CommonAddress {
     protected ?bool $is_main_street_address;
     protected ?bool $is_management_address;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

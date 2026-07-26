@@ -21,6 +21,9 @@ use Psr\Log\LoggerInterface;
  * @extends NamedValues<LegalFormID>
  */
 class LegalFormIDs extends NamedValues {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";
         $this->valueClassName = LegalFormID::class;
@@ -28,6 +31,9 @@ class LegalFormIDs extends NamedValues {
         parent::__construct($data, $logger);
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public function toArray(bool $fullEntity = true, string $dateFormat = DateTime::RFC3339_EXTENDED): array {
         $result = [];
         if ($fullEntity) {

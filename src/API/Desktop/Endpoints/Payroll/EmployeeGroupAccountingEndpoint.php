@@ -19,6 +19,10 @@ use Datev\Entities\Payroll\Employees\Groups\Accountings\EmployeeGroupAccountings
 class EmployeeGroupAccountingEndpoint extends PayrollEndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointSuffix = 'employee-group-accounting';
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?EmployeeGroupAccountings {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->endpointSuffix}");

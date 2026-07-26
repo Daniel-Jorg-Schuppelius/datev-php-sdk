@@ -19,6 +19,9 @@ use Psr\Log\LoggerInterface;
  * @extends DateTimeNamedValues<Surname>
  */
 class Surnames extends DateTimeNamedValues {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";
         $this->valueClassName = Surname::class;

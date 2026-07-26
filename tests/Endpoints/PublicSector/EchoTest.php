@@ -16,20 +16,20 @@ use Datev\API\Desktop\Endpoints\PublicSector\EchoEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class EchoTest extends EndpointTest {
-    protected ?EchoEndpoint $endpoint;
+    protected EchoEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new EchoEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new EchoEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_echo() {
+    public function test_get_echo(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }
 
-        $echo = $this->endpoint->search();
+        $echo = $this->endpoint->get();
         $this->assertNotNull($echo);
     }
 }

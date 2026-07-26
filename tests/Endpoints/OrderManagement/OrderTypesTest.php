@@ -17,15 +17,15 @@ use Datev\Entities\OrderManagement\OrderTypes\{OrderType, OrderTypes};
 use Tests\Contracts\EndpointTest;
 
 class OrderTypesTest extends EndpointTest {
-    protected ?OrderTypesEndpoint $endpoint;
+    protected OrderTypesEndpoint $endpoint;
 
-    public function __construct($name = null) {
-        parent::__construct($name);
-        $this->endpoint = new OrderTypesEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new OrderTypesEndpoint($this->client, self::getLogger());
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             'id' => 100,
             'ordertype' => 'FiBu',
@@ -34,7 +34,9 @@ class OrderTypesTest extends EndpointTest {
             'ordertype_group_name' => 'Buchhaltung',
         ];
 
-        $orderType = OrderType::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+        $orderType = OrderType::fromJson($json);
 
         $this->assertInstanceOf(OrderType::class, $orderType);
         $this->assertEquals('FiBu', $orderType->getOrderType());
@@ -42,7 +44,7 @@ class OrderTypesTest extends EndpointTest {
         $this->assertEquals(50, $orderType->getOrderTypeGroup());
     }
 
-    public function test_json_serialize_collection() {
+    public function test_json_serialize_collection(): void {
         $data = [
             [
                 'id' => 100,
@@ -56,13 +58,15 @@ class OrderTypesTest extends EndpointTest {
             ],
         ];
 
-        $orderTypes = OrderTypes::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+        $orderTypes = OrderTypes::fromJson($json);
 
         $this->assertInstanceOf(OrderTypes::class, $orderTypes);
         $this->assertCount(2, $orderTypes->getValues());
     }
 
-    public function test_search_order_types() {
+    public function test_search_order_types(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

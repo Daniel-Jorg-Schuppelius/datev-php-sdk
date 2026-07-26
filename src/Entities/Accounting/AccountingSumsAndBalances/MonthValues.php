@@ -19,6 +19,9 @@ use Psr\Log\LoggerInterface;
  * @extends NamedValues<MonthValue>
  */
 class MonthValues extends NamedValues {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "accounting_sums_and_balances_month_values";
         $this->valueClassName = MonthValue::class;

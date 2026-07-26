@@ -16,20 +16,20 @@ use Datev\API\Desktop\Endpoints\ClientMasterData\VersionEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class VersionTest extends EndpointTest {
-    protected ?VersionEndpoint $endpoint;
+    protected VersionEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new VersionEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new VersionEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_version() {
+    public function test_get_version(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }
 
-        $version = $this->endpoint->search();
+        $version = $this->endpoint->get();
         $this->assertNotNull($version);
     }
 }

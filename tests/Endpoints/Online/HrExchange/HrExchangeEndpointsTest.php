@@ -70,8 +70,11 @@ class HrExchangeEndpointsTest extends OnlineEndpointTest {
         $job = $endpoint->updateOne(self::PN, ['surname' => 'Musterfrau']);
         $this->assertSame(self::JOB_UUID, $job?->getId());
 
-        $requests = $this->mockClient->getRecordedRequests();
+        $mockClient = $this->mockClient;
+        $this->assertNotNull($mockClient);
+        $requests = $mockClient->getRecordedRequests();
         $lastRequest = end($requests);
+        $this->assertNotFalse($lastRequest);
         $this->assertSame(['surname' => 'Musterfrau'], $lastRequest['options']['json']);
     }
 
@@ -142,7 +145,9 @@ class HrExchangeEndpointsTest extends OnlineEndpointTest {
         $job = $endpoint->create(['resourceType' => 'employees', 'reference_date' => '2026-07-01'], HrTargetSystem::Lodas, 'https://callback.example/hook', 'Bearer token');
         $this->assertInstanceOf(Job::class, $job);
 
-        $requests = $this->mockClient->getRecordedRequests();
+        $mockClient = $this->mockClient;
+        $this->assertNotNull($mockClient);
+        $requests = $mockClient->getRecordedRequests();
         $createRequest = end($requests);
         $this->assertSame('lodas', $createRequest['options']['headers']['Target-System'] ?? null);
         $this->assertSame('https://callback.example/hook', $createRequest['options']['headers']['Notify-Url'] ?? null);
@@ -177,7 +182,11 @@ class HrExchangeEndpointsTest extends OnlineEndpointTest {
         $endpoint->test(self::JOB_UUID);
         $endpoint->delete(self::JOB_UUID);
 
-        $requests = $this->mockClient->getRecordedRequests();
-        $this->assertSame('DELETE', end($requests)['method']);
+        $mockClient = $this->mockClient;
+        $this->assertNotNull($mockClient);
+        $requests = $mockClient->getRecordedRequests();
+        $lastRequest = end($requests);
+        $this->assertNotFalse($lastRequest);
+        $this->assertSame('DELETE', $lastRequest['method']);
     }
 }

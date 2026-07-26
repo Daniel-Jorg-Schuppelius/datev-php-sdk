@@ -16,15 +16,15 @@ use Datev\Entities\Payroll\Clients\Client;
 use Tests\Contracts\EndpointTest;
 
 class DomainsTest extends EndpointTest {
-    protected ?DomainsEndpoint $endpoint;
+    protected DomainsEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
+    protected function setUp(): void {
+        $this->apiDisabled = true;
+        parent::setUp();
         $this->endpoint = new DomainsEndpoint($this->client, self::getLogger());
-        $this->apiDisabled = true; // API is disabled
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             "consultant_number" => "29115",
             "id" => "9351b0e3-e96b-4bb0-b94e-018b13d1db28",
@@ -45,7 +45,7 @@ class DomainsTest extends EndpointTest {
         $this->assertEquals(json_encode($data), $client->toJson());  // the order of the $data array is important for this test.
     }
 
-    public function test_create_and_delete_article_api() {
+    public function test_create_and_delete_article_api(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

@@ -19,6 +19,9 @@ class GroupMember extends NamedEntity {
     protected string $value;
     protected ?string $ref;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         // Transform $ref key before calling parent constructor
         if (is_array($data) && isset($data['$ref'])) {

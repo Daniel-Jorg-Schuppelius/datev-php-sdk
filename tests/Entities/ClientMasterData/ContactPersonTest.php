@@ -16,13 +16,13 @@ use Datev\Entities\ClientMasterData\ContactPersons\{ContactPerson, ContactPerson
 use Tests\Contracts\EntityTest;
 
 class ContactPersonTest extends EntityTest {
-    public function test_create_contact_person_id() {
+    public function test_create_contact_person_id(): void {
         $id = new ContactPersonID("12345678-1234-1234-1234-123456789012");
         $this->assertInstanceOf(ContactPersonID::class, $id);
         $this->assertEquals("12345678-1234-1234-1234-123456789012", $id->toString());
     }
 
-    public function test_create_contact_person() {
+    public function test_create_contact_person(): void {
         $data = [
             "id" => "12345678-1234-1234-1234-123456789012",
             "department" => "Buchhaltung",
@@ -36,7 +36,7 @@ class ContactPersonTest extends EntityTest {
         $this->assertInstanceOf(ContactPersonID::class, $contactPerson->getID());
     }
 
-    public function test_create_contact_persons() {
+    public function test_create_contact_persons(): void {
         $data = [
             [
                 "id" => "12345678-1234-1234-1234-123456789012",

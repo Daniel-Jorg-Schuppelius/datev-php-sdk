@@ -16,6 +16,9 @@ use Datev\Contracts\Abstracts\DateTimeNamedValue;
 use Psr\Log\LoggerInterface;
 
 class CountryOfHeadOffice extends DateTimeNamedValue {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
         $this->entityName = 'current_country_of_head_office';

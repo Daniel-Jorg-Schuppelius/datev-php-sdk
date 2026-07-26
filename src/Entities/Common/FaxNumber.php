@@ -16,6 +16,9 @@ use APIToolkit\Entities\Contact\PhoneNumber as BasePhoneNumber;
 use Psr\Log\LoggerInterface;
 
 class FaxNumber extends BasePhoneNumber {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
         $this->entityName = 'fax';

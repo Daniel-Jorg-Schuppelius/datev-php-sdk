@@ -21,6 +21,10 @@ use Datev\Entities\Online\AccountingDataExchange\SumsAndBalances\SumsAndBalances
 class SumsAndBalancesEndpoint extends FiscalYearScopedEndpointAbstract {
     protected string $endpointSuffix = 'sums-and-balances';
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?SumsAndBalancesList {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $urlPath = $this->getEndpointUrl();

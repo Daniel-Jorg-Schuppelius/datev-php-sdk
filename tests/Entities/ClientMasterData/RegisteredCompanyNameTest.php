@@ -16,7 +16,7 @@ use Datev\Entities\ClientMasterData\RegisteredCompanyNames\{RegisteredCompanyNam
 use Tests\Contracts\EntityTest;
 
 class RegisteredCompanyNameTest extends EntityTest {
-    public function test_create_registered_company_name() {
+    public function test_create_registered_company_name(): void {
         $data = [
             "value" => "Muster GmbH",
             "valid_from" => "2024-01-01",
@@ -26,7 +26,7 @@ class RegisteredCompanyNameTest extends EntityTest {
         $this->assertInstanceOf(RegisteredCompanyName::class, $name);
     }
 
-    public function test_create_registered_company_names() {
+    public function test_create_registered_company_names(): void {
         $data = [
             [
                 "value" => "Muster GmbH",

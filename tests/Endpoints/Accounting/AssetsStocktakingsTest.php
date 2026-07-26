@@ -23,7 +23,7 @@ class AssetsStocktakingsTest extends EndpointTest {
         return new AssetsStocktakingsEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_assets_stocktakings() {
+    public function test_get_assets_stocktakings(): void {
         $this->skipMockIfComplexEntity();
 
         $this->endpoint = $this->createEndpoint();

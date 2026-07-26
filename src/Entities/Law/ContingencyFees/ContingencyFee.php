@@ -30,6 +30,9 @@ class ContingencyFee extends NamedEntity implements IdentifiableNamedEntityInter
     protected ?string $client_id;
     protected ?string $client_link;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

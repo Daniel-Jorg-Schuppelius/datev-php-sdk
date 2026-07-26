@@ -107,22 +107,37 @@ class Client extends ClientAbstract {
         return $this->getServicePath() . '/' . $uri;
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     public function get(string $uri, array $options = []): ResponseInterface {
         return parent::get($this->prefixUri($uri), $options);
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     public function post(string $uri, array $options = []): ResponseInterface {
         return parent::post($this->prefixUri($uri), $options);
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     public function put(string $uri, array $options = []): ResponseInterface {
         return parent::put($this->prefixUri($uri), $options);
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     public function patch(string $uri, array $options = []): ResponseInterface {
         return parent::patch($this->prefixUri($uri), $options);
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     public function delete(string $uri, array $options = []): ResponseInterface {
         return parent::delete($this->prefixUri($uri), $options);
     }

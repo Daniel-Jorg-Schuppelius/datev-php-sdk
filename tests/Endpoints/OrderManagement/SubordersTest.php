@@ -14,20 +14,20 @@ use Datev\API\Desktop\Endpoints\OrderManagement\SubordersEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class SubordersTest extends EndpointTest {
-    protected ?SubordersEndpoint $endpoint;
+    protected SubordersEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new SubordersEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new SubordersEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_suborders() {
+    public function test_get_suborders(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }
 
-        $suborders = $this->endpoint->search();
+        $suborders = $this->endpoint->get();
         $this->assertNotNull($suborders);
     }
 }

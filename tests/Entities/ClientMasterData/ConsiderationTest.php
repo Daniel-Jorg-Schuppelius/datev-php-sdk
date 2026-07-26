@@ -16,7 +16,7 @@ use Datev\Entities\ClientMasterData\Considerations\{Consideration, Consideration
 use Tests\Contracts\EntityTest;
 
 class ConsiderationTest extends EntityTest {
-    public function test_create_consideration() {
+    public function test_create_consideration(): void {
         $data = [
             "value" => "2024-01-15",
             "valid_from" => "2024-01-01",
@@ -26,7 +26,7 @@ class ConsiderationTest extends EntityTest {
         $this->assertInstanceOf(Consideration::class, $consideration);
     }
 
-    public function test_create_considerations() {
+    public function test_create_considerations(): void {
         $data = [
             [
                 "value" => "2024-01-15",

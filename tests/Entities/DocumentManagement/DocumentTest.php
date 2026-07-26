@@ -16,7 +16,7 @@ use Datev\Entities\DocumentManagement\Documents\Document;
 use Tests\Contracts\EntityTest;
 
 class DocumentTest extends EntityTest {
-    public function test_create_document() {
+    public function test_create_document(): void {
         $data = [
             "acknowledge_by" => [
                 [
@@ -154,8 +154,10 @@ class DocumentTest extends EntityTest {
         $this->assertInstanceOf(Document::class, new Document);
         $this->assertTrue((new Document)->isValid());
         $this->assertInstanceOf(Document::class, $document);
-        $this->assertEquals('e602ddcb-e479-4cee-b268-e53bbecf6dc9', $document->getID()->getValue());
-        $this->assertTrue($document->getID()->isValid());
+        $id = $document->getID();
+        $this->assertNotNull($id);
+        $this->assertEquals('e602ddcb-e479-4cee-b268-e53bbecf6dc9', $id->getValue());
+        $this->assertTrue($id->isValid());
         $this->assertEquals(150.95, $document->getAmount());
     }
 }

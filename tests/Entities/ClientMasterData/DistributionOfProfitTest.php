@@ -16,7 +16,7 @@ use Datev\Entities\ClientMasterData\DistributionsOfProfit\{DistributionOfProfit,
 use Tests\Contracts\EntityTest;
 
 class DistributionOfProfitTest extends EntityTest {
-    public function test_create_distribution_of_profit() {
+    public function test_create_distribution_of_profit(): void {
         $data = [
             "percentage" => 50.0,
             "valid_from" => "2024-01-01",
@@ -26,7 +26,7 @@ class DistributionOfProfitTest extends EntityTest {
         $this->assertInstanceOf(DistributionOfProfit::class, $distribution);
     }
 
-    public function test_create_distributions_of_profit() {
+    public function test_create_distributions_of_profit(): void {
         $data = [
             [
                 "percentage" => 50.0,

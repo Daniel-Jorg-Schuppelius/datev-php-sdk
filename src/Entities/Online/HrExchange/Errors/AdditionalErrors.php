@@ -15,7 +15,13 @@ namespace Datev\Entities\Online\HrExchange\Errors;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<AdditionalError>
+ */
 class AdditionalErrors extends NamedValues {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->valueClassName = AdditionalError::class;
         parent::__construct($data, $logger);

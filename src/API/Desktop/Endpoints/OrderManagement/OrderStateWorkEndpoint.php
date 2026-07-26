@@ -29,6 +29,9 @@ class OrderStateWorkEndpoint extends EndpointAbstract implements SearchableEndpo
         return $this->getByOrderId((int) $id->toString());
     }
 
+    /**
+     * @param array<string, mixed> $queryParams
+     */
     public function getByOrderId(?int $orderId = null, array $queryParams = []): ?OrderStateWork {
         if (is_null($orderId)) {
             $this->logErrorAndThrow(InvalidArgumentException::class, 'Order ID is required');
@@ -45,6 +48,10 @@ class OrderStateWorkEndpoint extends EndpointAbstract implements SearchableEndpo
         }, "Fetching OrderStateWork (OrderID: {$orderId})");
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?OrderStateWorks {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options);

@@ -16,7 +16,7 @@ use Datev\Entities\Diagnostics\EchoResponse\EchoResponse;
 use Tests\Contracts\EntityTest;
 
 class EchoResponseTest extends EntityTest {
-    public function test_create_echo_response() {
+    public function test_create_echo_response(): void {
         $data = [
             "id" => "echo-12345",
             "echo_message" => "Hello DATEV API!",
@@ -25,6 +25,6 @@ class EchoResponseTest extends EntityTest {
         $echoResponse = new EchoResponse($data);
         $this->assertInstanceOf(EchoResponse::class, $echoResponse);
         $this->assertEquals("Hello DATEV API!", $echoResponse->getEchoMessage());
-        $this->assertNotNull($echoResponse->getID());
+        $this->assertSame("echo-12345", (string) $echoResponse->getID());
     }
 }

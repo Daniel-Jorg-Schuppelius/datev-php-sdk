@@ -67,6 +67,10 @@ class MeterReadingsEndpoint extends EndpointAbstract implements SearchableEndpoi
         }, "Fetching MeterReading (ID: {$meterReadingId})");
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?MeterReadings {
         if (!isset($this->clientId) || !isset($this->citizenId) || !isset($this->feeId) || !isset($this->meterId)) {
             $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID, Citizen ID, Fee ID and Meter ID are required');

@@ -36,6 +36,9 @@ class PersonalDatum extends NamedEntity implements IdentifiableNamedEntityInterf
     protected ?string $social_security_number;
     protected ?DateTime $initial_day_of_entrance;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

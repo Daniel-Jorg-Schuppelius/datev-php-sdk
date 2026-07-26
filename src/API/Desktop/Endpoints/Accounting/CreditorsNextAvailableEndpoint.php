@@ -48,6 +48,9 @@ class CreditorsNextAvailableEndpoint extends EndpointAbstract {
         return "{$this->getEndpointUrl()}/{$this->clientId->toString()}/fiscal-years/{$this->fiscalYearId->toString()}/creditors/next-available";
     }
 
+    /**
+     * @param array<string, mixed> $queryParams
+     */
     public function getNextAvailable(array $queryParams = []): ?int {
         return $this->logDebugWithTimer(function () use ($queryParams) {
             $response = parent::getContents($queryParams, [], $this->getBaseUrl());

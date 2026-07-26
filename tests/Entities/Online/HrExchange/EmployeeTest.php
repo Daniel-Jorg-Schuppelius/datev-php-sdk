@@ -42,7 +42,9 @@ class EmployeeTest extends EntityTest {
     ];
 
     public function test_deep_hydration(): void {
-        $employee = Employee::fromJson(json_encode(self::EXAMPLE));
+        $json = json_encode(self::EXAMPLE);
+        $this->assertIsString($json);
+        $employee = Employee::fromJson($json);
 
         $this->assertSame('Mustermann', $employee->getSurname());
         $this->assertSame(77, $employee->getPersonnelNumber());
@@ -51,7 +53,7 @@ class EmployeeTest extends EntityTest {
         $this->assertSame('1990-01-15', $employee->getPersonalData()?->getDateOfBirth());
         $this->assertSame(38.5, $employee->getActivity()?->getWeeklyWorkingHours());
         $this->assertSame(2, $employee->getEmploymentPeriods()?->count());
-        $this->assertSame('2026-12-31', $employee->getEmploymentPeriods()?->getValues()[1]->getDateOfTerminationOfEmployment());
+        $this->assertSame('2026-12-31', $employee->getEmploymentPeriods()->getValues()[1]->getDateOfTerminationOfEmployment());
 
         $grossPayment = $employee->getGrossPayments()?->getFirstValue();
         $this->assertInstanceOf(GrossPayment::class, $grossPayment);
@@ -63,7 +65,9 @@ class EmployeeTest extends EntityTest {
     }
 
     public function test_to_array_round_trip(): void {
-        $employee = Employee::fromJson(json_encode(self::EXAMPLE));
+        $json = json_encode(self::EXAMPLE);
+        $this->assertIsString($json);
+        $employee = Employee::fromJson($json);
         $array = $employee->toArray();
 
         $this->assertSame('Mustermann', $array['surname']);

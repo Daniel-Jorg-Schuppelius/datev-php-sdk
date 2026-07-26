@@ -18,8 +18,11 @@ use APIToolkit\Contracts\Abstracts\NamedValues;
  * Ergebnisseite eines paginierenden List-Endpoints: die Collection selbst
  * plus Paging-Metadaten aus den Response-Headern (Link/Total-Items bzw.
  * x-*-page*-Header).
+ *
+ * @template T of \APIToolkit\Contracts\Interfaces\NamedEntityInterface
  */
 final class PageResult {
+    /** @var ?NamedValues<T> */
     private ?NamedValues $items;
 
     private ?int $totalItems;
@@ -30,6 +33,7 @@ final class PageResult {
     private ?PageMeta $pageMeta;
 
     /**
+     * @param ?NamedValues<T> $items
      * @param array<string, string> $links rel => URL (aus dem Link-Header)
      */
     public function __construct(?NamedValues $items, ?int $totalItems = null, array $links = [], ?PageMeta $pageMeta = null) {
@@ -39,6 +43,9 @@ final class PageResult {
         $this->pageMeta = $pageMeta;
     }
 
+    /**
+     * @return ?NamedValues<T>
+     */
     public function getItems(): ?NamedValues {
         return $this->items;
     }

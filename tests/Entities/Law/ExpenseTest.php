@@ -16,7 +16,7 @@ use Datev\Entities\Law\Expenses\{Expense, Expenses};
 use Tests\Contracts\EntityTest;
 
 class ExpenseTest extends EntityTest {
-    public function test_create_expense() {
+    public function test_create_expense(): void {
         $data = [
             "id" => "exp-12345",
             "object_type" => "travel",
@@ -33,7 +33,7 @@ class ExpenseTest extends EntityTest {
         $this->assertNotNull($expense->getID());
     }
 
-    public function test_create_expenses() {
+    public function test_create_expenses(): void {
         $data = [
             "content" => [
                 [

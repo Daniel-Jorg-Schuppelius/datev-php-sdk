@@ -17,15 +17,15 @@ use Datev\Entities\OrderManagement\Orders\{Order, Orders};
 use Tests\Contracts\EndpointTest;
 
 class OrdersTest extends EndpointTest {
-    protected ?OrdersEndpoint $endpoint;
+    protected OrdersEndpoint $endpoint;
 
-    public function __construct($name = null) {
-        parent::__construct($name);
-        $this->endpoint = new OrdersEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new OrdersEndpoint($this->client, self::getLogger());
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             'order_id' => 4711,
             'creation_year' => 2024,
@@ -38,17 +38,21 @@ class OrdersTest extends EndpointTest {
             'billing_status' => 'open',
         ];
 
-        $order = Order::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+        $order = Order::fromJson($json);
 
         $this->assertInstanceOf(Order::class, $order);
-        $this->assertEquals(4711, $order->getID()->getValue());
+        $orderId = $order->getID();
+        $this->assertNotNull($orderId);
+        $this->assertEquals(4711, $orderId->getValue());
         $this->assertEquals(2024, $order->getCreationYear());
         $this->assertEquals(20, $order->getOrderNumber());
         $this->assertEquals('Jahresabschluss 2024', $order->getOrderName());
         $this->assertEquals('started', $order->getCompletionStatus());
     }
 
-    public function test_json_serialize_collection() {
+    public function test_json_serialize_collection(): void {
         $data = [
             [
                 'order_id' => 4711,
@@ -64,13 +68,15 @@ class OrdersTest extends EndpointTest {
             ],
         ];
 
-        $orders = Orders::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+        $orders = Orders::fromJson($json);
 
         $this->assertInstanceOf(Orders::class, $orders);
         $this->assertCount(2, $orders->getValues());
     }
 
-    public function test_search_orders() {
+    public function test_search_orders(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

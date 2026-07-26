@@ -23,7 +23,7 @@ class AccountingSumsAndBalancesTest extends EndpointTest {
         return new AccountingSumsAndBalancesEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_accounting_sums_and_balances() {
+    public function test_get_accounting_sums_and_balances(): void {
         $this->skipMockIfComplexEntity();
 
         $this->endpoint = $this->createEndpoint();

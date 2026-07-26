@@ -15,7 +15,13 @@ namespace Datev\Entities\Online\HrExports\MasterData;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<MasterData>
+ */
 class MasterDataList extends NamedValues {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->valueClassName = MasterData::class;
         parent::__construct($data, $logger);

@@ -15,15 +15,15 @@ use Datev\Entities\DocumentManagement\IndividualProperties\{IndividualProperties
 use Tests\Contracts\EndpointTest;
 
 class IndividualPropertyTest extends EndpointTest {
-    protected ?IndividualPropertiesEndpoint $endpoint;
+    protected IndividualPropertiesEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
+    protected function setUp(): void {
+        $this->apiDisabled = true;
+        parent::setUp();
         $this->endpoint = new IndividualPropertiesEndpoint($this->client, self::getLogger());
-        $this->apiDisabled = true; // API is disabled
     }
 
-    public function test_create_and_delete_article_api() {
+    public function test_create_and_delete_article_api(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

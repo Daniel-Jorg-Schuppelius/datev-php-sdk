@@ -24,29 +24,35 @@ class VocationalTrainingsTest extends EndpointTest {
         return new VocationalTrainingsEndpoint($this->client, self::getLogger());
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             'id' => '12345',
             'training_type' => 'Ausbildung',
             'start_date' => '2024-01-01',
         ];
 
-        $training = VocationalTraining::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+
+        $training = VocationalTraining::fromJson($json);
         $this->assertInstanceOf(VocationalTraining::class, $training);
     }
 
-    public function test_json_serialize_collection() {
+    public function test_json_serialize_collection(): void {
         $data = [
             ['id' => '12345', 'training_type' => 'Ausbildung'],
             ['id' => '12346', 'training_type' => 'Weiterbildung'],
         ];
 
-        $trainings = VocationalTrainings::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+
+        $trainings = VocationalTrainings::fromJson($json);
         $this->assertInstanceOf(VocationalTrainings::class, $trainings);
         $this->assertCount(2, $trainings->getValues());
     }
 
-    public function test_get_vocational_trainings() {
+    public function test_get_vocational_trainings(): void {
         $this->endpoint = $this->createEndpoint();
         $trainings = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

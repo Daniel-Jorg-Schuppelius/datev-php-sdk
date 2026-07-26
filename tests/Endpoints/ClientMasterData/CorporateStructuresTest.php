@@ -16,15 +16,15 @@ use Datev\API\Desktop\Endpoints\ClientMasterData\CorporateStructuresEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class CorporateStructuresTest extends EndpointTest {
-    protected ?CorporateStructuresEndpoint $endpoint;
+    protected CorporateStructuresEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new CorporateStructuresEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new CorporateStructuresEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_corporate_structures() {
+    public function test_get_corporate_structures(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

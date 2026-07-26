@@ -80,7 +80,6 @@ class MockDataLoaderTest extends TestCase {
     public function test_accounting_fixtures(): void {
         $clients = AccountingFixtures::getClients();
 
-        $this->assertIsArray($clients);
         $this->assertNotEmpty($clients);
         $this->assertArrayHasKey('consultant_number', $clients[0]);
     }
@@ -88,14 +87,12 @@ class MockDataLoaderTest extends TestCase {
     public function test_client_master_data_fixtures(): void {
         $addressees = ClientMasterDataFixtures::getAddressees();
 
-        $this->assertIsArray($addressees);
         $this->assertNotEmpty($addressees);
     }
 
     public function test_payroll_fixtures(): void {
         $employees = PayrollFixtures::getEmployees();
 
-        $this->assertIsArray($employees);
         $this->assertNotEmpty($employees);
         $this->assertArrayHasKey('content', $employees);
         $this->assertArrayHasKey('first_name', $employees['content'][0]);

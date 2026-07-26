@@ -41,6 +41,9 @@ class Client extends CommonClient {
     protected ?SalaryTypes $salary_types;
     protected ?WorkingHours $working_hours;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

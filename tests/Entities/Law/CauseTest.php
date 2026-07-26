@@ -16,7 +16,7 @@ use Datev\Entities\Law\Causes\{Cause, Causes};
 use Tests\Contracts\EntityTest;
 
 class CauseTest extends EntityTest {
-    public function test_create_cause() {
+    public function test_create_cause(): void {
         $data = [
             "id" => "c1234567-8901-2345-6789-012345678901",
             "name" => "Rechtsstreit Müller",
@@ -30,7 +30,7 @@ class CauseTest extends EntityTest {
         $this->assertIsArray($cause->getDepartments());
     }
 
-    public function test_create_causes() {
+    public function test_create_causes(): void {
         $data = [
             "content" => [
                 [

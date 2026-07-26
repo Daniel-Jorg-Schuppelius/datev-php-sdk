@@ -16,7 +16,7 @@ use Datev\Entities\Law\ContingencyFees\{ContingencyFee, ContingencyFees};
 use Tests\Contracts\EntityTest;
 
 class ContingencyFeeTest extends EntityTest {
-    public function test_create_contingency_fee() {
+    public function test_create_contingency_fee(): void {
         $data = [
             "id" => "9ed35edf-dd17-456c-857d-b895a6859cf0",
             "object_type" => "Contingency-Fee-By-File",
@@ -38,7 +38,7 @@ class ContingencyFeeTest extends EntityTest {
         $this->assertEquals("Sondervereinbarung", $contingencyFee->getNote());
     }
 
-    public function test_create_contingency_fees() {
+    public function test_create_contingency_fees(): void {
         $data = [
             "content" => [
                 [

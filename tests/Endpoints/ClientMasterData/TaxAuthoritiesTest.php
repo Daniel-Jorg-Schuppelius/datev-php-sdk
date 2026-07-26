@@ -16,15 +16,15 @@ use Datev\API\Desktop\Endpoints\ClientMasterData\TaxAuthoritiesEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class TaxAuthoritiesTest extends EndpointTest {
-    protected ?TaxAuthoritiesEndpoint $endpoint;
+    protected TaxAuthoritiesEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new TaxAuthoritiesEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new TaxAuthoritiesEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_tax_authorities() {
+    public function test_get_tax_authorities(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

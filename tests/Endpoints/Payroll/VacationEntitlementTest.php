@@ -24,29 +24,35 @@ class VacationEntitlementTest extends EndpointTest {
         return new VacationEntitlementEndpoint($this->client, self::getLogger());
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             'id' => '12345',
             'annual_entitlement' => 30,
             'remaining_days' => 15,
         ];
 
-        $entitlement = VacationEntitlement::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+
+        $entitlement = VacationEntitlement::fromJson($json);
         $this->assertInstanceOf(VacationEntitlement::class, $entitlement);
     }
 
-    public function test_json_serialize_collection() {
+    public function test_json_serialize_collection(): void {
         $data = [
             ['id' => '12345', 'annual_entitlement' => 30],
             ['id' => '12346', 'annual_entitlement' => 28],
         ];
 
-        $entitlements = VacationEntitlements::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+
+        $entitlements = VacationEntitlements::fromJson($json);
         $this->assertInstanceOf(VacationEntitlements::class, $entitlements);
         $this->assertCount(2, $entitlements->getValues());
     }
 
-    public function test_get_vacation_entitlements() {
+    public function test_get_vacation_entitlements(): void {
         $this->endpoint = $this->createEndpoint();
         $entitlements = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

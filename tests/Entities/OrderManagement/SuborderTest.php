@@ -16,7 +16,7 @@ use Datev\Entities\OrderManagement\Suborders\{Suborder, Suborders};
 use Tests\Contracts\EntityTest;
 
 class SuborderTest extends EntityTest {
-    public function test_create_suborder() {
+    public function test_create_suborder(): void {
         $data = [
             "suborder_id" => "s1234567-8901-2345-6789-012345678901",
             "order_id" => "o1234567-8901-2345-6789-012345678901",
@@ -31,7 +31,7 @@ class SuborderTest extends EntityTest {
         $this->assertInstanceOf(Suborder::class, $suborder);
     }
 
-    public function test_create_suborders() {
+    public function test_create_suborders(): void {
         $data = [
             "content" => [
                 [

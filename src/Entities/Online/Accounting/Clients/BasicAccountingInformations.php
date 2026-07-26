@@ -15,7 +15,13 @@ namespace Datev\Entities\Online\Accounting\Clients;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<BasicAccountingInformation>
+ */
 class BasicAccountingInformations extends NamedValues {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->valueClassName = BasicAccountingInformation::class;
         parent::__construct($data, $logger);

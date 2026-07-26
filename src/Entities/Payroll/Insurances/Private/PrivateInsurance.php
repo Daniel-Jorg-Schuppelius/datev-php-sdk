@@ -24,6 +24,9 @@ class PrivateInsurance extends NamedEntity implements IdentifiableNamedEntityInt
     protected ?float $monthly_premium_for_private_nursing_insurance;
     protected ?float $monthly_contribution_to_basic_health_insurance;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

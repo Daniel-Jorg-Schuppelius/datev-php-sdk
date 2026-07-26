@@ -33,6 +33,9 @@ class InitialActivity extends NamedEntity implements IdentifiableNamedEntityInte
     protected ?float $allocation_of_working_hours_sunday;
     protected ?int $employee_group_financial_accounting;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

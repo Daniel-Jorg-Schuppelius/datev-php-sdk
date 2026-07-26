@@ -17,15 +17,15 @@ use Datev\Entities\PublicSector\Citizens\{Citizen, Citizens};
 use Tests\Contracts\EndpointTest;
 
 class CitizensTest extends EndpointTest {
-    protected ?CitizensEndpoint $endpoint;
+    protected CitizensEndpoint $endpoint;
 
-    public function __construct($name = null, array $data = [], $dataName = '') {
-        parent::__construct($name, $data, $dataName);
-        $this->endpoint = new CitizensEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new CitizensEndpoint($this->client, self::getLogger());
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             'id' => '550e8400-e29b-41d4-a716-446655440000',
             'first_name' => 'Max',
@@ -41,7 +41,9 @@ class CitizensTest extends EndpointTest {
             ],
         ];
 
-        $citizen = Citizen::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+        $citizen = Citizen::fromJson($json);
         $this->assertInstanceOf(Citizen::class, $citizen);
         $this->assertEquals('Max', $citizen->getFirstName());
         $this->assertEquals('Mustermann', $citizen->getLastName());
@@ -50,7 +52,7 @@ class CitizensTest extends EndpointTest {
         $this->assertEquals('Musterstraße', $citizen->getLocation()->getStreet());
     }
 
-    public function test_json_serialize_collection() {
+    public function test_json_serialize_collection(): void {
         $data = [
             [
                 'id' => '550e8400-e29b-41d4-a716-446655440000',
@@ -64,7 +66,9 @@ class CitizensTest extends EndpointTest {
             ],
         ];
 
-        $citizens = Citizens::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+        $citizens = Citizens::fromJson($json);
         $this->assertInstanceOf(Citizens::class, $citizens);
         $this->assertCount(2, $citizens->getValues());
     }

@@ -47,6 +47,10 @@ class ClientCategoriesEndpoint extends EndpointAbstract implements SearchableEnd
         }, "Fetching ClientCategory (ID: {$id->toString()})");
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function searchByClient(array $queryParams = [], array $options = []): ?ClientCategories {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options);
@@ -59,6 +63,10 @@ class ClientCategoriesEndpoint extends EndpointAbstract implements SearchableEnd
         }, 'Searching ClientCategories by Client');
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?ClientCategories {
         // TODO: Check API, on documentation, this endpoint exists but it is not implemented?
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {

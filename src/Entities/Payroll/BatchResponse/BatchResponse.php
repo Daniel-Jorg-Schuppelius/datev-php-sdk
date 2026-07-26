@@ -21,6 +21,9 @@ class BatchResponse extends NamedEntity {
     protected ?SucceededResponses $succeeded;
     protected ?FailedResponses $failed;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

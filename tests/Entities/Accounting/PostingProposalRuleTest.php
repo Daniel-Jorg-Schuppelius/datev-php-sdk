@@ -16,7 +16,7 @@ use Datev\Entities\Accounting\PostingProposalRules\{PostingProposalRule, Posting
 use Tests\Contracts\EntityTest;
 
 class PostingProposalRuleTest extends EntityTest {
-    public function test_create_posting_proposal_rule() {
+    public function test_create_posting_proposal_rule(): void {
         $data = [
             "id" => 1,
             "account_number" => 4400,
@@ -38,7 +38,7 @@ class PostingProposalRuleTest extends EntityTest {
         $this->assertEquals("10000", $rule->getCostCenter1());
     }
 
-    public function test_create_posting_proposal_rules() {
+    public function test_create_posting_proposal_rules(): void {
         $data = [
             "content" => [
                 [

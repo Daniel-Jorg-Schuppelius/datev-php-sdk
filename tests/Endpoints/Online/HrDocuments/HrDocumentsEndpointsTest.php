@@ -38,7 +38,7 @@ class HrDocumentsEndpointsTest extends OnlineEndpointTest {
         $this->assertInstanceOf(Clients::class, $clients);
 
         if ($this->isUsingMock()) {
-            $this->assertSame(self::CLIENT_GUID, $clients->getFirstValue()->getClientGuid());
+            $this->assertSame(self::CLIENT_GUID, $clients->getFirstValue()?->getClientGuid());
         }
     }
 
@@ -63,8 +63,11 @@ class HrDocumentsEndpointsTest extends OnlineEndpointTest {
         $endpoint = new DocumentsEndpoint($this->client);
         $endpoint->uploadByGuid(self::CLIENT_GUID, 'pdf-content', 'vertrag.pdf', 'MyApp 1.0');
 
-        $requests = $this->mockClient->getRecordedRequests();
+        $mockClient = $this->mockClient;
+        $this->assertNotNull($mockClient);
+        $requests = $mockClient->getRecordedRequests();
         $lastRequest = end($requests);
+        $this->assertNotFalse($lastRequest);
         $this->assertSame('clients/' . self::CLIENT_GUID . '/documents', $lastRequest['uri']);
         $this->assertSame('MyApp 1.0', $lastRequest['options']['headers']['Client-Application'] ?? null);
         $this->assertSame('file', $lastRequest['options']['multipart'][0]['name']);
@@ -80,8 +83,11 @@ class HrDocumentsEndpointsTest extends OnlineEndpointTest {
         $endpoint = new DocumentsEndpoint($this->client);
         $endpoint->uploadByConsultantClientNumber(new ConsultantClientNumber(1234567, 12345), 'pdf-content', 'vertrag.pdf');
 
-        $requests = $this->mockClient->getRecordedRequests();
+        $mockClient = $this->mockClient;
+        $this->assertNotNull($mockClient);
+        $requests = $mockClient->getRecordedRequests();
         $lastRequest = end($requests);
+        $this->assertNotFalse($lastRequest);
         $this->assertSame('clients/1234567-12345/documents/upload', $lastRequest['uri']);
     }
 }

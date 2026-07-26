@@ -24,29 +24,35 @@ class CalendarRecordsTest extends EndpointTest {
         return new CalendarRecordsEndpoint($this->client, self::getLogger());
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             'id' => '12345',
             'date' => '2025-01-15',
             'type' => 'Urlaub',
         ];
 
-        $record = CalendarRecord::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+
+        $record = CalendarRecord::fromJson($json);
         $this->assertInstanceOf(CalendarRecord::class, $record);
     }
 
-    public function test_json_serialize_collection() {
+    public function test_json_serialize_collection(): void {
         $data = [
             ['id' => '12345', 'date' => '2025-01-15'],
             ['id' => '12346', 'date' => '2025-01-16'],
         ];
 
-        $records = CalendarRecords::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+
+        $records = CalendarRecords::fromJson($json);
         $this->assertInstanceOf(CalendarRecords::class, $records);
         $this->assertCount(2, $records->getValues());
     }
 
-    public function test_get_calendar_records() {
+    public function test_get_calendar_records(): void {
         $this->endpoint = $this->createEndpoint();
         $records = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

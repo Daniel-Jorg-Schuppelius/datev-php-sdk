@@ -38,6 +38,10 @@ class UsersEndpoint extends EndpointAbstract implements SearchableEndpointInterf
         }, "Fetching User (ID: {$id->toString()})");
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?Users {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options);

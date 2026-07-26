@@ -27,6 +27,9 @@ class TermOfPayment extends NamedEntity implements IdentifiableNamedEntityInterf
     protected ?string $payment_type;
     protected ?bool $is_locked;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

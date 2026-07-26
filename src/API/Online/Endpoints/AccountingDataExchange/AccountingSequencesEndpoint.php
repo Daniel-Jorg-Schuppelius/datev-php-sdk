@@ -21,6 +21,10 @@ use Datev\Entities\Online\AccountingDataExchange\AccountingSequences\AccountingS
 class AccountingSequencesEndpoint extends FiscalYearScopedEndpointAbstract {
     protected string $endpointSuffix = 'accounting-sequences';
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?AccountingSequences {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $urlPath = $this->getEndpointUrl();

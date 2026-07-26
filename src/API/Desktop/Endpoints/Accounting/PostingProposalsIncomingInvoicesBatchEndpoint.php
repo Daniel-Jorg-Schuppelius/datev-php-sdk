@@ -49,6 +49,10 @@ class PostingProposalsIncomingInvoicesBatchEndpoint extends EndpointAbstract imp
         return "{$this->getEndpointUrl()}/{$this->clientId->toString()}/fiscal-years/{$this->fiscalYearId->toString()}/posting-proposals-incoming-invoices/batch";
     }
 
+    /**
+     * @param array<array-key, mixed> $data
+     * @return array<array-key, mixed>
+     */
     public function create($data): ?array {
         return $this->logDebugWithTimer(function () use ($data) {
             $response = parent::postContents($data, [], $this->getBaseUrl());

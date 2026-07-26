@@ -19,6 +19,9 @@ use Psr\Log\LoggerInterface;
  * @extends NamedValues<OrderStateWork>
  */
 class OrderStateWorks extends NamedValues {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";
         $this->valueClassName = OrderStateWork::class;

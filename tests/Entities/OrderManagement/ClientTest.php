@@ -16,7 +16,7 @@ use Datev\Entities\OrderManagement\Clients\{Client, Clients};
 use Tests\Contracts\EntityTest;
 
 class ClientTest extends EntityTest {
-    public function test_create_client() {
+    public function test_create_client(): void {
         $data = [
             "id" => "c1234567-8901-2345-6789-012345678901",
             "client_number" => "10001",
@@ -32,7 +32,7 @@ class ClientTest extends EntityTest {
         $this->assertTrue($client->isActive());
     }
 
-    public function test_create_clients() {
+    public function test_create_clients(): void {
         $data = [
             "content" => [
                 [

@@ -38,6 +38,10 @@ class DeletionLogEndpoint extends EndpointAbstract implements SearchableEndpoint
         return "{$this->getEndpointUrl()}/clients/deletion-log";
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?DeletionLogs {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options, $this->getBaseUrl());

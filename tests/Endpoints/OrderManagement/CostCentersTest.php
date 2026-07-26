@@ -14,15 +14,15 @@ use Datev\API\Desktop\Endpoints\OrderManagement\CostCentersEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class CostCentersTest extends EndpointTest {
-    protected ?CostCentersEndpoint $endpoint;
+    protected CostCentersEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new CostCentersEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new CostCentersEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_cost_centers() {
+    public function test_get_cost_centers(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

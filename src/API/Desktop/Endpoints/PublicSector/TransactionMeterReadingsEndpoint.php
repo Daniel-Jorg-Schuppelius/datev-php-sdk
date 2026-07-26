@@ -70,6 +70,10 @@ class TransactionMeterReadingsEndpoint extends EndpointAbstract implements Searc
         }, "Fetching TransactionMeterReading (ID: {$transactionId})");
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?TransactionMeterReadings {
         if (!isset($this->clientId) || !isset($this->citizenId) || !isset($this->feeId) || !isset($this->meterId)) {
             $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID, Citizen ID, Fee ID and Meter ID are required');

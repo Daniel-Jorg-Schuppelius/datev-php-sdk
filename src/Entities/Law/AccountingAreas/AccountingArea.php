@@ -20,11 +20,17 @@ class AccountingArea extends NamedEntity implements IdentifiableNamedEntityInter
     protected ?AccountingAreaID $id;
     protected ?int $number;
     protected ?string $name;
+    /**
+     * @var array<array-key, mixed>
+     */
     protected ?array $fiscal_year;
     protected ?int $general_ledger_account_length;
     protected ?int $general_ledger_accounts_frame;
     protected ?string $taxation_method;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
@@ -41,6 +47,9 @@ class AccountingArea extends NamedEntity implements IdentifiableNamedEntityInter
         return $this->name ?? null;
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public function getFiscalYear(): ?array {
         return $this->fiscal_year ?? null;
     }

@@ -21,11 +21,14 @@ class DeletionLog extends NamedEntity implements IdentifiableNamedEntityInterfac
     protected ?DeletionLogID $id;
     protected ?DateTime $timestamp;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
 
-    public function getID(): DeletionLogID {
+    public function getID(): ?DeletionLogID {
         return $this->id;
     }
 

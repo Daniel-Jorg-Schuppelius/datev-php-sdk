@@ -28,6 +28,9 @@ class InternalCostService extends NamedEntity {
     protected ?DateTime $month;
     protected ?string $text;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

@@ -16,6 +16,9 @@ use APIToolkit\Entities\ID;
 use Psr\Log\LoggerInterface;
 
 class TransactionCommunicationID extends ID {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = 'id';
         parent::__construct($data, $logger);

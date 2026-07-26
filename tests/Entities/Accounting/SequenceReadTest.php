@@ -16,7 +16,7 @@ use Datev\Entities\Accounting\SequenceReads\{SequenceRead, SequenceReads};
 use Tests\Contracts\EntityTest;
 
 class SequenceReadTest extends EntityTest {
-    public function test_create_sequence_read() {
+    public function test_create_sequence_read(): void {
         $data = [
             "id" => 1,
             "date_from" => "2025-01-01",
@@ -31,7 +31,7 @@ class SequenceReadTest extends EntityTest {
         $this->assertNotNull($sequence->getID());
     }
 
-    public function test_create_sequence_reads() {
+    public function test_create_sequence_reads(): void {
         $data = [
             "content" => [
                 [

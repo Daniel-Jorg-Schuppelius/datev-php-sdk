@@ -49,6 +49,10 @@ class PostingProposalsCashRegisterBatchEndpoint extends EndpointAbstract impleme
         return "{$this->getEndpointUrl()}/{$this->clientId->toString()}/fiscal-years/{$this->fiscalYearId->toString()}/posting-proposals-cash-register/batch";
     }
 
+    /**
+     * @param array<array-key, mixed> $data
+     * @return array<array-key, mixed>
+     */
     public function create($data): ?array {
         return $this->logDebugWithTimer(function () use ($data) {
             $response = parent::postContents($data, [], $this->getBaseUrl());

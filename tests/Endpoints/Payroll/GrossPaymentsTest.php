@@ -24,29 +24,35 @@ class GrossPaymentsTest extends EndpointTest {
         return new GrossPaymentsEndpoint($this->client, self::getLogger());
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             'id' => '12345',
             'amount' => 5000.00,
             'currency' => 'EUR',
         ];
 
-        $payment = GrossPayment::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+
+        $payment = GrossPayment::fromJson($json);
         $this->assertInstanceOf(GrossPayment::class, $payment);
     }
 
-    public function test_json_serialize_collection() {
+    public function test_json_serialize_collection(): void {
         $data = [
             ['id' => '12345', 'amount' => 5000.00],
             ['id' => '12346', 'amount' => 4500.00],
         ];
 
-        $payments = GrossPayments::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+
+        $payments = GrossPayments::fromJson($json);
         $this->assertInstanceOf(GrossPayments::class, $payments);
         $this->assertCount(2, $payments->getValues());
     }
 
-    public function test_get_gross_payments() {
+    public function test_get_gross_payments(): void {
         $this->endpoint = $this->createEndpoint();
         $payments = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

@@ -31,6 +31,9 @@ class GrossPaymentsLodas extends NamedEntity {
 
     protected bool $component_gross_payment;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

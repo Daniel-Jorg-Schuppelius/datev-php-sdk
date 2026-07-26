@@ -18,17 +18,17 @@ use Datev\Entities\PublicSector\Meters\{Meter, Meters};
 use Tests\Contracts\EndpointTest;
 
 class MetersTest extends EndpointTest {
-    protected ?MetersEndpoint $endpoint;
-    protected ?MeterReadingsEndpoint $meterReadingsEndpoint;
+    protected MetersEndpoint $endpoint;
+    protected MeterReadingsEndpoint $meterReadingsEndpoint;
 
-    public function __construct($name = null, array $data = [], $dataName = '') {
-        parent::__construct($name, $data, $dataName);
+    protected function setUp(): void {
+        $this->apiDisabled = true;
+        parent::setUp();
         $this->endpoint = new MetersEndpoint($this->client, self::getLogger());
         $this->meterReadingsEndpoint = new MeterReadingsEndpoint($this->client, self::getLogger());
-        $this->apiDisabled = true;
     }
 
-    public function test_json_serialize_meter() {
+    public function test_json_serialize_meter(): void {
         $data = [
             'id' => 'METER-001',
             'meter_type' => [
@@ -43,7 +43,9 @@ class MetersTest extends EndpointTest {
             ],
         ];
 
-        $meter = Meter::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertIsString($json);
+        $meter = Meter::fromJson($json);
         $this->assertInstanceOf(Meter::class, $meter);
         $this->assertEquals('METER-001', $meter->getID());
         $this->assertEquals('WZ-12345', $meter->getMeterNumber());
@@ -51,7 +53,7 @@ class MetersTest extends EndpointTest {
         $this->assertEquals('Wasserzähler', $meter->getMeterType()->getName());
     }
 
-    public function test_json_serialize_meters_collection() {
+    public function test_json_serialize_meters_collection(): void {
         $data = [
             [
                 'id' => 'METER-001',
@@ -63,12 +65,14 @@ class MetersTest extends EndpointTest {
             ],
         ];
 
-        $meters = Meters::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertIsString($json);
+        $meters = Meters::fromJson($json);
         $this->assertInstanceOf(Meters::class, $meters);
         $this->assertCount(2, $meters->getValues());
     }
 
-    public function test_json_serialize_meter_reading() {
+    public function test_json_serialize_meter_reading(): void {
         $data = [
             'id' => 'READING-001',
             'reading_date' => '2024-06-01',
@@ -77,7 +81,9 @@ class MetersTest extends EndpointTest {
             'is_estimated' => false,
         ];
 
-        $meterReading = MeterReading::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertIsString($json);
+        $meterReading = MeterReading::fromJson($json);
         $this->assertInstanceOf(MeterReading::class, $meterReading);
         $this->assertEquals('READING-001', $meterReading->getID());
         $this->assertEquals(12345.67, $meterReading->getReadingValue());
@@ -85,7 +91,7 @@ class MetersTest extends EndpointTest {
         $this->assertFalse($meterReading->getIsEstimated());
     }
 
-    public function test_json_serialize_meter_readings_collection() {
+    public function test_json_serialize_meter_readings_collection(): void {
         $data = [
             [
                 'id' => 'READING-001',
@@ -99,7 +105,9 @@ class MetersTest extends EndpointTest {
             ],
         ];
 
-        $meterReadings = MeterReadings::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertIsString($json);
+        $meterReadings = MeterReadings::fromJson($json);
         $this->assertInstanceOf(MeterReadings::class, $meterReadings);
         $this->assertCount(2, $meterReadings->getValues());
     }

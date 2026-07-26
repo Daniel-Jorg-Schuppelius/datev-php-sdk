@@ -16,7 +16,7 @@ use Datev\Entities\ClientMasterData\Relationships\{Relationship, Relationships};
 use Tests\Contracts\EntityTest;
 
 class RelationshipTest extends EntityTest {
-    public function test_create_relationship() {
+    public function test_create_relationship(): void {
         $data = [
             "id" => "test-relationship-123",
             "abbreviation" => "GF",
@@ -34,7 +34,6 @@ class RelationshipTest extends EntityTest {
         $relationship = new Relationship($data);
         $this->assertInstanceOf(Relationship::class, new Relationship);
         $this->assertInstanceOf(Relationship::class, $relationship);
-        $this->assertNotNull($relationship->getID());
         $this->assertEquals("GF", $relationship->getAbbreviation());
         $this->assertEquals("Geschäftsführer", $relationship->getName());
         $this->assertTrue($relationship->isStandard());
@@ -43,7 +42,7 @@ class RelationshipTest extends EntityTest {
         $this->assertEquals("Musterfirma GmbH", $relationship->getIsAddresseeDisplayName());
     }
 
-    public function test_create_relationships() {
+    public function test_create_relationships(): void {
         $data = [
             "content" => [
                 [

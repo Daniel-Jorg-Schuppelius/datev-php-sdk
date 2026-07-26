@@ -24,6 +24,10 @@ use Datev\Entities\Online\HrExports\Clients\Clients;
 class ClientsEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
     protected string $endpoint = 'clients';
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?Clients {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options);

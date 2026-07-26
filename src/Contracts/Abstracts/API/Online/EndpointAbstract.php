@@ -71,6 +71,7 @@ abstract class EndpointAbstract extends APIEndpointAbstract {
      * (inkl. Header). Der Statuscode wird gegen die erwarteten Codes geprüft.
      *
      * @param int|array<int, int> $expectedStatusCodes
+     * @param array<string, mixed> $options
      */
     protected function requestResponse(string $method, ?string $urlPath = null, array $options = [], int|array $expectedStatusCodes = 200): ResponseInterface {
         $urlPath ??= $this->getEndpointUrl();
@@ -108,8 +109,9 @@ abstract class EndpointAbstract extends APIEndpointAbstract {
      *
      * @param array<int, array<string, mixed>> $multipart Guzzle-Multipart-Elemente
      * @param int|array<int, int> $expectedStatusCodes
+     * @param array<string, mixed> $headers
      */
-    protected function postMultipart(array $multipart, ?string $urlPath = null, int|array $expectedStatusCodes = [200, 201, 202], array $headers = []): ResponseInterface {
+    protected function postMultipartRequest(array $multipart, ?string $urlPath = null, int|array $expectedStatusCodes = [200, 201, 202], array $headers = []): ResponseInterface {
         $options = ['multipart' => $multipart];
         if (!empty($headers)) {
             $options['headers'] = $headers;
@@ -123,8 +125,9 @@ abstract class EndpointAbstract extends APIEndpointAbstract {
      *
      * @param array<int, array<string, mixed>> $multipart Guzzle-Multipart-Elemente
      * @param int|array<int, int> $expectedStatusCodes
+     * @param array<string, mixed> $headers
      */
-    protected function putMultipart(array $multipart, ?string $urlPath = null, int|array $expectedStatusCodes = [200, 201, 202], array $headers = []): ResponseInterface {
+    protected function putMultipartRequest(array $multipart, ?string $urlPath = null, int|array $expectedStatusCodes = [200, 201, 202], array $headers = []): ResponseInterface {
         $options = ['multipart' => $multipart];
         if (!empty($headers)) {
             $options['headers'] = $headers;

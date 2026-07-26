@@ -21,6 +21,9 @@ use Psr\Log\LoggerInterface;
 class VacationEntitlement extends NamedEntity {
     protected float $basic_vacation_entitlement;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

@@ -22,11 +22,14 @@ class Address extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?string $city;
     protected ?string $postal_code;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
 
-    public function getID(): AddressID {
+    public function getID(): ?AddressID {
         return $this->id;
     }
 

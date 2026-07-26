@@ -16,7 +16,7 @@ use Datev\Entities\Accounting\AccountingSumsAndBalances\{AccountingSumsAndBalanc
 use Tests\Contracts\EntityTest;
 
 class AccountingSumsAndBalanceTest extends EntityTest {
-    public function test_create_accounting_sums_and_balance() {
+    public function test_create_accounting_sums_and_balance(): void {
         $data = [
             "id" => "1200-2024",
             "account_number" => 1200,
@@ -32,7 +32,7 @@ class AccountingSumsAndBalanceTest extends EntityTest {
         $sumsAndBalance = new AccountingSumsAndBalance($data);
         $this->assertInstanceOf(AccountingSumsAndBalance::class, new AccountingSumsAndBalance);
         $this->assertInstanceOf(AccountingSumsAndBalance::class, $sumsAndBalance);
-        $this->assertNotNull($sumsAndBalance->getID());
+        $this->assertEquals("1200-2024", $sumsAndBalance->getID()->toString());
         $this->assertEquals(1200, $sumsAndBalance->getAccountNumber());
         $this->assertEquals(15000.00, $sumsAndBalance->getAnnualValueDebit());
         $this->assertEquals(12000.00, $sumsAndBalance->getAnnualValueCredit());
@@ -41,7 +41,7 @@ class AccountingSumsAndBalanceTest extends EntityTest {
         $this->assertEquals("Bank", $sumsAndBalance->getCaption());
     }
 
-    public function test_create_accounting_sums_and_balances() {
+    public function test_create_accounting_sums_and_balances(): void {
         $data = [
             "content" => [
                 [

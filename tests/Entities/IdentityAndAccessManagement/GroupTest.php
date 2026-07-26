@@ -16,7 +16,7 @@ use Datev\Entities\IdentityAndAccessManagement\Groups\{Group, Groups};
 use Tests\Contracts\EntityTest;
 
 class GroupTest extends EntityTest {
-    public function test_create_group() {
+    public function test_create_group(): void {
         $data = [
             "id" => "g1234567-8901-2345-6789-012345678901",
             "display_name" => "Administratoren",
@@ -29,7 +29,7 @@ class GroupTest extends EntityTest {
         $this->assertEquals("Administratoren", $group->getDisplayName());
     }
 
-    public function test_create_groups() {
+    public function test_create_groups(): void {
         $data = [
             "content" => [
                 [

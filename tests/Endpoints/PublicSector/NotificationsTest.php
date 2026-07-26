@@ -14,15 +14,15 @@ use Datev\API\Desktop\Endpoints\PublicSector\NotificationsEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class NotificationsTest extends EndpointTest {
-    protected ?NotificationsEndpoint $endpoint;
+    protected NotificationsEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new NotificationsEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new NotificationsEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_notifications() {
+    public function test_get_notifications(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

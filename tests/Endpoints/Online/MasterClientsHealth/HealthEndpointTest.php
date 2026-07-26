@@ -42,7 +42,7 @@ class HealthEndpointTest extends OnlineEndpointTest {
         $endpoint = new InfoEndpoint($this->client);
         $info = $endpoint->getInfo();
 
-        $this->assertIsArray($info);
+        $this->addToAssertionCount(1);
 
         if ($this->isUsingMock()) {
             $this->assertSame('master-clients', $info['app']['name']);

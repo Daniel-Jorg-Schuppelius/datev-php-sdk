@@ -16,6 +16,9 @@ use Datev\Entities\ClientMasterData\CountryCodes\CountryCodeID;
 use Psr\Log\LoggerInterface;
 
 class CountryCode extends CountryCodeID {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
         $this->entityName = 'country_code';

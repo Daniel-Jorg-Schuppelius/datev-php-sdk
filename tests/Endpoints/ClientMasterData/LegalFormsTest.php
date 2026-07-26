@@ -16,15 +16,15 @@ use Datev\API\Desktop\Endpoints\ClientMasterData\LegalFormsEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class LegalFormsTest extends EndpointTest {
-    protected ?LegalFormsEndpoint $endpoint;
+    protected LegalFormsEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new LegalFormsEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new LegalFormsEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_legal_forms() {
+    public function test_get_legal_forms(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

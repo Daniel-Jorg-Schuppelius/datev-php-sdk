@@ -19,6 +19,9 @@ use Psr\Log\LoggerInterface;
  * @extends BaseEmployees<Employee>
  */
 class Employees extends BaseEmployees {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";
         $this->valueClassName = Employee::class;

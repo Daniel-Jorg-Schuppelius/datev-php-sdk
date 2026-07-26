@@ -14,15 +14,15 @@ use Datev\API\Desktop\Endpoints\OrderManagement\FeePlansEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class FeePlansTest extends EndpointTest {
-    protected ?FeePlansEndpoint $endpoint;
+    protected FeePlansEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new FeePlansEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new FeePlansEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_fee_plans() {
+    public function test_get_fee_plans(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

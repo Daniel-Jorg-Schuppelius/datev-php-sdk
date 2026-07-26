@@ -19,6 +19,9 @@ use Psr\Log\LoggerInterface;
  * @extends NamedValues<RecordRead>
  */
 class RecordReads extends NamedValues {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";
         $this->valueClassName = RecordRead::class;

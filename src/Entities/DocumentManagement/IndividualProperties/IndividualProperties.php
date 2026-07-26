@@ -19,6 +19,9 @@ use Psr\Log\LoggerInterface;
  * @extends NamedValues<IndividualProperty>
  */
 class IndividualProperties extends NamedValues {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";
         $this->valueClassName = IndividualProperty::class;

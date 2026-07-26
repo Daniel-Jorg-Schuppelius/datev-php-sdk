@@ -16,7 +16,7 @@ use Datev\Entities\OrderManagement\Invoices\{Invoice, Invoices};
 use Tests\Contracts\EntityTest;
 
 class InvoiceTest extends EntityTest {
-    public function test_create_invoice() {
+    public function test_create_invoice(): void {
         $data = [
             "id" => 12345,
             "invoice_id" => "inv-2024-001",
@@ -38,7 +38,7 @@ class InvoiceTest extends EntityTest {
         $this->assertEquals(1001, $invoice->getInvoiceNumber());
     }
 
-    public function test_create_invoices() {
+    public function test_create_invoices(): void {
         $data = [
             "content" => [
                 [

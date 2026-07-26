@@ -29,6 +29,9 @@ class SubordersStateBillingEndpoint extends EndpointAbstract implements Searchab
         return $this->getByOrderId((int) $id->toString());
     }
 
+    /**
+     * @param array<string, mixed> $queryParams
+     */
     public function getByOrderId(?int $orderId = null, array $queryParams = []): ?SuborderStateBilling {
         if (is_null($orderId)) {
             $this->logErrorAndThrow(InvalidArgumentException::class, 'Order ID is required');
@@ -45,6 +48,10 @@ class SubordersStateBillingEndpoint extends EndpointAbstract implements Searchab
         }, "Fetching SuborderStateBilling (OrderID: {$orderId})");
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?SubordersStateBilling {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options);

@@ -17,7 +17,7 @@ use Datev\Enums\LegalFormType;
 use Tests\Contracts\EntityTest;
 
 class LegalFormTest extends EntityTest {
-    public function test_create_legal_form() {
+    public function test_create_legal_form(): void {
         $data = [
             "id" => "legal-form-123",
             "display_name" => "GmbH",
@@ -38,7 +38,7 @@ class LegalFormTest extends EntityTest {
         $this->assertEquals(LegalFormType::Kapitalgesellschaft, $legalForm->getType());
     }
 
-    public function test_create_legal_forms() {
+    public function test_create_legal_forms(): void {
         $data = [
             "content" => [
                 [

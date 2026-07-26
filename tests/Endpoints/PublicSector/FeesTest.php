@@ -17,15 +17,15 @@ use Datev\Entities\PublicSector\Fees\{Fee, Fees};
 use Tests\Contracts\EndpointTest;
 
 class FeesTest extends EndpointTest {
-    protected ?FeesEndpoint $endpoint;
+    protected FeesEndpoint $endpoint;
 
-    public function __construct($name = null, array $data = [], $dataName = '') {
-        parent::__construct($name, $data, $dataName);
-        $this->endpoint = new FeesEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new FeesEndpoint($this->client, self::getLogger());
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             'id' => 12345,
             'fee_name' => 'Wassergebühr',
@@ -40,7 +40,10 @@ class FeesTest extends EndpointTest {
             ],
         ];
 
-        $fee = Fee::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+
+        $fee = Fee::fromJson($json);
         $this->assertInstanceOf(Fee::class, $fee);
         $this->assertEquals(12345, $fee->getID());
         $this->assertEquals('Wassergebühr', $fee->getFeeName());
@@ -49,7 +52,7 @@ class FeesTest extends EndpointTest {
         $this->assertEquals('Musterbank', $fee->getPaymentMethod()->getBankName());
     }
 
-    public function test_json_serialize_collection() {
+    public function test_json_serialize_collection(): void {
         $data = [
             [
                 'id' => 12345,
@@ -63,7 +66,10 @@ class FeesTest extends EndpointTest {
             ],
         ];
 
-        $fees = Fees::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+
+        $fees = Fees::fromJson($json);
         $this->assertInstanceOf(Fees::class, $fees);
         $this->assertCount(2, $fees->getValues());
     }

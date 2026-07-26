@@ -32,6 +32,9 @@ class Relationship extends NamedEntity implements IdentifiableNamedEntityInterfa
     protected ?string $is_addressee_display_name;
     protected ?PersonType $is_addressee_type;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

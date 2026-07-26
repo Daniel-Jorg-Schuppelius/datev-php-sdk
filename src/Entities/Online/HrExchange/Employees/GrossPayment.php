@@ -27,6 +27,9 @@ class GrossPayment extends NamedEntity {
 
     protected string $payment_months;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

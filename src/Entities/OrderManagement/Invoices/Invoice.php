@@ -38,6 +38,9 @@ class Invoice extends NamedEntity {
     protected ?string $invoice_type;
     protected ?bool $cancellation_flag;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

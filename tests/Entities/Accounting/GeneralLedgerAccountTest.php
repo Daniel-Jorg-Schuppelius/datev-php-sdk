@@ -16,7 +16,7 @@ use Datev\Entities\Accounting\GeneralLedgerAccounts\{GeneralLedgerAccount, Gener
 use Tests\Contracts\EntityTest;
 
 class GeneralLedgerAccountTest extends EntityTest {
-    public function test_create_general_ledger_account() {
+    public function test_create_general_ledger_account(): void {
         $data = [
             "id" => 1800,
             "account_number" => 1800,
@@ -36,7 +36,7 @@ class GeneralLedgerAccountTest extends EntityTest {
         $this->assertFalse($account->isLocked());
     }
 
-    public function test_create_general_ledger_accounts() {
+    public function test_create_general_ledger_accounts(): void {
         $data = [
             "content" => [
                 [

@@ -32,6 +32,9 @@ class CostItem extends NamedEntity {
     protected ?int $object_number;
     protected ?string $unit_description;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

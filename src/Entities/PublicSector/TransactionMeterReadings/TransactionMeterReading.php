@@ -22,6 +22,9 @@ class TransactionMeterReading extends NamedEntity {
     protected ?string $notification_e_mail;
     protected ?TransactionMeterReadingData $meter_reading;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

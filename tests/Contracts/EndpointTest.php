@@ -23,7 +23,7 @@ use Throwable;
 abstract class EndpointTest extends TestCase {
     use ErrorLog;
 
-    protected ?ApiClientInterface $client;
+    protected ApiClientInterface $client;
 
     protected bool $apiDisabled = false;
 
@@ -62,13 +62,11 @@ abstract class EndpointTest extends TestCase {
         return $envValue === '1' || $envValue === 'true';
     }
 
-    public function __construct($name) {
-        parent::__construct($name);
+    protected function setUp(): void {
+        parent::setUp();
         self::setLogger(TestAPIClientFactory::getLogger());
         $this->client = TestAPIClientFactory::getClient();
-    }
 
-    final protected function setUp(): void {
         // Wenn DATEV_SKIP_API_TESTS gesetzt ist, alle Endpoint-Tests überspringen
         if (self::shouldSkipApiTests()) {
             $this->markTestSkipped('API tests disabled via DATEV_SKIP_API_TESTS environment variable');
@@ -87,7 +85,7 @@ abstract class EndpointTest extends TestCase {
             try {
                 $endpoint = new EchoEndpoint($this->client);
                 $echoResponse = $endpoint->get();
-                $this->apiDisabled = !$echoResponse->isValid();
+                $this->apiDisabled = $echoResponse === null || !$echoResponse->isValid();
             } catch (Throwable $e) {
                 self::logDebug("API not available, switching to mock mode: " . $e->getMessage());
                 $this->apiDisabled = true;
@@ -119,6 +117,7 @@ abstract class EndpointTest extends TestCase {
     /**
      * Registriert zusätzliche Mock-Responses für spezifische Tests.
      * Nur im Mock-Modus aktiv - wird bei verfügbarer API ignoriert.
+     * @param array<string, mixed> $headers
      */
     protected function registerMockResponse(
         string $method,

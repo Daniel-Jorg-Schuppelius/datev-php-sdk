@@ -16,7 +16,7 @@ use Datev\Entities\ClientMasterData\Denominations\{Denomination, Denominations};
 use Tests\Contracts\EntityTest;
 
 class DenominationTest extends EntityTest {
-    public function test_create_denomination() {
+    public function test_create_denomination(): void {
         $data = [
             "value" => "Evangelisch",
             "valid_from" => "2024-01-01",
@@ -26,7 +26,7 @@ class DenominationTest extends EntityTest {
         $this->assertInstanceOf(Denomination::class, $denomination);
     }
 
-    public function test_create_denominations() {
+    public function test_create_denominations(): void {
         $data = [
             [
                 "value" => "Evangelisch",

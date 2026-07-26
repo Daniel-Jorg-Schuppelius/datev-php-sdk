@@ -19,6 +19,9 @@ use Psr\Log\LoggerInterface;
 class Client extends CommonClient {
     protected CompanyData $company_data;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

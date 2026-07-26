@@ -16,7 +16,7 @@ use Datev\Entities\ClientMasterData\MaritalStatuses\{MaritalStatus, MaritalStatu
 use Tests\Contracts\EntityTest;
 
 class MaritalStatusTest extends EntityTest {
-    public function test_create_marital_status() {
+    public function test_create_marital_status(): void {
         $data = [
             "value" => "verheiratet",
             "valid_from" => "2024-01-01",
@@ -26,7 +26,7 @@ class MaritalStatusTest extends EntityTest {
         $this->assertInstanceOf(MaritalStatus::class, $status);
     }
 
-    public function test_create_marital_statuses() {
+    public function test_create_marital_statuses(): void {
         $data = [
             [
                 "value" => "verheiratet",

@@ -15,7 +15,13 @@ namespace Datev\Entities\Online\AccountingExtfFiles\Jobs;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<ExtfJob>
+ */
 class ExtfJobs extends NamedValues {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->valueClassName = ExtfJob::class;
         parent::__construct($data, $logger);

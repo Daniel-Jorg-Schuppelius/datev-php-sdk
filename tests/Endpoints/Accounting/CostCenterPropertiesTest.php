@@ -23,7 +23,7 @@ class CostCenterPropertiesTest extends EndpointTest {
         return new CostCenterPropertiesEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_cost_center_properties() {
+    public function test_get_cost_center_properties(): void {
         $this->skipMockIfComplexEntity();
 
         $this->endpoint = $this->createEndpoint();

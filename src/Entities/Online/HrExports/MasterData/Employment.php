@@ -45,6 +45,9 @@ class Employment extends NamedEntity {
 
     protected string $highest_level_of_professional_training;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

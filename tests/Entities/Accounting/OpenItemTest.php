@@ -16,7 +16,7 @@ use Datev\Entities\Accounting\OpenItems\{OpenItem, OpenItems};
 use Tests\Contracts\EntityTest;
 
 class OpenItemTest extends EntityTest {
-    public function test_create_open_item() {
+    public function test_create_open_item(): void {
         $data = [
             "assessment_year" => 2024,
             "assigned_due_date" => "2024-02-15T00:00:00.000+00:00",
@@ -31,7 +31,7 @@ class OpenItemTest extends EntityTest {
         $this->assertInstanceOf(OpenItem::class, $openItem);
     }
 
-    public function test_create_open_items() {
+    public function test_create_open_items(): void {
         $data = [
             "content" => [
                 [

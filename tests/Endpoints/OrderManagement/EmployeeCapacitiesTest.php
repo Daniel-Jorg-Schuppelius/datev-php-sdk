@@ -14,15 +14,15 @@ use Datev\API\Desktop\Endpoints\OrderManagement\EmployeeCapacitiesEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class EmployeeCapacitiesTest extends EndpointTest {
-    protected ?EmployeeCapacitiesEndpoint $endpoint;
+    protected EmployeeCapacitiesEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new EmployeeCapacitiesEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new EmployeeCapacitiesEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_employee_capacities() {
+    public function test_get_employee_capacities(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

@@ -14,20 +14,20 @@ use Datev\API\Desktop\Endpoints\OrderManagement\CostItemsEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class CostItemsTest extends EndpointTest {
-    protected ?CostItemsEndpoint $endpoint;
+    protected CostItemsEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new CostItemsEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new CostItemsEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_cost_items() {
+    public function test_get_cost_items(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }
 
-        $items = $this->endpoint->search();
+        $items = $this->endpoint->getByOrderId(1);
         $this->assertNotNull($items);
     }
 }

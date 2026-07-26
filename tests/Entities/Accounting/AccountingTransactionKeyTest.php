@@ -16,7 +16,7 @@ use Datev\Entities\Accounting\AccountingTransactionKeys\{AccountingTransactionKe
 use Tests\Contracts\EntityTest;
 
 class AccountingTransactionKeyTest extends EntityTest {
-    public function test_create_accounting_transaction_key() {
+    public function test_create_accounting_transaction_key(): void {
         $data = [
             "id" => "BU-1",
             "number" => 1,
@@ -32,14 +32,14 @@ class AccountingTransactionKeyTest extends EntityTest {
         $transactionKey = new AccountingTransactionKey($data);
         $this->assertInstanceOf(AccountingTransactionKey::class, new AccountingTransactionKey);
         $this->assertInstanceOf(AccountingTransactionKey::class, $transactionKey);
-        $this->assertNotNull($transactionKey->getID());
+        $this->assertEquals("BU-1", $transactionKey->getID()->toString());
         $this->assertEquals(1, $transactionKey->getNumber());
         $this->assertEquals("Nicht steuerbar (USt)", $transactionKey->getCaption());
         $this->assertEquals(0.00, $transactionKey->getTaxRate());
         $this->assertFalse($transactionKey->isTaxRateSelectable());
     }
 
-    public function test_create_accounting_transaction_keys() {
+    public function test_create_accounting_transaction_keys(): void {
         $data = [
             "content" => [
                 [

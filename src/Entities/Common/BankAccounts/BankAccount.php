@@ -34,11 +34,14 @@ class BankAccount extends NamedEntity implements IdentifiableNamedEntityInterfac
     protected ?DateTime $valid_from;
     protected ?DateTime $valid_to;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
 
-    public function getID(): BankAccountID {
+    public function getID(): ?BankAccountID {
         return $this->id;
     }
 

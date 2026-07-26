@@ -16,7 +16,7 @@ use Datev\Entities\ClientMasterData\LocationsOfHeadOffice\{LocationOfHeadOffice,
 use Tests\Contracts\EntityTest;
 
 class LocationOfHeadOfficeTest extends EntityTest {
-    public function test_create_location_of_head_office() {
+    public function test_create_location_of_head_office(): void {
         $data = [
             "value" => "München",
             "valid_from" => "2024-01-01",
@@ -26,7 +26,7 @@ class LocationOfHeadOfficeTest extends EntityTest {
         $this->assertInstanceOf(LocationOfHeadOffice::class, $location);
     }
 
-    public function test_create_locations_of_head_office() {
+    public function test_create_locations_of_head_office(): void {
         $data = [
             [
                 "value" => "München",

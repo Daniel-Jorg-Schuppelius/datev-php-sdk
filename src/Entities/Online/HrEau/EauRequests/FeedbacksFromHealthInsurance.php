@@ -15,7 +15,13 @@ namespace Datev\Entities\Online\HrEau\EauRequests;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<FeedbackFromHealthInsurance>
+ */
 class FeedbacksFromHealthInsurance extends NamedValues {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->valueClassName = FeedbackFromHealthInsurance::class;
         parent::__construct($data, $logger);

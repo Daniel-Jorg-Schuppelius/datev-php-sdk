@@ -16,7 +16,7 @@ use Datev\Entities\PublicSector\Fees\{Fee, Fees};
 use Tests\Contracts\EntityTest;
 
 class FeeTest extends EntityTest {
-    public function test_create_fee() {
+    public function test_create_fee(): void {
         $data = [
             "id" => 123,
             "fee_name" => "Wassergebühr",
@@ -30,7 +30,7 @@ class FeeTest extends EntityTest {
         $this->assertEquals("Wassergebühr", $fee->getFeeName());
     }
 
-    public function test_create_fees() {
+    public function test_create_fees(): void {
         $data = [
             "content" => [
                 [

@@ -14,15 +14,15 @@ use Datev\API\Desktop\Endpoints\PublicSector\TransactionRegistrationEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class TransactionRegistrationTest extends EndpointTest {
-    protected ?TransactionRegistrationEndpoint $endpoint;
+    protected TransactionRegistrationEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new TransactionRegistrationEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new TransactionRegistrationEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_transaction_registration() {
+    public function test_get_transaction_registration(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

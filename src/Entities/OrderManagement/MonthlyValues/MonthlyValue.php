@@ -54,6 +54,9 @@ class MonthlyValue extends NamedEntity {
     protected ?float $on_account_amount_offset;
     protected ?float $contribution_margin;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

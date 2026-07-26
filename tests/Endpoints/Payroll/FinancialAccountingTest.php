@@ -24,28 +24,34 @@ class FinancialAccountingTest extends EndpointTest {
         return new FinancialAccountingEndpoint($this->client, self::getLogger());
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             'id' => '12345',
             'account_number' => '4000',
         ];
 
-        $accounting = FinancialAccounting::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+
+        $accounting = FinancialAccounting::fromJson($json);
         $this->assertInstanceOf(FinancialAccounting::class, $accounting);
     }
 
-    public function test_json_serialize_collection() {
+    public function test_json_serialize_collection(): void {
         $data = [
             ['id' => '12345', 'account_number' => '4000'],
             ['id' => '12346', 'account_number' => '4100'],
         ];
 
-        $accountings = FinancialAccountings::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+
+        $accountings = FinancialAccountings::fromJson($json);
         $this->assertInstanceOf(FinancialAccountings::class, $accountings);
         $this->assertCount(2, $accountings->getValues());
     }
 
-    public function test_get_financial_accountings() {
+    public function test_get_financial_accountings(): void {
         $this->endpoint = $this->createEndpoint();
         $accountings = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

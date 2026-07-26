@@ -16,7 +16,7 @@ use Datev\Entities\ClientMasterData\Employees\{Employee, Employees};
 use Tests\Contracts\EntityTest;
 
 class EmployeeTest extends EntityTest {
-    public function test_create_employee() {
+    public function test_create_employee(): void {
         $data = [
             "id" => "e23f9c3c-380c-494e-97c8-d12fff738189",
             "name" => "Mustermann, Max",
@@ -33,7 +33,7 @@ class EmployeeTest extends EntityTest {
         $this->assertEquals(1001, $employee->getNumber());
     }
 
-    public function test_create_employees() {
+    public function test_create_employees(): void {
         $data = [
             [
                 "id" => "e23f9c3c-380c-494e-97c8-d12fff738189",

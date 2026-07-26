@@ -16,7 +16,7 @@ use Datev\Entities\ClientMasterData\ClientGroups\ClientGroup;
 use Tests\Contracts\EntityTest;
 
 class ClientGroupTest extends EntityTest {
-    public function test_create_client_group() {
+    public function test_create_client_group(): void {
         $data = [
             "id" => "a97c9c3e-380c-494e-47c8-d12fff738132",
             "client_group_type_id" => "a53f9c3e-480c-494e-47c8-d12fff738188",

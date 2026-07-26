@@ -38,6 +38,9 @@ class StocktakingRecord extends NamedEntity implements IdentifiableNamedEntityIn
     protected ?string $location;
     protected ?string $contract_number;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

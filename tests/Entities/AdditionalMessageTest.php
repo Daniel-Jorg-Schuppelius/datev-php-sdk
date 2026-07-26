@@ -16,7 +16,7 @@ use Datev\Entities\Common\AdditionalMessages\AdditionalMessage;
 use Tests\Contracts\EntityTest;
 
 class AdditionalMessageTest extends EntityTest {
-    public function test_create_additional_message() {
+    public function test_create_additional_message(): void {
         $data = [
             "id" => "abc",
             "description" => "abc",

@@ -15,6 +15,9 @@ namespace Datev\Entities\ClientMasterData\FederalStates;
 use Psr\Log\LoggerInterface;
 
 class FederalStateOfLegalPerson extends FederalState {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
         $this->entityName = 'current_federal_state_of_legal_person';

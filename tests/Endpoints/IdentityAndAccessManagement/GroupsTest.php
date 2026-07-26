@@ -17,15 +17,15 @@ use Datev\Entities\IdentityAndAccessManagement\Groups\{Group, GroupID, Groups};
 use Tests\Contracts\EndpointTest;
 
 class GroupsTest extends EndpointTest {
-    protected ?GroupsEndpoint $endpoint;
+    protected GroupsEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
+    protected function setUp(): void {
+        $this->apiDisabled = true;
+        parent::setUp();
         $this->endpoint = new GroupsEndpoint($this->client, self::getLogger());
-        $this->apiDisabled = true; // API is disabled
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             "id" => "a077bae8-e669-4b3a-851b-35b2079d2acd",
             "meta" => [
@@ -51,10 +51,12 @@ class GroupsTest extends EndpointTest {
         $group = new Group($data);
         $this->assertInstanceOf(Group::class, $group);
         $this->assertEquals("Sachbearbeiter", $group->getDisplayName());
-        $this->assertEquals("MitarbeiterInnen der Sachbearbeitung", $group->getDatevExtension()->getDescription());
+        $datevExtension = $group->getDatevExtension();
+        $this->assertNotNull($datevExtension);
+        $this->assertEquals("MitarbeiterInnen der Sachbearbeitung", $datevExtension->getDescription());
     }
 
-    public function test_get_groups() {
+    public function test_get_groups(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }
@@ -63,7 +65,7 @@ class GroupsTest extends EndpointTest {
         $this->assertInstanceOf(Groups::class, $groups);
     }
 
-    public function test_get_group() {
+    public function test_get_group(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

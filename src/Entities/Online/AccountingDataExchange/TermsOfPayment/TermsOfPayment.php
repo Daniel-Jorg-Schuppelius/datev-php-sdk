@@ -15,7 +15,13 @@ namespace Datev\Entities\Online\AccountingDataExchange\TermsOfPayment;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<TermOfPayment>
+ */
 class TermsOfPayment extends NamedValues {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->valueClassName = TermOfPayment::class;
         parent::__construct($data, $logger);

@@ -19,6 +19,9 @@ use Psr\Log\LoggerInterface;
  * @extends DateTimeNamedValues<CodeOfClassificationOfEconomicActivities2008>
  */
 class CodesOfClassificationOfEconomicActivities2008 extends DateTimeNamedValues {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";
         $this->valueClassName = CodeOfClassificationOfEconomicActivities2008::class;

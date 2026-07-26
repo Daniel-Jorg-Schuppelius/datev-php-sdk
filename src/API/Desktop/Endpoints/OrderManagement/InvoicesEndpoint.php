@@ -45,6 +45,10 @@ class InvoicesEndpoint extends EndpointAbstract implements SearchableEndpointInt
         }, "Fetching Invoice (ID: {$invoiceId})");
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?Invoices {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options);

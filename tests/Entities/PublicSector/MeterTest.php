@@ -16,7 +16,7 @@ use Datev\Entities\PublicSector\Meters\{Meter, Meters};
 use Tests\Contracts\EntityTest;
 
 class MeterTest extends EntityTest {
-    public function test_create_meter() {
+    public function test_create_meter(): void {
         $data = [
             "id" => "m1234567-8901-2345-6789-012345678901",
             "number" => "WZ-001",
@@ -37,7 +37,7 @@ class MeterTest extends EntityTest {
         $this->assertEquals("12345678", $meter->getMeterNumber());
     }
 
-    public function test_create_meters() {
+    public function test_create_meters(): void {
         $data = [
             "content" => [
                 [

@@ -35,6 +35,9 @@ class Suborder extends NamedEntity {
     protected ?float $external_costs;
     protected ?bool $accounting_allowed;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

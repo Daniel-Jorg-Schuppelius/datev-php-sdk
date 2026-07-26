@@ -16,7 +16,7 @@ use Datev\Entities\Accounting\Debitors\{Debitor, Debitors};
 use Tests\Contracts\EntityTest;
 
 class DebitorTest extends EntityTest {
-    public function test_create_debitor() {
+    public function test_create_debitor(): void {
         $data = [
             "id" => 10001,
             "account_number" => 10001,
@@ -39,7 +39,7 @@ class DebitorTest extends EntityTest {
         $this->assertTrue($debitor->isBusinessPartnerActive());
     }
 
-    public function test_create_debitors() {
+    public function test_create_debitors(): void {
         $data = [
             "content" => [
                 [

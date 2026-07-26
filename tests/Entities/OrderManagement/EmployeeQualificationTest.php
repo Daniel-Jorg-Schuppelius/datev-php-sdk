@@ -16,7 +16,7 @@ use Datev\Entities\OrderManagement\EmployeesQualification\{EmployeeQualification
 use Tests\Contracts\EntityTest;
 
 class EmployeeQualificationTest extends EntityTest {
-    public function test_create_employee_qualification() {
+    public function test_create_employee_qualification(): void {
         $data = [
             "id" => "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
             "employee_id" => "b2c3d4e5-f6a7-8901-bcde-f12345678901",
@@ -37,7 +37,7 @@ class EmployeeQualificationTest extends EntityTest {
         $this->assertEquals("Wirtschaftsprüfer", $qualification->getQualificationShortName());
     }
 
-    public function test_create_employees_qualification() {
+    public function test_create_employees_qualification(): void {
         $data = [
             "content" => [
                 [

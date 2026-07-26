@@ -26,6 +26,9 @@ class GeneralLedgerAccount extends NamedEntity implements IdentifiableNamedEntit
     protected ?bool $is_locked;
     protected ?DateTime $date_last_modification;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

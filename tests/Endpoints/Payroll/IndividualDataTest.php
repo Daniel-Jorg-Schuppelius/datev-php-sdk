@@ -24,29 +24,33 @@ class IndividualDataTest extends EndpointTest {
         return new IndividualDataEndpoint($this->client, self::getLogger());
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             'id' => '12345',
             'field_name' => 'custom_field',
             'field_value' => 'custom_value',
         ];
 
-        $individualData = IndividualDatum::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+        $individualData = IndividualDatum::fromJson($json);
         $this->assertInstanceOf(IndividualDatum::class, $individualData);
     }
 
-    public function test_json_serialize_collection() {
+    public function test_json_serialize_collection(): void {
         $data = [
             ['id' => '12345', 'field_name' => 'field1'],
             ['id' => '12346', 'field_name' => 'field2'],
         ];
 
-        $collection = IndividualData::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+        $collection = IndividualData::fromJson($json);
         $this->assertInstanceOf(IndividualData::class, $collection);
         $this->assertCount(2, $collection->getValues());
     }
 
-    public function test_get_individual_data() {
+    public function test_get_individual_data(): void {
         $this->endpoint = $this->createEndpoint();
         $data = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

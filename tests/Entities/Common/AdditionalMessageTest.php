@@ -16,13 +16,13 @@ use Datev\Entities\Common\AdditionalMessages\{AdditionalMessage, AdditionalMessa
 use Tests\Contracts\EntityTest;
 
 class AdditionalMessageTest extends EntityTest {
-    public function test_create_additional_message_id() {
+    public function test_create_additional_message_id(): void {
         $id = new AdditionalMessageID("12345678-1234-1234-1234-123456789012");
         $this->assertInstanceOf(AdditionalMessageID::class, $id);
         $this->assertEquals("12345678-1234-1234-1234-123456789012", $id->toString());
     }
 
-    public function test_create_additional_message() {
+    public function test_create_additional_message(): void {
         $data = [
             "id" => "12345678-1234-1234-1234-123456789012",
             "description" => "Test message",
@@ -33,7 +33,7 @@ class AdditionalMessageTest extends EntityTest {
         $this->assertInstanceOf(AdditionalMessage::class, $message);
     }
 
-    public function test_create_additional_messages() {
+    public function test_create_additional_messages(): void {
         $data = [
             [
                 "id" => "12345678-1234-1234-1234-123456789012",

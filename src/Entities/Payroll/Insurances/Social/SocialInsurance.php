@@ -28,6 +28,9 @@ class SocialInsurance extends NamedEntity implements IdentifiableNamedEntityInte
     protected ?string $company_number_of_health_insurer;
     protected ?string $branch_office_of_health_insurer;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

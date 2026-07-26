@@ -24,6 +24,10 @@ use InvalidArgumentException;
 class FiscalYearsEndpoint extends ClientScopedEndpointAbstract {
     protected string $endpointSuffix = 'fiscal-years';
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?FiscalYears {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $urlPath = $this->getEndpointUrl();

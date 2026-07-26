@@ -14,15 +14,15 @@ use Datev\API\Desktop\Endpoints\PublicSector\ConsumptionsEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class ConsumptionsTest extends EndpointTest {
-    protected ?ConsumptionsEndpoint $endpoint;
+    protected ConsumptionsEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new ConsumptionsEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new ConsumptionsEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_consumptions() {
+    public function test_get_consumptions(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

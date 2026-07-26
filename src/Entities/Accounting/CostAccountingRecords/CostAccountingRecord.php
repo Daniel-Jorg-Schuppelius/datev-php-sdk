@@ -26,6 +26,9 @@ class CostAccountingRecord extends NamedEntity implements IdentifiableNamedEntit
     protected ?string $posting_description;
     protected ?int $record_number;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

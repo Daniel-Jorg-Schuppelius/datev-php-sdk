@@ -19,14 +19,20 @@ class CorrespondencePartner extends NamedEntity {
     protected ?string $domain;
     protected ?CorrespondencePartnerLink $link;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public function toArray(): array {
         return [
             'domain' => $this->domain,
-            'link' => $this->link->getValue(),
+            'link' => $this->link?->getValue(),
         ];
     }
 

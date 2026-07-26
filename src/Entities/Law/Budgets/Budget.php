@@ -23,6 +23,9 @@ class Budget extends NamedEntity {
     protected ?float $unused_budget;
     protected ?string $currency_unit;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

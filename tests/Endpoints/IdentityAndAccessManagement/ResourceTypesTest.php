@@ -14,20 +14,20 @@ use Datev\API\Desktop\Endpoints\IdentityAndAccessManagement\ResourceTypesEndpoin
 use Tests\Contracts\EndpointTest;
 
 class ResourceTypesTest extends EndpointTest {
-    protected ?ResourceTypesEndpoint $endpoint;
+    protected ResourceTypesEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new ResourceTypesEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new ResourceTypesEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_resource_types() {
+    public function test_get_resource_types(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }
 
-        $resourceTypes = $this->endpoint->search();
+        $resourceTypes = $this->endpoint->get();
         $this->assertNotNull($resourceTypes);
     }
 }

@@ -16,7 +16,7 @@ use Datev\Entities\Law\Employees\{Employee, Employees};
 use Tests\Contracts\EntityTest;
 
 class EmployeeTest extends EntityTest {
-    public function test_create_employee() {
+    public function test_create_employee(): void {
         $data = [
             "id" => "e1234567-8901-2345-6789-012345678901",
             "employee_number" => 1001,
@@ -35,7 +35,7 @@ class EmployeeTest extends EntityTest {
         $this->assertEquals(1001, $employee->getEmployeeNumber());
     }
 
-    public function test_create_employees() {
+    public function test_create_employees(): void {
         $data = [
             "content" => [
                 [

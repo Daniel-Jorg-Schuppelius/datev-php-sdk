@@ -29,6 +29,9 @@ class PaymentMethod extends NamedEntity {
     protected ?string $sepa_mandate_reference;
     protected ?string $differing_account_holder;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

@@ -23,7 +23,7 @@ class VariousAddressesTest extends EndpointTest {
         return new VariousAddressesEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_various_addresses() {
+    public function test_get_various_addresses(): void {
         $this->skipMockIfComplexEntity();
 
         $this->endpoint = $this->createEndpoint();

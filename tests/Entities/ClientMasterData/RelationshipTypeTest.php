@@ -16,7 +16,7 @@ use Datev\Entities\ClientMasterData\RelationshipTypes\{RelationshipType, Relatio
 use Tests\Contracts\EntityTest;
 
 class RelationshipTypeTest extends EntityTest {
-    public function test_create_relationship_type() {
+    public function test_create_relationship_type(): void {
         $data = [
             "id" => "type-123",
             "abbreviation" => "GF",
@@ -28,14 +28,14 @@ class RelationshipTypeTest extends EntityTest {
         $relType = new RelationshipType($data);
         $this->assertInstanceOf(RelationshipType::class, new RelationshipType);
         $this->assertInstanceOf(RelationshipType::class, $relType);
-        $this->assertNotNull($relType->getID());
+        $this->assertEquals("type-123", $relType->getID()->getValue());
         $this->assertEquals("GF", $relType->getAbbreviation());
         $this->assertEquals("Geschäftsführer", $relType->getName());
         $this->assertTrue($relType->isStandard());
         $this->assertEquals(1, $relType->getType());
     }
 
-    public function test_create_relationship_types() {
+    public function test_create_relationship_types(): void {
         $data = [
             "content" => [
                 [

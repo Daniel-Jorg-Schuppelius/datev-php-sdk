@@ -19,14 +19,23 @@ use Psr\Log\LoggerInterface;
 class User extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?UserID $id;
     protected ?ScimMeta $meta;
+    /**
+     * @var array<array-key, mixed>
+     */
     protected ?array $schemas;
     protected ?ScimName $name;
     protected ?string $display_name;
     protected ?bool $active;
     protected ?ScimLinkages $groups;
+    /**
+     * @var array<array-key, mixed>
+     */
     protected ?array $entitlements;
     protected ?DatevUserExtension $datev_extension;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         // Transform SCIM extension key before calling parent constructor
         if (is_array($data) && isset($data['urn:ietf:params:scim:schemas:extension:datev:2.0:user'])) {
@@ -44,6 +53,9 @@ class User extends NamedEntity implements IdentifiableNamedEntityInterface {
         return $this->meta ?? null;
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public function getSchemas(): ?array {
         return $this->schemas ?? null;
     }
@@ -64,6 +76,9 @@ class User extends NamedEntity implements IdentifiableNamedEntityInterface {
         return $this->groups ?? null;
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public function getEntitlements(): ?array {
         return $this->entitlements ?? null;
     }

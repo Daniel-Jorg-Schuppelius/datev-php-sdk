@@ -16,7 +16,7 @@ use Datev\Entities\Accounting\VariousAddresses\{VariousAddress, VariousAddresses
 use Tests\Contracts\EntityTest;
 
 class VariousAddressTest extends EntityTest {
-    public function test_create_various_address() {
+    public function test_create_various_address(): void {
         $data = [
             "id" => "VA-10000",
             "account_number" => 10000,
@@ -30,14 +30,14 @@ class VariousAddressTest extends EntityTest {
         $variousAddress = new VariousAddress($data);
         $this->assertInstanceOf(VariousAddress::class, new VariousAddress);
         $this->assertInstanceOf(VariousAddress::class, $variousAddress);
-        $this->assertNotNull($variousAddress->getID());
+        $this->assertEquals("VA-10000", $variousAddress->getID()->toString());
         $this->assertEquals(10000, $variousAddress->getAccountNumber());
         $this->assertEquals("BP-2024-001", $variousAddress->getBusinessPartnerNumber());
         $this->assertEquals("Musterfirma GmbH", $variousAddress->getCaption());
         $this->assertEquals("GmbH", $variousAddress->getLegalEntityType());
     }
 
-    public function test_create_various_addresses() {
+    public function test_create_various_addresses(): void {
         $data = [
             "content" => [
                 [

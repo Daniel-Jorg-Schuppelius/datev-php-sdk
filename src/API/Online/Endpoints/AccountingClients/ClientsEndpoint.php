@@ -54,6 +54,8 @@ class ClientsEndpoint extends EndpointAbstract implements SearchableEndpointInte
 
     /**
      * Liefert die Liste aller zugreifbaren Mandanten.
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
      */
     public function search(array $queryParams = [], array $options = []): ?Clients {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
@@ -70,6 +72,9 @@ class ClientsEndpoint extends EndpointAbstract implements SearchableEndpointInte
     /**
      * Wie search(), liefert aber zusätzlich die Paging-Metadaten aus den
      * Response-Headern (Link, Total-Items).
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     * @return PageResult<\Datev\Entities\Online\AccountingClients\Clients\Client>
      */
     public function searchPage(array $queryParams = [], array $options = []): PageResult {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {

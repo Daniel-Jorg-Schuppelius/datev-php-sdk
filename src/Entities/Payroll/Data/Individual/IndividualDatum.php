@@ -19,8 +19,14 @@ use Psr\Log\LoggerInterface;
 
 class IndividualDatum extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected IndividualDatumID $id;
+    /**
+     * @var array<array-key, mixed>
+     */
     protected ?array $data;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
@@ -29,6 +35,9 @@ class IndividualDatum extends NamedEntity implements IdentifiableNamedEntityInte
         return $this->id;
     }
 
+    /**
+     * @param mixed $data
+     */
     public function setData($data): NamedEntityInterface {
         if (is_array($data)) {
             if (isset($data['id'])) {
@@ -69,6 +78,9 @@ class IndividualDatum extends NamedEntity implements IdentifiableNamedEntityInte
         return $this;
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public function toArray(): array {
         $result = [
             'id' => $this->getID()->toString(),
@@ -82,7 +94,7 @@ class IndividualDatum extends NamedEntity implements IdentifiableNamedEntityInte
             $result['amount'] = $firstRecord->getAmount();
         }
 
-        foreach ($this->data as $index => $record) {
+        foreach ($this->data ?? [] as $index => $record) {
             if ($index === 0) {
                 continue;
             }

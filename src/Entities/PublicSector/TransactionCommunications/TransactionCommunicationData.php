@@ -23,6 +23,9 @@ class TransactionCommunicationData extends NamedEntity {
     protected ?string $note;
     protected ?CommunicationUsageType $communication_usage_type;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

@@ -16,7 +16,7 @@ use Datev\Entities\IdentityAndAccessManagement\Users\{User, Users};
 use Tests\Contracts\EntityTest;
 
 class UserTest extends EntityTest {
-    public function test_create_user() {
+    public function test_create_user(): void {
         $data = [
             "id" => "u1234567-8901-2345-6789-012345678901",
             "display_name" => "Max Mustermann",
@@ -31,7 +31,7 @@ class UserTest extends EntityTest {
         $this->assertTrue($user->isActive());
     }
 
-    public function test_create_users() {
+    public function test_create_users(): void {
         $data = [
             "content" => [
                 [

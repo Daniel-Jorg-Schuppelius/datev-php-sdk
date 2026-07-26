@@ -60,6 +60,10 @@ class TransactionRegistrationEndpoint extends EndpointAbstract implements Search
         }, "Fetching TransactionRegistration (ID: {$transactionId})");
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?TransactionRegistrations {
         if (!isset($this->clientId) || !isset($this->citizenId)) {
             $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID and Citizen ID are required');

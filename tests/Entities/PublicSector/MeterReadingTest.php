@@ -16,7 +16,7 @@ use Datev\Entities\PublicSector\MeterReadings\{MeterReading, MeterReadings};
 use Tests\Contracts\EntityTest;
 
 class MeterReadingTest extends EntityTest {
-    public function test_create_meter_reading() {
+    public function test_create_meter_reading(): void {
         $data = [
             "id" => "r1234567-8901-2345-6789-012345678901",
             "date" => "2024-03-15T00:00:00.000+00:00",
@@ -36,7 +36,7 @@ class MeterReadingTest extends EntityTest {
         $this->assertEquals(1250.5, $meterReading->getValue());
     }
 
-    public function test_create_meter_readings() {
+    public function test_create_meter_readings(): void {
         $data = [
             "content" => [
                 [

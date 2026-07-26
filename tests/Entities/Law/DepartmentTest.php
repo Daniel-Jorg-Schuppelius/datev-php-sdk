@@ -16,7 +16,7 @@ use Datev\Entities\Law\Departments\{Department, Departments};
 use Tests\Contracts\EntityTest;
 
 class DepartmentTest extends EntityTest {
-    public function test_create_department() {
+    public function test_create_department(): void {
         $data = [
             "id" => "d1234567-8901-2345-6789-012345678901",
             "number" => 1,
@@ -32,7 +32,7 @@ class DepartmentTest extends EntityTest {
         $this->assertEquals(1, $department->getNumber());
     }
 
-    public function test_create_departments() {
+    public function test_create_departments(): void {
         $data = [
             "content" => [
                 [

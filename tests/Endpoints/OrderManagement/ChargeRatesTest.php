@@ -14,15 +14,15 @@ use Datev\API\Desktop\Endpoints\OrderManagement\ChargeRatesEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class ChargeRatesTest extends EndpointTest {
-    protected ?ChargeRatesEndpoint $endpoint;
+    protected ChargeRatesEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new ChargeRatesEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new ChargeRatesEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_charge_rates() {
+    public function test_get_charge_rates(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

@@ -24,7 +24,7 @@ class PersonalDataTest extends EndpointTest {
         return new PersonalDataEndpoint($this->client, self::getLogger());
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             'id' => '12345',
             'first_name' => 'Max',
@@ -32,22 +32,26 @@ class PersonalDataTest extends EndpointTest {
             'date_of_birth' => '1990-05-15',
         ];
 
-        $personalData = PersonalDatum::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+        $personalData = PersonalDatum::fromJson($json);
         $this->assertInstanceOf(PersonalDatum::class, $personalData);
     }
 
-    public function test_json_serialize_collection() {
+    public function test_json_serialize_collection(): void {
         $data = [
             ['id' => '12345', 'first_name' => 'Max'],
             ['id' => '12346', 'first_name' => 'Erika'],
         ];
 
-        $collection = PersonalData::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+        $collection = PersonalData::fromJson($json);
         $this->assertInstanceOf(PersonalData::class, $collection);
         $this->assertCount(2, $collection->getValues());
     }
 
-    public function test_get_personal_data() {
+    public function test_get_personal_data(): void {
         $this->endpoint = $this->createEndpoint();
         $data = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

@@ -32,6 +32,9 @@ class AccountingTransactionKey extends NamedEntity implements IdentifiableNamedE
     protected ?float $tax_rate;
     protected ?string $group;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

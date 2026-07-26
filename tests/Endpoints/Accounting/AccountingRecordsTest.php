@@ -23,7 +23,7 @@ class AccountingRecordsTest extends EndpointTest {
         return new AccountingRecordsEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_accounting_records() {
+    public function test_get_accounting_records(): void {
         $this->skipMockIfComplexEntity();
 
         $this->endpoint = $this->createEndpoint();

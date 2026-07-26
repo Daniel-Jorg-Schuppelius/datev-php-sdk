@@ -71,6 +71,7 @@ class AccountingDocumentsEndpointsTest extends OnlineEndpointTest {
 
         if ($this->isUsingMock()) {
             $type = $types->getFirstValue();
+            $this->assertNotNull($type);
             $this->assertSame(DocumentCategory::InvoicesReceived, $type->getCategory());
             $this->assertSame(DebitCreditIdentifier::Debit, $type->getDebitCreditIdentifier());
         }
@@ -112,8 +113,11 @@ class AccountingDocumentsEndpointsTest extends OnlineEndpointTest {
         $this->assertSame('07b94406-666b-4b3a-acdc-c8e783dcd7cd', $document->getId());
         $this->assertSame(1, $document->getFiles()?->count());
 
-        $requests = $this->mockClient->getRecordedRequests();
+        $mockClient = $this->mockClient;
+        $this->assertNotNull($mockClient);
+        $requests = $mockClient->getRecordedRequests();
         $lastRequest = end($requests);
+        $this->assertNotFalse($lastRequest);
         $multipartNames = array_column($lastRequest['options']['multipart'], 'name');
         $this->assertSame(['file', 'metadata'], $multipartNames);
     }
@@ -148,8 +152,11 @@ class AccountingDocumentsEndpointsTest extends OnlineEndpointTest {
 
         $this->assertInstanceOf(Document::class, $document);
 
-        $requests = $this->mockClient->getRecordedRequests();
+        $mockClient = $this->mockClient;
+        $this->assertNotNull($mockClient);
+        $requests = $mockClient->getRecordedRequests();
         $lastRequest = end($requests);
+        $this->assertNotFalse($lastRequest);
         $multipartNames = array_column($lastRequest['options']['multipart'], 'name');
         $this->assertSame(['files', 'files', 'metadata', 'custom_metadata'], $multipartNames);
     }

@@ -65,6 +65,10 @@ class ConsumptionsEndpoint extends EndpointAbstract implements SearchableEndpoin
         }, "Fetching Consumption (ID: {$consumptionId})");
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?Consumptions {
         if (!isset($this->clientId) || !isset($this->citizenId) || !isset($this->feeId)) {
             $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID, Citizen ID and Fee ID are required');

@@ -68,6 +68,10 @@ class CostSystemsEndpoint extends EndpointAbstract implements SearchableEndpoint
         }, "Fetching CostSystem (ID: {$costSystemId})");
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?CostSystems {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options, $this->getBaseUrl());

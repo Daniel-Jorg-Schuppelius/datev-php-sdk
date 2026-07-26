@@ -15,7 +15,13 @@ namespace Datev\Entities\Online\Common\Errors;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<AffectedElement>
+ */
 class AffectedElements extends NamedValues {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->valueClassName = AffectedElement::class;
         parent::__construct($data, $logger);

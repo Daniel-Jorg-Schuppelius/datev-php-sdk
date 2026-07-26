@@ -67,10 +67,15 @@ class HrPayrollReportsEndpointsTest extends OnlineEndpointTest {
         $this->assertSame('LOHNABRECHNUNG_2026-06.pdf', $document->filename);
         $this->assertStringStartsWith('%PDF', $document->content);
 
-        $requests = $this->mockClient->getRecordedRequests();
+        $mockClient = $this->mockClient;
+        $this->assertNotNull($mockClient);
+        $requests = $mockClient->getRecordedRequests();
         $lastRequest = end($requests);
-        $this->assertStringContainsString('document_types=LOHNABRECHNUNG', $lastRequest['uri']);
-        $this->assertStringContainsString('employee_number=7', $lastRequest['uri']);
+        $this->assertNotFalse($lastRequest);
+        $uri = $lastRequest['uri'];
+        $this->assertIsString($uri);
+        $this->assertStringContainsString('document_types=LOHNABRECHNUNG', $uri);
+        $this->assertStringContainsString('employee_number=7', $uri);
         $this->assertSame('application/pdf', $lastRequest['options']['headers']['Accept'] ?? null);
     }
 
@@ -108,7 +113,7 @@ class HrPayrollReportsEndpointsTest extends OnlineEndpointTest {
         if ($this->isUsingMock()) {
             $employeeDoc = $metadata->getEmployeeDocuments()?->getFirstValue();
             $this->assertSame('LOHNABRECHNUNG', $employeeDoc?->getDocumentType());
-            $this->assertSame(7, $employeeDoc?->getEmployees()?->getFirstValue()?->getEmployeeNumber());
+            $this->assertSame(7, $employeeDoc->getEmployees()?->getFirstValue()?->getEmployeeNumber());
             $this->assertSame('2026-06', $metadata->getClientDocuments()?->getFirstValue()?->getDocument()?->getFirstValue()?->getPeriod());
         }
     }

@@ -16,7 +16,7 @@ use Datev\Entities\PublicSector\TransactionRegistrations\{TransactionRegistratio
 use Tests\Contracts\EntityTest;
 
 class TransactionRegistrationTest extends EntityTest {
-    public function test_create_transaction_registration() {
+    public function test_create_transaction_registration(): void {
         $data = [
             "id" => 12345,
             "status" => "registered",
@@ -29,7 +29,7 @@ class TransactionRegistrationTest extends EntityTest {
         $this->assertEquals("registered", $reg->getStatus());
     }
 
-    public function test_create_transaction_registrations() {
+    public function test_create_transaction_registrations(): void {
         $data = [
             "content" => [
                 [

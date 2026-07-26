@@ -16,7 +16,7 @@ use Datev\Entities\Accounting\CostSequences\{CostSequence, CostSequences};
 use Tests\Contracts\EntityTest;
 
 class CostSequenceTest extends EntityTest {
-    public function test_create_cost_sequence() {
+    public function test_create_cost_sequence(): void {
         $data = [
             "id" => 1,
             "description" => "Kostenstapel Januar 2024",
@@ -34,7 +34,7 @@ class CostSequenceTest extends EntityTest {
         $this->assertFalse($costSequence->isCommitted());
     }
 
-    public function test_create_cost_sequences() {
+    public function test_create_cost_sequences(): void {
         $data = [
             "content" => [
                 [

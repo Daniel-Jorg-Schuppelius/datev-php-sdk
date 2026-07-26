@@ -20,6 +20,9 @@ use Psr\Log\LoggerInterface;
  * @extends NamedValues<T>
  */
 class Clients extends NamedValues {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";
         if (empty($this->valueClassName) || (!is_subclass_of($this->valueClassName, Client::class) && $this->valueClassName !== Client::class)) {

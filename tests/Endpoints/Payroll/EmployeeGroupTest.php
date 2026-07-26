@@ -24,28 +24,34 @@ class EmployeeGroupTest extends EndpointTest {
         return new EmployeeGroupEndpoint($this->client, self::getLogger());
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             'id' => 'EG001',
             'name' => 'Mitarbeitergruppe Vollzeit',
         ];
 
-        $group = EmployeeGroup::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+
+        $group = EmployeeGroup::fromJson($json);
         $this->assertInstanceOf(EmployeeGroup::class, $group);
     }
 
-    public function test_json_serialize_collection() {
+    public function test_json_serialize_collection(): void {
         $data = [
             ['id' => 'EG001', 'name' => 'Vollzeit'],
             ['id' => 'EG002', 'name' => 'Teilzeit'],
         ];
 
-        $groups = EmployeeGroups::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+
+        $groups = EmployeeGroups::fromJson($json);
         $this->assertInstanceOf(EmployeeGroups::class, $groups);
         $this->assertCount(2, $groups->getValues());
     }
 
-    public function test_get_employee_groups() {
+    public function test_get_employee_groups(): void {
         $this->endpoint = $this->createEndpoint();
         $groups = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

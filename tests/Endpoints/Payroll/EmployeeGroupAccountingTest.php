@@ -24,28 +24,34 @@ class EmployeeGroupAccountingTest extends EndpointTest {
         return new EmployeeGroupAccountingEndpoint($this->client, self::getLogger());
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             'id' => 'EGA001',
             'name' => 'Abrechnungsgruppe Standard',
         ];
 
-        $accounting = EmployeeGroupAccounting::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+
+        $accounting = EmployeeGroupAccounting::fromJson($json);
         $this->assertInstanceOf(EmployeeGroupAccounting::class, $accounting);
     }
 
-    public function test_json_serialize_collection() {
+    public function test_json_serialize_collection(): void {
         $data = [
             ['id' => 'EGA001', 'name' => 'Standard'],
             ['id' => 'EGA002', 'name' => 'Führungskräfte'],
         ];
 
-        $accountings = EmployeeGroupAccountings::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+
+        $accountings = EmployeeGroupAccountings::fromJson($json);
         $this->assertInstanceOf(EmployeeGroupAccountings::class, $accountings);
         $this->assertCount(2, $accountings->getValues());
     }
 
-    public function test_get_employee_group_accountings() {
+    public function test_get_employee_group_accountings(): void {
         $this->endpoint = $this->createEndpoint();
         $accountings = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

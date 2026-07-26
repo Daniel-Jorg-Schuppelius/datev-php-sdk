@@ -96,6 +96,7 @@ class ClientsEndpointTest extends OnlineEndpointTest {
             $clients = $endpoint->search(['top' => 1]);
             $this->assertNotNull($clients);
             $first = $clients->getFirstValue();
+            $this->assertNotNull($first);
 
             $client = $endpoint->get($first->getId());
             $this->assertInstanceOf(Client::class, $client);

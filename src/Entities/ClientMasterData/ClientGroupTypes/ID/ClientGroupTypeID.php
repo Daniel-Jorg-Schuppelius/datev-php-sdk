@@ -16,6 +16,9 @@ use Datev\Entities\ClientMasterData\ClientGroupTypes\ClientGroupTypeID as BaseCl
 use Psr\Log\LoggerInterface;
 
 class ClientGroupTypeID extends BaseClientGroupTypeID {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
         $this->entityName = 'client_group_type_id';

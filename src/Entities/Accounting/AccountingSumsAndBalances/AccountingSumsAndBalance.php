@@ -28,6 +28,9 @@ class AccountingSumsAndBalance extends NamedEntity implements IdentifiableNamedE
     protected ?float $opening_balance_sheet;
     protected ?string $opening_balance_sheet_debit_credit_identifier;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

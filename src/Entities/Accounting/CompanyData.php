@@ -16,11 +16,17 @@ use APIToolkit\Contracts\Abstracts\NamedValue;
 use Psr\Log\LoggerInterface;
 
 class CompanyData extends NamedValue {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = 'creditor_identifier';
         parent::__construct($data, $logger);
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public function toArray(): array {
         if (is_null($this->value)) {
             return [];

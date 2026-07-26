@@ -22,7 +22,7 @@ class AccountsPayableTest extends EndpointTest {
         return new AccountsPayableEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_accounts_payable() {
+    public function test_get_accounts_payable(): void {
         $this->skipMockIfComplexEntity();
 
         $this->endpoint = $this->createEndpoint();

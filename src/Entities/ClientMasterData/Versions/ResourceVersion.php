@@ -16,6 +16,9 @@ use APIToolkit\Entities\ProgramVersion;
 use Psr\Log\LoggerInterface;
 
 class ResourceVersion extends ProgramVersion {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
         $this->entityName = 'resource_version';

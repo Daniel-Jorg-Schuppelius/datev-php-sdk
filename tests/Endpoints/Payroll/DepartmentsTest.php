@@ -24,30 +24,36 @@ class DepartmentsTest extends EndpointTest {
         return new DepartmentsEndpoint($this->client, self::getLogger());
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             'id' => 'DEP001',
             'name' => 'Abteilung IT',
             'contact_person' => 'Max Mustermann',
         ];
 
-        $department = Department::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertIsString($json);
+
+        $department = Department::fromJson($json);
         $this->assertInstanceOf(Department::class, $department);
         $this->assertEquals('Abteilung IT', $department->getName());
     }
 
-    public function test_json_serialize_collection() {
+    public function test_json_serialize_collection(): void {
         $data = [
             ['id' => 'DEP001', 'name' => 'IT'],
             ['id' => 'DEP002', 'name' => 'Vertrieb'],
         ];
 
-        $departments = Departments::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertIsString($json);
+
+        $departments = Departments::fromJson($json);
         $this->assertInstanceOf(Departments::class, $departments);
         $this->assertCount(2, $departments->getValues());
     }
 
-    public function test_get_departments() {
+    public function test_get_departments(): void {
         $this->endpoint = $this->createEndpoint();
         $departments = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

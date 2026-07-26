@@ -16,7 +16,7 @@ use Datev\Entities\PublicSector\TransactionCommunications\{TransactionCommunicat
 use Tests\Contracts\EntityTest;
 
 class TransactionCommunicationTest extends EntityTest {
-    public function test_create_transaction_communication() {
+    public function test_create_transaction_communication(): void {
         $data = [
             "id" => 12345,
             "status" => "sent",
@@ -29,7 +29,7 @@ class TransactionCommunicationTest extends EntityTest {
         $this->assertEquals("sent", $comm->getStatus());
     }
 
-    public function test_create_transaction_communications() {
+    public function test_create_transaction_communications(): void {
         $data = [
             "content" => [
                 [

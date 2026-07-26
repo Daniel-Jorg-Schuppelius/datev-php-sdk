@@ -16,7 +16,7 @@ use Datev\Entities\Accounting\CostCenterPropertyCharacteristics\{CostCenterPrope
 use Tests\Contracts\EntityTest;
 
 class CostCenterPropertyCharacteristicTest extends EntityTest {
-    public function test_create_cost_center_property_characteristic() {
+    public function test_create_cost_center_property_characteristic(): void {
         $data = [
             "id" => 1,
             "description" => "Characteristic Description",
@@ -27,7 +27,7 @@ class CostCenterPropertyCharacteristicTest extends EntityTest {
         $this->assertInstanceOf(CostCenterPropertyCharacteristicID::class, $characteristic->getID());
     }
 
-    public function test_create_cost_center_property_characteristics() {
+    public function test_create_cost_center_property_characteristics(): void {
         $data = [
             "content" => [
                 [

@@ -16,7 +16,7 @@ use Datev\Entities\Diagnostics\Domains\{Domain, Domains};
 use Tests\Contracts\EntityTest;
 
 class DomainTest extends EntityTest {
-    public function test_create_domain() {
+    public function test_create_domain(): void {
         $data = [
             "Key" => "test-domain",
             "Value" => "Test Domain Value",
@@ -28,7 +28,7 @@ class DomainTest extends EntityTest {
         $this->assertEquals("Test Domain Value", $domain->getValue());
     }
 
-    public function test_create_domains() {
+    public function test_create_domains(): void {
         $data = [
             [
                 "Key" => "test-domain-1",

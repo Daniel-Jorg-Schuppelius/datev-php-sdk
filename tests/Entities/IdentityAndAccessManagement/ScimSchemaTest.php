@@ -16,7 +16,7 @@ use Datev\Entities\IdentityAndAccessManagement\Schemas\{ScimSchema, ScimSchemas}
 use Tests\Contracts\EntityTest;
 
 class ScimSchemaTest extends EntityTest {
-    public function test_create_scim_schema() {
+    public function test_create_scim_schema(): void {
         $data = [
             "id" => "urn:ietf:params:scim:schemas:core:2.0:User",
             "name" => "User",
@@ -29,7 +29,7 @@ class ScimSchemaTest extends EntityTest {
         $this->assertEquals("User", $schema->getName());
     }
 
-    public function test_create_scim_schemas() {
+    public function test_create_scim_schemas(): void {
         $data = [
             "Resources" => [
                 [

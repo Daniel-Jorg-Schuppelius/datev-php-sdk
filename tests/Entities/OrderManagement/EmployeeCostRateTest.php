@@ -16,7 +16,7 @@ use Datev\Entities\OrderManagement\EmployeesCostRate\{EmployeeCostRate, Employee
 use Tests\Contracts\EntityTest;
 
 class EmployeeCostRateTest extends EntityTest {
-    public function test_create_employee_cost_rate() {
+    public function test_create_employee_cost_rate(): void {
         $data = [
             "id" => "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
             "employee_id" => "b2c3d4e5-f6a7-8901-bcde-f12345678901",
@@ -37,7 +37,7 @@ class EmployeeCostRateTest extends EntityTest {
         $this->assertEquals(85.00, $costRate->getCostRate2());
     }
 
-    public function test_create_employees_cost_rate() {
+    public function test_create_employees_cost_rate(): void {
         $data = [
             "content" => [
                 [

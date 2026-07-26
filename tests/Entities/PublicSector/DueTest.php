@@ -16,7 +16,7 @@ use Datev\Entities\PublicSector\Dues\{Due, Dues};
 use Tests\Contracts\EntityTest;
 
 class DueTest extends EntityTest {
-    public function test_create_due() {
+    public function test_create_due(): void {
         $data = [
             "amount" => 250.75,
             "date" => "2024-02-15T00:00:00.000+00:00",
@@ -28,7 +28,7 @@ class DueTest extends EntityTest {
         $this->assertEquals(250.75, $due->getAmount());
     }
 
-    public function test_create_dues() {
+    public function test_create_dues(): void {
         $data = [
             "content" => [
                 [

@@ -36,6 +36,9 @@ class MeterReading extends NamedEntity {
     protected ?string $comment_for_notification;
     protected ?string $comment;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

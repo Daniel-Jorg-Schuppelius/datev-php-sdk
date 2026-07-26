@@ -19,6 +19,9 @@ use Psr\Log\LoggerInterface;
 abstract class DateTimeNamedValue extends NamedValue {
     protected ?DateTime $valid_from;
 
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         if (is_array($data)) {
             $this->valid_from = array_key_exists('valid_from', $data) ? new DateTime($data['valid_from']) : null;
@@ -37,6 +40,9 @@ abstract class DateTimeNamedValue extends NamedValue {
         return $this->valid_from ?? null;
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public function toArray(bool $fullEntity = false, string $dateFormat = DateTime::RFC3339_EXTENDED): array {
         $result = [];
 
@@ -44,7 +50,7 @@ abstract class DateTimeNamedValue extends NamedValue {
             $tempEntityName = $this->entityName;
             $this->entityName = 'value';
             $result = parent::toArray();
-            $result['valid_from'] = $this->valid_from->format($dateFormat);
+            $result['valid_from'] = $this->valid_from?->format($dateFormat);
             $this->entityName = $tempEntityName;
         } else {
             $result = parent::toArray();
