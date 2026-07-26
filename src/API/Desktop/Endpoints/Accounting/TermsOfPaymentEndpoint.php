@@ -68,6 +68,10 @@ class TermsOfPaymentEndpoint extends EndpointAbstract implements SearchableEndpo
         }, "Fetching TermOfPayment (ID: {$termId})");
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?TermsOfPayment {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options, $this->getBaseUrl());

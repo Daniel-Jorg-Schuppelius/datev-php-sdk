@@ -16,7 +16,7 @@ use Datev\Entities\ClientMasterData\ClientCategories\ClientCategory;
 use Tests\Contracts\EntityTest;
 
 class ClientCategoryTest extends EntityTest {
-    public function test_create_client_category() {
+    public function test_create_client_category(): void {
         $data = [
             "id" => "76579af6-3272-4116-9ee1-d7e4a385256a",
             "client_category_type_id" => "c43f9c3d-380c-494e-47c8-d12fff738188",

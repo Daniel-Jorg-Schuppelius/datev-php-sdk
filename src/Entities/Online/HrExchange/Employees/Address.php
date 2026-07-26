@@ -31,6 +31,9 @@ class Address extends NamedEntity {
 
     protected string $street;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

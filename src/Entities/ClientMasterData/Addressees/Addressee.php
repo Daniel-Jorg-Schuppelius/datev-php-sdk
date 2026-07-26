@@ -58,11 +58,14 @@ class Addressee extends NamedEntity implements IdentifiableNamedEntityInterface 
     protected ?TaxOffices $tax_offices;
     protected ?ContactPersons $contact_persons;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
 
-    public function getID(): AddresseeID {
+    public function getID(): ?AddresseeID {
         return $this->id;
     }
 

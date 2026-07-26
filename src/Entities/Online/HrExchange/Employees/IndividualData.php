@@ -89,6 +89,9 @@ class IndividualData extends NamedEntity {
 
     protected float $amount8;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

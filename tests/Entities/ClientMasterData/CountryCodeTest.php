@@ -16,7 +16,7 @@ use Datev\Entities\ClientMasterData\CountryCodes\{CountryCode, CountryCodes};
 use Tests\Contracts\EntityTest;
 
 class CountryCodeTest extends EntityTest {
-    public function test_create_country_code() {
+    public function test_create_country_code(): void {
         $data = [
             "id" => "DE",
             "name" => "Germany",
@@ -29,7 +29,7 @@ class CountryCodeTest extends EntityTest {
         $this->assertEquals("Germany", $code->getName());
     }
 
-    public function test_create_country_codes() {
+    public function test_create_country_codes(): void {
         $data = [
             [
                 "id" => "DE",

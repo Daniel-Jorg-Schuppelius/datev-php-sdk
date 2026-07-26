@@ -72,7 +72,9 @@ class HrEauEndpointsTest extends OnlineEndpointTest {
         $this->assertNotNull($jobLocation);
         $this->assertSame(self::EAU_REQUEST_ID, $jobLocation->getJobId());
 
-        $requests = $this->mockClient->getRecordedRequests();
+        $mockClient = $this->mockClient;
+        $this->assertNotNull($mockClient);
+        $requests = $mockClient->getRecordedRequests();
         $lastRequest = end($requests);
         $this->assertSame('2026-07-01', $lastRequest['options']['json']['start_work_incapacity'] ?? null);
     }
@@ -98,9 +100,9 @@ class HrEauEndpointsTest extends OnlineEndpointTest {
 
         if ($this->isUsingMock()) {
             $feedback = $feedbacks->getFirstValue();
-            $insuranceFeedback = $feedback->getFeedbacksFromHealthInsurance()?->getFirstValue();
+            $insuranceFeedback = $feedback?->getFeedbacksFromHealthInsurance()?->getFirstValue();
             $this->assertSame('fb-1', $insuranceFeedback?->getGuid());
-            $this->assertTrue($insuranceFeedback?->getIncapacityForWork()?->isInitialCertificate());
+            $this->assertTrue($insuranceFeedback->getIncapacityForWork()?->isInitialCertificate());
         }
     }
 
@@ -113,7 +115,11 @@ class HrEauEndpointsTest extends OnlineEndpointTest {
 
         $this->createEndpoint()->cancel(self::EAU_REQUEST_ID);
 
-        $requests = $this->mockClient->getRecordedRequests();
-        $this->assertSame('DELETE', end($requests)['method']);
+        $mockClient = $this->mockClient;
+        $this->assertNotNull($mockClient);
+        $requests = $mockClient->getRecordedRequests();
+        $lastRequest = end($requests);
+        $this->assertNotFalse($lastRequest);
+        $this->assertSame('DELETE', $lastRequest['method']);
     }
 }

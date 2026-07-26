@@ -24,6 +24,9 @@ class FeePlan extends NamedEntity {
     protected ?DateTime $fee_plan_date_to;
     protected ?bool $fee_plan_active;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

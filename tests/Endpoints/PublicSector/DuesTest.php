@@ -14,15 +14,15 @@ use Datev\API\Desktop\Endpoints\PublicSector\DuesEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class DuesTest extends EndpointTest {
-    protected ?DuesEndpoint $endpoint;
+    protected DuesEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new DuesEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new DuesEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_dues() {
+    public function test_get_dues(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

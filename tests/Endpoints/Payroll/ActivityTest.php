@@ -24,7 +24,7 @@ class ActivityTest extends EndpointTest {
         return new ActivityEndpoint($this->client, self::getLogger());
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             'id' => '12345',
             'activity_type' => 'Vollzeit',
@@ -33,22 +33,26 @@ class ActivityTest extends EndpointTest {
             'weekly_working_hours' => 40.0,
         ];
 
-        $activity = Activity::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+        $activity = Activity::fromJson($json);
         $this->assertInstanceOf(Activity::class, $activity);
     }
 
-    public function test_json_serialize_collection() {
+    public function test_json_serialize_collection(): void {
         $data = [
             ['id' => '12345', 'activity_type' => 'Vollzeit'],
             ['id' => '12346', 'activity_type' => 'Teilzeit'],
         ];
 
-        $activities = Activities::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+        $activities = Activities::fromJson($json);
         $this->assertInstanceOf(Activities::class, $activities);
         $this->assertCount(2, $activities->getValues());
     }
 
-    public function test_get_activities() {
+    public function test_get_activities(): void {
         $this->endpoint = $this->createEndpoint();
         $activities = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

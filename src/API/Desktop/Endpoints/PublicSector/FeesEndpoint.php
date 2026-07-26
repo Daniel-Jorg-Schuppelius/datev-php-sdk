@@ -60,6 +60,10 @@ class FeesEndpoint extends EndpointAbstract implements SearchableEndpointInterfa
         }, "Fetching Fee (ID: {$feeId})");
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?Fees {
         if (!isset($this->clientId) || !isset($this->citizenId)) {
             $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID and Citizen ID are required');

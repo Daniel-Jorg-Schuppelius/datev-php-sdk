@@ -60,6 +60,9 @@ class Record extends NamedEntity {
     protected ?bool $has_dunning_block;
     protected ?bool $has_interest_block;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

@@ -16,7 +16,7 @@ use Datev\Entities\ClientMasterData\Details\Detail;
 use Tests\Contracts\EntityTest;
 
 class DetailTest extends EntityTest {
-    public function test_create_detail() {
+    public function test_create_detail(): void {
         $data = [
             "complimentary_close" => "Mit freundlichen Grüßen",
             "correspondence_title" => "Herrn",

@@ -22,6 +22,9 @@ class OrderType extends NamedEntity {
     protected ?int $ordertype_group;
     protected ?string $ordertype_group_name;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

@@ -14,15 +14,15 @@ use Datev\API\Desktop\Endpoints\Law\DepartmentsEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class DepartmentsTest extends EndpointTest {
-    protected ?DepartmentsEndpoint $endpoint;
+    protected DepartmentsEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new DepartmentsEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new DepartmentsEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_departments() {
+    public function test_get_departments(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

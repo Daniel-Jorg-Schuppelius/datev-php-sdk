@@ -14,15 +14,15 @@ use Datev\API\Desktop\Endpoints\Law\LevelsOfJurisdictionEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class LevelsOfJurisdictionTest extends EndpointTest {
-    protected ?LevelsOfJurisdictionEndpoint $endpoint;
+    protected LevelsOfJurisdictionEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new LevelsOfJurisdictionEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new LevelsOfJurisdictionEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_levels_of_jurisdiction() {
+    public function test_get_levels_of_jurisdiction(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

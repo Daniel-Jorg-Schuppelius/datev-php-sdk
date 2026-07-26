@@ -63,7 +63,7 @@ class FilesEndpoint extends ClientScopedEndpointAbstract {
                 $multipart[] = ['name' => 'mail_address', 'contents' => $mailAddress];
             }
 
-            $response = $this->postMultipart($multipart, null, 201);
+            $response = $this->postMultipartRequest($multipart, null, 201);
             $body = (string) $response->getBody();
 
             return empty($body) ? null : JobInfo::fromJson($body, self::$logger);

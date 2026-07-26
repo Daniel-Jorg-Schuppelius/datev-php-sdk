@@ -16,6 +16,9 @@ use Datev\Entities\ClientMasterData\FunctionalAreas\FunctionalAreaID as BaseFunc
 use Psr\Log\LoggerInterface;
 
 class FunctionalAreaID extends BaseFunctionalAreaID {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
         $this->entityName = 'functional_area_id';

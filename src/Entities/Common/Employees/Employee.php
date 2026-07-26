@@ -19,11 +19,14 @@ use Psr\Log\LoggerInterface;
 class Employee extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?EmployeeID $id;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
 
-    public function getID(): EmployeeID {
+    public function getID(): ?EmployeeID {
         return $this->id;
     }
 }

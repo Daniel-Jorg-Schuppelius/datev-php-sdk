@@ -21,6 +21,10 @@ use Datev\Entities\Online\AccountingDataExchange\TermsOfPayment\TermsOfPayment;
 class TermsOfPaymentEndpoint extends FiscalYearScopedEndpointAbstract {
     protected string $endpointSuffix = 'terms-of-payment';
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?TermsOfPayment {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $urlPath = $this->getEndpointUrl();

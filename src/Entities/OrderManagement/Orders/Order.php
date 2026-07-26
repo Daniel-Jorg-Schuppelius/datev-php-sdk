@@ -60,6 +60,9 @@ class Order extends NamedEntity {
     protected ?GUID $order_responsible2_id;
     protected ?GUID $order_partner_id;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

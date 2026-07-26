@@ -23,6 +23,9 @@ class DocumentsMetadata extends NamedEntity {
 
     protected ClientDocumentTypes $client_documents;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

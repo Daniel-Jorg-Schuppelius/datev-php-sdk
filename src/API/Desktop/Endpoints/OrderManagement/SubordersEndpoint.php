@@ -25,6 +25,9 @@ class SubordersEndpoint extends EndpointAbstract {
         return null;
     }
 
+    /**
+     * @param array<string, mixed> $queryParams
+     */
     public function getByOrderIdAndSuborderId(?int $orderId = null, ?int $suborderId = null, array $queryParams = []): ?Suborder {
         if (is_null($orderId) || is_null($suborderId)) {
             $this->logErrorAndThrow(InvalidArgumentException::class, 'Order ID and Suborder ID are required');

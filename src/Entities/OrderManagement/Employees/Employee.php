@@ -24,6 +24,9 @@ class Employee extends BaseEmployee {
     protected ?GUID $costcenter_id;
     protected ?bool $isactive;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

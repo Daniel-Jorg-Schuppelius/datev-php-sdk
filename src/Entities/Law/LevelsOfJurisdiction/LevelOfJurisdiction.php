@@ -20,6 +20,9 @@ class LevelOfJurisdiction extends NamedEntity implements IdentifiableNamedEntity
     protected ?LevelOfJurisdictionID $id;
     protected ?string $name;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

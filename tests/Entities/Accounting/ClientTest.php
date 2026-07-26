@@ -16,7 +16,7 @@ use Datev\Entities\Accounting\Clients\{Client, Clients};
 use Tests\Contracts\EntityTest;
 
 class ClientTest extends EntityTest {
-    public function test_create_client() {
+    public function test_create_client(): void {
         $data = [
             "id" => "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
             "name" => "Test Client",
@@ -30,7 +30,7 @@ class ClientTest extends EntityTest {
         $this->assertNotNull($client->getID());
     }
 
-    public function test_create_clients() {
+    public function test_create_clients(): void {
         $data = [
             "content" => [
                 [

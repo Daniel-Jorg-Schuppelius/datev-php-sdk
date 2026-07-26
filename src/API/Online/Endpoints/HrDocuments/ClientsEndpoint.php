@@ -49,6 +49,8 @@ class ClientsEndpoint extends EndpointAbstract implements SearchableEndpointInte
 
     /**
      * Liefert alle zugreifbaren Mandanten (entpackt den clients-Wrapper).
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
      */
     public function search(array $queryParams = [], array $options = []): ?Clients {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {

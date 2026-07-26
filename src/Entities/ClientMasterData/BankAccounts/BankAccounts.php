@@ -19,6 +19,9 @@ use Psr\Log\LoggerInterface;
  * @extends BaseBankAccounts<BankAccount>
  */
 class BankAccounts extends BaseBankAccounts {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";
         $this->valueClassName = BankAccount::class;

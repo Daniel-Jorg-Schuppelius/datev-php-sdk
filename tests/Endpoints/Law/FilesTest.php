@@ -17,15 +17,15 @@ use Datev\Entities\Law\Files\{LawFile, LawFiles};
 use Tests\Contracts\EndpointTest;
 
 class FilesTest extends EndpointTest {
-    protected ?FilesEndpoint $endpoint;
+    protected FilesEndpoint $endpoint;
 
-    public function __construct($name = null) {
-        parent::__construct($name);
-        $this->endpoint = new FilesEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new FilesEndpoint($this->client, self::getLogger());
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             'id' => '550e8400-e29b-41d4-a716-446655440000',
             'file_number' => 'AZ-2024-001',
@@ -33,15 +33,17 @@ class FilesTest extends EndpointTest {
             'category' => 'Zivilrecht',
         ];
 
-        $file = LawFile::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+        $file = LawFile::fromJson($json);
 
         $this->assertInstanceOf(LawFile::class, $file);
-        $this->assertEquals('550e8400-e29b-41d4-a716-446655440000', $file->getID()->toString());
+        $this->assertEquals('550e8400-e29b-41d4-a716-446655440000', $file->getID()?->toString());
         $this->assertEquals('AZ-2024-001', $file->getFileNumber());
         $this->assertEquals('Mustermann vs. Example', $file->getShortName());
     }
 
-    public function test_json_serialize_collection() {
+    public function test_json_serialize_collection(): void {
         $data = [
             [
                 'id' => '550e8400-e29b-41d4-a716-446655440000',
@@ -55,13 +57,15 @@ class FilesTest extends EndpointTest {
             ],
         ];
 
-        $files = LawFiles::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+        $files = LawFiles::fromJson($json);
 
         $this->assertInstanceOf(LawFiles::class, $files);
         $this->assertCount(2, $files->getValues());
     }
 
-    public function test_search_files() {
+    public function test_search_files(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

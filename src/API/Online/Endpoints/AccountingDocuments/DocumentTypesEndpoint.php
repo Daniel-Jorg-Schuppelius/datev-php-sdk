@@ -22,6 +22,10 @@ use Datev\Entities\Online\AccountingDocuments\DocumentTypes\DocumentTypes;
 class DocumentTypesEndpoint extends ClientScopedEndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointSuffix = 'document-types';
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?DocumentTypes {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options);

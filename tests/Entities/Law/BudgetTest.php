@@ -16,7 +16,7 @@ use Datev\Entities\Law\Budgets\Budget;
 use Tests\Contracts\EntityTest;
 
 class BudgetTest extends EntityTest {
-    public function test_create_budget() {
+    public function test_create_budget(): void {
         $data = [
             "id" => 1,
             "budget" => 1000.00,
@@ -37,7 +37,7 @@ class BudgetTest extends EntityTest {
         $this->assertEquals("EUR", $budget->getCurrencyUnit());
     }
 
-    public function test_create_empty_budget() {
+    public function test_create_empty_budget(): void {
         $budget = new Budget(null);
         $this->assertInstanceOf(Budget::class, $budget);
         $this->assertNull($budget->getID());

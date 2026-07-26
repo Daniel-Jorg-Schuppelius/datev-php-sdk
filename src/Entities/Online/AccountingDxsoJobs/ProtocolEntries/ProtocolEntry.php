@@ -29,6 +29,9 @@ class ProtocolEntry extends NamedEntity {
 
     protected string $filename;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

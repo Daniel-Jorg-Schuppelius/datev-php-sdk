@@ -16,23 +16,25 @@ use Datev\Entities\DocumentManagement\Versions\Version;
 use Tests\Contracts\EndpointTest;
 
 class InfoTest extends EndpointTest {
-    protected ?InfoEndpoint $endpoint;
+    protected InfoEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
+    protected function setUp(): void {
+        $this->apiDisabled = true;
+        parent::setUp();
         $this->endpoint = new InfoEndpoint($this->client, self::getLogger());
-        $this->apiDisabled = true; // API is disabled
     }
 
-    public function test_create_and_delete_article_api() {
+    public function test_create_and_delete_article_api(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }
 
         $info = $this->endpoint->get();
         $this->assertInstanceOf(Info::class, $info);
-        $this->assertNotEmpty($info->getVersions(), "No versions found");
-        $randomVersion = $info->getVersions()->getValues()[array_rand($info->getVersions()->toArray())];
+        $versions = $info->getVersions();
+        $this->assertNotNull($versions, "No versions found");
+        $this->assertNotEmpty($versions, "No versions found");
+        $randomVersion = $versions->getValues()[array_rand($versions->toArray())];
         $this->assertInstanceOf(Version::class, $randomVersion);
     }
 }

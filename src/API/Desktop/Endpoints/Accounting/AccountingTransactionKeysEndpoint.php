@@ -68,6 +68,10 @@ class AccountingTransactionKeysEndpoint extends EndpointAbstract implements Sear
         }, "Fetching AccountingTransactionKey (ID: {$id})");
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?AccountingTransactionKeys {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options, $this->getBaseUrl());

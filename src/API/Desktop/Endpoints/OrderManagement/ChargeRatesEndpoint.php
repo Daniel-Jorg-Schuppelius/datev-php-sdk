@@ -37,6 +37,9 @@ class ChargeRatesEndpoint extends EndpointAbstract implements SearchableEndpoint
         }, "Fetching ChargeRate (ID: {$id->toString()})");
     }
 
+    /**
+     * @param array<string, mixed> $queryParams
+     */
     public function getForEmployee(GUID $employeeId, array $queryParams = []): ?ChargeRates {
         return $this->logDebugWithTimer(function () use ($employeeId, $queryParams) {
             $response = parent::getContents($queryParams, [], "{$this->getEndpointUrl()}/employees/{$employeeId->toString()}");
@@ -49,6 +52,10 @@ class ChargeRatesEndpoint extends EndpointAbstract implements SearchableEndpoint
         }, "Fetching ChargeRates for Employee (ID: {$employeeId})");
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?ChargeRates {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options);

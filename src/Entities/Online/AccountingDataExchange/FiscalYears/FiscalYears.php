@@ -15,7 +15,13 @@ namespace Datev\Entities\Online\AccountingDataExchange\FiscalYears;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<FiscalYear>
+ */
 class FiscalYears extends NamedValues {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->valueClassName = FiscalYear::class;
         parent::__construct($data, $logger);

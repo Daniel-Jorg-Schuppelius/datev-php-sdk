@@ -16,7 +16,7 @@ use Datev\Entities\IdentityAndAccessManagement\ServiceProvider\ServiceProviderCo
 use Tests\Contracts\EntityTest;
 
 class ServiceProviderConfigTest extends EntityTest {
-    public function test_create_service_provider_config() {
+    public function test_create_service_provider_config(): void {
         $data = [
             "schemas" => ["urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig"],
             "documentation_uri" => "https://example.com/scim/docs",

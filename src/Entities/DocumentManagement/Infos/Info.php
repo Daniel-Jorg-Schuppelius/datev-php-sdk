@@ -25,6 +25,9 @@ class Info extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?string $data_path;
     protected ?bool $is_client_installed;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

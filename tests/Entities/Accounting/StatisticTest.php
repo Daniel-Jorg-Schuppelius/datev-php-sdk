@@ -16,7 +16,7 @@ use Datev\Entities\Accounting\Statistics\{Statistic, Statistics};
 use Tests\Contracts\EntityTest;
 
 class StatisticTest extends EntityTest {
-    public function test_create_statistic() {
+    public function test_create_statistic(): void {
         $data = [
             "id" => 1,
             "month" => 6,
@@ -26,10 +26,10 @@ class StatisticTest extends EntityTest {
 
         $statistic = new Statistic($data);
         $this->assertInstanceOf(Statistic::class, $statistic);
-        $this->assertNotNull($statistic->getID());
+        $this->assertSame(1, $statistic->getID()->getValue());
     }
 
-    public function test_create_statistics() {
+    public function test_create_statistics(): void {
         $data = [
             "content" => [
                 [

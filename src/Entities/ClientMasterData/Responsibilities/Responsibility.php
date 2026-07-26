@@ -31,11 +31,14 @@ class Responsibility extends NamedEntity implements IdentifiableNamedEntityInter
     protected ?int $client_number;
     protected ?Status $client_status;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
 
-    public function getID(): ResponsibilityID {
+    public function getID(): ?ResponsibilityID {
         return $this->id;
     }
 }

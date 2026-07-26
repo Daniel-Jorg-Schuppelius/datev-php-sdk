@@ -22,6 +22,9 @@ class Folder extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?string $name;
     protected ?Registers $registers;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

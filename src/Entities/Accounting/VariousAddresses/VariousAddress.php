@@ -32,6 +32,9 @@ class VariousAddress extends NamedEntity implements IdentifiableNamedEntityInter
     protected ?DateTime $date_last_modification;
     protected ?string $legal_entity_type;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

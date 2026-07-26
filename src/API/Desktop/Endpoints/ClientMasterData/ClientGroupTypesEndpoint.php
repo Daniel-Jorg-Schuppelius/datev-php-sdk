@@ -45,6 +45,10 @@ class ClientGroupTypesEndpoint extends EndpointAbstract implements SearchableEnd
         }, "Fetching ClientGroupType (ID: {$id})");
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?ClientGroupTypes {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options);

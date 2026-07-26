@@ -24,28 +24,32 @@ class CostUnitsTest extends EndpointTest {
         return new CostUnitsEndpoint($this->client, self::getLogger());
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             'id' => 'CU001',
             'name' => 'Kostenträger Projekt A',
         ];
 
-        $costUnit = CostUnit::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+        $costUnit = CostUnit::fromJson($json);
         $this->assertInstanceOf(CostUnit::class, $costUnit);
     }
 
-    public function test_json_serialize_collection() {
+    public function test_json_serialize_collection(): void {
         $data = [
             ['id' => 'CU001', 'name' => 'Projekt A'],
             ['id' => 'CU002', 'name' => 'Projekt B'],
         ];
 
-        $costUnits = CostUnits::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+        $costUnits = CostUnits::fromJson($json);
         $this->assertInstanceOf(CostUnits::class, $costUnits);
         $this->assertCount(2, $costUnits->getValues());
     }
 
-    public function test_get_cost_units() {
+    public function test_get_cost_units(): void {
         $this->endpoint = $this->createEndpoint();
         $costUnits = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

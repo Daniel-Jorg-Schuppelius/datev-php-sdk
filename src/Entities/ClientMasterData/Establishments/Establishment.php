@@ -27,11 +27,14 @@ class Establishment extends NamedEntity implements IdentifiableNamedEntityInterf
     protected ?Status $status;
     protected ?DateTime $timestamp;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
 
-    public function getID(): EstablishmentID {
+    public function getID(): ?EstablishmentID {
         return $this->id;
     }
 

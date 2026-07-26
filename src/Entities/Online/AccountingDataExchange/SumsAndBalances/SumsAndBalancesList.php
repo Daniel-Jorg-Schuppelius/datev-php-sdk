@@ -15,7 +15,13 @@ namespace Datev\Entities\Online\AccountingDataExchange\SumsAndBalances;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<SumsAndBalances>
+ */
 class SumsAndBalancesList extends NamedValues {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->valueClassName = SumsAndBalances::class;
         parent::__construct($data, $logger);

@@ -21,6 +21,9 @@ use DateTime;
  * @extends NamedValues<T>
  */
 abstract class DateTimeNamedValues extends NamedValues {
+    /**
+     * @return array<array-key, mixed>
+     */
     public function toArray(bool $fullEntity = true, string $dateFormat = DateTime::RFC3339_EXTENDED): array {
         $result = [];
         if ($fullEntity) {

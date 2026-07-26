@@ -34,11 +34,14 @@ class TaxOffice extends NamedEntity implements IdentifiableNamedEntityInterface 
     protected ?bool $is_competent_for_turnover_tax;
     protected ?bool $is_competent_for_wage_tax;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
 
-    public function getID(): TaxOfficeID {
+    public function getID(): ?TaxOfficeID {
         return $this->id;
     }
 

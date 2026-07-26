@@ -70,6 +70,9 @@ class AccountPosting extends NamedEntity implements IdentifiableNamedEntityInter
     protected ?AccountingRecordType $record_type;
     protected ?float $tax_rate;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

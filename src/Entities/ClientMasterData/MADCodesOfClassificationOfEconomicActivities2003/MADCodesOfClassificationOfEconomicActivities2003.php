@@ -19,6 +19,9 @@ use Psr\Log\LoggerInterface;
  * @extends DateTimeNamedValues<MADCodeOfClassificationOfEconomicActivities2003>
  */
 class MADCodesOfClassificationOfEconomicActivities2003 extends DateTimeNamedValues {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";
         $this->valueClassName = MADCodeOfClassificationOfEconomicActivities2003::class;

@@ -25,6 +25,9 @@ class MeterType extends NamedEntity {
     protected ?int $count_of_post_decimal_digits;
     protected ?string $periodicity_of_calibration;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

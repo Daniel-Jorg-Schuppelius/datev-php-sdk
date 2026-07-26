@@ -24,29 +24,33 @@ class CostCentersTest extends EndpointTest {
         return new CostCentersEndpoint($this->client, self::getLogger());
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             'id' => 'CC001',
             'name' => 'Kostenstelle Vertrieb',
         ];
 
-        $costCenter = CostCenter::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+        $costCenter = CostCenter::fromJson($json);
         $this->assertInstanceOf(CostCenter::class, $costCenter);
         $this->assertEquals('Kostenstelle Vertrieb', $costCenter->getName());
     }
 
-    public function test_json_serialize_collection() {
+    public function test_json_serialize_collection(): void {
         $data = [
             ['id' => 'CC001', 'name' => 'Vertrieb'],
             ['id' => 'CC002', 'name' => 'Entwicklung'],
         ];
 
-        $costCenters = CostCenters::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+        $costCenters = CostCenters::fromJson($json);
         $this->assertInstanceOf(CostCenters::class, $costCenters);
         $this->assertCount(2, $costCenters->getValues());
     }
 
-    public function test_get_cost_centers() {
+    public function test_get_cost_centers(): void {
         $this->endpoint = $this->createEndpoint();
         $costCenters = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

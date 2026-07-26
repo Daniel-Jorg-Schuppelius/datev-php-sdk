@@ -16,7 +16,7 @@ use Datev\Entities\ClientMasterData\AreaOfResponsibilities\AreaOfResponsibility;
 use Tests\Contracts\EntityTest;
 
 class AreaOfResponsibilityTest extends EntityTest {
-    public function test_create_address() {
+    public function test_create_address(): void {
         $data = [
             "id" => "NA",
             "name" => "Notariatsaufgaben",

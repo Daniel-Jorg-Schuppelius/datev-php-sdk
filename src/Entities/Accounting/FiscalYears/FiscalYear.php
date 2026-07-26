@@ -39,6 +39,9 @@ class FiscalYear extends NamedEntity {
     protected ?string $national_right;
     protected ?string $taxation_method;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

@@ -20,11 +20,14 @@ class DocumentDomain extends NamedEntity implements IdentifiableNamedEntityInter
     protected ?DocumentDomainID $id;
     protected ?string $name;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
 
-    public function getID(): DocumentDomainID {
+    public function getID(): ?DocumentDomainID {
         return $this->id;
     }
 

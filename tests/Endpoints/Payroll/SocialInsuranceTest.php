@@ -24,29 +24,29 @@ class SocialInsuranceTest extends EndpointTest {
         return new SocialInsuranceEndpoint($this->client, self::getLogger());
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             'id' => '12345',
             'insurance_number' => '12345678A',
             'insurance_type' => 'Gesetzlich',
         ];
 
-        $insurance = SocialInsurance::fromJson(json_encode($data));
+        $insurance = SocialInsurance::fromJson(json_encode($data, JSON_THROW_ON_ERROR));
         $this->assertInstanceOf(SocialInsurance::class, $insurance);
     }
 
-    public function test_json_serialize_collection() {
+    public function test_json_serialize_collection(): void {
         $data = [
             ['id' => '12345', 'insurance_number' => '12345678A'],
             ['id' => '12346', 'insurance_number' => '12345679B'],
         ];
 
-        $insurances = SocialInsurances::fromJson(json_encode($data));
+        $insurances = SocialInsurances::fromJson(json_encode($data, JSON_THROW_ON_ERROR));
         $this->assertInstanceOf(SocialInsurances::class, $insurances);
         $this->assertCount(2, $insurances->getValues());
     }
 
-    public function test_get_social_insurances() {
+    public function test_get_social_insurances(): void {
         $this->endpoint = $this->createEndpoint();
         $insurances = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

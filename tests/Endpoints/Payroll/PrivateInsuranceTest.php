@@ -24,29 +24,35 @@ class PrivateInsuranceTest extends EndpointTest {
         return new PrivateInsuranceEndpoint($this->client, self::getLogger());
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             'id' => '12345',
             'insurance_type' => 'Krankenversicherung',
             'monthly_contribution' => 500.00,
         ];
 
-        $insurance = PrivateInsurance::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertIsString($json);
+
+        $insurance = PrivateInsurance::fromJson($json);
         $this->assertInstanceOf(PrivateInsurance::class, $insurance);
     }
 
-    public function test_json_serialize_collection() {
+    public function test_json_serialize_collection(): void {
         $data = [
             ['id' => '12345', 'insurance_type' => 'Krankenversicherung'],
             ['id' => '12346', 'insurance_type' => 'Pflegeversicherung'],
         ];
 
-        $insurances = PrivateInsurances::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertIsString($json);
+
+        $insurances = PrivateInsurances::fromJson($json);
         $this->assertInstanceOf(PrivateInsurances::class, $insurances);
         $this->assertCount(2, $insurances->getValues());
     }
 
-    public function test_get_private_insurances() {
+    public function test_get_private_insurances(): void {
         $this->endpoint = $this->createEndpoint();
         $insurances = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

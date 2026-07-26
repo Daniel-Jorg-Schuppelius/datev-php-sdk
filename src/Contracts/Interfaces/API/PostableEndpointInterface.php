@@ -15,5 +15,8 @@ namespace Datev\Contracts\Interfaces\API;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterface;
 
 interface PostableEndpointInterface extends EndpointInterface {
+    /**
+     * @param mixed $data
+     */
     public function create($data): mixed;
 }

@@ -16,7 +16,7 @@ use Datev\Entities\ClientMasterData\Responsibilities\{Responsibilities, Responsi
 use Tests\Contracts\EntityTest;
 
 class ResponsibilityTest extends EntityTest {
-    public function test_create_responsibility() {
+    public function test_create_responsibility(): void {
         $data = [
             "id" => 123,
             "area_of_responsibility_id" => "MV",
@@ -31,7 +31,7 @@ class ResponsibilityTest extends EntityTest {
         $this->assertNotNull($responsibility->getID());
     }
 
-    public function test_create_responsibilities() {
+    public function test_create_responsibilities(): void {
         $data = [
             [
                 "id" => 123,

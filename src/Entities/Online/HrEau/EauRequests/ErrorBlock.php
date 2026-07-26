@@ -27,6 +27,9 @@ class ErrorBlock extends NamedEntity {
 
     protected string $error_value;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

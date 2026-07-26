@@ -20,11 +20,14 @@ class SucceededResponse extends NamedEntity implements IdentifiableNamedEntityIn
     protected ?int $index;
     protected ?CreatedID $created_id;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
 
     public function getID(): ?CreatedID {
-        return $this->created_id["id"] ?? null;
+        return $this->created_id ?? null;
     }
 }

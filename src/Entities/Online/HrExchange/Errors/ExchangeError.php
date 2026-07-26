@@ -29,6 +29,9 @@ class ExchangeError extends NamedEntity {
 
     protected AdditionalErrors $additional_messages;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

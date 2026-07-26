@@ -15,7 +15,13 @@ namespace Datev\Entities\Online\HrExports\SocialSecurityPayments;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<SocialSecurityPayments>
+ */
 class SocialSecurityPaymentsList extends NamedValues {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->valueClassName = SocialSecurityPayments::class;
         parent::__construct($data, $logger);

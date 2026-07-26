@@ -24,6 +24,9 @@ use Datev\Entities\Online\AccountingDataExchange\AccountPostings\AccountPostings
 class AccountPostingsJobsEndpoint extends ClientScopedEndpointAbstract {
     protected string $endpointSuffix = 'account-postings-jobs';
 
+    /**
+     * @return PageResult<\Datev\Entities\Online\AccountingDataExchange\AccountPostings\AccountPosting>
+     */
     public function getPage(string $jobId, ?int $page = null): PageResult {
         return $this->logDebugWithTimer(function () use ($jobId, $page) {
             $urlPath = "{$this->getEndpointUrl()}/" . rawurlencode($jobId);

@@ -24,29 +24,33 @@ class EmploymentPeriodsTest extends EndpointTest {
         return new EmploymentPeriodsEndpoint($this->client, self::getLogger());
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             'id' => '12345',
             'start_date' => '2024-01-01',
             'end_date' => '2024-12-31',
         ];
 
-        $period = EmploymentPeriod::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+        $period = EmploymentPeriod::fromJson($json);
         $this->assertInstanceOf(EmploymentPeriod::class, $period);
     }
 
-    public function test_json_serialize_collection() {
+    public function test_json_serialize_collection(): void {
         $data = [
             ['id' => '12345', 'start_date' => '2024-01-01'],
             ['id' => '12346', 'start_date' => '2023-01-01'],
         ];
 
-        $periods = EmploymentPeriods::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+        $periods = EmploymentPeriods::fromJson($json);
         $this->assertInstanceOf(EmploymentPeriods::class, $periods);
         $this->assertCount(2, $periods->getValues());
     }
 
-    public function test_get_employment_periods() {
+    public function test_get_employment_periods(): void {
         $this->endpoint = $this->createEndpoint();
         $periods = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

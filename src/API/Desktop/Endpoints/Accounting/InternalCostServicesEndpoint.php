@@ -58,6 +58,9 @@ class InternalCostServicesEndpoint extends EndpointAbstract implements PostableE
         return "{$this->getEndpointUrl()}/{$this->clientId->toString()}/fiscal-years/{$this->fiscalYearId->toString()}/cost-systems/{$this->costSystemId->toString()}/internal-cost-services";
     }
 
+    /**
+     * @param \APIToolkit\Contracts\Interfaces\NamedEntityInterface $data
+     */
     public function create($data): ?InternalCostService {
         return $this->logDebugWithTimer(function () use ($data) {
             $response = parent::postContents($data->toArray(), [], $this->getBaseUrl());

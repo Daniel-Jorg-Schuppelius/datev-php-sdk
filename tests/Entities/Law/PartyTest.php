@@ -16,7 +16,7 @@ use Datev\Entities\Law\Parties\{Parties, Party};
 use Tests\Contracts\EntityTest;
 
 class PartyTest extends EntityTest {
-    public function test_create_party() {
+    public function test_create_party(): void {
         $data = [
             "id" => "32e6f021-8174-42c3-9d1a-d5eb3b636a1d",
             "party_role_id" => "ebd93cfc-1c2e-4927-aee5-24b448b050fd",
@@ -46,7 +46,7 @@ class PartyTest extends EntityTest {
         $this->assertEquals("Kfz-Halter", $party->getOfficialPartyType());
     }
 
-    public function test_create_parties() {
+    public function test_create_parties(): void {
         $data = [
             "content" => [
                 [

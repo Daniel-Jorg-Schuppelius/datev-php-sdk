@@ -16,6 +16,9 @@ use Datev\Entities\Common\Clients\ClientID as BaseClientID;
 use Psr\Log\LoggerInterface;
 
 class ClientID extends BaseClientID {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
         $this->entityName = 'client_id';

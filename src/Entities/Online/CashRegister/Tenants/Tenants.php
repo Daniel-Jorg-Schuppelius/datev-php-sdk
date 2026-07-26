@@ -15,7 +15,13 @@ namespace Datev\Entities\Online\CashRegister\Tenants;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<Tenant>
+ */
 class Tenants extends NamedValues {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->valueClassName = Tenant::class;
         parent::__construct($data, $logger);

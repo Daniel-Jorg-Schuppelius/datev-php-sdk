@@ -22,6 +22,9 @@ class VacationEntitlement extends NamedEntity implements IdentifiableNamedEntity
     protected ?float $current_year_vacation_entitlement;
     protected ?float $remaining_days_of_vacation_previous_year;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

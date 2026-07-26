@@ -32,6 +32,9 @@ class EmployeeCapacity extends NamedEntity {
     protected ?float $planned_hours_time_units;
     protected ?float $spare_hours_time_units;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

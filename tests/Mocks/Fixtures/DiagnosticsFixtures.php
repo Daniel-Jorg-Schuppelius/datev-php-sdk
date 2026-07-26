@@ -17,6 +17,9 @@ namespace Tests\Mocks\Fixtures;
  * Struktur entspricht der echten DATEV API Antwort.
  */
 class DiagnosticsFixtures {
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getEcho(): array {
         return [
             'id' => 'echo-' . uniqid(),
@@ -24,6 +27,9 @@ class DiagnosticsFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getEchoWithMessage(string $message = 'Test'): array {
         return [
             'id' => 'echo-' . uniqid(),
@@ -31,6 +37,9 @@ class DiagnosticsFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getAllResponses(): array {
         return [
             'GET:/datev/api/diagnostics/v1/echo' => [

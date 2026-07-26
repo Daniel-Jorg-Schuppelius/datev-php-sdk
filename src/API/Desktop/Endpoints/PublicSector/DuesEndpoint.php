@@ -58,6 +58,10 @@ class DuesEndpoint extends EndpointAbstract implements SearchableEndpointInterfa
         }, "Fetching Due (ID: {$id->toString()})");
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?Dues {
         if (!isset($this->clientId) || !isset($this->citizenId) || !isset($this->feeId)) {
             $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID, Citizen ID and Fee ID are required');

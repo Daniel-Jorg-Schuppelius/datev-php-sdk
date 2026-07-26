@@ -101,11 +101,14 @@ class Document extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?User $user;
     protected ?int $year;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
 
-    public function getID(): DocumentID {
+    public function getID(): ?DocumentID {
         return $this->id;
     }
 
@@ -317,6 +320,9 @@ class Document extends NamedEntity implements IdentifiableNamedEntityInterface {
         return $this->year ?? null;
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     protected function getArray(bool $asStringValues = false, bool $dateAsStringValues = true, string $dateFormat = "Y-m-d\TH:i:s"): array {
         return parent::getArray($asStringValues, $dateAsStringValues, $dateFormat);
     }

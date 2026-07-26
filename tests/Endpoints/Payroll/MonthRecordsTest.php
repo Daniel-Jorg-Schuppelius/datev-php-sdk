@@ -24,29 +24,33 @@ class MonthRecordsTest extends EndpointTest {
         return new MonthRecordsEndpoint($this->client, self::getLogger());
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             'id' => '12345',
             'month' => 1,
             'year' => 2025,
         ];
 
-        $record = MonthlyRecord::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+        $record = MonthlyRecord::fromJson($json);
         $this->assertInstanceOf(MonthlyRecord::class, $record);
     }
 
-    public function test_json_serialize_collection() {
+    public function test_json_serialize_collection(): void {
         $data = [
             ['id' => '12345', 'month' => 1],
             ['id' => '12346', 'month' => 2],
         ];
 
-        $records = MonthlyRecords::fromJson(json_encode($data));
+        $json = json_encode($data);
+        $this->assertNotFalse($json);
+        $records = MonthlyRecords::fromJson($json);
         $this->assertInstanceOf(MonthlyRecords::class, $records);
         $this->assertCount(2, $records->getValues());
     }
 
-    public function test_get_month_records() {
+    public function test_get_month_records(): void {
         $this->endpoint = $this->createEndpoint();
         $records = $this->endpoint->search(["reference-date" => "2021-01-01"]);
 

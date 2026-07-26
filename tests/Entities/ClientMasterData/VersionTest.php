@@ -16,7 +16,7 @@ use Datev\Entities\ClientMasterData\Versions\Version;
 use Tests\Contracts\EntityTest;
 
 class VersionTest extends EntityTest {
-    public function test_create_version() {
+    public function test_create_version(): void {
         $data = [
             "adress_country" => "DE",
             "client_number_maximum_number_of_digits" => 5,

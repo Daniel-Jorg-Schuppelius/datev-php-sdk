@@ -16,7 +16,7 @@ use Datev\Entities\Accounting\AccountPostings\{AccountPosting, AccountPostings};
 use Tests\Contracts\EntityTest;
 
 class AccountPostingTest extends EntityTest {
-    public function test_create_account_posting() {
+    public function test_create_account_posting(): void {
         $data = [
             "id" => 1,
             "account_number" => 1800,
@@ -28,10 +28,10 @@ class AccountPostingTest extends EntityTest {
         $posting = new AccountPosting($data);
         $this->assertInstanceOf(AccountPosting::class, new AccountPosting);
         $this->assertInstanceOf(AccountPosting::class, $posting);
-        $this->assertNotNull($posting->getID());
+        $this->assertEquals(1, $posting->getID()->getValue());
     }
 
-    public function test_create_account_postings() {
+    public function test_create_account_postings(): void {
         $data = [
             "content" => [
                 [

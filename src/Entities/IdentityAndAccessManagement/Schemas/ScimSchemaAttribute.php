@@ -26,9 +26,18 @@ class ScimSchemaAttribute extends NamedEntity {
     protected ?string $mutability;
     protected ?string $returned;
     protected ?string $uniqueness;
+    /**
+     * @var array<array-key, mixed>
+     */
     protected ?array $reference_types;
+    /**
+     * @var array<array-key, mixed>
+     */
     protected ?array $sub_attributes;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
@@ -73,10 +82,16 @@ class ScimSchemaAttribute extends NamedEntity {
         return $this->uniqueness ?? null;
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public function getReferenceTypes(): ?array {
         return $this->reference_types ?? null;
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public function getSubAttributes(): ?array {
         return $this->sub_attributes ?? null;
     }

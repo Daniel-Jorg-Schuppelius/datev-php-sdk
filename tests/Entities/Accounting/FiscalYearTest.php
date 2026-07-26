@@ -16,7 +16,7 @@ use Datev\Entities\Accounting\FiscalYears\{FiscalYear, FiscalYears};
 use Tests\Contracts\EntityTest;
 
 class FiscalYearTest extends EntityTest {
-    public function test_create_fiscal_year() {
+    public function test_create_fiscal_year(): void {
         $data = [
             "id" => "2024",
             "account_length" => 4,
@@ -50,7 +50,7 @@ class FiscalYearTest extends EntityTest {
         $this->assertFalse($fiscalYear->isLocked());
     }
 
-    public function test_create_fiscal_years() {
+    public function test_create_fiscal_years(): void {
         $data = [
             "content" => [
                 [

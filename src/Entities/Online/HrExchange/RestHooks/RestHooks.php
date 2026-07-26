@@ -15,7 +15,13 @@ namespace Datev\Entities\Online\HrExchange\RestHooks;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<RestHook>
+ */
 class RestHooks extends NamedValues {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->valueClassName = RestHook::class;
         parent::__construct($data, $logger);

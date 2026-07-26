@@ -25,6 +25,9 @@ class Service extends NamedEntity {
     /** @var array<int, string> */
     protected array $scopes;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

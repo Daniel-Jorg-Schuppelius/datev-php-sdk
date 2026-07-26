@@ -51,7 +51,7 @@ class FilesEndpoint extends TenantScopedEndpointAbstract {
 
             $headers = $requestId !== null ? ['Request-Id' => $requestId] : [];
 
-            $this->postMultipart($multipart, "{$this->getEndpointUrl()}/import", 202, $headers);
+            $this->postMultipartRequest($multipart, "{$this->getEndpointUrl()}/import", 202, $headers);
         }, "Importing CashRegister file '{$filename}' (Tenant: {$tenantId})");
     }
 }

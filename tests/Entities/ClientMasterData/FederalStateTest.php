@@ -16,7 +16,7 @@ use Datev\Entities\ClientMasterData\FederalStates\{FederalState, FederalStates};
 use Tests\Contracts\EntityTest;
 
 class FederalStateTest extends EntityTest {
-    public function test_create_federal_state() {
+    public function test_create_federal_state(): void {
         $data = [
             "value" => "BY",
             "valid_from" => "2024-01-01",
@@ -26,7 +26,7 @@ class FederalStateTest extends EntityTest {
         $this->assertInstanceOf(FederalState::class, $state);
     }
 
-    public function test_create_federal_states() {
+    public function test_create_federal_states(): void {
         $data = [
             [
                 "value" => "BY",

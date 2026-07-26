@@ -15,14 +15,13 @@ use Datev\Entities\Accounting\Clients\{Client, Clients};
 use Tests\Contracts\EndpointTest;
 
 class ClientTest extends EndpointTest {
-    protected ?ClientsEndpoint $endpoint = null;
     protected string $mockDomain = 'accounting';
 
     protected function createEndpoint(): ClientsEndpoint {
         return new ClientsEndpoint($this->client, self::getLogger());
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             "id" => "9351B0E3-E96B-4BB0-B94E-018B13D1DB28",
             "name" => "Küchenbeispiel",
@@ -45,10 +44,10 @@ class ClientTest extends EndpointTest {
         $this->assertEquals(json_encode($data1), $client1->toJson());  // the order of the $data array is important for this test.
     }
 
-    public function test_get_clients() {
-        $this->endpoint = $this->createEndpoint();
+    public function test_get_clients(): void {
+        $endpoint = $this->createEndpoint();
 
-        $clients = $this->endpoint->search();
+        $clients = $endpoint->search();
 
         if ($this->isUsingMock()) {
             $this->assertNotNull($clients);
@@ -57,7 +56,7 @@ class ClientTest extends EndpointTest {
             $this->assertNotEmpty($clients->getValues(), "No clients found");
             $randomClient = $clients->getValues()[array_rand($clients->getValues())];
             $this->assertInstanceOf(Client::class, $randomClient);
-            $client = $this->endpoint->get($randomClient->getID());
+            $client = $endpoint->get($randomClient->getID());
             $this->assertInstanceOf(Client::class, $client);
             $this->assertEquals($randomClient->getID(), $client->getID());
         }

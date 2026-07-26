@@ -16,13 +16,13 @@ use Datev\Entities\ClientMasterData\CorporateStructures\{CorporateStructure, Cor
 use Tests\Contracts\EntityTest;
 
 class CorporateStructureTest extends EntityTest {
-    public function test_create_corporate_structure_id() {
+    public function test_create_corporate_structure_id(): void {
         $id = new CorporateStructureID("12345678-1234-1234-1234-123456789012");
         $this->assertInstanceOf(CorporateStructureID::class, $id);
         $this->assertEquals("12345678-1234-1234-1234-123456789012", $id->toString());
     }
 
-    public function test_create_corporate_structure() {
+    public function test_create_corporate_structure(): void {
         $data = [
             "id" => "12345678-1234-1234-1234-123456789012",
             "name" => "Hauptniederlassung",
@@ -36,7 +36,7 @@ class CorporateStructureTest extends EntityTest {
         $this->assertEquals("Hauptniederlassung", $structure->getName());
     }
 
-    public function test_create_corporate_structures() {
+    public function test_create_corporate_structures(): void {
         $data = [
             [
                 "id" => "12345678-1234-1234-1234-123456789012",

@@ -16,6 +16,9 @@ use Datev\Entities\Payroll\Salaries\SalaryTypes\SalaryTypeID as BaseSalaryTypeID
 use Psr\Log\LoggerInterface;
 
 class SalaryTypeID extends BaseSalaryTypeID {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
         $this->entityName = 'salary_type_id';

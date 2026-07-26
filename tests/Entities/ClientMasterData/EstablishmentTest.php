@@ -16,13 +16,13 @@ use Datev\Entities\ClientMasterData\Establishments\{Establishment, Establishment
 use Tests\Contracts\EntityTest;
 
 class EstablishmentTest extends EntityTest {
-    public function test_create_establishment_id() {
+    public function test_create_establishment_id(): void {
         $id = new EstablishmentID("12345678-1234-1234-1234-123456789012");
         $this->assertInstanceOf(EstablishmentID::class, $id);
         $this->assertEquals("12345678-1234-1234-1234-123456789012", $id->toString());
     }
 
-    public function test_create_establishment() {
+    public function test_create_establishment(): void {
         $data = [
             "id" => "12345678-1234-1234-1234-123456789012",
             "name" => "Hauptniederlassung",
@@ -33,7 +33,7 @@ class EstablishmentTest extends EntityTest {
         $this->assertInstanceOf(Establishment::class, $establishment);
     }
 
-    public function test_create_establishments() {
+    public function test_create_establishments(): void {
         $data = [
             [
                 "id" => "12345678-1234-1234-1234-123456789012",

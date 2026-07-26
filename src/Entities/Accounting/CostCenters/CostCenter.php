@@ -38,11 +38,14 @@ class CostCenter extends NamedEntity implements IdentifiableNamedEntityInterface
     protected ?string $city;
     protected ?string $street;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
 
-    public function getID(): CostCenterID {
+    public function getID(): ?CostCenterID {
         return $this->id;
     }
 }

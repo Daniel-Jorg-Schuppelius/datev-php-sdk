@@ -1,6 +1,10 @@
 parameters:
-    level: 5
+    level: 8
+    phpVersion:
+        min: 80200
+        max: 80499
     paths:
         - src
+        - tests
     tmpDir: var/phpstan
     reportUnmatchedIgnoredErrors: true

@@ -16,7 +16,7 @@ use Datev\Entities\ClientMasterData\Communications\Communication;
 use Tests\Contracts\EntityTest;
 
 class CommunicationTest extends EntityTest {
-    public function test_create_communication() {
+    public function test_create_communication(): void {
         $data = [
             "id" => "20b9d6d9-117b-4555-b0b0-3659eb0279d9",
             "type" => "phone",

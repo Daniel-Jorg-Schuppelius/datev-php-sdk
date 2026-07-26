@@ -16,7 +16,7 @@ use Datev\Entities\Accounting\RecordReads\{RecordRead, RecordReads};
 use Tests\Contracts\EntityTest;
 
 class RecordReadTest extends EntityTest {
-    public function test_create_record_read() {
+    public function test_create_record_read(): void {
         $data = [
             "id" => 1,
             "account_number" => 1800,
@@ -31,7 +31,7 @@ class RecordReadTest extends EntityTest {
         $this->assertInstanceOf(RecordRead::class, $recordRead);
     }
 
-    public function test_create_record_reads() {
+    public function test_create_record_reads(): void {
         $data = [
             "content" => [
                 [

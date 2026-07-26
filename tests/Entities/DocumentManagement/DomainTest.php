@@ -16,7 +16,7 @@ use Datev\Entities\DocumentManagement\Domains\Domain;
 use Tests\Contracts\EntityTest;
 
 class DomainTest extends EntityTest {
-    public function test_create_document() {
+    public function test_create_document(): void {
         $data = [
             "correspondence_partner" => [
                 "domain" => "Mandant",

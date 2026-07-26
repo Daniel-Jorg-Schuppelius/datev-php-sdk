@@ -14,15 +14,15 @@ use Datev\API\Desktop\Endpoints\PublicSector\MeterReadingsEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class MeterReadingsTest extends EndpointTest {
-    protected ?MeterReadingsEndpoint $endpoint;
+    protected MeterReadingsEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new MeterReadingsEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new MeterReadingsEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_meter_readings() {
+    public function test_get_meter_readings(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

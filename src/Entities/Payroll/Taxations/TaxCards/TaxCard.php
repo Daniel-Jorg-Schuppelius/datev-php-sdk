@@ -26,6 +26,9 @@ class TaxCard extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?float $annual_tax_allowance;
     protected ?string $child_tax_allowances;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

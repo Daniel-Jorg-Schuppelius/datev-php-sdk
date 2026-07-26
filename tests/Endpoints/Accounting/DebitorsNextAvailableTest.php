@@ -23,12 +23,12 @@ class DebitorsNextAvailableTest extends EndpointTest {
         return new DebitorsNextAvailableEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_debitors_next_available() {
+    public function test_get_debitors_next_available(): void {
         $this->skipMockIfComplexEntity();
 
         $this->endpoint = $this->createEndpoint();
 
-        $nextAvailable = $this->endpoint->search();
+        $nextAvailable = $this->endpoint->getNextAvailable();
 
         $this->assertNotNull($nextAvailable);
     }

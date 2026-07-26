@@ -27,7 +27,7 @@ class ClientsEndpoint extends EndpointAbstract implements SearchableEndpointInte
         }
 
         $referenceDateFormatted = $referenceDate->format('Y-m-d');
-        $expand = urlencode($expand);
+        $expand = urlencode($expand ?? '');
 
         return $this->logDebugWithTimer(function () use ($id, $expand, $referenceDateFormatted) {
             $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}?expand={$expand}&reference-date={$referenceDateFormatted}");
@@ -40,6 +40,10 @@ class ClientsEndpoint extends EndpointAbstract implements SearchableEndpointInte
         }, "Fetching Payroll Client (ID: {$id->toString()})");
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?Clients {
         if (!isset($queryParams['reference-date'])) {
             $this->logInfo('No reference-date provided. Using current date.');

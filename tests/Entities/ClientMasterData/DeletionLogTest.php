@@ -16,7 +16,7 @@ use Datev\Entities\ClientMasterData\DeletionLogs\{DeletionLog, DeletionLogs};
 use Tests\Contracts\EntityTest;
 
 class DeletionLogTest extends EntityTest {
-    public function test_create_deletion_log() {
+    public function test_create_deletion_log(): void {
         $data = [
             "id" => "d13f9c3c-380c-494e-97c8-d12fff738189",
             "timestamp" => "2024-01-15",
@@ -29,7 +29,7 @@ class DeletionLogTest extends EntityTest {
         $this->assertNotNull($log->getTimestamp());
     }
 
-    public function test_create_deletion_logs() {
+    public function test_create_deletion_logs(): void {
         $data = [
             [
                 "id" => "d13f9c3c-380c-494e-97c8-d12fff738189",

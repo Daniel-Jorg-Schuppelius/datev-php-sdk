@@ -15,7 +15,13 @@ namespace Datev\Entities\Online\HrPayrollReports\Documents;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<MetadataEntry>
+ */
 class MetadataEntries extends NamedValues {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->valueClassName = MetadataEntry::class;
         parent::__construct($data, $logger);

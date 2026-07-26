@@ -35,7 +35,7 @@ class DocumentsEndpoint extends ClientScopedEndpointAbstract {
      */
     public function upload(string|StreamInterface $file, string $filename, ?array $metadata = null, ?array $customMetadata = null): ?Document {
         return $this->logDebugWithTimer(function () use ($file, $filename, $metadata, $customMetadata) {
-            $response = $this->postMultipart($this->buildMultipart([['contents' => $file, 'filename' => $filename]], $metadata, $customMetadata), null, 201);
+            $response = $this->postMultipartRequest($this->buildMultipart([['contents' => $file, 'filename' => $filename]], $metadata, $customMetadata), null, 201);
 
             return $this->toDocument((string) $response->getBody());
         }, "Uploading Document '{$filename}'");
@@ -51,7 +51,7 @@ class DocumentsEndpoint extends ClientScopedEndpointAbstract {
     public function uploadWithId(string $documentId, string|StreamInterface $file, string $filename, ?array $metadata = null, ?array $customMetadata = null): ?Document {
         return $this->logDebugWithTimer(function () use ($documentId, $file, $filename, $metadata, $customMetadata) {
             $urlPath = "{$this->getEndpointUrl()}/" . rawurlencode($documentId);
-            $response = $this->putMultipart($this->buildMultipart([['contents' => $file, 'filename' => $filename]], $metadata, $customMetadata), $urlPath, 201);
+            $response = $this->putMultipartRequest($this->buildMultipart([['contents' => $file, 'filename' => $filename]], $metadata, $customMetadata), $urlPath, 201);
 
             return $this->toDocument((string) $response->getBody());
         }, "Uploading Document '{$filename}' (ID: {$documentId})");
@@ -67,7 +67,7 @@ class DocumentsEndpoint extends ClientScopedEndpointAbstract {
     public function uploadStapled(array $files, ?array $metadata = null, ?array $customMetadata = null): ?Document {
         return $this->logDebugWithTimer(function () use ($files, $metadata, $customMetadata) {
             $urlPath = "{$this->getEndpointUrl()}/stapled";
-            $response = $this->putMultipart($this->buildMultipart($files, $metadata, $customMetadata, 'files'), $urlPath, 201);
+            $response = $this->putMultipartRequest($this->buildMultipart($files, $metadata, $customMetadata, 'files'), $urlPath, 201);
 
             return $this->toDocument((string) $response->getBody());
         }, 'Uploading stapled Document (' . count($files) . ' files)');

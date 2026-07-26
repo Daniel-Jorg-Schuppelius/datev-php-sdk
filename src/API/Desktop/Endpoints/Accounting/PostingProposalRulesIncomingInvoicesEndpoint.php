@@ -68,6 +68,10 @@ class PostingProposalRulesIncomingInvoicesEndpoint extends EndpointAbstract impl
         }, "Fetching PostingProposalRule (ID: {$ruleId})");
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?PostingProposalRules {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options, $this->getBaseUrl());

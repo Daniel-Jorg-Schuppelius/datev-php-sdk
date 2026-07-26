@@ -17,15 +17,15 @@ use Datev\Entities\IdentityAndAccessManagement\ServiceProvider\ServiceProviderCo
 use Tests\Contracts\EndpointTest;
 
 class ServiceProviderConfigTest extends EndpointTest {
-    protected ?ServiceProviderConfigEndpoint $endpoint;
+    protected ServiceProviderConfigEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
+    protected function setUp(): void {
+        $this->apiDisabled = true;
+        parent::setUp();
         $this->endpoint = new ServiceProviderConfigEndpoint($this->client, self::getLogger());
-        $this->apiDisabled = true; // API is disabled
     }
 
-    public function test_json_serialize() {
+    public function test_json_serialize(): void {
         $data = [
             "schemas" => ["urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig"],
             "documentation_uri" => "https://www.datev.de/developer/",
@@ -46,13 +46,22 @@ class ServiceProviderConfigTest extends EndpointTest {
 
         $config = new ServiceProviderConfig($data);
         $this->assertInstanceOf(ServiceProviderConfig::class, $config);
-        $this->assertTrue($config->getPatch()->isSupported());
-        $this->assertTrue($config->getBulk()->isSupported());
-        $this->assertEquals(1000, $config->getBulk()->getMaxOperations());
-        $this->assertFalse($config->getFilter()->isSupported());
+
+        $patch = $config->getPatch();
+        $this->assertNotNull($patch);
+        $this->assertTrue($patch->isSupported());
+
+        $bulk = $config->getBulk();
+        $this->assertNotNull($bulk);
+        $this->assertTrue($bulk->isSupported());
+        $this->assertEquals(1000, $bulk->getMaxOperations());
+
+        $filter = $config->getFilter();
+        $this->assertNotNull($filter);
+        $this->assertFalse($filter->isSupported());
     }
 
-    public function test_get_service_provider_config() {
+    public function test_get_service_provider_config(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

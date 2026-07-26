@@ -16,7 +16,7 @@ use Datev\Entities\PublicSector\Citizens\{Citizen, Citizens};
 use Tests\Contracts\EntityTest;
 
 class CitizenTest extends EntityTest {
-    public function test_create_citizen() {
+    public function test_create_citizen(): void {
         $data = [
             "id" => "c1234567-8901-2345-6789-012345678901",
             "first_name" => "Max",
@@ -28,7 +28,7 @@ class CitizenTest extends EntityTest {
         $this->assertInstanceOf(Citizen::class, $citizen);
     }
 
-    public function test_create_citizens() {
+    public function test_create_citizens(): void {
         $data = [
             "content" => [
                 [

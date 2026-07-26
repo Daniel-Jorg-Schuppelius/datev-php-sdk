@@ -14,15 +14,15 @@ use Datev\API\Desktop\Endpoints\Law\CustomFieldsEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class CustomFieldsTest extends EndpointTest {
-    protected ?CustomFieldsEndpoint $endpoint;
+    protected CustomFieldsEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new CustomFieldsEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new CustomFieldsEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_custom_fields() {
+    public function test_get_custom_fields(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

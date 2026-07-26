@@ -15,15 +15,15 @@ use Datev\Entities\DocumentManagement\SecureAreas\{SecureArea, SecureAreas};
 use Tests\Contracts\EndpointTest;
 
 class SecureAreaTest extends EndpointTest {
-    protected ?SecureAreasEndpoint $endpoint;
+    protected SecureAreasEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
+    protected function setUp(): void {
+        $this->apiDisabled = true;
+        parent::setUp();
         $this->endpoint = new SecureAreasEndpoint($this->client, self::getLogger());
-        $this->apiDisabled = true; // API is disabled
     }
 
-    public function test_get_secure_areas_api() {
+    public function test_get_secure_areas_api(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

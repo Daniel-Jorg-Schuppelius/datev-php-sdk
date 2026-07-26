@@ -16,6 +16,9 @@ use Datev\Entities\ClientMasterData\CompanyNames\CompanyName as BaseCompanyName;
 use Psr\Log\LoggerInterface;
 
 class CompanyName extends BaseCompanyName {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
         $this->entityName = 'current_three_lined_company_name_first_line';

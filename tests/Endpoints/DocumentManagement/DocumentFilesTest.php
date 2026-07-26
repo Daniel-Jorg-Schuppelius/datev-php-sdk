@@ -14,20 +14,20 @@ use Datev\API\Desktop\Endpoints\DocumentManagement\DocumentFilesEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class DocumentFilesTest extends EndpointTest {
-    protected ?DocumentFilesEndpoint $endpoint;
+    protected DocumentFilesEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new DocumentFilesEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new DocumentFilesEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_document_files() {
+    public function test_get_document_files(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }
 
-        $files = $this->endpoint->search();
+        $files = $this->endpoint->get();
         $this->assertNotNull($files);
     }
 }

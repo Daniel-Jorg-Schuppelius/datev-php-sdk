@@ -17,13 +17,13 @@ use Datev\Entities\ClientMasterData\FunctionalAreas\ID\FunctionalAreaID;
 use Tests\Contracts\EntityTest;
 
 class FunctionalAreaTest extends EntityTest {
-    public function test_create_functional_area_id() {
+    public function test_create_functional_area_id(): void {
         $id = new FunctionalAreaID("12345678-1234-1234-1234-123456789012");
         $this->assertInstanceOf(FunctionalAreaID::class, $id);
         $this->assertEquals("12345678-1234-1234-1234-123456789012", $id->toString());
     }
 
-    public function test_create_functional_area() {
+    public function test_create_functional_area(): void {
         $data = [
             "id" => "12345678-1234-1234-1234-123456789012",
             "name" => "Buchhaltung",
@@ -37,7 +37,7 @@ class FunctionalAreaTest extends EntityTest {
         $this->assertEquals("Buchhaltung", $area->getName());
     }
 
-    public function test_create_functional_areas() {
+    public function test_create_functional_areas(): void {
         $data = [
             [
                 "id" => "12345678-1234-1234-1234-123456789012",

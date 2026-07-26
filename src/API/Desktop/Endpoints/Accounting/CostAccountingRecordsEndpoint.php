@@ -86,6 +86,10 @@ class CostAccountingRecordsEndpoint extends EndpointAbstract implements Searchab
         }, "Fetching CostAccountingRecord (ID: {$recordId})");
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?CostAccountingRecords {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options, $this->getBaseUrl());

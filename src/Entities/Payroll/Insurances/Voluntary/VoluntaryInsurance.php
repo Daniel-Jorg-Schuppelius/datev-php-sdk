@@ -21,6 +21,9 @@ class VoluntaryInsurance extends NamedEntity implements IdentifiableNamedEntityI
     protected ?string $maximal_premium_for_voluntary_health_insurance;
     protected ?string $maximal_premium_for_voluntary_nursing_insurance;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

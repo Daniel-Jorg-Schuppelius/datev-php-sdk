@@ -22,6 +22,9 @@ class ClientBasics extends Client {
 
     protected BasicAccountingInformations $basic_accounting_information;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

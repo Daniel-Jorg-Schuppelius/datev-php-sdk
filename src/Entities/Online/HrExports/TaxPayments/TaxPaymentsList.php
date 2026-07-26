@@ -15,7 +15,13 @@ namespace Datev\Entities\Online\HrExports\TaxPayments;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<TaxPayments>
+ */
 class TaxPaymentsList extends NamedValues {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->valueClassName = TaxPayments::class;
         parent::__construct($data, $logger);

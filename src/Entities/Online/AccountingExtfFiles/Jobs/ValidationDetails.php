@@ -28,6 +28,9 @@ class ValidationDetails extends NamedEntity {
 
     protected AffectedElements $affected_elements;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

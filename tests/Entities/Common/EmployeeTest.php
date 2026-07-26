@@ -16,13 +16,13 @@ use Datev\Entities\Common\Employees\{Employee, EmployeeID, Employees};
 use Tests\Contracts\EntityTest;
 
 class EmployeeTest extends EntityTest {
-    public function test_create_employee_id() {
+    public function test_create_employee_id(): void {
         $id = new EmployeeID("12345678-1234-1234-1234-123456789012");
         $this->assertInstanceOf(EmployeeID::class, $id);
         $this->assertEquals("12345678-1234-1234-1234-123456789012", $id->toString());
     }
 
-    public function test_create_employee() {
+    public function test_create_employee(): void {
         $data = [
             "id" => "12345678-1234-1234-1234-123456789012",
         ];
@@ -33,7 +33,7 @@ class EmployeeTest extends EntityTest {
         $this->assertEquals("12345678-1234-1234-1234-123456789012", $employee->getID()->toString());
     }
 
-    public function test_create_employees() {
+    public function test_create_employees(): void {
         $data = [
             [
                 "id" => "12345678-1234-1234-1234-123456789012",

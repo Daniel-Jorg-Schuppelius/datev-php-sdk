@@ -22,8 +22,14 @@ class CustomField extends NamedEntity implements IdentifiableNamedEntityInterfac
     protected ?string $name;
     protected ?string $datatype;
     protected ?int $length;
+    /**
+     * @var array<array-key, mixed>
+     */
     protected ?array $department;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
@@ -48,6 +54,9 @@ class CustomField extends NamedEntity implements IdentifiableNamedEntityInterfac
         return $this->length ?? null;
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public function getDepartment(): ?array {
         return $this->department ?? null;
     }

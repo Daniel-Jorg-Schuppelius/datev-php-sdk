@@ -44,6 +44,10 @@ class FeeVersionsEndpoint extends EndpointAbstract implements SearchableEndpoint
         }, "Fetching FeeVersion (Number: {$number})");
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?FeeVersions {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options);

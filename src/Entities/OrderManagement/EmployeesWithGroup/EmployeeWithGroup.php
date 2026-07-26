@@ -26,6 +26,9 @@ class EmployeeWithGroup extends NamedEntity {
     protected ?string $employee_group_short_name;
     protected ?string $employee_group_long_name;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

@@ -16,7 +16,7 @@ use Datev\Entities\ClientMasterData\RegistrationNumbers\{RegistrationNumber, Reg
 use Tests\Contracts\EntityTest;
 
 class RegistrationNumberTest extends EntityTest {
-    public function test_create_registration_number() {
+    public function test_create_registration_number(): void {
         $data = [
             "value" => "HRB 12345",
             "valid_from" => "2024-01-01",
@@ -26,7 +26,7 @@ class RegistrationNumberTest extends EntityTest {
         $this->assertInstanceOf(RegistrationNumber::class, $number);
     }
 
-    public function test_create_registration_numbers() {
+    public function test_create_registration_numbers(): void {
         $data = [
             [
                 "value" => "HRB 12345",

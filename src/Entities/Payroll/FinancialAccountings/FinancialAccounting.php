@@ -21,6 +21,9 @@ class FinancialAccounting extends NamedEntity implements IdentifiableNamedEntity
     protected ?string $different_consultant_number;
     protected ?string $different_client_number;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

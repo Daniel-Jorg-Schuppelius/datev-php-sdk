@@ -16,6 +16,9 @@ namespace Tests\Mocks\Fixtures;
  * Mock-Fixtures für Payroll (HR) Endpoints.
  */
 class PayrollFixtures {
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getClients(): array {
         return [
             [
@@ -28,6 +31,9 @@ class PayrollFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getClient(): array {
         return [
             'id' => 'hr-12345',
@@ -38,6 +44,9 @@ class PayrollFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getEmployees(): array {
         return [
             'content' => [
@@ -63,6 +72,9 @@ class PayrollFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getEmployee(): array {
         return [
             'id' => 1,
@@ -75,6 +87,9 @@ class PayrollFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getAddresses(): array {
         return [
             [
@@ -87,6 +102,9 @@ class PayrollFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getSalaryComponents(): array {
         return [
             [
@@ -104,6 +122,9 @@ class PayrollFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getWorkingHours(): array {
         return [
             'id' => 'wh-001',
@@ -113,6 +134,9 @@ class PayrollFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getTaxData(): array {
         return [
             [
@@ -124,6 +148,9 @@ class PayrollFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getSocialInsurance(): array {
         return [
             [
@@ -136,6 +163,9 @@ class PayrollFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getPayslips(): array {
         return [
             [
@@ -148,6 +178,9 @@ class PayrollFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getAbsences(): array {
         return [
             [
@@ -167,6 +200,9 @@ class PayrollFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getAccountableEmployees(): array {
         return [
             [
@@ -178,6 +214,9 @@ class PayrollFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getAccountableEmployee(): array {
         return [
             'id' => 'acc-emp-001',
@@ -187,6 +226,9 @@ class PayrollFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getCostCenters(): array {
         return [
             [
@@ -197,6 +239,9 @@ class PayrollFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getCostUnits(): array {
         return [
             [
@@ -207,6 +252,9 @@ class PayrollFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getDepartments(): array {
         return [
             [
@@ -217,6 +265,9 @@ class PayrollFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getReasonsForAbsence(): array {
         return [
             [
@@ -227,6 +278,9 @@ class PayrollFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getSalaryTypes(): array {
         return [
             [
@@ -237,6 +291,9 @@ class PayrollFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getCalendarRecords(): array {
         return [
             [
@@ -247,6 +304,9 @@ class PayrollFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getActivities(): array {
         return [
             [
@@ -257,6 +317,9 @@ class PayrollFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getEmployeeGroups(): array {
         return [
             [
@@ -267,6 +330,9 @@ class PayrollFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getGenericData(): array {
         return [
             'id' => 1,
@@ -274,6 +340,9 @@ class PayrollFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getGenericList(): array {
         return [
             [
@@ -283,6 +352,9 @@ class PayrollFixtures {
         ];
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public static function getAllResponses(): array {
         return [
             'GET:/datev/api/hr/v3/clients' => [
@@ -446,10 +518,6 @@ class PayrollFixtures {
             'GET:/datev/api/hr/v3/clients/*/employees/*/individual-data' => [
                 'statusCode' => 200,
                 'body' => self::getGenericData(),
-            ],
-            'GET:/datev/api/hr/v3/clients/*/employees/*/initial-activities' => [
-                'statusCode' => 200,
-                'body' => self::getGenericList(),
             ],
             'GET:/datev/api/hr/v3/clients/*/employees/*/month-records' => [
                 'statusCode' => 200,

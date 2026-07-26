@@ -31,6 +31,9 @@ class MonthlyRecord extends NamedEntity implements IdentifiableNamedEntityInterf
     protected ?string $origin;
     protected ?DateTime $accounting_month;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

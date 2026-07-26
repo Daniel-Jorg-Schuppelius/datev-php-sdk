@@ -16,6 +16,9 @@ use APIToolkit\Entities\GUID;
 use Psr\Log\LoggerInterface;
 
 class SecurityZoneID extends GUID {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
         $this->entityName = 'id';

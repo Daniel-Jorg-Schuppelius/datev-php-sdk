@@ -39,6 +39,10 @@ class InitialActivitiesEndpoint extends PayrollEndpointAbstract implements Searc
         $this->employeeID = $employeeID;
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?InitialActivities {
         if (!$this->employeeID->isValid()) {
             $this->logErrorAndThrow(InvalidArgumentException::class, 'Employee ID is required');

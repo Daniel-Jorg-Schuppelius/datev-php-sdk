@@ -24,11 +24,14 @@ class EmploymentPeriod extends NamedEntity implements IdentifiableNamedEntityInt
     protected ?DateTime $date_of_termination_of_employment;
     protected ?DateTime $date_of_death;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
 
-    public function getID(): EmploymentPeriodID {
+    public function getID(): ?EmploymentPeriodID {
         return $this->id;
     }
 

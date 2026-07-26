@@ -58,7 +58,6 @@ class OpenApiMockGeneratorTest extends TestCase {
         $examples = OpenApiMockGenerator::extractExamples('clientmasterdata');
 
         $this->assertNotEmpty($examples);
-        $this->assertIsArray($examples);
 
         // Prüfe, ob Clients-Endpoint vorhanden ist
         $hasClientsEndpoint = false;
@@ -76,7 +75,11 @@ class OpenApiMockGeneratorTest extends TestCase {
 
         // Accounting spec hat möglicherweise nur Schema-Definitionen ohne explizite Beispiele
         // Daher prüfen wir nur, ob das Array-Format stimmt
-        $this->assertIsArray($examples);
+        $this->assertSame(
+            [],
+            array_filter($examples, static fn (mixed $value): bool => !is_array($value)),
+            'Alle Beispiel-Einträge müssen Arrays sein'
+        );
     }
 
     public function test_create_mock_client_from_open_api(): void {

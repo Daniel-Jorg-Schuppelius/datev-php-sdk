@@ -26,6 +26,9 @@ class MonthValue extends NamedEntity {
     protected ?float $month_credit;
     protected ?int $month;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

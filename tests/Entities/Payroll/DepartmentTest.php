@@ -16,7 +16,7 @@ use Datev\Entities\Payroll\Departments\{Department, Departments};
 use Tests\Contracts\EntityTest;
 
 class DepartmentTest extends EntityTest {
-    public function test_create_department() {
+    public function test_create_department(): void {
         $data = [
             "id" => 1,
             "name" => "Buchhaltung",
@@ -29,7 +29,7 @@ class DepartmentTest extends EntityTest {
         $this->assertEquals("Max Mustermann", $department->getContactPerson());
     }
 
-    public function test_create_departments() {
+    public function test_create_departments(): void {
         $data = [
             "content" => [
                 [

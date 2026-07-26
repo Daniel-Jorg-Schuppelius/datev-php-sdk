@@ -27,6 +27,9 @@ class Taxation extends NamedEntity {
 
     protected int $flat_rate_tax;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

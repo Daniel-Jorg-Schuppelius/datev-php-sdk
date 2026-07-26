@@ -29,11 +29,14 @@ class CorporateStructure extends NamedEntity implements IdentifiableNamedEntityI
     protected ?Establishments $establishments;
     protected ?FunctionalAreas $functional_areas;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
 
-    public function getID(): CorporateStructureID {
+    public function getID(): ?CorporateStructureID {
         return $this->id;
     }
 

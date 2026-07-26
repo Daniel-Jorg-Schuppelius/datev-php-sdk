@@ -25,6 +25,9 @@ class Fee extends NamedEntity {
     protected ?float $factor_to;
     protected ?float $default_factor;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

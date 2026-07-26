@@ -32,6 +32,9 @@ class EmployeeQualification extends NamedEntity {
     protected ?bool $employee_qualified;
     protected ?bool $qualification_active;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

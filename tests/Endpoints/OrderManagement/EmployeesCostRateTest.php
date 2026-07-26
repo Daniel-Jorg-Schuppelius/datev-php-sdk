@@ -14,15 +14,15 @@ use Datev\API\Desktop\Endpoints\OrderManagement\EmployeesCostRateEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class EmployeesCostRateTest extends EndpointTest {
-    protected ?EmployeesCostRateEndpoint $endpoint;
+    protected EmployeesCostRateEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new EmployeesCostRateEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new EmployeesCostRateEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_employees_cost_rate() {
+    public function test_get_employees_cost_rate(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

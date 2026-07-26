@@ -15,7 +15,13 @@ namespace Datev\Entities\Online\HrPayrollReports\Documents;
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @extends NamedValues<ClientDocumentType>
+ */
 class ClientDocumentTypes extends NamedValues {
+    /**
+     * @param mixed $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->valueClassName = ClientDocumentType::class;
         parent::__construct($data, $logger);

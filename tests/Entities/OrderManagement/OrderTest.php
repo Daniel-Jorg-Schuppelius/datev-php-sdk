@@ -16,7 +16,7 @@ use Datev\Entities\OrderManagement\Orders\{Order, Orders};
 use Tests\Contracts\EntityTest;
 
 class OrderTest extends EntityTest {
-    public function test_create_order() {
+    public function test_create_order(): void {
         $data = [
             "order_id" => "o1234567-8901-2345-6789-012345678901",
             "creation_year" => 2024,
@@ -36,7 +36,7 @@ class OrderTest extends EntityTest {
         $this->assertEquals(2024, $order->getCreationYear());
     }
 
-    public function test_create_orders() {
+    public function test_create_orders(): void {
         $data = [
             "content" => [
                 [

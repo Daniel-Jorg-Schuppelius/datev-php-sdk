@@ -68,6 +68,10 @@ class DebitorsEndpoint extends EndpointAbstract implements SearchableEndpointInt
         }, "Fetching Debitor (ID: {$debitorId})");
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?Debitors {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options, $this->getBaseUrl());

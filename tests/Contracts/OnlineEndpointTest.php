@@ -30,7 +30,7 @@ use Tests\TestAPIClientFactory;
 abstract class OnlineEndpointTest extends TestCase {
     use ErrorLog;
 
-    protected ?ApiClientInterface $client = null;
+    protected ApiClientInterface $client;
 
     /**
      * Gibt an, ob der Test im Mock-Modus läuft.
@@ -60,12 +60,10 @@ abstract class OnlineEndpointTest extends TestCase {
         return $envValue === '1' || $envValue === 'true';
     }
 
-    public function __construct($name) {
-        parent::__construct($name);
-        self::setLogger(TestAPIClientFactory::getLogger());
-    }
-
     protected function setUp(): void {
+        parent::setUp();
+        self::setLogger(TestAPIClientFactory::getLogger());
+
         if (self::shouldSkipApiTests()) {
             $this->markTestSkipped('API tests disabled via DATEV_SKIP_API_TESTS environment variable');
         }
@@ -96,6 +94,7 @@ abstract class OnlineEndpointTest extends TestCase {
     /**
      * Registriert zusätzliche Mock-Responses für spezifische Tests.
      * Nur im Mock-Modus aktiv - wird bei Live-Tests ignoriert.
+     * @param array<string, mixed> $headers
      */
     protected function registerMockResponse(
         string $method,

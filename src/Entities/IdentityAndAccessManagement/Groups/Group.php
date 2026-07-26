@@ -20,11 +20,17 @@ use Psr\Log\LoggerInterface;
 class Group extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?GroupID $id;
     protected ?ScimMeta $meta;
+    /**
+     * @var array<array-key, mixed>
+     */
     protected ?array $schemas;
     protected ?string $display_name;
     protected ?GroupMembers $members;
     protected ?DatevGroupExtension $datev_extension;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         // Transform SCIM extension key before calling parent constructor
         if (is_array($data) && isset($data['urn:ietf:params:scim:schemas:extension:datev:2.0:group'])) {
@@ -42,6 +48,9 @@ class Group extends NamedEntity implements IdentifiableNamedEntityInterface {
         return $this->meta ?? null;
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public function getSchemas(): ?array {
         return $this->schemas ?? null;
     }

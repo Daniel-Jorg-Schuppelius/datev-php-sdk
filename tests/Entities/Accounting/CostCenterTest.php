@@ -16,7 +16,7 @@ use Datev\Entities\Accounting\CostCenters\{CostCenter, CostCenters};
 use Tests\Contracts\EntityTest;
 
 class CostCenterTest extends EntityTest {
-    public function test_create_cost_center() {
+    public function test_create_cost_center(): void {
         $data = [
             "id" => "10000",
             "long_name" => "Verwaltung",
@@ -32,7 +32,7 @@ class CostCenterTest extends EntityTest {
         $this->assertInstanceOf(CostCenter::class, $costCenter);
     }
 
-    public function test_create_cost_centers() {
+    public function test_create_cost_centers(): void {
         $data = [
             "content" => [
                 [

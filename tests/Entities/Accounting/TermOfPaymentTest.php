@@ -16,7 +16,7 @@ use Datev\Entities\Accounting\TermsOfPayment\{TermOfPayment, TermsOfPayment};
 use Tests\Contracts\EntityTest;
 
 class TermOfPaymentTest extends EntityTest {
-    public function test_create_term_of_payment() {
+    public function test_create_term_of_payment(): void {
         $data = [
             "id" => 1,
             "caption" => "14 Tage 2% Skonto, 30 Tage netto",
@@ -39,7 +39,7 @@ class TermOfPaymentTest extends EntityTest {
         $this->assertFalse($term->isLocked());
     }
 
-    public function test_create_terms_of_payment() {
+    public function test_create_terms_of_payment(): void {
         $data = [
             "content" => [
                 [

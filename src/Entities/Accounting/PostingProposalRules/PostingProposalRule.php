@@ -27,6 +27,9 @@ class PostingProposalRule extends NamedEntity implements IdentifiableNamedEntity
     protected ?string $business_partner_number;
     protected ?string $iban;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

@@ -19,6 +19,9 @@ class Note extends NamedEntity {
     protected ?string $text;
     protected ?bool $popup;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }

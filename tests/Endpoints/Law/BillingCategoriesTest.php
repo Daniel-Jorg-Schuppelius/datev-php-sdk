@@ -14,15 +14,15 @@ use Datev\API\Desktop\Endpoints\Law\BillingCategoriesEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class BillingCategoriesTest extends EndpointTest {
-    protected ?BillingCategoriesEndpoint $endpoint;
+    protected BillingCategoriesEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new BillingCategoriesEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new BillingCategoriesEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_billing_categories() {
+    public function test_get_billing_categories(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

@@ -16,7 +16,7 @@ use Datev\Entities\PublicSector\Notifications\{Notification, Notifications};
 use Tests\Contracts\EntityTest;
 
 class NotificationTest extends EntityTest {
-    public function test_create_notification() {
+    public function test_create_notification(): void {
         $data = [
             "id" => "n1234567-8901-2345-6789-012345678901",
             "number" => "2024-001",
@@ -34,7 +34,7 @@ class NotificationTest extends EntityTest {
         $this->assertEquals("billing", $notification->getType());
     }
 
-    public function test_create_notifications() {
+    public function test_create_notifications(): void {
         $data = [
             "content" => [
                 [

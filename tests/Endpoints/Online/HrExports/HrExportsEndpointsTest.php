@@ -78,7 +78,9 @@ class HrExportsEndpointsTest extends OnlineEndpointTest {
         $this->assertSame('Mustermann', $masterData->getPersonalData()?->getSurname());
         $this->assertSame('K1', $masterData->getEmployment()?->getCostCenter()?->getCostCenterId());
 
-        $requests = $this->mockClient->getRecordedRequests();
+        $mockClient = $this->mockClient;
+        $this->assertNotNull($mockClient);
+        $requests = $mockClient->getRecordedRequests();
         $this->assertStringContainsString('payroll_accounting_month=2026-06', $requests[count($requests) - 3]['uri']);
     }
 
@@ -97,7 +99,9 @@ class HrExportsEndpointsTest extends OnlineEndpointTest {
 
         $this->assertInstanceOf(TaxPaymentsList::class, $list);
         $this->assertSame(2, $list->count());
-        $this->assertSame(7, $list->getFirstValue()->getPersonnelNumber());
+        $first = $list->getFirstValue();
+        $this->assertNotNull($first);
+        $this->assertSame(7, $first->getPersonnelNumber());
     }
 
     public function test_resolve_employee_id(): void {

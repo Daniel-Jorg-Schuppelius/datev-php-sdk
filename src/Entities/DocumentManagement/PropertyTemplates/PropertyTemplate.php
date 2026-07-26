@@ -25,11 +25,14 @@ class PropertyTemplate extends NamedEntity implements IdentifiableNamedEntityInt
     protected ?int $inbox_document_type_number;
     protected ?int $outbox_document_type_number;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
 
-    public function getID(): PropertyTemplateID {
+    public function getID(): ?PropertyTemplateID {
         return $this->id;
     }
 

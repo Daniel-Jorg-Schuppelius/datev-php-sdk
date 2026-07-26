@@ -25,10 +25,19 @@ class Employee extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?string $email;
     protected ?string $phone;
     protected ?bool $active;
+    /**
+     * @var array<array-key, mixed>
+     */
     protected ?array $functions;
+    /**
+     * @var array<array-key, mixed>
+     */
     protected ?array $job_titles;
     protected ?string $branch;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
@@ -65,10 +74,16 @@ class Employee extends NamedEntity implements IdentifiableNamedEntityInterface {
         return $this->active ?? null;
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public function getFunctions(): ?array {
         return $this->functions ?? null;
     }
 
+    /**
+     * @return array<array-key, mixed>
+     */
     public function getJobTitles(): ?array {
         return $this->job_titles ?? null;
     }

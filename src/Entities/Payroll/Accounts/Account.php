@@ -23,11 +23,14 @@ class Account extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?BIC $bic;
     protected ?string $differing_account_holder;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
 
-    public function getID(): AccountID {
+    public function getID(): ?AccountID {
         return $this->id;
     }
 

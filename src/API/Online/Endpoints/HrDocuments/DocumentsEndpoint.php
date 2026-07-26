@@ -61,7 +61,7 @@ class DocumentsEndpoint extends EndpointAbstract {
     private function uploadDocument(string $urlPath, string|StreamInterface $file, string $filename, ?string $clientApplication): void {
         $headers = $clientApplication !== null ? ['Client-Application' => $clientApplication] : [];
 
-        $this->postMultipart([
+        $this->postMultipartRequest([
             ['name' => 'file', 'contents' => $file, 'filename' => $filename],
         ], $urlPath, 200, $headers);
     }

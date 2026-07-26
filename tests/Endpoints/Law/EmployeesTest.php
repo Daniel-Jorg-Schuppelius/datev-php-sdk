@@ -14,15 +14,15 @@ use Datev\API\Desktop\Endpoints\Law\EmployeesEndpoint;
 use Tests\Contracts\EndpointTest;
 
 class EmployeesTest extends EndpointTest {
-    protected ?EmployeesEndpoint $endpoint;
+    protected EmployeesEndpoint $endpoint;
 
-    public function __construct($name) {
-        parent::__construct($name);
-        $this->endpoint = new EmployeesEndpoint($this->client, self::getLogger());
+    protected function setUp(): void {
         $this->apiDisabled = true;
+        parent::setUp();
+        $this->endpoint = new EmployeesEndpoint($this->client, self::getLogger());
     }
 
-    public function test_get_employees() {
+    public function test_get_employees(): void {
         if ($this->apiDisabled) {
             $this->markTestSkipped('API is disabled');
         }

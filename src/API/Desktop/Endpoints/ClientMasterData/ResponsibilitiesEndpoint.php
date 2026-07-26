@@ -38,6 +38,10 @@ class ResponsibilitiesEndpoint extends EndpointAbstract implements SearchableEnd
         return $this->getEndpointUrl();
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $queryParams
+     */
     public function search(array $queryParams = [], array $options = []): ?Responsibilities {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options, $this->getBaseUrl());

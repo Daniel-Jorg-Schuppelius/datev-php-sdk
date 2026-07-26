@@ -32,6 +32,9 @@ class Due extends NamedEntity {
     protected ?string $tariff_caption;
     protected ?string $tariff_additional_caption;
 
+    /**
+     * @param array<string, mixed>|object|null $data
+     */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
