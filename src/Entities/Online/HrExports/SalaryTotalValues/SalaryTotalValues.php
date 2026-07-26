@@ -64,20 +64,20 @@ class SalaryTotalValues extends NamedEntity {
         return $this->month_of_recalculation ?? null;
     }
 
-    public function getCurrentGrossPayment(): ?float {
-        return $this->current_gross_payment ?? null;
+    public function getCurrentGrossPayment(): ?Money {
+        return $this->toMoney($this->current_gross_payment ?? null);
     }
 
-    public function getAmountPaid(): ?float {
-        return $this->amount_paid ?? null;
+    public function getAmountPaid(): ?Money {
+        return $this->toMoney($this->amount_paid ?? null);
     }
 
     public function getNetIncome(): ?float {
         return $this->net_income ?? null;
     }
 
-    public function getNetPaymentsAndNetDeductions(): ?float {
-        return $this->net_payments_and_net_deductions ?? null;
+    public function getNetPaymentsAndNetDeductions(): ?Money {
+        return $this->toMoney($this->net_payments_and_net_deductions ?? null);
     }
 
     public function getTotalStatutoryDeductions(): ?Money {

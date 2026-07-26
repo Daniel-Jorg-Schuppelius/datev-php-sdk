@@ -173,16 +173,16 @@ class MonthlyValue extends NamedEntity {
         return $this->toMoney($this->total_turnover ?? null);
     }
 
-    public function getFees(): ?float {
-        return $this->fees ?? null;
+    public function getFees(): ?Money {
+        return $this->toMoney($this->fees ?? null);
     }
 
     public function getExpenses(): ?float {
         return $this->expenses ?? null;
     }
 
-    public function getCreditFees(): ?float {
-        return $this->credit_fees ?? null;
+    public function getCreditFees(): ?Money {
+        return $this->toMoney($this->credit_fees ?? null);
     }
 
     public function getCreditExpenses(): ?float {
@@ -193,8 +193,8 @@ class MonthlyValue extends NamedEntity {
         return $this->toMoney($this->credit_amount ?? null);
     }
 
-    public function getOnAccountFeesOffset(): ?float {
-        return $this->on_account_fees_offset ?? null;
+    public function getOnAccountFeesOffset(): ?Money {
+        return $this->toMoney($this->on_account_fees_offset ?? null);
     }
 
     public function getOnAccountExpensesOffset(): ?float {
@@ -205,7 +205,7 @@ class MonthlyValue extends NamedEntity {
         return $this->toMoney($this->on_account_amount_offset ?? null);
     }
 
-    public function getContributionMargin(): ?float {
-        return $this->contribution_margin ?? null;
+    public function getContributionMargin(): ?Money {
+        return $this->toMoney($this->contribution_margin ?? null);
     }
 }

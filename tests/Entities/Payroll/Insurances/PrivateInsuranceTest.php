@@ -33,7 +33,7 @@ class PrivateInsuranceTest extends EntityTest {
         $this->assertEquals("pi-001", $privateInsurance->getID()->getValue());
         $this->assertTrue($privateInsurance->isPrivateHealthInsured());
         $this->assertFalse($privateInsurance->isPrivateNursingInsured());
-        $this->assertEquals(450.00, $privateInsurance->getMonthlyPremiumForPrivateHealthInsurance());
+        $this->assertSame('450.00', $privateInsurance->getMonthlyPremiumForPrivateHealthInsurance()?->getAmount());
     }
 
     public function test_create_private_insurances(): void {

@@ -48,32 +48,32 @@ class PensionInsurance extends NamedEntity {
         parent::__construct($data, $logger);
     }
 
-    public function getPensionInsuranceMonthlyContributionEmployer(): ?float {
-        return $this->pension_insurance_monthly_contribution_employer ?? null;
+    public function getPensionInsuranceMonthlyContributionEmployer(): ?Money {
+        return $this->toMoney($this->pension_insurance_monthly_contribution_employer ?? null);
     }
 
-    public function getPensionInsuranceEmployersContributionNonRecurringPayment(): ?float {
-        return $this->pension_insurance_employers_contribution_non_recurring_payment ?? null;
+    public function getPensionInsuranceEmployersContributionNonRecurringPayment(): ?Money {
+        return $this->toMoney($this->pension_insurance_employers_contribution_non_recurring_payment ?? null);
     }
 
-    public function getPensionInsuranceEmployeesContributionNonRecurringPayment(): ?float {
-        return $this->pension_insurance_employees_contribution_non_recurring_payment ?? null;
+    public function getPensionInsuranceEmployeesContributionNonRecurringPayment(): ?Money {
+        return $this->toMoney($this->pension_insurance_employees_contribution_non_recurring_payment ?? null);
     }
 
-    public function getPensionInsuranceMonthlyContributionEmployee(): ?float {
-        return $this->pension_insurance_monthly_contribution_employee ?? null;
+    public function getPensionInsuranceMonthlyContributionEmployee(): ?Money {
+        return $this->toMoney($this->pension_insurance_monthly_contribution_employee ?? null);
     }
 
-    public function getPensionInsuranceGross(): ?float {
-        return $this->pension_insurance_gross ?? null;
+    public function getPensionInsuranceGross(): ?Money {
+        return $this->toMoney($this->pension_insurance_gross ?? null);
     }
 
-    public function getPensionInsuranceGrossNonRecurringPayment(): ?float {
-        return $this->pension_insurance_gross_non_recurring_payment ?? null;
+    public function getPensionInsuranceGrossNonRecurringPayment(): ?Money {
+        return $this->toMoney($this->pension_insurance_gross_non_recurring_payment ?? null);
     }
 
-    public function getPensionInsuranceGrossMonthlyContribution(): ?float {
-        return $this->pension_insurance_gross_monthly_contribution ?? null;
+    public function getPensionInsuranceGrossMonthlyContribution(): ?Money {
+        return $this->toMoney($this->pension_insurance_gross_monthly_contribution ?? null);
     }
 
     public function getPensionInsuranceEmployeesContributionTotal(): ?Money {

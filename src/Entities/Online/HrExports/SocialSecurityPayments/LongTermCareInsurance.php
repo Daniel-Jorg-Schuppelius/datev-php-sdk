@@ -48,32 +48,32 @@ class LongTermCareInsurance extends NamedEntity {
         parent::__construct($data, $logger);
     }
 
-    public function getLongTermCareInsuranceMonthlyContributionEmployer(): ?float {
-        return $this->long_term_care_insurance_monthly_contribution_employer ?? null;
+    public function getLongTermCareInsuranceMonthlyContributionEmployer(): ?Money {
+        return $this->toMoney($this->long_term_care_insurance_monthly_contribution_employer ?? null);
     }
 
-    public function getLongTermCareInsuranceEmployersContributionNonRecurringPayment(): ?float {
-        return $this->long_term_care_insurance_employers_contribution_non_recurring_payment ?? null;
+    public function getLongTermCareInsuranceEmployersContributionNonRecurringPayment(): ?Money {
+        return $this->toMoney($this->long_term_care_insurance_employers_contribution_non_recurring_payment ?? null);
     }
 
-    public function getLongTermCareInsuranceEmployeesContributionNonRecurringPayment(): ?float {
-        return $this->long_term_care_insurance_employees_contribution_non_recurring_payment ?? null;
+    public function getLongTermCareInsuranceEmployeesContributionNonRecurringPayment(): ?Money {
+        return $this->toMoney($this->long_term_care_insurance_employees_contribution_non_recurring_payment ?? null);
     }
 
-    public function getLongTermCareInsuranceMonthlyContributionEmployee(): ?float {
-        return $this->long_term_care_insurance_monthly_contribution_employee ?? null;
+    public function getLongTermCareInsuranceMonthlyContributionEmployee(): ?Money {
+        return $this->toMoney($this->long_term_care_insurance_monthly_contribution_employee ?? null);
     }
 
-    public function getLongTermCareInsuranceGross(): ?float {
-        return $this->long_term_care_insurance_gross ?? null;
+    public function getLongTermCareInsuranceGross(): ?Money {
+        return $this->toMoney($this->long_term_care_insurance_gross ?? null);
     }
 
-    public function getLongTermCareInsuranceGrossNonRecurringPayment(): ?float {
-        return $this->long_term_care_insurance_gross_non_recurring_payment ?? null;
+    public function getLongTermCareInsuranceGrossNonRecurringPayment(): ?Money {
+        return $this->toMoney($this->long_term_care_insurance_gross_non_recurring_payment ?? null);
     }
 
-    public function getLongTermCareInsuranceGrossMonthlyContribution(): ?float {
-        return $this->long_term_care_insurance_gross_monthly_contribution ?? null;
+    public function getLongTermCareInsuranceGrossMonthlyContribution(): ?Money {
+        return $this->toMoney($this->long_term_care_insurance_gross_monthly_contribution ?? null);
     }
 
     public function getLongTermCareInsuranceEmployeesContributionTotal(): ?Money {

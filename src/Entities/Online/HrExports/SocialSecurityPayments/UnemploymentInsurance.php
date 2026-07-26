@@ -48,32 +48,32 @@ class UnemploymentInsurance extends NamedEntity {
         parent::__construct($data, $logger);
     }
 
-    public function getUnemploymentInsuranceMonthlyContributionEmployer(): ?float {
-        return $this->unemployment_insurance_monthly_contribution_employer ?? null;
+    public function getUnemploymentInsuranceMonthlyContributionEmployer(): ?Money {
+        return $this->toMoney($this->unemployment_insurance_monthly_contribution_employer ?? null);
     }
 
-    public function getUnemploymentInsuranceEmployersContributionNonRecurringPayment(): ?float {
-        return $this->unemployment_insurance_employers_contribution_non_recurring_payment ?? null;
+    public function getUnemploymentInsuranceEmployersContributionNonRecurringPayment(): ?Money {
+        return $this->toMoney($this->unemployment_insurance_employers_contribution_non_recurring_payment ?? null);
     }
 
-    public function getUnemploymentInsuranceEmployeesContributionNonRecurringPayment(): ?float {
-        return $this->unemployment_insurance_employees_contribution_non_recurring_payment ?? null;
+    public function getUnemploymentInsuranceEmployeesContributionNonRecurringPayment(): ?Money {
+        return $this->toMoney($this->unemployment_insurance_employees_contribution_non_recurring_payment ?? null);
     }
 
-    public function getUnemploymentInsuranceMonthlyContributionEmployee(): ?float {
-        return $this->unemployment_insurance_monthly_contribution_employee ?? null;
+    public function getUnemploymentInsuranceMonthlyContributionEmployee(): ?Money {
+        return $this->toMoney($this->unemployment_insurance_monthly_contribution_employee ?? null);
     }
 
-    public function getUnemploymentInsuranceGross(): ?float {
-        return $this->unemployment_insurance_gross ?? null;
+    public function getUnemploymentInsuranceGross(): ?Money {
+        return $this->toMoney($this->unemployment_insurance_gross ?? null);
     }
 
-    public function getUnemploymentInsuranceGrossNonRecurringPayment(): ?float {
-        return $this->unemployment_insurance_gross_non_recurring_payment ?? null;
+    public function getUnemploymentInsuranceGrossNonRecurringPayment(): ?Money {
+        return $this->toMoney($this->unemployment_insurance_gross_non_recurring_payment ?? null);
     }
 
-    public function getUnemploymentInsuranceGrossMonthlyContribution(): ?float {
-        return $this->unemployment_insurance_gross_monthly_contribution ?? null;
+    public function getUnemploymentInsuranceGrossMonthlyContribution(): ?Money {
+        return $this->toMoney($this->unemployment_insurance_gross_monthly_contribution ?? null);
     }
 
     public function getUnemploymentInsuranceEmployeesContributionTotal(): ?Money {

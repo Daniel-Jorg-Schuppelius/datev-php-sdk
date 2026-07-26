@@ -13,12 +13,16 @@ declare(strict_types=1);
 namespace Datev\Entities\Online\HrExports\TaxPayments;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
+use CommonToolkit\ValueObjects\Money;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 /**
  * Steuerzahlungen eines Arbeitnehmers je Abrechnungsmonat.
  */
 class TaxPayments extends NamedEntity {
+    use MoneyAccessorTrait;
+
     protected int $personnel_number;
 
     protected string $company_personnel_number;
@@ -90,8 +94,8 @@ class TaxPayments extends NamedEntity {
         return $this->month_of_recalculation ?? null;
     }
 
-    public function getCurrentGrossTax(): ?float {
-        return $this->current_gross_tax ?? null;
+    public function getCurrentGrossTax(): ?Money {
+        return $this->toMoney($this->current_gross_tax ?? null);
     }
 
     public function getFlatRateChurchTax(): ?float {
@@ -110,12 +114,12 @@ class TaxPayments extends NamedEntity {
         return $this->flat_rate_taxed_payments ?? null;
     }
 
-    public function getSolidarityTax(): ?float {
-        return $this->solidarity_tax ?? null;
+    public function getSolidarityTax(): ?Money {
+        return $this->toMoney($this->solidarity_tax ?? null);
     }
 
-    public function getWageTax(): ?float {
-        return $this->wage_tax ?? null;
+    public function getWageTax(): ?Money {
+        return $this->toMoney($this->wage_tax ?? null);
     }
 
     public function getOtherPaymentsTaxedAtFlatRate(): ?float {
@@ -130,43 +134,43 @@ class TaxPayments extends NamedEntity {
         return $this->payment_taxed_at_a_flat_rate_when_short_term_employed ?? null;
     }
 
-    public function getWageTaxNonRecurringPayment(): ?float {
-        return $this->wage_tax_non_recurring_payment ?? null;
+    public function getWageTaxNonRecurringPayment(): ?Money {
+        return $this->toMoney($this->wage_tax_non_recurring_payment ?? null);
     }
 
-    public function getWageTaxMonthly(): ?float {
-        return $this->wage_tax_monthly ?? null;
+    public function getWageTaxMonthly(): ?Money {
+        return $this->toMoney($this->wage_tax_monthly ?? null);
     }
 
-    public function getChurchTaxNonRecurringPayment(): ?float {
-        return $this->church_tax_non_recurring_payment ?? null;
+    public function getChurchTaxNonRecurringPayment(): ?Money {
+        return $this->toMoney($this->church_tax_non_recurring_payment ?? null);
     }
 
-    public function getChurchTax(): ?float {
-        return $this->church_tax ?? null;
+    public function getChurchTax(): ?Money {
+        return $this->toMoney($this->church_tax ?? null);
     }
 
-    public function getChurchTaxMonthly(): ?float {
-        return $this->church_tax_monthly ?? null;
+    public function getChurchTaxMonthly(): ?Money {
+        return $this->toMoney($this->church_tax_monthly ?? null);
     }
 
     public function getTaxRelevantDays(): ?float {
         return $this->tax_relevant_days ?? null;
     }
 
-    public function getGrossTaxNonRecurringPayment(): ?float {
-        return $this->gross_tax_non_recurring_payment ?? null;
+    public function getGrossTaxNonRecurringPayment(): ?Money {
+        return $this->toMoney($this->gross_tax_non_recurring_payment ?? null);
     }
 
-    public function getTaxDeductions(): ?float {
-        return $this->tax_deductions ?? null;
+    public function getTaxDeductions(): ?Money {
+        return $this->toMoney($this->tax_deductions ?? null);
     }
 
-    public function getSolidarityTaxMonthly(): ?float {
-        return $this->solidarity_tax_monthly ?? null;
+    public function getSolidarityTaxMonthly(): ?Money {
+        return $this->toMoney($this->solidarity_tax_monthly ?? null);
     }
 
-    public function getSolidarityTaxNonRecurringPayment(): ?float {
-        return $this->solidarity_tax_non_recurring_payment ?? null;
+    public function getSolidarityTaxNonRecurringPayment(): ?Money {
+        return $this->toMoney($this->solidarity_tax_non_recurring_payment ?? null);
     }
 }

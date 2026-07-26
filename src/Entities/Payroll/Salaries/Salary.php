@@ -117,148 +117,148 @@ class Salary extends NamedEntity implements IdentifiableNamedEntityInterface {
         return $this->date_of_emergence ?? null;
     }
 
-    public function getCurrentGrossPayment(): ?float {
-        return $this->current_gross_payment ?? null;
+    public function getCurrentGrossPayment(): ?Money {
+        return $this->toMoney($this->current_gross_payment ?? null);
     }
 
-    public function getCurrentGrossTax(): ?float {
-        return $this->current_gross_tax ?? null;
+    public function getCurrentGrossTax(): ?Money {
+        return $this->toMoney($this->current_gross_tax ?? null);
     }
 
-    public function getWageTax(): ?float {
-        return $this->wage_tax ?? null;
+    public function getWageTax(): ?Money {
+        return $this->toMoney($this->wage_tax ?? null);
     }
 
-    public function getWageTaxNonRecurringPayment(): ?float {
-        return $this->wage_tax_non_recurring_payment ?? null;
+    public function getWageTaxNonRecurringPayment(): ?Money {
+        return $this->toMoney($this->wage_tax_non_recurring_payment ?? null);
     }
 
-    public function getWageTaxMonthly(): ?float {
-        return $this->wage_tax_monthly ?? null;
+    public function getWageTaxMonthly(): ?Money {
+        return $this->toMoney($this->wage_tax_monthly ?? null);
     }
 
-    public function getChurchTaxNonRecurringPayment(): ?float {
-        return $this->church_tax_non_recurring_payment ?? null;
+    public function getChurchTaxNonRecurringPayment(): ?Money {
+        return $this->toMoney($this->church_tax_non_recurring_payment ?? null);
     }
 
-    public function getChurchTaxMonthly(): ?float {
-        return $this->church_tax_monthly ?? null;
+    public function getChurchTaxMonthly(): ?Money {
+        return $this->toMoney($this->church_tax_monthly ?? null);
     }
 
-    public function getSolidarityTaxMonthly(): ?float {
-        return $this->solidarity_tax_monthly ?? null;
+    public function getSolidarityTaxMonthly(): ?Money {
+        return $this->toMoney($this->solidarity_tax_monthly ?? null);
     }
 
-    public function getSolidarityTaxNonRecurringPayment(): ?float {
-        return $this->solidarity_tax_non_recurring_payment ?? null;
+    public function getSolidarityTaxNonRecurringPayment(): ?Money {
+        return $this->toMoney($this->solidarity_tax_non_recurring_payment ?? null);
     }
 
-    public function getHealthInsuranceEmployeesContributionNonRecurringPayment(): ?float {
-        return $this->health_insurance_employees_contribution_non_recurring_payment ?? null;
+    public function getHealthInsuranceEmployeesContributionNonRecurringPayment(): ?Money {
+        return $this->toMoney($this->health_insurance_employees_contribution_non_recurring_payment ?? null);
     }
 
-    public function getHealthInsuranceMonthlyContributionEmployee(): ?float {
-        return $this->health_insurance_monthly_contribution_employee ?? null;
+    public function getHealthInsuranceMonthlyContributionEmployee(): ?Money {
+        return $this->toMoney($this->health_insurance_monthly_contribution_employee ?? null);
     }
 
-    public function getHealthInsuranceMonthlyContributionEmployer(): ?float {
-        return $this->health_insurance_monthly_contribution_employer ?? null;
+    public function getHealthInsuranceMonthlyContributionEmployer(): ?Money {
+        return $this->toMoney($this->health_insurance_monthly_contribution_employer ?? null);
     }
 
-    public function getNonRecurringPaymentEmployersContributionToHealthInsurance(): ?float {
-        return $this->non_recurring_payment_employers_contribution_to_health_insurance ?? null;
+    public function getNonRecurringPaymentEmployersContributionToHealthInsurance(): ?Money {
+        return $this->toMoney($this->non_recurring_payment_employers_contribution_to_health_insurance ?? null);
     }
 
-    public function getHealthInsuranceGrossNonRecurringPayment(): ?float {
-        return $this->health_insurance_gross_non_recurring_payment ?? null;
+    public function getHealthInsuranceGrossNonRecurringPayment(): ?Money {
+        return $this->toMoney($this->health_insurance_gross_non_recurring_payment ?? null);
     }
 
-    public function getHealthInsuranceGrossMonthlyContribution(): ?float {
-        return $this->health_insurance_gross_monthly_contribution ?? null;
+    public function getHealthInsuranceGrossMonthlyContribution(): ?Money {
+        return $this->toMoney($this->health_insurance_gross_monthly_contribution ?? null);
     }
 
-    public function getNonRecurringPaymentEmployersContributionToUnemploymentInsurance(): ?float {
-        return $this->non_recurring_payment_employers_contribution_to_unemployment_insurance ?? null;
+    public function getNonRecurringPaymentEmployersContributionToUnemploymentInsurance(): ?Money {
+        return $this->toMoney($this->non_recurring_payment_employers_contribution_to_unemployment_insurance ?? null);
     }
 
-    public function getUnemploymentInsuranceMonthlyContributionEmployer(): ?float {
-        return $this->unemployment_insurance_monthly_contribution_employer ?? null;
+    public function getUnemploymentInsuranceMonthlyContributionEmployer(): ?Money {
+        return $this->toMoney($this->unemployment_insurance_monthly_contribution_employer ?? null);
     }
 
-    public function getUnemploymentInsuranceEmployeesContributionNonRecurringPayment(): ?float {
-        return $this->unemployment_insurance_employees_contribution_non_recurring_payment ?? null;
+    public function getUnemploymentInsuranceEmployeesContributionNonRecurringPayment(): ?Money {
+        return $this->toMoney($this->unemployment_insurance_employees_contribution_non_recurring_payment ?? null);
     }
 
-    public function getUnemploymentInsuranceMonthlyContributionEmployee(): ?float {
-        return $this->unemployment_insurance_monthly_contribution_employee ?? null;
+    public function getUnemploymentInsuranceMonthlyContributionEmployee(): ?Money {
+        return $this->toMoney($this->unemployment_insurance_monthly_contribution_employee ?? null);
     }
 
-    public function getUnemploymentInsuranceGrossNonRecurringPayment(): ?float {
-        return $this->unemployment_insurance_gross_non_recurring_payment ?? null;
+    public function getUnemploymentInsuranceGrossNonRecurringPayment(): ?Money {
+        return $this->toMoney($this->unemployment_insurance_gross_non_recurring_payment ?? null);
     }
 
-    public function getUnemploymentInsuranceGrossMonthlyContribution(): ?float {
-        return $this->unemployment_insurance_gross_monthly_contribution ?? null;
+    public function getUnemploymentInsuranceGrossMonthlyContribution(): ?Money {
+        return $this->toMoney($this->unemployment_insurance_gross_monthly_contribution ?? null);
     }
 
-    public function getNonRecurringPaymentEmployersContributionToLongTermCareInsurance(): ?float {
-        return $this->non_recurring_payment_employers_contribution_to_long_term_care_insurance ?? null;
+    public function getNonRecurringPaymentEmployersContributionToLongTermCareInsurance(): ?Money {
+        return $this->toMoney($this->non_recurring_payment_employers_contribution_to_long_term_care_insurance ?? null);
     }
 
-    public function getLongTermCareInsuranceMonthlyContributionEmployer(): ?float {
-        return $this->long_term_care_insurance_monthly_contribution_employer ?? null;
+    public function getLongTermCareInsuranceMonthlyContributionEmployer(): ?Money {
+        return $this->toMoney($this->long_term_care_insurance_monthly_contribution_employer ?? null);
     }
 
-    public function getLongTermCareInsuranceEmployeesContributionNonRecurringPayment(): ?float {
-        return $this->long_term_care_insurance_employees_contribution_non_recurring_payment ?? null;
+    public function getLongTermCareInsuranceEmployeesContributionNonRecurringPayment(): ?Money {
+        return $this->toMoney($this->long_term_care_insurance_employees_contribution_non_recurring_payment ?? null);
     }
 
-    public function getLongTermCareInsuranceMonthlyContributionEmployee(): ?float {
-        return $this->long_term_care_insurance_monthly_contribution_employee ?? null;
+    public function getLongTermCareInsuranceMonthlyContributionEmployee(): ?Money {
+        return $this->toMoney($this->long_term_care_insurance_monthly_contribution_employee ?? null);
     }
 
-    public function getLongTermCareInsuranceGrossNonRecurringPayment(): ?float {
-        return $this->long_term_care_insurance_gross_non_recurring_payment ?? null;
+    public function getLongTermCareInsuranceGrossNonRecurringPayment(): ?Money {
+        return $this->toMoney($this->long_term_care_insurance_gross_non_recurring_payment ?? null);
     }
 
-    public function getLongTermCareInsuranceGrossMonthlyContribution(): ?float {
-        return $this->long_term_care_insurance_gross_monthly_contribution ?? null;
+    public function getLongTermCareInsuranceGrossMonthlyContribution(): ?Money {
+        return $this->toMoney($this->long_term_care_insurance_gross_monthly_contribution ?? null);
     }
 
-    public function getNonRecurringPaymentEmployersContributionToPensionInsurance(): ?float {
-        return $this->non_recurring_payment_employers_contribution_to_pension_insurance ?? null;
+    public function getNonRecurringPaymentEmployersContributionToPensionInsurance(): ?Money {
+        return $this->toMoney($this->non_recurring_payment_employers_contribution_to_pension_insurance ?? null);
     }
 
-    public function getPensionInsuranceMonthlyContributionEmployer(): ?float {
-        return $this->pension_insurance_monthly_contribution_employer ?? null;
+    public function getPensionInsuranceMonthlyContributionEmployer(): ?Money {
+        return $this->toMoney($this->pension_insurance_monthly_contribution_employer ?? null);
     }
 
-    public function getPensionInsuranceMonthlyContributionEmployee(): ?float {
-        return $this->pension_insurance_monthly_contribution_employee ?? null;
+    public function getPensionInsuranceMonthlyContributionEmployee(): ?Money {
+        return $this->toMoney($this->pension_insurance_monthly_contribution_employee ?? null);
     }
 
-    public function getPensionInsuranceEmployeesContributionNonRecurringPayment(): ?float {
-        return $this->pension_insurance_employees_contribution_non_recurring_payment ?? null;
+    public function getPensionInsuranceEmployeesContributionNonRecurringPayment(): ?Money {
+        return $this->toMoney($this->pension_insurance_employees_contribution_non_recurring_payment ?? null);
     }
 
-    public function getPensionInsuranceGrossNonRecurringPayment(): ?float {
-        return $this->pension_insurance_gross_non_recurring_payment ?? null;
+    public function getPensionInsuranceGrossNonRecurringPayment(): ?Money {
+        return $this->toMoney($this->pension_insurance_gross_non_recurring_payment ?? null);
     }
 
-    public function getPensionInsuranceGrossMonthlyContribution(): ?float {
-        return $this->pension_insurance_gross_monthly_contribution ?? null;
+    public function getPensionInsuranceGrossMonthlyContribution(): ?Money {
+        return $this->toMoney($this->pension_insurance_gross_monthly_contribution ?? null);
     }
 
     public function getNetIncome(): ?float {
         return $this->net_income ?? null;
     }
 
-    public function getAmountPaid(): ?float {
-        return $this->amount_paid ?? null;
+    public function getAmountPaid(): ?Money {
+        return $this->toMoney($this->amount_paid ?? null);
     }
 
-    public function getNetPaymentsAndNetDeductions(): ?float {
-        return $this->net_payments_and_net_deductions ?? null;
+    public function getNetPaymentsAndNetDeductions(): ?Money {
+        return $this->toMoney($this->net_payments_and_net_deductions ?? null);
     }
 
     public function getAllocation1(): ?float {
@@ -281,16 +281,16 @@ class Salary extends NamedEntity implements IdentifiableNamedEntityInterface {
         return $this->social_security_deductions ?? null;
     }
 
-    public function getTaxDeductions(): ?float {
-        return $this->tax_deductions ?? null;
+    public function getTaxDeductions(): ?Money {
+        return $this->toMoney($this->tax_deductions ?? null);
     }
 
     public function getTaxClass(): ?float {
         return $this->tax_class ?? null;
     }
 
-    public function getGrossTaxNonRecurringPayment(): ?float {
-        return $this->gross_tax_non_recurring_payment ?? null;
+    public function getGrossTaxNonRecurringPayment(): ?Money {
+        return $this->toMoney($this->gross_tax_non_recurring_payment ?? null);
     }
 
     public function getTaxRelevantDays(): ?float {

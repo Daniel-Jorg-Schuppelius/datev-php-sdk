@@ -13,12 +13,16 @@ declare(strict_types=1);
 namespace Datev\Entities\Online\HrExports\SocialSecurityPayments;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
+use CommonToolkit\ValueObjects\Money;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 /**
  * Sozialversicherungszahlungen eines Arbeitnehmers je Abrechnungsmonat.
  */
 class SocialSecurityPayments extends NamedEntity {
+    use MoneyAccessorTrait;
+
     protected int $personnel_number;
 
     protected string $company_personnel_number;
@@ -92,12 +96,12 @@ class SocialSecurityPayments extends NamedEntity {
         return $this->pension_insurance ?? null;
     }
 
-    public function getCurrentPaymentsToSocialSecurityEmployersContribution(): ?float {
-        return $this->current_payments_to_social_security_employers_contribution ?? null;
+    public function getCurrentPaymentsToSocialSecurityEmployersContribution(): ?Money {
+        return $this->toMoney($this->current_payments_to_social_security_employers_contribution ?? null);
     }
 
-    public function getOtherPaymentsToSocialSecurityEmployersContribution(): ?float {
-        return $this->other_payments_to_social_security_employers_contribution ?? null;
+    public function getOtherPaymentsToSocialSecurityEmployersContribution(): ?Money {
+        return $this->toMoney($this->other_payments_to_social_security_employers_contribution ?? null);
     }
 
     public function getAllocation1(): ?float {

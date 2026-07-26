@@ -66,12 +66,14 @@ class HrExportsEndpointsTest extends OnlineEndpointTest {
 
         $tax = $endpoint->getTaxPayments(['payroll_accounting_month' => '2026-06']);
         $this->assertInstanceOf(TaxPayments::class, $tax);
-        $this->assertSame(512.5, $tax->getWageTax());
+        $this->assertSame('512.50', $tax->getWageTax()?->getAmount());
 
         $salary = $endpoint->getSalaryPayments();
         $this->assertInstanceOf(SalaryPayments::class, $salary);
         $this->assertSame('Gehalt', $salary->getGrossPaymentsLodas()?->getFirstValue()?->getWageTypeName());
-        $this->assertSame(40.0, $salary->getNetPayments()?->getFirstValue()?->getNetPaymentAmount());
+        // getNetPaymentAmount() liefert Money; getWageTax() oben ist noch float
+        // (die Money-Umstellung ist im SDK erst teilweise durchgezogen).
+        $this->assertSame('40.00', $salary->getNetPayments()?->getFirstValue()?->getNetPaymentAmount()?->getAmount());
 
         $masterData = $endpoint->getMasterData();
         $this->assertInstanceOf(MasterData::class, $masterData);

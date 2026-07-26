@@ -151,7 +151,8 @@ class AccountingDataExchangeEndpointsTest extends OnlineEndpointTest {
         $this->assertSame(14, $terms?->getFirstValue()?->getPaymentDueInDays()?->getDueDateNet());
 
         $sums = (new SumsAndBalancesEndpoint($this->client, self::CLIENT_ID, self::FISCAL_YEAR_ID))->search();
-        $this->assertSame(100.5, $sums?->getFirstValue()?->getBalance());
+        // getBalance() liefert Money (kanonischer Dezimalstring), nicht float.
+        $this->assertSame('100.50', $sums?->getFirstValue()?->getBalance()?->getAmount());
         $this->assertSame(1, $sums->getFirstValue()->getSumsAndBalancesMonthValues()?->count());
     }
 

@@ -13,12 +13,16 @@ declare(strict_types=1);
 namespace Datev\Entities\Online\HrExchange\Employees;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
+use CommonToolkit\ValueObjects\Money;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 /**
  * Steuerkartendaten des Arbeitnehmers.
  */
 class TaxCard extends NamedEntity {
+    use MoneyAccessorTrait;
+
     protected int $annual_tax_allowance;
 
     protected float $child_tax_allowances;
@@ -44,8 +48,8 @@ class TaxCard extends NamedEntity {
         return $this->annual_tax_allowance ?? null;
     }
 
-    public function getChildTaxAllowances(): ?float {
-        return $this->child_tax_allowances ?? null;
+    public function getChildTaxAllowances(): ?Money {
+        return $this->toMoney($this->child_tax_allowances ?? null);
     }
 
     public function getDenomination(): ?string {

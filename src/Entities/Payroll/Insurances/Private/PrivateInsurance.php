@@ -14,9 +14,13 @@ namespace Datev\Entities\Payroll\Insurances\Private;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
+use CommonToolkit\ValueObjects\Money;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 class PrivateInsurance extends NamedEntity implements IdentifiableNamedEntityInterface {
+    use MoneyAccessorTrait;
+
     protected PrivateInsuranceID $id;
     protected ?bool $is_private_health_insured;
     protected ?bool $is_private_nursing_insured;
@@ -43,15 +47,15 @@ class PrivateInsurance extends NamedEntity implements IdentifiableNamedEntityInt
         return $this->is_private_nursing_insured ?? false;
     }
 
-    public function getMonthlyPremiumForPrivateHealthInsurance(): ?float {
-        return $this->monthly_premium_for_private_health_insurance ?? null;
+    public function getMonthlyPremiumForPrivateHealthInsurance(): ?Money {
+        return $this->toMoney($this->monthly_premium_for_private_health_insurance ?? null);
     }
 
-    public function getMonthlyPremiumForPrivateNursingInsurance(): ?float {
-        return $this->monthly_premium_for_private_nursing_insurance ?? null;
+    public function getMonthlyPremiumForPrivateNursingInsurance(): ?Money {
+        return $this->toMoney($this->monthly_premium_for_private_nursing_insurance ?? null);
     }
 
-    public function getMonthlyContributionToBasicHealthInsurance(): ?float {
-        return $this->monthly_contribution_to_basic_health_insurance ?? null;
+    public function getMonthlyContributionToBasicHealthInsurance(): ?Money {
+        return $this->toMoney($this->monthly_contribution_to_basic_health_insurance ?? null);
     }
 }

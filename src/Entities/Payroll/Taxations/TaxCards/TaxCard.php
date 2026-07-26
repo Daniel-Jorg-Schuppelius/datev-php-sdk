@@ -14,9 +14,13 @@ namespace Datev\Entities\Payroll\Taxations\TaxCards;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
+use CommonToolkit\ValueObjects\Money;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 class TaxCard extends NamedEntity implements IdentifiableNamedEntityInterface {
+    use MoneyAccessorTrait;
+
     protected TaxCardID $id;
     protected ?int $tax_class;
     protected ?float $factor;
@@ -53,12 +57,12 @@ class TaxCard extends NamedEntity implements IdentifiableNamedEntityInterface {
         return $this->spouses_denomination ?? null;
     }
 
-    public function getMonthlyTaxAllowance(): ?float {
-        return $this->monthly_tax_allowance ?? null;
+    public function getMonthlyTaxAllowance(): ?Money {
+        return $this->toMoney($this->monthly_tax_allowance ?? null);
     }
 
-    public function getAnnualTaxAllowance(): ?float {
-        return $this->annual_tax_allowance ?? null;
+    public function getAnnualTaxAllowance(): ?Money {
+        return $this->toMoney($this->annual_tax_allowance ?? null);
     }
 
     public function getChildTaxAllowances(): ?string {

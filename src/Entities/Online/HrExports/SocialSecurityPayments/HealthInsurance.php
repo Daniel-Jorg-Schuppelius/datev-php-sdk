@@ -48,32 +48,32 @@ class HealthInsurance extends NamedEntity {
         parent::__construct($data, $logger);
     }
 
-    public function getHealthInsuranceMonthlyContributionEmployer(): ?float {
-        return $this->health_insurance_monthly_contribution_employer ?? null;
+    public function getHealthInsuranceMonthlyContributionEmployer(): ?Money {
+        return $this->toMoney($this->health_insurance_monthly_contribution_employer ?? null);
     }
 
-    public function getHealthInsuranceEmployersContributionNonRecurringPayment(): ?float {
-        return $this->health_insurance_employers_contribution_non_recurring_payment ?? null;
+    public function getHealthInsuranceEmployersContributionNonRecurringPayment(): ?Money {
+        return $this->toMoney($this->health_insurance_employers_contribution_non_recurring_payment ?? null);
     }
 
-    public function getHealthInsuranceEmployeesContributionNonRecurringPayment(): ?float {
-        return $this->health_insurance_employees_contribution_non_recurring_payment ?? null;
+    public function getHealthInsuranceEmployeesContributionNonRecurringPayment(): ?Money {
+        return $this->toMoney($this->health_insurance_employees_contribution_non_recurring_payment ?? null);
     }
 
-    public function getHealthInsuranceMonthlyContributionEmployee(): ?float {
-        return $this->health_insurance_monthly_contribution_employee ?? null;
+    public function getHealthInsuranceMonthlyContributionEmployee(): ?Money {
+        return $this->toMoney($this->health_insurance_monthly_contribution_employee ?? null);
     }
 
-    public function getHealthInsuranceGross(): ?float {
-        return $this->health_insurance_gross ?? null;
+    public function getHealthInsuranceGross(): ?Money {
+        return $this->toMoney($this->health_insurance_gross ?? null);
     }
 
-    public function getHealthInsuranceGrossNonRecurringPayment(): ?float {
-        return $this->health_insurance_gross_non_recurring_payment ?? null;
+    public function getHealthInsuranceGrossNonRecurringPayment(): ?Money {
+        return $this->toMoney($this->health_insurance_gross_non_recurring_payment ?? null);
     }
 
-    public function getHealthInsuranceGrossMonthlyContribution(): ?float {
-        return $this->health_insurance_gross_monthly_contribution ?? null;
+    public function getHealthInsuranceGrossMonthlyContribution(): ?Money {
+        return $this->toMoney($this->health_insurance_gross_monthly_contribution ?? null);
     }
 
     public function getHealthInsuranceEmployeesContributionTotal(): ?Money {
