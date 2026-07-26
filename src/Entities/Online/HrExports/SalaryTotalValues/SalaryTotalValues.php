@@ -13,12 +13,16 @@ declare(strict_types=1);
 namespace Datev\Entities\Online\HrExports\SalaryTotalValues;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
+use CommonToolkit\ValueObjects\Money;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 /**
  * Gesamtwerte der Entgeltabrechnung je Abrechnungsmonat.
  */
 class SalaryTotalValues extends NamedEntity {
+    use MoneyAccessorTrait;
+
     protected int $personnel_number;
 
     protected string $company_personnel_number;
@@ -76,7 +80,7 @@ class SalaryTotalValues extends NamedEntity {
         return $this->net_payments_and_net_deductions ?? null;
     }
 
-    public function getTotalStatutoryDeductions(): ?float {
-        return $this->total_statutory_deductions ?? null;
+    public function getTotalStatutoryDeductions(): ?Money {
+        return $this->toMoney($this->total_statutory_deductions ?? null);
     }
 }

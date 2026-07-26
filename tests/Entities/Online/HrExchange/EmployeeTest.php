@@ -57,9 +57,9 @@ class EmployeeTest extends EntityTest {
 
         $grossPayment = $employee->getGrossPayments()?->getFirstValue();
         $this->assertInstanceOf(GrossPayment::class, $grossPayment);
-        $this->assertSame(4200.5, $grossPayment->getAmount());
+        $this->assertSame('4200.50', $grossPayment->getAmount()?->getAmount());
 
-        $this->assertSame(24.5, $employee->getHourlyWages()?->getFirstValue()?->getAmount());
+        $this->assertSame('24.50', $employee->getHourlyWages()?->getFirstValue()?->getAmount()?->getAmount());
         $this->assertSame('1', $employee->getTaxCard()?->getTaxClass());
         $this->assertSame(30.0, $employee->getVacationEntitlement()?->getBasicVacationEntitlement());
     }

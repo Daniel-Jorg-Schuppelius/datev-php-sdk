@@ -14,10 +14,14 @@ namespace Datev\Entities\OrderManagement\Invoices;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Entities\GUID;
+use CommonToolkit\ValueObjects\Money;
 use DateTime;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 class Invoice extends NamedEntity {
+    use MoneyAccessorTrait;
+
     protected ?int $id;
     protected ?InvoiceID $invoice_id;
     protected ?int $accounting_year;
@@ -65,16 +69,16 @@ class Invoice extends NamedEntity {
         return $this->date_of_invoice ?? null;
     }
 
-    public function getGrossAmount(): ?float {
-        return $this->gross_amount ?? null;
+    public function getGrossAmount(): ?Money {
+        return $this->toMoney($this->gross_amount ?? null);
     }
 
-    public function getNetAmount(): ?float {
-        return $this->net_amount ?? null;
+    public function getNetAmount(): ?Money {
+        return $this->toMoney($this->net_amount ?? null);
     }
 
-    public function getVatAmount(): ?float {
-        return $this->vat_amount ?? null;
+    public function getVatAmount(): ?Money {
+        return $this->toMoney($this->vat_amount ?? null);
     }
 
     public function getClientID(): ?GUID {

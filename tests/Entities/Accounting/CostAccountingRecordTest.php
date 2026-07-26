@@ -30,7 +30,7 @@ class CostAccountingRecordTest extends EntityTest {
         $record = new CostAccountingRecord($data);
         $this->assertInstanceOf(CostAccountingRecord::class, new CostAccountingRecord);
         $this->assertInstanceOf(CostAccountingRecord::class, $record);
-        $this->assertEquals(1500.50, $record->getAmount());
+        $this->assertSame('1500.50', $record->getAmount()?->getAmount());
         $this->assertEquals("10000", $record->getCostCenter());
         $this->assertEquals("20000", $record->getContraCostCenter());
         $this->assertEquals("Kostenumbuchung", $record->getPostingDescription());

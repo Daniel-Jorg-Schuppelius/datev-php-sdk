@@ -13,10 +13,14 @@ declare(strict_types=1);
 namespace Datev\Entities\PublicSector\Dues;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
+use CommonToolkit\ValueObjects\Money;
 use DateTime;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 class Due extends NamedEntity {
+    use MoneyAccessorTrait;
+
     protected ?DateTime $assessment_period;
     protected ?DateTime $date;
     protected ?float $amount;
@@ -43,16 +47,16 @@ class Due extends NamedEntity {
         return $this->date ?? null;
     }
 
-    public function getAmount(): ?float {
-        return $this->amount ?? null;
+    public function getAmount(): ?Money {
+        return $this->toMoney($this->amount ?? null);
     }
 
     public function getTaxPercentage(): ?float {
         return $this->tax_percentage ?? null;
     }
 
-    public function getTaxAmount(): ?float {
-        return $this->tax_amount ?? null;
+    public function getTaxAmount(): ?Money {
+        return $this->toMoney($this->tax_amount ?? null);
     }
 
     public function getNotificationNumber(): ?string {

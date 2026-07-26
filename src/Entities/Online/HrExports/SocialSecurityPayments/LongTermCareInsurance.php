@@ -13,12 +13,16 @@ declare(strict_types=1);
 namespace Datev\Entities\Online\HrExports\SocialSecurityPayments;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
+use CommonToolkit\ValueObjects\Money;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 /**
  * Beitragswerte der Versicherung (long_term_care_insurance).
  */
 class LongTermCareInsurance extends NamedEntity {
+    use MoneyAccessorTrait;
+
     protected float $long_term_care_insurance_monthly_contribution_employer;
 
     protected float $long_term_care_insurance_employers_contribution_non_recurring_payment;
@@ -72,11 +76,11 @@ class LongTermCareInsurance extends NamedEntity {
         return $this->long_term_care_insurance_gross_monthly_contribution ?? null;
     }
 
-    public function getLongTermCareInsuranceEmployeesContributionTotal(): ?float {
-        return $this->long_term_care_insurance_employees_contribution_total ?? null;
+    public function getLongTermCareInsuranceEmployeesContributionTotal(): ?Money {
+        return $this->toMoney($this->long_term_care_insurance_employees_contribution_total ?? null);
     }
 
-    public function getLongTermCareInsuranceEmployerContributionTotal(): ?float {
-        return $this->long_term_care_insurance_employer_contribution_total ?? null;
+    public function getLongTermCareInsuranceEmployerContributionTotal(): ?Money {
+        return $this->toMoney($this->long_term_care_insurance_employer_contribution_total ?? null);
     }
 }

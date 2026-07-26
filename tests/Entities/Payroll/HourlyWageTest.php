@@ -29,7 +29,7 @@ class HourlyWageTest extends EntityTest {
         $this->assertInstanceOf(HourlyWageID::class, $hourlyWage->getID());
         $this->assertEquals("hw-001", $hourlyWage->getID()->getValue());
         $this->assertEquals("12345", $hourlyWage->getPersonnelNumber());
-        $this->assertEquals(25.50, $hourlyWage->getAmount());
+        $this->assertSame('25.50', $hourlyWage->getAmount()?->getAmount());
     }
 
     public function test_create_hourly_wages(): void {

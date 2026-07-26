@@ -14,11 +14,15 @@ namespace Datev\Entities\Payroll\GrossPayments;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
+use CommonToolkit\ValueObjects\Money;
 use DateTime;
 use Datev\Entities\Payroll\Salaries\SalaryTypes\ID\SalaryTypeID;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 class GrossPayment extends NamedEntity implements IdentifiableNamedEntityInterface {
+    use MoneyAccessorTrait;
+
     protected GrossPaymentID $id;
     protected ?string $personnel_number;
     protected ?float $amount;
@@ -44,8 +48,8 @@ class GrossPayment extends NamedEntity implements IdentifiableNamedEntityInterfa
         return $this->personnel_number ?? null;
     }
 
-    public function getAmount(): ?float {
-        return $this->amount ?? null;
+    public function getAmount(): ?Money {
+        return $this->toMoney($this->amount ?? null);
     }
 
     public function getSalaryTypeID(): ?SalaryTypeID {

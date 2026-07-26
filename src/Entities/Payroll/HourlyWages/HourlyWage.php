@@ -14,9 +14,13 @@ namespace Datev\Entities\Payroll\HourlyWages;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
+use CommonToolkit\ValueObjects\Money;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 class HourlyWage extends NamedEntity implements IdentifiableNamedEntityInterface {
+    use MoneyAccessorTrait;
+
     protected HourlyWageID $id;
     protected string $personnel_number;
     protected ?float $amount;
@@ -36,7 +40,7 @@ class HourlyWage extends NamedEntity implements IdentifiableNamedEntityInterface
         return $this->personnel_number;
     }
 
-    public function getAmount(): ?float {
-        return $this->amount ?? null;
+    public function getAmount(): ?Money {
+        return $this->toMoney($this->amount ?? null);
     }
 }

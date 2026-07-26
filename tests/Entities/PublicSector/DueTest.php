@@ -25,7 +25,7 @@ class DueTest extends EntityTest {
         $due = new Due($data);
         $this->assertInstanceOf(Due::class, new Due);
         $this->assertInstanceOf(Due::class, $due);
-        $this->assertEquals(250.75, $due->getAmount());
+        $this->assertSame('250.75', $due->getAmount()?->getAmount());
     }
 
     public function test_create_dues(): void {

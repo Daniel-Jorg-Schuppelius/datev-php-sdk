@@ -13,12 +13,16 @@ declare(strict_types=1);
 namespace Datev\Entities\Online\AccountingDataExchange\SumsAndBalances;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
+use CommonToolkit\ValueObjects\Money;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 /**
  * Monatswert der Summen und Salden mit Menge und Gewicht.
  */
 class SumsAndBalancesQuantityAndWeightMonthValue extends NamedEntity {
+    use MoneyAccessorTrait;
+
     protected float $accumulatedBalance;
 
     protected string $accumulatedBalanceDebitCreditIdentifier;
@@ -40,8 +44,8 @@ class SumsAndBalancesQuantityAndWeightMonthValue extends NamedEntity {
         parent::__construct($data, $logger);
     }
 
-    public function getAccumulatedBalance(): ?float {
-        return $this->accumulatedBalance ?? null;
+    public function getAccumulatedBalance(): ?Money {
+        return $this->toMoney($this->accumulatedBalance ?? null);
     }
 
     public function getAccumulatedBalanceDebitCreditIdentifier(): ?string {
@@ -60,8 +64,8 @@ class SumsAndBalancesQuantityAndWeightMonthValue extends NamedEntity {
         return $this->averagePriceQuantity ?? null;
     }
 
-    public function getAveragePriceWeight(): ?float {
-        return $this->averagePriceWeight ?? null;
+    public function getAveragePriceWeight(): ?Money {
+        return $this->toMoney($this->averagePriceWeight ?? null);
     }
 
     public function getFiscalYearMonth(): ?int {

@@ -14,10 +14,14 @@ namespace Datev\Entities\Law\Expenses;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
+use CommonToolkit\ValueObjects\Money;
 use DateTime;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 class Expense extends NamedEntity implements IdentifiableNamedEntityInterface {
+    use MoneyAccessorTrait;
+
     protected ?ExpenseID $id;
     protected ?string $object_type;
     protected ?string $case_handler_id;
@@ -144,8 +148,8 @@ class Expense extends NamedEntity implements IdentifiableNamedEntityInterface {
         return $this->unit_rate ?? null;
     }
 
-    public function getAmount(): ?float {
-        return $this->amount ?? null;
+    public function getAmount(): ?Money {
+        return $this->toMoney($this->amount ?? null);
     }
 
     public function getCurrency(): ?string {

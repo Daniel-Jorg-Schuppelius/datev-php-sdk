@@ -29,7 +29,7 @@ class VocationalTrainingTest extends EntityTest {
         $this->assertInstanceOf(VocationalTrainingID::class, $vocationalTraining->getID());
         $this->assertEquals("vt-001", $vocationalTraining->getID()->getValue());
         $this->assertEquals("12345", $vocationalTraining->getPersonnelNumber());
-        $this->assertEquals(750.00, $vocationalTraining->getAmount());
+        $this->assertSame('750.00', $vocationalTraining->getAmount()?->getAmount());
     }
 
     public function test_create_vocational_trainings(): void {

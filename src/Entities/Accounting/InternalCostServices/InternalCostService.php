@@ -13,10 +13,14 @@ declare(strict_types=1);
 namespace Datev\Entities\Accounting\InternalCostServices;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
+use CommonToolkit\ValueObjects\Money;
 use DateTime;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 class InternalCostService extends NamedEntity {
+    use MoneyAccessorTrait;
+
     protected ?float $amount;
     protected ?string $cost_center_from;
     protected ?string $cost_center_to;
@@ -35,8 +39,8 @@ class InternalCostService extends NamedEntity {
         parent::__construct($data, $logger);
     }
 
-    public function getAmount(): ?float {
-        return $this->amount ?? null;
+    public function getAmount(): ?Money {
+        return $this->toMoney($this->amount ?? null);
     }
 
     public function getCostCenterFrom(): ?string {

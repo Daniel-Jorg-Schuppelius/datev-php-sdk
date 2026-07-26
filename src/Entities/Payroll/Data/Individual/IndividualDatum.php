@@ -91,7 +91,7 @@ class IndividualDatum extends NamedEntity implements IdentifiableNamedEntityInte
             $result['long_field_name'] = $firstRecord->getLongFieldName();
             $result['short_field_name'] = $firstRecord->getShortFieldName();
             $result['date'] = $firstRecord->getDate() ? $firstRecord->getDate()->format('Y-m-d') : null;
-            $result['amount'] = $firstRecord->getAmount();
+            $result['amount'] = $firstRecord->getAmount()?->toFloat();
         }
 
         foreach ($this->data ?? [] as $index => $record) {
@@ -104,7 +104,7 @@ class IndividualDatum extends NamedEntity implements IdentifiableNamedEntityInte
             $result["long_field_name{$indexPlusOne}"] = $record->getLongFieldName();
             $result["short_field_name{$indexPlusOne}"] = $record->getShortFieldName();
             $result["date{$indexPlusOne}"] = $record->getDate() ? $record->getDate()->format('Y-m-d') : null;
-            $result["amount{$indexPlusOne}"] = $record->getAmount();
+            $result["amount{$indexPlusOne}"] = $record->getAmount()?->toFloat();
         }
 
         return $result;

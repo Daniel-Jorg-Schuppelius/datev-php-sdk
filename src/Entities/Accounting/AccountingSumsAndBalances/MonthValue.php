@@ -13,9 +13,13 @@ declare(strict_types=1);
 namespace Datev\Entities\Accounting\AccountingSumsAndBalances;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
+use CommonToolkit\ValueObjects\Money;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 class MonthValue extends NamedEntity {
+    use MoneyAccessorTrait;
+
     protected ?float $monthly_balance;
     protected ?string $debit_credit_identifier;
     protected ?float $month_debit;
@@ -29,8 +33,8 @@ class MonthValue extends NamedEntity {
         parent::__construct($data, $logger);
     }
 
-    public function getMonthlyBalance(): ?float {
-        return $this->monthly_balance ?? null;
+    public function getMonthlyBalance(): ?Money {
+        return $this->toMoney($this->monthly_balance ?? null);
     }
 
     public function getDebitCreditIdentifier(): ?string {

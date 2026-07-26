@@ -14,6 +14,7 @@ namespace Datev\Entities\DocumentManagement\Documents;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
+use CommonToolkit\ValueObjects\Money;
 use DateTime;
 use Datev\Entities\DocumentManagement\AcknowledgementUsers\AcknowledgementUsers;
 use Datev\Entities\DocumentManagement\CorrespondencePartners\CorrespondencePartnerGUID;
@@ -31,9 +32,12 @@ use Datev\Entities\DocumentManagement\SecureAreas\SecureArea;
 use Datev\Entities\DocumentManagement\States\State;
 use Datev\Entities\DocumentManagement\StructureItems\StructureItems;
 use Datev\Entities\DocumentManagement\Users\User;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 class Document extends NamedEntity implements IdentifiableNamedEntityInterface {
+    use MoneyAccessorTrait;
+
     protected ?DocumentID $id;
     protected ?AcknowledgementUsers $acknowledge_by;
     protected ?float $amount;
@@ -112,8 +116,8 @@ class Document extends NamedEntity implements IdentifiableNamedEntityInterface {
         return $this->acknowledge_by ?? null;
     }
 
-    public function getAmount(): ?float {
-        return $this->amount ?? null;
+    public function getAmount(): ?Money {
+        return $this->toMoney($this->amount ?? null);
     }
 
     public function getApplication(): ?string {

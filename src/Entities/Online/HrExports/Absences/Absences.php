@@ -13,12 +13,16 @@ declare(strict_types=1);
 namespace Datev\Entities\Online\HrExports\Absences;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
+use CommonToolkit\ValueObjects\Money;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 /**
  * Fehlzeiten und Urlaubswerte eines Arbeitnehmers je Abrechnungsmonat.
  */
 class Absences extends NamedEntity {
+    use MoneyAccessorTrait;
+
     protected int $personnel_number;
 
     protected string $company_personnel_number;
@@ -64,8 +68,8 @@ class Absences extends NamedEntity {
         return $this->month_of_recalculation ?? null;
     }
 
-    public function getTotalVacationEntitlement(): ?float {
-        return $this->total_vacation_entitlement ?? null;
+    public function getTotalVacationEntitlement(): ?Money {
+        return $this->toMoney($this->total_vacation_entitlement ?? null);
     }
 
     public function getVacationDaysTaken(): ?float {

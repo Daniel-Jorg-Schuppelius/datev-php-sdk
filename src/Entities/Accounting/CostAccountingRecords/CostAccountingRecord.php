@@ -14,10 +14,14 @@ namespace Datev\Entities\Accounting\CostAccountingRecords;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
+use CommonToolkit\ValueObjects\Money;
 use DateTime;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 class CostAccountingRecord extends NamedEntity implements IdentifiableNamedEntityInterface {
+    use MoneyAccessorTrait;
+
     protected ?CostAccountingRecordID $id;
     protected ?float $amount;
     protected ?string $cost_center;
@@ -37,8 +41,8 @@ class CostAccountingRecord extends NamedEntity implements IdentifiableNamedEntit
         return $this->id ?? null;
     }
 
-    public function getAmount(): ?float {
-        return $this->amount ?? null;
+    public function getAmount(): ?Money {
+        return $this->toMoney($this->amount ?? null);
     }
 
     public function getCostCenter(): ?string {

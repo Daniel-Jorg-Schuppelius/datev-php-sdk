@@ -13,12 +13,16 @@ declare(strict_types=1);
 namespace Datev\Entities\Online\HrExports\SalaryPayments;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
+use CommonToolkit\ValueObjects\Money;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 /**
  * Bruttolohnart (LODAS).
  */
 class GrossPaymentsLodas extends NamedEntity {
+    use MoneyAccessorTrait;
+
     protected string $wage_type_name;
 
     protected string $wage_type_number;
@@ -46,12 +50,12 @@ class GrossPaymentsLodas extends NamedEntity {
         return $this->wage_type_number ?? null;
     }
 
-    public function getWageTypeAmount(): ?float {
-        return $this->wage_type_amount ?? null;
+    public function getWageTypeAmount(): ?Money {
+        return $this->toMoney($this->wage_type_amount ?? null);
     }
 
-    public function getWageTypeAmountDifference(): ?float {
-        return $this->wage_type_amount_difference ?? null;
+    public function getWageTypeAmountDifference(): ?Money {
+        return $this->toMoney($this->wage_type_amount_difference ?? null);
     }
 
     public function getTaxAndSocialSecurityTreatmentOfWageType(): ?string {

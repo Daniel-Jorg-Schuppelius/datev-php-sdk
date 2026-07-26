@@ -14,10 +14,14 @@ namespace Datev\Entities\OrderManagement\EmployeeCapacities;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Entities\GUID;
+use CommonToolkit\ValueObjects\Money;
 use DateTime;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 class EmployeeCapacity extends NamedEntity {
+    use MoneyAccessorTrait;
+
     protected ?EmployeeCapacityID $id;
     protected ?GUID $employee_id;
     protected ?DateTime $date;
@@ -47,8 +51,8 @@ class EmployeeCapacity extends NamedEntity {
         return $this->date ?? null;
     }
 
-    public function getTotalHoursTimeUnits(): ?float {
-        return $this->total_hours_time_units ?? null;
+    public function getTotalHoursTimeUnits(): ?Money {
+        return $this->toMoney($this->total_hours_time_units ?? null);
     }
 
     public function getTargetHoursTimeUnits(): ?float {

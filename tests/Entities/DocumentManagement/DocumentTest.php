@@ -158,6 +158,6 @@ class DocumentTest extends EntityTest {
         $this->assertNotNull($id);
         $this->assertEquals('e602ddcb-e479-4cee-b268-e53bbecf6dc9', $id->getValue());
         $this->assertTrue($id->isValid());
-        $this->assertEquals(150.95, $document->getAmount());
+        $this->assertSame('150.95', $document->getAmount()?->getAmount());
     }
 }

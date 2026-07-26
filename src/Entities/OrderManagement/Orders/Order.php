@@ -14,10 +14,14 @@ namespace Datev\Entities\OrderManagement\Orders;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Entities\GUID;
+use CommonToolkit\ValueObjects\Money;
 use DateTime;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 class Order extends NamedEntity {
+    use MoneyAccessorTrait;
+
     protected ?OrderID $order_id;
     protected ?int $creation_year;
     protected ?int $order_number;
@@ -107,7 +111,7 @@ class Order extends NamedEntity {
         return $this->total_hours ?? null;
     }
 
-    public function getTimeCosts(): ?float {
-        return $this->time_costs ?? null;
+    public function getTimeCosts(): ?Money {
+        return $this->toMoney($this->time_costs ?? null);
     }
 }

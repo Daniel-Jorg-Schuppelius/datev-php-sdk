@@ -14,10 +14,14 @@ namespace Datev\Entities\OrderManagement\EmployeesCostRate;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Entities\GUID;
+use CommonToolkit\ValueObjects\Money;
 use DateTime;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 class EmployeeCostRate extends NamedEntity {
+    use MoneyAccessorTrait;
+
     protected ?EmployeeCostRateID $id;
     protected ?GUID $employee_id;
     protected ?int $employee_number;
@@ -68,40 +72,40 @@ class EmployeeCostRate extends NamedEntity {
         return $this->cost_rate_date_to ?? null;
     }
 
-    public function getCostRate1(): ?float {
-        return $this->cost_rate_1 ?? null;
+    public function getCostRate1(): ?Money {
+        return $this->toMoney($this->cost_rate_1 ?? null);
     }
 
-    public function getCostRate2(): ?float {
-        return $this->cost_rate_2 ?? null;
+    public function getCostRate2(): ?Money {
+        return $this->toMoney($this->cost_rate_2 ?? null);
     }
 
-    public function getCostRate3(): ?float {
-        return $this->cost_rate_3 ?? null;
+    public function getCostRate3(): ?Money {
+        return $this->toMoney($this->cost_rate_3 ?? null);
     }
 
-    public function getCostRate4(): ?float {
-        return $this->cost_rate_4 ?? null;
+    public function getCostRate4(): ?Money {
+        return $this->toMoney($this->cost_rate_4 ?? null);
     }
 
-    public function getCostRate5(): ?float {
-        return $this->cost_rate_5 ?? null;
+    public function getCostRate5(): ?Money {
+        return $this->toMoney($this->cost_rate_5 ?? null);
     }
 
-    public function getCostRate6(): ?float {
-        return $this->cost_rate_6 ?? null;
+    public function getCostRate6(): ?Money {
+        return $this->toMoney($this->cost_rate_6 ?? null);
     }
 
-    public function getCostRate7(): ?float {
-        return $this->cost_rate_7 ?? null;
+    public function getCostRate7(): ?Money {
+        return $this->toMoney($this->cost_rate_7 ?? null);
     }
 
-    public function getCostRate8(): ?float {
-        return $this->cost_rate_8 ?? null;
+    public function getCostRate8(): ?Money {
+        return $this->toMoney($this->cost_rate_8 ?? null);
     }
 
-    public function getCostRate9(): ?float {
-        return $this->cost_rate_9 ?? null;
+    public function getCostRate9(): ?Money {
+        return $this->toMoney($this->cost_rate_9 ?? null);
     }
 
     public function getInternalChargeRateInternalOrders(): ?float {

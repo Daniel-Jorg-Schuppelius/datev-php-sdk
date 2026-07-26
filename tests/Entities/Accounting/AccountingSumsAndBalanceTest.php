@@ -36,7 +36,7 @@ class AccountingSumsAndBalanceTest extends EntityTest {
         $this->assertEquals(1200, $sumsAndBalance->getAccountNumber());
         $this->assertEquals(15000.00, $sumsAndBalance->getAnnualValueDebit());
         $this->assertEquals(12000.00, $sumsAndBalance->getAnnualValueCredit());
-        $this->assertEquals(3000.00, $sumsAndBalance->getBalance());
+        $this->assertSame('3000.00', $sumsAndBalance->getBalance()?->getAmount());
         $this->assertEquals("D", $sumsAndBalance->getBalanceDebitCreditIdentifier());
         $this->assertEquals("Bank", $sumsAndBalance->getCaption());
     }

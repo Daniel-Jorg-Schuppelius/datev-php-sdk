@@ -29,6 +29,6 @@ class IndividualDatumRecordTest extends EntityTest {
         $this->assertInstanceOf(IndividualDatumRecord::class, $record);
         $this->assertEquals("Sonderzahlung Weihnachtsgeld", $record->getLongFieldName());
         $this->assertEquals("SZW", $record->getShortFieldName());
-        $this->assertEquals(1500.00, $record->getAmount());
+        $this->assertSame('1500.00', $record->getAmount()?->getAmount());
     }
 }

@@ -13,10 +13,14 @@ declare(strict_types=1);
 namespace Datev\Entities\PublicSector\MeterReadings;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
+use CommonToolkit\ValueObjects\Money;
 use DateTime;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 class MeterReading extends NamedEntity {
+    use MoneyAccessorTrait;
+
     protected ?string $id;
     protected ?DateTime $date;
     protected ?DateTime $reading_date;
@@ -71,8 +75,8 @@ class MeterReading extends NamedEntity {
         return $this->is_estimated ?? null;
     }
 
-    public function getConsumption(): ?float {
-        return $this->consumption ?? null;
+    public function getConsumption(): ?Money {
+        return $this->toMoney($this->consumption ?? null);
     }
 
     public function getRelevance(): ?string {

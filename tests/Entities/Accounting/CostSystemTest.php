@@ -30,7 +30,7 @@ class CostSystemTest extends EntityTest {
         $this->assertInstanceOf(CostSystem::class, $costSystem);
         $this->assertEquals("Standard-Kostenrechnung", $costSystem->getCaption());
         $this->assertEquals("standard", $costSystem->getCostSystemType());
-        $this->assertEquals(5, $costSystem->getCostLength());
+        $this->assertSame(5, $costSystem->getCostLength());
         $this->assertTrue($costSystem->isActive());
     }
 

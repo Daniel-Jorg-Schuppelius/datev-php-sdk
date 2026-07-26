@@ -13,12 +13,16 @@ declare(strict_types=1);
 namespace Datev\Entities\Online\HrExports\SocialSecurityPayments;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
+use CommonToolkit\ValueObjects\Money;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 /**
  * Beitragswerte der Versicherung (pension_insurance).
  */
 class PensionInsurance extends NamedEntity {
+    use MoneyAccessorTrait;
+
     protected float $pension_insurance_monthly_contribution_employer;
 
     protected float $pension_insurance_employers_contribution_non_recurring_payment;
@@ -72,11 +76,11 @@ class PensionInsurance extends NamedEntity {
         return $this->pension_insurance_gross_monthly_contribution ?? null;
     }
 
-    public function getPensionInsuranceEmployeesContributionTotal(): ?float {
-        return $this->pension_insurance_employees_contribution_total ?? null;
+    public function getPensionInsuranceEmployeesContributionTotal(): ?Money {
+        return $this->toMoney($this->pension_insurance_employees_contribution_total ?? null);
     }
 
-    public function getPensionInsuranceEmployerContributionTotal(): ?float {
-        return $this->pension_insurance_employer_contribution_total ?? null;
+    public function getPensionInsuranceEmployerContributionTotal(): ?Money {
+        return $this->toMoney($this->pension_insurance_employer_contribution_total ?? null);
     }
 }
