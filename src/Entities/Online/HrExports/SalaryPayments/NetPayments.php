@@ -13,12 +13,16 @@ declare(strict_types=1);
 namespace Datev\Entities\Online\HrExports\SalaryPayments;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
+use CommonToolkit\ValueObjects\Money;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 /**
  * Nettobezug/-abzug.
  */
 class NetPayments extends NamedEntity {
+    use MoneyAccessorTrait;
+
     protected string $net_payment_number;
 
     protected string $net_payment_name;
@@ -39,11 +43,11 @@ class NetPayments extends NamedEntity {
         return $this->net_payment_name ?? null;
     }
 
-    public function getNetPaymentAmount(): ?float {
-        return $this->net_payment_amount ?? null;
+    public function getNetPaymentAmount(): ?Money {
+        return $this->toMoney($this->net_payment_amount ?? null);
     }
 
-    public function getNetPaymentAmountDifference(): ?float {
-        return $this->net_payment_amount_difference ?? null;
+    public function getNetPaymentAmountDifference(): ?Money {
+        return $this->toMoney($this->net_payment_amount_difference ?? null);
     }
 }

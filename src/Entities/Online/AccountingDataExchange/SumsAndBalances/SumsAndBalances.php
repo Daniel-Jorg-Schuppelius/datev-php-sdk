@@ -13,12 +13,16 @@ declare(strict_types=1);
 namespace Datev\Entities\Online\AccountingDataExchange\SumsAndBalances;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
+use CommonToolkit\ValueObjects\Money;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 /**
  * Summen und Salden eines Kontos.
  */
 class SumsAndBalances extends NamedEntity {
+    use MoneyAccessorTrait;
+
     protected int $accountNumber;
 
     protected SumsAndBalancesMonthValues $sumsAndBalancesMonthValues;
@@ -57,8 +61,8 @@ class SumsAndBalances extends NamedEntity {
         return $this->annualValueCredit ?? null;
     }
 
-    public function getBalance(): ?float {
-        return $this->balance ?? null;
+    public function getBalance(): ?Money {
+        return $this->toMoney($this->balance ?? null);
     }
 
     public function getBalanceDebitCreditIdentifier(): ?string {
@@ -69,11 +73,11 @@ class SumsAndBalances extends NamedEntity {
         return $this->caption ?? null;
     }
 
-    public function getOpeningBalanceDebit(): ?float {
-        return $this->openingBalanceDebit ?? null;
+    public function getOpeningBalanceDebit(): ?Money {
+        return $this->toMoney($this->openingBalanceDebit ?? null);
     }
 
-    public function getOpeningBalanceCredit(): ?float {
-        return $this->openingBalanceCredit ?? null;
+    public function getOpeningBalanceCredit(): ?Money {
+        return $this->toMoney($this->openingBalanceCredit ?? null);
     }
 }

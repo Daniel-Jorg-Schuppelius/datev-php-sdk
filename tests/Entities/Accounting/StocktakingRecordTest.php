@@ -42,7 +42,7 @@ class StocktakingRecordTest extends EntityTest {
         $this->assertEquals(1001, $stocktakingRecord->getAssetNumber());
         $this->assertEquals("PC-2024-001", $stocktakingRecord->getInventoryNumber());
         $this->assertEquals("Laptop Dell XPS 15", $stocktakingRecord->getInventoryName());
-        $this->assertEquals(1599.00, $stocktakingRecord->getPrice());
+        $this->assertSame('1599.00', $stocktakingRecord->getPrice()?->getAmount());
     }
 
     public function test_create_stocktaking_records() {

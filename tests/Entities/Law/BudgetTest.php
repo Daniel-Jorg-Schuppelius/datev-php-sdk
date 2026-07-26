@@ -31,8 +31,8 @@ class BudgetTest extends EntityTest {
         $this->assertInstanceOf(Budget::class, $budget);
         $this->assertEquals(1, $budget->getID());
         $this->assertEquals(1000.00, $budget->getBudget());
-        $this->assertEquals(200.00, $budget->getSumTimeExpenses());
-        $this->assertEquals(329.00, $budget->getSumTaxableExpenses());
+        $this->assertSame('200.00', $budget->getSumTimeExpenses()?->getAmount());
+        $this->assertSame('329.00', $budget->getSumTaxableExpenses()?->getAmount());
         $this->assertEquals(471.00, $budget->getUnusedBudget());
         $this->assertEquals("EUR", $budget->getCurrencyUnit());
     }

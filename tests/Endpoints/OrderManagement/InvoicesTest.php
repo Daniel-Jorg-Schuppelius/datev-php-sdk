@@ -46,8 +46,8 @@ class InvoicesTest extends EndpointTest {
         $this->assertEquals(10000, $invoice->getID());
         $this->assertEquals(2024, $invoice->getAccountingYear());
         $this->assertEquals(10010, $invoice->getInvoiceNumber());
-        $this->assertEquals(1190.00, $invoice->getGrossAmount());
-        $this->assertEquals(1000.00, $invoice->getNetAmount());
+        $this->assertSame('1190.00', $invoice->getGrossAmount()?->getAmount());
+        $this->assertSame('1000.00', $invoice->getNetAmount()?->getAmount());
         $this->assertFalse($invoice->isCancellation());
     }
 

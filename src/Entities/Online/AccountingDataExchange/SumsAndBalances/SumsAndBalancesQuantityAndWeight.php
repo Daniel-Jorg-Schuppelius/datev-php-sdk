@@ -13,12 +13,16 @@ declare(strict_types=1);
 namespace Datev\Entities\Online\AccountingDataExchange\SumsAndBalances;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
+use CommonToolkit\ValueObjects\Money;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 /**
  * Summen und Salden mit Menge und Gewicht eines Kontos.
  */
 class SumsAndBalancesQuantityAndWeight extends NamedEntity {
+    use MoneyAccessorTrait;
+
     protected int $accountNumber;
 
     protected string $caption;
@@ -41,8 +45,8 @@ class SumsAndBalancesQuantityAndWeight extends NamedEntity {
         return $this->caption ?? null;
     }
 
-    public function getOpeningBalance(): ?float {
-        return $this->openingBalance ?? null;
+    public function getOpeningBalance(): ?Money {
+        return $this->toMoney($this->openingBalance ?? null);
     }
 
     public function getOpeningBalanceDebitCreditIdentifier(): ?string {

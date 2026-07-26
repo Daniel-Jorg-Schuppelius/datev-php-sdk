@@ -14,9 +14,13 @@ namespace Datev\Entities\Accounting\AccountingSumsAndBalances;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
+use CommonToolkit\ValueObjects\Money;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 class AccountingSumsAndBalance extends NamedEntity implements IdentifiableNamedEntityInterface {
+    use MoneyAccessorTrait;
+
     protected AccountingSumsAndBalancesID $id;
     protected ?int $account_number;
     protected ?MonthValues $accounting_sums_and_balances_month_values;
@@ -52,8 +56,8 @@ class AccountingSumsAndBalance extends NamedEntity implements IdentifiableNamedE
         return $this->annual_value_credit ?? null;
     }
 
-    public function getBalance(): ?float {
-        return $this->balance ?? null;
+    public function getBalance(): ?Money {
+        return $this->toMoney($this->balance ?? null);
     }
 
     public function getBalanceDebitCreditIdentifier(): ?string {
@@ -64,8 +68,8 @@ class AccountingSumsAndBalance extends NamedEntity implements IdentifiableNamedE
         return $this->caption ?? null;
     }
 
-    public function getOpeningBalanceSheet(): ?float {
-        return $this->opening_balance_sheet ?? null;
+    public function getOpeningBalanceSheet(): ?Money {
+        return $this->toMoney($this->opening_balance_sheet ?? null);
     }
 
     public function getOpeningBalanceSheetDebitCreditIdentifier(): ?string {

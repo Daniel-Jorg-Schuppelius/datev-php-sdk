@@ -13,12 +13,16 @@ declare(strict_types=1);
 namespace Datev\Entities\Online\HrExchange\Employees;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
+use CommonToolkit\ValueObjects\Money;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 /**
  * Bruttobezug (Festbezug) des Arbeitnehmers.
  */
 class GrossPayment extends NamedEntity {
+    use MoneyAccessorTrait;
+
     protected int $id;
 
     protected float $amount;
@@ -35,8 +39,8 @@ class GrossPayment extends NamedEntity {
         return $this->id ?? null;
     }
 
-    public function getAmount(): ?float {
-        return $this->amount ?? null;
+    public function getAmount(): ?Money {
+        return $this->toMoney($this->amount ?? null);
     }
 
     public function getSalaryTypeId(): ?int {

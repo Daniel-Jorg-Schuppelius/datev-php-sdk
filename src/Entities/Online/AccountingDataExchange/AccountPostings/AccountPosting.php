@@ -13,13 +13,17 @@ declare(strict_types=1);
 namespace Datev\Entities\Online\AccountingDataExchange\AccountPostings;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
+use CommonToolkit\ValueObjects\Money;
 use Datev\Enums\Online\DataExchangeRecordType;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 /**
  * Buchungssatz aus dem Buchungsdatenservice (Accounting Data Exchange).
  */
 class AccountPosting extends NamedEntity {
+    use MoneyAccessorTrait;
+
     protected int $accountNumber;
 
     protected int $accountingSequenceId;
@@ -132,12 +136,12 @@ class AccountPosting extends NamedEntity {
         return $this->additionalFunctionsForGoodsAndServices ?? null;
     }
 
-    public function getAmountCredit(): ?float {
-        return $this->amountCredit ?? null;
+    public function getAmountCredit(): ?Money {
+        return $this->toMoney($this->amountCredit ?? null);
     }
 
-    public function getAmountDebit(): ?float {
-        return $this->amountDebit ?? null;
+    public function getAmountDebit(): ?Money {
+        return $this->toMoney($this->amountDebit ?? null);
     }
 
     public function getAdvancePayment(): ?AdvancePayment {

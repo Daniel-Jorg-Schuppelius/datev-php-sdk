@@ -30,7 +30,7 @@ class EmployeeCapacityTest extends EntityTest {
         $employeeCapacity = new EmployeeCapacity($data);
 
         $this->assertInstanceOf(EmployeeCapacity::class, $employeeCapacity);
-        $this->assertEquals(40.0, $employeeCapacity->getTotalHoursTimeUnits());
+        $this->assertSame('40.00', $employeeCapacity->getTotalHoursTimeUnits()?->getAmount());
     }
 
     public function test_create_employee_capacities(): void {

@@ -13,12 +13,16 @@ declare(strict_types=1);
 namespace Datev\Entities\Online\HrExports\SocialSecurityPayments;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
+use CommonToolkit\ValueObjects\Money;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 /**
  * Beitragswerte der Versicherung (unemployment_insurance).
  */
 class UnemploymentInsurance extends NamedEntity {
+    use MoneyAccessorTrait;
+
     protected float $unemployment_insurance_monthly_contribution_employer;
 
     protected float $unemployment_insurance_employers_contribution_non_recurring_payment;
@@ -69,11 +73,11 @@ class UnemploymentInsurance extends NamedEntity {
         return $this->unemployment_insurance_gross_monthly_contribution ?? null;
     }
 
-    public function getUnemploymentInsuranceEmployeesContributionTotal(): ?float {
-        return $this->unemployment_insurance_employees_contribution_total ?? null;
+    public function getUnemploymentInsuranceEmployeesContributionTotal(): ?Money {
+        return $this->toMoney($this->unemployment_insurance_employees_contribution_total ?? null);
     }
 
-    public function getUnemploymentInsuranceEmployerContributionTotal(): ?float {
-        return $this->unemployment_insurance_employer_contribution_total ?? null;
+    public function getUnemploymentInsuranceEmployerContributionTotal(): ?Money {
+        return $this->toMoney($this->unemployment_insurance_employer_contribution_total ?? null);
     }
 }

@@ -13,9 +13,13 @@ declare(strict_types=1);
 namespace Datev\Entities\Law\Budgets;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
+use CommonToolkit\ValueObjects\Money;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 class Budget extends NamedEntity {
+    use MoneyAccessorTrait;
+
     protected ?int $id;
     protected ?float $budget;
     protected ?float $sum_time_expenses;
@@ -35,12 +39,12 @@ class Budget extends NamedEntity {
         return $this->budget ?? null;
     }
 
-    public function getSumTimeExpenses(): ?float {
-        return $this->sum_time_expenses ?? null;
+    public function getSumTimeExpenses(): ?Money {
+        return $this->toMoney($this->sum_time_expenses ?? null);
     }
 
-    public function getSumTaxableExpenses(): ?float {
-        return $this->sum_taxable_expenses ?? null;
+    public function getSumTaxableExpenses(): ?Money {
+        return $this->toMoney($this->sum_taxable_expenses ?? null);
     }
 
     public function getUnusedBudget(): ?float {

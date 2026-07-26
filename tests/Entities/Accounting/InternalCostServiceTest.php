@@ -33,7 +33,7 @@ class InternalCostServiceTest extends EntityTest {
         $costService = new InternalCostService($data);
         $this->assertInstanceOf(InternalCostService::class, new InternalCostService);
         $this->assertInstanceOf(InternalCostService::class, $costService);
-        $this->assertEquals(1500.00, $costService->getAmount());
+        $this->assertSame('1500.00', $costService->getAmount()?->getAmount());
         $this->assertEquals("10000", $costService->getCostCenterFrom());
         $this->assertEquals("20000", $costService->getCostCenterTo());
         $this->assertEquals("Rechnung 2024-001", $costService->getDocumentField1());

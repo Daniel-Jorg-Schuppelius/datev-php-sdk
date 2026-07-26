@@ -14,10 +14,14 @@ namespace Datev\Entities\Accounting\Stocktakings;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
+use CommonToolkit\ValueObjects\Money;
 use DateTime;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 class StocktakingRecord extends NamedEntity implements IdentifiableNamedEntityInterface {
+    use MoneyAccessorTrait;
+
     protected StocktakingRecordID $id;
     protected ?int $asset_number;
     protected ?string $inventory_number;
@@ -86,8 +90,8 @@ class StocktakingRecord extends NamedEntity implements IdentifiableNamedEntityIn
         return $this->origin_type ?? null;
     }
 
-    public function getPrice(): ?float {
-        return $this->price ?? null;
+    public function getPrice(): ?Money {
+        return $this->toMoney($this->price ?? null);
     }
 
     public function getQuantity(): ?float {

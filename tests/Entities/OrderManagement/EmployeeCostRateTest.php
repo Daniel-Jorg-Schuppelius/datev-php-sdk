@@ -33,8 +33,8 @@ class EmployeeCostRateTest extends EntityTest {
         $this->assertInstanceOf(EmployeeCostRate::class, $costRate);
         $this->assertEquals(100, $costRate->getEmployeeNumber());
         $this->assertEquals(1, $costRate->getCostRateNumber());
-        $this->assertEquals(75.00, $costRate->getCostRate1());
-        $this->assertEquals(85.00, $costRate->getCostRate2());
+        $this->assertSame('75.00', $costRate->getCostRate1()?->getAmount());
+        $this->assertSame('85.00', $costRate->getCostRate2()?->getAmount());
     }
 
     public function test_create_employees_cost_rate() {

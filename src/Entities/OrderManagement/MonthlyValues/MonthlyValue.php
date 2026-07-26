@@ -14,9 +14,13 @@ namespace Datev\Entities\OrderManagement\MonthlyValues;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Entities\GUID;
+use CommonToolkit\ValueObjects\Money;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 class MonthlyValue extends NamedEntity {
+    use MoneyAccessorTrait;
+
     protected ?MonthlyValueID $id;
     protected ?int $order_id;
     protected ?int $creation_year;
@@ -118,52 +122,52 @@ class MonthlyValue extends NamedEntity {
         return $this->total_hours ?? null;
     }
 
-    public function getTotalHoursNotInvoiced(): ?float {
-        return $this->total_hours_not_invoiced ?? null;
+    public function getTotalHoursNotInvoiced(): ?Money {
+        return $this->toMoney($this->total_hours_not_invoiced ?? null);
     }
 
-    public function getTimeCosts(): ?float {
-        return $this->time_costs ?? null;
+    public function getTimeCosts(): ?Money {
+        return $this->toMoney($this->time_costs ?? null);
     }
 
-    public function getTimeCostsNotInvoiced(): ?float {
-        return $this->time_costs_not_invoiced ?? null;
+    public function getTimeCostsNotInvoiced(): ?Money {
+        return $this->toMoney($this->time_costs_not_invoiced ?? null);
     }
 
-    public function getMaterialCosts(): ?float {
-        return $this->material_costs ?? null;
+    public function getMaterialCosts(): ?Money {
+        return $this->toMoney($this->material_costs ?? null);
     }
 
-    public function getMaterialCostsNotInvoiced(): ?float {
-        return $this->material_costs_not_invoiced ?? null;
+    public function getMaterialCostsNotInvoiced(): ?Money {
+        return $this->toMoney($this->material_costs_not_invoiced ?? null);
     }
 
-    public function getExpensesCosts(): ?float {
-        return $this->expenses_costs ?? null;
+    public function getExpensesCosts(): ?Money {
+        return $this->toMoney($this->expenses_costs ?? null);
     }
 
-    public function getExpensesCostsNotInvoiced(): ?float {
-        return $this->expenses_costs_not_invoiced ?? null;
+    public function getExpensesCostsNotInvoiced(): ?Money {
+        return $this->toMoney($this->expenses_costs_not_invoiced ?? null);
     }
 
-    public function getExternalCosts(): ?float {
-        return $this->external_costs ?? null;
+    public function getExternalCosts(): ?Money {
+        return $this->toMoney($this->external_costs ?? null);
     }
 
-    public function getExternalCostsNotInvoiced(): ?float {
-        return $this->external_costs_not_invoiced ?? null;
+    public function getExternalCostsNotInvoiced(): ?Money {
+        return $this->toMoney($this->external_costs_not_invoiced ?? null);
     }
 
-    public function getTotalCosts(): ?float {
-        return $this->total_costs ?? null;
+    public function getTotalCosts(): ?Money {
+        return $this->toMoney($this->total_costs ?? null);
     }
 
-    public function getTotalCostsNotInvoiced(): ?float {
-        return $this->total_costs_not_invoiced ?? null;
+    public function getTotalCostsNotInvoiced(): ?Money {
+        return $this->toMoney($this->total_costs_not_invoiced ?? null);
     }
 
-    public function getTotalTurnover(): ?float {
-        return $this->total_turnover ?? null;
+    public function getTotalTurnover(): ?Money {
+        return $this->toMoney($this->total_turnover ?? null);
     }
 
     public function getFees(): ?float {
@@ -182,8 +186,8 @@ class MonthlyValue extends NamedEntity {
         return $this->credit_expenses ?? null;
     }
 
-    public function getCreditAmount(): ?float {
-        return $this->credit_amount ?? null;
+    public function getCreditAmount(): ?Money {
+        return $this->toMoney($this->credit_amount ?? null);
     }
 
     public function getOnAccountFeesOffset(): ?float {
@@ -194,8 +198,8 @@ class MonthlyValue extends NamedEntity {
         return $this->on_account_expenses_offset ?? null;
     }
 
-    public function getOnAccountAmountOffset(): ?float {
-        return $this->on_account_amount_offset ?? null;
+    public function getOnAccountAmountOffset(): ?Money {
+        return $this->toMoney($this->on_account_amount_offset ?? null);
     }
 
     public function getContributionMargin(): ?float {

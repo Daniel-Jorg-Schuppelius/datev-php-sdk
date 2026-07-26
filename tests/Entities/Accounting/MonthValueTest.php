@@ -28,7 +28,7 @@ class MonthValueTest extends EntityTest {
         $monthValue = new MonthValue($data);
 
         $this->assertInstanceOf(MonthValue::class, $monthValue);
-        $this->assertEquals(1234.56, $monthValue->getMonthlyBalance());
+        $this->assertSame('1234.56', $monthValue->getMonthlyBalance()?->getAmount());
         $this->assertEquals("D", $monthValue->getDebitCreditIdentifier());
         $this->assertEquals(5000.00, $monthValue->getMonthDebit());
         $this->assertEquals(3765.44, $monthValue->getMonthCredit());

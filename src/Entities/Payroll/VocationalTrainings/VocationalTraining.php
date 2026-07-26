@@ -14,9 +14,13 @@ namespace Datev\Entities\Payroll\VocationalTrainings;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
+use CommonToolkit\ValueObjects\Money;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 class VocationalTraining extends NamedEntity implements IdentifiableNamedEntityInterface {
+    use MoneyAccessorTrait;
+
     protected VocationalTrainingID $id;
     protected string $personnel_number;
     protected ?float $amount;
@@ -33,7 +37,7 @@ class VocationalTraining extends NamedEntity implements IdentifiableNamedEntityI
         return $this->personnel_number;
     }
 
-    public function getAmount(): ?float {
-        return $this->amount ?? null;
+    public function getAmount(): ?Money {
+        return $this->toMoney($this->amount ?? null);
     }
 }

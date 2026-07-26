@@ -13,12 +13,16 @@ declare(strict_types=1);
 namespace Datev\Entities\Online\HrExchange\Employees;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
+use CommonToolkit\ValueObjects\Money;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 /**
  * Individuelle Felder des Arbeitnehmers (bis zu acht Feldgruppen).
  */
 class IndividualData extends NamedEntity {
+    use MoneyAccessorTrait;
+
     protected string $id;
 
     protected string $long_field_name;
@@ -105,8 +109,8 @@ class IndividualData extends NamedEntity {
         return $this->date ?? null;
     }
 
-    public function getAmount(): ?float {
-        return $this->amount ?? null;
+    public function getAmount(): ?Money {
+        return $this->toMoney($this->amount ?? null);
     }
 
     public function getLongFieldName2(): ?string {
@@ -121,8 +125,8 @@ class IndividualData extends NamedEntity {
         return $this->date2 ?? null;
     }
 
-    public function getAmount2(): ?float {
-        return $this->amount2 ?? null;
+    public function getAmount2(): ?Money {
+        return $this->toMoney($this->amount2 ?? null);
     }
 
     public function getLongFieldName3(): ?string {
@@ -137,8 +141,8 @@ class IndividualData extends NamedEntity {
         return $this->date3 ?? null;
     }
 
-    public function getAmount3(): ?float {
-        return $this->amount3 ?? null;
+    public function getAmount3(): ?Money {
+        return $this->toMoney($this->amount3 ?? null);
     }
 
     public function getLongFieldName4(): ?string {
@@ -153,8 +157,8 @@ class IndividualData extends NamedEntity {
         return $this->date4 ?? null;
     }
 
-    public function getAmount4(): ?float {
-        return $this->amount4 ?? null;
+    public function getAmount4(): ?Money {
+        return $this->toMoney($this->amount4 ?? null);
     }
 
     public function getLongFieldName5(): ?string {
@@ -169,8 +173,8 @@ class IndividualData extends NamedEntity {
         return $this->date5 ?? null;
     }
 
-    public function getAmount5(): ?float {
-        return $this->amount5 ?? null;
+    public function getAmount5(): ?Money {
+        return $this->toMoney($this->amount5 ?? null);
     }
 
     public function getLongFieldName6(): ?string {
@@ -185,8 +189,8 @@ class IndividualData extends NamedEntity {
         return $this->date6 ?? null;
     }
 
-    public function getAmount6(): ?float {
-        return $this->amount6 ?? null;
+    public function getAmount6(): ?Money {
+        return $this->toMoney($this->amount6 ?? null);
     }
 
     public function getLongFieldName7(): ?string {
@@ -201,8 +205,8 @@ class IndividualData extends NamedEntity {
         return $this->date7 ?? null;
     }
 
-    public function getAmount7(): ?float {
-        return $this->amount7 ?? null;
+    public function getAmount7(): ?Money {
+        return $this->toMoney($this->amount7 ?? null);
     }
 
     public function getLongFieldName8(): ?string {
@@ -217,7 +221,7 @@ class IndividualData extends NamedEntity {
         return $this->date8 ?? null;
     }
 
-    public function getAmount8(): ?float {
-        return $this->amount8 ?? null;
+    public function getAmount8(): ?Money {
+        return $this->toMoney($this->amount8 ?? null);
     }
 }

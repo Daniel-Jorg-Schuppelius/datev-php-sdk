@@ -14,10 +14,14 @@ namespace Datev\Entities\Payroll\Salaries;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
+use CommonToolkit\ValueObjects\Money;
 use DateTime;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 class Salary extends NamedEntity implements IdentifiableNamedEntityInterface {
+    use MoneyAccessorTrait;
+
     protected SalaryID $id;
     protected ?string $personnel_number;
     protected ?DateTime $date_of_emergence;
@@ -346,8 +350,8 @@ class Salary extends NamedEntity implements IdentifiableNamedEntityInterface {
         return $this->payment_flat_rate_tax_agriculture_and_forestry_temporary_employed ?? null;
     }
 
-    public function getFlatRateWageTaxGrantRideCosts(): ?float {
-        return $this->flat_rate_wage_tax_grant_ride_costs ?? null;
+    public function getFlatRateWageTaxGrantRideCosts(): ?Money {
+        return $this->toMoney($this->flat_rate_wage_tax_grant_ride_costs ?? null);
     }
 
     public function getFlatRateWageTaxDirectInsuranceContributions(): ?float {
@@ -370,8 +374,8 @@ class Salary extends NamedEntity implements IdentifiableNamedEntityInterface {
         return $this->flat_rate_wage_tax_mini_job ?? null;
     }
 
-    public function getFlatRateSolitaryTaxGrantRideCosts(): ?float {
-        return $this->flat_rate_solitary_tax_grant_ride_costs ?? null;
+    public function getFlatRateSolitaryTaxGrantRideCosts(): ?Money {
+        return $this->toMoney($this->flat_rate_solitary_tax_grant_ride_costs ?? null);
     }
 
     public function getFlatRateSolitaryTaxTemporaryEmployed(): ?float {
@@ -382,8 +386,8 @@ class Salary extends NamedEntity implements IdentifiableNamedEntityInterface {
         return $this->flat_rate_solitary_tax_agriculture_and_forestry_temporary_employed ?? null;
     }
 
-    public function getFlatRateChurchTaxGrantRideCosts(): ?float {
-        return $this->flat_rate_church_tax_grant_ride_costs ?? null;
+    public function getFlatRateChurchTaxGrantRideCosts(): ?Money {
+        return $this->toMoney($this->flat_rate_church_tax_grant_ride_costs ?? null);
     }
 
     public function getFlatRateChurchTaxTemporaryEmployed(): ?float {

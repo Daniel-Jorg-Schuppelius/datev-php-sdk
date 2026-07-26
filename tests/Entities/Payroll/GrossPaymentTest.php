@@ -30,7 +30,7 @@ class GrossPaymentTest extends EntityTest {
         $this->assertInstanceOf(GrossPaymentID::class, $grossPayment->getID());
         $this->assertEquals("gp-001", $grossPayment->getID()->getValue());
         $this->assertEquals("12345", $grossPayment->getPersonnelNumber());
-        $this->assertEquals(5000.00, $grossPayment->getAmount());
+        $this->assertSame('5000.00', $grossPayment->getAmount()?->getAmount());
     }
 
     public function test_create_gross_payments(): void {

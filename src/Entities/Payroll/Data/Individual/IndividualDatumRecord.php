@@ -13,10 +13,14 @@ declare(strict_types=1);
 namespace Datev\Entities\Payroll\Data\Individual;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
+use CommonToolkit\ValueObjects\Money;
 use DateTime;
+use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 class IndividualDatumRecord extends NamedEntity {
+    use MoneyAccessorTrait;
+
     protected ?string $long_field_name;
     protected ?string $short_field_name;
     protected ?DateTime $date;
@@ -38,7 +42,7 @@ class IndividualDatumRecord extends NamedEntity {
         return $this->date;
     }
 
-    public function getAmount(): ?float {
-        return $this->amount;
+    public function getAmount(): ?Money {
+        return $this->toMoney($this->amount);
     }
 }
