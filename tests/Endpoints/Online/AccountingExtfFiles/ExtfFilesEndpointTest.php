@@ -71,7 +71,8 @@ class ExtfFilesEndpointTest extends OnlineEndpointTest {
 
         $page = $this->createEndpoint()->searchJobs(['skip' => 0, 'top' => 10]);
 
-        $this->assertSame('42.00', $page->getTotalItems()?->getAmount());
+        // Total-Items ist die Trefferanzahl aus dem Header (?int), kein Betrag.
+        $this->assertSame(42, $page->getTotalItems());
         $this->assertTrue($page->hasNext());
         $this->assertSame(1, $page->getItems()?->count());
         $this->assertInstanceOf(ExtfJob::class, $page->getItems()->getFirstValue());

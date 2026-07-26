@@ -68,7 +68,8 @@ class ClientsEndpointTest extends OnlineEndpointTest {
         $this->assertSame(2, $page->getItems()->count());
 
         if ($this->isUsingMock()) {
-            $this->assertSame('248.00', $page->getTotalItems()?->getAmount());
+            // Total-Items ist die Trefferanzahl aus dem Header (?int), kein Betrag.
+            $this->assertSame(248, $page->getTotalItems());
             $this->assertTrue($page->hasNext());
             $this->assertSame('?skip=2&top=2', $page->getNextLink());
         }

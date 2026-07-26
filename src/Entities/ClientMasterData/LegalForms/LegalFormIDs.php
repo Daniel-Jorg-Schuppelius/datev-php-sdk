@@ -14,7 +14,6 @@ namespace Datev\Entities\ClientMasterData\LegalForms;
 
 use APIToolkit\Contracts\Abstracts\NamedValues;
 use DateTime;
-use Datev\Contracts\Abstracts\DateTimeNamedValue;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -37,12 +36,12 @@ class LegalFormIDs extends NamedValues {
     public function toArray(bool $fullEntity = true, string $dateFormat = DateTime::RFC3339_EXTENDED): array {
         $result = [];
         if ($fullEntity) {
-            foreach ($this->values as $key => $value) {
-                if ($value instanceof LegalFormID || $value instanceof DateTimeNamedValue) {
-                    $result[] = $value->toArray($fullEntity, $dateFormat);
-                } else {
-                    $result[] = $this->makeArray($key, $value, false, true, $dateFormat);
-                }
+            // Die Collection ist auf LegalFormID festgelegt (@extends
+            // NamedValues<LegalFormID>, valueClassName im Konstruktor) — eine
+            // Typunterscheidung wie in DateTimeNamedValues, wo der Elementtyp
+            // offen ist, hätte hier keinen erreichbaren Zweig.
+            foreach ($this->values as $value) {
+                $result[] = $value->toArray($fullEntity, $dateFormat);
             }
         } else {
             $result = parent::toArray();
