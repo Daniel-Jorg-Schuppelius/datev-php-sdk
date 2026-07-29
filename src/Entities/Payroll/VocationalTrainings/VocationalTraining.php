@@ -14,8 +14,8 @@ namespace Datev\Entities\Payroll\VocationalTrainings;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
+use APIToolkit\Traits\MoneyAccessorTrait;
 use CommonToolkit\ValueObjects\Money;
-use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 class VocationalTraining extends NamedEntity implements IdentifiableNamedEntityInterface {

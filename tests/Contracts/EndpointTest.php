@@ -27,6 +27,9 @@ abstract class EndpointTest extends TestCase {
 
     protected bool $apiDisabled = false;
 
+    /** Ergebnis der Echo-Probe, einmal je Testlauf ermittelt (null = noch offen). */
+    private static ?bool $apiAvailability = null;
+
     /**
      * Gibt an, ob der Test im Mock-Modus läuft.
      * Wenn true, werden Mock-Daten statt echter API-Antworten verwendet.
@@ -62,6 +65,27 @@ abstract class EndpointTest extends TestCase {
         return $envValue === '1' || $envValue === 'true';
     }
 
+    /**
+     * Einmalige Verfügbarkeitsprüfung pro Testlauf.
+     *
+     * Zuvor lief die Echo-Probe in jedem setUp(); ohne laufende Desktop-API
+     * kostete jeder Test den Verbindungsversuch inklusive Retry-Backoff und
+     * die Suite lief in den Composer-Prozess-Timeout (300 s).
+     */
+    protected static function apiUnavailable(ApiClientInterface $client): bool {
+        if (self::$apiAvailability === null) {
+            try {
+                $echoResponse = (new EchoEndpoint($client))->get();
+                self::$apiAvailability = $echoResponse !== null && $echoResponse->isValid();
+            } catch (Throwable $e) {
+                self::logDebug('API not available, switching to mock mode: ' . $e->getMessage());
+                self::$apiAvailability = false;
+            }
+        }
+
+        return self::$apiAvailability === false;
+    }
+
     protected function setUp(): void {
         parent::setUp();
         self::setLogger(TestAPIClientFactory::getLogger());
@@ -82,14 +106,7 @@ abstract class EndpointTest extends TestCase {
         }
 
         if (!$this->apiDisabled) {
-            try {
-                $endpoint = new EchoEndpoint($this->client);
-                $echoResponse = $endpoint->get();
-                $this->apiDisabled = $echoResponse === null || !$echoResponse->isValid();
-            } catch (Throwable $e) {
-                self::logDebug("API not available, switching to mock mode: " . $e->getMessage());
-                $this->apiDisabled = true;
-            }
+            $this->apiDisabled = self::apiUnavailable($this->client);
         }
 
         // Wenn API deaktiviert ist, auf MockClient umschalten

@@ -14,11 +14,11 @@ namespace Datev\Entities\OrderManagement\ExpensePostings;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Entities\GUID;
+use APIToolkit\Traits\MoneyAccessorTrait;
 use CommonToolkit\ValueObjects\Money;
 use DateTime;
 use Datev\Entities\OrderManagement\Orders\OrderID;
 use Datev\Entities\OrderManagement\Suborders\SuborderID;
-use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 class ExpensePosting extends NamedEntity {

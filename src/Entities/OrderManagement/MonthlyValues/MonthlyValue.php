@@ -14,8 +14,8 @@ namespace Datev\Entities\OrderManagement\MonthlyValues;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Entities\GUID;
+use APIToolkit\Traits\MoneyAccessorTrait;
 use CommonToolkit\ValueObjects\Money;
-use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 class MonthlyValue extends NamedEntity {

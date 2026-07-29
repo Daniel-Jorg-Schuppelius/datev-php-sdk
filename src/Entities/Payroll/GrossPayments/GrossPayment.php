@@ -14,10 +14,10 @@ namespace Datev\Entities\Payroll\GrossPayments;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
+use APIToolkit\Traits\MoneyAccessorTrait;
 use CommonToolkit\ValueObjects\Money;
 use DateTime;
 use Datev\Entities\Payroll\Salaries\SalaryTypes\ID\SalaryTypeID;
-use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 class GrossPayment extends NamedEntity implements IdentifiableNamedEntityInterface {

@@ -14,8 +14,8 @@ namespace Datev\Entities\Payroll\Insurances\Private;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
+use APIToolkit\Traits\MoneyAccessorTrait;
 use CommonToolkit\ValueObjects\Money;
-use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 class PrivateInsurance extends NamedEntity implements IdentifiableNamedEntityInterface {
