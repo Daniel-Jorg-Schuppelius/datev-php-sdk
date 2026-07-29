@@ -14,6 +14,7 @@ namespace Datev\Entities\DocumentManagement\Documents;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
+use APIToolkit\Traits\MoneyAccessorTrait;
 use CommonToolkit\ValueObjects\Money;
 use DateTime;
 use Datev\Entities\DocumentManagement\AcknowledgementUsers\AcknowledgementUsers;
@@ -32,7 +33,6 @@ use Datev\Entities\DocumentManagement\SecureAreas\SecureArea;
 use Datev\Entities\DocumentManagement\States\State;
 use Datev\Entities\DocumentManagement\StructureItems\StructureItems;
 use Datev\Entities\DocumentManagement\Users\User;
-use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 class Document extends NamedEntity implements IdentifiableNamedEntityInterface {

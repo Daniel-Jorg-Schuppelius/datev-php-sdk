@@ -13,9 +13,9 @@ declare(strict_types=1);
 namespace Datev\Entities\Online\AccountingDataExchange\AccountPostings;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
+use APIToolkit\Traits\MoneyAccessorTrait;
 use CommonToolkit\ValueObjects\Money;
 use Datev\Enums\Online\DataExchangeRecordType;
-use Datev\Traits\MoneyAccessorTrait;
 use Psr\Log\LoggerInterface;
 
 /**

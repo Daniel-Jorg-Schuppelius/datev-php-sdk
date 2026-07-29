@@ -14,6 +14,7 @@ namespace Datev\API\Online;
 
 use APIToolkit\Contracts\Abstracts\API\ClientAbstract;
 use APIToolkit\Contracts\Interfaces\API\AuthenticationInterface;
+use GuzzleHttp\Client as HttpClient;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
@@ -31,15 +32,21 @@ class Client extends ClientAbstract {
 
     protected bool $sandbox;
 
+    /**
+     * @param HttpClient|null $httpClient Vorkonfigurierter Guzzle-Client — Naht
+     *                                    für Tests (MockHandler) und für
+     *                                    Anwendungen mit eigenem Transport.
+     */
     public function __construct(
         OnlineService $service,
         ?AuthenticationInterface $authentication = null,
         ?string $datevClientId = null,
         bool $sandbox = false,
         ?LoggerInterface $logger = null,
-        bool $sleepAfterRequest = false
+        bool $sleepAfterRequest = false,
+        ?HttpClient $httpClient = null
     ) {
-        parent::__construct($service->host(), $logger, $sleepAfterRequest);
+        parent::__construct($service->host(), $logger, $sleepAfterRequest, $httpClient);
 
         $this->service = $service;
         $this->sandbox = $sandbox;
@@ -69,9 +76,10 @@ class Client extends ClientAbstract {
         string $datevClientSecret = '',
         bool $sandbox = false,
         ?LoggerInterface $logger = null,
-        bool $sleepAfterRequest = false
+        bool $sleepAfterRequest = false,
+        ?HttpClient $httpClient = null
     ): self {
-        $client = new self($service, null, $datevClientId, $sandbox, $logger, $sleepAfterRequest);
+        $client = new self($service, null, $datevClientId, $sandbox, $logger, $sleepAfterRequest, $httpClient);
 
         if ($datevClientSecret !== '') {
             $client->addDefaultHeader($service->clientSecretHeader(), $datevClientSecret);
@@ -96,15 +104,22 @@ class Client extends ClientAbstract {
     }
 
     /**
-     * Stellt dienst-relativen URIs den Basispfad voran.
-     * Absolute URLs (http/https) und gerootete Pfade ("/...") bleiben unverändert.
+     * Baut aus einem dienst-relativen URI die vollständige Ziel-URL
+     * (Host + Basispfad + Pfad). Absolute URLs (z. B. aus Location-Headern)
+     * bleiben unverändert; ein gerooteter Pfad ("/...") trägt den Basispfad
+     * selbst. Die vollständige URL macht den Client unabhängig von der
+     * base_uri eines injizierten Transports.
      */
     protected function prefixUri(string $uri): string {
-        if ($uri === '' || str_starts_with($uri, 'http://') || str_starts_with($uri, 'https://') || str_starts_with($uri, '/')) {
+        if ($uri === '' || str_starts_with($uri, 'http://') || str_starts_with($uri, 'https://')) {
             return $uri;
         }
 
-        return $this->getServicePath() . '/' . $uri;
+        if (str_starts_with($uri, '/')) {
+            return $this->getBaseUrl() . $uri;
+        }
+
+        return $this->getBaseUrl() . $this->getServicePath() . '/' . $uri;
     }
 
     /**

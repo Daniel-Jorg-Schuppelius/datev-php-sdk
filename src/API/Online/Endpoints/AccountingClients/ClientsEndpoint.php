@@ -98,4 +98,34 @@ class ClientsEndpoint extends EndpointAbstract implements SearchableEndpointInte
             );
         }, 'Searching Clients (paged)');
     }
+
+    /**
+     * Iteriert alle Mandanten über sämtliche Seiten hinweg (folgt rel="next").
+     *
+     * @param array<string, mixed> $queryParams
+     * @param array<string, mixed> $options
+     * @param int|null $maxPages Obergrenze für die Zahl geladener Seiten
+     * @return \Generator<int, \Datev\Entities\Online\AccountingClients\Clients\Client>
+     */
+    public function searchAll(array $queryParams = [], array $options = [], ?int $maxPages = null): \Generator {
+        $urlPath = $this->getEndpointUrl();
+        $queryString = http_build_query($queryParams);
+        if ($queryString !== '') {
+            $urlPath .= "?{$queryString}";
+        }
+
+        yield from $this->iterateLinkPages(
+            $urlPath,
+            function ($response): array {
+                $body = (string) $response->getBody();
+                if ($body === '' || $body === '[]') {
+                    return [];
+                }
+
+                return Clients::fromJson($body, self::$logger)->getValues();
+            },
+            $options,
+            $maxPages
+        );
+    }
 }

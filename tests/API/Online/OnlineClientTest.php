@@ -31,21 +31,31 @@ class OnlineClientTest extends TestCase {
 
     public function test_prefixes_service_relative_uri(): void {
         $client = $this->createClient(OnlineService::AccountingClients);
+        $host = OnlineService::AccountingClients->host();
 
-        $this->assertSame('/platform/v2/clients', $client->exposePrefixUri('clients'));
-        $this->assertSame('/platform/v2/clients/29098-55003?top=5', $client->exposePrefixUri('clients/29098-55003?top=5'));
+        // Der Client baut die vollständige URL; ein injizierter Transport muss
+        // dafür keine base_uri mitbringen.
+        $this->assertSame($host . '/platform/v2/clients', $client->exposePrefixUri('clients'));
+        $this->assertSame($host . '/platform/v2/clients/29098-55003?top=5', $client->exposePrefixUri('clients/29098-55003?top=5'));
     }
 
     public function test_sandbox_prefix(): void {
         $client = $this->createClient(OnlineService::AccountingClients, true);
 
-        $this->assertSame('/platform-sandbox/v2/clients', $client->exposePrefixUri('clients'));
+        $this->assertSame(
+            OnlineService::AccountingClients->host() . '/platform-sandbox/v2/clients',
+            $client->exposePrefixUri('clients')
+        );
     }
 
     public function test_rooted_and_absolute_uris_pass_through(): void {
         $client = $this->createClient(OnlineService::AccountingExtfFiles);
 
-        $this->assertSame('/platform/v3/clients/1-2/extf-files/jobs/abc', $client->exposePrefixUri('/platform/v3/clients/1-2/extf-files/jobs/abc'));
+        // Gerootete Pfade tragen den Basispfad selbst und bekommen nur den Host.
+        $this->assertSame(
+            OnlineService::AccountingExtfFiles->host() . '/platform/v3/clients/1-2/extf-files/jobs/abc',
+            $client->exposePrefixUri('/platform/v3/clients/1-2/extf-files/jobs/abc')
+        );
         $this->assertSame('https://accounting-extf-files.api.datev.de/platform/v3/clients', $client->exposePrefixUri('https://accounting-extf-files.api.datev.de/platform/v3/clients'));
         $this->assertSame('', $client->exposePrefixUri(''));
     }

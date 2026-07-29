@@ -12,10 +12,12 @@ declare(strict_types=1);
 
 namespace Datev\Contracts\Abstracts\API\Online;
 
+use APIToolkit\API\Pagination\LinkHeaderPaginator;
 use APIToolkit\Contracts\Abstracts\API\EndpointAbstract as APIEndpointAbstract;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterface;
 use APIToolkit\Entities\ID;
 use APIToolkit\Exceptions\ApiException;
+use Generator;
 use InvalidArgumentException;
 use Psr\Http\Message\{ResponseInterface, StreamInterface};
 
@@ -64,6 +66,29 @@ abstract class EndpointAbstract extends APIEndpointAbstract {
         ], fn (string $part) => $part !== '');
 
         return implode('/', $parts);
+    }
+
+    /**
+     * Läuft eine per Link-Header paginierte Liste vollständig durch und liefert
+     * die einzelnen Einträge.
+     *
+     * Die Online-Dienste geben die Folgeseite als rel="next" mit; der
+     * {@see LinkHeaderPaginator} des api-toolkits folgt ihr, bis keine mehr da
+     * ist. Aufrufer arbeiten damit mit einer Sequenz statt mit Seiten-URLs.
+     *
+     * @param callable(ResponseInterface): array<int, mixed> $itemsFromResponse Zieht die Einträge aus einer Seiten-Response
+     * @param array<string, mixed> $options
+     * @param int|null $maxPages Obergrenze für die Zahl geladener Seiten
+     * @return Generator<int, mixed>
+     */
+    protected function iterateLinkPages(string $firstUrl, callable $itemsFromResponse, array $options = [], ?int $maxPages = null): Generator {
+        $paginator = new LinkHeaderPaginator(
+            fn (?string $url): ResponseInterface => $this->requestResponse('GET', $url ?? $firstUrl, $options, 200),
+            $itemsFromResponse,
+            $maxPages
+        );
+
+        yield from $paginator;
     }
 
     /**
