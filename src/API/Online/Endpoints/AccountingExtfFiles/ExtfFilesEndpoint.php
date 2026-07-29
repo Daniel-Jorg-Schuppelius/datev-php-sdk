@@ -12,8 +12,9 @@ declare(strict_types=1);
 
 namespace Datev\API\Online\Endpoints\AccountingExtfFiles;
 
+use APIToolkit\API\Pagination\LinkHeader;
 use APIToolkit\Entities\ID;
-use Datev\API\Online\Support\{JobLocation, JobPoller, LinkHeaderParser, PageMeta, PageResult, PollTick};
+use Datev\API\Online\Support\{JobLocation, JobPoller, PageMeta, PageResult, PollTick};
 use Datev\Contracts\Abstracts\API\Online\ClientScopedEndpointAbstract;
 use Datev\Entities\Online\AccountingExtfFiles\Jobs\{ExtfJob, ExtfJobs};
 use InvalidArgumentException;
@@ -75,7 +76,7 @@ class ExtfFilesEndpoint extends ClientScopedEndpointAbstract {
             return new PageResult(
                 $items,
                 is_numeric($totalItems) ? (int) $totalItems : null,
-                LinkHeaderParser::fromResponse($response),
+                LinkHeader::fromResponse($response),
                 PageMeta::fromResponse($response)
             );
         }, 'Searching ExtfJobs');

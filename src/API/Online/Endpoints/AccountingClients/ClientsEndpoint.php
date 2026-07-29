@@ -12,9 +12,10 @@ declare(strict_types=1);
 
 namespace Datev\API\Online\Endpoints\AccountingClients;
 
+use APIToolkit\API\Pagination\LinkHeader;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
-use Datev\API\Online\Support\{LinkHeaderParser, PageMeta, PageResult};
+use Datev\API\Online\Support\{PageMeta, PageResult};
 use Datev\Contracts\Abstracts\API\Online\EndpointAbstract;
 use Datev\Entities\Online\AccountingClients\Clients\{Client, Clients};
 use Datev\Entities\Online\Common\ConsultantClientNumber;
@@ -93,7 +94,7 @@ class ClientsEndpoint extends EndpointAbstract implements SearchableEndpointInte
             return new PageResult(
                 $items,
                 is_numeric($totalItems) ? (int) $totalItems : null,
-                LinkHeaderParser::fromResponse($response),
+                LinkHeader::fromResponse($response),
                 PageMeta::fromResponse($response)
             );
         }, 'Searching Clients (paged)');

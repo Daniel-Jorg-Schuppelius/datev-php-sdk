@@ -12,11 +12,10 @@ namespace Tests;
 
 use APIToolkit\API\Authentication\{BasicAuthentication, BearerAuthentication};
 use APIToolkit\Contracts\Interfaces\API\ApiClientInterface;
+use APIToolkit\Testing\TestLoggerFactory;
 use ConfigToolkit\ConfigLoader;
 use Datev\API\Desktop\Client;
 use Datev\API\Online\{Client as OnlineClient, OnlineService};
-use ERRORToolkit\Enums\LogType;
-use ERRORToolkit\Factories\{ConsoleLoggerFactory, FileLoggerFactory};
 use ERRORToolkit\LoggerRegistry;
 use Psr\Log\LoggerInterface;
 use Tests\Mocks\{MockClient, MockDataLoader};
@@ -32,19 +31,7 @@ class TestAPIClientFactory {
      * Unterstützt Console- und FileLogger basierend auf Umgebungsvariable.
      */
     public static function getLogger(): LoggerInterface {
-        if (self::$logger === null) {
-            $logType = getenv('DATEV_LOG_TYPE') ?: LogType::CONSOLE->value;
-
-            self::$logger = match ($logType) {
-                LogType::FILE->value => FileLoggerFactory::getLogger(
-                    getenv('DATEV_LOG_FILE') ?: sys_get_temp_dir() . '/datev-sdk.log'
-                ),
-                default => ConsoleLoggerFactory::getLogger(),
-            };
-
-            LoggerRegistry::setLogger(self::$logger);
-        }
-        return self::$logger;
+        return self::$logger ??= TestLoggerFactory::get('DATEV');
     }
 
     public static function getClient(): ApiClientInterface {
@@ -160,6 +147,7 @@ class TestAPIClientFactory {
         self::$mockClient = null;
         self::$logger = null;
         self::$useMock = false;
+        TestLoggerFactory::reset();
         LoggerRegistry::resetLogger();
     }
 }

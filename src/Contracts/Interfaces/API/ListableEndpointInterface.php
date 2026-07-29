@@ -13,9 +13,9 @@ declare(strict_types=1);
 namespace Datev\Contracts\Interfaces\API;
 
 use APIToolkit\Contracts\Abstracts\NamedValues;
-use APIToolkit\Contracts\Interfaces\API\EndpointInterface;
+use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\ListableEndpointInterface as APIToolkitListableEndpointInterface;
 
-interface ListableEndpointInterface extends EndpointInterface {
+interface ListableEndpointInterface extends APIToolkitListableEndpointInterface {
     /**
      * @param array<string, mixed> $options
      * @return NamedValues<\APIToolkit\Contracts\Interfaces\NamedEntityInterface>

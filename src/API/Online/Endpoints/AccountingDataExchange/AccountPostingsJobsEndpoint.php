@@ -12,7 +12,8 @@ declare(strict_types=1);
 
 namespace Datev\API\Online\Endpoints\AccountingDataExchange;
 
-use Datev\API\Online\Support\{LinkHeaderParser, PageMeta, PageResult};
+use APIToolkit\API\Pagination\LinkHeader;
+use Datev\API\Online\Support\{PageMeta, PageResult};
 use Datev\Contracts\Abstracts\API\Online\ClientScopedEndpointAbstract;
 use Datev\Entities\Online\AccountingDataExchange\AccountPostings\AccountPostings;
 
@@ -40,7 +41,7 @@ class AccountPostingsJobsEndpoint extends ClientScopedEndpointAbstract {
             return new PageResult(
                 empty($rows) ? null : new AccountPostings($rows, self::$logger),
                 null,
-                LinkHeaderParser::fromResponse($response),
+                LinkHeader::fromResponse($response),
                 PageMeta::fromResponse($response)
             );
         }, "Fetching AccountPostings job result (ID: {$jobId}" . ($page !== null ? ", page {$page}" : '') . ')');
