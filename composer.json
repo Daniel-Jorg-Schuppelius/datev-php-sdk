@@ -15,6 +15,11 @@
     }
   },
   "prefer-stable": true,
+  "config": {
+    "platform": {
+      "php": "8.2.0"
+    }
+  },
   "require": {
     "php": ">=8.2 <8.5",
     "daniel-jorg-schuppelius/php-api-toolkit": "^2.8",
