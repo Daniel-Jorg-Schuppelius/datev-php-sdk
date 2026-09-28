@@ -118,16 +118,16 @@
         },
         {
             "name": "dschuppelius/php-common-toolkit",
-            "version": "v2.0.0",
+            "version": "v2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DSchuppelius/php-common-toolkit.git",
-                "reference": "69a4dfaa749492776a6ea78ab2c7cb677db2bf8e"
+                "reference": "0abd565f618b17439211afea1a0f39a1460b9414"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DSchuppelius/php-common-toolkit/zipball/69a4dfaa749492776a6ea78ab2c7cb677db2bf8e",
-                "reference": "69a4dfaa749492776a6ea78ab2c7cb677db2bf8e",
+                "url": "https://api.github.com/repos/DSchuppelius/php-common-toolkit/zipball/0abd565f618b17439211afea1a0f39a1460b9414",
+                "reference": "0abd565f618b17439211afea1a0f39a1460b9414",
                 "shasum": ""
             },
             "require": {
@@ -158,28 +158,31 @@
             "authors": [
                 {
                     "name": "Daniel Joerg Schuppelius",
-                    "email": "info@schuppelius.org"
+                    "email": "info@schuppelius.org",
+                    "homepage": "https://schuppelius.org",
+                    "role": "Developer"
                 }
             ],
             "description": "Project description.",
+            "homepage": "https://github.com/DSchuppelius/php-common-toolkit",
             "support": {
                 "issues": "https://github.com/DSchuppelius/php-common-toolkit/issues",
-                "source": "https://github.com/DSchuppelius/php-common-toolkit/tree/v2.0.0"
+                "source": "https://github.com/DSchuppelius/php-common-toolkit"
             },
-            "time": "2026-09-19T10:52:15+00:00"
+            "time": "2026-09-24T06:34:40+00:00"
         },
         {
             "name": "dschuppelius/php-config-toolkit",
-            "version": "v0.5.9",
+            "version": "v0.5.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DSchuppelius/php-config-toolkit.git",
-                "reference": "3f37bf2a25ebff303db4b52289f4586740af5e0b"
+                "reference": "405236ec4135ea577b7910244ae9ab6b9f9e4e81"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DSchuppelius/php-config-toolkit/zipball/3f37bf2a25ebff303db4b52289f4586740af5e0b",
-                "reference": "3f37bf2a25ebff303db4b52289f4586740af5e0b",
+                "url": "https://api.github.com/repos/DSchuppelius/php-config-toolkit/zipball/405236ec4135ea577b7910244ae9ab6b9f9e4e81",
+                "reference": "405236ec4135ea577b7910244ae9ab6b9f9e4e81",
                 "shasum": ""
             },
             "require": {
@@ -204,15 +207,18 @@
             "authors": [
                 {
                     "name": "Daniel Joerg Schuppelius",
-                    "email": "info@schuppelius.org"
+                    "email": "info@schuppelius.org",
+                    "homepage": "https://schuppelius.org",
+                    "role": "Developer"
                 }
             ],
             "description": "Ein Toolkit für JSON-basierte Konfigurationsverwaltung",
+            "homepage": "https://github.com/DSchuppelius/php-config-toolkit",
             "support": {
                 "issues": "https://github.com/DSchuppelius/php-config-toolkit/issues",
-                "source": "https://github.com/DSchuppelius/php-config-toolkit/tree/v0.5.9"
+                "source": "https://github.com/DSchuppelius/php-config-toolkit"
             },
-            "time": "2026-09-10T22:48:30+00:00"
+            "time": "2026-09-25T12:33:25+00:00"
         },
         {
             "name": "dschuppelius/php-error-toolkit",
