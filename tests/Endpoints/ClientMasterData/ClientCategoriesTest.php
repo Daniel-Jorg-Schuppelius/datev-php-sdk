@@ -46,7 +46,7 @@ class ClientCategoriesTest extends EndpointTest {
         $randomClientCategory = $clientCategories->getValues()[array_rand($clientCategories->getValues())];
         $this->assertInstanceOf(ClientCategory::class, $randomClientCategory);
         $clientCategory = $this->endpoint->get($randomClientCategory->getID());
-        $this->assertInstanceOf(ClientCategory::class, $randomClientCategory);
-        $this->assertEquals($randomClientCategory->getID(), $clientCategory?->getID());
+        $this->assertInstanceOf(ClientCategory::class, $clientCategory);
+        $this->assertEquals($randomClientCategory->getID(), $clientCategory->getID());
     }
 }

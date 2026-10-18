@@ -34,7 +34,7 @@ class BanksTest extends EndpointTest {
         $randomBank = $banks->getValues()[array_rand($banks->getValues())];
         $this->assertInstanceOf(Bank::class, $randomBank);
         $bank = $this->endpoint->get($randomBank->getID());
-        $this->assertInstanceOf(Bank::class, $randomBank);
-        $this->assertEquals($randomBank->getID(), $bank?->getID());
+        $this->assertInstanceOf(Bank::class, $bank);
+        $this->assertEquals($randomBank->getID(), $bank->getID());
     }
 }
