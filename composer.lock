@@ -118,16 +118,16 @@
         },
         {
             "name": "dschuppelius/php-common-toolkit",
-            "version": "v2.13.2",
+            "version": "v2.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DSchuppelius/php-common-toolkit.git",
-                "reference": "96b5a283faf1bc44b327b7e7e6abb86a4fc58b4d"
+                "reference": "34ec195c5dbae1671c1f7836fc820d0445298aff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DSchuppelius/php-common-toolkit/zipball/96b5a283faf1bc44b327b7e7e6abb86a4fc58b4d",
-                "reference": "96b5a283faf1bc44b327b7e7e6abb86a4fc58b4d",
+                "url": "https://api.github.com/repos/DSchuppelius/php-common-toolkit/zipball/34ec195c5dbae1671c1f7836fc820d0445298aff",
+                "reference": "34ec195c5dbae1671c1f7836fc820d0445298aff",
                 "shasum": ""
             },
             "require": {
@@ -169,7 +169,7 @@
                 "issues": "https://github.com/DSchuppelius/php-common-toolkit/issues",
                 "source": "https://github.com/DSchuppelius/php-common-toolkit"
             },
-            "time": "2026-10-22T18:59:32+00:00"
+            "time": "2026-10-26T08:16:18+00:00"
         },
         {
             "name": "dschuppelius/php-config-toolkit",
@@ -1328,16 +1328,16 @@
         },
         {
             "name": "symfony/process",
-            "version": "v7.4.21",
+            "version": "v7.4.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "e5247f4a5e0797d232ad8e8e6803aeb341843c83"
+                "reference": "a5a6912edbbfc4c98cd080bc4bbe37c8e7eeb20a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/e5247f4a5e0797d232ad8e8e6803aeb341843c83",
-                "reference": "e5247f4a5e0797d232ad8e8e6803aeb341843c83",
+                "url": "https://api.github.com/repos/symfony/process/zipball/a5a6912edbbfc4c98cd080bc4bbe37c8e7eeb20a",
+                "reference": "a5a6912edbbfc4c98cd080bc4bbe37c8e7eeb20a",
                 "shasum": ""
             },
             "require": {
@@ -1369,7 +1369,7 @@
             "description": "Executes commands in sub-processes",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/process/tree/v7.4.21"
+                "source": "https://github.com/symfony/process/tree/v7.4.22"
             },
             "funding": [
                 {
@@ -1389,7 +1389,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-10-08T16:56:12+00:00"
+            "time": "2026-10-25T14:40:16+00:00"
         }
     ],
     "packages-dev": [
