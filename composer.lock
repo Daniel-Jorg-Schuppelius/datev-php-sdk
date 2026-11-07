@@ -118,7 +118,6 @@
         },
         {
             "name": "dschuppelius/php-common-toolkit",
-<<<<<<< HEAD
             "version": "v2.16.1",
             "source": {
                 "type": "git",
@@ -129,18 +128,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/DSchuppelius/php-common-toolkit/zipball/a7290975d34149c74390202b90d881e818b73a66",
                 "reference": "a7290975d34149c74390202b90d881e818b73a66",
-=======
-            "version": "v2.16.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/DSchuppelius/php-common-toolkit.git",
-                "reference": "34ec195c5dbae1671c1f7836fc820d0445298aff"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/DSchuppelius/php-common-toolkit/zipball/34ec195c5dbae1671c1f7836fc820d0445298aff",
-                "reference": "34ec195c5dbae1671c1f7836fc820d0445298aff",
->>>>>>> ca28f6e9c3e5c8df5cc3c90119ac0f2e2a7f8411
                 "shasum": ""
             },
             "require": {
@@ -182,11 +169,7 @@
                 "issues": "https://github.com/DSchuppelius/php-common-toolkit/issues",
                 "source": "https://github.com/DSchuppelius/php-common-toolkit"
             },
-<<<<<<< HEAD
             "time": "2026-11-07T21:44:19+00:00"
-=======
-            "time": "2026-10-26T08:16:18+00:00"
->>>>>>> ca28f6e9c3e5c8df5cc3c90119ac0f2e2a7f8411
         },
         {
             "name": "dschuppelius/php-config-toolkit",
@@ -1717,19 +1700,11 @@
         },
         {
             "name": "phpstan/phpstan",
-<<<<<<< HEAD
             "version": "2.3.5",
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/phpstan/phpstan/zipball/645a1bd6bead15fc1b8474137467961d0fa30a79",
                 "reference": "645a1bd6bead15fc1b8474137467961d0fa30a79",
-=======
-            "version": "2.3.4",
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/f20ce6f3c82556cfcfc086b152445a12d1d64fff",
-                "reference": "f20ce6f3c82556cfcfc086b152445a12d1d64fff",
->>>>>>> ca28f6e9c3e5c8df5cc3c90119ac0f2e2a7f8411
                 "shasum": ""
             },
             "require": {
@@ -1785,11 +1760,7 @@
                     "type": "github"
                 }
             ],
-<<<<<<< HEAD
             "time": "2026-11-03T12:14:22+00:00"
-=======
-            "time": "2026-10-28T22:38:53+00:00"
->>>>>>> ca28f6e9c3e5c8df5cc3c90119ac0f2e2a7f8411
         },
         {
             "name": "phpunit/php-code-coverage",
