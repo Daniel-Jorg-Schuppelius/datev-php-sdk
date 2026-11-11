@@ -11,8 +11,8 @@ class CostCentersTest extends EntityTest {
     public function test_create_from_array(): void {
         $data = [
             "content" => [
-                ["id" => "cc-1", "cost_center_number" => "100", "cost_center_name" => "Cost Center 1"],
-                ["id" => "cc-2", "cost_center_number" => "200", "cost_center_name" => "Cost Center 2"],
+                ["id" => "cc-1", "cost_center_number" => "100", "costcenter_name" => "Cost Center 1"],
+                ["id" => "cc-2", "cost_center_number" => "200", "costcenter_name" => "Cost Center 2"],
             ],
         ];
         $collection = new CostCenters($data);

@@ -24,6 +24,8 @@ class ClientGroup extends NamedEntity {
     protected ?GUID $group_id;
     protected ?string $group_number;
     protected ?string $group_name;
+    protected ?string $client_group;
+    protected ?string $client_group_name;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -58,5 +60,13 @@ class ClientGroup extends NamedEntity {
 
     public function getGroupName(): ?string {
         return $this->group_name ?? null;
+    }
+
+    public function getClientGroup(): ?string {
+        return $this->client_group ?? null;
+    }
+
+    public function getClientGroupName(): ?string {
+        return $this->client_group_name ?? null;
     }
 }

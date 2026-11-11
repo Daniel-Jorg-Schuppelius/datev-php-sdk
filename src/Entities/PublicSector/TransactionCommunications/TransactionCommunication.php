@@ -20,6 +20,7 @@ class TransactionCommunication extends NamedEntity {
     protected ?string $status;
     protected ?string $notification_e_mail;
     protected ?TransactionCommunicationData $communication;
+    protected ?string $comment;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -42,5 +43,9 @@ class TransactionCommunication extends NamedEntity {
 
     public function getCommunication(): ?TransactionCommunicationData {
         return $this->communication ?? null;
+    }
+
+    public function getComment(): ?string {
+        return $this->comment ?? null;
     }
 }

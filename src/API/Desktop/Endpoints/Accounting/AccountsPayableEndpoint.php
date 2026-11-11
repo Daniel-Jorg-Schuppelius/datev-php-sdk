@@ -15,7 +15,7 @@ namespace Datev\API\Desktop\Endpoints\Accounting;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\Accounting\OpenItems\{OpenItem, OpenItems};
+use Datev\Entities\Accounting\AccountsPayable\{AccountPayable, AccountsPayable};
 use InvalidArgumentException;
 
 class AccountsPayableEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
@@ -45,14 +45,14 @@ class AccountsPayableEndpoint extends EndpointAbstract implements SearchableEndp
         return "{$this->getEndpointUrl()}/{$this->clientId->toString()}/fiscal-years/{$this->fiscalYearId->toString()}/accounts-payable";
     }
 
-    public function get(?ID $id = null): ?OpenItem {
+    public function get(?ID $id = null): ?AccountPayable {
         if (is_null($id)) {
             return null;
         }
         return $this->getById($id->toString());
     }
 
-    public function getById(?string $openItemId = null): ?OpenItem {
+    public function getById(?string $openItemId = null): ?AccountPayable {
         if (is_null($openItemId)) {
             $this->logErrorAndThrow(InvalidArgumentException::class, 'Open Item ID is required');
         }
@@ -64,7 +64,7 @@ class AccountsPayableEndpoint extends EndpointAbstract implements SearchableEndp
                 return null;
             }
 
-            return OpenItem::fromJson($response, self::$logger);
+            return AccountPayable::fromJson($response, self::$logger);
         }, "Fetching OpenItem (ID: {$openItemId})");
     }
 
@@ -72,7 +72,7 @@ class AccountsPayableEndpoint extends EndpointAbstract implements SearchableEndp
      * @param array<string, mixed> $options
      * @param array<string, mixed> $queryParams
      */
-    public function search(array $queryParams = [], array $options = []): ?OpenItems {
+    public function search(array $queryParams = [], array $options = []): ?AccountsPayable {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
 
@@ -80,7 +80,7 @@ class AccountsPayableEndpoint extends EndpointAbstract implements SearchableEndp
                 return null;
             }
 
-            return OpenItems::fromJson($response, self::$logger);
+            return AccountsPayable::fromJson($response, self::$logger);
         }, 'Searching OpenItems (Accounts Payable)');
     }
 
@@ -88,7 +88,7 @@ class AccountsPayableEndpoint extends EndpointAbstract implements SearchableEndp
      * @param array<string, mixed> $options
      * @param array<string, mixed> $queryParams
      */
-    public function searchCondensed(array $queryParams = [], array $options = []): ?OpenItems {
+    public function searchCondensed(array $queryParams = [], array $options = []): ?AccountsPayable {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options, "{$this->getBaseUrl()}/condense");
 
@@ -96,7 +96,7 @@ class AccountsPayableEndpoint extends EndpointAbstract implements SearchableEndp
                 return null;
             }
 
-            return OpenItems::fromJson($response, self::$logger);
+            return AccountsPayable::fromJson($response, self::$logger);
         }, 'Searching OpenItems (Accounts Payable Condensed)');
     }
 }

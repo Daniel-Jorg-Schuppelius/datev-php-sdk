@@ -3,41 +3,40 @@
  * Created on   : Sun Oct 06 2024
  * Author       : Daniel Jörg Schuppelius
  * Author Uri   : https://schuppelius.org
- * Filename     : ClientsEndpoint.php
+ * Filename     : EmployeesEndpoint.php
  * License      : MIT License
  * License Uri  : https://opensource.org/license/mit
  */
 
+declare(strict_types=1);
+
 namespace Datev\API\Desktop\Endpoints\Payroll;
 
-use APIToolkit\Contracts\Interfaces\API\ApiClientInterface;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
-use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\Common\Clients\ClientID;
+use DateTimeInterface;
+use Datev\Contracts\Abstracts\API\Desktop\Payroll\PayrollEndpointAbstract;
 use Datev\Entities\Payroll\Employees\{Employee, Employees};
 use InvalidArgumentException;
-use Psr\Log\LoggerInterface;
 
-class EmployeesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
-    protected string $endpointPrefix = 'hr/v3';
-    protected string $endpoint = 'clients/{client-id}';
+class EmployeesEndpoint extends PayrollEndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointSuffix = 'employees';
 
-    protected ClientID $clientID;
-
-    public function __construct(ApiClientInterface $client, ?LoggerInterface $logger = null, ClientID $clientID = new ClientID) {
-        parent::__construct($client, $logger);
-        $this->clientID = $clientID;
-    }
-
-    public function get(?ID $id = null): ?Employee {
+    public function get(?ID $id = null, ?string $expand = null, ?DateTimeInterface $referenceDate = null): ?Employee {
         if (is_null($id)) {
             $this->logErrorAndThrow(InvalidArgumentException::class, 'ID is required');
         }
 
-        return $this->logDebugWithTimer(function () use ($id) {
-            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
+        $queryParams = [];
+        if ($referenceDate !== null) {
+            $queryParams['reference-date'] = $referenceDate->format('Y-m-d');
+        }
+        if ($expand !== null) {
+            $queryParams['expand'] = $expand;
+        }
+
+        return $this->logDebugWithTimer(function () use ($id, $queryParams) {
+            $response = parent::getContents($queryParams, [], "{$this->getEndpointUrl()}/{$this->endpointSuffix}/{$id->toString()}");
 
             if (empty($response) || $response === '[]') {
                 return null;
@@ -53,7 +52,7 @@ class EmployeesEndpoint extends EndpointAbstract implements SearchableEndpointIn
      */
     public function search(array $queryParams = [], array $options = []): ?Employees {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
-            $response = parent::getContents($queryParams, $options);
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->endpointSuffix}");
 
             if (empty($response) || $response === '[]') {
                 return null;
@@ -61,17 +60,5 @@ class EmployeesEndpoint extends EndpointAbstract implements SearchableEndpointIn
 
             return Employees::fromJson($response, self::$logger);
         }, "Searching Employees");
-    }
-
-    public function getClientID(): ClientID {
-        return $this->clientID;
-    }
-
-    public function setClientID(ClientID $clientID): void {
-        $this->clientID = $clientID;
-    }
-
-    protected function getEndpointUrl(): string {
-        return str_replace('{client-id}', $this->clientID->toString(), parent::getEndpointUrl());
     }
 }

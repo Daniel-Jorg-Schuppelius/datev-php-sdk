@@ -27,6 +27,9 @@ class Communication extends NamedEntity implements IdentifiableNamedEntityInterf
     protected ?string $name;
     protected ?bool $is_main_communication;
     protected ?bool $is_management_phone;
+    protected ?string $communication_data_content;
+    protected ?string $communication_type;
+    protected ?CommunicationUsageType $communication_usage_type;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -65,5 +68,17 @@ class Communication extends NamedEntity implements IdentifiableNamedEntityInterf
 
     public function isManagementPhone(): bool {
         return $this->is_management_phone ?? false;
+    }
+
+    public function getCommunicationDataContent(): ?string {
+        return $this->communication_data_content ?? null;
+    }
+
+    public function getCommunicationType(): ?string {
+        return $this->communication_type ?? null;
+    }
+
+    public function getCommunicationUsageType(): ?CommunicationUsageType {
+        return $this->communication_usage_type ?? null;
     }
 }

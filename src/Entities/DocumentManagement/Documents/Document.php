@@ -50,8 +50,8 @@ class Document extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?int $correspondence_partner_firm_number;
     protected ?float $cost_quantity;
     protected ?DateTime $cost_date;
-    protected ?int $cost_number1;
-    protected ?int $cost_number2;
+    protected ?string $cost_number1;
+    protected ?string $cost_number2;
     protected ?DateTime $create_date_time;
     protected ?User $creation_user;
     protected ?DateTime $deletion_date;
@@ -100,6 +100,8 @@ class Document extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?StructureItems $structure_items;
     protected ?User $user;
     protected ?int $year;
+    protected ?string $checkout_computer;
+    protected ?User $checkout_user;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -156,11 +158,11 @@ class Document extends NamedEntity implements IdentifiableNamedEntityInterface {
         return $this->cost_date ?? null;
     }
 
-    public function getCostNumber1(): ?int {
+    public function getCostNumber1(): ?string {
         return $this->cost_number1 ?? null;
     }
 
-    public function getCostNumber2(): ?int {
+    public function getCostNumber2(): ?string {
         return $this->cost_number2 ?? null;
     }
 
@@ -325,5 +327,13 @@ class Document extends NamedEntity implements IdentifiableNamedEntityInterface {
      */
     protected function getArray(bool $asStringValues = false, bool $dateAsStringValues = true, string $dateFormat = "Y-m-d\TH:i:s"): array {
         return parent::getArray($asStringValues, $dateAsStringValues, $dateFormat);
+    }
+
+    public function getCheckoutComputer(): ?string {
+        return $this->checkout_computer ?? null;
+    }
+
+    public function getCheckoutUser(): ?User {
+        return $this->checkout_user ?? null;
     }
 }

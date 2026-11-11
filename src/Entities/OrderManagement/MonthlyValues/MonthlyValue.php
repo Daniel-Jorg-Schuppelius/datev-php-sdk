@@ -57,6 +57,13 @@ class MonthlyValue extends NamedEntity {
     protected ?float $on_account_expenses_offset;
     protected ?float $on_account_amount_offset;
     protected ?float $contribution_margin;
+    protected ?int $assessment_year;
+    protected ?int $fiscal_year;
+    protected ?string $cost_center;
+    protected ?int $calculated_cost_rate_id;
+    protected ?float $advance;
+    protected ?float $advance_received;
+    protected ?float $advance_offset;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -207,5 +214,33 @@ class MonthlyValue extends NamedEntity {
 
     public function getContributionMargin(): ?Money {
         return $this->toMoney($this->contribution_margin ?? null);
+    }
+
+    public function getAssessmentYear(): ?int {
+        return $this->assessment_year ?? null;
+    }
+
+    public function getFiscalYear(): ?int {
+        return $this->fiscal_year ?? null;
+    }
+
+    public function getCostCenter(): ?string {
+        return $this->cost_center ?? null;
+    }
+
+    public function getCalculatedCostRateId(): ?int {
+        return $this->calculated_cost_rate_id ?? null;
+    }
+
+    public function getAdvance(): ?float {
+        return $this->advance ?? null;
+    }
+
+    public function getAdvanceReceived(): ?float {
+        return $this->advance_received ?? null;
+    }
+
+    public function getAdvanceOffset(): ?float {
+        return $this->advance_offset ?? null;
     }
 }

@@ -41,6 +41,8 @@ class Invoice extends NamedEntity {
     protected ?string $origin_flag;
     protected ?string $invoice_type;
     protected ?bool $cancellation_flag;
+    protected ?string $e_invoice_delivery;
+    protected ?SubInvoices $sub_invoices;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -91,5 +93,13 @@ class Invoice extends NamedEntity {
 
     public function isCancellation(): ?bool {
         return $this->cancellation_flag ?? null;
+    }
+
+    public function getEInvoiceDelivery(): ?string {
+        return $this->e_invoice_delivery ?? null;
+    }
+
+    public function getSubInvoices(): ?SubInvoices {
+        return $this->sub_invoices ?? null;
     }
 }

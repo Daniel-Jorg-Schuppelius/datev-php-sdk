@@ -16,6 +16,9 @@ use APIToolkit\Entities\ID;
 use Psr\Log\LoggerInterface;
 
 class CreatedID extends ID {
+    // Spec "New-object-id": created_id kommt als Objekt {"id": …}.
+    protected bool $wrapped = true;
+
     /**
      * @param mixed $data
      */

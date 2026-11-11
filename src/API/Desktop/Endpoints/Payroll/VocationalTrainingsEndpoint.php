@@ -21,6 +21,9 @@ use InvalidArgumentException;
 class VocationalTrainingsEndpoint extends PayrollEndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointSuffix = 'vocational-trainings';
 
+    /**
+     * @deprecated Die DATEV-Spezifikation Payroll 3.1.1 kennt den Einzelabruf nur je Mitarbeiter (/employees/{employee-id}/...).
+     */
     public function get(?ID $id = null): ?VocationalTraining {
         if (is_null($id)) {
             $this->logErrorAndThrow(InvalidArgumentException::class, 'ID is required');

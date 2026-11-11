@@ -20,8 +20,11 @@ use InvalidArgumentException;
 
 class CostCentersEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointPrefix = 'order-management/v1';
-    protected string $endpoint = 'cost-centers';
+    protected string $endpoint = 'costcenters';
 
+    /**
+     * @deprecated Die DATEV-Spezifikation Order Management 1.4.8 kennt keinen Einzelabruf; search() verwenden.
+     */
     public function get(?ID $id = null): ?CostCenter {
         if (is_null($id)) {
             $this->logErrorAndThrow(InvalidArgumentException::class, 'ID is required');

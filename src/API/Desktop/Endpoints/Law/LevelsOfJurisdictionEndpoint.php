@@ -22,6 +22,9 @@ class LevelsOfJurisdictionEndpoint extends EndpointAbstract implements Searchabl
     protected string $endpointPrefix = 'law/v1';
     protected string $endpoint = 'levels-of-jurisdiction';
 
+    /**
+     * @deprecated Die DATEV-Spezifikation Law 0.2.2 kennt keinen Einzelabruf; search() verwenden.
+     */
     public function get(?ID $id = null): ?LevelOfJurisdiction {
         if (is_null($id)) {
             $this->logErrorAndThrow(InvalidArgumentException::class, 'ID is required');

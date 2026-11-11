@@ -21,6 +21,9 @@ class EmployeesQualificationEndpoint extends EndpointAbstract implements Searcha
     protected string $endpointPrefix = 'order-management/v1';
     protected string $endpoint = 'employeesqualification';
 
+    /**
+     * @deprecated Die DATEV-Spezifikation Order Management 1.4.8 kennt keinen Einzelabruf; search() verwenden.
+     */
     public function get(?ID $id = null): ?EmployeeQualification {
         if (is_null($id)) {
             return null;

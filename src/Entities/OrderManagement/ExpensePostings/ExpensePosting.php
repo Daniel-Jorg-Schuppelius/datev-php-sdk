@@ -35,7 +35,7 @@ class ExpensePosting extends NamedEntity {
     protected ?int $object_number;
     protected ?string $comment;
     protected ?bool $isbillable;
-    protected ?string $start_time;
+    protected ?string $Start_time;
     protected ?int $time_units;
     protected ?float $number_of_days;
     protected ?float $cost_amount;

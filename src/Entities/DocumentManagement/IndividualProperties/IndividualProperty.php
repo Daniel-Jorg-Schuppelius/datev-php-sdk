@@ -19,7 +19,7 @@ use Psr\Log\LoggerInterface;
 class IndividualProperty extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?IndividualPropertyID $id;
     protected ?string $data_name;
-    protected ?string $data_type;
+    protected ?string $datatype;
     protected ?string $display_name;
     protected ?int $order;
     protected ?bool $active;
@@ -41,7 +41,7 @@ class IndividualProperty extends NamedEntity implements IdentifiableNamedEntityI
     }
 
     public function getDataType(): ?string {
-        return $this->data_type ?? null;
+        return $this->datatype ?? null;
     }
 
     public function getDisplayName(): ?string {

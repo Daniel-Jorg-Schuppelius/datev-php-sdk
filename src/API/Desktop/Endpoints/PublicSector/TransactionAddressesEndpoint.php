@@ -50,7 +50,7 @@ class TransactionAddressesEndpoint extends EndpointAbstract implements Searchabl
         }
 
         return $this->logDebugWithTimer(function () use ($transactionId) {
-            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/transaction-addresses/{$transactionId}");
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizen/{$this->citizenId->toString()}/transaction-addresses/{$transactionId}/");
 
             if (empty($response) || $response === '[]') {
                 return null;
@@ -70,7 +70,7 @@ class TransactionAddressesEndpoint extends EndpointAbstract implements Searchabl
         }
 
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
-            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/transaction-addresses");
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizen/{$this->citizenId->toString()}/transaction-addresses/");
 
             if (empty($response) || $response === '[]') {
                 return null;
@@ -86,7 +86,7 @@ class TransactionAddressesEndpoint extends EndpointAbstract implements Searchabl
         }
 
         return $this->logDebugWithTimer(function () use ($transaction) {
-            $response = parent::postContents($transaction->toArray(), [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/transaction-addresses");
+            $response = parent::postContents($transaction->toArray(), [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizen/{$this->citizenId->toString()}/transaction-addresses/");
 
             return $response !== '';
         }, "Creating TransactionAddress");

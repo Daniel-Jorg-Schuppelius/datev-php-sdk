@@ -15,7 +15,17 @@ namespace Datev\Contracts\Abstracts\API\Desktop;
 use APIToolkit\Contracts\Abstracts\API\EndpointAbstract as APIEndpointAbstract;
 
 abstract class EndpointAbstract extends APIEndpointAbstract {
+    /**
+     * Ohne endpointSuffix: den hängt jeder Endpunkt selbst an.
+     */
     protected function getEndpointUrl(): string {
-        return "/datev/api/{$this->endpointPrefix}/{$this->endpoint}";
+        return "{$this->getServiceUrl()}/{$this->endpoint}";
+    }
+
+    /**
+     * Basispfad des Dienstes für Ressourcen neben $endpoint (z. B. /addressees/deletion-log).
+     */
+    protected function getServiceUrl(): string {
+        return "/datev/api/{$this->endpointPrefix}";
     }
 }

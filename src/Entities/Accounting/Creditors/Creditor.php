@@ -16,6 +16,7 @@ use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use DateTime;
 use Datev\Entities\Accounting\Banks\Banks;
+use Datev\Entities\Accounting\BusinessPartners\{LegalPerson, NaturalPerson, NotSpecifiedPerson};
 use Datev\Entities\ClientMasterData\Addresses\Addresses;
 use Datev\Entities\ClientMasterData\Communications\Communications;
 use Psr\Log\LoggerInterface;
@@ -42,6 +43,10 @@ class Creditor extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?Addresses $addresses;
     protected ?Communications $communications;
     protected ?Banks $banks;
+    protected ?CreditorAccountingInformation $accounting_information;
+    protected ?NaturalPerson $natural_person;
+    protected ?LegalPerson $legal_person;
+    protected ?NotSpecifiedPerson $not_specified_person;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -88,5 +93,21 @@ class Creditor extends NamedEntity implements IdentifiableNamedEntityInterface {
 
     public function getBanks(): ?Banks {
         return $this->banks ?? null;
+    }
+
+    public function getAccountingInformation(): ?CreditorAccountingInformation {
+        return $this->accounting_information ?? null;
+    }
+
+    public function getNaturalPerson(): ?NaturalPerson {
+        return $this->natural_person ?? null;
+    }
+
+    public function getLegalPerson(): ?LegalPerson {
+        return $this->legal_person ?? null;
+    }
+
+    public function getNotSpecifiedPerson(): ?NotSpecifiedPerson {
+        return $this->not_specified_person ?? null;
     }
 }

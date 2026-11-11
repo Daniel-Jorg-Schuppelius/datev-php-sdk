@@ -45,7 +45,7 @@ class CitizensEndpoint extends EndpointAbstract implements SearchableEndpointInt
         }
 
         return $this->logDebugWithTimer(function () use ($citizenId) {
-            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$citizenId->toString()}");
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizen/{$citizenId->toString()}");
 
             if (empty($response) || $response === '[]') {
                 return null;
@@ -65,7 +65,7 @@ class CitizensEndpoint extends EndpointAbstract implements SearchableEndpointInt
         }
 
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
-            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens");
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizen/");
 
             if (empty($response) || $response === '[]') {
                 return null;

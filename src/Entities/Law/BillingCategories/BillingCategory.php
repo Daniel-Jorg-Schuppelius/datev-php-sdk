@@ -18,6 +18,7 @@ use Psr\Log\LoggerInterface;
 class BillingCategory extends NamedEntity {
     protected ?int $number;
     protected ?string $name;
+    protected ?int $id;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -32,5 +33,9 @@ class BillingCategory extends NamedEntity {
 
     public function getName(): ?string {
         return $this->name ?? null;
+    }
+
+    public function getId(): ?int {
+        return $this->id ?? null;
     }
 }

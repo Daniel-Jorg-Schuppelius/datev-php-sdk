@@ -31,6 +31,9 @@ class ClientCategoriesEndpoint extends EndpointAbstract implements SearchableEnd
         $this->clientID = $clientID;
     }
 
+    /**
+     * @deprecated Die DATEV-Spezifikation Client Master Data 1.7.1 kennt keinen Einzelabruf; searchByClient() verwenden.
+     */
     public function get(?ID $id = null): ?ClientCategory {
         if (is_null($id)) {
             $this->logErrorAndThrow(InvalidArgumentException::class, 'ID is required');
@@ -53,7 +56,7 @@ class ClientCategoriesEndpoint extends EndpointAbstract implements SearchableEnd
      */
     public function searchByClient(array $queryParams = [], array $options = []): ?ClientCategories {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
-            $response = parent::getContents($queryParams, $options);
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->endpointSuffix}");
 
             if (empty($response) || $response === '[]') {
                 return null;
@@ -68,9 +71,8 @@ class ClientCategoriesEndpoint extends EndpointAbstract implements SearchableEnd
      * @param array<string, mixed> $queryParams
      */
     public function search(array $queryParams = [], array $options = []): ?ClientCategories {
-        // TODO: Check API, on documentation, this endpoint exists but it is not implemented?
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
-            $response = parent::getContents($queryParams, $options, "{$this->endpointPrefix}/{$this->endpointSuffix}");
+            $response = parent::getContents($queryParams, $options, "{$this->getServiceUrl()}/{$this->endpointSuffix}");
 
             if (empty($response) || $response === '[]') {
                 return null;

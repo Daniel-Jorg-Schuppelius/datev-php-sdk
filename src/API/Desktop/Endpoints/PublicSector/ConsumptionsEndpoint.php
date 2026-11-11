@@ -38,6 +38,9 @@ class ConsumptionsEndpoint extends EndpointAbstract implements SearchableEndpoin
         $this->feeId = $feeId;
     }
 
+    /**
+     * @deprecated Die DATEV-Spezifikation Public Sector 1.0.4 kennt keinen Einzelabruf; search() verwenden.
+     */
     public function get(?ID $id = null): ?Consumption {
         if (is_null($id)) {
             return null;
@@ -45,6 +48,9 @@ class ConsumptionsEndpoint extends EndpointAbstract implements SearchableEndpoin
         return $this->getById($id->toString());
     }
 
+    /**
+     * @deprecated Die DATEV-Spezifikation Public Sector 1.0.4 kennt keinen Einzelabruf; search() verwenden.
+     */
     public function getById(?string $consumptionId = null): ?Consumption {
         if (!isset($this->clientId) || !isset($this->citizenId) || !isset($this->feeId)) {
             $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID, Citizen ID and Fee ID are required');
@@ -55,7 +61,7 @@ class ConsumptionsEndpoint extends EndpointAbstract implements SearchableEndpoin
         }
 
         return $this->logDebugWithTimer(function () use ($consumptionId) {
-            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/consumptions/{$consumptionId}");
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizen/{$this->citizenId->toString()}/fees/{$this->feeId}/consumptions/{$consumptionId}");
 
             if (empty($response) || $response === '[]') {
                 return null;
@@ -75,7 +81,7 @@ class ConsumptionsEndpoint extends EndpointAbstract implements SearchableEndpoin
         }
 
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
-            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/consumptions");
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizen/{$this->citizenId->toString()}/fees/{$this->feeId}/consumptions/");
 
             if (empty($response) || $response === '[]') {
                 return null;

@@ -14,6 +14,7 @@ namespace Datev\Entities\Accounting\CostCenterProperties;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
+use Datev\Entities\Accounting\CostCenterPropertyCharacteristics\CostCenterPropertyCharacteristics;
 use Datev\Entities\Accounting\CostCenterPropertyCharacteristics\ID\CostCenterPropertyCharacteristicID;
 use Psr\Log\LoggerInterface;
 
@@ -21,6 +22,7 @@ class CostCenterProperty extends NamedEntity implements IdentifiableNamedEntityI
     protected CostCenterPropertyID $id;
     protected ?CostCenterPropertyCharacteristicID $characteristic_id;
     protected ?string $description;
+    protected ?CostCenterPropertyCharacteristics $characteristics;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -31,5 +33,9 @@ class CostCenterProperty extends NamedEntity implements IdentifiableNamedEntityI
 
     public function getID(): CostCenterPropertyID {
         return $this->id;
+    }
+
+    public function getCharacteristics(): ?CostCenterPropertyCharacteristics {
+        return $this->characteristics ?? null;
     }
 }

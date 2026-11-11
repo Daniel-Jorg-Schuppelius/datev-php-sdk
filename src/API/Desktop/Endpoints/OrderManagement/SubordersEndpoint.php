@@ -27,6 +27,7 @@ class SubordersEndpoint extends EndpointAbstract {
 
     /**
      * @param array<string, mixed> $queryParams
+     * @deprecated Die DATEV-Spezifikation Order Management 1.4.8 kennt für Teilaufträge nur PUT; sie stehen im Auftrag (Order::getSuborders()).
      */
     public function getByOrderIdAndSuborderId(?int $orderId = null, ?int $suborderId = null, array $queryParams = []): ?Suborder {
         if (is_null($orderId) || is_null($suborderId)) {

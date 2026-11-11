@@ -22,6 +22,7 @@ class IndividualReference extends NamedEntity implements IdentifiableNamedEntity
     protected string $name;
     protected ?CorrespondencePartnerGUID $correspondence_partner_guid;
     protected ?CorrespondencePartnerLink $correspondence_partner_link;
+    protected ?string $correspondence_partner_domain;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -44,5 +45,9 @@ class IndividualReference extends NamedEntity implements IdentifiableNamedEntity
 
     public function getCorrespondencePartnerLink(): ?CorrespondencePartnerLink {
         return $this->correspondence_partner_link;
+    }
+
+    public function getCorrespondencePartnerDomain(): ?string {
+        return $this->correspondence_partner_domain ?? null;
     }
 }

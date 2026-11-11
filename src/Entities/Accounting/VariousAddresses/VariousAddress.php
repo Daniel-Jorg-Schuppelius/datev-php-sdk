@@ -16,6 +16,7 @@ use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use DateTime;
 use Datev\Entities\Accounting\Banks\Banks;
+use Datev\Entities\Accounting\BusinessPartners\{IndividualFields, LegalPerson, NaturalPerson, NotSpecifiedPerson};
 use Datev\Entities\ClientMasterData\Addresses\Addresses;
 use Datev\Entities\ClientMasterData\Communications\Communications;
 use Psr\Log\LoggerInterface;
@@ -31,6 +32,13 @@ class VariousAddress extends NamedEntity implements IdentifiableNamedEntityInter
     protected ?string $correspondence_title;
     protected ?DateTime $date_last_modification;
     protected ?string $legal_entity_type;
+    protected ?CorrespondenceInformation $correspondence_information;
+    protected ?IndividualFields $individual_fields;
+    protected ?LegalPerson $legal_person;
+    protected ?NaturalPerson $natural_person;
+    protected ?NotSpecifiedPerson $not_specified_person;
+    protected ?string $number;
+    protected ?string $short_name;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -77,5 +85,33 @@ class VariousAddress extends NamedEntity implements IdentifiableNamedEntityInter
 
     public function getLegalEntityType(): ?string {
         return $this->legal_entity_type ?? null;
+    }
+
+    public function getCorrespondenceInformation(): ?CorrespondenceInformation {
+        return $this->correspondence_information ?? null;
+    }
+
+    public function getIndividualFields(): ?IndividualFields {
+        return $this->individual_fields ?? null;
+    }
+
+    public function getLegalPerson(): ?LegalPerson {
+        return $this->legal_person ?? null;
+    }
+
+    public function getNaturalPerson(): ?NaturalPerson {
+        return $this->natural_person ?? null;
+    }
+
+    public function getNotSpecifiedPerson(): ?NotSpecifiedPerson {
+        return $this->not_specified_person ?? null;
+    }
+
+    public function getNumber(): ?string {
+        return $this->number ?? null;
+    }
+
+    public function getShortName(): ?string {
+        return $this->short_name ?? null;
     }
 }

@@ -20,6 +20,7 @@ class TransactionRegistration extends NamedEntity {
     protected ?string $status;
     protected ?string $notification_e_mail;
     protected ?TransactionRegistrationData $registration;
+    protected ?string $comment;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -42,5 +43,9 @@ class TransactionRegistration extends NamedEntity {
 
     public function getRegistration(): ?TransactionRegistrationData {
         return $this->registration ?? null;
+    }
+
+    public function getComment(): ?string {
+        return $this->comment ?? null;
     }
 }

@@ -21,6 +21,9 @@ class EmployeeCapacitiesEndpoint extends EndpointAbstract implements SearchableE
     protected string $endpointPrefix = 'order-management/v1';
     protected string $endpoint = 'employeecapacities';
 
+    /**
+     * @deprecated Die DATEV-Spezifikation Order Management 1.4.8 kennt keinen Einzelabruf; search() verwenden.
+     */
     public function get(?ID $id = null): ?EmployeeCapacity {
         if (is_null($id)) {
             return null;

@@ -21,6 +21,9 @@ class FeesEndpoint extends EndpointAbstract implements SearchableEndpointInterfa
     protected string $endpointPrefix = 'order-management/v1';
     protected string $endpoint = 'fees';
 
+    /**
+     * @deprecated Die DATEV-Spezifikation Order Management 1.4.8 kennt keinen Einzelabruf; search() verwenden.
+     */
     public function get(?ID $id = null): ?Fee {
         if (is_null($id)) {
             return null;

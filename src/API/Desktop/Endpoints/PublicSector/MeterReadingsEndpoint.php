@@ -57,7 +57,7 @@ class MeterReadingsEndpoint extends EndpointAbstract implements SearchableEndpoi
         }
 
         return $this->logDebugWithTimer(function () use ($meterReadingId) {
-            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/meters/{$this->meterId}/meterreadings/{$meterReadingId}");
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizen/{$this->citizenId->toString()}/fees/{$this->feeId}/meters/{$this->meterId}/meterreadings/{$meterReadingId}");
 
             if (empty($response) || $response === '[]') {
                 return null;
@@ -77,7 +77,7 @@ class MeterReadingsEndpoint extends EndpointAbstract implements SearchableEndpoi
         }
 
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
-            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/meters/{$this->meterId}/meterreadings");
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizen/{$this->citizenId->toString()}/fees/{$this->feeId}/meters/{$this->meterId}/meterreadings/");
 
             if (empty($response) || $response === '[]') {
                 return null;
@@ -87,13 +87,16 @@ class MeterReadingsEndpoint extends EndpointAbstract implements SearchableEndpoi
         }, "Searching MeterReadings");
     }
 
+    /**
+     * @deprecated Die DATEV-Spezifikation Public Sector 1.0.4 kennt für meterreadings nur GET; Zählerstände über TransactionMeterReadingsEndpoint::create() melden.
+     */
     public function create(MeterReading $meterReading): bool {
         if (!isset($this->clientId) || !isset($this->citizenId) || !isset($this->feeId) || !isset($this->meterId)) {
             $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID, Citizen ID, Fee ID and Meter ID are required');
         }
 
         return $this->logDebugWithTimer(function () use ($meterReading) {
-            $response = parent::postContents($meterReading->toArray(), [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/meters/{$this->meterId}/meterreadings");
+            $response = parent::postContents($meterReading->toArray(), [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizen/{$this->citizenId->toString()}/fees/{$this->feeId}/meters/{$this->meterId}/meterreadings/");
 
             return $response !== '';
         }, "Creating MeterReading");

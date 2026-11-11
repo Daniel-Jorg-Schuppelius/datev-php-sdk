@@ -21,6 +21,7 @@ class TransactionMeterReading extends NamedEntity {
     protected ?string $type;
     protected ?string $notification_e_mail;
     protected ?TransactionMeterReadingData $meter_reading;
+    protected ?string $comment;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -47,5 +48,9 @@ class TransactionMeterReading extends NamedEntity {
 
     public function getMeterReading(): ?TransactionMeterReadingData {
         return $this->meter_reading ?? null;
+    }
+
+    public function getComment(): ?string {
+        return $this->comment ?? null;
     }
 }

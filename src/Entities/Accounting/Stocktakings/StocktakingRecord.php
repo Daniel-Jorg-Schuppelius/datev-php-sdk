@@ -17,6 +17,7 @@ use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntit
 use APIToolkit\Traits\MoneyAccessorTrait;
 use CommonToolkit\ValueObjects\Money;
 use DateTime;
+use Datev\Entities\Accounting\GeneralLedgerAccounts\GeneralLedgerAccount;
 use Psr\Log\LoggerInterface;
 
 class StocktakingRecord extends NamedEntity implements IdentifiableNamedEntityInterface {
@@ -41,6 +42,11 @@ class StocktakingRecord extends NamedEntity implements IdentifiableNamedEntityIn
     protected ?string $serial_number;
     protected ?string $location;
     protected ?string $contract_number;
+    protected ?GeneralLedgerAccount $general_ledger_account;
+    protected ?string $type_of_use;
+    protected ?string $condition;
+    protected ?string $isin;
+    protected ?string $explanation_of_depreciation;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -123,5 +129,25 @@ class StocktakingRecord extends NamedEntity implements IdentifiableNamedEntityIn
 
     public function getContractNumber(): ?string {
         return $this->contract_number ?? null;
+    }
+
+    public function getGeneralLedgerAccount(): ?GeneralLedgerAccount {
+        return $this->general_ledger_account ?? null;
+    }
+
+    public function getTypeOfUse(): ?string {
+        return $this->type_of_use ?? null;
+    }
+
+    public function getCondition(): ?string {
+        return $this->condition ?? null;
+    }
+
+    public function getIsin(): ?string {
+        return $this->isin ?? null;
+    }
+
+    public function getExplanationOfDepreciation(): ?string {
+        return $this->explanation_of_depreciation ?? null;
     }
 }

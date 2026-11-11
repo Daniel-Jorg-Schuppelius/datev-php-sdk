@@ -18,6 +18,7 @@ use DateTime;
 use Datev\Entities\Accounting\Records\Records;
 use Datev\Entities\Accounting\Sequences\SequenceID;
 use Datev\Enums\{AccountingReason, AccountingRecordType};
+use Datev\Enums\InspectionStatus;
 use Psr\Log\LoggerInterface;
 
 class SequenceRead extends NamedEntity implements IdentifiableNamedEntityInterface {
@@ -31,6 +32,10 @@ class SequenceRead extends NamedEntity implements IdentifiableNamedEntityInterfa
     protected ?bool $is_committed;
     protected ?AccountingRecordType $record_type;
     protected ?Records $accounting_records;
+    protected ?string $accounting_sequence_id;
+    protected ?DateTime $date_committed;
+    protected ?InspectionStatus $inspection_status;
+    protected ?string $mark_of_origin;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -41,5 +46,21 @@ class SequenceRead extends NamedEntity implements IdentifiableNamedEntityInterfa
 
     public function getID(): ?SequenceID {
         return $this->id;
+    }
+
+    public function getAccountingSequenceId(): ?string {
+        return $this->accounting_sequence_id ?? null;
+    }
+
+    public function getDateCommitted(): ?DateTime {
+        return $this->date_committed ?? null;
+    }
+
+    public function getInspectionStatus(): ?InspectionStatus {
+        return $this->inspection_status ?? null;
+    }
+
+    public function getMarkOfOrigin(): ?string {
+        return $this->mark_of_origin ?? null;
     }
 }

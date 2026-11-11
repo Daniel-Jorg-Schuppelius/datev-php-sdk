@@ -38,6 +38,10 @@ class Address extends CommonAddress {
     protected ?bool $is_main_post_office_box_address;
     protected ?bool $is_main_street_address;
     protected ?bool $is_management_address;
+    protected ?string $address_type;
+    protected ?AddressUsageType $address_usage_type;
+    protected ?string $district;
+    protected ?string $individual_shipping_information;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -120,5 +124,21 @@ class Address extends CommonAddress {
 
     public function isManagementAddress(): bool {
         return $this->is_management_address ?? false;
+    }
+
+    public function getAddressType(): ?string {
+        return $this->address_type ?? null;
+    }
+
+    public function getAddressUsageType(): ?AddressUsageType {
+        return $this->address_usage_type ?? null;
+    }
+
+    public function getDistrict(): ?string {
+        return $this->district ?? null;
+    }
+
+    public function getIndividualShippingInformation(): ?string {
+        return $this->individual_shipping_information ?? null;
     }
 }

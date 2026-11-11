@@ -14,10 +14,10 @@ namespace Datev\Enums;
 
 enum AccountingReason: string {
     case IndependentFromAccountingReason = "independent_from_accounting_reason";
-    case Reserved1 = "reserved_1";
-    case Reserved2 = "reserved_2";
+    case Reserved1 = "reserved1";
+    case Reserved2 = "reserved2";
     case CommercialLaw = "commercial_law";
     case TaxLaw = "tax_law";
-    case InternationalAccountingStandards = "international_accounting_standards";
+    case InternationalAccountingStandards = "ifrs";
     case ForCalculation = "for_calculation";
 }

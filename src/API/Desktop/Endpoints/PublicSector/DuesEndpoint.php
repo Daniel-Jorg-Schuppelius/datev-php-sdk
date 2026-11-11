@@ -38,6 +38,9 @@ class DuesEndpoint extends EndpointAbstract implements SearchableEndpointInterfa
         $this->feeId = $feeId;
     }
 
+    /**
+     * @deprecated Die DATEV-Spezifikation Public Sector 1.0.4 kennt keinen Einzelabruf; search() verwenden.
+     */
     public function get(?ID $id = null): ?Due {
         if (!isset($this->clientId) || !isset($this->citizenId) || !isset($this->feeId)) {
             $this->logErrorAndThrow(InvalidArgumentException::class, 'Client ID, Citizen ID and Fee ID are required');
@@ -48,7 +51,7 @@ class DuesEndpoint extends EndpointAbstract implements SearchableEndpointInterfa
         }
 
         return $this->logDebugWithTimer(function () use ($id) {
-            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/dues/{$id->toString()}");
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizen/{$this->citizenId->toString()}/fees/{$this->feeId}/dues/{$id->toString()}");
 
             if (empty($response) || $response === '[]') {
                 return null;
@@ -68,7 +71,7 @@ class DuesEndpoint extends EndpointAbstract implements SearchableEndpointInterfa
         }
 
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
-            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/dues");
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizen/{$this->citizenId->toString()}/fees/{$this->feeId}/dues/");
 
             if (empty($response) || $response === '[]') {
                 return null;

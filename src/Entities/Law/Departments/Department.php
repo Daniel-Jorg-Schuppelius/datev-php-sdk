@@ -14,6 +14,7 @@ namespace Datev\Entities\Law\Departments;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Entities\GUID;
+use Datev\Entities\Law\Causes\Causes;
 use Psr\Log\LoggerInterface;
 
 class Department extends NamedEntity {
@@ -21,6 +22,7 @@ class Department extends NamedEntity {
     protected ?int $number;
     protected ?string $short_name;
     protected ?string $name;
+    protected ?Causes $causes;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -43,5 +45,9 @@ class Department extends NamedEntity {
 
     public function getName(): ?string {
         return $this->name ?? null;
+    }
+
+    public function getCauses(): ?Causes {
+        return $this->causes ?? null;
     }
 }

@@ -15,7 +15,7 @@ namespace Datev\API\Desktop\Endpoints\Accounting;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\Accounting\OpenItems\OpenItems;
+use Datev\Entities\Accounting\AccountsPayable\AccountsPayable;
 use InvalidArgumentException;
 
 class AccountsPayableCondenseEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
@@ -25,7 +25,7 @@ class AccountsPayableCondenseEndpoint extends EndpointAbstract implements Search
     protected ID $clientId;
     protected ID $fiscalYearId;
 
-    public function get(?ID $id = null): ?OpenItems {
+    public function get(?ID $id = null): ?AccountsPayable {
         return null;
     }
 
@@ -53,7 +53,7 @@ class AccountsPayableCondenseEndpoint extends EndpointAbstract implements Search
      * @param array<string, mixed> $options
      * @param array<string, mixed> $queryParams
      */
-    public function search(array $queryParams = [], array $options = []): ?OpenItems {
+    public function search(array $queryParams = [], array $options = []): ?AccountsPayable {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
 
@@ -61,7 +61,7 @@ class AccountsPayableCondenseEndpoint extends EndpointAbstract implements Search
                 return null;
             }
 
-            return OpenItems::fromJson($response, self::$logger);
+            return AccountsPayable::fromJson($response, self::$logger);
         }, 'Searching OpenItems (Accounts Payable Condense)');
     }
 }

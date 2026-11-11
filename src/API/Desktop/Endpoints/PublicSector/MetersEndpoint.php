@@ -52,7 +52,7 @@ class MetersEndpoint extends EndpointAbstract implements SearchableEndpointInter
         }
 
         return $this->logDebugWithTimer(function () use ($meterId) {
-            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/meters/{$meterId}");
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizen/{$this->citizenId->toString()}/fees/{$this->feeId}/meters/{$meterId}");
 
             if (empty($response) || $response === '[]') {
                 return null;
@@ -72,7 +72,7 @@ class MetersEndpoint extends EndpointAbstract implements SearchableEndpointInter
         }
 
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
-            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/meters");
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizen/{$this->citizenId->toString()}/fees/{$this->feeId}/meters/");
 
             if (empty($response) || $response === '[]') {
                 return null;

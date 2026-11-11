@@ -22,6 +22,7 @@ class Client extends CommonClient {
     protected ?GUID $organization_id;
     protected ?GUID $establishment_id;
     protected ?bool $isactive;
+    protected ?string $client_id;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -48,5 +49,9 @@ class Client extends CommonClient {
 
     public function isActive(): ?bool {
         return $this->isactive ?? null;
+    }
+
+    public function getClientId(): ?string {
+        return $this->client_id ?? null;
     }
 }

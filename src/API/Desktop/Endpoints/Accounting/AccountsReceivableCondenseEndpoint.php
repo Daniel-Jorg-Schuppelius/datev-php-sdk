@@ -15,7 +15,7 @@ namespace Datev\API\Desktop\Endpoints\Accounting;
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
 use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
-use Datev\Entities\Accounting\OpenItems\OpenItems;
+use Datev\Entities\Accounting\AccountsReceivable\AccountsReceivable;
 use InvalidArgumentException;
 
 class AccountsReceivableCondenseEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
@@ -25,7 +25,7 @@ class AccountsReceivableCondenseEndpoint extends EndpointAbstract implements Sea
     protected ID $clientId;
     protected ID $fiscalYearId;
 
-    public function get(?ID $id = null): ?OpenItems {
+    public function get(?ID $id = null): ?AccountsReceivable {
         return null;
     }
 
@@ -53,7 +53,7 @@ class AccountsReceivableCondenseEndpoint extends EndpointAbstract implements Sea
      * @param array<string, mixed> $options
      * @param array<string, mixed> $queryParams
      */
-    public function search(array $queryParams = [], array $options = []): ?OpenItems {
+    public function search(array $queryParams = [], array $options = []): ?AccountsReceivable {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
             $response = parent::getContents($queryParams, $options, $this->getBaseUrl());
 
@@ -61,7 +61,7 @@ class AccountsReceivableCondenseEndpoint extends EndpointAbstract implements Sea
                 return null;
             }
 
-            return OpenItems::fromJson($response, self::$logger);
+            return AccountsReceivable::fromJson($response, self::$logger);
         }, 'Searching OpenItems (Accounts Receivable Condense)');
     }
 }

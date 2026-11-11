@@ -18,6 +18,9 @@ use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
 use Datev\Entities\OrderManagement\Employees\{Employee, Employees};
 use InvalidArgumentException;
 
+/**
+ * @deprecated Die Ressource /employees fehlt in der DATEV-Spezifikation Order Management 1.4.8.
+ */
 class EmployeesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointPrefix = 'order-management/v1';
     protected string $endpoint = 'employees';

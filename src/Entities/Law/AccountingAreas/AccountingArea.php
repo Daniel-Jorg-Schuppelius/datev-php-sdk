@@ -27,6 +27,8 @@ class AccountingArea extends NamedEntity implements IdentifiableNamedEntityInter
     protected ?int $general_ledger_account_length;
     protected ?int $general_ledger_accounts_frame;
     protected ?string $taxation_method;
+    protected ?int $payment_target;
+    protected ?string $transfer_path;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -64,5 +66,13 @@ class AccountingArea extends NamedEntity implements IdentifiableNamedEntityInter
 
     public function getTaxationMethod(): ?string {
         return $this->taxation_method ?? null;
+    }
+
+    public function getPaymentTarget(): ?int {
+        return $this->payment_target ?? null;
+    }
+
+    public function getTransferPath(): ?string {
+        return $this->transfer_path ?? null;
     }
 }

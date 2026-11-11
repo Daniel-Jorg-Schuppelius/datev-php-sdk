@@ -24,7 +24,7 @@ class MonthlyRecord extends NamedEntity implements IdentifiableNamedEntityInterf
     protected ?DateTime $month_of_emergence;
     protected ?SalaryTypeID $salary_type_id;
     protected ?string $cost_center_id;
-    protected ?int $cost_unit_id;
+    protected ?string $cost_unit_id;
     protected ?float $value;
     protected ?float $differing_factor;
     protected ?float $differing_pay_change;
@@ -58,7 +58,7 @@ class MonthlyRecord extends NamedEntity implements IdentifiableNamedEntityInterf
         return $this->cost_center_id ?? null;
     }
 
-    public function getCostUnitID(): ?int {
+    public function getCostUnitID(): ?string {
         return $this->cost_unit_id ?? null;
     }
 

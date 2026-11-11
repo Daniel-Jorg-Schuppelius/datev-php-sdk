@@ -20,6 +20,7 @@ class TransactionAddress extends NamedEntity {
     protected ?string $status;
     protected ?string $notification_e_mail;
     protected ?TransactionAddressData $address;
+    protected ?string $comment;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -42,5 +43,9 @@ class TransactionAddress extends NamedEntity {
 
     public function getAddress(): ?TransactionAddressData {
         return $this->address ?? null;
+    }
+
+    public function getComment(): ?string {
+        return $this->comment ?? null;
     }
 }

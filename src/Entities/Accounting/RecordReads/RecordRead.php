@@ -21,7 +21,6 @@ use Datev\Entities\Accounting\AdvancePayments\AdvancePayment;
 use Datev\Entities\Accounting\CostCenters\ID\{CostCenterIDOne, CostCenterIDTwo};
 use Datev\Entities\Common\VariousAddressID;
 use Datev\Entities\Common\VAT\{EuVatID, EuVatID4CountryOfOrigin};
-use Datev\Entities\DocumentManagement\Documents\DocumentID;
 use Datev\Enums\{CashDiscountType, DebitCredit, InspectionStatus, PaymentMethod, TaxationMethod};
 use Psr\Log\LoggerInterface;
 
@@ -47,7 +46,8 @@ class RecordRead extends NamedEntity implements IdentifiableNamedEntityInterface
     protected ?TaxationMethod $differing_taxation_method;
     protected ?string $document_field1;
     protected ?string $document_field2;
-    protected ?DocumentID $document_link;
+    // Text wie 'BEDI "<GUID>"', keine GUID.
+    protected ?string $document_link;
     protected DateTime $due_date;
     protected ?float $eu_tax_rate;
     protected ?float $eu_tax_rate_for_country_of_origin;
@@ -67,7 +67,7 @@ class RecordRead extends NamedEntity implements IdentifiableNamedEntityInterface
     protected ?string $posting_description;
     protected ?int $quantity;
     protected ?string $receivable_type_id;
-    protected ?int $selectable_tax_rate;
+    protected ?float $selectable_tax_rate;
     protected ?string $sepa_mandate_reference;
     protected ?DateTime $temp_dunning_block;
     protected ?VariousAddressID $various_address_id;

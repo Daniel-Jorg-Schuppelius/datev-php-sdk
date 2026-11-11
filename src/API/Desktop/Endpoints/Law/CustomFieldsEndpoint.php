@@ -22,6 +22,9 @@ class CustomFieldsEndpoint extends EndpointAbstract implements SearchableEndpoin
     protected string $endpointPrefix = 'law/v1';
     protected string $endpoint = 'custom-fields';
 
+    /**
+     * @deprecated Die DATEV-Spezifikation Law 0.2.2 kennt keinen Einzelabruf; search() verwenden.
+     */
     public function get(?ID $id = null): ?CustomField {
         if (is_null($id)) {
             $this->logErrorAndThrow(InvalidArgumentException::class, 'ID is required');

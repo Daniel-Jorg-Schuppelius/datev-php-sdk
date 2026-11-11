@@ -33,7 +33,7 @@ class ResponsibilitiesEndpoint extends EndpointAbstract implements SearchableEnd
 
     protected function getBaseUrl(): string {
         if (isset($this->clientId)) {
-            return "{$this->getEndpointUrl()}/clients/{$this->clientId->toString()}/responsibilities";
+            return "{$this->getServiceUrl()}/clients/{$this->clientId->toString()}/responsibilities";
         }
         return $this->getEndpointUrl();
     }

@@ -33,7 +33,7 @@ class ClientGroupsEndpoint extends EndpointAbstract implements SearchableEndpoin
 
     protected function getBaseUrl(): string {
         if (isset($this->clientId)) {
-            return "{$this->getEndpointUrl()}/clients/{$this->clientId->toString()}/client-groups";
+            return "{$this->getServiceUrl()}/clients/{$this->clientId->toString()}/client-groups";
         }
         return $this->getEndpointUrl();
     }

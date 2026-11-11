@@ -22,6 +22,9 @@ class ClientsEndpoint extends EndpointAbstract implements SearchableEndpointInte
     protected string $endpointPrefix = 'order-management/v1';
     protected string $endpoint = 'selfclients';
 
+    /**
+     * @deprecated Die DATEV-Spezifikation Order Management 1.4.8 kennt keinen Einzelabruf; search() verwenden.
+     */
     public function get(?ID $id = null): ?Client {
         if ($id instanceof GUID) {
             return $this->getByGuid($id);
@@ -29,6 +32,9 @@ class ClientsEndpoint extends EndpointAbstract implements SearchableEndpointInte
         return $this->getByGuid($id !== null ? new GUID($id->toString()) : null);
     }
 
+    /**
+     * @deprecated Die DATEV-Spezifikation Order Management 1.4.8 kennt keinen Einzelabruf; search() verwenden.
+     */
     public function getByGuid(?GUID $id = null): ?Client {
         if (is_null($id)) {
             $this->logErrorAndThrow(InvalidArgumentException::class, 'ID is required');

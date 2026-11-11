@@ -37,7 +37,7 @@ class StructureItemsEndpoint extends EndpointAbstract implements SearchableEndpo
         }
 
         return $this->logDebugWithTimer(function () use ($id) {
-            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}");
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->endpointSuffix}/{$id->toString()}");
 
             if (empty($response) || $response === '[]') {
                 return null;
@@ -53,7 +53,7 @@ class StructureItemsEndpoint extends EndpointAbstract implements SearchableEndpo
      */
     public function search(array $queryParams = [], array $options = []): ?StructureItems {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
-            $response = parent::getContents($queryParams, $options);
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->endpointSuffix}");
 
             if (empty($response) || $response === '[]') {
                 return null;

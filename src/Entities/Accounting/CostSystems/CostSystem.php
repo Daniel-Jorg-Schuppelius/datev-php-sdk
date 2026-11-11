@@ -22,6 +22,10 @@ class CostSystem extends NamedEntity implements IdentifiableNamedEntityInterface
     protected ?string $cost_system_type;
     protected ?int $cost_length;
     protected ?bool $is_active;
+    protected ?string $short_name;
+    protected ?bool $is_activated_for_postings;
+    protected ?string $cost_field;
+    protected ?float $number;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -48,5 +52,21 @@ class CostSystem extends NamedEntity implements IdentifiableNamedEntityInterface
 
     public function isActive(): ?bool {
         return $this->is_active ?? null;
+    }
+
+    public function getShortName(): ?string {
+        return $this->short_name ?? null;
+    }
+
+    public function isActivatedForPostings(): ?bool {
+        return $this->is_activated_for_postings ?? null;
+    }
+
+    public function getCostField(): ?string {
+        return $this->cost_field ?? null;
+    }
+
+    public function getNumber(): ?float {
+        return $this->number ?? null;
     }
 }

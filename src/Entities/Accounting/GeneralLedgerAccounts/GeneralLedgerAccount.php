@@ -25,6 +25,12 @@ class GeneralLedgerAccount extends NamedEntity implements IdentifiableNamedEntit
     protected ?string $account_function;
     protected ?bool $is_locked;
     protected ?DateTime $date_last_modification;
+    protected ?int $additional_function;
+    protected ?string $function_description;
+    protected ?int $function_extension;
+    protected ?int $main_function;
+    protected ?int $main_function_number;
+    protected ?TaxRates $tax_rates;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -59,5 +65,29 @@ class GeneralLedgerAccount extends NamedEntity implements IdentifiableNamedEntit
 
     public function getDateLastModification(): ?DateTime {
         return $this->date_last_modification ?? null;
+    }
+
+    public function getAdditionalFunction(): ?int {
+        return $this->additional_function ?? null;
+    }
+
+    public function getFunctionDescription(): ?string {
+        return $this->function_description ?? null;
+    }
+
+    public function getFunctionExtension(): ?int {
+        return $this->function_extension ?? null;
+    }
+
+    public function getMainFunction(): ?int {
+        return $this->main_function ?? null;
+    }
+
+    public function getMainFunctionNumber(): ?int {
+        return $this->main_function_number ?? null;
+    }
+
+    public function getTaxRates(): ?TaxRates {
+        return $this->tax_rates ?? null;
     }
 }

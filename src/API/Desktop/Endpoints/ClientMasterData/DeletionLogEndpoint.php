@@ -33,9 +33,9 @@ class DeletionLogEndpoint extends EndpointAbstract implements SearchableEndpoint
 
     protected function getBaseUrl(): string {
         if ($this->forAddressees) {
-            return "{$this->getEndpointUrl()}/addressees/deletion-log";
+            return "{$this->getServiceUrl()}/addressees/deletion-log";
         }
-        return "{$this->getEndpointUrl()}/clients/deletion-log";
+        return "{$this->getEndpointUrl()}/deletion-log";
     }
 
     /**

@@ -14,6 +14,7 @@ namespace Datev\Entities\Law\Employees;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
+use Datev\Enums\Status;
 use Psr\Log\LoggerInterface;
 
 class Employee extends NamedEntity implements IdentifiableNamedEntityInterface {
@@ -33,7 +34,20 @@ class Employee extends NamedEntity implements IdentifiableNamedEntityInterface {
      * @var array<array-key, mixed>
      */
     protected ?array $job_titles;
-    protected ?string $branch;
+    protected ?Branch $branch;
+    protected ?string $addressee_id;
+    protected ?string $addressee_link;
+    protected ?string $degree;
+    protected ?string $title_of_nobility;
+    protected ?string $name_prefix;
+    protected ?string $firstname;
+    protected ?string $correspondence_name;
+    protected ?Status $activity_status;
+    protected ?string $fax;
+    protected ?string $assistant_id;
+    protected ?string $assistant_link;
+    protected ?string $initials;
+    protected ?string $profit_center;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -88,7 +102,59 @@ class Employee extends NamedEntity implements IdentifiableNamedEntityInterface {
         return $this->job_titles ?? null;
     }
 
-    public function getBranch(): ?string {
+    public function getBranch(): ?Branch {
         return $this->branch ?? null;
+    }
+
+    public function getAddresseeId(): ?string {
+        return $this->addressee_id ?? null;
+    }
+
+    public function getAddresseeLink(): ?string {
+        return $this->addressee_link ?? null;
+    }
+
+    public function getDegree(): ?string {
+        return $this->degree ?? null;
+    }
+
+    public function getTitleOfNobility(): ?string {
+        return $this->title_of_nobility ?? null;
+    }
+
+    public function getNamePrefix(): ?string {
+        return $this->name_prefix ?? null;
+    }
+
+    public function getFirstname(): ?string {
+        return $this->firstname ?? null;
+    }
+
+    public function getCorrespondenceName(): ?string {
+        return $this->correspondence_name ?? null;
+    }
+
+    public function getActivityStatus(): ?Status {
+        return $this->activity_status ?? null;
+    }
+
+    public function getFax(): ?string {
+        return $this->fax ?? null;
+    }
+
+    public function getAssistantId(): ?string {
+        return $this->assistant_id ?? null;
+    }
+
+    public function getAssistantLink(): ?string {
+        return $this->assistant_link ?? null;
+    }
+
+    public function getInitials(): ?string {
+        return $this->initials ?? null;
+    }
+
+    public function getProfitCenter(): ?string {
+        return $this->profit_center ?? null;
     }
 }

@@ -26,6 +26,11 @@ class TermOfPayment extends NamedEntity implements IdentifiableNamedEntityInterf
     protected ?int $net_days;
     protected ?string $payment_type;
     protected ?bool $is_locked;
+    protected ?string $due_type;
+    protected ?float $cash_discount1_percentage;
+    protected ?float $cash_discount2_percentage;
+    protected ?DueInDays $due_in_days;
+    protected ?DueAsPeriod $due_as_period;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -68,5 +73,25 @@ class TermOfPayment extends NamedEntity implements IdentifiableNamedEntityInterf
 
     public function isLocked(): ?bool {
         return $this->is_locked ?? null;
+    }
+
+    public function getDueType(): ?string {
+        return $this->due_type ?? null;
+    }
+
+    public function getCashDiscount1Percentage(): ?float {
+        return $this->cash_discount1_percentage ?? null;
+    }
+
+    public function getCashDiscount2Percentage(): ?float {
+        return $this->cash_discount2_percentage ?? null;
+    }
+
+    public function getDueInDays(): ?DueInDays {
+        return $this->due_in_days ?? null;
+    }
+
+    public function getDueAsPeriod(): ?DueAsPeriod {
+        return $this->due_as_period ?? null;
     }
 }

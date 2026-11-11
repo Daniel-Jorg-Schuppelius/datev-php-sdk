@@ -15,14 +15,13 @@ namespace Datev\Entities\DocumentManagement\StructureItems;
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use DateTime;
-use Datev\Entities\DocumentManagement\Documents\Files\DocumentFileID;
 use Psr\Log\LoggerInterface;
 
 class BaseStructureItem extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected StructureItemID $id;
     protected ?DateTime $creation_date;
     protected ?DateTime $last_modification_date;
-    protected ?DocumentFileID $document_file_id;
+    protected ?StructureItemDocumentFileID $document_file_id;
     protected ?string $revision_comment;
 
     /**
@@ -34,5 +33,21 @@ class BaseStructureItem extends NamedEntity implements IdentifiableNamedEntityIn
 
     public function getID(): StructureItemID {
         return $this->id;
+    }
+
+    public function getCreationDate(): ?DateTime {
+        return $this->creation_date ?? null;
+    }
+
+    public function getLastModificationDate(): ?DateTime {
+        return $this->last_modification_date ?? null;
+    }
+
+    public function getDocumentFileID(): ?StructureItemDocumentFileID {
+        return $this->document_file_id ?? null;
+    }
+
+    public function getRevisionComment(): ?string {
+        return $this->revision_comment ?? null;
     }
 }

@@ -16,7 +16,7 @@ use Datev\API\Online\Endpoints\HrEau\{ClientsEndpoint, EauRequestsEndpoint};
 use Datev\API\Online\OnlineService;
 use Datev\Entities\Online\Common\ConsultantClientNumber;
 use Datev\Entities\Online\HrEau\Clients\ClientId;
-use Datev\Entities\Online\HrEau\EauRequests\{EauRequest, Feedbacks};
+use Datev\Entities\Online\HrEau\EauRequests\{EauRequest, Feedback};
 use Tests\Contracts\OnlineEndpointTest;
 
 class HrEauEndpointsTest extends OnlineEndpointTest {
@@ -80,27 +80,25 @@ class HrEauEndpointsTest extends OnlineEndpointTest {
     }
 
     public function test_get_feedbacks(): void {
+        // Spec: ein Feedback-Objekt, die Rückmeldungen der Kassen stehen in feedbacks_from_health_insurance.
         $this->registerMockResponse('GET', $this->base() . '/' . self::EAU_REQUEST_ID . '/feedbacks', 200, [
-            [
-                'source' => 'systemName v1.0',
-                'start_work_incapacity' => '2026-07-01',
-                'feedbacks_from_health_insurance' => [
-                    [
-                        'guid' => 'fb-1',
-                        'incapacity_for_work' => ['start_work_incapacity_au' => '2026-07-01', 'accident_at_work' => false, 'initial_certificate' => true],
-                        'error_block_list' => [],
-                    ],
+            'source' => 'systemName v1.0',
+            'start_work_incapacity' => '2026-07-01',
+            'feedbacks_from_health_insurance' => [
+                [
+                    'guid' => 'fb-1',
+                    'incapacity_for_work' => ['start_work_incapacity_au' => '2026-07-01', 'accident_at_work' => false, 'initial_certificate' => true],
+                    'error_block_list' => [],
                 ],
             ],
         ]);
 
-        $feedbacks = $this->createEndpoint()->getFeedbacks(self::EAU_REQUEST_ID);
+        $feedback = $this->createEndpoint()->getFeedbacks(self::EAU_REQUEST_ID);
 
-        $this->assertInstanceOf(Feedbacks::class, $feedbacks);
+        $this->assertInstanceOf(Feedback::class, $feedback);
 
         if ($this->isUsingMock()) {
-            $feedback = $feedbacks->getFirstValue();
-            $insuranceFeedback = $feedback?->getFeedbacksFromHealthInsurance()?->getFirstValue();
+            $insuranceFeedback = $feedback->getFeedbacksFromHealthInsurance()?->getFirstValue();
             $this->assertSame('fb-1', $insuranceFeedback?->getGuid());
             $this->assertTrue($insuranceFeedback->getIncapacityForWork()?->isInitialCertificate());
         }

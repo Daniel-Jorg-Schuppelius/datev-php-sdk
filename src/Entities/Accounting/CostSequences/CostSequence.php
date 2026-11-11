@@ -24,6 +24,9 @@ class CostSequence extends NamedEntity implements IdentifiableNamedEntityInterfa
     protected ?DateTime $date_to;
     protected ?string $initials;
     protected ?bool $is_committed;
+    protected ?string $accounting_reason;
+    protected ?int $month;
+    protected ?DateTime $processed_at;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -54,5 +57,17 @@ class CostSequence extends NamedEntity implements IdentifiableNamedEntityInterfa
 
     public function isCommitted(): ?bool {
         return $this->is_committed ?? null;
+    }
+
+    public function getAccountingReason(): ?string {
+        return $this->accounting_reason ?? null;
+    }
+
+    public function getMonth(): ?int {
+        return $this->month ?? null;
+    }
+
+    public function getProcessedAt(): ?DateTime {
+        return $this->processed_at ?? null;
     }
 }

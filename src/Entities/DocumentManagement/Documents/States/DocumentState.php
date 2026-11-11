@@ -14,13 +14,13 @@ namespace Datev\Entities\DocumentManagement\Documents\States;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
-use Datev\Entities\DocumentManagement\Documents\Classes\DocumentClasses;
 use Psr\Log\LoggerInterface;
 
 class DocumentState extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected DocumentStateID $id;
     protected ?string $name;
-    protected ?DocumentClasses $valid_document_classes;
+    /** @var array<int, int>|null */
+    protected ?array $valid_document_classes;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -37,7 +37,10 @@ class DocumentState extends NamedEntity implements IdentifiableNamedEntityInterf
         return $this->name ?? null;
     }
 
-    public function getValidDocumentClasses(): ?DocumentClasses {
+    /**
+     * @return array<int, int>|null
+     */
+    public function getValidDocumentClasses(): ?array {
         return $this->valid_document_classes ?? null;
     }
 }

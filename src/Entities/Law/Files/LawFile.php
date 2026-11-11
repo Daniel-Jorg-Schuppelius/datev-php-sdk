@@ -58,6 +58,11 @@ class LawFile extends NamedEntity implements IdentifiableNamedEntityInterface {
      * @var array<array-key, mixed>
      */
     protected ?array $accounting_area;
+    protected ?bool $reactivated;
+    protected ?Filing $filing;
+    protected ?string $note;
+    protected ?Created $created;
+    protected ?Modified $modified;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -156,5 +161,25 @@ class LawFile extends NamedEntity implements IdentifiableNamedEntityInterface {
      */
     public function getAccountingArea(): ?array {
         return $this->accounting_area ?? null;
+    }
+
+    public function isReactivated(): ?bool {
+        return $this->reactivated ?? null;
+    }
+
+    public function getFiling(): ?Filing {
+        return $this->filing ?? null;
+    }
+
+    public function getNote(): ?string {
+        return $this->note ?? null;
+    }
+
+    public function getCreated(): ?Created {
+        return $this->created ?? null;
+    }
+
+    public function getModified(): ?Modified {
+        return $this->modified ?? null;
     }
 }

@@ -14,7 +14,7 @@ namespace Datev\API\Online\Endpoints\HrEau;
 
 use Datev\API\Online\Support\JobLocation;
 use Datev\Contracts\Abstracts\API\Online\EmployeeScopedEndpointAbstract;
-use Datev\Entities\Online\HrEau\EauRequests\{EauRequest, Feedbacks};
+use Datev\Entities\Online\HrEau\EauRequests\{EauRequest, Feedback};
 
 /**
  * hr:eau v1: elektronische Arbeitsunfähigkeitsbescheinigungen eines
@@ -42,7 +42,7 @@ class EauRequestsEndpoint extends EmployeeScopedEndpointAbstract {
     /**
      * Liefert die Krankenkassen-Rückmeldungen zu einer eAU-Anfrage.
      */
-    public function getFeedbacks(string $eauRequestId): ?Feedbacks {
+    public function getFeedbacks(string $eauRequestId): ?Feedback {
         return $this->logDebugWithTimer(function () use ($eauRequestId) {
             $response = parent::getContents([], [], "{$this->getEndpointUrl()}/" . rawurlencode($eauRequestId) . '/feedbacks');
 
@@ -50,7 +50,7 @@ class EauRequestsEndpoint extends EmployeeScopedEndpointAbstract {
                 return null;
             }
 
-            return Feedbacks::fromJson($response, self::$logger);
+            return Feedback::fromJson($response, self::$logger);
         }, "Fetching eAU feedbacks (ID: {$eauRequestId})");
     }
 

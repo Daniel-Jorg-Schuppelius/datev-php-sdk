@@ -47,7 +47,7 @@ class NotificationsEndpoint extends EndpointAbstract implements SearchableEndpoi
         }
 
         return $this->logDebugWithTimer(function () use ($notificationId) {
-            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/notifications/{$notificationId}");
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizen/{$this->citizenId->toString()}/notifications/{$notificationId}");
 
             if (empty($response) || $response === '[]') {
                 return null;
@@ -67,7 +67,7 @@ class NotificationsEndpoint extends EndpointAbstract implements SearchableEndpoi
         }
 
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
-            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/notifications");
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizen/{$this->citizenId->toString()}/notifications/");
 
             if (empty($response) || $response === '[]') {
                 return null;
@@ -83,7 +83,7 @@ class NotificationsEndpoint extends EndpointAbstract implements SearchableEndpoi
         }
 
         return $this->logDebugWithTimer(function () use ($notificationId) {
-            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/notifications/{$notificationId}/document");
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizen/{$this->citizenId->toString()}/notifications/{$notificationId}/document");
 
             if (empty($response)) {
                 return null;

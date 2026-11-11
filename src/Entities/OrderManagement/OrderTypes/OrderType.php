@@ -19,8 +19,12 @@ class OrderType extends NamedEntity {
     protected ?OrderTypeID $id;
     protected ?string $ordertype;
     protected ?string $ordertype_name;
-    protected ?int $ordertype_group;
+    protected ?string $ordertype_group;
     protected ?string $ordertype_group_name;
+    protected ?int $ordertype_id;
+    protected ?bool $active;
+    protected ?bool $isinternal;
+    protected ?int $ordertype_group_id;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -41,11 +45,27 @@ class OrderType extends NamedEntity {
         return $this->ordertype_name ?? null;
     }
 
-    public function getOrderTypeGroup(): ?int {
+    public function getOrderTypeGroup(): ?string {
         return $this->ordertype_group ?? null;
     }
 
     public function getOrderTypeGroupName(): ?string {
         return $this->ordertype_group_name ?? null;
+    }
+
+    public function getOrdertypeId(): ?int {
+        return $this->ordertype_id ?? null;
+    }
+
+    public function isActive(): ?bool {
+        return $this->active ?? null;
+    }
+
+    public function isIsinternal(): ?bool {
+        return $this->isinternal ?? null;
+    }
+
+    public function getOrdertypeGroupId(): ?int {
+        return $this->ordertype_group_id ?? null;
     }
 }

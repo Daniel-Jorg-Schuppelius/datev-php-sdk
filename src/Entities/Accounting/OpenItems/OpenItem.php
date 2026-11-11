@@ -28,6 +28,7 @@ class OpenItem extends NamedEntity {
     protected ?bool $has_interest_block;
     protected ?PaymentMethod $payment_method;
     protected ?string $receivable_type_id;
+    protected ?string $sepa_mandate_reference;
     protected ?VariousAddressID $various_address_id;
 
     /**

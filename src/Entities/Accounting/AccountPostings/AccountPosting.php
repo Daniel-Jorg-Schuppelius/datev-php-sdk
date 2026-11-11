@@ -20,9 +20,7 @@ use Datev\Entities\Accounting\AdditionalInformations\AdditionalInformations;
 use Datev\Entities\Accounting\AdvancePayments\AdvancePayment;
 use Datev\Entities\Accounting\CostCenters\ID\{CostCenterIDOne, CostCenterIDTwo};
 use Datev\Entities\Accounting\OpenItems\OpenItem;
-use Datev\Entities\Accounting\Sequences\SequenceID;
 use Datev\Entities\Common\VAT\{EuVatID, EuVatID4CountryOfOrigin};
-use Datev\Entities\DocumentManagement\Documents\DocumentID;
 use Datev\Enums\{AccountingReason, AccountingRecordType, CashDiscountType, TaxationMethod};
 use Psr\Log\LoggerInterface;
 
@@ -30,14 +28,14 @@ class AccountPosting extends NamedEntity implements IdentifiableNamedEntityInter
     protected AccountPostingID $id;
     protected ?int $account_number;
     protected ?AccountingReason $accounting_reason;
-    protected ?SequenceID $accounting_sequence_id;
+    protected ?string $accounting_sequence_id;
     protected ?int $accounting_transaction_key;
     protected ?int $accounting_transaction_key49_additional_function;
     protected ?int $accounting_transaction_key49_main_function_number;
     protected ?int $accounting_transaction_key49_main_function_type;
     protected ?int $additional_functions_for_goods_and_services;
     protected ?AdditionalInformations $additional_information;
-    protected ?float $amount_creadit;
+    protected ?float $amount_credit;
     protected ?float $amount_debit;
     protected ?float $amount_entered;
     protected ?AdvancePayment $advance_payment;
@@ -53,7 +51,8 @@ class AccountPosting extends NamedEntity implements IdentifiableNamedEntityInter
     protected ?TaxationMethod $differing_taxation_method;
     protected ?string $document_field1;
     protected ?string $document_field2;
-    protected ?DocumentID $document_link;
+    // Text wie 'BEDI "<GUID>"', keine GUID.
+    protected ?string $document_link;
     protected ?float $eu_tax_rate;
     protected ?float $eu_tax_rate_for_country_of_origin;
     protected ?EuVatID $eu_vat_id;

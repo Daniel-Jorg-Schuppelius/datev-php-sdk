@@ -50,7 +50,7 @@ class FeesEndpoint extends EndpointAbstract implements SearchableEndpointInterfa
         }
 
         return $this->logDebugWithTimer(function () use ($feeId) {
-            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$feeId}");
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizen/{$this->citizenId->toString()}/fees/{$feeId}");
 
             if (empty($response) || $response === '[]') {
                 return null;
@@ -70,7 +70,7 @@ class FeesEndpoint extends EndpointAbstract implements SearchableEndpointInterfa
         }
 
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
-            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees");
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizen/{$this->citizenId->toString()}/fees/");
 
             if (empty($response) || $response === '[]') {
                 return null;

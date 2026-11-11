@@ -24,6 +24,24 @@ class Fee extends NamedEntity {
     protected ?float $factor_from;
     protected ?float $factor_to;
     protected ?float $default_factor;
+    protected ?int $order_id;
+    protected ?int $suborder_id;
+    protected ?int $creation_year;
+    protected ?int $order_number;
+    protected ?int $suborder_number;
+    protected ?int $object_number;
+    protected ?string $fee_short_name;
+    protected ?string $position_type;
+    protected ?string $billing_type;
+    protected ?float $amount;
+    protected ?float $unit_rate;
+    protected ?float $unit;
+    protected ?float $value;
+    protected ?int $charge_rate_number;
+    protected ?int $time_units;
+    protected ?string $state;
+    protected ?float $rate;
+    protected ?int $denominator;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -54,5 +72,77 @@ class Fee extends NamedEntity {
 
     public function getDefaultFactor(): ?float {
         return $this->default_factor ?? null;
+    }
+
+    public function getOrderId(): ?int {
+        return $this->order_id ?? null;
+    }
+
+    public function getSuborderId(): ?int {
+        return $this->suborder_id ?? null;
+    }
+
+    public function getCreationYear(): ?int {
+        return $this->creation_year ?? null;
+    }
+
+    public function getOrderNumber(): ?int {
+        return $this->order_number ?? null;
+    }
+
+    public function getSuborderNumber(): ?int {
+        return $this->suborder_number ?? null;
+    }
+
+    public function getObjectNumber(): ?int {
+        return $this->object_number ?? null;
+    }
+
+    public function getFeeShortName(): ?string {
+        return $this->fee_short_name ?? null;
+    }
+
+    public function getPositionType(): ?string {
+        return $this->position_type ?? null;
+    }
+
+    public function getBillingType(): ?string {
+        return $this->billing_type ?? null;
+    }
+
+    public function getAmount(): ?float {
+        return $this->amount ?? null;
+    }
+
+    public function getUnitRate(): ?float {
+        return $this->unit_rate ?? null;
+    }
+
+    public function getUnit(): ?float {
+        return $this->unit ?? null;
+    }
+
+    public function getValue(): ?float {
+        return $this->value ?? null;
+    }
+
+    public function getChargeRateNumber(): ?int {
+        return $this->charge_rate_number ?? null;
+    }
+
+    public function getTimeUnits(): ?int {
+        return $this->time_units ?? null;
+    }
+
+    public function getState(): ?string {
+        return $this->state ?? null;
+    }
+
+    public function getRate(): ?float {
+        return $this->rate ?? null;
+    }
+
+    public function getDenominator(): ?int {
+        return $this->denominator ?? null;
     }
 }

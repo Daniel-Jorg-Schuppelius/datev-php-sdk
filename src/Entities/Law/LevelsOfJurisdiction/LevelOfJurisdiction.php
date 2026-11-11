@@ -19,6 +19,8 @@ use Psr\Log\LoggerInterface;
 class LevelOfJurisdiction extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?LevelOfJurisdictionID $id;
     protected ?string $name;
+    protected ?int $number;
+    protected ?bool $active;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -33,5 +35,13 @@ class LevelOfJurisdiction extends NamedEntity implements IdentifiableNamedEntity
 
     public function getName(): ?string {
         return $this->name ?? null;
+    }
+
+    public function getNumber(): ?int {
+        return $this->number ?? null;
+    }
+
+    public function isActive(): ?bool {
+        return $this->active ?? null;
     }
 }

@@ -21,6 +21,9 @@ class ExpensePostingsEndpoint extends EndpointAbstract implements SearchableEndp
     protected string $endpointPrefix = 'order-management/v1';
     protected string $endpoint = 'orders';
 
+    /**
+     * @deprecated Die DATEV-Spezifikation Order Management 1.4.8 kennt keinen Einzelabruf; search() verwenden.
+     */
     public function get(?ID $id = null): ?ExpensePosting {
         if (is_null($id)) {
             return null;
@@ -71,11 +74,11 @@ class ExpensePostingsEndpoint extends EndpointAbstract implements SearchableEndp
     /**
      * @param array<string, mixed> $queryParams
      */
-    public function create(int $orderId, ExpensePosting $expensePosting, array $queryParams = []): bool {
-        return $this->logDebugWithTimer(function () use ($orderId, $expensePosting, $queryParams) {
-            $response = parent::postContents($expensePosting->toArray(), $queryParams, "{$this->getEndpointUrl()}/{$orderId}/expensepostings");
+    public function create(int $orderId, int $suborderId, ExpensePosting $expensePosting, array $queryParams = []): bool {
+        return $this->logDebugWithTimer(function () use ($orderId, $suborderId, $expensePosting, $queryParams) {
+            $response = parent::postContents($expensePosting->toArray(), $queryParams, "{$this->getEndpointUrl()}/{$orderId}/suborders/{$suborderId}/expensepostings");
 
             return $response !== '';
-        }, "Creating ExpensePosting for Order (ID: {$orderId})");
+        }, "Creating ExpensePosting for Order (ID: {$orderId}, Suborder: {$suborderId})");
     }
 }

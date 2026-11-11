@@ -94,12 +94,14 @@ $singleClient = $endpoint->get(id: $clientId);
 use APIToolkit\API\Authentication\BasicAuthentication;
 use Datev\API\Desktop\Client;
 use Datev\API\Desktop\Endpoints\Payroll\EmployeesEndpoint;
+use Datev\Entities\Common\Clients\ClientID;
 
 $client = new Client(new BasicAuthentication('user', 'password'));
-$endpoint = new EmployeesEndpoint($client);
+$endpoint = new EmployeesEndpoint($client, clientID: new ClientID('<mandanten-guid>'));
 
-// Mitarbeiter mit Referenzdatum abrufen (erforderlich für HR-Endpoints)
-$employees = $endpoint->get(referenceDate: new DateTime('2024-01-01'));
+// reference-date ist Pflicht; ohne Angabe nimmt search() das heutige Datum
+$employees = $endpoint->search(['reference-date' => '2024-01-01']);
+$employee  = $endpoint->get($employeeId, expand: 'all', referenceDate: new DateTime('2024-01-01'));
 ```
 
 ### Beispiel: Echo-Test (Verbindung prüfen)
@@ -192,15 +194,15 @@ Lohn- und Gehaltsabrechnung. **Hinweis:** Alle HR-Endpoints erfordern ein `refer
 
 Dokumentenverwaltung und Archivierung.
 
-| Endpoint                 | Beschreibung          |
-| ------------------------ | --------------------- |
-| `DocumentsEndpoint`      | Dokumentverwaltung    |
-| `DocumentFilesEndpoint`  | Dateien zu Dokumenten |
-| `DocumentStatesEndpoint` | Dokumentstatus        |
-| `DomainsEndpoint`        | Mandantenbereiche     |
-| `StructureItemsEndpoint` | Ordnerstrukturen      |
-| `SecureAreasEndpoint`    | Sicherheitsbereiche   |
-| ... und 5 weitere        |                       |
+| Endpoint                 | Beschreibung                                                                                   |
+| ------------------------ | ---------------------------------------------------------------------------------------------- |
+| `DocumentsEndpoint`      | Dokumentverwaltung                                                                             |
+| `DocumentFilesEndpoint`  | Dateien zu Dokumenten                                                                          |
+| `DocumentStatesEndpoint` | Dokumentstatus                                                                                 |
+| `DomainsEndpoint`        | Mandantenbereiche                                                                              |
+| `StructureItemsEndpoint` | Strukturelemente (Dateien) eines Dokuments, mit `document_file_id` für `DocumentFilesEndpoint` |
+| `SecureAreasEndpoint`    | Sicherheitsbereiche                                                                            |
+| ... und 5 weitere        |                                                                                                |
 
 ### Order Management
 
@@ -378,6 +380,14 @@ vendor/bin/phpunit
 # Endpoint-Tests im Mock-Modus (ohne DATEV-Installation, inkl. aller Online-Dienste):
 DATEV_SKIP_API_TESTS=0 DATEV_FORCE_MOCK=1 vendor/bin/phpunit
 ```
+
+Drei Offline-Prüfungen laufen immer mit und vergleichen das SDK mit den OpenAPI-Dateien unter `docs/OpenAPI/Desktop` und `docs/OpenAPI/Online`:
+
+- `tests/API/OpenApiPathTest.php` ruft jede öffentliche Methode der Endpunkte auf und verlangt, dass jeder gebaute Pfad in der Spec steht; bei Desktop zusätzlich, dass er den deklarierten `endpointSuffix` enthält. Methoden ohne Gegenstück in der Spec sind `@deprecated` und stehen mit Grund in einer Ausnahmeliste.
+- `tests/API/OpenApiResponseTest.php` liest für jede GET-Operation ein aus dem Antwortschema erzeugtes Beispiel mit der zurückgegebenen Entität ein und verlangt jedes Feld zurück, auch in verschachtelten Objekten und Listen. Außerdem müssen die Feldtypen zur Spec passen und Enums alle Spec-Werte kennen.
+- `tests/Entities/OpenApiSchemaCoverageTest.php` prüft Schemas, die über keine GET-Operation erreichbar sind (Anfrage-Bodies, eingebettete Objekte), Feld für Feld.
+
+**Bekannte Grenze:** Entitäten bilden JSON-Schlüssel direkt auf Properties ab. Schlüssel, die kein PHP-Bezeichner sind, kommen deshalb nicht an: im Auftragswesen die Verkaufswerte (`time_costs (sales_value)` und Geschwister in Monatswerten und Teilaufträgen), in der Benutzerverwaltung (SCIM) `$ref` und die `urn:ietf:params:scim:…`-Erweiterungen.
 
 > **Hinweis:** Die Endpoint-Tests erfordern standardmäßig eine laufende DATEV-Installation und sind daher deaktiviert (`DATEV_SKIP_API_TESTS=1` in `phpunit.xml.dist`). Im Mock-Modus werden die Antworten aus den OpenAPI-Spezifikationen in `docs/OpenAPI/` generiert.
 >

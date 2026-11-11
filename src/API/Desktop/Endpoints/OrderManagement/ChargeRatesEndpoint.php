@@ -19,8 +19,11 @@ use Datev\Entities\OrderManagement\ChargeRates\{ChargeRate, ChargeRates};
 
 class ChargeRatesEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointPrefix = 'order-management/v1';
-    protected string $endpoint = 'charge-rates';
+    protected string $endpoint = 'chargerates';
 
+    /**
+     * @deprecated Die DATEV-Spezifikation Order Management 1.4.8 kennt keinen Einzelabruf; search() verwenden.
+     */
     public function get(?ID $id = null): ?ChargeRate {
         if (is_null($id)) {
             return null;
@@ -39,6 +42,7 @@ class ChargeRatesEndpoint extends EndpointAbstract implements SearchableEndpoint
 
     /**
      * @param array<string, mixed> $queryParams
+     * @deprecated Die DATEV-Spezifikation Order Management 1.4.8 kennt keinen Einzelabruf; search() verwenden.
      */
     public function getForEmployee(GUID $employeeId, array $queryParams = []): ?ChargeRates {
         return $this->logDebugWithTimer(function () use ($employeeId, $queryParams) {

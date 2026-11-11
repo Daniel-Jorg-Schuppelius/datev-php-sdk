@@ -17,6 +17,7 @@ use APIToolkit\Entities\GUID;
 use APIToolkit\Traits\MoneyAccessorTrait;
 use CommonToolkit\ValueObjects\Money;
 use DateTime;
+use Datev\Entities\OrderManagement\Suborders\Suborders;
 use Psr\Log\LoggerInterface;
 
 class Order extends NamedEntity {
@@ -28,7 +29,7 @@ class Order extends NamedEntity {
     protected ?string $order_name;
     protected ?string $ordertype;
     protected ?string $ordertype_name;
-    protected ?int $ordertype_group;
+    protected ?string $ordertype_group;
     protected ?string $ordertype_group_name;
     protected ?GUID $client_id;
     protected ?string $client_name;
@@ -59,6 +60,28 @@ class Order extends NamedEntity {
     protected ?GUID $order_responsible1_id;
     protected ?GUID $order_responsible2_id;
     protected ?GUID $order_partner_id;
+    protected ?int $id;
+    protected ?int $creation_year_predecessor;
+    protected ?int $order_number_predecessor;
+    protected ?int $creation_year_successor;
+    protected ?int $order_number_successor;
+    protected ?string $cost_center;
+    protected ?string $cost_center_name;
+    protected ?string $client_responsible_id;
+    protected ?string $file_id;
+    protected ?DateTime $date_completion_status;
+    protected ?DateTime $date_billing_status;
+    protected ?DateTime $completion_date;
+    protected ?DateTime $interruption_date;
+    protected ?DateTime $resume_date;
+    protected ?string $order_structure;
+    protected ?DateTime $min_planned_start;
+    protected ?DateTime $max_planned_end;
+    protected ?float $planned_hours;
+    protected ?bool $automatic_fee_active;
+    protected ?float $automatic_fee_level;
+    protected ?string $invoice_type;
+    protected ?Suborders $suborders;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -113,5 +136,89 @@ class Order extends NamedEntity {
 
     public function getTimeCosts(): ?Money {
         return $this->toMoney($this->time_costs ?? null);
+    }
+
+    public function getCreationYearPredecessor(): ?int {
+        return $this->creation_year_predecessor ?? null;
+    }
+
+    public function getOrderNumberPredecessor(): ?int {
+        return $this->order_number_predecessor ?? null;
+    }
+
+    public function getCreationYearSuccessor(): ?int {
+        return $this->creation_year_successor ?? null;
+    }
+
+    public function getOrderNumberSuccessor(): ?int {
+        return $this->order_number_successor ?? null;
+    }
+
+    public function getCostCenter(): ?string {
+        return $this->cost_center ?? null;
+    }
+
+    public function getCostCenterName(): ?string {
+        return $this->cost_center_name ?? null;
+    }
+
+    public function getClientResponsibleId(): ?string {
+        return $this->client_responsible_id ?? null;
+    }
+
+    public function getFileId(): ?string {
+        return $this->file_id ?? null;
+    }
+
+    public function getDateCompletionStatus(): ?DateTime {
+        return $this->date_completion_status ?? null;
+    }
+
+    public function getDateBillingStatus(): ?DateTime {
+        return $this->date_billing_status ?? null;
+    }
+
+    public function getCompletionDate(): ?DateTime {
+        return $this->completion_date ?? null;
+    }
+
+    public function getInterruptionDate(): ?DateTime {
+        return $this->interruption_date ?? null;
+    }
+
+    public function getResumeDate(): ?DateTime {
+        return $this->resume_date ?? null;
+    }
+
+    public function getOrderStructure(): ?string {
+        return $this->order_structure ?? null;
+    }
+
+    public function getMinPlannedStart(): ?DateTime {
+        return $this->min_planned_start ?? null;
+    }
+
+    public function getMaxPlannedEnd(): ?DateTime {
+        return $this->max_planned_end ?? null;
+    }
+
+    public function getPlannedHours(): ?float {
+        return $this->planned_hours ?? null;
+    }
+
+    public function isAutomaticFeeActive(): ?bool {
+        return $this->automatic_fee_active ?? null;
+    }
+
+    public function getAutomaticFeeLevel(): ?float {
+        return $this->automatic_fee_level ?? null;
+    }
+
+    public function getInvoiceType(): ?string {
+        return $this->invoice_type ?? null;
+    }
+
+    public function getSuborders(): ?Suborders {
+        return $this->suborders ?? null;
     }
 }

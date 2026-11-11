@@ -14,4 +14,6 @@ namespace Datev\Enums;
 
 enum AddressType: string {
     case Street = "street";
+    case PostOfficeBox = "post_office_box";
+    case CorporateClient = "corporate_client";
 }

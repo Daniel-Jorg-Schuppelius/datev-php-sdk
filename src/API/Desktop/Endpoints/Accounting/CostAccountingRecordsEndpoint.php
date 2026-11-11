@@ -63,6 +63,9 @@ class CostAccountingRecordsEndpoint extends EndpointAbstract implements Searchab
         return "{$this->getEndpointUrl()}/{$this->clientId->toString()}/fiscal-years/{$this->fiscalYearId->toString()}/cost-systems/{$this->costSystemId->toString()}/cost-sequences/{$this->costSequenceId->toString()}/cost-accounting-records";
     }
 
+    /**
+     * @deprecated Die DATEV-Spezifikation Accounting 1.7.4.1 kennt nur Liste und Anlage; search() verwenden.
+     */
     public function get(?ID $id = null): ?CostAccountingRecord {
         if (is_null($id)) {
             return null;
@@ -70,6 +73,9 @@ class CostAccountingRecordsEndpoint extends EndpointAbstract implements Searchab
         return $this->getById($id->toString());
     }
 
+    /**
+     * @deprecated Die DATEV-Spezifikation Accounting 1.7.4.1 kennt nur Liste und Anlage; search() verwenden.
+     */
     public function getById(?string $recordId = null): ?CostAccountingRecord {
         if (is_null($recordId)) {
             $this->logErrorAndThrow(InvalidArgumentException::class, 'Cost Accounting Record ID is required');

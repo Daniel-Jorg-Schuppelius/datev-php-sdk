@@ -16,6 +16,7 @@ use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
 use APIToolkit\Traits\MoneyAccessorTrait;
 use CommonToolkit\ValueObjects\Money;
+use DateTime;
 use Psr\Log\LoggerInterface;
 
 class VocationalTraining extends NamedEntity implements IdentifiableNamedEntityInterface {
@@ -24,6 +25,9 @@ class VocationalTraining extends NamedEntity implements IdentifiableNamedEntityI
     protected VocationalTrainingID $id;
     protected string $personnel_number;
     protected ?float $amount;
+    protected ?DateTime $start;
+    protected ?DateTime $expected_end;
+    protected ?DateTime $actual_end;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -42,5 +46,17 @@ class VocationalTraining extends NamedEntity implements IdentifiableNamedEntityI
 
     public function getAmount(): ?Money {
         return $this->toMoney($this->amount ?? null);
+    }
+
+    public function getStart(): ?DateTime {
+        return $this->start ?? null;
+    }
+
+    public function getExpectedEnd(): ?DateTime {
+        return $this->expected_end ?? null;
+    }
+
+    public function getActualEnd(): ?DateTime {
+        return $this->actual_end ?? null;
     }
 }

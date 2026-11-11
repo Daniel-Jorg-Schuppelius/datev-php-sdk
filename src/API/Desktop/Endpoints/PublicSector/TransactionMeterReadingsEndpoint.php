@@ -60,7 +60,7 @@ class TransactionMeterReadingsEndpoint extends EndpointAbstract implements Searc
         }
 
         return $this->logDebugWithTimer(function () use ($transactionId) {
-            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/meters/{$this->meterId}/transaction-meter-readings/{$transactionId}");
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizen/{$this->citizenId->toString()}/fees/{$this->feeId}/meters/{$this->meterId}/transaction-meter-readings/{$transactionId}/");
 
             if (empty($response) || $response === '[]') {
                 return null;
@@ -80,7 +80,7 @@ class TransactionMeterReadingsEndpoint extends EndpointAbstract implements Searc
         }
 
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
-            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/meters/{$this->meterId}/transaction-meter-readings");
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizen/{$this->citizenId->toString()}/fees/{$this->feeId}/meters/{$this->meterId}/transaction-meter-readings/");
 
             if (empty($response) || $response === '[]') {
                 return null;
@@ -96,7 +96,7 @@ class TransactionMeterReadingsEndpoint extends EndpointAbstract implements Searc
         }
 
         return $this->logDebugWithTimer(function () use ($transaction) {
-            $response = parent::postContents($transaction->toArray(), [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/fees/{$this->feeId}/meters/{$this->meterId}/transaction-meter-readings");
+            $response = parent::postContents($transaction->toArray(), [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizen/{$this->citizenId->toString()}/fees/{$this->feeId}/meters/{$this->meterId}/transaction-meter-readings/");
 
             return $response !== '';
         }, "Creating TransactionMeterReading");

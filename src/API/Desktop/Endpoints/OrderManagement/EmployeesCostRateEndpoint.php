@@ -21,6 +21,9 @@ class EmployeesCostRateEndpoint extends EndpointAbstract implements SearchableEn
     protected string $endpointPrefix = 'order-management/v1';
     protected string $endpoint = 'employeescostrate';
 
+    /**
+     * @deprecated Die DATEV-Spezifikation Order Management 1.4.8 kennt keinen Einzelabruf; search() verwenden.
+     */
     public function get(?ID $id = null): ?EmployeeCostRate {
         if (is_null($id)) {
             return null;

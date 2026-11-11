@@ -8,41 +8,47 @@
  * License Uri  : https://opensource.org/license/mit
  */
 
+declare(strict_types=1);
+
 namespace Datev\API\Desktop\Endpoints\Payroll;
 
 use APIToolkit\Contracts\Interfaces\API\EndpointInterfaces\SearchableEndpointInterface;
 use APIToolkit\Entities\ID;
-use Datev\Contracts\Abstracts\API\Desktop\EndpointAbstract;
+use Datev\Contracts\Abstracts\API\Desktop\Payroll\PayrollEndpointAbstract;
 use Datev\Entities\Payroll\Accounts\{Account, Accounts};
 use InvalidArgumentException;
 
-class AccountEndpoint extends EndpointAbstract implements SearchableEndpointInterface {
-    protected string $endpointPrefix = 'hr/v3';
-    protected string $endpoint = 'clients';
+class AccountEndpoint extends PayrollEndpointAbstract implements SearchableEndpointInterface {
+    protected string $endpointSuffix = 'account';
 
+    /**
+     * Bankverbindung eines Mitarbeiters des gesetzten Mandanten.
+     */
     public function get(?ID $id = null): ?Account {
         if (is_null($id)) {
-            $this->logErrorAndThrow(InvalidArgumentException::class, 'ID is required');
+            $this->logErrorAndThrow(InvalidArgumentException::class, 'Employee ID is required');
         }
 
         return $this->logDebugWithTimer(function () use ($id) {
-            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$id->toString()}/account");
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/employees/{$id->toString()}/{$this->endpointSuffix}");
 
             if (empty($response) || $response === '[]') {
                 return null;
             }
 
             return Account::fromJson($response, self::$logger);
-        }, "Fetching Account for Client (ID: {$id->toString()})");
+        }, "Fetching Account for Employee (ID: {$id->toString()})");
     }
 
     /**
+     * Bankverbindungen aller Mitarbeiter des gesetzten Mandanten.
+     *
      * @param array<string, mixed> $options
      * @param array<string, mixed> $queryParams
      */
     public function search(array $queryParams = [], array $options = []): ?Accounts {
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
-            $response = parent::getContents($queryParams, $options);
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->endpointSuffix}");
 
             if (empty($response) || $response === '[]') {
                 return null;

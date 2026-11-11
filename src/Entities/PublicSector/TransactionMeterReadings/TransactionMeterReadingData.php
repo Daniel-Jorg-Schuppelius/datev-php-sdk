@@ -30,6 +30,9 @@ class TransactionMeterReadingData extends NamedEntity {
     protected ?string $reader;
     protected ?string $comment_for_notification;
     protected ?string $comment;
+    protected ?string $id;
+    protected ?int $date_serial_number;
+    protected ?float $consumption;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -88,5 +91,17 @@ class TransactionMeterReadingData extends NamedEntity {
 
     public function getComment(): ?string {
         return $this->comment ?? null;
+    }
+
+    public function getId(): ?string {
+        return $this->id ?? null;
+    }
+
+    public function getDateSerialNumber(): ?int {
+        return $this->date_serial_number ?? null;
+    }
+
+    public function getConsumption(): ?float {
+        return $this->consumption ?? null;
     }
 }

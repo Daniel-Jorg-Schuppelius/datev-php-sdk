@@ -14,13 +14,12 @@ namespace Datev\Entities\DocumentManagement\PropertyTemplates;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
-use Datev\Entities\DocumentManagement\Documents\Classes\DocumentClass;
 use Psr\Log\LoggerInterface;
 
 class PropertyTemplate extends NamedEntity implements IdentifiableNamedEntityInterface {
     protected ?PropertyTemplateID $id;
     protected ?string $name;
-    protected ?DocumentClass $document_class;
+    protected ?int $document_class;
     protected ?string $supplement;
     protected ?int $inbox_document_type_number;
     protected ?int $outbox_document_type_number;
@@ -40,7 +39,7 @@ class PropertyTemplate extends NamedEntity implements IdentifiableNamedEntityInt
         return $this->name ?? null;
     }
 
-    public function getDocumentClass(): ?DocumentClass {
+    public function getDocumentClass(): ?int {
         return $this->document_class ?? null;
     }
 

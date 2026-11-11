@@ -15,6 +15,7 @@ namespace Datev\Entities\Payroll\Data\Individual;
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterface;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
+use DateTime;
 use Psr\Log\LoggerInterface;
 
 class IndividualDatum extends NamedEntity implements IdentifiableNamedEntityInterface {
@@ -23,6 +24,38 @@ class IndividualDatum extends NamedEntity implements IdentifiableNamedEntityInte
      * @var array<array-key, mixed>
      */
     protected ?array $data;
+    protected ?string $long_field_name;
+    protected ?string $short_field_name;
+    protected ?DateTime $date;
+    protected ?float $amount;
+    protected ?string $long_field_name2;
+    protected ?string $short_field_name2;
+    protected ?DateTime $date2;
+    protected ?float $amount2;
+    protected ?string $long_field_name3;
+    protected ?string $short_field_name3;
+    protected ?DateTime $date3;
+    protected ?float $amount3;
+    protected ?string $long_field_name4;
+    protected ?string $short_field_name4;
+    protected ?DateTime $date4;
+    protected ?float $amount4;
+    protected ?string $long_field_name5;
+    protected ?string $short_field_name5;
+    protected ?DateTime $date5;
+    protected ?float $amount5;
+    protected ?string $long_field_name6;
+    protected ?string $short_field_name6;
+    protected ?DateTime $date6;
+    protected ?float $amount6;
+    protected ?string $long_field_name7;
+    protected ?string $short_field_name7;
+    protected ?DateTime $date7;
+    protected ?float $amount7;
+    protected ?string $long_field_name8;
+    protected ?string $short_field_name8;
+    protected ?DateTime $date8;
+    protected ?float $amount8;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -108,5 +141,133 @@ class IndividualDatum extends NamedEntity implements IdentifiableNamedEntityInte
         }
 
         return $result;
+    }
+
+    public function getLongFieldName(): ?string {
+        return $this->long_field_name ?? null;
+    }
+
+    public function getShortFieldName(): ?string {
+        return $this->short_field_name ?? null;
+    }
+
+    public function getDate(): ?DateTime {
+        return $this->date ?? null;
+    }
+
+    public function getAmount(): ?float {
+        return $this->amount ?? null;
+    }
+
+    public function getLongFieldName2(): ?string {
+        return $this->long_field_name2 ?? null;
+    }
+
+    public function getShortFieldName2(): ?string {
+        return $this->short_field_name2 ?? null;
+    }
+
+    public function getDate2(): ?DateTime {
+        return $this->date2 ?? null;
+    }
+
+    public function getAmount2(): ?float {
+        return $this->amount2 ?? null;
+    }
+
+    public function getLongFieldName3(): ?string {
+        return $this->long_field_name3 ?? null;
+    }
+
+    public function getShortFieldName3(): ?string {
+        return $this->short_field_name3 ?? null;
+    }
+
+    public function getDate3(): ?DateTime {
+        return $this->date3 ?? null;
+    }
+
+    public function getAmount3(): ?float {
+        return $this->amount3 ?? null;
+    }
+
+    public function getLongFieldName4(): ?string {
+        return $this->long_field_name4 ?? null;
+    }
+
+    public function getShortFieldName4(): ?string {
+        return $this->short_field_name4 ?? null;
+    }
+
+    public function getDate4(): ?DateTime {
+        return $this->date4 ?? null;
+    }
+
+    public function getAmount4(): ?float {
+        return $this->amount4 ?? null;
+    }
+
+    public function getLongFieldName5(): ?string {
+        return $this->long_field_name5 ?? null;
+    }
+
+    public function getShortFieldName5(): ?string {
+        return $this->short_field_name5 ?? null;
+    }
+
+    public function getDate5(): ?DateTime {
+        return $this->date5 ?? null;
+    }
+
+    public function getAmount5(): ?float {
+        return $this->amount5 ?? null;
+    }
+
+    public function getLongFieldName6(): ?string {
+        return $this->long_field_name6 ?? null;
+    }
+
+    public function getShortFieldName6(): ?string {
+        return $this->short_field_name6 ?? null;
+    }
+
+    public function getDate6(): ?DateTime {
+        return $this->date6 ?? null;
+    }
+
+    public function getAmount6(): ?float {
+        return $this->amount6 ?? null;
+    }
+
+    public function getLongFieldName7(): ?string {
+        return $this->long_field_name7 ?? null;
+    }
+
+    public function getShortFieldName7(): ?string {
+        return $this->short_field_name7 ?? null;
+    }
+
+    public function getDate7(): ?DateTime {
+        return $this->date7 ?? null;
+    }
+
+    public function getAmount7(): ?float {
+        return $this->amount7 ?? null;
+    }
+
+    public function getLongFieldName8(): ?string {
+        return $this->long_field_name8 ?? null;
+    }
+
+    public function getShortFieldName8(): ?string {
+        return $this->short_field_name8 ?? null;
+    }
+
+    public function getDate8(): ?DateTime {
+        return $this->date8 ?? null;
+    }
+
+    public function getAmount8(): ?float {
+        return $this->amount8 ?? null;
     }
 }

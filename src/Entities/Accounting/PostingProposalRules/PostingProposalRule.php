@@ -14,6 +14,7 @@ namespace Datev\Entities\Accounting\PostingProposalRules;
 
 use APIToolkit\Contracts\Abstracts\NamedEntity;
 use APIToolkit\Contracts\Interfaces\NamedEntityInterfaces\IdentifiableNamedEntityInterface;
+use DateTime;
 use Psr\Log\LoggerInterface;
 
 class PostingProposalRule extends NamedEntity implements IdentifiableNamedEntityInterface {
@@ -26,6 +27,11 @@ class PostingProposalRule extends NamedEntity implements IdentifiableNamedEntity
     protected ?string $business_partner_name;
     protected ?string $business_partner_number;
     protected ?string $iban;
+    protected ?AssignmentCriteria $assignment_criteria;
+    protected ?DateTime $creation_date;
+    protected ?DateTime $last_used_date;
+    protected ?PostingProposalInformationList $posting_proposal_information;
+    protected ?bool $uncertain_label;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -56,5 +62,25 @@ class PostingProposalRule extends NamedEntity implements IdentifiableNamedEntity
 
     public function getCostCenter2(): ?string {
         return $this->cost_center_2 ?? null;
+    }
+
+    public function getAssignmentCriteria(): ?AssignmentCriteria {
+        return $this->assignment_criteria ?? null;
+    }
+
+    public function getCreationDate(): ?DateTime {
+        return $this->creation_date ?? null;
+    }
+
+    public function getLastUsedDate(): ?DateTime {
+        return $this->last_used_date ?? null;
+    }
+
+    public function getPostingProposalInformation(): ?PostingProposalInformationList {
+        return $this->posting_proposal_information ?? null;
+    }
+
+    public function isUncertainLabel(): ?bool {
+        return $this->uncertain_label ?? null;
     }
 }

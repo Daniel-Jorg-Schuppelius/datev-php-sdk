@@ -16,15 +16,17 @@ use APIToolkit\Contracts\Abstracts\NamedValues;
 use Psr\Log\LoggerInterface;
 
 /**
- * @extends NamedValues<OpenItem>
+ * @template T of OpenItem = OpenItem
+ * @extends NamedValues<T>
  */
 class OpenItems extends NamedValues {
+    protected string $valueClassName = OpenItem::class;
+
     /**
      * @param mixed $data
      */
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         $this->entityName = "content";
-        $this->valueClassName = OpenItem::class;
 
         parent::__construct($data, $logger);
     }

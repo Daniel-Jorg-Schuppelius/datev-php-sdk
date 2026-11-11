@@ -14,4 +14,8 @@ namespace Datev\Enums;
 
 enum CommunicationType: string {
     case Phone = "phone";
+    case Email = "email";
+    case Url = "url";
+    case Fax = "fax";
+    case Other = "other";
 }

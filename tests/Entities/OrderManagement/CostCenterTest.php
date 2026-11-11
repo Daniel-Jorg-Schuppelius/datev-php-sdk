@@ -20,7 +20,7 @@ class CostCenterTest extends EntityTest {
         $data = [
             "id" => "550e8400-e29b-41d4-a716-446655440000",
             "cost_center_number" => "1000",
-            "cost_center_name" => "Verwaltung",
+            "costcenter_name" => "Verwaltung",
             "organization_id" => "660e8400-e29b-41d4-a716-446655440001",
             "isactive" => true,
         ];
@@ -40,12 +40,12 @@ class CostCenterTest extends EntityTest {
                 [
                     "id" => "550e8400-e29b-41d4-a716-446655440000",
                     "cost_center_number" => "1000",
-                    "cost_center_name" => "Verwaltung",
+                    "costcenter_name" => "Verwaltung",
                 ],
                 [
                     "id" => "550e8400-e29b-41d4-a716-446655440001",
                     "cost_center_number" => "2000",
-                    "cost_center_name" => "Produktion",
+                    "costcenter_name" => "Produktion",
                 ],
             ],
         ];

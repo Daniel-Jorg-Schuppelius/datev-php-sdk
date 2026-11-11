@@ -50,7 +50,7 @@ class TransactionCommunicationsEndpoint extends EndpointAbstract implements Sear
         }
 
         return $this->logDebugWithTimer(function () use ($transactionId) {
-            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/transaction-communications/{$transactionId}");
+            $response = parent::getContents([], [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizen/{$this->citizenId->toString()}/transaction-communications/{$transactionId}/");
 
             if (empty($response) || $response === '[]') {
                 return null;
@@ -70,7 +70,7 @@ class TransactionCommunicationsEndpoint extends EndpointAbstract implements Sear
         }
 
         return $this->logDebugWithTimer(function () use ($queryParams, $options) {
-            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/transaction-communications");
+            $response = parent::getContents($queryParams, $options, "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizen/{$this->citizenId->toString()}/transaction-communications/");
 
             if (empty($response) || $response === '[]') {
                 return null;
@@ -86,7 +86,7 @@ class TransactionCommunicationsEndpoint extends EndpointAbstract implements Sear
         }
 
         return $this->logDebugWithTimer(function () use ($transaction) {
-            $response = parent::postContents($transaction->toArray(), [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizens/{$this->citizenId->toString()}/transaction-communications");
+            $response = parent::postContents($transaction->toArray(), [], "{$this->getEndpointUrl()}/{$this->clientId->toString()}/citizen/{$this->citizenId->toString()}/transaction-communications/");
 
             return $response !== '';
         }, "Creating TransactionCommunication");

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "13dbff9aab7aea09599a3aa5c11e8885",
+    "content-hash": "c9cfc3964e14502e2937c134a2bc0467",
     "packages": [
         {
             "name": "brick/math",
@@ -68,16 +68,16 @@
         },
         {
             "name": "daniel-jorg-schuppelius/php-api-toolkit",
-            "version": "v2.11.4",
+            "version": "v2.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Daniel-Jorg-Schuppelius/php-api-toolkit.git",
-                "reference": "e616eb999bf5c5cf651c9ef29654ea214f06222b"
+                "reference": "6e74f0b2050a716396dc3625d15333ceba6bd03f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Daniel-Jorg-Schuppelius/php-api-toolkit/zipball/e616eb999bf5c5cf651c9ef29654ea214f06222b",
-                "reference": "e616eb999bf5c5cf651c9ef29654ea214f06222b",
+                "url": "https://api.github.com/repos/Daniel-Jorg-Schuppelius/php-api-toolkit/zipball/6e74f0b2050a716396dc3625d15333ceba6bd03f",
+                "reference": "6e74f0b2050a716396dc3625d15333ceba6bd03f",
                 "shasum": ""
             },
             "require": {
@@ -112,9 +112,9 @@
             "description": "Reused codes for my api php sdks",
             "support": {
                 "issues": "https://github.com/Daniel-Jorg-Schuppelius/php-api-toolkit/issues",
-                "source": "https://github.com/Daniel-Jorg-Schuppelius/php-api-toolkit/tree/v2.11.4"
+                "source": "https://github.com/Daniel-Jorg-Schuppelius/php-api-toolkit/tree/v2.12.0"
             },
-            "time": "2026-11-08T21:52:04+00:00"
+            "time": "2026-11-11T20:41:24+00:00"
         },
         {
             "name": "dschuppelius/php-common-toolkit",
@@ -3302,9 +3302,9 @@
     "platform": {
         "php": ">=8.2 <8.6"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "platform-overrides": {
         "php": "8.2.0"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }

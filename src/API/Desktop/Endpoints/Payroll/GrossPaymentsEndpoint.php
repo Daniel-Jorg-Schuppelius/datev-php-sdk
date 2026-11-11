@@ -21,6 +21,9 @@ use InvalidArgumentException;
 class GrossPaymentsEndpoint extends PayrollEndpointAbstract implements SearchableEndpointInterface {
     protected string $endpointSuffix = 'gross-payments';
 
+    /**
+     * @deprecated Die DATEV-Spezifikation Payroll 3.1.1 kennt den Einzelabruf nur je Mitarbeiter (/employees/{employee-id}/...).
+     */
     public function get(?ID $id = null): ?GrossPayment {
         if (is_null($id)) {
             $this->logErrorAndThrow(InvalidArgumentException::class, 'ID is required');

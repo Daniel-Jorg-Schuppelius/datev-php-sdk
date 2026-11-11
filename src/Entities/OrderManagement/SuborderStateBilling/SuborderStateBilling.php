@@ -39,6 +39,14 @@ class SuborderStateBilling extends NamedEntity {
     protected ?DateTime $creditnote_proposal_date;
     protected ?DateTime $creditnote_release_date;
     protected ?DateTime $creditnote_billing_date;
+    protected ?int $advance_accounting_year;
+    protected ?int $advance_invoice_number;
+    protected ?int $creditnote_accounting_year;
+    protected ?int $creditnote_invoice_number;
+    protected ?int $manual_year;
+    protected ?int $manual_invoice_number;
+    protected ?int $manual_advance_year;
+    protected ?int $manual_advance_invoice_number;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -133,5 +141,37 @@ class SuborderStateBilling extends NamedEntity {
 
     public function getCreditnoteBillingDate(): ?DateTime {
         return $this->creditnote_billing_date ?? null;
+    }
+
+    public function getAdvanceAccountingYear(): ?int {
+        return $this->advance_accounting_year ?? null;
+    }
+
+    public function getAdvanceInvoiceNumber(): ?int {
+        return $this->advance_invoice_number ?? null;
+    }
+
+    public function getCreditnoteAccountingYear(): ?int {
+        return $this->creditnote_accounting_year ?? null;
+    }
+
+    public function getCreditnoteInvoiceNumber(): ?int {
+        return $this->creditnote_invoice_number ?? null;
+    }
+
+    public function getManualYear(): ?int {
+        return $this->manual_year ?? null;
+    }
+
+    public function getManualInvoiceNumber(): ?int {
+        return $this->manual_invoice_number ?? null;
+    }
+
+    public function getManualAdvanceYear(): ?int {
+        return $this->manual_advance_year ?? null;
+    }
+
+    public function getManualAdvanceInvoiceNumber(): ?int {
+        return $this->manual_advance_invoice_number ?? null;
     }
 }

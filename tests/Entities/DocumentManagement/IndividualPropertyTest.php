@@ -20,7 +20,7 @@ class IndividualPropertyTest extends EntityTest {
         $data = [
             "id" => "prop-001",
             "data_name" => "CustomField1",
-            "data_type" => "string",
+            "datatype" => "string",
             "display_name" => "Benutzerdefiniertes Feld",
             "order" => 1,
             "active" => true,

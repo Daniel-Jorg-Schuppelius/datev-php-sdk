@@ -26,6 +26,7 @@ class CustomField extends NamedEntity implements IdentifiableNamedEntityInterfac
      * @var array<array-key, mixed>
      */
     protected ?array $department;
+    protected ?string $value;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -59,5 +60,9 @@ class CustomField extends NamedEntity implements IdentifiableNamedEntityInterfac
      */
     public function getDepartment(): ?array {
         return $this->department ?? null;
+    }
+
+    public function getValue(): ?string {
+        return $this->value ?? null;
     }
 }

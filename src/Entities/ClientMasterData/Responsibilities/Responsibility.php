@@ -25,7 +25,7 @@ class Responsibility extends NamedEntity implements IdentifiableNamedEntityInter
     protected ?GUID $employee_id;
     protected ?string $employee_display_name;
     protected ?int $employee_number;
-    protected ?bool $employee_status;
+    protected ?Status $employee_status;
     protected ?GUID $client_id;
     protected ?string $client_name;
     protected ?int $client_number;
