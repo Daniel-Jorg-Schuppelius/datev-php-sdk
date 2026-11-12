@@ -35,7 +35,7 @@ class Resource extends NamedEntity {
 
     protected string $reference_date;
 
-    protected Resource $sub_resource;
+    protected ?Resource $sub_resource = null;
 
     /**
      * @param array<string, mixed>|object|null $data
@@ -43,6 +43,12 @@ class Resource extends NamedEntity {
     public function __construct($data = null, ?LoggerInterface $logger = null) {
         parent::__construct($data, $logger);
     }
+
+    /**
+     * NamedEntity::initialize() legt Entitätsfelder sofort an; sub_resource verweist auf
+     * die eigene Klasse und liefe so endlos. Alle übrigen Felder sind Strings.
+     */
+    protected function initialize(): void {}
 
     public function getPath(): ?string {
         return $this->path ?? null;

@@ -16,6 +16,7 @@ use APIToolkit\Contracts\Abstracts\{AbstractUuid, NamedEntity, NamedValue, Named
 use APIToolkit\Contracts\Interfaces\API\ApiClientInterface;
 use APIToolkit\Entities\ID;
 use BackedEnum;
+use Error;
 use Psr\Log\{LoggerInterface, NullLogger};
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -104,7 +105,8 @@ final class OpenApiProbe {
 
                 try {
                     $method->invoke($endpoint, ...self::arguments($method));
-                } catch (Throwable) {
+                } catch (Throwable $e) {
+                    self::failOnRecursion($e);
                     // 404 des Mock-Clients oder fehlende Pflichtwerte; nur der Request zählt.
                 }
 
@@ -293,7 +295,8 @@ final class OpenApiProbe {
     public static function listItemClass(string $listClass): ?string {
         try {
             $item = (new ReflectionClass($listClass))->getProperty('valueClassName')->getValue(new $listClass);
-        } catch (Throwable) {
+        } catch (Throwable $e) {
+            self::failOnRecursion($e);
             return null;
         }
 
@@ -336,7 +339,8 @@ final class OpenApiProbe {
 
         try {
             return $reflection->newInstanceArgs($arguments);
-        } catch (Throwable) {
+        } catch (Throwable $e) {
+            self::failOnRecursion($e);
             return null;
         }
     }
@@ -357,7 +361,8 @@ final class OpenApiProbe {
 
             try {
                 $setter->invoke($endpoint, $value);
-            } catch (Throwable) {
+            } catch (Throwable $e) {
+                self::failOnRecursion($e);
                 // Setter mit zusätzlicher Prüfung; der Aufruf läuft dann ohne diesen Wert.
             }
         }
@@ -418,10 +423,20 @@ final class OpenApiProbe {
         };
     }
 
+    /**
+     * Endlosrekursion ist ein echter Fehler: PHP 8.2 stürzt dabei ab, ab 8.3 bliebe der Error sonst unbemerkt.
+     */
+    private static function failOnRecursion(Throwable $e): void {
+        if ($e instanceof Error && str_contains($e->getMessage(), 'Maximum call stack size')) {
+            throw $e;
+        }
+    }
+
     private static function create(string $class): ?object {
         try {
             return new $class;
-        } catch (Throwable) {
+        } catch (Throwable $e) {
+            self::failOnRecursion($e);
             return null;
         }
     }
